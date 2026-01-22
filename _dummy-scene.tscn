@@ -9,3 +9,5 @@ func _ready() -> void:
 
 [node name="Node3D" type="Node3D"]
 script = SubResource("GDScript_4xowi")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
