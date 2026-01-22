@@ -112,7 +112,7 @@ The Godot Git Plugin addon will already be installed when you clone the reposito
 	- **Important:**   If you created a new branch, you will need to run `git push --set-upstream origin <your branch name>` for the first push to properly configure things.  You won't need to do this again for your branch after the first push.
 
 ### Method 3:  GitHub Desktop
-NOTE:  If you want to use GitHub Desktop, using the `HTTPS` version of the text might make committing easier.  You won't have to re-clone the repository though.  Go to `Repository > Repository Settings... > Remote` and change the primary remote repository (origin) URL.
+NOTE:  If you want to use GitHub Desktop, using the `HTTPS` version of the clone text might make committing easier.  You won't have to re-clone the repository though.  Go to `Repository > Repository Settings... > Remote` and change the primary remote repository (origin) URL.
 
 1. Add the repository by going to `File > Add local repository` and choosing the location where you cloned the repository.
 2. *Verify you are not on the main branch* by checking the `Current branch` dropdown menu in the middle-ish area.  It will be between the `Current repository` dropdown menu and the `Fetch origin` button.
