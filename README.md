@@ -37,6 +37,7 @@ This step assumes you have Git installed.  Please install Git if you do not have
 1. Make sure you are ***not*** on the main branch before you start making changes.
 2. Make a commit every time you change something.  Doesn't have to be a big change.
 3. When you are ready to submit your changes to main, push all of your commits to your branch on the repository, then make a Pull Request.
+	- To make a pull request, there will be a noticable green buttom that says "Pull Request."  If not, then click the `Contribute` button and click `Opeen pull request`.
 	- Be descriptive about your changes when writing the pull request title and description.
 4. *Do Not Merge Your Pull Request Immediately*.  Wait for another team member to approve of the merge.
 	- The merge might cause some merge conflicts since merge conflicts are bound to happen.  If there are any, please inform the rest of the team about the conflicts.
