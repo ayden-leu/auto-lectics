@@ -13,3 +13,5 @@ script = SubResource("GDScript_4xowi")
 [node name="Sprite3D" type="Sprite3D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite3D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite3D/Sprite2D"]
