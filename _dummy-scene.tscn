@@ -10,4 +10,5 @@ func _ready() -> void:
 [node name="Node3D" type="Node3D"]
 script = SubResource("GDScript_4xowi")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Window" type="Window" parent="."]
+oversampling_override = 1.0
