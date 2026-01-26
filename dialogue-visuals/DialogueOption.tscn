@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://pdwngeenin11"]
 
-[ext_resource type="Script" uid="uid://cl13xh13e428b" path="res://dialogue-visuals/dialogue_option.gd" id="1_vbb0e"]
+[ext_resource type="Script" uid="uid://cl13xh13e428b" path="res://dialogue-visuals/DialogueOption.gd" id="1_vbb0e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2d7vg"]
 size = Vector3(0.08, 1, 2.98)
 
-[node name="dialogue-option" type="Node3D"]
+[node name="DialogueOption" type="Node3D"]
 script = ExtResource("1_vbb0e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

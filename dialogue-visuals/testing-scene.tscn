@@ -1,23 +1,27 @@
 [gd_scene load_steps=4 format=3 uid="uid://crll5200m2esb"]
 
-[ext_resource type="PackedScene" uid="uid://dwqide2q2tp3i" path="res://dialogue-visuals/dialogue-box.tscn" id="1_4o76d"]
+[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://dialogue-visuals/NPC_test.tscn" id="2_eo7jj"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_g6gns"]
-size = Vector2(20, 20)
+size = Vector2(44, 20)
 
-[sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_4o76d"]
+size = Vector2(73, 11)
 
 [node name="TestingScene" type="Node3D"]
 
 [node name="floor" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_g6gns")
 
+[node name="wall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.18702123, -0.9823559, 0, 0.9823559, 0.18702123, 0, 4.406572, -12.002214)
+mesh = SubResource("PlaneMesh_4o76d")
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.9904663, -0.13775572, 0, 0.13775572, 0.9904663, 0, 1.0181502, 3.219642)
 
-[node name="dialogue-box" parent="." instance=ExtResource("1_4o76d")]
-transform = Transform3D(0.5000001, 0, -0.8660253, 0, 1, 0, 0.8660253, 0, 0.5000001, -0.80589867, 1.3559643, -0.08739334)
+[node name="NPC_Test" parent="." instance=ExtResource("2_eo7jj")]
+transform = Transform3D(-0.29419053, 0, -0.95574695, 0, 1, 0, 0.95574695, 0, -0.29419053, 1.083954, 0.052559137, 0.14762259)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.93675774, 0, -0.3499785, 0, 1, 0, 0.3499785, 0, 0.93675774, 1.5106134, 0.55488515, -0.7389178)
-mesh = SubResource("BoxMesh_4o76d")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0842692, 0.99644303, 0, -0.99644303, 0.0842692, 0, 4.275903, 0)

@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var label : Label3D = $TextLabel
+@onready var label:Label3D = $TextLabel
 
 func _ready() -> void:
 	pass

@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwqide2q2tp3i"]
 
-[ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue-visuals/dialogue_box.gd" id="1_xrnu6"]
+[ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue-visuals/DialogueBox.gd" id="1_xrnu6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ilnc5"]
 size = Vector3(0.14, 2.42, 2.075)
 
-[node name="dialogue-box" type="Node3D"]
+[node name="DialogueBox" type="Node3D"]
 script = ExtResource("1_xrnu6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -13,7 +13,7 @@ mesh = SubResource("BoxMesh_ilnc5")
 
 [node name="DialogueLabel" type="Label3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.09841019, 1.1696776, 0.99419135)
-text = "who are you.  why are you interacting with me..."
+text = "test message"
 font_size = 64
 horizontal_alignment = 0
 vertical_alignment = 0
