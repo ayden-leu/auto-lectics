@@ -19,3 +19,14 @@ horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2
 width = 400.0
+
+[node name="OptionPositions" type="Node" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="OptionPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1529791, -1.3127452)
+
+[node name="Marker3D2" type="Marker3D" parent="OptionPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.123217344, -1.3127452)
+
+[node name="Marker3D3" type="Marker3D" parent="OptionPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.78651214, -1.3127452)

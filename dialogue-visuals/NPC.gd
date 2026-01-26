@@ -3,7 +3,6 @@ extends Node3D
 @onready var dialogueBoxScene:Resource = preload("res://dialogue-visuals/DialogueBox.tscn")
 var dialogueBox:DialogueBox = null
 
-
 var dialogue:Dictionary = {
 	"initial": "who are you.  why are you interacting with me...",
 	"options": [
