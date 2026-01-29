@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://6ampr08wbamb"]
+[gd_scene load_steps=7 format=3 uid="uid://6ampr08wbamb"]
 
-[ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://3D character controller/Scripts_player_related/player.gd" id="1_hyl87"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://3D character controller/Player.tscn" id="1_hyl87"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -21,10 +21,6 @@ size = Vector3(10, 1, 10)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_silsq"]
 data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h4x50"]
-
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -43,15 +39,8 @@ mesh = SubResource("BoxMesh_f1nio")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_silsq")
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" parent="." instance=ExtResource("1_hyl87")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
-script = ExtResource("1_hyl87")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("CapsuleMesh_hyl87")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_h4x50")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.9869006, -0.0154835805, -0.16058478, 0.018404698, 0.99969083, 0.016718974, 0.16027626, -0.019455481, 0.9868804, 0.37519836, 4.0297956, 9.623781)

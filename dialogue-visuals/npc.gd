@@ -58,21 +58,21 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_accept") and dummyCounter == 0:
-		_onInteraction()
-		dummyCounter = 1
-	
-	if dummyCounter == 1:
-		if Input.is_key_pressed(KEY_1):
-			dialogueBox.dummyFunction(1)
-			dummyCounter = 0
-		elif Input.is_key_pressed(KEY_2):
-			dialogueBox.dummyFunction(2)
-			dummyCounter = 0
-		elif Input.is_key_pressed(KEY_3):
-			dialogueBox.dummyFunction(3)
-			dummyCounter = 0
+#func _input(_event: InputEvent) -> void:
+	#if Input.is_action_just_pressed("ui_accept") and dummyCounter == 0:
+		#_onInteraction()
+		#dummyCounter = 1
+	#
+	#if dummyCounter == 1:
+		#if Input.is_key_pressed(KEY_1):
+			#dialogueBox.dummyFunction(1)
+			#dummyCounter = 0
+		#elif Input.is_key_pressed(KEY_2):
+			#dialogueBox.dummyFunction(2)
+			#dummyCounter = 0
+		#elif Input.is_key_pressed(KEY_3):
+			#dialogueBox.dummyFunction(3)
+			#dummyCounter = 0
 
 func spawnDialogue() -> void:
 	if dialogueBox != null:

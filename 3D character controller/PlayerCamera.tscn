@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm2wlegvafwbr"]
+
+[ext_resource type="Script" uid="uid://dbbi5gir2sqok" path="res://3D character controller/Scripts_player_related/player_camera.gd" id="1_ckl5i"]
+
+[node name="PlayerCamera" type="Camera3D" node_paths=PackedStringArray("focus")]
+transform = Transform3D(1, 0, 0, 0, 0.98997694, 0.14122958, 0, -0.14122958, 0.98997694, 0, 0, 0)
+script = ExtResource("1_ckl5i")
+focus = NodePath("")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
