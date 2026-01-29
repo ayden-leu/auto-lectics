@@ -11,3 +11,6 @@ script = ExtResource("1_vefio")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_4o76d")
 skeleton = NodePath("../..")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(0.9573195, 0, 0.28903177, 0, 1, 0, -0.28903177, 0, 0.9573195, 0, 1.214, 1.941)
