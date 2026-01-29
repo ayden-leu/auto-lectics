@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq04u0nihuu52"]
+
+[ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://dialogue-visuals/NPC.gd" id="1_vefio"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
+
+[node name="NPC_Test" type="Node3D"]
+script = ExtResource("1_vefio")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_4o76d")
+skeleton = NodePath("../..")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(0.9573195, 0, 0.28903177, 0, 1, 0, -0.28903177, 0, 0.9573195, 0, 1.214, 1.941)

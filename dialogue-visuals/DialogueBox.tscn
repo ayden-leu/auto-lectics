@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwqide2q2tp3i"]
+
+[ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue-visuals/DialogueBox.gd" id="1_xrnu6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ilnc5"]
+size = Vector3(0.14, 2.42, 2.075)
+
+[node name="DialogueBox" type="Node3D"]
+script = ExtResource("1_xrnu6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ilnc5")
+
+[node name="DialogueLabel" type="Label3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.09841019, 1.1696776, 0.99419135)
+text = "test message"
+font_size = 64
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 2
+width = 400.0
+
+[node name="OptionPositions" type="Node3D" parent="."]
+
+[node name="1" type="Marker3D" parent="OptionPositions"]
+transform = Transform3D(0.9349682, 0, 0.35473162, 0, 1, 0, -0.35473162, 0, 0.9349682, 0, 1.4997917, 2.3156834)
+metadata/_edit_group_ = true
+
+[node name="2" type="Marker3D" parent="OptionPositions"]
+transform = Transform3D(0.9349682, 0, 0.35473162, 0, 1, 0, -0.35473162, 0, 0.9349682, 0.23440003, 0.38438928, 2.7309422)
+metadata/_edit_group_ = true
+
+[node name="3" type="Marker3D" parent="OptionPositions"]
+transform = Transform3D(0.97552687, 0, -0.21988025, 0, 1, 0, 0.21988025, 0, 0.97552687, -0.23674092, 1.5993555, -1.153683)
+metadata/_edit_group_ = true
