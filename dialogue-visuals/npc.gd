@@ -12,19 +12,19 @@ var dialogue:Array[Dictionary] = [
 		"initial": "who are you.  why are you interacting with me...",
 		"options": [
 			{
-				"text": "1 your shirt looks cool",
+				"text": "your shirt looks cool",
 				"type": "good",
 				"spawnDelay": 3.0,
 				"nextID": 1,
 			},
 			{
-				"text": "2 where are you library?",
+				"text": "where are you library?",
 				"type": "bad",
 				"spawnDelay": 0.5,
 				"nextID": 2
 			},
 			{
-				"text": "3 oh sorry, i thought you were someone else",
+				"text": "oh sorry, i thought you were someone else",
 				"type": "neutral",
 				"spawnDelay": 1.0,
 				"nextID": 3
