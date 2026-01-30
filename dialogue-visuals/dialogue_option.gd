@@ -25,5 +25,8 @@ func spawn() -> void:
 func picked() -> void:
 	emit_signal("option_picked", nextDialogue)
 
+func _onInteraction() -> void:
+	picked()
+
 func kill():
 	queue_free()

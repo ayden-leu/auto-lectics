@@ -36,6 +36,8 @@ mesh = SubResource("PlaneMesh_xb1h1")
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="floor"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
 shape = SubResource("BoxShape3D_xb1h1")
@@ -46,6 +48,8 @@ mesh = SubResource("PlaneMesh_8vs5r")
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="wall"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wall/StaticBody3D"]
 shape = SubResource("BoxShape3D_8vs5r")
@@ -73,4 +77,7 @@ transform = Transform3D(1, 0, 0, 0, 0.9899769, 0.14122957, 0, -0.14122957, 0.989
 focus = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_f1udx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94127333, 1.0968018, 1.3495631)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94127333, 1.7612977, 1.3495631)
+
+[node name="debugging" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.91471297, 0.40410414, 0, -0.40410414, 0.91471297, 0, 4.752346, 7.0903287)

@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dbbi5gir2sqok" path="res://3D character controller/Scripts_player_related/player_camera.gd" id="1_ckl5i"]
 
-[node name="PlayerCamera" type="Camera3D" node_paths=PackedStringArray("focus")]
-transform = Transform3D(1, 0, 0, 0, 0.98997694, 0.14122958, 0, -0.14122958, 0.98997694, 0, 0, 0)
+[node name="PlayerCamera" type="Camera3D"]
 script = ExtResource("1_ckl5i")
-focus = NodePath("")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, 0, -4.371139e-08, -1, -8.742278e-08, -1, 4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, 40, 0)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
