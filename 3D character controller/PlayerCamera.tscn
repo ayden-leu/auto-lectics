@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bm2wlegvafwbr"]
+[gd_scene load_steps=3 format=3 uid="uid://bm2wlegvafwbr"]
 
 [ext_resource type="Script" uid="uid://dbbi5gir2sqok" path="res://3D character controller/Scripts_player_related/player_camera.gd" id="1_ckl5i"]
+[ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://3D character controller/ui.gd" id="2_t2kjy"]
 
 [node name="PlayerCamera" type="Camera3D"]
 script = ExtResource("1_ckl5i")
@@ -17,6 +18,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
+script = ExtResource("2_t2kjy")
 
 [node name="Container" type="CenterContainer" parent="ui"]
 layout_mode = 0

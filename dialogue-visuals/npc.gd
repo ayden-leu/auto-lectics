@@ -3,6 +3,7 @@ extends Node3D
 @onready var dialogueBoxScene:Resource = preload("res://dialogue-visuals/DialogueBox.tscn")
 @onready var dialogueBoxAnchor:Marker3D = $DialogueBoxAnchor
 var dialogueBox:DialogueBox = null
+var isTalking:bool = false
 
 var idleDialogueIndex:int = 0
 
@@ -93,10 +94,15 @@ func loadNextDialogue(data) -> void:
 	
 	if dialogue[data].options.size() == 0:
 		dialogueBox.kill()
+		isTalking = false
 		return
 
 	dialogueBox.createOptions()
 
 func _onInteraction() -> void:
+	if isTalking:
+		return
+	
+	isTalking = true
 	spawnDialogue()
 	loadNextDialogue(idleDialogueIndex)
