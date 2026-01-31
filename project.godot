@@ -15,10 +15,22 @@ run/main_scene="uid://dbtcrr1c8clsr"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://globals.gd"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "gray",
+"res://dialogue_visuals/": "green",
+"res://player/": "orange"
+}
 
 [input]
 

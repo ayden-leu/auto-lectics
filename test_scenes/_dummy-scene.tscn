@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://dbtcrr1c8clsr"]
 
-[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://dialogue-visuals/NPC_test.tscn" id="1_8vs5r"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://3D character controller/Player.tscn" id="2_f1udx"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://3D character controller/PlayerCamera.tscn" id="2_gmrsg"]
+[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://dialogue_visuals/npc_test.tscn" id="1_t63oj"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://player/player_camera.tscn" id="2_cylm4"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://player/player.tscn" id="3_yk782"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xb1h1"]
 size = Vector2(44, 20)
@@ -63,20 +63,20 @@ environment = SubResource("Environment_f1udx")
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="NPC_Test" parent="npcs" instance=ExtResource("1_8vs5r")]
+[node name="NPC_Test" parent="npcs" instance=ExtResource("1_t63oj")]
 transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 3.4547997, 0.09680176, -3.9502602)
 
-[node name="NPC_Test2" parent="npcs" instance=ExtResource("1_8vs5r")]
+[node name="NPC_Test2" parent="npcs" instance=ExtResource("1_t63oj")]
 transform = Transform3D(-0.9733272, 0, 0.22942129, 0, 1, 0, -0.22942129, 0, -0.9733272, 6.7025104, 0.09680176, 1.4582052)
 
-[node name="NPC_Test3" parent="npcs" instance=ExtResource("1_8vs5r")]
+[node name="NPC_Test3" parent="npcs" instance=ExtResource("1_t63oj")]
 transform = Transform3D(0.9995405, 0, 0.030311748, 0, 1, 0, -0.030311748, 0, 0.9995405, -3.3436327, 0.09680176, -1.3710213)
 
-[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_gmrsg")]
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_cylm4")]
 transform = Transform3D(1, 0, 0, 0, 0.9899769, 0.14122957, 0, -0.14122957, 0.9899769, 0.21943045, 3.858653, 7.1172028)
 focus = NodePath("../Player")
 
-[node name="Player" parent="." instance=ExtResource("2_f1udx")]
+[node name="Player" parent="." instance=ExtResource("3_yk782")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94127333, 1.7612977, 1.3495631)
 
 [node name="debugging" type="Camera3D" parent="."]

@@ -9,7 +9,7 @@ var text:String = "":
 		text = value
 		myLabel.text = value
 
-@onready var optionScene:Resource = preload("res://dialogue-visuals/DialogueOption.tscn")
+@onready var optionScene:Resource = preload(Globals.SCENES.DialogueOption)
 @onready var optionSpawnPositions = $OptionPositions.get_children()
 var optionData:Array = []
 var loadedOptions:Array = []

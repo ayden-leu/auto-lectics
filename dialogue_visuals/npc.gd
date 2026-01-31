@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var dialogueBoxScene:Resource = preload("res://dialogue-visuals/DialogueBox.tscn")
+@onready var dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 @onready var dialogueBoxAnchor:Marker3D = $DialogueBoxAnchor
 var dialogueBox:DialogueBox = null
 var isTalking:bool = false

@@ -1,8 +1,8 @@
 extends CharacterBody3D
 class_name Player
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const SPEED:float = 5.0
+const JUMP_VELOCITY:float = 4.5
 
 @onready var cameraAnchor:Marker3D = $CameraAnchor
 

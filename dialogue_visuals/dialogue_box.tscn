@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwqide2q2tp3i"]
 
-[ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue-visuals/dialogue_box.gd" id="1_xrnu6"]
+[ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ilnc5"]
 size = Vector3(0.14, 2.42, 2.075)
