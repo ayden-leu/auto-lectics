@@ -39,15 +39,13 @@ func spawnOption(data:Dictionary, marker:Marker3D) -> void:
 	option.connect("option_picked", _onOptionPicked)
 	option.spawn()
 	
+func kill() -> void:
+	queue_free()
+
+
 func _onOptionPicked(data) -> void:
 	for _i in range(loadedOptions.size()):
 		var toKill:DialogueOption = loadedOptions.pop_front()
 		toKill.kill()
 		
 	emit_signal("update_me", data)
-
-func dummyFunction(index:int) -> void:
-	loadedOptions[index-1].picked()
-
-func kill() -> void:
-	queue_free()

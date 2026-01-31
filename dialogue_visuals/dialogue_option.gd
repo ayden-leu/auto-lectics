@@ -30,12 +30,9 @@ func spawn() -> void:
 	visible = true
 	hitbox.disabled = false
 
-func picked() -> void:
-	emit_signal("option_picked", nextDialogue)
-
-func _onInteraction() -> void:
-	picked()
-
 func kill():
 	goingToDie = true
 	queue_free()
+
+func _onInteraction() -> void:
+	emit_signal("option_picked", nextDialogue)

@@ -83,13 +83,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94127333, 1.7612977, 1.3495
 
 [node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("3_s4y84")]
 transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
-mainCamera = NodePath("../PlayerCamera")
+mainCamera = NodePath("../PlayerCamera/Camera3D")
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
-current = true
 focus = NodePath("../Player")
+
+[node name="Camera3D" parent="PlayerCamera" index="0"]
+current = true
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("5_aue1p")]
 player = NodePath("../Player")
 wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
+
+[editable path="PlayerCamera"]
