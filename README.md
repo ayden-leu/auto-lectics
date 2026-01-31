@@ -16,13 +16,20 @@ Engine:  Godot
 	- Holds files related to the in-world dialogue stuff.
 4. `entites`:
 	- Holds files related to any Being in the game (The player, NPCs)
-5. `test_scenes`:
+5. `helpers`:
+	- Holds files related to resources that manage other resources.
+	- e.g  Input handler
+6. `materials`:
+	- Holds all shader material presets.
+7. `test_scenes`:
 	- Holds files meant for developers to test stuff.
 	- These files should not be used in the final game.
-6. `ui`:
+8. `textures`:
+	- Holds all textures.
+9. `ui`:
 	- Holds files related to non-diagetic things the player interacts with.
 	- e.g  Main menu, HUD, settings
-7. `world`:
+10. `world`:
 	- Holds files related to the environment the player walks around in.
 
 ## Developing Notes

@@ -33,7 +33,9 @@ folder_colors={
 "res://entities/npcs/": "purple",
 "res://entities/player/": "orange",
 "res://helpers/": "red",
+"res://materials/": "pink",
 "res://test_scenes/": "gray",
+"res://textures/": "pink",
 "res://ui/": "green"
 }
 

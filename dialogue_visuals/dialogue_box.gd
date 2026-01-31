@@ -1,6 +1,9 @@
 extends Node3D
 class_name DialogueBox
 
+# TODO:  position options inline to the side neatly
+# TODO:  position options randomly in hectic mode while still beinng visible
+
 signal update_me
 
 @onready var myLabel:Label3D = $DialogueLabel
