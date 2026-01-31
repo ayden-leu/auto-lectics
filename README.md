@@ -12,24 +12,32 @@ Engine:  Godot
 		- Example:  Paths to scenes so we can easily create them.
 2. `addons`:
 	- Main folder for any third-party addons we use.
-3. `dialogue_visuals`:
+3. `dialogue_objects`:
+	- Holds all of the dialogue objects and configurations.
+	- Also holds the translated text until we add non-english language support.
+4. `dialogue_visuals`:
 	- Holds files related to the in-world dialogue stuff.
-4. `entites`:
+5. `entites`:
 	- Holds files related to any Being in the game (The player, NPCs)
-5. `helpers`:
+6. `helpers`:
 	- Holds files related to resources that manage other resources.
 	- e.g  Input handler
-6. `materials`:
+7. `language_files`:
+	- Holds the language files that'll be swappable in-game.
+	- Not used for now.
+8. `materials`:
 	- Holds all shader material presets.
-7. `test_scenes`:
+9. `sounds`:
+	- Holds all of the sounds for the game.
+10. `test_scenes`:
 	- Holds files meant for developers to test stuff.
 	- These files should not be used in the final game.
-8. `textures`:
+11. `textures`:
 	- Holds all textures.
-9. `ui`:
+12. `ui`:
 	- Holds files related to non-diagetic things the player interacts with.
 	- e.g  Main menu, HUD, settings
-10. `world`:
+13. `world`:
 	- Holds files related to the environment the player walks around in.
 
 ## Developing Notes
@@ -40,6 +48,59 @@ Engine:  Godot
 - RayCast3D can be configured to interact with Areas and Bodies.  It doesn't interact with Areas by default.
 - Area3D can be set to Monitoring and Monitorable.  Monitoring means it can detect when something enters its area.  Monitorable means other things can detect when it enters their area.
 - If you need to access the children of an inherited scene, right click it and enable `Editable Children` near the bottom half of the menu.
+
+---
+
+# Notes for Designers
+(this will be moved somewhere more appropriate later)
+This section details the functionality we plan to add by the end.  Some aspects may not be implemented yet.
+
+# Adding Dialogue
+In `dialogue_objects`, each NPC gets its own folder that matches its name, which is the name of the root node of its scene.
+The name of the `.json` file is important, as that will be its ID.
+```
+dialogue_objects
+├── NPC_Test
+│   ├── Dialogue1.json
+│   ├── Dialogue2.json
+│   ├── Dialogue3.json
+│   └── Dialogue4.json
+└── John
+    ├── FirstMeeting.json
+    ├── WithCake.json
+    ├── Injured.json
+    └── Injured_2.json
+```
+
+## Fields required for a dialogue entry:
+- `text`: The text that appears in the main dialogue box.
+- `type`: The type of dialogue it is.
+	- Neutral
+	- Happy
+	- Angry
+	- Confused
+	- Sad
+- `mode`: The dialogue mode.
+	- Normal
+	- Hectic
+- `options`: A list of options the player can pick from.
+	- `text`: The text that appears in the main dialogue box.
+	- `type`: Whether this option is a good choice or not.
+		- Positive
+		- Neutral
+		- Negative
+	- `nextID`: The ID of the next dialogue entry.
+
+There are other optional fields you can fill out to customimze the dialogue.
+`Dialogue1a.json` has all posssible fields written out, and `Dialogue1b.json` is a minimal version of it.
+The game will automatically fill in the missing fields.
+
+Some fields may not be implemented or customizable yet.  These include:
+- Option `lifetime`
+- `particles`
+- `sfx:spawn`
+- `backgroundTheme`
+- `font`
 
 ---
 

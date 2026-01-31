@@ -28,12 +28,14 @@ version_control/autoload_on_startup=true
 
 folder_colors={
 "res://addons/": "gray",
+"res://dialogue_objects/": "blue",
 "res://dialogue_visuals/": "teal",
 "res://entities/": "blue",
 "res://entities/npcs/": "purple",
 "res://entities/player/": "orange",
 "res://helpers/": "red",
 "res://materials/": "pink",
+"res://sounds/": "orange",
 "res://test_scenes/": "gray",
 "res://textures/": "pink",
 "res://ui/": "green"
