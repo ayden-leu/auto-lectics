@@ -1,6 +1,10 @@
 extends Node
 class_name DialogueDB
 
+# TODO:  rewrite to handle new format.
+# NOTE:  assume these functions will be ran by the NPC, who can
+#			interact with its dialogue box and tell it to modify its options.
+
 var language := "en"
 var _cache: Dictionary = {} # key: path, value: parsed dict
 
