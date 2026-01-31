@@ -9,8 +9,6 @@ class_name PlayerCamera
 
 var actAsFocus:bool = true
 
-@onready var interactionRaycast = $RayCast3D
-
 func _ready() -> void:
 	actAsFocus = true
 
@@ -25,24 +23,17 @@ func _process(_delta: float) -> void:
 		thirdPersonMode()
 
 func firstPersonMode() -> void:
-	global_position = focus.global_position
+	global_position = focus.cameraAnchor.global_position
 
 func thirdPersonMode() -> void:
 	global_position = focus.cameraAnchor.global_position
 	look_at(focus.global_position)
 
-
+# Rotates the camera horizontally and vertically when the mouse moves
 func _onMouseMoved(distanceMoved:Vector2) -> void:
 	#print(name + ": mouse moved")
 	rotation_degrees.x += -distanceMoved.y
 	rotation_degrees.y += -distanceMoved.x
-
-func _onInteractPressed() -> void:
-	#print(name + ": interact pressed")
-	# TODO: make a better way to get the NPC we're acting with
-	# 		making assumptions about the node hierarchy isn't good
-	if interactionRaycast.get_collider() is Area3D:
-		interactionRaycast.get_collider().get_parent()._onInteraction()
 
 
 

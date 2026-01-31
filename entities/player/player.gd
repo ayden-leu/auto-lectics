@@ -5,7 +5,8 @@ class_name Player
 const SPEED:float = 5.0
 const JUMP_VELOCITY:float = 4.5
 
-@onready var cameraAnchor:Marker3D = $CameraAnchor
+@onready var cameraAnchor:Marker3D = %CameraAnchor
+@onready var interactionRaycast:RayCast3D = $RayCast3D
 
 func _process(_delta: float) -> void:
 	# Dev-ing stuff
@@ -26,6 +27,7 @@ func _physics_process(delta: float) -> void:
 func jump() -> void:	
 	velocity.y = JUMP_VELOCITY
 
+# Modifies velocity so `move_and_slide()` can move the player
 func handleDirectionInput(direction:Vector3) -> void:
 	if direction:
 		velocity.x = direction.x * SPEED
@@ -34,10 +36,18 @@ func handleDirectionInput(direction:Vector3) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
-
+# Rotates the player when the mouse moves horizontally
 func _onMouseMoved(distanceMoved:Vector2) -> void:
 	#print(name + ": mouse moved")
 	rotation_degrees.y += -distanceMoved.x
+	interactionRaycast.rotation_degrees.x -= -distanceMoved.y
+
+func _onInteractPressed() -> void:
+	#print(name + ": interact pressed")
+	# TODO: make a better way to get the NPC we're acting with
+	# 		making assumptions about the node hierarchy isn't good
+	if interactionRaycast.get_collider() is Area3D:
+		interactionRaycast.get_collider().get_parent()._onInteraction()
 
 
 

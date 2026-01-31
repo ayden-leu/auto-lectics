@@ -17,4 +17,13 @@ mesh = SubResource("CapsuleMesh_hyl87")
 shape = SubResource("CapsuleShape3D_h4x50")
 
 [node name="CameraAnchor" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.644, 3.005)
+unique_name_in_owner = true
+transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, 0, -4.371139e-08, -1, -8.742278e-08, -1, 4.371139e-08, 0, 0.4390247, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, 0, -4.371139e-08, -1, -8.742278e-08, -1, 4.371139e-08, 0, 0.4390247, 0)
+target_position = Vector3(0, 40, 0)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+metadata/_edit_group_ = true

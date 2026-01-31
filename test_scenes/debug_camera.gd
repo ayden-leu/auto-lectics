@@ -10,7 +10,7 @@ extends Camera3D
 		update_configuration_warnings() # Dev-ing stuff
 
 func _ready() -> void:
-	mainCamera = mainCamera
+	mainCamera.current = true
 
 func _process(_delta: float) -> void:
 	# Makes sure the code only runs while the game is running

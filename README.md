@@ -25,6 +25,14 @@ Engine:  Godot
 7. `world`:
 	- Holds files related to the environment the player walks around in.
 
+## Developing Notes
+- Collision layers exist.  They can be configured under `CollisionObject3D > Collision`
+	- "Layer" holds the collision layers the physics body is on.
+	- "Mask" holds the collision layers the physics body interacts with.
+		- e.g  The ground does not interact with the player.  The player interacts with the ground.
+- RayCast3D can be configured to interact with Areas and Bodies.  It doesn't interact with Areas by default.
+- Area3D can be set to Monitoring and Monitorable.  Monitoring means it can detect when something enters its area.  Monitorable means other things can detect when it enters their area.
+
 ---
 
 # Connecting to the GitHub Repository
