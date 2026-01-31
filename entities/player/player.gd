@@ -6,7 +6,7 @@ const SPEED:float = 5.0
 const JUMP_VELOCITY:float = 4.5
 
 @onready var cameraAnchor:Marker3D = %CameraAnchor
-@onready var interactionRaycast:RayCast3D = $RayCast3D
+@onready var interactionRaycast:RayCast3D = %InteractionRaycast
 
 func _process(_delta: float) -> void:
 	# Dev-ing stuff
@@ -44,10 +44,7 @@ func _onMouseMoved(distanceMoved:Vector2) -> void:
 
 func _onInteractPressed() -> void:
 	#print(name + ": interact pressed")
-	# TODO: make a better way to get the NPC we're acting with
-	# 		making assumptions about the node hierarchy isn't good
-	if interactionRaycast.get_collider() is Area3D:
-		interactionRaycast.get_collider().get_parent()._onInteraction()
+	interactionRaycast.get_collider().owner._onInteraction()
 
 
 
