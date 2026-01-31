@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c81e8pibiemgh"]
+
+[ext_resource type="Script" uid="uid://5ooarlk1kffw" path="res://test_scenes/debug_camera.gd" id="1_ov5b1"]
+
+[node name="DebugCamera" type="Camera3D" node_paths=PackedStringArray("mainCamera")]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, 0, 0, 0)
+script = ExtResource("1_ov5b1")
+mainCamera = NodePath("")

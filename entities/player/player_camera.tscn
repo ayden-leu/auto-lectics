@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm2wlegvafwbr"]
+
+[ext_resource type="Script" uid="uid://dbbi5gir2sqok" path="res://entities/player/player_camera.gd" id="1_ckl5i"]
+[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://ui/hud/hud.tscn" id="2_dnosu"]
+
+[node name="PlayerCamera" type="Node3D"]
+script = ExtResource("1_ckl5i")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource("2_dnosu")]

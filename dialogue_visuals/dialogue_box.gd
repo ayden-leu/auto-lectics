@@ -1,6 +1,9 @@
 extends Node3D
 class_name DialogueBox
 
+# TODO:  position options inline to the side neatly
+# TODO:  position options randomly in hectic mode while still beinng visible
+
 signal update_me
 
 @onready var myLabel:Label3D = $DialogueLabel
@@ -9,7 +12,7 @@ var text:String = "":
 		text = value
 		myLabel.text = value
 
-@onready var optionScene:Resource = preload("res://dialogue-visuals/DialogueOption.tscn")
+@onready var optionScene:Resource = preload(Globals.SCENES.DialogueOption)
 @onready var optionSpawnPositions = $OptionPositions.get_children()
 var optionData:Array = []
 var loadedOptions:Array = []
@@ -39,15 +42,13 @@ func spawnOption(data:Dictionary, marker:Marker3D) -> void:
 	option.connect("option_picked", _onOptionPicked)
 	option.spawn()
 	
+func kill() -> void:
+	queue_free()
+
+
 func _onOptionPicked(data) -> void:
 	for _i in range(loadedOptions.size()):
 		var toKill:DialogueOption = loadedOptions.pop_front()
 		toKill.kill()
 		
 	emit_signal("update_me", data)
-
-func dummyFunction(index:int) -> void:
-	loadedOptions[index-1].picked()
-
-func kill() -> void:
-	queue_free()

@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4qdi730tv5hl"]
+
+[ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://ui/hud/hud.gd" id="1_xmswo"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_xmswo")
+
+[node name="Container" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ColorRect2" type="ColorRect" parent="Container"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Container/ColorRect2"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 13.0
+offset_bottom = 13.0

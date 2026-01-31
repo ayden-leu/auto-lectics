@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://crll5200m2esb"]
+
+[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="1_axsc5"]
+[ext_resource type="Script" uid="uid://cn67u5ck832c2" path="res://test_scenes/test_dialogue.gd" id="1_ic3ec"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_g6gns"]
+size = Vector2(44, 20)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4o76d"]
+size = Vector2(73, 11)
+
+[node name="Test_Dialogue" type="Node3D"]
+script = ExtResource("1_ic3ec")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="floor" type="MeshInstance3D" parent="Environment"]
+mesh = SubResource("PlaneMesh_g6gns")
+skeleton = NodePath("../..")
+
+[node name="wall" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.18702123, -0.9823559, 0, 0.9823559, 0.18702123, 0, 4.406572, -12.002214)
+mesh = SubResource("PlaneMesh_4o76d")
+skeleton = NodePath("../..")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.0842692, 0.99644303, 0, -0.99644303, 0.0842692, 0, 4.275903, 0)
+
+[node name="NPC_Test" parent="." instance=ExtResource("1_axsc5")]
+transform = Transform3D(-0.29419053, 0, -0.95574695, 0, 1, 0, 0.95574695, 0, -0.29419053, 1.083954, 0.052559137, 0.14762259)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2986922, 2.2938116, 5.485113)
+current = true

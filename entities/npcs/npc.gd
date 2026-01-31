@@ -1,8 +1,10 @@
 extends Node3D
+class_name NPC
 
-@onready var dialogueBoxScene:Resource = preload("res://dialogue-visuals/DialogueBox.tscn")
+@onready var dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 @onready var dialogueBoxAnchor:Marker3D = $DialogueBoxAnchor
 var dialogueBox:DialogueBox = null
+var isTalking:bool = false
 
 var idleDialogueIndex:int = 0
 
@@ -12,19 +14,19 @@ var dialogue:Array[Dictionary] = [
 		"initial": "who are you.  why are you interacting with me...",
 		"options": [
 			{
-				"text": "1 your shirt looks cool",
+				"text": "your shirt looks cool",
 				"type": "good",
 				"spawnDelay": 3.0,
 				"nextID": 1,
 			},
 			{
-				"text": "2 where are you library?",
+				"text": "where are you library?",
 				"type": "bad",
 				"spawnDelay": 0.5,
 				"nextID": 2
 			},
 			{
-				"text": "3 oh sorry, i thought you were someone else",
+				"text": "oh sorry, i thought you were someone else",
 				"type": "neutral",
 				"spawnDelay": 1.0,
 				"nextID": 3
@@ -58,22 +60,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_accept") and dummyCounter == 0:
-		_onInteraction()
-		dummyCounter = 1
-	
-	if dummyCounter == 1:
-		if Input.is_key_pressed(KEY_1):
-			dialogueBox.dummyFunction(1)
-			dummyCounter = 0
-		elif Input.is_key_pressed(KEY_2):
-			dialogueBox.dummyFunction(2)
-			dummyCounter = 0
-		elif Input.is_key_pressed(KEY_3):
-			dialogueBox.dummyFunction(3)
-			dummyCounter = 0
-
 func spawnDialogue() -> void:
 	if dialogueBox != null:
 		return
@@ -93,10 +79,15 @@ func loadNextDialogue(data) -> void:
 	
 	if dialogue[data].options.size() == 0:
 		dialogueBox.kill()
+		isTalking = false
 		return
 
 	dialogueBox.createOptions()
 
 func _onInteraction() -> void:
+	if isTalking:
+		return
+	
+	isTalking = true
 	spawnDialogue()
 	loadNextDialogue(idleDialogueIndex)

@@ -3,6 +3,46 @@ Main repository for the AUTO-Lectics game.
 
 Engine:  Godot
 
+---
+
+# Project Structure
+1. `globals.gd`:
+	- Holds global variables.
+	- Should only contain information needed everywhere in the game
+		- Example:  Paths to scenes so we can easily create them.
+2. `addons`:
+	- Main folder for any third-party addons we use.
+3. `dialogue_visuals`:
+	- Holds files related to the in-world dialogue stuff.
+4. `entites`:
+	- Holds files related to any Being in the game (The player, NPCs)
+5. `helpers`:
+	- Holds files related to resources that manage other resources.
+	- e.g  Input handler
+6. `materials`:
+	- Holds all shader material presets.
+7. `test_scenes`:
+	- Holds files meant for developers to test stuff.
+	- These files should not be used in the final game.
+8. `textures`:
+	- Holds all textures.
+9. `ui`:
+	- Holds files related to non-diagetic things the player interacts with.
+	- e.g  Main menu, HUD, settings
+10. `world`:
+	- Holds files related to the environment the player walks around in.
+
+## Developing Notes
+- Collision layers exist.  They can be configured under `CollisionObject3D > Collision`
+	- `Layer` holds the collision layers the physics body is on.
+	- `Mask` holds the collision layers the physics body interacts with.
+		- e.g  The ground does not interact with the player.  The player interacts with the ground.
+- RayCast3D can be configured to interact with Areas and Bodies.  It doesn't interact with Areas by default.
+- Area3D can be set to Monitoring and Monitorable.  Monitoring means it can detect when something enters its area.  Monitorable means other things can detect when it enters their area.
+- If you need to access the children of an inherited scene, right click it and enable `Editable Children` near the bottom half of the menu.
+
+---
+
 # Connecting to the GitHub Repository
 This section will help you setup a git management tool so you can push and pull changes to and from the repository.
 ## Step 1:  Setup an SSH key for your GitHub account
@@ -12,7 +52,7 @@ GitHub has deprecated the easier method of using a username and password to logi
 	- or click this link:  https://github.com/settings
 2. Go to the `SSH and GPG keys` tab on the left.
 3. Follow the official guide for generating a new SSH key.
-	- Link:  https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+	- Link:  https://docs.github.com/en/ahuduthentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 4. Follow the official guide for adding a new SSH key to your GitHub account.
 	- Link:  https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
 5. Follow the official guide for testing your SSH connection.
