@@ -16,7 +16,6 @@ var spawnDelay:float = 0.0
 var nextDialogue:int = -1
 
 func _ready() -> void:
-	print("ready")
 	visible = false
 	
 func _process(_delta: float) -> void:

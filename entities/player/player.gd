@@ -1,3 +1,4 @@
+@tool
 extends CharacterBody3D
 class_name Player
 
@@ -6,19 +7,26 @@ const JUMP_VELOCITY:float = 4.5
 
 @onready var cameraAnchor:Marker3D = $CameraAnchor
 
+func _process(_delta: float) -> void:
+	# Dev-ing stuff
+	if Engine.is_editor_hint():
+		update_configuration_warnings()
+
 func _physics_process(delta: float) -> void:
+	# Makes sure the code only runs while the game is running
+	if Engine.is_editor_hint():
+		return
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	move_and_slide()
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+func jump() -> void:	
+	velocity.y = JUMP_VELOCITY
+
+func handleDirectionInput(direction:Vector3) -> void:
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -26,4 +34,27 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
-	move_and_slide()
+
+func _onMouseMoved(distanceMoved:Vector2) -> void:
+	#print(name + ": mouse moved")
+	rotation_degrees.y += -distanceMoved.x
+
+
+
+# Dev-ing stuff
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+	var numInputHandlers:int = get_tree().get_node_count_in_group("InputHandler")
+	
+	if numInputHandlers < 1:
+		warnings.push_back(
+			"There isn't a InputHandler node, so the player won't be able to the player character.
+			Consider adding an InputHandler node from the helpers folder.
+		")
+	elif numInputHandlers > 1:
+		warnings.push_back(
+			"There are too many InputHandler nodes.
+			This won't crash the game, but it may lead to unexpected behavior.
+		")
+	
+	return warnings

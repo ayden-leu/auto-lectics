@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://6ampr08wbamb"]
+[gd_scene load_steps=10 format=3 uid="uid://6ampr08wbamb"]
 
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="1_hyl87"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_feikh"]
+[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_eawqy"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_nt7id"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_kkbud"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_jvw1w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -45,13 +47,18 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_silsq")
 
-[node name="DebugCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, 0.13, 4.095, 9.739)
+[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("1_eawqy")]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.052335963, 0, -0.052335963, 0.9986295, 0.13, 4.095, 9.739)
+mainCamera = NodePath("../PlayerCamera")
 
-[node name="Player" parent="." instance=ExtResource("1_hyl87")]
+[node name="Player" parent="." instance=ExtResource("2_nt7id")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
 
-[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_feikh")]
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
-current = true
 focus = NodePath("../Player")
+
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_jvw1w")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowWhenInteract = [NodePath("../PlayerCamera")]

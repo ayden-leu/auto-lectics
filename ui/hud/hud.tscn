@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://b4qdi730tv5hl"]
 
-[ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://ui/ui.gd" id="1_qgus4"]
+[ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://ui/hud/hud.gd" id="1_xmswo"]
 
-[node name="ui" type="Control"]
+[node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
-script = ExtResource("1_qgus4")
+script = ExtResource("1_xmswo")
 
 [node name="Container" type="CenterContainer" parent="."]
 layout_mode = 0

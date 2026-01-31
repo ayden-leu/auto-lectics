@@ -3,6 +3,30 @@ Main repository for the AUTO-Lectics game.
 
 Engine:  Godot
 
+---
+
+# Project Structure
+1. `globals.gd`:
+	- Holds global variables.
+	- Should only contain information needed everywhere in the game
+		- Example:  Paths to scenes so we can easily create them.
+2. `addons`:
+	- Main folder for any third-party addons we use.
+3. `dialogue_visuals`:
+	- Holds files related to the in-world dialogue stuff.
+4. `entites`:
+	- Holds files related to any Being in the game (The player, NPCs)
+5. `test_scenes`:
+	- Holds files meant for developers to test stuff.
+	- These files should not be used in the final game.
+6. `ui`:
+	- Holds files related to non-diagetic things the player interacts with.
+	- e.g  Main menu, HUD, settings
+7. `world`:
+	- Holds files related to the environment the player walks around in.
+
+---
+
 # Connecting to the GitHub Repository
 This section will help you setup a git management tool so you can push and pull changes to and from the repository.
 ## Step 1:  Setup an SSH key for your GitHub account
@@ -12,7 +36,7 @@ GitHub has deprecated the easier method of using a username and password to logi
 	- or click this link:  https://github.com/settings
 2. Go to the `SSH and GPG keys` tab on the left.
 3. Follow the official guide for generating a new SSH key.
-	- Link:  https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+	- Link:  https://docs.github.com/en/ahuduthentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 4. Follow the official guide for adding a new SSH key to your GitHub account.
 	- Link:  https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
 5. Follow the official guide for testing your SSH connection.
