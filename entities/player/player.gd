@@ -44,7 +44,8 @@ func _onMouseMoved(distanceMoved:Vector2) -> void:
 
 func _onInteractPressed() -> void:
 	#print(name + ": interact pressed")
-	interactionRaycast.get_collider().owner._onInteraction()
+	if interactionRaycast.is_colliding():
+		interactionRaycast.get_collider().owner._onInteraction()
 
 
 

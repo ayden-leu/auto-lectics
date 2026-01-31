@@ -14,7 +14,6 @@ mesh = SubResource("BoxMesh_ilnc5")
 [node name="DialogueLabel" type="Label3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.09841019, 1.1696776, 0.99419135)
 text = "test message"
-font_size = 64
 horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2

@@ -17,7 +17,6 @@ mesh = SubResource("BoxMesh_2d7vg")
 [node name="TextLabel" type="Label3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.09841019, 0.47822595, 1.4547267)
 text = "eggs"
-font_size = 64
 horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 1
