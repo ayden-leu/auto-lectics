@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://dbtcrr1c8clsr"]
 
-[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://dialogue_visuals/npc_test.tscn" id="1_aqyf1"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://player/player_camera.tscn" id="2_5jbr5"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://player/player.tscn" id="3_4nemi"]
+[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="1_un40c"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="3_aue1p"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xb1h1"]
 size = Vector2(44, 20)
@@ -29,55 +29,59 @@ sky = SubResource("Sky_bmedq")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="root" type="Node3D"]
+[node name="Test_NPCInteraction" type="Node3D"]
 
-[node name="floor" type="MeshInstance3D" parent="."]
+[node name="Environment" type="Node" parent="."]
+
+[node name="floor" type="MeshInstance3D" parent="Environment"]
 mesh = SubResource("PlaneMesh_xb1h1")
+skeleton = NodePath("../..")
 metadata/_edit_group_ = true
 
-[node name="StaticBody3D" type="StaticBody3D" parent="floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/floor"]
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/floor/StaticBody3D"]
 shape = SubResource("BoxShape3D_xb1h1")
 
-[node name="wall" type="MeshInstance3D" parent="."]
+[node name="wall" type="MeshInstance3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 0.18702123, -0.9823559, 0, 0.9823559, 0.18702123, 0, 4.406572, -10.559556)
 mesh = SubResource("PlaneMesh_8vs5r")
+skeleton = NodePath("../..")
 metadata/_edit_group_ = true
 
-[node name="StaticBody3D" type="StaticBody3D" parent="wall"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/wall"]
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="wall/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall/StaticBody3D"]
 shape = SubResource("BoxShape3D_8vs5r")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_f1udx")
+
+[node name="DebugCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.914713, 0.40410417, 0, -0.40410417, 0.914713, 0, 4.752346, 7.0903287)
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="npc_test" parent="npcs" instance=ExtResource("1_aqyf1")]
+[node name="NPC_Test" parent="npcs" instance=ExtResource("1_un40c")]
 transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 3.4547997, 0.09680176, -3.9502602)
 
-[node name="npc_test2" parent="npcs" instance=ExtResource("1_aqyf1")]
+[node name="NPC_Test2" parent="npcs" instance=ExtResource("1_un40c")]
 transform = Transform3D(-0.9733272, 0, 0.22942129, 0, 1, 0, -0.22942129, 0, -0.9733272, 6.7025104, 0.09680176, 1.4582052)
 
-[node name="npc_test3" parent="npcs" instance=ExtResource("1_aqyf1")]
+[node name="NPC_Test3" parent="npcs" instance=ExtResource("1_un40c")]
 transform = Transform3D(0.9995405, 0, 0.030311748, 0, 1, 0, -0.030311748, 0, 0.9995405, -3.3436327, 0.09680176, -1.3710213)
 
-[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_5jbr5")]
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 transform = Transform3D(1, 0, 0, 0, 0.9899769, 0.14122957, 0, -0.14122957, 0.9899769, 0.21943045, 3.858653, 7.1172028)
 focus = NodePath("../Player")
 
-[node name="Player" parent="." instance=ExtResource("3_4nemi")]
+[node name="Player" parent="." instance=ExtResource("3_aue1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94127333, 1.7612977, 1.3495631)
-
-[node name="debugging" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.91471297, 0.40410414, 0, -0.40410414, 0.91471297, 0, 4.752346, 7.0903287)
