@@ -68,7 +68,7 @@ func spawnDialogue() -> void:
 	
 func loadData(dialogueEntry:Dictionary) -> void:
 	dialogueBox.text = dialogueEntry.initial
-	dialogueBox.optionData = dialogueEntry.options
+	dialogueBox.loadOptionData(dialogueEntry.options)
 
 func loadNextDialogue(data) -> void:
 	loadData(dialogue[data])
