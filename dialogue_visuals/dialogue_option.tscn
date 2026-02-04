@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://pdwngeenin11"]
+[gd_scene load_steps=7 format=3 uid="uid://pdwngeenin11"]
 
 [ext_resource type="Script" uid="uid://cl13xh13e428b" path="res://dialogue_visuals/dialogue_option.gd" id="1_vbb0e"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_hgihb"]
@@ -6,7 +6,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_2d7vg"]
 resource_local_to_scene = true
 material = ExtResource("2_hgihb")
-size = Vector3(0.08, 0.29999998, 0.39499998)
+size = Vector3(0.04, 0.29999998, 0.39499998)
 
 [sub_resource type="FontFile" id="FontFile_hgihb"]
 subpixel_positioning = 0
@@ -264,10 +264,14 @@ cache/0/127/0/underline_thickness = 0.0
 cache/0/127/0/scale = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgihb"]
-size = Vector3(0.13, 0.35, 0.445)
+size = Vector3(0.09, 0.35, 0.445)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wakav"]
+size = Vector3(0.103515625, 0.36157227, 0.44335938)
 
 [node name="DialogueOption" type="Node3D"]
 script = ExtResource("1_vbb0e")
+dummyThickness = 0.04
 
 [node name="Background" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999999, 0.19749999)
@@ -282,12 +286,21 @@ vertical_alignment = 0
 autowrap_mode = 3
 width = 550.0
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="InteractionHitbox" type="Area3D" parent="."]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999999, 0.19749999)
 shape = SubResource("BoxShape3D_hgihb")
 disabled = true
+
+[node name="VisualArea" type="Area3D" parent="InteractionHitbox/CollisionShape3D" groups=["VisualArea"]]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionHitbox/CollisionShape3D/VisualArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0034103394, 0)
+shape = SubResource("BoxShape3D_wakav")

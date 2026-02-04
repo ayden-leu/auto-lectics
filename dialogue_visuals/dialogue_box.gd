@@ -3,8 +3,6 @@ class_name DialogueBox
 
 signal update_me(next_id: String)
 
-signal update_me
-
 enum OPTIONS_ANCHOR {
 	topLeft = 0,
 	topRight = 1,
@@ -23,18 +21,32 @@ var text:String = "":
 @onready var optionSpawnPositions = {
 	"normal": $OptionPositions/Normal.get_children()
 }
-@onready var optionConntainer = $OptionsContainer
+@onready var optionContainer = $OptionsContainer
+@onready var warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
+@onready var warningAreas:Array = $WarningPositionAreas.get_children()
+@onready var warningsContainer = $WarningsContainer
 
+var rng:RandomNumberGenerator = RandomNumberGenerator.new()
 var optionData:Array = []
 var loadedOptions:Array = []
 var mode:String = "normal"
+var numWarnings:int = 6
 
 func _ready() -> void:
+	$WarningPositionAreas.visible = false
+	
+func _process(_delta: float) -> void:
 	pass
 
 func loadOptionData(options: Array) -> void:
 	optionData = options
 	optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
+
+func prepare() -> void:
+	# TODO:  load configuration. maybe
+	
+	if mode == "hectic":
+		spawnWarnings(numWarnings)
 
 func createOptions() -> void:
 	var prevDelay:float = 0.0
@@ -50,7 +62,7 @@ func createOptions() -> void:
 
 func spawnOption() -> DialogueOption:
 	var option:DialogueOption = optionScene.instantiate()
-	optionConntainer.add_child(option)
+	optionContainer.add_child(option)
 	loadedOptions.push_back(option)
 	return option
 
@@ -97,15 +109,51 @@ func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
 	instance.text = data.text
 	instance.nextDialogue = data.nextID
 	instance.connect("option_picked", _onOptionPicked)
+
+func spawnWarnings(amount:int) -> void:
+	for _i in range(amount):
+		var spawnLocation:Vector3 = getWarningTilePosition()
+		
+		var warningTile:WarningTile = warningTileScene.instantiate()
+		warningsContainer.add_child(warningTile)
+		warningTile.position = spawnLocation
+		warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
+		warningTile.connect("blocking_visual", _on_warning_tile_overlap)
+
+func getWarningTilePosition() -> Vector3:
+	# TODO:  round robin pick the areas instead
+	# TODO:  reuse areas for positioning the options too
+	rng.randomize()
+	var chosenArea:MeshInstance3D = warningAreas[rng.randi_range(0,2)]
 	
+	var maxOffset:Vector3 = chosenArea.mesh.get_aabb().size
+	var offset:Vector3 = Vector3(
+		rng.randf_range(-maxOffset.x, maxOffset.x),
+		rng.randf_range(-maxOffset.y, maxOffset.y),
+		rng.randf_range(-maxOffset.z, maxOffset.z)
+	)
+	return chosenArea.position + offset
+
 func kill() -> void:
 	queue_free()
 
-func _onOptionPicked(next_id: Variant) -> void:
-	# Clear options
-	while loadedOptions.size() > 0:
-		var toKill: DialogueOption = loadedOptions.pop_front()
-		toKill.kill()
 
-	# Ensure we emit a string ID
-	emit_signal("update_me", str(next_id))
+
+func _onOptionPicked(data) -> void:
+	for _i in range(loadedOptions.size()):
+		var toKill:DialogueOption = loadedOptions.pop_front()
+		toKill.kill()
+		
+	emit_signal("update_me", data)
+
+func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
+	# TODO:  move warning tile up and left/right instead of random position in area
+	if warningTile.numTimesRepositioned > 3:
+		return
+	
+	rng.randomize()
+	var delay:float = rng.randf_range(0.0, 1.0)
+	await get_tree().create_timer(delay).timeout
+	warningTile.position = getWarningTilePosition()
+	warningTile.numTimesRepositioned += 1
+	warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)

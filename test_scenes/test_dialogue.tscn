@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://crll5200m2esb"]
+[gd_scene load_steps=6 format=3 uid="uid://crll5200m2esb"]
 
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="1_axsc5"]
 [ext_resource type="Script" uid="uid://cn67u5ck832c2" path="res://test_scenes/test_dialogue.gd" id="1_ic3ec"]
@@ -8,6 +8,9 @@ size = Vector2(44, 20)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4o76d"]
 size = Vector2(73, 11)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ic3ec"]
+font_size = 66
 
 [node name="Test_Dialogue" type="Node3D"]
 script = ExtResource("1_ic3ec")
@@ -32,3 +35,16 @@ transform = Transform3D(-0.29419053, 0, -0.95574695, 0, 1, 0, 0.95574695, 0, -0.
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2986922, 2.2938116, 5.485113)
 current = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 226.0
+offset_bottom = 79.0
+text = "test"
+label_settings = SubResource("LabelSettings_ic3ec")

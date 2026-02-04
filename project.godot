@@ -44,6 +44,7 @@ folder_colors={
 [global_group]
 
 InputHandler=""
+VisualArea=""
 
 [input]
 
@@ -98,3 +99,4 @@ debug_2={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Environment"
 3d_physics/layer_3="NPC"
+3d_physics/layer_4="Visuals"

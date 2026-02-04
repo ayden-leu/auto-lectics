@@ -21,7 +21,7 @@ enum VERTICAL_ALIGNMENT{
 @export var verticalAlignment:VERTICAL_ALIGNMENT = VERTICAL_ALIGNMENT.top
 
 @onready var label:Label3D = $TextLabel
-@onready var hitbox:CollisionShape3D = $Area3D/CollisionShape3D
+@onready var hitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
 @onready var background:MeshInstance3D = $Background
 
 var hitboxPadding:float = 0.05

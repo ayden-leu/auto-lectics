@@ -2,11 +2,14 @@
 extends Node3D
 class_name WarningTile
 
+signal blocking_visual
+
 @export var radius:float = 0.6
 
 @onready var label:Label3D = $Background/TextLabel
 @onready var background:MeshInstance3D = $Background
 @onready var shakeTimer:Timer = $ShakeTimer
+@onready var visualArea:Area3D = $Background/VisualArea
 
 var rng:RandomNumberGenerator = RandomNumberGenerator.new()
 var radiusToLabelPixelRatio:float = 0.005/0.6
@@ -22,6 +25,8 @@ var offsetRange:Dictionary = {
 }
 var shakeUpdateInterval:float = 0.1
 
+var numTimesRepositioned:int = 0
+
 func _ready() -> void:
 	updateSize()
 	shakeTimer.wait_time = shakeUpdateInterval
@@ -30,6 +35,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		updateSize()
+		return
+	
+	#if visualArea.has_overlapping_areas():
+		#_on_visual_area_area_entered(null)
 
 func updateSize() -> void:
 	background.mesh.radius = radius
@@ -40,9 +49,12 @@ func shake() -> void:
 	var offsetX = rng.randf_range(offsetRange.x.min, offsetRange.x.max)
 	var offsetY = rng.randf_range(offsetRange.y.min, offsetRange.y.max)
 	
+	background.position.x = offsetX * radius/0.6
 	background.position.y = offsetY * radius/0.6
-	background.position.z = offsetX * radius/0.6
 
 
 func _on_shake_timer_timeout() -> void:
 	shake()
+
+func _on_visual_area_area_entered(_area: Area3D) -> void:
+	emit_signal("blocking_visual", self)
