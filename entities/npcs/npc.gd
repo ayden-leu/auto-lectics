@@ -65,17 +65,24 @@ func spawnDialogue() -> void:
 	dialogueBox = dialogueBoxScene.instantiate()
 	dialogueBox.connect("update_me", loadNextDialogue)
 	dialogueBoxAnchor.add_child(dialogueBox)
-	
+
+# TODO:  update to match new dialogue format
+func loadMyDialogueTree(tree:Array) -> void:
+	dialogue = tree
+
 func loadData(dialogueEntry:Dictionary) -> void:
+	dialogueBox.mode = dialogueEntry.mode
 	dialogueBox.text = dialogueEntry.initial
 	dialogueBox.loadOptionData(dialogueEntry.options)
+	dialogueBox.prepare()
 
-func loadNextDialogue(data) -> void:
-	loadData(dialogue[data])
+# TODO:  update to match new dialogue format
+func loadNextDialogue(id:int) -> void:
+	loadData(dialogue[id])
 	
 	await get_tree().create_timer(delayStartShowingOptions).timeout
 	
-	if dialogue[data].options.size() == 0:
+	if dialogue[id].options.size() == 0:
 		dialogueBox.kill()
 		isTalking = false
 		return
