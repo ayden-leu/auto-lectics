@@ -52,8 +52,6 @@ var dialogue:Array[Dictionary] = [
 
 var delayStartShowingOptions:float = 1.0
 
-var dummyCounter:int = 0
-
 func _ready() -> void:
 	pass
 
