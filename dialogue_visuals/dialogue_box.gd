@@ -3,54 +3,101 @@ class_name DialogueBox
 
 signal update_me(next_id: String)
 
-@onready var myLabel: Label3D = $DialogueLabel
-var text: String = "":
+signal update_me
+
+enum OPTIONS_ANCHOR {
+	topLeft = 0,
+	topRight = 1,
+	bottomLeft = 2,
+	bottomRight = 3
+}
+
+@export var optionsAnchor:OPTIONS_ANCHOR = OPTIONS_ANCHOR.topLeft
+
+@onready var myLabel:Label3D = $DialogueLabel
+var text:String = "":
 	set(value):
 		text = value
 		myLabel.text = value
+@onready var optionScene:Resource = preload(Globals.SCENES.DialogueOption)
+@onready var optionSpawnPositions = {
+	"normal": $OptionPositions/Normal.get_children()
+}
+@onready var optionConntainer = $OptionsContainer
 
-@onready var optionScene: Resource = preload(Globals.SCENES.DialogueOption)
-@onready var optionSpawnPositions: Array = $OptionPositions.get_children()
-
-var optionData: Array = []          # Array[Dictionary]
-var loadedOptions: Array = []       # Array[DialogueOption]
+var optionData:Array = []
+var loadedOptions:Array = []
+var mode:String = "normal"
 
 func _ready() -> void:
 	pass
 
 func loadOptionData(options: Array) -> void:
 	optionData = options
+	optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
 
 func createOptions() -> void:
-	# Safety: don’t spawn more options than we have markers for
-	var count = min(optionData.size(), optionSpawnPositions.size())
-	for i in range(count):
-		spawnOption(optionData[i], optionSpawnPositions[i])
+	var prevDelay:float = 0.0
+	for optionObjectData in optionData:
+		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0)
+		if spawnDelay > 0:
+			await get_tree().create_timer(optionObjectData.spawnDelay).timeout
+		prevDelay += spawnDelay
+		
+		var newOption:DialogueOption = spawnOption()
+		configureOptionInstance(newOption, optionObjectData)
+		newOption.spawn()
 
-func spawnOption(data: Dictionary, marker: Marker3D) -> void:
-	var option: DialogueOption = optionScene.instantiate()
-	marker.add_child(option)
-	loadedOptions.append(option)
+func spawnOption() -> DialogueOption:
+	var option:DialogueOption = optionScene.instantiate()
+	optionConntainer.add_child(option)
+	loadedOptions.push_back(option)
+	return option
 
-	# IMPORTANT: dictionary access via []
-	option.text = str(data.get("text", ""))
+func setOptionPosition(option:DialogueOption) -> void:
+	if loadedOptions.size() == 1:
+		option.position = optionSpawnPositions.normal[optionsAnchor].position
+		option.rotation_degrees = optionSpawnPositions.normal[optionsAnchor].rotation_degrees
+		return
+	
+	var lastOption:DialogueOption = loadedOptions[-2]
+	var offsetMultiplier:float = 1.001
+	if optionsAnchor == OPTIONS_ANCHOR.bottomLeft or optionsAnchor == OPTIONS_ANCHOR.bottomRight:
+		offsetMultiplier *= -1
+	
+	option.position = lastOption.position + Vector3(0, -lastOption.labelHeight * offsetMultiplier, 0)
+	option.rotation_degrees = lastOption.rotation_degrees
 
-	# nextID is what NPC expects to load next json; empty string ends
-	option.nextDialogue = str(data.get("nextID", ""))
-
-	# Spawn delay default 0 if missing
-	option.spawnDelay = float(data.get("spawnDelay", 0.0))
-
+func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
+	setOptionPosition(instance)
+	
+	match optionsAnchor:
+		OPTIONS_ANCHOR.topLeft:
+			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.right
+			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.top
+		OPTIONS_ANCHOR.topRight:
+			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.left
+			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.top
+		OPTIONS_ANCHOR.bottomLeft:
+			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.right
+			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.bottom
+		OPTIONS_ANCHOR.bottomRight:
+			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.left
+			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.bottom
+	
+	# TODO:  apply this aspect properly
 	# Optional: if your DialogueOption supports lifetime
 	if option.has_method("set_lifetime") and data.has("lifetime"):
 		option.set_lifetime(float(data.get("lifetime", -1.0)))
 	elif "lifetime" in option:
 		# If lifetime is a property, this will work too
 		option.lifetime = float(data.get("lifetime", -1.0))
-
-	option.connect("option_picked", Callable(self, "_onOptionPicked"))
-	option.spawn()
-
+	
+	#instance.name = data.text
+	instance.text = data.text
+	instance.nextDialogue = data.nextID
+	instance.connect("option_picked", _onOptionPicked)
+	
 func kill() -> void:
 	queue_free()
 

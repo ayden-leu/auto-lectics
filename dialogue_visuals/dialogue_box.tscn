@@ -9,6 +9,7 @@ size = Vector3(0.14, 2.42, 2.075)
 
 [node name="DialogueBox" type="Node3D"]
 script = ExtResource("1_xrnu6")
+optionsAnchor = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_ilnc5")
@@ -23,14 +24,22 @@ width = 400.0
 
 [node name="OptionPositions" type="Node3D" parent="."]
 
-[node name="1" type="Marker3D" parent="OptionPositions"]
-transform = Transform3D(0.9349682, 0, 0.35473162, 0, 1, 0, -0.35473162, 0, 0.9349682, 0, 1.4997917, 2.3156834)
+[node name="Normal" type="Node3D" parent="OptionPositions"]
+
+[node name="TopLeft" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0, 1.21, 1.163)
 metadata/_edit_group_ = true
 
-[node name="2" type="Marker3D" parent="OptionPositions"]
-transform = Transform3D(0.9349682, 0, 0.35473162, 0, 1, 0, -0.35473162, 0, 0.9349682, 0.23440003, 0.38438928, 2.7309422)
+[node name="TopRight" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0, 1.21, -1.163)
 metadata/_edit_group_ = true
 
-[node name="3" type="Marker3D" parent="OptionPositions"]
-transform = Transform3D(0.97552687, 0, -0.21988025, 0, 1, 0, 0.21988025, 0, 0.97552687, -0.23674092, 1.5993555, -1.153683)
+[node name="BottomLeft" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0, -1.205454, 1.163)
 metadata/_edit_group_ = true
+
+[node name="BottomRight" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0, -1.205454, -1.163)
+metadata/_edit_group_ = true
+
+[node name="OptionsContainer" type="Node3D" parent="."]
