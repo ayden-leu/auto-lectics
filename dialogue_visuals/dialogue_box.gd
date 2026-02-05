@@ -63,7 +63,7 @@ func createOptions() -> void:
 	for optionObjectData in optionData:
 		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0)
 		if spawnDelay > 0:
-			await get_tree().create_timer(optionObjectData.spawnDelay).timeout
+			await get_tree().create_timer(spawnDelay).timeout
 		prevDelay += spawnDelay
 		
 		var newOption:DialogueOption = spawnOption()

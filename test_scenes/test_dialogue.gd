@@ -34,16 +34,19 @@ var normalDialogue:Array[Dictionary] = [
 	{
 		"id": 1,
 		"initial": "oh thanks",
+		"mode": "normal",
 		"options": []
 	},
 	{
 		"id": 2,
 		"initial": "what? weirdo",
+		"mode": "normal",
 		"options": []
 	},
 	{
 		"id": 3,
 		"initial": "ah no problem",
+		"mode": "normal",
 		"options": []
 	}
 ]

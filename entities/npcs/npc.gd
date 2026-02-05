@@ -17,7 +17,7 @@ var dialogue:Array[Dictionary] = [
 			{
 				"text": "your shirt looks cool",
 				"type": "good",
-				"spawnDelay": 3.0,
+				"spawnDelay": 2.5,
 				"nextID": 1,
 			},
 			{
@@ -54,7 +54,7 @@ var dialogue:Array[Dictionary] = [
 	}
 ]
 
-var delayStartShowingOptions:float = 1.0
+var delayStartShowingOptions:float = 1.5
 
 func _ready() -> void:
 	pass
