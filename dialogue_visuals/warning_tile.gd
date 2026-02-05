@@ -52,6 +52,9 @@ func shake() -> void:
 	background.position.x = offsetX * radius/0.6
 	background.position.y = offsetY * radius/0.6
 
+func kill() -> void:
+	queue_free()
+
 
 func _on_shake_timer_timeout() -> void:
 	shake()

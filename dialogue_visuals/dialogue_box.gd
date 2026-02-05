@@ -9,6 +9,11 @@ enum OPTIONS_ANCHOR {
 	bottomLeft = 2,
 	bottomRight = 3
 }
+enum HECTIC_SECTION {
+	left = 0,
+	right = 1,
+	top = 2
+}
 
 @export var optionsAnchor:OPTIONS_ANCHOR = OPTIONS_ANCHOR.topLeft
 
@@ -19,7 +24,8 @@ var text:String = "":
 		myLabel.text = value
 @onready var optionScene:Resource = preload(Globals.SCENES.DialogueOption)
 @onready var optionSpawnPositions = {
-	"normal": $OptionPositions/Normal.get_children()
+	"normal": $OptionPositions/Normal.get_children(),
+	"hecticSections": $OptionPositions/Hectic.get_children()
 }
 @onready var optionContainer = $OptionsContainer
 @onready var warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
@@ -31,6 +37,7 @@ var optionData:Array = []
 var loadedOptions:Array = []
 var mode:String = "normal"
 var numWarnings:int = 6
+var spawnedWarningTiles:Array = []
 
 func _ready() -> void:
 	$WarningPositionAreas.visible = false
@@ -66,7 +73,7 @@ func spawnOption() -> DialogueOption:
 	loadedOptions.push_back(option)
 	return option
 
-func setOptionPosition(option:DialogueOption) -> void:
+func setOptionPositionNormal(option:DialogueOption) -> void:
 	if loadedOptions.size() == 1:
 		option.position = optionSpawnPositions.normal[optionsAnchor].position
 		option.rotation_degrees = optionSpawnPositions.normal[optionsAnchor].rotation_degrees
@@ -80,22 +87,56 @@ func setOptionPosition(option:DialogueOption) -> void:
 	option.position = lastOption.position + Vector3(0, -lastOption.labelHeight * offsetMultiplier, 0)
 	option.rotation_degrees = lastOption.rotation_degrees
 
-func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
-	setOptionPosition(instance)
-	
+func setOptionAlignmentNormal(option:DialogueOption) -> void:
 	match optionsAnchor:
 		OPTIONS_ANCHOR.topLeft:
-			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.right
-			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.top
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.top
 		OPTIONS_ANCHOR.topRight:
-			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.left
-			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.top
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.top
 		OPTIONS_ANCHOR.bottomLeft:
-			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.right
-			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.bottom
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
 		OPTIONS_ANCHOR.bottomRight:
-			instance.horizontalAlignment = instance.HORIZONTAL_ALIGNMENT.left
-			instance.verticalAlignment = instance.VERTICAL_ALIGNMENT.bottom
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+
+func setOptionPositionHectic(option:DialogueOption, section:HECTIC_SECTION) -> void:
+	# TODO:  maybe pick a position like we do with the warning tiles.
+	var potentialPositions:Array = optionSpawnPositions.hecticSections[section].get_children()
+	var newPosition:Marker3D = potentialPositions.pick_random()
+	
+	option.position = newPosition.position
+	option.rotation_degrees = newPosition.rotation_degrees
+	
+	# TODO:  maybe figuree out a better way of removing a position from being chosen
+	newPosition.queue_free()
+
+func setOptionAlignmentHectic(option:DialogueOption, section:HECTIC_SECTION) -> void:
+	match section:
+		HECTIC_SECTION.left:
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
+		HECTIC_SECTION.right:
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
+		HECTIC_SECTION.top:
+			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.center
+			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+
+func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
+	if mode == "normal":
+		setOptionPositionNormal(instance)
+		setOptionAlignmentNormal(instance)
+	elif mode == "hectic":
+		# TODO:  remove section opposite of options anchor so we don't overlap with NPCs
+		#		 maybe just check for collision instead of relying on areas?
+		#			would require spawning option in annd setting visible to check for collisions
+		rng.randomize()
+		var chosenSection:HECTIC_SECTION = rng.randi_range(0, HECTIC_SECTION.size()-1) as HECTIC_SECTION
+		setOptionPositionHectic(instance, chosenSection)
+		setOptionAlignmentHectic(instance, chosenSection)
 	
 	# TODO:  apply this aspect properly
 	# Optional: if your DialogueOption supports lifetime
@@ -116,13 +157,14 @@ func spawnWarnings(amount:int) -> void:
 		
 		var warningTile:WarningTile = warningTileScene.instantiate()
 		warningsContainer.add_child(warningTile)
+		spawnedWarningTiles.push_back(warningTile)
+		
 		warningTile.position = spawnLocation
 		warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
 		warningTile.connect("blocking_visual", _on_warning_tile_overlap)
 
 func getWarningTilePosition() -> Vector3:
 	# TODO:  round robin pick the areas instead
-	# TODO:  reuse areas for positioning the options too
 	rng.randomize()
 	var chosenArea:MeshInstance3D = warningAreas[rng.randi_range(0,2)]
 	
@@ -142,6 +184,11 @@ func kill() -> void:
 func _onOptionPicked(data) -> void:
 	for _i in range(loadedOptions.size()):
 		var toKill:DialogueOption = loadedOptions.pop_front()
+		toKill.kill()
+	
+	# TODO:  maybe create a small script for wa
+	for _i in range(spawnedWarningTiles.size()):
+		var toKill:WarningTile = spawnedWarningTiles.pop_front()
 		toKill.kill()
 		
 	emit_signal("update_me", data)

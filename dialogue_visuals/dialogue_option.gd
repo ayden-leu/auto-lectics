@@ -22,6 +22,7 @@ enum VERTICAL_ALIGNMENT{
 
 @onready var label:Label3D = $TextLabel
 @onready var hitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
+@onready var visualArea:CollisionShape3D = $InteractionHitbox/CollisionShape3D/VisualArea/CollisionShape3D
 @onready var background:MeshInstance3D = $Background
 
 var hitboxPadding:float = 0.05
@@ -123,6 +124,8 @@ func applyBackgroundSettingsAy() -> void:
 	hitbox.shape.size = background.mesh.size + Vector3.ONE * hitboxPadding
 	hitbox.position.y = background.position.y
 	hitbox.position.z = background.position.z
+	
+	visualArea.shape.size = hitbox.shape.size
 	
 	labelHeight = hitbox.shape.size.y
 
