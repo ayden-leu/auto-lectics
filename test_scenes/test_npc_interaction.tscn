@@ -22,12 +22,12 @@ size = Vector3(73.19116, 0.19360352, 20.08374)
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
-[sub_resource type="Sky" id="Sky_bmedq"]
+[sub_resource type="Sky" id="Sky_aue1p"]
 sky_material = SubResource("ProceduralSkyMaterial_8vs5r")
 
 [sub_resource type="Environment" id="Environment_f1udx"]
 background_mode = 2
-sky = SubResource("Sky_bmedq")
+sky = SubResource("Sky_aue1p")
 tonemap_mode = 2
 glow_enabled = true
 
