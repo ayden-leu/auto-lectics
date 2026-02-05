@@ -12,6 +12,7 @@ var dialogue:Array[Dictionary] = [
 	{
 		"id": 0,
 		"initial": "who are you.  why are you interacting with me...",
+		"mode": "normal",
 		"options": [
 			{
 				"text": "your shirt looks cool",
@@ -36,16 +37,19 @@ var dialogue:Array[Dictionary] = [
 	{
 		"id": 1,
 		"initial": "oh thanks",
+		"mode": "normal",
 		"options": []
 	},
 	{
 		"id": 2,
 		"initial": "what? weirdo",
+		"mode": "normal",
 		"options": []
 	},
 	{
 		"id": 3,
 		"initial": "ah no problem",
+		"mode": "normal",
 		"options": []
 	}
 ]

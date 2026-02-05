@@ -77,16 +77,19 @@ var hecticDialogue:Array[Dictionary] = [
 	{
 		"id": 1,
 		"initial": "correct!",
+		"mode": "hectic",
 		"options": []
 	},
 	{
 		"id": 2,
 		"initial": "no",
+		"mode": "hectic",
 		"options": []
 	},
 	{
 		"id": 3,
 		"initial": "yea i guess",
+		"mode": "hectic",
 		"options": []
 	}
 ]
