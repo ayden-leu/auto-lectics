@@ -3,22 +3,19 @@ class_name NPC
 
 @onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
 @onready var dialogueBoxAnchor: Marker3D = $DialogueBoxAnchor
+
+## Valid dialogue entries can be found in `dialogue_objects`
+@export var initialDialogueID: String = "Dialogue1a"
+@export var myName:String = "NPC_Test"
+
 var dialogueBox: DialogueBox = null
 var isTalking: bool = false
-
-# --- NEW: JSON dialogue setup ---
-@export var dialogue_folder: String = "res://dialogue_objects/NPC_Test/"
-@export var starting_dialogue_id: String = "Dialogue1a" # e.g. "Dialogue1a"
-
-# Optional: if you still want "idleDialogueIndex" behaviour, you can swap starting_dialogue_id at runtime
-var current_dialogue_id: String = ""
-
+var currentDialogueID: String = ""
 var delayStartShowingOptions: float = 1.0
-
 var loader := DialogueLoader.new()
 
 func _ready() -> void:
-	current_dialogue_id = starting_dialogue_id
+	currentDialogueID = initialDialogueID
 
 func _process(_delta: float) -> void:
 	pass
@@ -36,11 +33,8 @@ func spawnDialogue() -> void:
 
 	dialogueBoxAnchor.add_child(dialogueBox)
 
-func _dialogue_path_from_id(id: String) -> String:
-	return dialogue_folder + id + ".json"
-
 func _load_dialogue_node(id: String) -> Dictionary:
-	var path := _dialogue_path_from_id(id)
+	var path:String = Globals.getDialoguePath(myName, id)
 	var dlg := loader.load_dialogue_node_file(path)
 	if dlg.is_empty():
 		push_warning("NPC: Failed to load dialogue id '%s' at '%s'" % [id, path])
@@ -78,9 +72,9 @@ func loadNextDialogue(next_id: Variant) -> void:
 		_end_dialogue()
 		return
 
-	current_dialogue_id = id_str
+	currentDialogueID = id_str
 
-	var dlg := _load_dialogue_node(current_dialogue_id)
+	var dlg := _load_dialogue_node(currentDialogueID)
 	if dlg.is_empty():
 		_end_dialogue()
 		return
@@ -109,5 +103,5 @@ func _onInteraction() -> void:
 	isTalking = true
 	spawnDialogue()
 
-	# Start at starting_dialogue_id
-	loadNextDialogue(starting_dialogue_id)
+	# Start at initialDialogueID
+	loadNextDialogue(initialDialogueID)

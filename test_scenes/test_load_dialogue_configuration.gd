@@ -3,13 +3,14 @@ extends Node3D
 # TODO:  go through DialogueLoader and clean up the code
 
 @export var dialogueID:String = "Dialogue1a"
+@export var npcName:String = "NPC_Test"
 
 func _ready() -> void:
 	var loader := DialogueLoader.new()
 	var dialogue := loader.load_dialogue_node_file(
-		Globals.DIALOGUE.storageLocation + dialogueID + Globals.DIALOGUE.fileType
+		Globals.getDialoguePath(npcName, dialogueID)
 	)
-
+	
 	print("--- DIALOGUE ---")
 	print("text: ", dialogue.get("text"))
 	print("type: ", dialogue.get("type"))

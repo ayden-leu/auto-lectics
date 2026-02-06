@@ -12,6 +12,9 @@ const SCENES = {
 }
 
 const DIALOGUE = {
-	"storageLocation": "res://dialogue_objects/NPC_Test/",
+	"storageLocation": "res://dialogue_objects/",
 	"fileType": ".json"
 }
+
+func getDialoguePath(entityName:String, id:String) -> String:
+	return DIALOGUE.storageLocation + entityName + "/" + id + DIALOGUE.fileType
