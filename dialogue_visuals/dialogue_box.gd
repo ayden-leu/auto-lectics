@@ -158,11 +158,11 @@ func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
 	
 	# TODO:  apply this aspect properly
 	# Optional: if your DialogueOption supports lifetime
-	if option.has_method("set_lifetime") and data.has("lifetime"):
-		option.set_lifetime(float(data.get("lifetime", -1.0)))
-	elif "lifetime" in option:
+	if instance.has_method("set_lifetime") and data.has("lifetime"):
+		instance.set_lifetime(float(data.get("lifetime", -1.0)))
+	elif "lifetime" in instance:
 		# If lifetime is a property, this will work too
-		option.lifetime = float(data.get("lifetime", -1.0))
+		instance.lifetime = float(data.get("lifetime", -1.0))
 	
 	#instance.name = data.text
 	instance.text = data.text
@@ -229,4 +229,4 @@ func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 	warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
 
 func _on_timer_bar_timeout() -> void:
-	_on_option_picked(10)  # TODO:  switch 10 to "failure"
+	_on_option_picked("failure")
