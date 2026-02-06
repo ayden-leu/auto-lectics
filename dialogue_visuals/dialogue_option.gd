@@ -13,7 +13,7 @@ var text:String = "":
 		text = value
 		label.text = value
 var spawnDelay:float = 0.0
-var nextDialogue:int = -1
+var nextDialogue:String
 
 func _ready() -> void:
 	visible = false

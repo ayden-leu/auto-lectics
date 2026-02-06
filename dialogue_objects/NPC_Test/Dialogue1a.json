@@ -44,7 +44,7 @@
 					"texture": "none"
 				}
 			},
-			"spawnDelay": -1,
+			"spawnDelay": 0.5,
 			"lifetime": -1,
 			"nextID": "Dialogue2"
 		},
@@ -70,7 +70,7 @@
 					"texture": "none"
 				}
 			},
-			"spawnDelay": -1,
+			"spawnDelay": 1,
 			"lifetime": -1,
 			"nextID": "Dialogue3"
 		},
@@ -96,7 +96,7 @@
 					"texture": "none"
 				}
 			},
-			"spawnDelay": -1,
+			"spawnDelay": 0,
 			"lifetime": -1,
 			"nextID": "Dialogue4"
 		}

@@ -1,61 +1,21 @@
 extends Node3D
 class_name NPC
 
-@onready var dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
-@onready var dialogueBoxAnchor:Marker3D = $DialogueBoxAnchor
-var dialogueBox:DialogueBox = null
-var isTalking:bool = false
+@onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
+@onready var dialogueBoxAnchor: Marker3D = $DialogueBoxAnchor
 
-var idleDialogueIndex:int = 0
+## Valid dialogue entries can be found in `dialogue_objects`
+@export var initialDialogueID: String = "Dialogue1a"
+@export var myName:String = "NPC_Test"
 
-var dialogue:Array[Dictionary] = [
-	{
-		"id": 0,
-		"initial": "who are you.  why are you interacting with me...",
-		"options": [
-			{
-				"text": "your shirt looks cool",
-				"type": "good",
-				"spawnDelay": 3.0,
-				"nextID": 1,
-			},
-			{
-				"text": "where are you library?",
-				"type": "bad",
-				"spawnDelay": 0.5,
-				"nextID": 2
-			},
-			{
-				"text": "oh sorry, i thought you were someone else",
-				"type": "neutral",
-				"spawnDelay": 1.0,
-				"nextID": 3
-			}
-		]
-	},
-	{
-		"id": 1,
-		"initial": "oh thanks",
-		"options": []
-	},
-	{
-		"id": 2,
-		"initial": "what? weirdo",
-		"options": []
-	},
-	{
-		"id": 3,
-		"initial": "ah no problem",
-		"options": []
-	}
-]
-
-var delayStartShowingOptions:float = 1.0
-
-var dummyCounter:int = 0
+var dialogueBox: DialogueBox = null
+var isTalking: bool = false
+var currentDialogueID: String = ""
+var delayStartShowingOptions: float = 1.0
+var loader := DialogueLoader.new()
 
 func _ready() -> void:
-	pass
+	currentDialogueID = initialDialogueID
 
 func _process(_delta: float) -> void:
 	pass
@@ -63,31 +23,55 @@ func _process(_delta: float) -> void:
 func spawnDialogue() -> void:
 	if dialogueBox != null:
 		return
-	
-	dialogueBox = dialogueBoxScene.instantiate()
-	dialogueBox.connect("update_me", loadNextDialogue)
-	dialogueBoxAnchor.add_child(dialogueBox)
-	
-func loadData(dialogueEntry:Dictionary) -> void:
-	dialogueBox.text = dialogueEntry.initial
-	dialogueBox.optionData = dialogueEntry.options
 
-func loadNextDialogue(data) -> void:
-	loadData(dialogue[data])
+	dialogueBox = dialogueBoxScene.instantiate()
 	
+	# TODO:  verify this note
+	# IMPORTANT CHANGE:
+	# DialogueBox should emit "update_me" with the option's nextID (String),
+	# not an array index. If it currently emits an int, update DialogueBox (see below).
+	dialogueBox.connect("update_me", loadNextDialogue)
+
+	dialogueBoxAnchor.add_child(dialogueBox)
+
+func loadData(dialogueData: Dictionary) -> void:
+	dialogueBox.text = dialogueData.text
+	dialogueBox.optionData = dialogueData.options
+
+func loadNextDialogue(nextDialogueID: String) -> void:
+	# TODO:  maybe remove this part
+	if nextDialogueID == "":
+		_end_dialogue()
+		return
+
+	currentDialogueID = nextDialogueID
+	var dialogue := Globals.loadDialogueNode(myName, currentDialogueID)
+	# this never ran
+	#if dlg.is_empty():
+		#_end_dialogue()
+		#return
+	loadData(dialogue)
+
 	await get_tree().create_timer(delayStartShowingOptions).timeout
-	
-	if dialogue[data].options.size() == 0:
-		dialogueBox.kill()
-		isTalking = false
+ 
+	if dialogue.options.size() == 0:
+		_end_dialogue()
 		return
 
 	dialogueBox.createOptions()
 
+func _end_dialogue() -> void:
+	if dialogueBox != null:
+		dialogueBox.kill()
+		dialogueBox = null
+	isTalking = false
+
 func _onInteraction() -> void:
 	if isTalking:
 		return
-	
+
 	isTalking = true
 	spawnDialogue()
-	loadNextDialogue(idleDialogueIndex)
+
+	# Start at initialDialogueID
+	loadNextDialogue(initialDialogueID)
