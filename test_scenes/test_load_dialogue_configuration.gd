@@ -7,7 +7,6 @@ extends Node3D
 func _ready() -> void:
 	var loader := DialogueLoader.new()
 	var dlg := loader.load_dialogue_node_file(dialogue_json_path)
-	var database := DialogueDB.new()
 
 	print("--- DIALOGUE ---")
 	print("text:", dlg.get("text"))
