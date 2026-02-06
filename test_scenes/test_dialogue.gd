@@ -2,8 +2,12 @@ extends Node3D
 
 var counter:int = 0
 var mode:String = "normal"
+var canChooseOption:bool = false
 
 # TODO:  update dummy dialogue to fit new format
+# TODO:  add new fields:
+#			hectic mode duration
+#			nextID for when you fail hectic mode
 
 var normalDialogue:Array[Dictionary] = [
 	{
@@ -54,7 +58,7 @@ var normalDialogue:Array[Dictionary] = [
 var hecticDialogue:Array[Dictionary] = [
 	{
 		"id": 0,
-		"initial": "you got 3 seconds to respond pal",
+		"initial": "you got 5 seconds to respond pal",
 		"mode": "hectic",
 		"options": [
 			{
@@ -80,19 +84,25 @@ var hecticDialogue:Array[Dictionary] = [
 	{
 		"id": 1,
 		"initial": "correct!",
-		"mode": "hectic",
+		"mode": "normal",
 		"options": []
 	},
 	{
 		"id": 2,
-		"initial": "no",
-		"mode": "hectic",
+		"initial": "wrong answer",
+		"mode": "normal",
 		"options": []
 	},
 	{
 		"id": 3,
 		"initial": "yea i guess",
-		"mode": "hectic",
+		"mode": "normal",
+		"options": []
+	},
+	{
+		"id": 10,  # TODO:  make these dummy entries use strings.  make fail dialogue id "failure"
+		"initial": "you failed",
+		"mode": "normal",
 		"options": []
 	}
 ]
@@ -107,11 +117,15 @@ func _input(_event: InputEvent) -> void:
 		match counter:
 			0:
 				$NPC_Test.loadMyDialogueTree(dialogueToLoad)
-				$NPC_Test._onInteraction()
+				$NPC_Test._on_interaction()
 				counter = 1
 			1:
+				if not canChooseOption:
+					return
+				canChooseOption = true
+					
 				$NPC_Test.dialogueBox.loadedOptions[0]._onInteraction()
-				counter = 0
+				counter = 2
 	
 	if Input.is_action_just_pressed("debug_2"):
 		match mode:
@@ -125,3 +139,10 @@ func _input(_event: InputEvent) -> void:
 
 func updateLabel(prefix:String = "", content:String = "", suffix:String = "") -> void:
 	$Control/Label.text = prefix + content + suffix
+
+
+func _on_npc_test_finished_dialogue() -> void:
+	counter = 0
+
+func _on_npc_test_options_available() -> void:
+	canChooseOption = true

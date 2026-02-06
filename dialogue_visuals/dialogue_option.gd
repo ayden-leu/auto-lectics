@@ -133,5 +133,5 @@ func kill():
 	goingToDie = true
 	queue_free()
 
-func _onInteraction() -> void:
+func _on_interaction() -> void:
 	emit_signal("option_picked", nextDialogue)

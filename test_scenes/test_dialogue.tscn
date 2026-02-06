@@ -64,3 +64,6 @@ offset_right = 226.0
 offset_bottom = 79.0
 text = "test"
 label_settings = SubResource("LabelSettings_ic3ec")
+
+[connection signal="finished_dialogue" from="NPC_Test" to="." method="_on_npc_test_finished_dialogue"]
+[connection signal="options_available" from="NPC_Test" to="." method="_on_npc_test_options_available"]

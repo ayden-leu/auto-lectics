@@ -1,6 +1,9 @@
 extends Node3D
 class_name NPC
 
+signal options_available
+signal finished_dialogue
+
 @onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
 @onready var dialogueBoxAnchor: Marker3D = $DialogueBoxAnchor
 
@@ -26,13 +29,16 @@ func spawnDialogue() -> void:
 	
 	dialogueBox = dialogueBoxScene.instantiate()
 	dialogueBox.connect("update_me", loadNextDialogue)
+	dialogueBox.connect("new_option_available", _on_dialogue_box_new_options_spawned)
+	#dialogueBox.connect("all_options_spawned", _on_dialogue_box_all_options_spawned)
 	dialogueBoxAnchor.add_child(dialogueBox)
 
 # TODO:  update to match new dialogue format
 func loadMyDialogueTree(tree:Array) -> void:
-	dialogue = tree
+	currentDialogue = tree
 
 func loadData(dialogueEntry:Dictionary) -> void:
+	dialogueBox.currentDialogueID = dialogueEntry.id
 	dialogueBox.mode = dialogueEntry.mode
 	dialogueBox.text = dialogueEntry.initial
 	dialogueBox.loadOptionData(dialogueEntry.options)
@@ -40,7 +46,12 @@ func loadData(dialogueEntry:Dictionary) -> void:
 
 # TODO:  update to match new dialogue format
 func loadNextDialogue(id:int) -> void:
-	loadData(dialogue[id])
+	var entryToLoad:Dictionary
+	for entry in currentDialogue:
+		if entry.id == id:
+			entryToLoad = entry
+			break
+	loadData(entryToLoad)
 	
 	# TODO:  verify this note
 	# IMPORTANT CHANGE:
@@ -91,3 +102,9 @@ func _onInteraction() -> void:
 
 	# Start at initialDialogueID
 	loadNextDialogue(initialDialogueID)
+
+func _on_dialogue_box_new_options_spawned() -> void:
+	options_available.emit()
+
+#func _on_dialogue_box_all_options_spawned() -> void:
+	#options_available.emit()
