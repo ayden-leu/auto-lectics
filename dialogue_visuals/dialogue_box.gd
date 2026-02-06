@@ -5,6 +5,8 @@ class_name DialogueBox
 # TODO:  adjust size of dialogue box dynamically
 
 signal update_me
+signal new_option_available
+signal all_options_spawned
 
 enum OPTIONS_ANCHOR {
 	topLeft = 0,
@@ -33,9 +35,11 @@ var text:String = "":
 @onready var optionContainer = $OptionsContainer
 @onready var warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 @onready var warningAreas:Array = $WarningPositionAreas.get_children()
-@onready var warningsContainer = $WarningsContainer
+@onready var warningsContainer:Node3D = $WarningsContainer
+@onready var timer:TimerBar = $Timer
 
 var rng:RandomNumberGenerator = RandomNumberGenerator.new()
+var currentDialogueID
 var optionData:Array = []
 var loadedOptions:Array = []
 var mode:String = "normal"
@@ -57,18 +61,29 @@ func prepare() -> void:
 	
 	if mode == "hectic":
 		spawnWarnings(numWarnings)
+		timer.duration = 5.0  # TODO:  make this customizable
+		timer.start()
 
 func createOptions() -> void:
+	var loadingDialogueID
+	
 	var prevDelay:float = 0.0
 	for optionObjectData in optionData:
+		loadingDialogueID = currentDialogueID
+		
 		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0)
 		if spawnDelay > 0:
 			await get_tree().create_timer(spawnDelay).timeout
+			if loadingDialogueID != currentDialogueID:
+				return
 		prevDelay += spawnDelay
 		
 		var newOption:DialogueOption = spawnOption()
 		configureOptionInstance(newOption, optionObjectData)
 		newOption.spawn()
+		new_option_available.emit()
+	
+	all_options_spawned.emit()
 
 func spawnOption() -> DialogueOption:
 	var option:DialogueOption = optionScene.instantiate()
@@ -144,7 +159,7 @@ func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
 	#instance.name = data.text
 	instance.text = data.text
 	instance.nextDialogue = data.nextID
-	instance.connect("option_picked", _onOptionPicked)
+	instance.connect("option_picked", _on_option_picked)
 
 func spawnWarnings(amount:int) -> void:
 	for _i in range(amount):
@@ -176,7 +191,7 @@ func kill() -> void:
 
 
 
-func _onOptionPicked(data) -> void:
+func _on_option_picked(data) -> void:
 	for _i in range(loadedOptions.size()):
 		var toKill:DialogueOption = loadedOptions.pop_front()
 		toKill.kill()
@@ -185,8 +200,9 @@ func _onOptionPicked(data) -> void:
 	for _i in range(spawnedWarningTiles.size()):
 		var toKill:WarningTile = spawnedWarningTiles.pop_front()
 		toKill.kill()
-		
-	emit_signal("update_me", data)
+	
+	timer.stop()
+	update_me.emit(data)
 
 func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 	# TODO:  move warning tile up and left/right instead of random position in area
@@ -195,7 +211,14 @@ func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 	
 	rng.randomize()
 	var delay:float = rng.randf_range(0.0, 1.0)
+	
 	await get_tree().create_timer(delay).timeout
+	if not warningTile:
+		return
+	
 	warningTile.position = getWarningTilePosition()
 	warningTile.numTimesRepositioned += 1
 	warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
+
+func _on_timer_bar_timeout() -> void:
+	_on_option_picked(10)  # TODO:  switch 10 to "failure"
