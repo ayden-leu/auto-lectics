@@ -29,16 +29,9 @@ func spawnDialogue() -> void:
 	# IMPORTANT CHANGE:
 	# DialogueBox should emit "update_me" with the option's nextID (String),
 	# not an array index. If it currently emits an int, update DialogueBox (see below).
-	dialogueBox.connect("update_me", Callable(self, "loadNextDialogue"))
+	dialogueBox.connect("update_me", loadNextDialogue)
 
 	dialogueBoxAnchor.add_child(dialogueBox)
-
-func _load_dialogue_node(id: String) -> Dictionary:
-	var path:String = Globals.getDialoguePath(myName, id)
-	var dlg := loader.load_dialogue_node_file(path)
-	if dlg.is_empty():
-		push_warning("NPC: Failed to load dialogue id '%s' at '%s'" % [id, path])
-	return dlg
 
 # Adapter: convert loaded JSON dict into what your DialogueBox expects
 func loadData(dlg: Dictionary) -> void:
@@ -74,10 +67,11 @@ func loadNextDialogue(next_id: Variant) -> void:
 
 	currentDialogueID = id_str
 
-	var dlg := _load_dialogue_node(currentDialogueID)
-	if dlg.is_empty():
-		_end_dialogue()
-		return
+	var dlg := Globals.loadDialogueNode(myName, currentDialogueID)
+	# this never ran
+	#if dlg.is_empty():
+		#_end_dialogue()
+		#return
 
 	loadData(dlg)
 
