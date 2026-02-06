@@ -10,3 +10,8 @@ const SCENES = {
 	"DialogueBox": "uid://dwqide2q2tp3i",
 	"DialogueOption": "uid://pdwngeenin11"
 }
+
+const DIALOGUE = {
+	"storageLocation": "res://dialogue_objects/NPC_Test/",
+	"fileType": ".json"
+}

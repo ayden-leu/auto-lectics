@@ -1,15 +1,13 @@
 extends Node3D
 
-# TODO:  test the functions implemented in dialogue_db.gd
+# TODO:  go through DialogueLoader and clean up the code
 
 @export var dialogueID:String = "Dialogue1a"
-var dialogueStorageLocation:String = "res://dialogue_objects/NPC_Test/"
-var dialogueFileType:String = ".json"
 
 func _ready() -> void:
 	var loader := DialogueLoader.new()
 	var dialogue := loader.load_dialogue_node_file(
-		dialogueStorageLocation + dialogueID + dialogueFileType
+		Globals.DIALOGUE.storageLocation + dialogueID + Globals.DIALOGUE.fileType
 	)
 
 	print("--- DIALOGUE ---")
