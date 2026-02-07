@@ -20,7 +20,8 @@ signal finished_dialogue
 ## All dialogues belonging to this NPC will be under "dialogue_objects/[NPC name]"
 @export var initialDialogueID: String = ""
 
-@onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
+## Holds a reference to the dialogue box resource.
+const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 
 ## Holds a reference to this NPC's dialogue box scene.
 var dialogueBox:DialogueBox = null
