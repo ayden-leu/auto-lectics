@@ -2,7 +2,7 @@ extends Node3D
 class_name NPC
 
 signal options_available
-signal finished_dialogue
+#signal finished_dialogue
 
 @onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
 @onready var dialogueBoxAnchor: Marker3D = $DialogueBoxAnchor

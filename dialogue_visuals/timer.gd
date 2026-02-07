@@ -25,8 +25,8 @@ func _ready() -> void:
 	# makes sure not to run code if in editor
 	if Engine.is_editor_hint():
 		return
-	
-	visible = false
+	else:
+		visible = false
 
 func _process(delta: float) -> void:
 	updateBar()

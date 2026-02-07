@@ -2,7 +2,7 @@
 	"text": "who are you.  why are you interacting with me...",
 	"font": "default",
 	"type": "neutral",
-	"mode": "normal",
+	"mode": "hectic",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 20.0,
 	"sfx": {

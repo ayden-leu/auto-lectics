@@ -180,7 +180,5 @@ metadata/_edit_group_ = true
 
 [node name="Timer" parent="." instance=ExtResource("4_44dxv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2821603, 0)
-visible = true
-shouldCountdown = false
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_bar_timeout"]
