@@ -1,6 +1,9 @@
 extends Node3D
 class_name NPC
 
+signal options_available
+#signal finished_dialogue
+
 @onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
 @onready var dialogueBoxAnchor: Marker3D = $DialogueBoxAnchor
 
@@ -23,7 +26,7 @@ func _process(_delta: float) -> void:
 func spawnDialogue() -> void:
 	if dialogueBox != null:
 		return
-
+	
 	dialogueBox = dialogueBoxScene.instantiate()
 	
 	# TODO:  verify this note
@@ -31,12 +34,21 @@ func spawnDialogue() -> void:
 	# DialogueBox should emit "update_me" with the option's nextID (String),
 	# not an array index. If it currently emits an int, update DialogueBox (see below).
 	dialogueBox.connect("update_me", loadNextDialogue)
-
+	
+	dialogueBox.connect("new_option_available", _on_dialogue_box_new_options_spawned)
+	#dialogueBox.connect("all_options_spawned", _on_dialogue_box_all_options_spawned)
 	dialogueBoxAnchor.add_child(dialogueBox)
 
-func loadData(dialogueData: Dictionary) -> void:
-	dialogueBox.text = dialogueData.text
-	dialogueBox.optionData = dialogueData.options
+# TODO:  update to match new dialogue format
+#func loadMyDialogueTree(tree:Array) -> void:
+	#currentDialogue = tree
+
+func loadData(dialogueID:String, dialogueEntry:Dictionary) -> void:
+	dialogueBox.currentDialogueID = dialogueID
+	dialogueBox.mode = dialogueEntry.mode
+	dialogueBox.text = dialogueEntry.text
+	dialogueBox.loadOptionData(dialogueEntry.options)
+	dialogueBox.prepare()
 
 func loadNextDialogue(nextDialogueID: String) -> void:
 	# TODO:  maybe remove this part
@@ -50,7 +62,7 @@ func loadNextDialogue(nextDialogueID: String) -> void:
 	#if dlg.is_empty():
 		#_end_dialogue()
 		#return
-	loadData(dialogue)
+	loadData(nextDialogueID, dialogue)
 
 	await get_tree().create_timer(delayStartShowingOptions).timeout
  
@@ -66,7 +78,7 @@ func _end_dialogue() -> void:
 		dialogueBox = null
 	isTalking = false
 
-func _onInteraction() -> void:
+func _on_interaction() -> void:
 	if isTalking:
 		return
 
@@ -75,3 +87,9 @@ func _onInteraction() -> void:
 
 	# Start at initialDialogueID
 	loadNextDialogue(initialDialogueID)
+
+func _on_dialogue_box_new_options_spawned() -> void:
+	options_available.emit()
+
+#func _on_dialogue_box_all_options_spawned() -> void:
+	#options_available.emit()

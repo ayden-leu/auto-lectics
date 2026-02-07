@@ -1,0 +1,104 @@
+{
+	"text": "who are you.  why are you interacting with me...",
+	"font": "default",
+	"type": "neutral",
+	"mode": "hectic",
+	"writeSpeed": "medium",
+	"writeSpeedCustom": 20.0,
+	"sfx": {
+		"spawn": "none",
+		"text": "default"
+	},
+	"backgroundTheme": "default",
+	"particles": {
+		"spawn": {
+			"texture": "none"
+		},
+		"text": {
+			"texture": "none"
+		},
+		"ambient": {
+			"texture": "none"
+		}
+	},
+	"options": [
+		{
+			"text": "your shirt looks cool",
+			"font": "inherit",
+			"type": "positive",
+			"writeSpeed": "inherit",
+			"writeSpeedCustom": -1,
+			"sfx": {
+				"spawn": "none",
+				"text": "default"
+			},
+			"backgroundTheme": "inherit",
+			"particles": {
+				"spawn": {
+					"texture": "none"
+				},
+				"text": {
+					"texture": "none"
+				},
+				"ambient": {
+					"texture": "none"
+				}
+			},
+			"spawnDelay": 0.5,
+			"lifetime": -1,
+			"nextID": "Dialogue2"
+		},
+		{
+			"text": "where are you library?",
+			"font": "inherit",
+			"type": "negative",
+			"writeSpeed": "inherit",
+			"writeSpeedCustom": -1,
+			"sfx": {
+				"spawn": "none",
+				"text": "default"
+			},
+			"backgroundTheme": "inherit",
+			"particles": {
+				"spawn": {
+					"texture": "none"
+				},
+				"text": {
+					"texture": "none"
+				},
+				"ambient": {
+					"texture": "none"
+				}
+			},
+			"spawnDelay": 1,
+			"lifetime": -1,
+			"nextID": "Dialogue3"
+		},
+		{
+			"text": "oh sorry, i thought you were someone else",
+			"font": "inherit",
+			"type": "neutral",
+			"writeSpeed": "inherit",
+			"writeSpeedCustom": -1,
+			"sfx": {
+				"spawn": "none",
+				"text": "default"
+			},
+			"backgroundTheme": "inherit",
+			"particles": {
+				"spawn": {
+					"texture": "none"
+				},
+				"text": {
+					"texture": "none"
+				},
+				"ambient": {
+					"texture": "none"
+				}
+			},
+			"spawnDelay": 0,
+			"lifetime": -1,
+			"nextID": "Dialogue4"
+		}
+	]
+}

@@ -46,13 +46,16 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
-		if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
-			emit_signal("mouse_moved", event.relative * mouseSentitivity)
+		#if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
+		emit_signal("mouse_moved", event.relative * mouseSentitivity)
 		
 	if Input.is_action_just_pressed("interact"):
 		emit_signal("interact_button_pressed")
 
-
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:

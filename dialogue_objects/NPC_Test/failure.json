@@ -1,0 +1,25 @@
+{
+	"text": "failure",
+	"font": "default",
+	"type": "angry",
+	"mode": "normal",
+	"writeSpeed": "medium",
+	"writeSpeedCustom": 20.0,
+	"sfx": {
+		"spawn": "none",
+		"text": "default"
+	},
+	"backgroundTheme": "default",
+	"particles": {
+		"spawn": {
+			"texture": "none"
+		},
+		"text": {
+			"texture": "none"
+		},
+		"ambient": {
+			"texture": "none"
+		}
+	},
+	"options": []
+}
