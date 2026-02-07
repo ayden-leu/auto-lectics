@@ -72,7 +72,7 @@ func loadData(dialogueEntry:Dictionary) -> void:
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
 	currentDialogueID = nextDialogueID
-	var dialogue:Dictionary = Globals.loadDialogueNode(myName, currentDialogueID)
+	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	loadData(dialogue)
 
 	await get_tree().create_timer(delayStartShowingOptions).timeout
