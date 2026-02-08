@@ -12,6 +12,7 @@ script = ExtResource("1_vefio")
 dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 myName = "NPC_Test"
 initialDialogueID = "Dialogue1a"
+hecticFailureDialogueID = "failure"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

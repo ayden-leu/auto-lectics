@@ -3,6 +3,7 @@
 	"font": "default",
 	"type": "neutral",
 	"mode": "normal",
+	"nextOnHecticFailureID": "",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 20.0,
 	"sfx": {

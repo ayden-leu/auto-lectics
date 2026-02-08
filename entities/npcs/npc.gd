@@ -18,7 +18,9 @@ signal finished_dialogue
 ## The name of the NPC.
 @export var myName:String = ""
 ## All dialogues belonging to this NPC will be under "dialogue_objects/[NPC name]"
-@export var initialDialogueID: String = ""
+@export var initialDialogueID:String = ""
+## The dialogue ID of the dialogue object to load when the player fails a hectic dialogue interaction.
+@export var hecticFailureDialogueID:String = ""
 
 ## Holds a reference to the dialogue box resource.
 const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
@@ -63,8 +65,10 @@ func connectDialogueBoxSignals() -> void:
 	dialogueBox.connect("all_options_available", _on_dialogue_box_all_options_available)
 
 ## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
-func loadData(dialogueEntry:Dictionary) -> void:
+func loadDialogueData(dialogueEntry:Dictionary) -> void:
+	dialogueBox.realOwner = self
 	dialogueBox.currentDialogueID = currentDialogueID
+	dialogueBox.hecticFailureDialogueID = hecticFailureDialogueID
 	dialogueBox.mode = dialogueEntry.mode
 	dialogueBox.text = dialogueEntry.text
 	dialogueBox.loadOptionData(dialogueEntry.options)
@@ -74,8 +78,8 @@ func loadData(dialogueEntry:Dictionary) -> void:
 func loadNextDialogue(nextDialogueID: String) -> void:
 	currentDialogueID = nextDialogueID
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
-	loadData(dialogue)
-
+	loadDialogueData(dialogue)
+	
 	await get_tree().create_timer(delayStartShowingOptions).timeout
  
 	if dialogue.options.size() == 0:
@@ -91,6 +95,7 @@ func endDialogue() -> void:
 		dialogueBox.kill()
 		dialogueBox = null
 	isTalking = false
+	connectedDialogueBoxSignals = false
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
@@ -128,6 +133,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	
 	if initialDialogueID == "":
 		warnings.push_back("The initial dialogue ID is not set.")
+	
+	if hecticFailureDialogueID == "":
+		warnings.push_back("The hectic failure dialogue ID is not set. If you don't plan on ever having the player enter a hectic dialogue with this NPC, you can ignore this. But this may lead to bugs if you later decide to add a hectic dialogue interaction and forget to set this.")
 	
 	if myName == "":
 		warnings.push_back("This NPC doesn't have a name yet.")
