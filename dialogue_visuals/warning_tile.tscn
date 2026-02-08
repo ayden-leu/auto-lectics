@@ -17,7 +17,7 @@ size = Vector3(1.1152344, 2.2163086, 1.2509766)
 script = ExtResource("2_jti8w")
 
 [node name="Background" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -0.011517396, 0.008694978, 0)
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -0.014495317, 0.029779656, 0)
 mesh = SubResource("TubeTrailMesh_ted7g")
 
 [node name="TextLabel" type="Label3D" parent="Background"]

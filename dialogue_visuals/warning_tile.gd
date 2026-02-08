@@ -52,12 +52,18 @@ func shake() -> void:
 	background.position.x = offsetX * radius/0.6
 	background.position.y = offsetY * radius/0.6
 
+func lookAtCamera():
+	look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
+
 func kill() -> void:
 	queue_free()
 
 
 func _on_shake_timer_timeout() -> void:
 	shake()
+	lookAtCamera()
 
 func _on_visual_area_area_entered(_area: Area3D) -> void:
+	# TODO:  maybe add a collision check against everything instead of needing to apply an area to everything?
+	# 			or maybe just make sure it doesn't overlap with dialogue-related visuals?
 	emit_signal("blocking_visual", self)
