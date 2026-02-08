@@ -7,15 +7,15 @@ signal option_picked
 
 ## Used for referencing how the dialogue option should grow horizontally.
 enum HORIZONTAL_ALIGNMENT{
-    left,
-    center,
-    right
+	left,
+	center,
+	right
 }
 ## Used for referencing how the dialogue option should grow vertically.
 enum VERTICAL_ALIGNMENT{
-    top,
-    center,
-    bottom
+	top,
+	center,
+	bottom
 }
 
 ## The thickness of the background for the dialogue option.
@@ -31,9 +31,9 @@ enum VERTICAL_ALIGNMENT{
 @onready var label:Label3D = $TextLabel
 ## Holds the text that displays the current dialogue option. Mainly just used as an easier way to get/set the label text.
 var text:String = "":
-    set(value):
-        text = value
-        label.text = value
+	set(value):
+		text = value
+		label.text = value
 ## Holds a reference to the interaction hitbox.
 @onready var interactionHitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
 ## Holds a reference to the visual area hitbox that's used by warning tiles to make sure they don't cover it.  (might be removed in the future)
@@ -58,112 +58,112 @@ var lifetime:float = 0.0
 var nextDialogueID:String
 
 func _ready() -> void:
-    # Makes sure the code only runs while the game is running
-    if Engine.is_editor_hint():
-        return
-    
-    visible = false
-    
+	# Makes sure the code only runs while the game is running
+	if Engine.is_editor_hint():
+		return
+	
+	visible = false
+	
 func _process(_delta: float) -> void:
-    # Only runs this code while the game is running
-    if Engine.is_editor_hint():
-        applySettings()
+	# Only runs this code while the game is running
+	if Engine.is_editor_hint():
+		applySettings()
 
 ## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
-    await get_tree().create_timer(0.0001).timeout
-    if goingToDie:
-        return
-    
-    applySettings()
-    visible = true
-    interactionHitbox.disabled = false
-    if lifetime > 0:
-        lifeTimer.wait_time = lifetime
-        lifeTimer.start()
+	await get_tree().create_timer(0.0001).timeout
+	if goingToDie:
+		return
+	
+	applySettings()
+	visible = true
+	interactionHitbox.disabled = false
+	if lifetime > 0:
+		lifeTimer.wait_time = lifetime
+		lifeTimer.start()
 
 ## Applies all configured visual settings.
 func applySettings() -> void:
-    applyLabelSettings()
-    applyBackgroundSettings()
+	applyLabelSettings()
+	applyBackgroundSettings()
 
 ## Applies the horizontal and vertical alignment settings of the label.
 func applyLabelSettings() -> void:    
-    match horizontalAlignment:
-        HORIZONTAL_ALIGNMENT.left:
-            label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-            label.position.z = -labelPadding.x/2
-        HORIZONTAL_ALIGNMENT.right:
-            label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-            label.position.z = labelPadding.x/2
-        HORIZONTAL_ALIGNMENT.center:
-            label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-            label.position.z = 0
-        _:
-            printerr("Unhandled horizontal alignment: ", horizontalAlignment)
-    
-    match verticalAlignment:
-        VERTICAL_ALIGNMENT.top:
-            label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-            label.position.y = -labelPadding.y/2
-        VERTICAL_ALIGNMENT.bottom:
-            label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-            label.position.y = labelPadding.y/2
-        VERTICAL_ALIGNMENT.center:
-            label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-            label.position.y = 0
-        _:
-            printerr("Unhandled vertical alignment: ", verticalAlignment)
+	match horizontalAlignment:
+		HORIZONTAL_ALIGNMENT.left:
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			label.position.z = -labelPadding.x/2
+		HORIZONTAL_ALIGNMENT.right:
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			label.position.z = labelPadding.x/2
+		HORIZONTAL_ALIGNMENT.center:
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.position.z = 0
+		_:
+			printerr("DialogueOption: Unhandled horizontal alignment for label: ", horizontalAlignment)
+	
+	match verticalAlignment:
+		VERTICAL_ALIGNMENT.top:
+			label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+			label.position.y = -labelPadding.y/2
+		VERTICAL_ALIGNMENT.bottom:
+			label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+			label.position.y = labelPadding.y/2
+		VERTICAL_ALIGNMENT.center:
+			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			label.position.y = 0
+		_:
+			printerr("DialogueOption: Unhandled vertical alignment for label: ", verticalAlignment)
 
 ## Applies the horizontal and vertical alignment settings of the background.
 func applyBackgroundSettings() -> void:
-    var labelSize:Vector3 = label.get_aabb().size
-    
-    background.mesh.size.x = thickness
-    background.mesh.size.y = labelSize.y + labelPadding.y
-    background.mesh.size.z = labelSize.x + labelPadding.x
-    
-    match horizontalAlignment:
-        HORIZONTAL_ALIGNMENT.left:
-            background.position.z = -labelSize.x/2 + label.position.z
-        HORIZONTAL_ALIGNMENT.right:
-            background.position.z = labelSize.x/2 + label.position.z
-        HORIZONTAL_ALIGNMENT.center:
-            background.position.z = 0
-        _:
-            printerr("Unhandled horizontal alignment: ", horizontalAlignment)
-    
-    match verticalAlignment:
-        VERTICAL_ALIGNMENT.top:
-            #background.mesh.size.y = labelSize.y - label.position.y * 2
-            background.position.y = -labelSize.y/2 + label.position.y
-        VERTICAL_ALIGNMENT.bottom:
-            #background.mesh.size.y = labelSize.y + label.position.y * 2
-            background.position.y = labelSize.y/2 + label.position.y
-        VERTICAL_ALIGNMENT.center:
-            background.position.y = 0
-        _:
-            printerr("Unhandled vertical alignment: ", verticalAlignment)
+	var labelSize:Vector3 = label.get_aabb().size
+	
+	background.mesh.size.x = thickness
+	background.mesh.size.y = labelSize.y + labelPadding.y
+	background.mesh.size.z = labelSize.x + labelPadding.x
+	
+	match horizontalAlignment:
+		HORIZONTAL_ALIGNMENT.left:
+			background.position.z = -labelSize.x/2 + label.position.z
+		HORIZONTAL_ALIGNMENT.right:
+			background.position.z = labelSize.x/2 + label.position.z
+		HORIZONTAL_ALIGNMENT.center:
+			background.position.z = 0
+		_:
+			printerr("DialogueOption: Unhandled horizontal alignment for background: ", horizontalAlignment)
+	
+	match verticalAlignment:
+		VERTICAL_ALIGNMENT.top:
+			#background.mesh.size.y = labelSize.y - label.position.y * 2
+			background.position.y = -labelSize.y/2 + label.position.y
+		VERTICAL_ALIGNMENT.bottom:
+			#background.mesh.size.y = labelSize.y + label.position.y * 2
+			background.position.y = labelSize.y/2 + label.position.y
+		VERTICAL_ALIGNMENT.center:
+			background.position.y = 0
+		_:
+			printerr("DialogueOption: Unhandled vertical alignment for background: ", verticalAlignment)
 
-    interactionHitbox.shape.size = background.mesh.size + Vector3.ONE * interactionHitboxPadding
-    interactionHitbox.position.y = background.position.y
-    interactionHitbox.position.z = background.position.z
-    
-    visualArea.shape.size = interactionHitbox.shape.size
-    
-    labelHeight = interactionHitbox.shape.size.y
+	interactionHitbox.shape.size = background.mesh.size + Vector3.ONE * interactionHitboxPadding
+	interactionHitbox.position.y = background.position.y
+	interactionHitbox.position.z = background.position.z
+	
+	visualArea.shape.size = interactionHitbox.shape.size
+	
+	labelHeight = interactionHitbox.shape.size.y
 
 ## Kills the dialogue option.
 func kill():
-    goingToDie = true
-    queue_free()
+	goingToDie = true
+	queue_free()
 
 
 
 ## Handles logic for when the dialogue option gets picked.
 func _on_interaction() -> void:
-    emit_signal("option_picked", nextDialogueID)
+	emit_signal("option_picked", nextDialogueID)
 
 ## Handles the logic for when the lifetime of the dialogue option expires.
 func _on_life_timer_timeout() -> void:
-    kill()
+	kill()
