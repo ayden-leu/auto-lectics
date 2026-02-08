@@ -266,7 +266,7 @@ func kill() -> void:
 ## Handles logic for when a dialogue option is picked.
 func _on_option_picked(nextDialogueID:String) -> void:
 	for _i in range(spawnedOptions.size()):
-		var toKill:DialogueOption = spawnedOptions.pop_front()
+		var toKill = spawnedOptions.pop_front()
 		if toKill:
 			toKill.kill()
 	optionSpawnPositions.hectic.root.usedPositions.clear()
