@@ -3,6 +3,7 @@
 	"font": "default",
 	"type": "neutral",
 	"mode": "normal",
+	"nextOnHecticFailureID": "",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 20.0,
 	"sfx": {
@@ -97,7 +98,7 @@
 				}
 			},
 			"spawnDelay": 0,
-			"lifetime": -1,
+			"lifetime": 0.75,
 			"nextID": "Dialogue4"
 		}
 	]

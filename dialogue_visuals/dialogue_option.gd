@@ -2,46 +2,64 @@
 extends Node3D
 class_name DialogueOption
 
+## Emitted when this dialogue option is picked.
 signal option_picked
 
+## Used for referencing how the dialogue option should grow horizontally.
 enum HORIZONTAL_ALIGNMENT{
 	left,
 	center,
 	right
 }
+## Used for referencing how the dialogue option should grow vertically.
 enum VERTICAL_ALIGNMENT{
 	top,
 	center,
 	bottom
 }
 
-@export var dummyThickness:float = 0.08
+## The thickness of the background for the dialogue option.
+@export var thickness:float = 0.08
+## How much padding the text label of the dialogue option should have.
 @export var labelPadding:Vector2 = Vector2(0.1, 0.1)
+## How the dialogue option should grow horizontally.
 @export var horizontalAlignment:HORIZONTAL_ALIGNMENT = HORIZONTAL_ALIGNMENT.right
+## How the dialogue option should grow vertically.
 @export var verticalAlignment:VERTICAL_ALIGNMENT = VERTICAL_ALIGNMENT.top
 
+## Holds a reference to the text label that displays the dialogue option text.
 @onready var label:Label3D = $TextLabel
-@onready var hitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
-@onready var visualArea:CollisionShape3D = $InteractionHitbox/CollisionShape3D/VisualArea/CollisionShape3D
-@onready var background:MeshInstance3D = $Background
-
-var hitboxPadding:float = 0.05
-var labelHeight:float = 0.0  # used externally
-var goingToDie:bool = false
-
+## Holds the text that displays the current dialogue option. Mainly just used as an easier way to get/set the label text.
 var text:String = "":
 	set(value):
 		text = value
 		label.text = value
+## Holds a reference to the interaction hitbox.
+@onready var interactionHitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
+## Holds a reference to the background of the dialogue option.
+@onready var background:MeshInstance3D = $Background
+## Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
+@onready var lifeTimer:Timer = $LifeTimer
+
+## Padding amount for the interaction hitbox.
+const interactionHitboxPadding:float = 0.05
+
+## Used by DialogueBox for positioning dialogue options.
+var labelHeight:float = 0.0  # used externally
+## Mainly used in case the dialogue option dies in between an await call.
+var goingToDie:bool = false
+## How long it takes for a dialogue option to appear.
 var spawnDelay:float = 0.0
-var nextDialogue:String
+## How long a dialogue option will last.
+var lifetime:float = 0.0
+## The ID of the next dialogue object to load.
+var nextDialogueID:String
 
 func _ready() -> void:
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
 		return
 	
-	#visible = false
 	visible = false
 	
 func _process(_delta: float) -> void:
@@ -49,23 +67,26 @@ func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		applySettings()
 
-func spawn() -> void:
+## Runs any configurations that need to be run before continuing onward.
+func prepare() -> void:
 	await get_tree().create_timer(0.0001).timeout
-	applySettings()
-	
 	if goingToDie:
 		return
 	
+	applySettings()
 	visible = true
-	hitbox.disabled = false
+	interactionHitbox.disabled = false
+	if lifetime > 0:
+		lifeTimer.wait_time = lifetime
+		lifeTimer.start()
 
+## Applies all configured visual settings.
 func applySettings() -> void:
 	applyLabelSettings()
-	applyBackgroundSettingsAy()
+	applyBackgroundSettings()
 
-func applyLabelSettings() -> void:
-	# TODO:  call after the configuration gets set up
-	
+## Applies the horizontal and vertical alignment settings of the label.
+func applyLabelSettings() -> void:    
 	match horizontalAlignment:
 		HORIZONTAL_ALIGNMENT.left:
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -77,7 +98,7 @@ func applyLabelSettings() -> void:
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			label.position.z = 0
 		_:
-			printerr("Unhandled horizontal alignment: ", horizontalAlignment)
+			printerr("DialogueOption: Unhandled horizontal alignment for label: ", horizontalAlignment)
 	
 	match verticalAlignment:
 		VERTICAL_ALIGNMENT.top:
@@ -90,12 +111,13 @@ func applyLabelSettings() -> void:
 			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 			label.position.y = 0
 		_:
-			printerr("Unhandled vertical alignment: ", verticalAlignment)
+			printerr("DialogueOption: Unhandled vertical alignment for label: ", verticalAlignment)
 
-func applyBackgroundSettingsAy() -> void:
+## Applies the horizontal and vertical alignment settings of the background.
+func applyBackgroundSettings() -> void:
 	var labelSize:Vector3 = label.get_aabb().size
 	
-	background.mesh.size.x = dummyThickness
+	background.mesh.size.x = thickness
 	background.mesh.size.y = labelSize.y + labelPadding.y
 	background.mesh.size.z = labelSize.x + labelPadding.x
 	
@@ -107,7 +129,7 @@ func applyBackgroundSettingsAy() -> void:
 		HORIZONTAL_ALIGNMENT.center:
 			background.position.z = 0
 		_:
-			printerr("Unhandled horizontal alignment: ", horizontalAlignment)
+			printerr("DialogueOption: Unhandled horizontal alignment for background: ", horizontalAlignment)
 	
 	match verticalAlignment:
 		VERTICAL_ALIGNMENT.top:
@@ -119,19 +141,25 @@ func applyBackgroundSettingsAy() -> void:
 		VERTICAL_ALIGNMENT.center:
 			background.position.y = 0
 		_:
-			printerr("Unhandled vertical alignment: ", verticalAlignment)
+			printerr("DialogueOption: Unhandled vertical alignment for background: ", verticalAlignment)
 
-	hitbox.shape.size = background.mesh.size + Vector3.ONE * hitboxPadding
-	hitbox.position.y = background.position.y
-	hitbox.position.z = background.position.z
+	interactionHitbox.shape.size = background.mesh.size + Vector3.ONE * interactionHitboxPadding
+	interactionHitbox.position.y = background.position.y
+	interactionHitbox.position.z = background.position.z
 	
-	visualArea.shape.size = hitbox.shape.size
-	
-	labelHeight = hitbox.shape.size.y
+	labelHeight = interactionHitbox.shape.size.y
 
+## Kills the dialogue option.
 func kill():
 	goingToDie = true
 	queue_free()
 
+
+
+## Handles logic for when the dialogue option gets picked.
 func _on_interaction() -> void:
-	emit_signal("option_picked", nextDialogue)
+	emit_signal("option_picked", nextDialogueID)
+
+## Handles the logic for when the lifetime of the dialogue option expires.
+func _on_life_timer_timeout() -> void:
+	kill()

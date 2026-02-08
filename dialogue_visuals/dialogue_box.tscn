@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwqide2q2tp3i"]
+[gd_scene load_steps=11 format=3 uid="uid://dwqide2q2tp3i"]
 
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
 [ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
+[ext_resource type="Script" uid="uid://bix7b5bmj6lso" path="res://dialogue_visuals/hectic_positions.gd" id="4_hx4ud"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ilnc5"]
 material = ExtResource("2_c2e7b")
@@ -24,8 +25,9 @@ size = Vector3(0.195, 1.585, 1.32)
 material = ExtResource("3_21gmv")
 size = Vector3(0.195, 1.585, 1.32)
 
-[node name="DialogueBox" type="Node3D"]
+[node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("myLabel")]
 script = ExtResource("1_xrnu6")
+myLabel = NodePath("DialogueLabel")
 
 [node name="Background" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_ilnc5")
@@ -38,7 +40,7 @@ vertical_alignment = 0
 autowrap_mode = 2
 width = 400.0
 
-[node name="VisualArea" type="Area3D" parent="." groups=["VisualArea"]]
+[node name="VisualArea" type="Area3D" parent="."]
 collision_layer = 8
 collision_mask = 0
 monitoring = false
@@ -83,6 +85,7 @@ transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.937
 metadata/_edit_group_ = true
 
 [node name="Hectic" type="Node3D" parent="OptionPositions"]
+script = ExtResource("4_hx4ud")
 
 [node name="Left" type="Node3D" parent="OptionPositions/Hectic"]
 

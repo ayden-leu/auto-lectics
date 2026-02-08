@@ -1,58 +1,85 @@
 extends Node
 class_name DialogueDefaults
 
-const DIALOGUE_TYPES := ["neutral", "happy", "angry", "confused", "sad"]
-const OPTION_TYPES := ["positive", "neutral", "negative"]
-
-# Preset -> speed mapping
-const WRITE_SPEED_PRESETS := {
+## The types of dialogue that exist.
+const DIALOGUE_TYPES:Array[String] = [
+	"neutral", "happy", "angry", "confused", "sad"
+]
+## The types of options that exist.
+const OPTION_TYPES:Array[String] = [
+	"positive", "neutral", "negative"
+]
+## Text write speed presets.
+const WRITE_SPEED_PRESETS:Dictionary = {
 	"slow": 30.0,
 	"medium": 60.0,
-	"fast": 120.0
+	"fast": 120.0,
+	"custom": -1.0
 }
+## Background theme presets.
+const BACKGROUND_THEME:Dictionary = {
+	# TODO:  add background theme presets.
+	"default": "todo"
+}
+## Events where a particle can spawn.
+const PARTICLE_EVENTS:Array[String] = [
+	"spawn", "text", "ambient"
+]
+## Attributes a particle event has.
+const PARTICLE_EVENT_ATTRIBUTES:Array[String] = [
+	"texture"
+]
+## Paths to particle textures.
+const PARTICLE_TEXTURE:Dictionary = {
+	# TODO:  add particle textures
+}
+## Events where a SFX can play.
+const SFX_EVENTS:Array[String] = [
+	"spawn", "text"
+]
 
+## Returns a default dialogue object.
 static func default_dialogue() -> Dictionary:
 	return {
+		# === Mandatory ===
 		"text": "",
 		"font": "default",
 		"type": "neutral",
 		"mode": "normal",
+		"nextOnHecticFailureID": "",
 
-		# Typewriter
+		# === Optional ===
 		"writeSpeed": "medium",
 		"writeSpeedCustom": -1.0,
 
-		# SFX
 		"sfx": {
 			"spawn": "none",
 			"text": "default"
 		},
 
-		# Background theme preset
 		"backgroundTheme": "default",
 
-		# Particles
 		"particles": {
 			"spawn": { "texture": "none" },
 			"text": { "texture": "none" },
 			"ambient": { "texture": "none" }
 		},
 
-		# Options list
 		"options": []
 	}
 
+## Returns a default option object.
 static func default_option() -> Dictionary:
 	return {
+		# === Mandatory ===
 		"text": "",
 		"font": "inherit",
 		"type": "neutral",
 
-		# Typewriter (options inherit by default)
+		# === Optional ===
 		"writeSpeed": "inherit",
 		"writeSpeedCustom": -1.0,
 
-		# SFX (options inherit by default)
 		"sfx": {
 			"spawn": "inherit",
 			"text": "inherit"

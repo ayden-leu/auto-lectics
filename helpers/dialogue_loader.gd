@@ -1,192 +1,194 @@
 extends Node
 class_name DialogueLoader
 
-# Loads a single dialogue node file (like Dialogue1a.json)
-# Returns a normalised Dictionary (with defaults + resolved inheritance)
-func load_dialogue_node_file(path: String) -> Dictionary:
+## Loads a single dialogue node file. Returns a dialogue object with all settings.
+static func loadDialogueNodeFile(path: String) -> Dictionary:
 	var json_text := _read_text_file(path)
 	if json_text == "":
-		push_error("DialogueLoader: Missing/empty file: %s" % path)
+		printerr("DialogueLoader: Missing/empty file: %s" % path)
 		return {}
 
-	var raw = JSON.parse_string(json_text)
-	if typeof(raw) != TYPE_DICTIONARY:
-		push_error("DialogueLoader: Expected a JSON object at root: %s" % path)
+	var dialogue_obj = JSON.parse_string(json_text)
+	if typeof(dialogue_obj) != TYPE_DICTIONARY:
+		printerr("DialogueLoader: Expected a JSON object at root: %s" % path)
 		return {}
 
-	return _normalise_dialogue(raw)
+	return _fill_dialogue_missing_fields(dialogue_obj)
 
 
-# -------------------------
-# Normalisation
-# -------------------------
-func _normalise_dialogue(raw: Dictionary) -> Dictionary:
-	var dlg := DialogueDefaults.default_dialogue()
-
-	# Basic fields
-	dlg["text"] = str(raw.get("text", dlg["text"]))
-	dlg["font"] = str(raw.get("font", dlg["font"]))
-	dlg["type"] = _safe_enum(str(raw.get("type", dlg["type"])).to_lower(), DialogueDefaults.DIALOGUE_TYPES, dlg["type"])
-	dlg["mode"] = str(raw.get("mode", dlg["mode"])).to_lower()
-
-	# Typewriter
-	dlg["writeSpeed"] = str(raw.get("writeSpeed", dlg["writeSpeed"])).to_lower()
-	dlg["writeSpeedCustom"] = float(raw.get("writeSpeedCustom", dlg["writeSpeedCustom"]))
-
-	# SFX
-	if raw.has("sfx"):
-		dlg["sfx"] = _merge_sfx(dlg["sfx"], raw["sfx"])
-
-	# Background theme
-	dlg["backgroundTheme"] = str(raw.get("backgroundTheme", dlg["backgroundTheme"]))
-
-	# Particles
-	if raw.has("particles"):
-		dlg["particles"] = _merge_particles(dlg["particles"], raw["particles"])
-
-	# Options
-	dlg["options"] = []
-	var raw_options = raw.get("options", [])
-	if typeof(raw_options) == TYPE_ARRAY:
-		for opt_raw in raw_options:
-			if typeof(opt_raw) != TYPE_DICTIONARY:
+## Fills in any missing fields from the dialogue node file with default values.
+static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionary:
+	var dialogue:Dictionary = DialogueDefaults.default_dialogue()
+	
+	# Mandatory fields
+	dialogue.text = dialogue_obj.get("text", dialogue.text)
+	dialogue.font = dialogue_obj.get("font", dialogue.font)
+	dialogue.type = _verify_in_list(
+		dialogue_obj.get("type", dialogue.type).to_lower(),
+		DialogueDefaults.DIALOGUE_TYPES,
+		dialogue.type
+	)
+	dialogue.mode = dialogue_obj.get("mode", dialogue.mode).to_lower()
+	dialogue.nextOnHecticFailureID = dialogue_obj.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
+	
+	var dialogue_obj_options:Array = dialogue_obj.get("options", [])
+	if typeof(dialogue_obj_options) == TYPE_ARRAY:
+		for option_obj in dialogue_obj_options:
+			if typeof(option_obj) != TYPE_DICTIONARY:
+				printerr("DialogueLoader: Item in options field of this dialogue node isn't a dictionary.")
 				continue
-			var opt := _normalise_option(opt_raw, dlg)
-			dlg["options"].append(opt)
+			
+			var opt := _fill_option_missing_fields(option_obj, dialogue)
+			dialogue.options.append(opt)
+	else:
+		printerr("DialogueLoader: Options field of this dialogue node file isn't an array.")
 
-	return dlg
+	# Optional fields
+	dialogue.writeSpeed = _verify_in_list(
+		dialogue_obj.get("writeSpeed", dialogue.writeSpeed).to_lower(),
+		DialogueDefaults.WRITE_SPEED_PRESETS.keys(),
+		dialogue.writeSpeed
+	)
+	dialogue.writeSpeedCustom = max(
+		dialogue_obj.get("writeSpeedCustom", dialogue.writeSpeedCustom),
+		0.0001 #  arbitrary small value. it just shouldn't be zero.
+	)
+
+	if dialogue_obj.has("sfx"):
+		dialogue.sfx = _merge_sfx(dialogue.sfx, dialogue_obj.sfx)
+	
+	dialogue.backgroundTheme = _verify_in_list(
+		dialogue_obj.get("backgroundTheme", dialogue.backgroundTheme).to_lower(),
+		DialogueDefaults.BACKGROUND_THEME.keys(),
+		dialogue.backgroundTheme
+	)
+
+	if dialogue_obj.has("particles"):
+		dialogue.particles = _merge_particles(dialogue.particles, dialogue_obj.particles)
+
+	return dialogue
+
+## Fills in any missing fields from the option object with default values.
+static func _fill_option_missing_fields(option_obj: Dictionary, dialogue_owner: Dictionary) -> Dictionary:
+	var option:Dictionary = DialogueDefaults.default_option()
+
+	# Mandatory
+	option.text = option_obj.get("text", option.text)
+	option.type = _verify_in_list(
+		option_obj.get("type", option.type).to_lower(),
+		DialogueDefaults.OPTION_TYPES,
+		option.type
+	)
+	option.nextID = option_obj.get("nextID", option.nextID)
+	
+	# Optional
+	option.font = option_obj.get("font", option.font)
+		
+	option.writeSpeed = _verify_in_list(
+		option_obj.get("writeSpeed", option.writeSpeed).to_lower(),
+		DialogueDefaults.WRITE_SPEED_PRESETS.keys(),
+		option.writeSpeed
+	)
+	option.writeSpeedCustom = max(
+		option_obj.get("writeSpeedCustom", option.writeSpeedCustom),
+		0.0001 #  arbitrary small value. it just shouldn't be zero.
+	)
+	
+	if option_obj.has("sfx"):
+		option.sfx = _merge_sfx(option.sfx, option_obj.sfx)
+		
+	option.backgroundTheme = _verify_in_list(
+		option_obj.get("backgroundTheme", option.backgroundTheme).to_lower(),
+		DialogueDefaults.BACKGROUND_THEME.keys(),
+		option.backgroundTheme
+	)
+	
+	if option_obj.has("particles"):
+		option.particles = _merge_particles(option.particles, option_obj.particles)
+
+	option.spawnDelay = option_obj.get("spawnDelay", option.spawnDelay)
+	option.lifetime = option_obj.get("lifetime", option.lifetime)
+	
+	_resolve_option_inheritance(option, dialogue_owner)
+
+	return option
 
 
-func _normalise_option(raw: Dictionary, dlg: Dictionary) -> Dictionary:
-	var opt := DialogueDefaults.default_option()
+## Replaces any instance of "inherit" in an option object configuration with the dialogue's corresponding value.
+static func _resolve_option_inheritance(option: Dictionary, dialogue_owner: Dictionary) -> void:
+	if option.font == "inherit":
+		option.font = dialogue_owner.font
 
-	# Required-ish
-	opt["text"] = str(raw.get("text", opt["text"]))
-	opt["font"] = str(raw.get("font", opt["font"]))
-	opt["type"] = _safe_enum(str(raw.get("type", opt["type"])).to_lower(), DialogueDefaults.OPTION_TYPES, opt["type"])
+	if option.writeSpeed == "inherit":
+		option.writeSpeed = dialogue_owner.writeSpeed
 
-	# Typewriter
-	opt["writeSpeed"] = str(raw.get("writeSpeed", opt["writeSpeed"])).to_lower()
-	opt["writeSpeedCustom"] = float(raw.get("writeSpeedCustom", opt["writeSpeedCustom"]))
+	if option.writeSpeedCustom < 0.0:
+		option.writeSpeedCustom = dialogue_owner.writeSpeedCustom
+	
+	for event in DialogueDefaults.SFX_EVENTS:
+		if option.sfx[event] == "inherit":
+			option.sfx[event] = dialogue_owner.sfx[event]
 
-	# SFX
-	if raw.has("sfx"):
-		# If sfx is {}, inherit spawn/text from dialogue (your NOTE)
-		opt["sfx"] = _merge_sfx(opt["sfx"], raw["sfx"])
-
-	# Background theme
-	opt["backgroundTheme"] = str(raw.get("backgroundTheme", opt["backgroundTheme"]))
-
-	# Particles
-	if raw.has("particles"):
-		# If particles is {}, inherit spawn/text/ambient from dialogue (your NOTE)
-		opt["particles"] = _merge_particles(opt["particles"], raw["particles"])
-
-	# Timing / linking
-	opt["spawnDelay"] = float(raw.get("spawnDelay", opt["spawnDelay"]))
-	opt["lifetime"] = float(raw.get("lifetime", opt["lifetime"]))
-	opt["nextID"] = str(raw.get("nextID", opt["nextID"]))
-
-	# Resolve inheritance against dialogue
-	_resolve_option_inheritance(opt, dlg)
-
-	return opt
-
-
-# -------------------------
-# Inheritance rules
-# -------------------------
-func _resolve_option_inheritance(opt: Dictionary, dlg: Dictionary) -> void:
-	# Font
-	if opt["font"] == "inherit":
-		opt["font"] = dlg["font"]
-
-	# Write speed preset
-	if opt["writeSpeed"] == "inherit":
-		opt["writeSpeed"] = dlg["writeSpeed"]
-
-	# Write speed custom:
-	# if option custom is -1, inherit dialogue custom (or keep -1 if dialogue also -1)
-	if float(opt["writeSpeedCustom"]) < 0.0:
-		opt["writeSpeedCustom"] = float(dlg["writeSpeedCustom"])
-
-	# SFX fields
-	if opt["sfx"]["spawn"] == "inherit":
-		opt["sfx"]["spawn"] = dlg["sfx"]["spawn"]
-	if opt["sfx"]["text"] == "inherit":
-		opt["sfx"]["text"] = dlg["sfx"]["text"]
-
-	# Background theme
-	if opt["backgroundTheme"] == "inherit":
-		opt["backgroundTheme"] = dlg["backgroundTheme"]
+	if option.backgroundTheme == "inherit":
+		option.backgroundTheme = dialogue_owner.backgroundTheme
 
 	# Particles textures
-	for k in ["spawn", "text", "ambient"]:
-		var tex = opt["particles"][k].get("texture", "inherit")
-		if typeof(tex) == TYPE_STRING and tex == "inherit":
-			opt["particles"][k]["texture"] = dlg["particles"][k].get("texture", "none")
+	for event in DialogueDefaults.PARTICLE_EVENTS:
+		for attribute in DialogueDefaults.PARTICLE_EVENT_ATTRIBUTES:
+			var _attr:String = option.particles[event].get(attribute, "inherit")
+			if _attr == "inherit":
+				option.particles[event][attribute] = dialogue_owner.particles[event].get(attribute, "none")
 
+## Helper function to merge the SFX attributes.
+static func _merge_sfx(default: Dictionary, sfx_obj) -> Dictionary:
+	if typeof(sfx_obj) != TYPE_DICTIONARY:
+		return default
 
-# -------------------------
-# Merge helpers (with {} meaning "inherit subfields")
-# -------------------------
-func _merge_sfx(base: Dictionary, raw_sfx) -> Dictionary:
-	var out := base.duplicate(true)
+	if sfx_obj.is_empty():
+		return default
+	
+	var merged:Dictionary = default.duplicate(true)
+	for event in DialogueDefaults.SFX_EVENTS:
+		if sfx_obj.has(event):
+			merged[event] = sfx_obj[event]
+	
+	return merged
 
-	# If designer writes "none"/"inherit" as a string, ignore for now (could support later)
-	if typeof(raw_sfx) != TYPE_DICTIONARY:
-		return out
+## Helper function to merge the particle attributes.
+static func _merge_particles(default: Dictionary, particles_obj) -> Dictionary:
+	if typeof(particles_obj) != TYPE_DICTIONARY:
+		return default
 
-	var rs: Dictionary = raw_sfx
-	if rs.is_empty():
-		# {} => keep "inherit" defaults (then inheritance resolver pulls from dialogue)
-		return out
-
-	if rs.has("spawn"): out["spawn"] = str(rs["spawn"])
-	if rs.has("text"): out["text"] = str(rs["text"])
-	return out
-
-
-func _merge_particles(base: Dictionary, raw_particles) -> Dictionary:
-	var out := base.duplicate(true)
-
-	if typeof(raw_particles) != TYPE_DICTIONARY:
-		return out
-
-	var rp: Dictionary = raw_particles
-	if rp.is_empty():
-		# {} => keep inherit defaults (then inheritance resolver pulls from dialogue)
-		return out
-
-	for k in ["spawn", "text", "ambient"]:
-		if rp.has(k) and typeof(rp[k]) == TYPE_DICTIONARY:
-			var rk: Dictionary = rp[k]
-			if rk.is_empty():
-				# {} at sub-level => do nothing; inheritance stays
+	if particles_obj.is_empty():
+		return default
+	
+	var merged := default.duplicate(true)
+	for event in DialogueDefaults.PARTICLE_EVENTS:
+		if particles_obj.has(event) and typeof(particles_obj[event]) == TYPE_DICTIONARY:
+			if particles_obj[event].is_empty():
 				continue
-			if rk.has("texture"):
-				out[k]["texture"] = str(rk["texture"])
-	return out
+			
+			for attribute in DialogueDefaults.PARTICLE_EVENT_ATTRIBUTES:
+				if particles_obj[event].has(attribute):
+					merged[event][attribute] = particles_obj[event][attribute]
+		else:
+			printerr("DialogueLoader: Particle event [%s]'s value isn't a dictionary. Value type ID: " % event, typeof(particles_obj[event]))
+	return merged
 
 
-# -------------------------
-# Small utilities
-# -------------------------
-func _safe_enum(value: String, allowed: Array, fallback: String) -> String:
-	return value if allowed.has(value) else fallback
+## Verifies if value in in list. If not, return fallback.
+static func _verify_in_list(value: String, list: Array, fallback: String) -> String:
+	return value if list.has(value) else fallback
 
-func _read_text_file(path: String) -> String:
+## Reads a file at the path. Path needs to include the file.
+static func _read_text_file(path: String) -> String:
 	if not FileAccess.file_exists(path):
+		printerr("DialogueLoader: File does not exist: ", path)
 		return ""
-	var f := FileAccess.open(path, FileAccess.READ)
-	if f == null:
+	
+	var file:FileAccess = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		printerr("DialogueLoader: Could not open file: ", path)
 		return ""
-	return f.get_as_text()
-
-# Optional: resolve final numeric speed used by your typewriter
-func resolve_write_speed_chars_per_sec(node: Dictionary) -> float:
-	var custom := float(node.get("writeSpeedCustom", -1.0))
-	if custom >= 0.0:
-		return custom
-	var preset := str(node.get("writeSpeed", "medium")).to_lower()
-	return float(DialogueDefaults.WRITE_SPEED_PRESETS.get(preset, DialogueDefaults.WRITE_SPEED_PRESETS["medium"]))
+	
+	return file.get_as_text()

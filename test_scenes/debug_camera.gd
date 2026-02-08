@@ -1,6 +1,7 @@
 @tool
 extends Camera3D
 
+## The main camera to switch to and from.
 @export var mainCamera:Camera3D:
 	set(newCamera):
 		if mainCamera and newCamera:

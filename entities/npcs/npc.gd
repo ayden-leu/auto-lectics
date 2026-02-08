@@ -1,95 +1,157 @@
+@tool
 extends Node3D
 class_name NPC
 
-signal options_available
-#signal finished_dialogue
+# TODO:  verify/add signal emitions for all signals
 
-@onready var dialogueBoxScene: Resource = preload(Globals.SCENES.DialogueBox)
-@onready var dialogueBoxAnchor: Marker3D = $DialogueBoxAnchor
+## Emitted when a dialogue entry is fully displayed.
+signal dialogue_all_visible
+## Emitted when a dialogue option is spawned.
+signal option_available
+## Emitted when all dialogue options have been spawned.
+signal all_options_available
+## Emitted when the dialogue tree reaches an end.
+signal finished_dialogue
 
-## Valid dialogue entries can be found in `dialogue_objects`
-@export var initialDialogueID: String = "Dialogue1a"
-@export var myName:String = "NPC_Test"
+## Tells the game where to spawn a dialogue box when a player interacts with the NPC. If the NPC moves or rotates, the dialogue box will move and rotate with them.
+@export var dialogueBoxAnchor:Marker3D
+## The name of the NPC.
+@export var myName:String = ""
+## All dialogues belonging to this NPC will be under "dialogue_objects/[NPC name]"
+@export var initialDialogueID:String = ""
+## The dialogue ID of the dialogue object to load when the player fails a hectic dialogue interaction.
+@export var hecticFailureDialogueID:String = ""
 
-var dialogueBox: DialogueBox = null
+## Holds a reference to the dialogue box resource.
+const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
+
+## Holds a reference to this NPC's dialogue box scene.
+var dialogueBox:DialogueBox = null
+## Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
+var connectedDialogueBoxSignals:bool = false
+## Is true when their dialogue box is visible.
 var isTalking: bool = false
+## Keeps track of which dialogue object to reference at the moment.
 var currentDialogueID: String = ""
+## Hardcoded delay between the dialogue being fully displayed, and when the dialogue options can begin spawning.
 var delayStartShowingOptions: float = 1.0
-var loader := DialogueLoader.new()
 
 func _ready() -> void:
+	# Makes sure the code after this is only ran in-game
+	if Engine.is_editor_hint():
+		return
+	
 	currentDialogueID = initialDialogueID
 
 func _process(_delta: float) -> void:
 	pass
 
-func spawnDialogue() -> void:
+## Creates the dialogue box scene. Only one can exist at a time.
+func spawnDialogueBox() -> void:
 	if dialogueBox != null:
 		return
 	
 	dialogueBox = dialogueBoxScene.instantiate()
-	
-	# TODO:  verify this note
-	# IMPORTANT CHANGE:
-	# DialogueBox should emit "update_me" with the option's nextID (String),
-	# not an array index. If it currently emits an int, update DialogueBox (see below).
-	dialogueBox.connect("update_me", loadNextDialogue)
-	
-	dialogueBox.connect("new_option_available", _on_dialogue_box_new_options_spawned)
-	#dialogueBox.connect("all_options_spawned", _on_dialogue_box_all_options_spawned)
 	dialogueBoxAnchor.add_child(dialogueBox)
 
-# TODO:  update to match new dialogue format
-#func loadMyDialogueTree(tree:Array) -> void:
-	#currentDialogue = tree
+## Connects the dialogue box's signals to functions. Only needs to be ran once.
+func connectDialogueBoxSignals() -> void:
+	if connectedDialogueBoxSignals:
+		return
+	connectedDialogueBoxSignals = true
+	
+	dialogueBox.connect("update_me", loadNextDialogue)
+	dialogueBox.connect("new_option_available", _on_dialogue_box_new_option_spawned)
+	dialogueBox.connect("all_options_available", _on_dialogue_box_all_options_available)
+	dialogueBox.connect("all_dialogue_text_visible", _on_dialogue_box_all_dialogue_text_visible)
 
-func loadData(dialogueID:String, dialogueEntry:Dictionary) -> void:
-	dialogueBox.currentDialogueID = dialogueID
+## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
+func loadDialogueData(dialogueEntry:Dictionary) -> void:
+	dialogueBox.realOwner = self
+	dialogueBox.currentDialogueID = currentDialogueID
+	dialogueBox.hecticFailureDialogueID = hecticFailureDialogueID
 	dialogueBox.mode = dialogueEntry.mode
 	dialogueBox.text = dialogueEntry.text
 	dialogueBox.loadOptionData(dialogueEntry.options)
 	dialogueBox.prepare()
 
+## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
-	# TODO:  maybe remove this part
-	if nextDialogueID == "":
-		_end_dialogue()
-		return
-
 	currentDialogueID = nextDialogueID
-	var dialogue := Globals.loadDialogueNode(myName, currentDialogueID)
-	# this never ran
-	#if dlg.is_empty():
-		#_end_dialogue()
-		#return
-	loadData(nextDialogueID, dialogue)
-
+	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
+	loadDialogueData(dialogue)
+	dialogueBox.start()
+	
+	# TODO: remove this section.  move logic to dialogue_box.start()
 	await get_tree().create_timer(delayStartShowingOptions).timeout
  
 	if dialogue.options.size() == 0:
-		_end_dialogue()
+		endDialogue()
+		finished_dialogue.emit()
 		return
 
 	dialogueBox.createOptions()
 
-func _end_dialogue() -> void:
+## Ends the dialogue interaction.
+func endDialogue() -> void:
 	if dialogueBox != null:
 		dialogueBox.kill()
 		dialogueBox = null
 	isTalking = false
+	connectedDialogueBoxSignals = false
 
+## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
 	if isTalking:
 		return
-
 	isTalking = true
-	spawnDialogue()
-
-	# Start at initialDialogueID
+	
+	spawnDialogueBox()
+	connectDialogueBoxSignals()
 	loadNextDialogue(initialDialogueID)
 
-func _on_dialogue_box_new_options_spawned() -> void:
-	options_available.emit()
+## Emits the "option_available" signal.
+func _on_dialogue_box_new_option_spawned() -> void:
+	option_available.emit()
 
-#func _on_dialogue_box_all_options_spawned() -> void:
-	#options_available.emit()
+## Emits the "all_options_available" signal.
+func _on_dialogue_box_all_options_available() -> void:
+	all_options_available.emit()
+
+func _on_dialogue_box_all_dialogue_text_visible() -> void:
+	dialogue_all_visible.emit()
+
+
+# Dev-ing stuff
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+	
+	var hasModel:bool = false
+	var hitbox:Area3D = null
+	for child in get_children():
+		if child is MeshInstance3D:
+			hasModel = true
+		elif child is Area3D:
+			hitbox = child
+	
+	if not hasModel:
+		warnings.push_back("This NPC doesn't have a model.")
+	
+	if initialDialogueID == "":
+		warnings.push_back("The initial dialogue ID is not set.")
+	
+	if hecticFailureDialogueID == "":
+		warnings.push_back("The hectic failure dialogue ID is not set. If you don't plan on ever having the player enter a hectic dialogue with this NPC, you can ignore this. But this may lead to bugs if you later decide to add a hectic dialogue interaction and forget to set this.")
+	
+	if myName == "":
+		warnings.push_back("This NPC doesn't have a name yet.")
+	
+	if hitbox == null:
+		warnings.push_back("This NPC doesn't have a hitbox yet. This is needed to allow the player to interact with them.")
+	elif hitbox.collision_layer != 4:
+		warnings.push_back("The hitbox's collision layer should only have square #3/Bit 2/the NPC layer enabled.")
+	
+	if not dialogueBoxAnchor:
+		warnings.push_back("A marker for the dialogue box has not been set yet.")
+	
+	return warnings

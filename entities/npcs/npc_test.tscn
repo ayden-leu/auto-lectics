@@ -7,8 +7,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.1191406, 1.1877441, 1.2324219)
 
-[node name="NPC_Test" type="Node3D"]
+[node name="NPC_Test" type="Node3D" node_paths=PackedStringArray("dialogueBoxAnchor")]
 script = ExtResource("1_vefio")
+dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
+myName = "NPC_Test"
+initialDialogueID = "Dialogue1a"
+hecticFailureDialogueID = "failure"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -26,6 +30,3 @@ shape = SubResource("BoxShape3D_vefio")
 
 [node name="DialogueBoxAnchor" type="Marker3D" parent="."]
 transform = Transform3D(0.9573195, 0, 0.28903177, 0, 1, 0, -0.28903177, 0, 0.9573195, 0, 1.214, 1.941)
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.45051247, 0.4454649, 0)
