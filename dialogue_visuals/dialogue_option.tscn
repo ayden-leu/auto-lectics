@@ -6,7 +6,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_2d7vg"]
 resource_local_to_scene = true
 material = ExtResource("2_hgihb")
-size = Vector3(0.04, 0.29999998, 0.39499998)
+size = Vector3(0.08, 0.29999998, 0.39499998)
 
 [sub_resource type="FontFile" id="FontFile_hgihb"]
 subpixel_positioning = 0
@@ -265,15 +265,14 @@ cache/0/127/0/scale = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgihb"]
 resource_local_to_scene = true
-size = Vector3(0.09, 0.35, 0.445)
+size = Vector3(0.13, 0.35, 0.445)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wakav"]
 resource_local_to_scene = true
-size = Vector3(0.09, 0.35, 0.445)
+size = Vector3(0.13, 0.35, 0.445)
 
 [node name="DialogueOption" type="Node3D"]
 script = ExtResource("1_vbb0e")
-dummyThickness = 0.04
 
 [node name="Background" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999999, 0.19749999)

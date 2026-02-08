@@ -103,7 +103,6 @@ func createOptions() -> void:
 		loadingDialogueID = currentDialogueID
 		
 		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0.001)
-		#if spawnDelay > 0:
 		await get_tree().create_timer(spawnDelay).timeout
 		if loadingDialogueID != currentDialogueID:
 			return
@@ -111,7 +110,7 @@ func createOptions() -> void:
 		
 		var newOption:DialogueOption = spawnOption()
 		configureDialogueOption(newOption, optionObjectData)
-		newOption.spawn()
+		newOption.prepare()
 		new_option_available.emit()
 	
 	all_options_available.emit()
@@ -211,7 +210,7 @@ func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
 	
 	#instance.name = data.text
 	instance.text = data.text
-	instance.nextDialogue = data.nextID
+	instance.nextDialogueID = data.nextID
 	instance.lifetime = data.lifetime
 	instance.connect("option_picked", _on_option_picked)
 

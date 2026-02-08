@@ -2,144 +2,168 @@
 extends Node3D
 class_name DialogueOption
 
+## Emitted when this dialogue option is picked.
 signal option_picked
 
+## Used for referencing how the dialogue option should grow horizontally.
 enum HORIZONTAL_ALIGNMENT{
-	left,
-	center,
-	right
+    left,
+    center,
+    right
 }
+## Used for referencing how the dialogue option should grow vertically.
 enum VERTICAL_ALIGNMENT{
-	top,
-	center,
-	bottom
+    top,
+    center,
+    bottom
 }
 
-@export var dummyThickness:float = 0.08
+## The thickness of the background for the dialogue option.
+@export var thickness:float = 0.08
+## How much padding the text label of the dialogue option should have.
 @export var labelPadding:Vector2 = Vector2(0.1, 0.1)
+## How the dialogue option should grow horizontally.
 @export var horizontalAlignment:HORIZONTAL_ALIGNMENT = HORIZONTAL_ALIGNMENT.right
+## How the dialogue option should grow vertically.
 @export var verticalAlignment:VERTICAL_ALIGNMENT = VERTICAL_ALIGNMENT.top
 
+## Holds a reference to the text label that displays the dialogue option text.
 @onready var label:Label3D = $TextLabel
-@onready var hitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
+## Holds the text that displays the current dialogue option. Mainly just used as an easier way to get/set the label text.
+var text:String = "":
+    set(value):
+        text = value
+        label.text = value
+## Holds a reference to the interaction hitbox.
+@onready var interactionHitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
+## Holds a reference to the visual area hitbox that's used by warning tiles to make sure they don't cover it.  (might be removed in the future)
 @onready var visualArea:CollisionShape3D = $InteractionHitbox/CollisionShape3D/VisualArea/CollisionShape3D
+## Holds a reference to the background of the dialogue option.
 @onready var background:MeshInstance3D = $Background
+## Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
 @onready var lifeTimer:Timer = $LifeTimer
 
-var hitboxPadding:float = 0.05
-var labelHeight:float = 0.0  # used externally
-var goingToDie:bool = false
+## Padding amount for the interaction hitbox.
+const interactionHitboxPadding:float = 0.05
 
-var text:String = "":
-	set(value):
-		text = value
-		label.text = value
+## Used by DialogueBox for positioning dialogue options.
+var labelHeight:float = 0.0  # used externally
+## Mainly used in case the dialogue option dies in between an await call.
+var goingToDie:bool = false
+## How long it takes for a dialogue option to appear.
 var spawnDelay:float = 0.0
-var lifetime:float = 1.0
-var nextDialogue:String
+## How long a dialogue option will last.
+var lifetime:float = 0.0
+## The ID of the next dialogue object to load.
+var nextDialogueID:String
 
 func _ready() -> void:
-	# Makes sure the code only runs while the game is running
-	if Engine.is_editor_hint():
-		return
-	
-	#visible = false
-	visible = false
-	
+    # Makes sure the code only runs while the game is running
+    if Engine.is_editor_hint():
+        return
+    
+    visible = false
+    
 func _process(_delta: float) -> void:
-	# Only runs this code while the game is running
-	if Engine.is_editor_hint():
-		applySettings()
+    # Only runs this code while the game is running
+    if Engine.is_editor_hint():
+        applySettings()
 
-func spawn() -> void:
-	await get_tree().create_timer(0.0001).timeout
-	applySettings()
-	
-	if goingToDie:
-		return
-	
-	visible = true
-	hitbox.disabled = false
-	if lifetime > 0:
-		lifeTimer.wait_time = lifetime
-		lifeTimer.start()
+## Runs any configurations that need to be run before continuing onward.
+func prepare() -> void:
+    await get_tree().create_timer(0.0001).timeout
+    if goingToDie:
+        return
+    
+    applySettings()
+    visible = true
+    interactionHitbox.disabled = false
+    if lifetime > 0:
+        lifeTimer.wait_time = lifetime
+        lifeTimer.start()
 
+## Applies all configured visual settings.
 func applySettings() -> void:
-	applyLabelSettings()
-	applyBackgroundSettings()
+    applyLabelSettings()
+    applyBackgroundSettings()
 
-func applyLabelSettings() -> void:
-	# TODO:  call after the configuration gets set up
-	
-	match horizontalAlignment:
-		HORIZONTAL_ALIGNMENT.left:
-			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-			label.position.z = -labelPadding.x/2
-		HORIZONTAL_ALIGNMENT.right:
-			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-			label.position.z = labelPadding.x/2
-		HORIZONTAL_ALIGNMENT.center:
-			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			label.position.z = 0
-		_:
-			printerr("Unhandled horizontal alignment: ", horizontalAlignment)
-	
-	match verticalAlignment:
-		VERTICAL_ALIGNMENT.top:
-			label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-			label.position.y = -labelPadding.y/2
-		VERTICAL_ALIGNMENT.bottom:
-			label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-			label.position.y = labelPadding.y/2
-		VERTICAL_ALIGNMENT.center:
-			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			label.position.y = 0
-		_:
-			printerr("Unhandled vertical alignment: ", verticalAlignment)
+## Applies the horizontal and vertical alignment settings of the label.
+func applyLabelSettings() -> void:    
+    match horizontalAlignment:
+        HORIZONTAL_ALIGNMENT.left:
+            label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+            label.position.z = -labelPadding.x/2
+        HORIZONTAL_ALIGNMENT.right:
+            label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+            label.position.z = labelPadding.x/2
+        HORIZONTAL_ALIGNMENT.center:
+            label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+            label.position.z = 0
+        _:
+            printerr("Unhandled horizontal alignment: ", horizontalAlignment)
+    
+    match verticalAlignment:
+        VERTICAL_ALIGNMENT.top:
+            label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+            label.position.y = -labelPadding.y/2
+        VERTICAL_ALIGNMENT.bottom:
+            label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+            label.position.y = labelPadding.y/2
+        VERTICAL_ALIGNMENT.center:
+            label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+            label.position.y = 0
+        _:
+            printerr("Unhandled vertical alignment: ", verticalAlignment)
 
+## Applies the horizontal and vertical alignment settings of the background.
 func applyBackgroundSettings() -> void:
-	var labelSize:Vector3 = label.get_aabb().size
-	
-	background.mesh.size.x = dummyThickness
-	background.mesh.size.y = labelSize.y + labelPadding.y
-	background.mesh.size.z = labelSize.x + labelPadding.x
-	
-	match horizontalAlignment:
-		HORIZONTAL_ALIGNMENT.left:
-			background.position.z = -labelSize.x/2 + label.position.z
-		HORIZONTAL_ALIGNMENT.right:
-			background.position.z = labelSize.x/2 + label.position.z
-		HORIZONTAL_ALIGNMENT.center:
-			background.position.z = 0
-		_:
-			printerr("Unhandled horizontal alignment: ", horizontalAlignment)
-	
-	match verticalAlignment:
-		VERTICAL_ALIGNMENT.top:
-			#background.mesh.size.y = labelSize.y - label.position.y * 2
-			background.position.y = -labelSize.y/2 + label.position.y
-		VERTICAL_ALIGNMENT.bottom:
-			#background.mesh.size.y = labelSize.y + label.position.y * 2
-			background.position.y = labelSize.y/2 + label.position.y
-		VERTICAL_ALIGNMENT.center:
-			background.position.y = 0
-		_:
-			printerr("Unhandled vertical alignment: ", verticalAlignment)
+    var labelSize:Vector3 = label.get_aabb().size
+    
+    background.mesh.size.x = thickness
+    background.mesh.size.y = labelSize.y + labelPadding.y
+    background.mesh.size.z = labelSize.x + labelPadding.x
+    
+    match horizontalAlignment:
+        HORIZONTAL_ALIGNMENT.left:
+            background.position.z = -labelSize.x/2 + label.position.z
+        HORIZONTAL_ALIGNMENT.right:
+            background.position.z = labelSize.x/2 + label.position.z
+        HORIZONTAL_ALIGNMENT.center:
+            background.position.z = 0
+        _:
+            printerr("Unhandled horizontal alignment: ", horizontalAlignment)
+    
+    match verticalAlignment:
+        VERTICAL_ALIGNMENT.top:
+            #background.mesh.size.y = labelSize.y - label.position.y * 2
+            background.position.y = -labelSize.y/2 + label.position.y
+        VERTICAL_ALIGNMENT.bottom:
+            #background.mesh.size.y = labelSize.y + label.position.y * 2
+            background.position.y = labelSize.y/2 + label.position.y
+        VERTICAL_ALIGNMENT.center:
+            background.position.y = 0
+        _:
+            printerr("Unhandled vertical alignment: ", verticalAlignment)
 
-	hitbox.shape.size = background.mesh.size + Vector3.ONE * hitboxPadding
-	hitbox.position.y = background.position.y
-	hitbox.position.z = background.position.z
-	
-	visualArea.shape.size = hitbox.shape.size
-	
-	labelHeight = hitbox.shape.size.y
+    interactionHitbox.shape.size = background.mesh.size + Vector3.ONE * interactionHitboxPadding
+    interactionHitbox.position.y = background.position.y
+    interactionHitbox.position.z = background.position.z
+    
+    visualArea.shape.size = interactionHitbox.shape.size
+    
+    labelHeight = interactionHitbox.shape.size.y
 
+## Kills the dialogue option.
 func kill():
-	goingToDie = true
-	queue_free()
+    goingToDie = true
+    queue_free()
 
+
+
+## Handles logic for when the dialogue option gets picked.
 func _on_interaction() -> void:
-	emit_signal("option_picked", nextDialogue)
+    emit_signal("option_picked", nextDialogueID)
 
+## Handles the logic for when the lifetime of the dialogue option expires.
 func _on_life_timer_timeout() -> void:
-	kill()
+    kill()
