@@ -2,7 +2,9 @@
 extends CharacterBody3D
 class_name Player
 
+## The anchor for the player camera to attach itself to.
 @onready var cameraAnchor:Marker3D = %CameraAnchor
+## The raycast that lets you interact with things in the world.
 @onready var interactionRaycast:RayCast3D = %InteractionRaycast
 
 # TODO:  determine better values for min, max, and step once we figure out the real player size.
@@ -39,13 +41,17 @@ class_name Player
 ## The higher the value, the faster the player falls.
 @export_range(1.0, 4.0, 0.05) var fallGravityMultiplier: float = 2.0
 
-
+## Calculated in _recompute_jump_params()
 var _jumpVelocity: float = 0.0
+## Calculated in _recompute_jump_params()
 var _gravityUp: float = 0.0
+## Calculated in _recompute_jump_params()
 var _gravityDown: float = 0.0
-
+## The previous on floor state of the player.
 var _wasOnFloor: bool = false
+## Keeps track of how long the player has been at the apex of their jump.
 var _timeSinceApex: float = 0.0
+## If the player should be able to hang around at the aapex of their jump.
 var _apexHangActive: bool = false
 
 
@@ -56,13 +62,15 @@ func _process(_delta: float) -> void:
 	# Dev-ing stuff
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
-		
-func _notification(_what: int) -> void:
-	#unfinished wait for connect to a notficiation function that able to change data after it had been edited in  editor
-	#if what == NOTIFICATION_EDITOR_PROPERTY_CHANGED:
-		_recompute_jump_params()
 
+func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 
+	_apply_vertical_physics(delta)
+	move_and_slide()
+
+## Calculates jumping parameters based on the export variable values.
 func _recompute_jump_params() -> void:
 	# avioding 0 set make system bug
 
@@ -73,15 +81,7 @@ func _recompute_jump_params() -> void:
 	# able to fall down faster
 	_gravityDown = _gravityUp * fallGravityMultiplier
 	
-
-func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
-
-	_apply_vertical_physics(delta)
-	move_and_slide()
-
-
+## Applies gravity.
 func _apply_vertical_physics(delta: float) -> void:
 	if not is_on_floor():
 		#if jumping, enable the hang
@@ -111,6 +111,7 @@ func _apply_vertical_physics(delta: float) -> void:
 
 	_wasOnFloor = is_on_floor()
 
+## Makes the player jump.
 func jump() -> void:
 	# jump enable need to set
 	_recompute_jump_params()
@@ -118,6 +119,7 @@ func jump() -> void:
 	_apexHangActive = false
 	_timeSinceApex = 0.0
 
+## Handles movement input from the player.
 func handleDirectionInput(direction: Vector3) -> void:
 	var target := Vector3.ZERO
 	if direction != Vector3.ZERO:
@@ -150,7 +152,8 @@ func handleDirectionInput(direction: Vector3) -> void:
 	velocity.x = current_h.x
 	velocity.z = current_h.z
 
-# Rotates the player when the mouse moves horizontally
+
+## Rotates the player when the mouse moves horizontally.
 func _onMouseMoved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
@@ -159,6 +162,7 @@ func _onMouseMoved(distanceMoved:Vector2) -> void:
 	rotation_degrees.y += -distanceMoved.x
 	interactionRaycast.rotation_degrees.x -= -distanceMoved.y
 
+## Handles interaction logic.
 func _onInteractPressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():
