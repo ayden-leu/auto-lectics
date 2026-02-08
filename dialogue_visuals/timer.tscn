@@ -12,3 +12,5 @@ script = ExtResource("1_7l3sg")
 
 [node name="Bar" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_uks04")
+
+[node name="Timer" type="Timer" parent="."]

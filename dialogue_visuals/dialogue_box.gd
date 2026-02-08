@@ -53,7 +53,7 @@ const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 @onready var warningAreas:Array = $WarningPositionAreas.get_children()
 ## Holds all spawned warning tiles.
 @onready var warningsContainer:Node3D = $WarningsContainer
-## The timer barr that appears when a hectic dialogue object is loaded.
+## The timer bar that appears when a hectic dialogue object is loaded.
 @onready var timer:TimerBar = $Timer
 
 ## The owner of this dialogue box.
