@@ -16,7 +16,7 @@ signal timeout
 ## The progress of the timer so far.
 @export_range(0.0, 1.0) var progress:float = 1.0
 
-## The visual bar.
+## Holds a reference to the timer's visual bar.
 @onready var bar:MeshInstance3D = $Bar
 
 ## The original size of the timer bar. Currently hardcoded.
