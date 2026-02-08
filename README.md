@@ -83,6 +83,8 @@ dialogue_objects
 - `mode`: The dialogue mode.
 	- Normal
 	- Hectic
+- `nextOnHecticFailureID`: The ID of the next dialogue entry to load upon failing hectic mode.
+	- If this dialogue's mode isn't in hectic mode, you can keep it blank.
 - `options`: A list of options the player can pick from.
 	- `text`: The text that appears in the main dialogue box.
 	- `type`: Whether this option is a good choice or not.

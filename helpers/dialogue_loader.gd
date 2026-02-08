@@ -29,6 +29,7 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 		dialogue.type
 	)
 	dialogue.mode = dialogue_obj.get("mode", dialogue.mode).to_lower()
+	dialogue.nextOnHecticFailureID = dialogue_obj.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
 	
 	var dialogue_obj_options:Array = dialogue_obj.get("options", [])
 	if typeof(dialogue_obj_options) == TYPE_ARRAY:
