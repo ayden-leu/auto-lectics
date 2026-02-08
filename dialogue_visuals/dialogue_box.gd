@@ -190,7 +190,7 @@ func setOptionAlignmentHectic(option:DialogueOption, section:String) -> void:
 			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.center
 			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
 		_:
-			printerr("Unexpected section value. Got: ", section)
+			printerr("DialogueBox: Unexpected section value. Got: ", section)
 
 ## Gets the appropriate general areas to spawn dialogue options in depending on "optionsAnchor"
 func getValidHecticAreas() -> Array[String]:
@@ -204,7 +204,7 @@ func getValidHecticAreas() -> Array[String]:
 		OPTIONS_ANCHOR.bottomRight:
 			return ["right"]
 		_:
-			printerr("optionsAnchor value not accounted for")
+			printerr("DialogueBox: optionsAnchor value not accounted for")
 			return ["???"]
 
 ## Configures aspects of a dialogue option.
@@ -217,7 +217,7 @@ func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
 		setOptionPositionHectic(instance, chosenSection)
 		setOptionAlignmentHectic(instance, chosenSection)
 	else:
-		printerr("Mode is not set to 'normal' or 'hectic.' Got: ", mode)
+		printerr("DialogueBox: Mode is not set to 'normal' or 'hectic.' Got: ", mode)
 	
 	#instance.name = data.text
 	instance.text = data.text
@@ -300,8 +300,8 @@ func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 func _on_timer_bar_timeout() -> void:
 	if hecticFailureDialogueID == "":
 		if realOwner != null:
-			printerr("Hectic Failure Dialogue ID not set for: ", realOwner.name)
+			printerr("DialogueBox: Hectic Failure Dialogue ID not set for: ", realOwner.name)
 		else:
-			printerr("Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
-			printerr("Also, realOwner variable not set.")
+			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
+			printerr("DialogueBox: Also, realOwner variable not set.")
 	_on_option_picked(hecticFailureDialogueID)
