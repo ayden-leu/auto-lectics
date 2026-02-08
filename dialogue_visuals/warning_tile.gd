@@ -2,8 +2,6 @@
 extends Node3D
 class_name WarningTile
 
-# TODO:  rewrite blocking detection to use colllisions instead.
-
 ## Emitted when the warning tile detects it is blocking something important.
 signal blocking_visual
 
@@ -17,7 +15,7 @@ signal blocking_visual
 ## Holds a reference to the timer responsible for shaking the warning tile.
 @onready var shakeTimer:Timer = $ShakeTimer
 ## Holds a reference to the area that detects if the warning tile is blocking something important.
-@onready var visualArea:Area3D = $Background/VisualArea
+@onready var visualArea:CollisionShape3D = $VisualArea/CollisionShape3D
 
 ## The mathematical relationship between the warning tile's radius and the label's pixel size.
 const radiusToLabelPixelRatio:float = 0.005/0.6
@@ -25,14 +23,8 @@ const radiusToLabelPixelRatio:float = 0.005/0.6
 const shakeUpdateInterval:float = 0.1
 ## How far the warning tile can shake from its origin.
 const offsetRange:Dictionary = {
-	"x": {
-		"max": 0.03,
-		"min": -0.03
-	},
-	"y": {
-		"max": 0.03,
-		"min": -0.03
-	}
+	"x": 0.03,
+	"y": 0.03
 }
 
 ## A random number generator.
@@ -49,26 +41,27 @@ func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		updateSize()
 		return
-	
-	#if visualArea.has_overlapping_areas():
-		#_on_visual_area_area_entered(null)
 
 ## Updates the size of the warning tile.
 func updateSize() -> void:
 	background.mesh.radius = radius
 	label.pixel_size = radius * radiusToLabelPixelRatio
+	visualArea.shape.size.x = (radius + offsetRange.x) * 2
+	visualArea.shape.size.y = (radius + offsetRange.y) * 2
 
 ## Shakes the warning tile.
 func shake() -> void:
 	rng.randomize()
-	var offsetX = rng.randf_range(offsetRange.x.min, offsetRange.x.max)
-	var offsetY = rng.randf_range(offsetRange.y.min, offsetRange.y.max)
+	var offsetX = rng.randf_range(-offsetRange.x, offsetRange.x)
+	var offsetY = rng.randf_range(-offsetRange.y, offsetRange.y)
 	
 	background.position.x = offsetX * radius/0.6
 	background.position.y = offsetY * radius/0.6
 
 ## Makes the warning tile look at the player's camera.
 func lookAtCamera():
+	if Engine.is_editor_hint():
+		return
 	look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
 
 ## Kills the warning tile.
@@ -83,6 +76,4 @@ func _on_shake_timer_timeout() -> void:
 
 ## Handles logic for when the warning tile blocks something important.
 func _on_visual_area_area_entered(_area: Area3D) -> void:
-	# TODO:  maybe add a collision check against everything instead of needing to apply an area to everything?
-	# 			or maybe just make sure it doesn't overlap with dialogue-related visuals?
 	emit_signal("blocking_visual", self)

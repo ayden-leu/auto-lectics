@@ -40,7 +40,7 @@ vertical_alignment = 0
 autowrap_mode = 2
 width = 400.0
 
-[node name="VisualArea" type="Area3D" parent="." groups=["VisualArea"]]
+[node name="VisualArea" type="Area3D" parent="."]
 collision_layer = 8
 collision_mask = 0
 monitoring = false

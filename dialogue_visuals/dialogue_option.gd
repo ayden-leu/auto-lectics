@@ -36,8 +36,6 @@ var text:String = "":
 		label.text = value
 ## Holds a reference to the interaction hitbox.
 @onready var interactionHitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
-## Holds a reference to the visual area hitbox that's used by warning tiles to make sure they don't cover it.  (might be removed in the future)
-@onready var visualArea:CollisionShape3D = $InteractionHitbox/CollisionShape3D/VisualArea/CollisionShape3D
 ## Holds a reference to the background of the dialogue option.
 @onready var background:MeshInstance3D = $Background
 ## Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
@@ -148,8 +146,6 @@ func applyBackgroundSettings() -> void:
 	interactionHitbox.shape.size = background.mesh.size + Vector3.ONE * interactionHitboxPadding
 	interactionHitbox.position.y = background.position.y
 	interactionHitbox.position.z = background.position.z
-	
-	visualArea.shape.size = interactionHitbox.shape.size
 	
 	labelHeight = interactionHitbox.shape.size.y
 
