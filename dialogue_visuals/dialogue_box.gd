@@ -7,6 +7,8 @@ class_name DialogueBox
 
 ## Emitted when the dialogue box wants to be updated.
 signal update_me(nextID:String)
+## Emitted when all of the dialogue text is visible.
+signal all_dialogue_text_visible    # TODO
 ## Emitted when an option spawns.
 signal new_option_available
 ## Emitted when all options are spawned.
@@ -93,6 +95,15 @@ func prepare() -> void:
 		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
 		timer.start()
+
+## Make the dialogue box start doing things.
+func start() -> void:
+	# TODO:  start text writing on effect
+	# 	when all dialogue text is visible:
+	# 		emit signal all_dialogue_text_visible
+	#		createOptions()
+	#		or endDialogue() if there are no options
+	pass
 
 ## Creates each option that the player can choose from for this dialogue object.
 func createOptions() -> void:

@@ -5,7 +5,7 @@ class_name NPC
 # TODO:  verify/add signal emitions for all signals
 
 ## Emitted when a dialogue entry is fully displayed.
-signal dialogue_all_visible        # TODO
+signal dialogue_all_visible
 ## Emitted when a dialogue option is spawned.
 signal option_available
 ## Emitted when all dialogue options have been spawned.
@@ -63,6 +63,7 @@ func connectDialogueBoxSignals() -> void:
 	dialogueBox.connect("update_me", loadNextDialogue)
 	dialogueBox.connect("new_option_available", _on_dialogue_box_new_option_spawned)
 	dialogueBox.connect("all_options_available", _on_dialogue_box_all_options_available)
+	dialogueBox.connect("all_dialogue_text_visible", _on_dialogue_box_all_dialogue_text_visible)
 
 ## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
 func loadDialogueData(dialogueEntry:Dictionary) -> void:
@@ -79,7 +80,9 @@ func loadNextDialogue(nextDialogueID: String) -> void:
 	currentDialogueID = nextDialogueID
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	loadDialogueData(dialogue)
+	dialogueBox.start()
 	
+	# TODO: remove this section.  move logic to dialogue_box.start()
 	await get_tree().create_timer(delayStartShowingOptions).timeout
  
 	if dialogue.options.size() == 0:
@@ -114,6 +117,9 @@ func _on_dialogue_box_new_option_spawned() -> void:
 ## Emits the "all_options_available" signal.
 func _on_dialogue_box_all_options_available() -> void:
 	all_options_available.emit()
+
+func _on_dialogue_box_all_dialogue_text_visible() -> void:
+	dialogue_all_visible.emit()
 
 
 # Dev-ing stuff
