@@ -5,10 +5,6 @@ var mode:String = "normal"
 var canChooseOption:bool = false
 
 # TODO:  uupdate this entire thing
-# TODO:  update dummy dialogue to fit new format
-# TODO:  add new fields:
-#			hectic mode duration
-#			nextID for when you fail hectic mode
 
 var normalDialogue:Array[Dictionary] = [
 	{

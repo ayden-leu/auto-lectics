@@ -192,11 +192,3 @@ static func _read_text_file(path: String) -> String:
 		return ""
 	
 	return file.get_as_text()
-
-# Optional: resolve final numeric speed used by your typewriter
-func resolve_write_speed_chars_per_sec(node: Dictionary) -> float:
-	var custom := float(node.get("writeSpeedCustom", -1.0))
-	if custom >= 0.0:
-		return custom
-	var preset := str(node.get("writeSpeed", "medium")).to_lower()
-	return float(DialogueDefaults.WRITE_SPEED_PRESETS.get(preset, DialogueDefaults.WRITE_SPEED_PRESETS["medium"]))
