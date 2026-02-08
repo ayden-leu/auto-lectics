@@ -18,10 +18,6 @@ const DIALOGUE = {
 	"storageLocation": "res://dialogue_objects/",
 	"fileType": ".json"
 }
-## The main dialogue loader. Use this instead of creating a new one.
-var dialogueLoader:DialogueLoader = DialogueLoader.new():
-	set(value):
-		return
 
 ## Gets the path to a dialogue object.
 func getDialoguePath(entityName:String, id:String) -> String:
@@ -30,11 +26,11 @@ func getDialoguePath(entityName:String, id:String) -> String:
 ## Gets the dialogue information within a dialogue object.
 func getDialogueNode(entityName:String, id: String) -> Dictionary:
 	var path:String = getDialoguePath(entityName, id)
-	var dialogue:Dictionary = dialogueLoader.load_dialogue_node_file(path)
+	var dialogue:Dictionary = DialogueLoader.loadDialogueNodeFile(path)
 	
 	if dialogue.is_empty():
 		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, path])
-		return dialogueLoader.load_dialogue_node_file(
+		return DialogueLoader.loadDialogueNodeFile(
 			DIALOGUE.storageLocation + "fallback" + DIALOGUE.fileType
 		)
 	return dialogue
