@@ -2,102 +2,135 @@ extends Node3D
 class_name DialogueBox
 
 # TODO:  adjust size of dialogue box dynamically
+# TODO:  verify/add signal emitions for all signals
+# TODO:  make optionsAnchor configurable in dialogue .json file
 
-signal update_me(next_id: String)
-
+## Emitted when the dialogue box wants to be updated.
+signal update_me(nextID:String)
+## Emitted when an option spawns.
 signal new_option_available
-signal all_options_spawned
+## Emitted when all options are spawned.
+signal all_options_available
 
+## Used for referencing which corner of the dialogue box to start spawning options from.
 enum OPTIONS_ANCHOR {
-	topLeft = 0,
-	topRight = 1,
-	bottomLeft = 2,
-	bottomRight = 3
-}
-enum HECTIC_SECTION {
-	left = 0,
-	right = 1,
-	top = 2
+	topLeft,
+	topRight,
+	bottomLeft,
+	bottomRight
 }
 
+## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly. 
 @export var optionsAnchor:OPTIONS_ANCHOR = OPTIONS_ANCHOR.topLeft
-
-@onready var myLabel:Label3D = $DialogueLabel
+## Holds a reference to the text label that displays the current dialogue.
+@export var myLabel:Label3D
+## Holds the text that displays the current dialogue.  Mainly just used as an easier way to get/set the label text.
 var text:String = "":
 	set(value):
 		text = value
 		myLabel.text = value
-@onready var optionScene:Resource = preload(Globals.SCENES.DialogueOption)
+
+## Holds a reference to the dialogue option resource.
+const optionScene:Resource = preload(Globals.SCENES.DialogueOption)
+## Holds a reference to the warning tile resource.
+const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
+
+## Holds the available spawn positions for dialogue options for both modes.
 @onready var optionSpawnPositions = {
 	"normal": $OptionPositions/Normal.get_children(),
-	"hecticSections": $OptionPositions/Hectic.get_children()
+	"hectic": {
+		"root": $OptionPositions/Hectic,
+		"left": $OptionPositions/Hectic/Left.get_children(),
+		"right": $OptionPositions/Hectic/Right.get_children(),
+		"top": $OptionPositions/Hectic/Top.get_children(),
+	}
 }
+## Holds all spawned options.
 @onready var optionContainer = $OptionsContainer
-@onready var warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
+## Holds the available spawn positions for warning tiles.
 @onready var warningAreas:Array = $WarningPositionAreas.get_children()
+## Holds all spawned warning tiles.
 @onready var warningsContainer:Node3D = $WarningsContainer
+## The timer barr that appears when a hectic dialogue object is loaded.
 @onready var timer:TimerBar = $Timer
 
+## The owner of this dialogue box.
+var realOwner
+## A random number generator.
 var rng:RandomNumberGenerator = RandomNumberGenerator.new()
-var currentDialogueID
+## The ID of the current dialogue.
+var currentDialogueID:String
+## The ID of dialogue object to go to when the player fails a hectic dialogue interaction.
+var hecticFailureDialogueID:String
+## Holds the data for the options to spawn.
 var optionData:Array = []
-var loadedOptions:Array = []
+## Holds references to all spawned options.
+var spawnedOptions:Array = []
+## The dialogue mode.
 var mode:String = "normal"
+## The number of warning tiles to spawn during hectic mode.
 var numWarnings:int = 6
+## Holds references to all spawned warning tiles.
 var spawnedWarningTiles:Array = []
 
 func _ready() -> void:
-	$WarningPositionAreas.visible = false
+	if Engine.is_editor_hint():
+		$WarningPositionAreas.visible = true
+	else:
+		$WarningPositionAreas.visible = false
 	
 func _process(_delta: float) -> void:
 	pass
 
+## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
 	optionData = options
 	optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
 
+## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
-	# TODO:  load configuration. maybe
-	
 	if mode == "hectic":
-		spawnWarnings(numWarnings)
+		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
 		timer.start()
 
+## Creates each option that the player can choose from for this dialogue object.
 func createOptions() -> void:
-	var loadingDialogueID
-	
+	var loadingDialogueID:String
 	var prevDelay:float = 0.0
+	
 	for optionObjectData in optionData:
 		loadingDialogueID = currentDialogueID
 		
-		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0)
-		if spawnDelay > 0:
-			await get_tree().create_timer(spawnDelay).timeout
-			if loadingDialogueID != currentDialogueID:
-				return
-		prevDelay += spawnDelay
+		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0.001)
+		#if spawnDelay > 0:
+		await get_tree().create_timer(spawnDelay).timeout
+		if loadingDialogueID != currentDialogueID:
+			return
+		prevDelay += spawnDelay - 0.001
 		
 		var newOption:DialogueOption = spawnOption()
-		configureOptionInstance(newOption, optionObjectData)
+		configureDialogueOption(newOption, optionObjectData)
 		newOption.spawn()
 		new_option_available.emit()
 	
-	all_options_spawned.emit()
+	all_options_available.emit()
 
+## Creates a dialogue option scene and saves a reference to it in "spawnedOptions"
 func spawnOption() -> DialogueOption:
 	var option:DialogueOption = optionScene.instantiate()
 	optionContainer.add_child(option)
-	loadedOptions.push_back(option)
+	spawnedOptions.push_back(option)
 	return option
 
+## Updates the position of a dialogue option in normal mode.
 func setOptionPositionNormal(option:DialogueOption) -> void:
-	if loadedOptions.size() == 1:
+	if spawnedOptions.size() == 1:
 		option.position = optionSpawnPositions.normal[optionsAnchor].position
 		option.rotation_degrees = optionSpawnPositions.normal[optionsAnchor].rotation_degrees
 		return
 	
-	var lastOption:DialogueOption = loadedOptions[-2]
+	var lastOption:DialogueOption = spawnedOptions[-2]
 	var offsetMultiplier:float = 1.001
 	if optionsAnchor == OPTIONS_ANCHOR.bottomLeft or optionsAnchor == OPTIONS_ANCHOR.bottomRight:
 		offsetMultiplier *= -1
@@ -105,6 +138,7 @@ func setOptionPositionNormal(option:DialogueOption) -> void:
 	option.position = lastOption.position + Vector3(0, -lastOption.labelHeight * offsetMultiplier, 0)
 	option.rotation_degrees = lastOption.rotation_degrees
 
+## Updates the alignment of a dialogue option in normal mode.
 func setOptionAlignmentNormal(option:DialogueOption) -> void:
 	match optionsAnchor:
 		OPTIONS_ANCHOR.topLeft:
@@ -120,73 +154,93 @@ func setOptionAlignmentNormal(option:DialogueOption) -> void:
 			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
 			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
 
-func setOptionPositionHectic(option:DialogueOption, section:HECTIC_SECTION) -> void:
+## Updates the position of a dialogue option in hectic mode.
+func setOptionPositionHectic(option:DialogueOption, section:String) -> void:
 	# TODO:  maybe pick a position like we do with the warning tiles.
-	var potentialPositions:Array = optionSpawnPositions.hecticSections[section].get_children()
+	var potentialPositions:Array = optionSpawnPositions.hectic[section]
+	for usedPosition in optionSpawnPositions.hectic.root.usedPositions:
+		potentialPositions.erase(usedPosition)
+	
 	var newPosition:Marker3D = potentialPositions.pick_random()
+	optionSpawnPositions.hectic.root.usedPositions.push_back(newPosition)
 	
 	option.position = newPosition.position
 	option.rotation_degrees = newPosition.rotation_degrees
-	
-	# TODO:  maybe figuree out a better way of removing a position from being chosen
-	newPosition.queue_free()
 
-func setOptionAlignmentHectic(option:DialogueOption, section:HECTIC_SECTION) -> void:
+## Updates the alignment of a dialogue option in hectic mode.
+func setOptionAlignmentHectic(option:DialogueOption, section:String) -> void:
 	match section:
-		HECTIC_SECTION.left:
+		"left":
 			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
 			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
-		HECTIC_SECTION.right:
+		"right":
 			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
 			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
-		HECTIC_SECTION.top:
+		"top":
 			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.center
 			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+		_:
+			printerr("Unexpected section value. Got: ", section)
 
-func configureOptionInstance(instance:DialogueOption, data:Dictionary) -> void:
+## Gets the appropriate general areas to spawn dialogue options in depending on "optionsAnchor"
+func getValidHecticAreas() -> Array[String]:
+	match optionsAnchor:
+		OPTIONS_ANCHOR.topLeft:
+			return ["left", "top"]
+		OPTIONS_ANCHOR.topRight:
+			return ["right", "top"]
+		OPTIONS_ANCHOR.bottomLeft:
+			return ["left"]
+		OPTIONS_ANCHOR.bottomRight:
+			return ["right"]
+		_:
+			printerr("optionsAnchor value not accounted for")
+			return ["???"]
+
+## Configures aspects of a dialogue option.
+func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
 	if mode == "normal":
 		setOptionPositionNormal(instance)
 		setOptionAlignmentNormal(instance)
 	elif mode == "hectic":
-		# TODO:  remove section opposite of options anchor so we don't overlap with NPCs
-		#		 maybe just check for collision instead of relying on areas?
-		#			would require spawning option in annd setting visible to check for collisions
-		rng.randomize()
-		var chosenSection:HECTIC_SECTION = rng.randi_range(0, HECTIC_SECTION.size()-1) as HECTIC_SECTION
+		var chosenSection:String = getValidHecticAreas().pick_random()
 		setOptionPositionHectic(instance, chosenSection)
 		setOptionAlignmentHectic(instance, chosenSection)
-	
-	# TODO:  apply this aspect properly
-	# Optional: if your DialogueOption supports lifetime
-	if instance.has_method("set_lifetime") and data.has("lifetime"):
-		instance.set_lifetime(float(data.get("lifetime", -1.0)))
-	elif "lifetime" in instance:
-		# If lifetime is a property, this will work too
-		instance.lifetime = float(data.get("lifetime", -1.0))
+	else:
+		printerr("Mode is not set to 'normal' or 'hectic.' Got: ", mode)
 	
 	#instance.name = data.text
 	instance.text = data.text
 	instance.nextDialogue = data.nextID
+	instance.lifetime = data.lifetime
 	instance.connect("option_picked", _on_option_picked)
 
-func spawnWarnings(amount:int) -> void:
+## Creates "amount" warning tiles.
+func createWarningTiles(amount:int) -> void:
 	for _i in range(amount):
-		var spawnLocation:Vector3 = getWarningTilePosition()
-		
-		var warningTile:WarningTile = warningTileScene.instantiate()
-		warningsContainer.add_child(warningTile)
-		spawnedWarningTiles.push_back(warningTile)
-		
-		warningTile.position = spawnLocation
-		warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
-		warningTile.connect("blocking_visual", _on_warning_tile_overlap)
+		var warningTile:WarningTile = spawnWarningTile()
+		configureWarningTile(warningTile)
 
+## Creates a warning tile scene and saves a reference to it in "spawnedWarningTiles"
+func spawnWarningTile() -> WarningTile:
+	var warningTile:WarningTile = warningTileScene.instantiate()
+	warningsContainer.add_child(warningTile)
+	spawnedWarningTiles.push_back(warningTile)
+	return warningTile
+
+## Configures a warning tile.
+func configureWarningTile(warningTile:WarningTile) -> void:
+	warningTile.position = getWarningTilePosition()
+	warningTile.lookAtCamera()
+	warningTile.connect("blocking_visual", _on_warning_tile_overlap)
+
+## Gets a valid position to move a warning tile to based on the pre-configured WarningPositionAreas.
 func getWarningTilePosition() -> Vector3:
-	# TODO:  round robin pick the areas instead
-	rng.randomize()
-	var chosenArea:MeshInstance3D = warningAreas[rng.randi_range(0,2)]
-	
+	# TODO:  maybe make sure each area is picked at least once before picking again?
+	var chosenArea:MeshInstance3D = warningAreas.pick_random()
 	var maxOffset:Vector3 = chosenArea.mesh.get_aabb().size
+	
+	rng.randomize()
 	var offset:Vector3 = Vector3(
 		rng.randf_range(-maxOffset.x, maxOffset.x),
 		rng.randf_range(-maxOffset.y, maxOffset.y),
@@ -194,39 +248,50 @@ func getWarningTilePosition() -> Vector3:
 	)
 	return chosenArea.position + offset
 
+## Removes the dialogue box from the world.
 func kill() -> void:
 	queue_free()
 
 
-
-func _on_option_picked(data) -> void:
-	for _i in range(loadedOptions.size()):
-		var toKill:DialogueOption = loadedOptions.pop_front()
-		toKill.kill()
+## Handles logic for when a dialogue option is picked.
+func _on_option_picked(nextDialogueID:String) -> void:
+	for _i in range(spawnedOptions.size()):
+		var toKill:DialogueOption = spawnedOptions.pop_front()
+		if toKill:
+			toKill.kill()
+	optionSpawnPositions.hectic.root.usedPositions.clear()
 	
-	# TODO:  maybe create a small script for wa
 	for _i in range(spawnedWarningTiles.size()):
 		var toKill:WarningTile = spawnedWarningTiles.pop_front()
 		toKill.kill()
 	
 	timer.stop()
-	update_me.emit(data)
+	update_me.emit(nextDialogueID)
 
+## Handles logic for when a warning tile is blocking an important subject.
 func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
-	# TODO:  move warning tile up and left/right instead of random position in area
 	if warningTile.numTimesRepositioned > 3:
 		return
 	
 	rng.randomize()
 	var delay:float = rng.randf_range(0.0, 1.0)
-	
 	await get_tree().create_timer(delay).timeout
+	
+	# it's possible for the dialogue box to kill() in between the delay starting and stopping.
 	if not warningTile:
 		return
 	
+	# TODO:  maybe move warning tile up and left/right instead of random position in area
 	warningTile.position = getWarningTilePosition()
+	warningTile.lookAtCamera()
 	warningTile.numTimesRepositioned += 1
-	warningTile.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
 
+## Handles logic for when an option isn't picked in time during hectic mode.
 func _on_timer_bar_timeout() -> void:
-	_on_option_picked("failure")
+	if hecticFailureDialogueID == "":
+		if realOwner != null:
+			printerr("Hectic Failure Dialogue ID not set for: ", realOwner.name)
+		else:
+			printerr("Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
+			printerr("Also, realOwner variable not set.")
+	_on_option_picked(hecticFailureDialogueID)
