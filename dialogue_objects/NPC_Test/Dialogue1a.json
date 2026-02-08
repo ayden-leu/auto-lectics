@@ -98,7 +98,7 @@
 				}
 			},
 			"spawnDelay": 0,
-			"lifetime": -1,
+			"lifetime": 0.75,
 			"nextID": "Dialogue4"
 		}
 	]

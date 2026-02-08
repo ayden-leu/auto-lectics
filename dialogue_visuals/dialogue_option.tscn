@@ -305,3 +305,8 @@ monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionHitbox/CollisionShape3D/VisualArea"]
 shape = SubResource("BoxShape3D_wakav")
+
+[node name="LifeTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]

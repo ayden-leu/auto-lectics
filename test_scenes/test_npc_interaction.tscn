@@ -71,7 +71,6 @@ environment = SubResource("Environment_f1udx")
 
 [node name="NPC_Test" parent="npcs" instance=ExtResource("1_un40c")]
 transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 3.4547997, 0.09680176, -3.9502602)
-initialDialogueID = "Dialogue1a_hectic"
 
 [node name="NPC_Test2" parent="npcs" instance=ExtResource("1_un40c")]
 transform = Transform3D(-0.9733272, 0, 0.22942129, 0, 1, 0, -0.22942129, 0, -0.9733272, 6.7025104, 0.09680176, 1.4582052)

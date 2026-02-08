@@ -24,6 +24,7 @@ enum VERTICAL_ALIGNMENT{
 @onready var hitbox:CollisionShape3D = $InteractionHitbox/CollisionShape3D
 @onready var visualArea:CollisionShape3D = $InteractionHitbox/CollisionShape3D/VisualArea/CollisionShape3D
 @onready var background:MeshInstance3D = $Background
+@onready var lifeTimer:Timer = $LifeTimer
 
 var hitboxPadding:float = 0.05
 var labelHeight:float = 0.0  # used externally
@@ -34,6 +35,7 @@ var text:String = "":
 		text = value
 		label.text = value
 var spawnDelay:float = 0.0
+var lifetime:float = 1.0
 var nextDialogue:String
 
 func _ready() -> void:
@@ -58,10 +60,13 @@ func spawn() -> void:
 	
 	visible = true
 	hitbox.disabled = false
+	if lifetime > 0:
+		lifeTimer.wait_time = lifetime
+		lifeTimer.start()
 
 func applySettings() -> void:
 	applyLabelSettings()
-	applyBackgroundSettingsAy()
+	applyBackgroundSettings()
 
 func applyLabelSettings() -> void:
 	# TODO:  call after the configuration gets set up
@@ -92,7 +97,7 @@ func applyLabelSettings() -> void:
 		_:
 			printerr("Unhandled vertical alignment: ", verticalAlignment)
 
-func applyBackgroundSettingsAy() -> void:
+func applyBackgroundSettings() -> void:
 	var labelSize:Vector3 = label.get_aabb().size
 	
 	background.mesh.size.x = dummyThickness
@@ -135,3 +140,6 @@ func kill():
 
 func _on_interaction() -> void:
 	emit_signal("option_picked", nextDialogue)
+
+func _on_life_timer_timeout() -> void:
+	kill()
