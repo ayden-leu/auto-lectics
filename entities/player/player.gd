@@ -152,6 +152,9 @@ func handleDirectionInput(direction: Vector3) -> void:
 
 # Rotates the player when the mouse moves horizontally
 func _onMouseMoved(distanceMoved:Vector2) -> void:
+	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		return
+	
 	#print(name + ": mouse moved")
 	rotation_degrees.y += -distanceMoved.x
 	interactionRaycast.rotation_degrees.x -= -distanceMoved.y

@@ -39,6 +39,9 @@ func thirdPersonMode() -> void:
 
 # Rotates the camera horizontally and vertically when the mouse moves
 func _onMouseMoved(distanceMoved:Vector2) -> void:
+	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		return
+		
 	#print(name + ": mouse moved")
 	rotation_degrees.x += -distanceMoved.y
 	rotation_degrees.y += -distanceMoved.x

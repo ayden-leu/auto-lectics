@@ -79,6 +79,7 @@ initialDialogueID = "Dialogue1a_hectic"
 
 [node name="NPC_Test3" parent="npcs" instance=ExtResource("1_un40c")]
 transform = Transform3D(0.9995405, 0, 0.030311748, 0, 1, 0, -0.030311748, 0, 0.9995405, -3.3436327, 0.09680176, -1.3710213)
+initialDialogueID = "Dialogue1b"
 
 [node name="Player" parent="." instance=ExtResource("3_aue1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94127333, 1.7612977, 1.3495631)
