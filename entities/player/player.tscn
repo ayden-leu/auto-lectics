@@ -9,6 +9,18 @@
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 2
 script = ExtResource("1_q8vf3")
+max_speed = null
+acceleration = null
+deceleration = null
+turn_deceleration_boost = null
+air_acceleration = null
+air_deceleration = null
+air_control = null
+jump_height = null
+time_to_apex = null
+apex_hang_time = null
+fall_gravity_multiplier = null
+low_jump_multiplier = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_hyl87")

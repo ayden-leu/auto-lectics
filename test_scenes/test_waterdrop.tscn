@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=3 uid="uid://ce5ufr7w3rky4"]
+
+[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_qu7pd"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_wsfuu"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_eqdbr"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_gedth"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_hyl87"]
+sky_material = SubResource("ProceduralSkyMaterial_h4x50")
+
+[sub_resource type="Environment" id="Environment_x333r"]
+background_mode = 2
+sky = SubResource("Sky_hyl87")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_f1nio"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_silsq"]
+data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hbbb5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6e2s"]
+albedo_color = Color(0.92941177, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6eo2x"]
+material = SubResource("StandardMaterial3D_g6e2s")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="Skin" id="Skin_uvnsu"]
+
+[node name="Test_PlayerMovement" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_x333r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(0.9982836, -0.05712497, -0.012912117, 0.05642047, 0.9971761, -0.04956478, 0.015707068, 0.04875123, 0.9986875, -0.2657839, 0.1674071, -0.16342661)
+mesh = SubResource("BoxMesh_f1nio")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/MeshInstance3D"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_silsq")
+
+[node name="DebugCamera" parent="." instance=ExtResource("1_qu7pd")]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.052335963, 0, -0.052335963, 0.9986295, 0.13, 4.095, 9.739)
+
+[node name="Player" parent="." instance=ExtResource("2_wsfuu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
+max_speed = 5.0
+acceleration = 18.0
+deceleration = 28.0
+turn_deceleration_boost = 6.0
+air_acceleration = 10.0
+air_deceleration = 6.0
+air_control = 0.45
+jump_height = 1.2
+time_to_apex = 0.4
+apex_hang_time = 0.04
+fall_gravity_multiplier = 2.0
+low_jump_multiplier = 1.35
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_eqdbr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
+focus = NodePath("../Player")
+
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_gedth")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowWhenInteract = [NodePath("../PlayerCamera")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6444097, 4.565408, 0)
+ignore_occlusion_culling = true
+trail_enabled = true
+trail_lifetime = 0.37
+process_material = SubResource("ParticleProcessMaterial_hbbb5")
+draw_pass_1 = SubResource("BoxMesh_6eo2x")
+draw_skin = SubResource("Skin_uvnsu")
