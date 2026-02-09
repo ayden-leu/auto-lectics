@@ -1,0 +1,19 @@
+{
+	"text": "You don't know...you sound like PR3-CHR. When he lost his last position, he really began to lose it.",
+	"options": [
+		{
+			"text": "Tell me more.",
+			"type": "Negative",
+			"nextID": "dialogue3_Fail"
+		},
+		{
+			"text": "I should go talk to him.",
+			"nextID": "dialogue3_Neutral"
+		},
+		{
+			"text": "I spotted another bot too.",
+			"type": "Positive",
+			"nextID": "dialogue4"
+		}
+	]
+}

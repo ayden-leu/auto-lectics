@@ -1,11 +1,11 @@
 {
-	"text": "THE POWER RUNS INSIDE EM, CONTROLS EM!",
+	"text": "NEW!?!?! *Parts of the bot fall off*",
 	"type": "Happy",
 	"options": [
 		{
 			"text": "[Continue]",
 			"type": "Positive",
-			"nextID": "dialogue3_Continue2"
+			"nextID": "dialogue2_Continue1"
 		}
 	]
 }

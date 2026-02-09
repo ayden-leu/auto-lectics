@@ -1,0 +1,20 @@
+{
+	"text": "*Bot plays a mixture of fast and slow tempoed music bits*",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "I can't understand you.",
+			"type": "Negative",
+			"nextID": "dialogue4_Fail"
+		},
+		{
+			"text": "Uhh...",
+			"nextID": "dialogue4_Neutral"
+		},
+		{
+			"text": "Seems like a lot has been going on.",
+			"type": "Positive",
+			"nextID": "dialogue5"
+		}
+	]
+}

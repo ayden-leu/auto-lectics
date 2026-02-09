@@ -1,0 +1,20 @@
+{
+	"text": "*The bot plays a fast-tempo music bit.*",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "Can you not speak?",
+			"type": "Negative",
+			"nextID": "dialogue3_Fail"
+		},
+		{
+			"text": "Listening to anything good?",
+			"nextID": "dialogue3_Neutral"
+		},
+		{
+			"text": "What's going on here?",
+			"type": "Positive",
+			"nextID": "dialogue4"
+		}
+	]
+}

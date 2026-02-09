@@ -1,0 +1,28 @@
+{
+	"text": "Who are you? Where'd you come from? How'd you get here?",
+	"type": "Angry",
+	"options": [
+		{
+			"text": "That's not important.",
+			"type": "Negative",
+			"nextID": "dialogue1_Fail"
+		},
+		{
+			"text": "Excuse me?",
+			"nextID": "dialogue1_Neutral"
+		},
+		{
+			"text": "Are you okay?",
+			"nextID": "dialogue1_Neutral"
+		},
+		{
+			"text": "Who are you?",
+			"nextID": "dialogue1_Neutral"
+		},
+		{
+			"text": "I'm new here.",
+			"type": "Positive",
+			"nextID": "dialogue2"
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"text": "Likely R4-DO, yeah we try not to bother them. They use to handle all off-world communications, but after those were severed they just listen to the abyss.",
+	"options": [
+		{
+			"text": "Anything else?",
+			"type": "Negative",
+			"nextID": "dialogue4_Fail"
+		},
+		{
+			"text": "I should go talk to them.",
+			"nextID": "dialogue4_Neutral"
+		},
+		{
+			"text": "You know a lot about the others.",
+			"type": "Positive",
+			"nextID": "dialogue5"
+		}
+	]
+}

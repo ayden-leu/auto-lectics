@@ -1,0 +1,20 @@
+{
+	"text": "*The bot points its antennas at you. A furious static can be heard.*",
+	"type": "Angry",
+	"options": [
+		{
+			"text": "Sorry, I'll back off.",
+			"type": "Negative",
+			"nextID": "dialogue2_Fail"
+		},
+		{
+			"text": "What are you doing here?",
+			"nextID": "dialogue2_Neutral"
+		},
+		{
+			"text": "Am I interrupting?",
+			"type": "Positive",
+			"nextID": "dialogue3"
+		}
+	]
+}

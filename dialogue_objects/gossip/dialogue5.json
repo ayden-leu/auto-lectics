@@ -1,0 +1,19 @@
+{
+	"text": "All thanks to my flock.",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "So you spy on them?",
+			"type": "Negative",
+			"nextID": "dialogue5_Fail"
+		},
+		{
+			"text": "The birds?",
+			"nextID": "dialogue5_Neutral"
+		},
+		{
+			"text": "Nice talking to you.",
+			"type": "Positive"
+		}
+	]
+}
