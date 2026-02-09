@@ -92,6 +92,7 @@ dialogue_objects
 		- Neutral
 		- Negative
 	- `nextID`: The ID of the next dialogue entry.
+		- If this is empty, the dialogue will end when the player selects this dialogue.
 
 There are other optional fields you can fill out to customimze the dialogue.
 `Dialogue1a.json` has all posssible fields written out, and `Dialogue1b.json` is a minimal version of it.

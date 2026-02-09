@@ -77,7 +77,11 @@ func loadDialogueData(dialogueEntry:Dictionary) -> void:
 
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
+	if nextDialogueID == "":
+		endDialogue()
+		return
 	currentDialogueID = nextDialogueID
+	
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	loadDialogueData(dialogue)
 	dialogueBox.start()
@@ -87,7 +91,6 @@ func loadNextDialogue(nextDialogueID: String) -> void:
  
 	if dialogue.options.size() == 0:
 		endDialogue()
-		finished_dialogue.emit()
 		return
 
 	dialogueBox.createOptions()
@@ -99,6 +102,7 @@ func endDialogue() -> void:
 		dialogueBox = null
 	isTalking = false
 	connectedDialogueBoxSignals = false
+	finished_dialogue.emit()
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
