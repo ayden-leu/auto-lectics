@@ -7,7 +7,7 @@
 		{
 			"text": "[Continue]",
 			"type": "Positive",
-			"next": "dialogue1_Continue8"
+			"nextID": "dialogue1_Continue8"
 		}
 	]
 }

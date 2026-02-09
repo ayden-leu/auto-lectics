@@ -5,16 +5,16 @@
 		{
 			"text": "I don't want to be turned on.",
 			"type": "Negative",
-			"next": "dialogue3_Fail"
+			"nextID": "dialogue3_Fail"
 		},
 		{
 			"text": "Can you elaborate?",
-			"next": "dialogue3_Neutral"
+			"nextID": "dialogue3_Neutral"
 		},
 		{
 			"text": "I'm ready to be turned on.",
 			"type": "Positive",
-			"next": "dialogue4"
+			"nextID": "dialogue4"
 		}
 	]
 }

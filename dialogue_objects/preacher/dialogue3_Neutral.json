@@ -4,12 +4,12 @@
 		{
 			"text": "Okay I'm in.",
 			"type": "Positive",
-			"next": "dialogue4"
+			"nextID": "dialogue4"
 		},
 		{
 			"text": "I don't want to be turned on.",
 			"type": "Negative",
-			"next": "dialogue3_Fail"
+			"nextID": "dialogue3_Fail"
 		}
 	]
 }
