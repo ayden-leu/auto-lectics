@@ -1,33 +1,25 @@
 [gd_scene load_steps=4 format=3 uid="uid://bxfsxhyjvsml8"]
 
-[ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://entities/npcs/npc.gd" id="1_u8dq6"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
+[ext_resource type="PackedScene" uid="uid://cxmlmdlsqdkd6" path="res://models/npcs/looker.fbx" id="2_2ow1n"]
+[ext_resource type="Script" uid="uid://y3bv4bjrakvy" path="res://entities/npcs/looker.gd" id="3_y34t1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.47114
 
-[node name="NPC_Test" type="Node3D" node_paths=PackedStringArray("dialogueBoxAnchor")]
-script = ExtResource("1_u8dq6")
-dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
+[node name="looker" type="Node3D" node_paths=PackedStringArray("model")]
+script = ExtResource("3_y34t1")
+model = NodePath("lookerModel")
 myName = "looker"
 initialDialogueID = "Dialogue1a"
-hecticFailureDialogueID = "failure"
 
-[node name="model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-visible = false
-mesh = SubResource("BoxMesh_4o76d")
-skeleton = NodePath("../..")
+[node name="lookerModel" parent="." instance=ExtResource("2_2ow1n")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 
 [node name="Hitbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 7.646444, -0.15410192)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_u8dq6")
-
-[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
-transform = Transform3D(0.7554435, 1.0740387, 0.80457807, -1.2472496, 0.902673, -0.03390473, -0.49525064, -0.6349977, 1.3126708, 1.8826584, 1.214, 2.7194102)

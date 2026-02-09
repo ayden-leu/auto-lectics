@@ -38,7 +38,7 @@ Engine:  Godot
 	- Holds files meant for developers to test stuff.
 	- These files should not be used in the final game.
 13. `textures`:
-	- Holds all textures not related to a model..
+	- Holds all textures not related to a model.
 14. `ui`:
 	- Holds files related to non-diagetic things the player interacts with.
 	- e.g  Main menu, HUD, settings

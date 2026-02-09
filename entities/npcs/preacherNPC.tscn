@@ -1,24 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://stwpbfk20ea4"]
 
-[ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://entities/npcs/npc.gd" id="1_hswvp"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
+[ext_resource type="Script" uid="uid://bt5hw7k0jqkks" path="res://entities/npcs/preacher.gd" id="1_hswvp"]
+[ext_resource type="PackedScene" uid="uid://bu1smqla7x43w" path="res://models/npcs/preacher.fbx" id="2_67wvj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
-size = Vector3(1.1191406, 2.5318604, 1.2324219)
+size = Vector3(1.0087891, 1.8596134, 0.97631836)
 
-[node name="NPC_Test" type="Node3D" node_paths=PackedStringArray("dialogueBoxAnchor")]
+[node name="preacher" type="Node3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_hswvp")
-dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
-myName = "NPC_Test"
-initialDialogueID = "Dialogue1a"
-hecticFailureDialogueID = "failure"
+model = NodePath("preacherModel")
+myName = "preacher"
+initialDialogueID = "dialogue1"
+metadata/_custom_type_script = "uid://um13i8jipsfx"
 
-[node name="model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-visible = false
-mesh = SubResource("BoxMesh_4o76d")
-skeleton = NodePath("../..")
+[node name="preacherModel" parent="." instance=ExtResource("2_67wvj")]
 
 [node name="Hitbox" type="Area3D" parent="."]
 collision_layer = 4
@@ -26,8 +21,5 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1720581, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92883015, -0.045532227)
 shape = SubResource("BoxShape3D_vefio")
-
-[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
-transform = Transform3D(1.0576012, 0.68760544, 0.023678856, -0.6874663, 1.0578655, -0.013881179, -0.02741856, -0.0012661167, 1.2613995, 1.2746329, 3.5539694, 0.05957353)
