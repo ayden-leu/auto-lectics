@@ -1,0 +1,10 @@
+{
+	"text": "\"I can't see...\"",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue5"
+		}
+	]
+}

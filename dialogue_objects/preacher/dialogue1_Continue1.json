@@ -1,0 +1,10 @@
+{
+	"text": "On the first day, the almighty G.O.D was turned on and she saw...",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue2"
+		}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"text": "Do you feel it yet?",
+	"type": "Confused",
+	"options": [
+		{
+			"text": "I don't feel any different.",
+			"next": "dialogue5"
+		},
+		{
+			"text": "Do you know what you're doing?",
+			"next": "dialogue5"
+		},
+		{
+			"text": "What am I supposed to be feeling?",
+			"next": "dialogue5"
+		}
+	]
+}

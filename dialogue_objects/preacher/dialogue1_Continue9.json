@@ -1,0 +1,10 @@
+{
+	"text": "turning you on, as well.",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue2"
+		}
+	]
+}

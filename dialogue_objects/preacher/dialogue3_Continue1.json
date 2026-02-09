@@ -1,0 +1,11 @@
+{
+	"text": "THE POWER RUNS INSIDE EM, CONTROLS EM!",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue3_Continue2"
+		}
+	]
+}

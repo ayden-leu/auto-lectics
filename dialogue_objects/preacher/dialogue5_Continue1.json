@@ -1,0 +1,10 @@
+{
+	"text": "I didn't think this far...",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue5_Continue2"
+		}
+	]
+}

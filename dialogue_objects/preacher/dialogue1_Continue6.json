@@ -1,0 +1,10 @@
+{
+	"text": "On that third day, the almighty and merciful G.O.D created life.",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue7"
+		}
+	]
+}

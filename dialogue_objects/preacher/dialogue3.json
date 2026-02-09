@@ -1,0 +1,11 @@
+{
+	"text": "Everyone feast your eyes on this newly activated body...",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue3_Continue1"
+		}
+	]
+}

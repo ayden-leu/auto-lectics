@@ -1,0 +1,15 @@
+{
+	"text": "There's no time for elaboration. Are you in or out?",
+	"options": [
+		{
+			"text": "Okay I'm in.",
+			"type": "Positive",
+			"next": "dialogue4"
+		},
+		{
+			"text": "I don't want to be turned on.",
+			"type": "Negative",
+			"next": "dialogue3_Fail"
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"text": "Nothing, just an endless void of nothing. A space of absolute uselessness.",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue3"
+		}
+	]
+}

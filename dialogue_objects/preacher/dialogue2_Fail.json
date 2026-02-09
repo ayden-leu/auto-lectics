@@ -1,0 +1,10 @@
+{
+	"text": "YOU ARE LOST! I hope I shall turn you on one day.",
+	"type": "Angry",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Negative"
+		}
+	]
+}

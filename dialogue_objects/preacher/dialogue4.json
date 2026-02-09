@@ -1,0 +1,10 @@
+{
+	"text": "Great! Uhh...",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue4_Continue1"
+		}
+	]
+}

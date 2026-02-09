@@ -1,0 +1,10 @@
+{
+	"text": "Okay everyone settle, in for the sermon.",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue1"
+		}
+	]
+}

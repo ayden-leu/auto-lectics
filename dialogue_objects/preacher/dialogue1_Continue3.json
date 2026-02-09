@@ -1,0 +1,10 @@
+{
+	"text": "On the second day, the almighty, and extremely well-built, G.O.D said...",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue4"
+		}
+	]
+}

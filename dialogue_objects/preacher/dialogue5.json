@@ -1,0 +1,10 @@
+{
+	"text": "One moment let me check. Step 1: Ask if they want to be turned on. Step 2: Figure out later...",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue5_Continue1"
+		}
+	]
+}

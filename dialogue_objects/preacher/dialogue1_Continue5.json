@@ -1,0 +1,10 @@
+{
+	"text": "and plugged in the world to the external power grid.",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialouge1_Continue6"
+		}
+	]
+}

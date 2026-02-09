@@ -1,0 +1,27 @@
+{
+	"text": "YOU! ARE YOU TURNED ON?!?!",
+	"type": "Angry",
+	"writeSpeed": "fast",
+	"writeSpeedCustom": -1.0,
+	"options": [
+		{
+			"text": "1",
+			"type": "Negative",
+			"next": "dialogue2_Fail"
+		},
+		{
+			"text": "I don't want to be turned on.",
+			"type": "Negative",
+			"next": "dialogue2_Fail"
+		},
+		{
+			"text": "Yes, I think so.",
+			"next": "dialogue2_Neutral"
+		},
+		{
+			"text": "What?",
+			"type": "Positive",
+			"next": "dialogue3"
+		}
+	]
+}

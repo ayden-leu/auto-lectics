@@ -1,0 +1,10 @@
+{
+	"text": "But now I have been bestowed upon with great purpose...",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"next": "dialogue1_Continue9"
+		}
+	]
+}
