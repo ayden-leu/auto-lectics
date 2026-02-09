@@ -174,7 +174,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 	var numInputHandlers:int = get_tree().get_node_count_in_group("InputHandler")
 	
-	if numInputHandlers < 1:
+	if numInputHandlers < 1 and self != get_tree().edited_scene_root:
 		warnings.push_back(
 			"There isn't a InputHandler node, so the player won't be able to the player character.
 			Consider adding an InputHandler node from the helpers folder.

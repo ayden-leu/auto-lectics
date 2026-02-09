@@ -40,10 +40,13 @@ folder_colors={
 "res://entities/player/": "orange",
 "res://helpers/": "red",
 "res://materials/": "pink",
+"res://models/": "pink",
+"res://shaders/": "teal",
 "res://sounds/": "orange",
 "res://test_scenes/": "gray",
 "res://textures/": "pink",
-"res://ui/": "green"
+"res://ui/": "green",
+"res://world/": "blue"
 }
 
 [global_group]
