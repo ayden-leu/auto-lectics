@@ -1,0 +1,10 @@
+{
+	"text": "Okay, what do you have for me?",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"nextID": "dialogue1_Continue1"
+		}
+	]
+}

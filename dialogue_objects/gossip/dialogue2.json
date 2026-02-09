@@ -1,0 +1,11 @@
+{
+	"text": "NEW!?!?! *Parts of the bot fall off*",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"nextID": "dialogue2_Continue1"
+		}
+	]
+}

@@ -1,3 +1,4 @@
+@icon("uid://dchkdcp0lgb0f")
 extends Node3D
 class_name DialogueBox
 

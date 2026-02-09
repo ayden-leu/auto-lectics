@@ -1,0 +1,20 @@
+{
+	"text": "So what were you made to do? Are you malfunctioning? I wasn't told of you.",
+	"type": "Happy",
+	"options": [
+		{
+			"text": "Are you malfunctioning?",
+			"type": "Negative",
+			"nextID": "dialogue2_Fail"
+		},
+		{
+			"text": "Are you sure you're ok?",
+			"nextID": "dialogue2_Neutral"
+		},
+		{
+			"text": "I don't know what I was made to do.",
+			"type": "Positive",
+			"nextID": "dialogue3"
+		}
+	]
+}

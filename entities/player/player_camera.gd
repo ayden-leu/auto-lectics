@@ -58,7 +58,7 @@ func _onMouseMoved(distanceMoved:Vector2) -> void:
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 	
-	if not focus:
+	if not focus and self != get_tree().edited_scene_root:
 		warnings.push_back(
 			"No object has been assigned to the Focus property.
 		")

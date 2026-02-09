@@ -1,0 +1,20 @@
+{
+	"text": "*The bot sits, pointing its antennas towards the abyss.*",
+	"options": [
+		{
+			"text": "Excuse me?",
+			"type": "Negative",
+			"nextID": "dialogue2"
+		},
+		{
+			"text": "What are you listening to?",
+			"type": "Negative",
+			"nextID": "dialogue2"
+		},
+		{
+			"text": "Who are you?",
+			"type": "Negative",
+			"nextID": "dialogue2"
+		}
+	]
+}

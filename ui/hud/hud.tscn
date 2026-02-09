@@ -1,25 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4qdi730tv5hl"]
+[gd_scene load_steps=4 format=3 uid="uid://b4qdi730tv5hl"]
 
 [ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://ui/hud/hud.gd" id="1_xmswo"]
+[ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="2_4d6w6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0nub"]
+shader = ExtResource("2_4d6w6")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.05
+shader_parameter/scanlines_width = 0.0
+shader_parameter/grille_opacity = 0.1
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/pixelate = true
+shader_parameter/roll = false
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 0.1
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.01
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.1
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.1
+shader_parameter/vignette_opacity = 0.5
 
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 243.0
+offset_bottom = 156.0
 script = ExtResource("1_xmswo")
 
-[node name="Container" type="CenterContainer" parent="."]
+[node name="ShaderOverlay" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_e0nub")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 652.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="ShaderOverlay"]
+handle_input_locally = false
+size = Vector2i(1152, 652)
+render_target_update_mode = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="ColorRect2" type="ColorRect" parent="Container"]
+[node name="ColorRect2" type="ColorRect" parent="CenterContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect" type="ColorRect" parent="Container/ColorRect2"]
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/ColorRect2"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 0
 offset_left = 3.0

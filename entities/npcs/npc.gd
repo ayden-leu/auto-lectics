@@ -1,5 +1,7 @@
+@icon("uid://bmn0gum6ccama")
 @tool
 extends Node3D
+## The base class of all NPCs in the game.
 class_name NPC
 
 # TODO:  verify/add signal emitions for all signals
@@ -13,14 +15,14 @@ signal all_options_available
 ## Emitted when the dialogue tree reaches an end.
 signal finished_dialogue
 
+## The main model of the NPC.
+@export var model:Node3D
 ## Tells the game where to spawn a dialogue box when a player interacts with the NPC. If the NPC moves or rotates, the dialogue box will move and rotate with them.
 @export var dialogueBoxAnchor:Marker3D
 ## The name of the NPC.
 @export var myName:String = ""
 ## All dialogues belonging to this NPC will be under "dialogue_objects/[NPC name]"
 @export var initialDialogueID:String = ""
-## The dialogue ID of the dialogue object to load when the player fails a hectic dialogue interaction.
-@export var hecticFailureDialogueID:String = ""
 
 ## Holds a reference to the dialogue box resource.
 const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
@@ -33,6 +35,8 @@ var connectedDialogueBoxSignals:bool = false
 var isTalking: bool = false
 ## Keeps track of which dialogue object to reference at the moment.
 var currentDialogueID: String = ""
+## The dialogue ID of the dialogue object to load when the player fails a hectic dialogue interaction.
+var hecticFailureDialogueID:String = ""
 ## Hardcoded delay between the dialogue being fully displayed, and when the dialogue options can begin spawning.
 var delayStartShowingOptions: float = 1.0
 
@@ -77,7 +81,11 @@ func loadDialogueData(dialogueEntry:Dictionary) -> void:
 
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
+	if nextDialogueID == "":
+		endDialogue()
+		return
 	currentDialogueID = nextDialogueID
+	
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	loadDialogueData(dialogue)
 	dialogueBox.start()
@@ -87,7 +95,6 @@ func loadNextDialogue(nextDialogueID: String) -> void:
  
 	if dialogue.options.size() == 0:
 		endDialogue()
-		finished_dialogue.emit()
 		return
 
 	dialogueBox.createOptions()
@@ -99,6 +106,7 @@ func endDialogue() -> void:
 		dialogueBox = null
 	isTalking = false
 	connectedDialogueBoxSignals = false
+	finished_dialogue.emit()
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
@@ -126,32 +134,29 @@ func _on_dialogue_box_all_dialogue_text_visible() -> void:
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 	
-	var hasModel:bool = false
 	var hitbox:Area3D = null
 	for child in get_children():
-		if child is MeshInstance3D:
-			hasModel = true
-		elif child is Area3D:
+		if child is Area3D:
 			hitbox = child
 	
-	if not hasModel:
+	if not model:
 		warnings.push_back("This NPC doesn't have a model.")
 	
 	if initialDialogueID == "":
 		warnings.push_back("The initial dialogue ID is not set.")
 	
-	if hecticFailureDialogueID == "":
-		warnings.push_back("The hectic failure dialogue ID is not set. If you don't plan on ever having the player enter a hectic dialogue with this NPC, you can ignore this. But this may lead to bugs if you later decide to add a hectic dialogue interaction and forget to set this.")
-	
 	if myName == "":
 		warnings.push_back("This NPC doesn't have a name yet.")
 	
 	if hitbox == null:
-		warnings.push_back("This NPC doesn't have a hitbox yet. This is needed to allow the player to interact with them.")
+		warnings.push_back("This NPC doesn't have a hitbox yet. This is needed to allow the player to interact with them. A hitbox is an Area3D node.")
 	elif hitbox.collision_layer != 4:
 		warnings.push_back("The hitbox's collision layer should only have square #3/Bit 2/the NPC layer enabled.")
 	
-	if not dialogueBoxAnchor:
-		warnings.push_back("A marker for the dialogue box has not been set yet.")
+	if self != get_tree().edited_scene_root:
+		if not dialogueBoxAnchor:
+			warnings.push_back("A marker for the dialogue box has not been set yet.")
+		elif dialogueBoxAnchor.get_parent() == self:
+			warnings.push_back("Making the marker for the dialogue box a child of the NPC will make the dialogue box move with it if you move the NPC's root node (i.e the one with a custom icon). If this is not desired and you must move the NPC's root node, you can:\n1) Make the marker a not a child of the NPC or its children.\n2) Add a Node (the white hollow circle) as a child to the NPC, then add the marker as a child of the Node.\nThis must be done within the level scene, as doing it within the NPC scene will cause the marker to be at the level's origin (0,0,0).")
 	
 	return warnings

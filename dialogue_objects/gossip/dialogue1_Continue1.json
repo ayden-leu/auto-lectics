@@ -1,0 +1,11 @@
+{
+	"text": "Ohhhhh woah woah woah, I don't know you...",
+	"type": "Confused",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Positive",
+			"nextID": "dialogue1_Continue2"
+		}
+	]
+}
