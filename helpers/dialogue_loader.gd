@@ -22,15 +22,6 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 	
 	# Mandatory fields
 	dialogue.text = dialogue_obj.get("text", dialogue.text)
-	dialogue.font = dialogue_obj.get("font", dialogue.font)
-	dialogue.type = _verify_in_list(
-		dialogue_obj.get("type", dialogue.type).to_lower(),
-		DialogueDefaults.DIALOGUE_TYPES,
-		dialogue.type
-	)
-	dialogue.mode = dialogue_obj.get("mode", dialogue.mode).to_lower()
-	dialogue.nextOnHecticFailureID = dialogue_obj.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
-	
 	var dialogue_obj_options:Array = dialogue_obj.get("options", [])
 	if typeof(dialogue_obj_options) == TYPE_ARRAY:
 		for option_obj in dialogue_obj_options:
@@ -42,8 +33,17 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 			dialogue.options.append(opt)
 	else:
 		printerr("DialogueLoader: Options field of this dialogue node file isn't an array.")
-
+	
 	# Optional fields
+	dialogue.font = dialogue_obj.get("font", dialogue.font)
+	dialogue.type = _verify_in_list(
+		dialogue_obj.get("type", dialogue.type).to_lower(),
+		DialogueDefaults.DIALOGUE_TYPES,
+		dialogue.type
+	)
+	dialogue.mode = dialogue_obj.get("mode", dialogue.mode).to_lower()
+	dialogue.nextOnHecticFailureID = dialogue_obj.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
+	
 	dialogue.writeSpeed = _verify_in_list(
 		dialogue_obj.get("writeSpeed", dialogue.writeSpeed).to_lower(),
 		DialogueDefaults.WRITE_SPEED_PRESETS.keys(),
@@ -74,14 +74,14 @@ static func _fill_option_missing_fields(option_obj: Dictionary, dialogue_owner: 
 
 	# Mandatory
 	option.text = option_obj.get("text", option.text)
+	option.nextID = option_obj.get("nextID", option.nextID)
+	
+	# Optional
 	option.type = _verify_in_list(
 		option_obj.get("type", option.type).to_lower(),
 		DialogueDefaults.OPTION_TYPES,
 		option.type
 	)
-	option.nextID = option_obj.get("nextID", option.nextID)
-	
-	# Optional
 	option.font = option_obj.get("font", option.font)
 		
 	option.writeSpeed = _verify_in_list(

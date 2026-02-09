@@ -43,12 +43,13 @@ static func default_dialogue() -> Dictionary:
 	return {
 		# === Mandatory ===
 		"text": "",
-		"font": "default",
-		"type": "neutral",
-		"mode": "normal",
-		"nextOnHecticFailureID": "",
+		"options": [],
 
 		# === Optional ===
+		"mode": "normal",
+		"nextOnHecticFailureID": "",
+		"font": "default",
+		"type": "neutral",
 		"writeSpeed": "medium",
 		"writeSpeedCustom": -1.0,
 
@@ -63,9 +64,7 @@ static func default_dialogue() -> Dictionary:
 			"spawn": { "texture": "none" },
 			"text": { "texture": "none" },
 			"ambient": { "texture": "none" }
-		},
-
-		"options": []
+		}
 	}
 
 ## Returns a default option object.
@@ -73,10 +72,11 @@ static func default_option() -> Dictionary:
 	return {
 		# === Mandatory ===
 		"text": "",
-		"font": "inherit",
-		"type": "neutral",
+		"nextID": "",
 
 		# === Optional ===
+		"font": "inherit",
+		"type": "neutral",
 		"writeSpeed": "inherit",
 		"writeSpeedCustom": -1.0,
 
@@ -95,5 +95,4 @@ static func default_option() -> Dictionary:
 
 		"spawnDelay": 0.0,
 		"lifetime": -1.0,
-		"nextID": ""
 	}
