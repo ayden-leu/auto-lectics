@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://rk23gwhwys02"]
+
+[ext_resource type="Script" uid="uid://c3cwc1sl1cyw6" path="res://delete-this-later/fix-json-files.gd" id="1_8omyq"]
+
+[node name="fix-json-files" type="Node3D"]
+script = ExtResource("1_8omyq")
