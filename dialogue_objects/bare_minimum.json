@@ -1,0 +1,9 @@
+{
+	"text": "hello.",
+	"options": [
+		{
+			"text": "hi.",
+			"nextID": "bare_minimum"
+		}
+	]
+}

@@ -1,0 +1,54 @@
+{
+	"text": "hello but with all features.",
+	"font": "default",
+	"type": "neutral",
+	"mode": "normal",
+	"nextOnHecticFailureID": "",
+	"writeSpeed": "medium",
+	"writeSpeedCustom": 20.0,
+	"sfx": {
+		"spawn": "none",
+		"text": "default"
+	},
+	"backgroundTheme": "default",
+	"particles": {
+		"spawn": {
+			"texture": "none"
+		},
+		"text": {
+			"texture": "none"
+		},
+		"ambient": {
+			"texture": "none"
+		}
+	},
+
+	"options": [
+		{
+			"text": "i am a character in a video game i dont know what this means.",
+			"font": "inherit",
+			"type": "positive",
+			"writeSpeed": "inherit",
+			"writeSpeedCustom": -1,
+			"sfx": {
+				"spawn": "none",
+				"text": "default"
+			},
+			"backgroundTheme": "inherit",
+			"particles": {
+				"spawn": {
+					"texture": "none"
+				},
+				"text": {
+					"texture": "none"
+				},
+				"ambient": {
+					"texture": "none"
+				}
+			},
+			"spawnDelay": 0.5,
+			"lifetime": -1,
+			"nextID": "all_features"
+		}
+	]
+}
