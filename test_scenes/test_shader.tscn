@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://deqxre2n26g0m"]
+[gd_scene load_steps=3 format=3 uid="uid://blbfoatmcceb6"]
 
-[ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="1_rbxnt"]
-[ext_resource type="PackedScene" uid="uid://5mqketysr0a7" path="res://world/week_6_playtest_map.tscn" id="2_rbxnt"]
+[ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="1_67jda"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ge0g4"]
-shader = ExtResource("1_rbxnt")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5r8k"]
+shader = ExtResource("1_67jda")
 shader_parameter/overlay = false
 shader_parameter/scanlines_opacity = 0.05
 shader_parameter/scanlines_width = 0.0
@@ -27,14 +26,22 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.1
 shader_parameter/vignette_opacity = 0.5
 
-[node name="SubViewportContainer" type="SubViewportContainer"]
-material = SubResource("ShaderMaterial_ge0g4")
-offset_right = 601.0
-offset_bottom = 619.0
-scale = Vector2(2.255, 1.27)
+[node name="test_shader" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_q5r8k")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 652.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
+size = Vector2i(1152, 652)
 render_target_update_mode = 4
-
-[node name="week_6_playtest" parent="." instance=ExtResource("2_rbxnt")]

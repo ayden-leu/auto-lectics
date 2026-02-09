@@ -27,18 +27,23 @@ Engine:  Godot
 	- Not used for now.
 8. `materials`:
 	- Holds all shader material presets.
-9. `sounds`:
+9. `models`:
+	- Holds all models, their associated textures, and auto-generated scenes Godot makes when you try editing them in-engine.
+	- Ideally, all models should be `.blend` files since you can easily see any changes made to them in Blender.
+10. `shaders`:
+	- Holds all `.gdshader` files.
+11. `sounds`:
 	- Holds all of the sounds for the game.
-10. `test_scenes`:
+12. `test_scenes`:
 	- Holds files meant for developers to test stuff.
 	- These files should not be used in the final game.
-11. `textures`:
-	- Holds all textures.
-12. `ui`:
+13. `textures`:
+	- Holds all textures not related to a model..
+14. `ui`:
 	- Holds files related to non-diagetic things the player interacts with.
 	- e.g  Main menu, HUD, settings
-13. `world`:
-	- Holds files related to the environment the player walks around in.
+15. `world`:
+	- Holds the actual scenes/levels that will be used in the final game.
 
 ## Developing Notes
 - Collision layers exist.  They can be configured under `CollisionObject3D > Collision`

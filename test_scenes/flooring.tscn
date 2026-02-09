@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://rk3e0e8myqhn"]
-
-[ext_resource type="PackedScene" uid="uid://coeq57ci2drv1" path="res://Week6PlaytestWorldAssets/MainTube/flooring.fbx" id="1_x1n1t"]
-
-[node name="flooring" instance=ExtResource("1_x1n1t")]
