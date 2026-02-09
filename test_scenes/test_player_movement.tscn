@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://6ampr08wbamb"]
+[gd_scene load_steps=11 format=3 uid="uid://6ampr08wbamb"]
 
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_eawqy"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_nt7id"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_kkbud"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_jvw1w"]
+[ext_resource type="PackedScene" uid="uid://dloital66b4nj" path="res://Week6PlaytestWorldAssets/MainTube/catwalk_with_collision.tscn" id="5_nt7id"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -66,5 +67,8 @@ current = true
 player = NodePath("../Player")
 wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
+
+[node name="catwalk3" parent="." instance=ExtResource("5_nt7id")]
+transform = Transform3D(0.3495253, 0, 0, 0, 0.34952524, 0, 0, 0, 0.3495253, 0, 1.0084434, 0)
 
 [editable path="PlayerCamera"]
