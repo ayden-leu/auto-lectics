@@ -10,7 +10,7 @@ radius = 1.47114
 [node name="NPC_Test" type="Node3D" node_paths=PackedStringArray("dialogueBoxAnchor")]
 script = ExtResource("1_u8dq6")
 dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
-myName = "NPC_Test"
+myName = "looker"
 initialDialogueID = "Dialogue1a"
 hecticFailureDialogueID = "failure"
 

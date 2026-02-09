@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3vn5e4oq45bl"]
+
+[ext_resource type="PackedScene" uid="uid://bvt6pcxkwktvq" path="res://Week6PlaytestWorldAssets/tank/glass.fbx" id="1_navgg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqry4"]
+albedo_color = Color(0.88235295, 0.8980392, 0.8627451, 0.13333334)
+metallic = 0.05
+metallic_specular = 0.0
+roughness = 0.85
+refraction_enabled = true
+refraction_scale = -0.26
+detail_enabled = true
+
+[node name="glass" instance=ExtResource("1_navgg")]
+
+[node name="glass" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_cqry4")
