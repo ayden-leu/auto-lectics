@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="21_072tr"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="22_87qvr"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="23_qr6ly"]
-[ext_resource type="AudioStream" uid="uid://dyrdr7v142x7o" path="res://sounds/sfx/ambience_plus15db.wav" id="24_18efa"]
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="24_18efa"]
 [ext_resource type="PackedScene" uid="uid://ddhddoogpswwf" path="res://Week6PlaytestWorldAssets/MainTube/tankTube.fbx" id="24_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_e57of"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="24_wdgfk"]
@@ -612,6 +612,7 @@ autoplay = true
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("24_wdgfk")
+volume_db = -7.0
 autoplay = true
 
 [node name="npcs" type="Node" parent="."]

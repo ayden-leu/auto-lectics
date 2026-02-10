@@ -41,7 +41,7 @@ var text:String = "":
 ## Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
 @onready var lifeTimer:Timer = $LifeTimer
 ## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary = {
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
 	"spawn": $SFX/spawn,
 	"text": $SFX/text
 }
@@ -181,6 +181,7 @@ func _on_interaction() -> void:
 	visible = false
 	interactionHitbox.disabled = true
 	lifeTimer.stop()
+	sfxPlayer.spawn.stop()
 	option_picked.emit(nextDialogueID)
 
 ## Handles the logic for when the lifetime of the dialogue option expires.

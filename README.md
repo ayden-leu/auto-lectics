@@ -268,6 +268,7 @@ Assume designers know nothing as a baseline. Tentative list of things that will 
 	- By creating the file manually.
 	- By using the tool. (text ver.)
 	- By using the tool. (ui ver. once it exists)
+- Which audio file type to use.
 - Adding audio that plays everywhere.
 - Example world scene setup.
 	- Placing a player.

@@ -57,7 +57,7 @@ const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 ## The timer bar that appears when a hectic dialogue object is loaded.
 @onready var timer:TimerBar = $Timer
 ## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary = {
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
 	"spawn": $SFX/spawn,
 	"text": $SFX/text
 }
@@ -304,6 +304,7 @@ func _on_option_picked(nextDialogueID:String) -> void:
 	
 	timer.stop()
 	#print("\nnext dialogue: ", nextDialogueID)
+	sfxPlayer.spawn.stop()
 	update_me.emit(nextDialogueID)
 
 ## Handles logic for when an option isn't picked in time during hectic mode.
