@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cacib06ypgbbs"]
+
+[ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="1_gw5m8"]
+[ext_resource type="PackedScene" uid="uid://8v076obpcbuh" path="res://models/npcs/side_NPCS/container.fbx" id="2_gw5m8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g1gq4"]
+size = Vector3(7.5915527, 15.754944, 3.277588)
+
+[node name="container" type="Node3D" node_paths=PackedStringArray("model")]
+script = ExtResource("1_gw5m8")
+model = NodePath("container")
+myName = "container"
+initialDialogueID = "Dialogue1a"
+
+[node name="container" parent="." instance=ExtResource("2_gw5m8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.89498043, -0.0071525574, -2.0783005)
+
+[node name="Hitbox" type="Area3D" parent="."]
+transform = Transform3D(2.0046275, 0, 0, 0, 0.26196957, 0, 0, 0, 2.0046275, 0.07154727, -2.9271755, -0.15410192)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1, -0.09606902, -6.2066946, -1.010133)
+shape = SubResource("BoxShape3D_g1gq4")

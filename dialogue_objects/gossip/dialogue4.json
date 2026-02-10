@@ -1,5 +1,7 @@
 {
 	"text": "Likely R4-DO, yeah we try not to bother them. They use to handle all off-world communications, but after those were severed they just listen to the abyss.",
+				 "sfx":{ "spawn": "gossipSound", "text": "default"},
+
 	"options": [
 		{
 			"text": "Anything else?",

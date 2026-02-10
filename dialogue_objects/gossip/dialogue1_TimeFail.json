@@ -1,0 +1,7 @@
+{
+	"text": "Guh. What's the point in talking to you if you're just gonna be boring.",
+		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+
+	"type": "Angry",
+	"options": [	{"text": "[End]"}	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "YOU ARE LOST! I hope I shall turn you on one day.",
+		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+	
+	"type": "Angry",
+	"options": [
+		{
+			"text": "[End]",
+			"type": "Negative"
+		}
+	]
+}

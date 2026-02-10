@@ -4,6 +4,6 @@
 		 "sfx":{ "spawn": "normalSound", "text": "default"},
 
 	"type": "Confused",
-	"options": [ {"text": "[Continue]"}
+	"options": [ {"text": "[End]"}
 	]
 }

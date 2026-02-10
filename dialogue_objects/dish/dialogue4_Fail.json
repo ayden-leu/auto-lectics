@@ -2,5 +2,5 @@
 
 	"text": "*The bot plays furious static.*",
 	"type": "Angry",
-	"options": []
+	"options": [{"text": "[End]"}]
 }

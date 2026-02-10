@@ -3,6 +3,6 @@
 	
 		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
 	"type": "Angry",
-	"options": []
+	"options": [{"text": "[End]"}]
 
 }

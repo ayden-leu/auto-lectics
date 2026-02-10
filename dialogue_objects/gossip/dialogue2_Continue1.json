@@ -1,8 +1,10 @@
 {
 	"text": "So what were you made to do? Are you malfunctioning? I wasn't told of you.",
+			 "sfx":{ "spawn": "gossipSound", "text": "default"},
+
 	"type": "Happy",
 	"mode": "hectic",
-	"nextOnHecticFailureID": "dialogue2_Fail",
+	"nextOnHecticFailureID": "dialogue1_TimeFail",
 	"options": [
 		{
 			"text": "Are you malfunctioning?",

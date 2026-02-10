@@ -1,5 +1,5 @@
 {
 	"text": "*The bot plays a fast-tempo music bit.*",
 	"type": "Happy",
-	"options": []
+	"options": [{"text": "[End]"}]
 }
