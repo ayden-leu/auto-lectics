@@ -1,6 +1,8 @@
 {
 	"text": "*The bot points its antennas at you. A furious static can be heard.*",
 	"type": "Angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue2_Fail",
 	"options": [
 		{
 			"text": "Sorry, I'll back off.",
