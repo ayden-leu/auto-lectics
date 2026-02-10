@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
-[ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/text_label.gd" id="3_ane15"]
+[ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/type_writer_label.gd" id="3_ane15"]
 [ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
 [ext_resource type="Script" uid="uid://bix7b5bmj6lso" path="res://dialogue_visuals/hectic_positions.gd" id="4_hx4ud"]
 
@@ -49,6 +49,7 @@ vertical_alignment = 0
 autowrap_mode = 2
 width = 400.0
 script = ExtResource("3_ane15")
+fullText = "test message"
 
 [node name="VisualArea" type="Area3D" parent="."]
 collision_layer = 8
@@ -205,9 +206,4 @@ stream = SubResource("AudioStreamRandomizer_ane15")
 [node name="tempTimeer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [connection signal="timeout" from="Timer" to="." method="_on_timer_bar_timeout"]
-[connection signal="timeout" from="tempTimeer" to="." method="_on_temp_timeer_timeout"]
