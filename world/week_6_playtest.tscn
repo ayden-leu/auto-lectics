@@ -713,10 +713,10 @@ script = null
 transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.065751456, -0.6617077, -0.037088916, 0.99766946, -0.057272285, 19.958824, 23.540928, -11.605336)
 
 [node name="Player" parent="." instance=ExtResource("28_to1nd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.328213, 1.7612958, 0.10652828)
+transform = Transform3D(-0.35275638, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275638, 66.40753, 0.9343929, 0.8199239)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("30_dt8rv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 2.2003224, 1.3495631)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.865444, 6.326866, 1.3495631)
 focus = NodePath("../Player")
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("31_ohlsf")]
