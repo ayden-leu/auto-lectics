@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cacib06ypgbbs"]
 
-[ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="1_gw5m8"]
+[ext_resource type="Script" uid="uid://bumv83wldprl3" path="res://entities/npcs/sideNPCS/container.gd" id="1_gw5m8"]
 [ext_resource type="PackedScene" uid="uid://8v076obpcbuh" path="res://models/npcs/side_NPCS/container.fbx" id="2_gw5m8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g1gq4"]
@@ -10,7 +10,6 @@ size = Vector3(15.211182, 4.095703, 6.5566406)
 script = ExtResource("1_gw5m8")
 model = NodePath("container")
 myName = "container"
-initialDialogueID = "Dialogue1a"
 
 [node name="container" parent="." instance=ExtResource("2_gw5m8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.89498043, -0.0071525574, -2.0783005)
