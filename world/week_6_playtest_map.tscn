@@ -24,9 +24,9 @@
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_14xtk"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="26_xbw3l"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="27_8rko8"]
+[ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="27_qx7mq"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="29_mk6m1"]
 [ext_resource type="PackedScene" uid="uid://8v076obpcbuh" path="res://models/npcs/side_NPCS/container.fbx" id="30_hihur"]
-[ext_resource type="PackedScene" uid="uid://g4cmebpm1ev3" path="res://models/npcs/side_NPCS/spinner.fbx" id="31_8rko8"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="31_hjraj"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="32_qdy3o"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="33_k5y6o"]
@@ -541,19 +541,25 @@ transform = Transform3D(-0.99861866, 0, -0.052545086, 0, 1, 0, 0.052545086, 0, -
 metadata/_edit_group_ = true
 
 [node name="container" parent="npcs" instance=ExtResource("30_hihur")]
-transform = Transform3D(-0.8040125, 0, 0.5946123, 0, 0.8999999, 0, -0.5946123, 0, -0.8040125, 8.480301, 30.624096, -9.483724)
+transform = Transform3D(-0.8040125, 0, 0.5946123, 0, 0.8999999, 0, -0.5946123, 0, -0.8040125, 4.249571, 15.933763, -9.483724)
 
-[node name="spinner" parent="npcs" instance=ExtResource("31_8rko8")]
-transform = Transform3D(0.235, 0, 0, 0, 0.235, 0, 0, 0, 0.235, 8.750906, 4.6325197, 11.7188835)
-
-[node name="egg" parent="npcs" instance=ExtResource("27_8rko8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4355845, 4.844326, 7.148372)
+[node name="egg" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("27_8rko8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.115288734, 4.46198, 5.5504785)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
 
 [node name="Node" type="Node" parent="npcs/egg"]
 
 [node name="Marker3D" type="Marker3D" parent="npcs/egg/Node"]
-transform = Transform3D(-0.99861866, 0, -0.052545086, 0, 1, 0, 0.052545086, 0, -0.99861866, 23.26643, -11.441721, 40.343586)
-metadata/_edit_group_ = true
+transform = Transform3D(0.834271, 0, -0.5513548, 0, 1, 0, 0.5513548, 0, 0.834271, -1.9136126, 6.5832644, 5.4242077)
+
+[node name="spinner" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("27_qx7mq")]
+transform = Transform3D(0.71970016, 0, 0, 0, 1, 0, 0, 0, 0.71970016, 9.482667, 4.82733, 11.900775)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/spinner"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/spinner/Node"]
+transform = Transform3D(-0.6631427, 0, 0.7484932, 0, 1, 0, -0.7484932, 0, -0.6631427, 10.380273, 6.5832653, 13.073282)
 
 [node name="Player" parent="." instance=ExtResource("31_hjraj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.659458, 1.7612977, 1.3495631)

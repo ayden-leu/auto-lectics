@@ -1,5 +1,5 @@
 {
-	"text": "I’m just here for entertainment.",
+	"text": "I don't think youre supposed to be here.",
 	 "sfx":{ "spawn": "normalSound", "text": "default"},
 	"font": "default",
 	"type": "neutral",
@@ -25,9 +25,15 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
-			"type": "Negative"
-		}
+			"text": "Are you?",
+			"type": "Positive",
+			"nextID": "dialogue2"
+		},
 		
+		{
+			"text": "Sorry, I generally have no idea what I'm doing.",
+			"type": "Positive",
+			"nextID": "dialogue3"
+		}
 	]
 }

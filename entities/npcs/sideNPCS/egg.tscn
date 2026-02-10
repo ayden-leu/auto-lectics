@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://h1q7nwfs2wpl"]
 
-[ext_resource type="Script" uid="uid://y3bv4bjrakvy" path="res://entities/npcs/looker.gd" id="1_560c1"]
+[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_560c1"]
 [ext_resource type="PackedScene" uid="uid://cs05y8fjcnq14" path="res://models/npcs/side_NPCS/egg.fbx" id="2_560c1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
@@ -8,7 +8,7 @@ radius = 1.47114
 
 [node name="egg" type="Node3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_560c1")
-model = NodePath("")
+model = NodePath("egg")
 myName = "egg"
 initialDialogueID = "Dialogue1a"
 

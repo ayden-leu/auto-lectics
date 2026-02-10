@@ -11,7 +11,9 @@
 		},
 		{
 			"text": "Are you sure you're ok?",
+			"type": "Neutral",
 			"nextID": "dialogue2_Neutral"
+			
 		},
 		{
 			"text": "I don't know what I was made to do.",

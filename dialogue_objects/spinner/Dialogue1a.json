@@ -1,6 +1,7 @@
 {
-	"text": "I’m just here for entertainment.",
-	 "sfx":{ "spawn": "normalSound", "text": "default"},
+	"text": "They’re completely ignoring the obvious importance of the great turning.",
+		 "sfx":{ "spawn": "normalSound", "text": "default"},
+
 	"font": "default",
 	"type": "neutral",
 	"mode": "normal",

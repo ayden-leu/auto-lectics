@@ -1,5 +1,6 @@
 {
 	"text": "Birds? *A piece of the bot falls off*",
+	"sfx":{ "spawn": "dialogueFailSound", "text": "default"},
 	"type": "Confused",
 	"options": []
 }

@@ -1,6 +1,6 @@
 {
 	"text": "THE POWER RUNS INSIDE EM, CONTROLS EM!",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
 	
 	"type": "Happy",
 	"options": [

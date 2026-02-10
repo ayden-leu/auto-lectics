@@ -21,8 +21,8 @@ Globals="*res://globals.gd"
 
 [display]
 
-window/size/mode=2
-window/stretch/mode="canvas_items"
+window/size/mode=3
+window/stretch/mode="viewport"
 
 [editor]
 

@@ -1,5 +1,7 @@
 {
 	"text": "I DON'T SPY, I MERELY OBSERVE!",
+	
+	"sfx":{ "spawn": "dialogueFailSound", "text": "default"},
 	"type": "Angry",
 	"options": []
 }
