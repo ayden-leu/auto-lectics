@@ -189,7 +189,8 @@ func setOptionAlignmentNormal(option:DialogueOption) -> void:
 
 ## Updates the position of a dialogue option in hectic mode.
 func setOptionPositionHectic(option:DialogueOption, section:String) -> void:
-	# TODO:  maybe pick a position like we do with the warning tiles.
+	# TODO:  pick a position like we do with the warning tiles.
+	#			its technically possible to run out of positions
 	var potentialPositions:Array = optionSpawnPositions.hectic[section]
 	for usedPosition in optionSpawnPositions.hectic.root.usedPositions:
 		potentialPositions.erase(usedPosition)
@@ -217,18 +218,30 @@ func setOptionAlignmentHectic(option:DialogueOption, section:String) -> void:
 
 ## Gets the appropriate general areas to spawn dialogue options in depending on "optionsAnchor"
 func getValidHecticAreas() -> Array[String]:
+	var toReturn:Array[String] = ["left", "right", "top"]
+	if optionSpawnPositions.hectic.left.size() == 0:
+		toReturn.erase("left")
+	if optionSpawnPositions.hectic.right.size() == 0:
+		toReturn.erase("right")
+	if optionSpawnPositions.hectic.top.size() == 0:
+		toReturn.erase("top")
+	
 	match optionsAnchor:
 		OPTIONS_ANCHOR.topLeft:
-			return ["left", "top"]
+			toReturn.erase("right")
 		OPTIONS_ANCHOR.topRight:
-			return ["right", "top"]
+			toReturn.erase("left")
 		OPTIONS_ANCHOR.bottomLeft:
-			return ["left"]
+			toReturn.erase("right")
+			toReturn.erase("top")
 		OPTIONS_ANCHOR.bottomRight:
-			return ["right"]
+			toReturn.erase("left")
+			toReturn.erase("top")
 		_:
 			printerr("DialogueBox: optionsAnchor value not accounted for")
 			return ["???"]
+	
+	return toReturn
 
 ## Configures aspects of a dialogue option.
 func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
