@@ -1,6 +1,8 @@
 {
 	"text": "Who are you? Where'd you come from? How'd you get here?",
 	"type": "Angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue1_Fail",
 	"options": [
 		{
 			"text": "That's not important.",

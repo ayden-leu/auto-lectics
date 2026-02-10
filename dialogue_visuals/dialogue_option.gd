@@ -158,6 +158,7 @@ func kill():
 
 ## Handles logic for when the dialogue option gets picked.
 func _on_interaction() -> void:
+	lifeTimer.stop()
 	emit_signal("option_picked", nextDialogueID)
 
 ## Handles the logic for when the lifetime of the dialogue option expires.

@@ -1,6 +1,8 @@
 {
 	"text": "So what were you made to do? Are you malfunctioning? I wasn't told of you.",
 	"type": "Happy",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue2_Fail",
 	"options": [
 		{
 			"text": "Are you malfunctioning?",
