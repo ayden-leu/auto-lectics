@@ -116,7 +116,9 @@ func loadOptionData(options: Array) -> void:
 ## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
 	if mode == "hectic":
-		
+		optionSpawnPositions.hectic.left = $OptionPositions/Hectic/Left.get_children()
+		optionSpawnPositions.hectic.right = $OptionPositions/Hectic/Right.get_children()
+		optionSpawnPositions.hectic.top = $OptionPositions/Hectic/Top.get_children()
 		
 		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
