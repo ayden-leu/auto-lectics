@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bt62vwn7bnq36"]
+[gd_scene load_steps=48 format=3 uid="uid://bt62vwn7bnq36"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_d02ib"]
@@ -24,20 +24,18 @@
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="21_072tr"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="22_87qvr"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="23_qr6ly"]
-[ext_resource type="AudioStream" uid="uid://cn1xvpqk0bwt0" path="res://sounds/sfx/ambience v0.wav" id="23_t6f3i"]
+[ext_resource type="AudioStream" uid="uid://dyrdr7v142x7o" path="res://sounds/sfx/ambience_plus15db.wav" id="24_18efa"]
 [ext_resource type="PackedScene" uid="uid://ddhddoogpswwf" path="res://Week6PlaytestWorldAssets/MainTube/tankTube.fbx" id="24_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_e57of"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="24_wdgfk"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="26_aw1g7"]
 [ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="27_ug5cj"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="28_to1nd"]
-[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="29_8v7jq"]
 [ext_resource type="PackedScene" uid="uid://bu511kjk81y1o" path="res://models/npcs/side_NPCS/birds.fbx" id="29_els8b"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="30_dt8rv"]
 [ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="30_ha65o"]
 [ext_resource type="PackedScene" uid="uid://cacib06ypgbbs" path="res://entities/npcs/sideNPCS/container.tscn" id="31_ha65o"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="31_ohlsf"]
-[ext_resource type="Script" uid="uid://y3bv4bjrakvy" path="res://entities/npcs/looker.gd" id="32_wx00b"]
 [ext_resource type="PackedScene" uid="uid://cdn26x78pvors" path="res://Week6PlaytestWorldAssets/MainTube/tankTubeUpsiderDow.fbx" id="33_pcetu"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
@@ -591,6 +589,9 @@ transform = Transform3D(0.78735167, 0, 0, 0, 2.6252835, 0, 0, 0, 0.78735167, 0.0
 [node name="tubeTower2" parent="Environment/Models/Distant Tower8" instance=ExtResource("4_pcetu")]
 transform = Transform3D(0.96545064, 0, 0, 0, 2.6972353, 0, 0, 0, 0.96545064, 0.12668228, -0.15092723, 0.2211113)
 
+[node name="tankTubeUpsiderDow" parent="Environment/Models" instance=ExtResource("33_pcetu")]
+transform = Transform3D(1.3762618, 0, 0, 0, -1.3762618, 1.2031663e-07, 0, -1.2031663e-07, -1.3762618, -9.744242, 42.93663, 4.108347)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
 light_energy = 2.243
 light_indirect_energy = 0.932
@@ -604,56 +605,14 @@ light_color = Color(1, 0.525, 0.25, 1)
 light_energy = 16.0
 omni_range = 37.16013
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment"]
-stream = ExtResource("23_t6f3i")
-attenuation_model = 1
-volume_db = 80.0
-unit_size = 10.7
-max_db = 6.0
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("24_18efa")
+volume_db = 10.0
 autoplay = true
-max_distance = 147.08
 
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.808144, 0, 0)
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("24_wdgfk")
-volume_db = 1.332
-unit_size = 3.91
-max_db = 0.1
 autoplay = true
-max_distance = 51.08
-parameters/looping = true
-
-[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.561245, 0, 83.797325)
-stream = ExtResource("24_wdgfk")
-attenuation_model = 1
-volume_db = 16.147
-unit_size = 10.7
-max_db = 6.0
-autoplay = true
-max_distance = 147.08
-parameters/looping = true
-
-[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.009193, 0, -39.815876)
-stream = ExtResource("23_t6f3i")
-attenuation_model = 1
-volume_db = 64.587
-unit_size = 10.7
-max_db = 6.0
-autoplay = true
-max_distance = 147.08
-
-[node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -139.30981, 0, 15.82423)
-stream = ExtResource("24_wdgfk")
-attenuation_model = 1
-volume_db = 64.587
-unit_size = 10.7
-max_db = 6.0
-autoplay = true
-max_distance = 147.08
-parameters/looping = true
 
 [node name="npcs" type="Node" parent="."]
 
@@ -720,33 +679,32 @@ transform = Transform3D(-0.6631427, 0, 0.7484932, 0, 1, 0, -0.7484932, 0, -0.663
 [node name="Node3D" type="Node3D" parent="npcs"]
 
 [node name="birds" parent="npcs/Node3D" instance=ExtResource("29_els8b")]
-transform = Transform3D(-0.99638695, 0, -0.08492994, 0, 1, 0, 0.08492994, 0, -0.99638695, 28.882927, 14.696882, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 28.882927, 14.696882, 0)
 script = ExtResource("30_ha65o")
 
 [node name="birds2" parent="npcs/Node3D" instance=ExtResource("29_els8b")]
-transform = Transform3D(0.434983, 0.081668966, -0.89672744, -0.25242397, 0.967006, -0.0343758, 0.86433345, 0.24130835, 0.44124636, 24.031094, 27.615396, -34.99405)
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 24.031094, 27.615396, -34.99405)
 script = ExtResource("30_ha65o")
 
 [node name="birds3" parent="npcs/Node3D" instance=ExtResource("29_els8b")]
-transform = Transform3D(0.7042874, 0, 0.70991504, 0, 1, 0, -0.70991504, 0, 0.7042874, -5.100329, 25.431995, 27.202068)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -5.100329, 25.431995, 27.202068)
 script = ExtResource("30_ha65o")
 
 [node name="birds4" parent="npcs/Node3D" instance=ExtResource("29_els8b")]
-transform = Transform3D(0.7958858, 0, 0.6054468, 0, 1, 0, -0.6054468, 0, 0.7958858, -7.71135, 25.431995, 26.641573)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -7.71135, 25.431995, 26.641573)
 script = ExtResource("30_ha65o")
 
 [node name="birds5" parent="npcs/Node3D" instance=ExtResource("29_els8b")]
-transform = Transform3D(0.9977221, 0, -0.06745826, 0, 1, 0, 0.06745826, 0, 0.9977221, -37.8219, 34.65417, -15.096623)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -37.8219, 34.65417, -15.096623)
 script = ExtResource("30_ha65o")
 
 [node name="birds6" parent="npcs/Node3D" instance=ExtResource("29_els8b")]
-transform = Transform3D(0.25821188, 0, -0.9660883, 0, 1, 0, 0.9660883, 0, 0.25821188, 1.2749557, 9.41077, -36.829082)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 1.2749557, 9.41077, -36.829082)
 script = ExtResource("30_ha65o")
 
-[node name="container" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("31_ha65o")]
+[node name="container" parent="npcs" instance=ExtResource("31_ha65o")]
 transform = Transform3D(0.7338738, 0, 0.6271863, 0, 0.9653669, 0, -0.6271863, 0, 0.7338738, 19.63311, 17.308321, -21.130909)
-script = ExtResource("32_wx00b")
-dialogueBoxAnchor = NodePath("Node/Marker3D")
+script = null
 
 [node name="Node" type="Node" parent="npcs/container"]
 
@@ -756,23 +714,11 @@ transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.0657
 [node name="Player" parent="." instance=ExtResource("28_to1nd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.328213, 1.7612958, 0.10652828)
 
-[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("29_8v7jq")]
-transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
-mainCamera = NodePath("../PlayerCamera/Camera3D")
-
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("30_dt8rv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 2.2003224, 1.3495631)
 focus = NodePath("../Player")
-
-[node name="Camera3D" parent="PlayerCamera" index="0"]
-current = true
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("31_ohlsf")]
 player = NodePath("../Player")
 wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
-
-[node name="tankTubeUpsiderDow" parent="." instance=ExtResource("33_pcetu")]
-transform = Transform3D(1.3762618, 0, 0, 0, -1.3762618, 1.2031663e-07, 0, -1.2031663e-07, -1.3762618, 0, 41.646545, 0)
-
-[editable path="PlayerCamera"]

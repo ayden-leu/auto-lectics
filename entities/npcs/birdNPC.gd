@@ -1,5 +1,4 @@
-@tool
-extends NPC
+extends Node3D
 
 var time : float
 var base_position : Vector3

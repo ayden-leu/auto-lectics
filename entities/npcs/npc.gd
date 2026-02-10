@@ -2,7 +2,7 @@
 @tool
 extends Node3D
 ## The base class of all NPCs in the game.
-class_name NPC
+class_name InteractableNPC
 
 # TODO:  verify/add signal emitions for all signals
 
@@ -29,16 +29,12 @@ const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 
 ## Holds a reference to this NPC's dialogue box scene.
 var dialogueBox:DialogueBox = null
-## If this is the first time spawning the dialogue box for an interaction.
-var firstTimeSpawningDialogue:bool = true
 ## Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
 var connectedDialogueBoxSignals:bool = false
 ## Is true when their dialogue box is visible.
 var isTalking: bool = false
 ## Keeps track of which dialogue object to reference at the moment.
 var currentDialogueID: String = ""
-## Hardcoded delay between the dialogue being fully displayed, and when the dialogue options can begin spawning.
-var delayStartShowingOptions: float = 1.0
 
 func _ready() -> void:
 	# Makes sure the code after this is only ran in-game
@@ -69,6 +65,14 @@ func connectDialogueBoxSignals() -> void:
 	dialogueBox.connect("all_options_available", _on_dialogue_box_all_options_available)
 	dialogueBox.connect("all_dialogue_text_visible", _on_dialogue_box_all_dialogue_text_visible)
 
+func disconnectDialogueBoxSignals() -> void:
+	connectedDialogueBoxSignals = false
+
+	dialogueBox.disconnect("update_me", loadNextDialogue)
+	dialogueBox.disconnect("new_option_available", _on_dialogue_box_new_option_spawned)
+	dialogueBox.disconnect("all_options_available", _on_dialogue_box_all_options_available)
+	dialogueBox.disconnect("all_dialogue_text_visible", _on_dialogue_box_all_dialogue_text_visible)
+
 ## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
 func loadDialogueData(dialogueEntry:Dictionary) -> void:
 	dialogueBox.realOwner = self
@@ -83,7 +87,7 @@ func loadDialogueData(dialogueEntry:Dictionary) -> void:
 
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
-	#print("\nloading dialogue: ", nextDialogueID)
+	#print("\nloading dialogue: [", nextDialogueID, "]")
 	
 	if nextDialogueID == "" and isTalking:
 		endDialogue()
@@ -93,29 +97,17 @@ func loadNextDialogue(nextDialogueID: String) -> void:
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	#print("dialogue data: ", dialogue)
 	loadDialogueData(dialogue)
-	dialogueBox.start(firstTimeSpawningDialogue)
-	if firstTimeSpawningDialogue:
-		firstTimeSpawningDialogue = false
-	
-	# TODO: remove this section.  move logic to dialogue_box.start()
-	await get_tree().create_timer(delayStartShowingOptions).timeout
-
-	if dialogue.options.size() == 0 and isTalking:
-		endDialogue()
-		return
-
-	dialogueBox.createOptions()
+	dialogueBox.start()
 
 ## Ends the dialogue interaction.
 func endDialogue() -> void:
 	#print("ending")
 	
+	isTalking = false
+	disconnectDialogueBoxSignals()
+	finished_dialogue.emit()
 	dialogueBox.kill()
 	dialogueBox = null
-	isTalking = false
-	connectedDialogueBoxSignals = false
-	firstTimeSpawningDialogue = true
-	finished_dialogue.emit()
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
