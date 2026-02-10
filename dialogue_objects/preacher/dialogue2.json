@@ -3,6 +3,8 @@
 	 "sfx":{ "spawn": "preacherSound", "text": "default"},
 	"mode": "hectic",
 	"type": "Angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue2_Fail",
 	"writeSpeed": "fast",
 	"writeSpeedCustom": -1.0,
 	"options": [

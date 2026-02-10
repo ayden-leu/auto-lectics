@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 	if shouldCountdown:
 		timeElapsed += delta
 		if timeElapsed >= duration:
-			stop()
+			onTimeout()
 
 ## Starts the timer.
 func start(timeSec:float = -1.0) -> void:
@@ -56,13 +56,17 @@ func pause() -> void:
 
 # TODO:  maybe make a separate function for timing out, to match the normal timer's functionality.
 ## Stops the timer.
-func stop() -> void:	
+func stop() -> void:
 	if shouldCountdown == false:
 		return
 	
 	shouldCountdown = false
 	timeElapsed = 0
 	visible = false
+
+## Ran when the the time elapsed is beyond the duration.
+func onTimeout() -> void:
+	stop()
 	emit_signal("timeout")
 
 ## Updates the size of the bar based on the timer's progress.

@@ -41,7 +41,11 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 		DialogueDefaults.DIALOGUE_TYPES,
 		dialogue.type
 	)
-	dialogue.mode = dialogue_obj.get("mode", dialogue.mode).to_lower()
+	dialogue.mode = _verify_in_list(
+		dialogue_obj.get("mode", dialogue.mode).to_lower(),
+		DialogueDefaults.DIALOGUE_MODES,
+		dialogue.mode
+	)
 	dialogue.nextOnHecticFailureID = dialogue_obj.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
 	
 	dialogue.writeSpeed = _verify_in_list(
