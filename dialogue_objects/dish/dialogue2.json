@@ -1,6 +1,9 @@
 {
 	"text": "*",
-		 "sfx":{ "spawn": "static", "text": "normalSound"},
+	"sfx":{
+		"spawn": "static",
+		"text": "normalSound"
+	},
 	"type": "Angry",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "dialogue2_Fail",

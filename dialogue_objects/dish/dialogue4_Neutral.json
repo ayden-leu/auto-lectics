@@ -1,6 +1,6 @@
 {
 	
 	"text": "*",
-	"sfx":{ "spawn": "hum", "text": "default"},
+	"sfx":{ "spawn": "michaelwave", "text": "default"},
 	"options": [{"text": "[End]"}]
 }
