@@ -7,11 +7,14 @@ static func loadAudioFiles(id:String, audioStream:AudioStreamRandomizer) -> void
 	if id == "none":
 		return
 		
+	var tempDirAccess:DirAccess = DirAccess.open(SFX_PATH)
+	if not tempDirAccess.dir_exists(id):
+		printerr("AudioLoader: Could not find the SFX ID folder: ", id)
+	
 	var soundIDPath:String = SFX_PATH + id
 	var audioFileNames:PackedStringArray = ResourceLoader.list_directory(soundIDPath)
-	
 	if audioFileNames.is_empty():
-		printerr("AudioLoader: Could not find SFX ID folder: ", id)
+		printerr("AudioLoader: Could not find any SFX in SFX ID folder: ", id)
 	
 	for filename in audioFileNames:
 		if not filename.ends_with(".wav"):
