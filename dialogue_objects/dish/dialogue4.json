@@ -1,6 +1,6 @@
 {
 	"text": "*",
-	"sfx":{ "spawn": "weird", "text": "default"},
+	"sfx":{ "spawn": "weird"},
 	"type": "Happy",
 	"options": [
 		{

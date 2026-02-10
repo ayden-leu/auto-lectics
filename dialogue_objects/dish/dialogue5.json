@@ -1,6 +1,6 @@
 {
 	"text": "*",
-	"sfx":{ "spawn": "upbeat", "text": "default"},
+	"sfx":{ "spawn": "upbeat"},
 	"type": "Happy",
 	"options": [{"text": "[End]"}]
 }

@@ -1,6 +1,6 @@
 {
 	"text": "You don't know...you sound like PR3-CHR. When he lost his last position, he really began to lose it.",
-				 "sfx":{ "spawn": "gossipSound", "text": "default"},
+				 "sfx":{ "spawn": "gossipSound"},
 
 	"options": [
 		{

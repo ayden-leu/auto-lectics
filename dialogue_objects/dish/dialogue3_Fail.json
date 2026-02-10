@@ -1,6 +1,6 @@
 {
 	"text": "*",
-	"sfx":{ "spawn": "static", "text": "default"},
+	"sfx":{ "spawn": "static"},
 	"type": "Angry",
 	"options": [{"text": "[End]"}]
 }

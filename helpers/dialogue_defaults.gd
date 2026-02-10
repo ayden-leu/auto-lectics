@@ -59,7 +59,7 @@ static func default_dialogue() -> Dictionary:
 
 		"sfx": {
 			"spawn": "none",
-			"text": "none"
+			"text": "default"
 		},
 
 		"backgroundTheme": "default",

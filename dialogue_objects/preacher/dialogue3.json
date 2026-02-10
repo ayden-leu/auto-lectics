@@ -1,6 +1,6 @@
 {
 	"text": "Everyone feast your eyes on this newly activated body...",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	 "sfx":{ "spawn": "preacherSound"},
 	
 	"type": "Happy",
 	"options": [

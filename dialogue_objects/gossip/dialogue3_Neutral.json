@@ -1,7 +1,7 @@
 {
 	"text": "I wouldn't recommend it. He's a real gear box.",
-				 "sfx":{ "spawn": "gossipSound", "text": "default"},
+				 "sfx":{ "spawn": "gossipSound"},
 
-		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+		 "sfx":{ "spawn": "dialogueFailSound"},
 	"options": [{"text": "[End]"}]
 }

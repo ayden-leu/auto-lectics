@@ -1,6 +1,6 @@
 {
 	"text": "Join the club.",
-		 "sfx":{ "spawn": "normalSound", "text": "default"},
+		 "sfx":{ "spawn": "normalSound"},
 
 	"type": "Confused",
 	"options": [

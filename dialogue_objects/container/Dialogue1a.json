@@ -1,6 +1,6 @@
 {
 	"text": "Huh... Wuh? I can't read you down there. I'm stuck.",
-	 "sfx":{ "spawn": "normalSound", "text": "default"},
+	 "sfx":{ "spawn": "normalSound"},
 	"font": "default",
 	"type": "neutral",
 	"mode": "normal",

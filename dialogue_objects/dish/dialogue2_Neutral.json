@@ -1,4 +1,4 @@
-{		 "sfx":{ "spawn": "upbeat", "text": "default"},
+{		 "sfx":{ "spawn": "upbeat"},
 
 	"text": "*",
 	"options": [{"text": "[End]"}]

@@ -1,6 +1,6 @@
 {
 	"text": "I don't think youre supposed to be here.",
-	 "sfx":{ "spawn": "normalSound", "text": "default"},
+	 "sfx":{ "spawn": "normalSound"},
 	"font": "default",
 	"type": "neutral",
 	"mode": "normal",

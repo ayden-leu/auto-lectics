@@ -1,6 +1,6 @@
 {
 	"text": "So what were you made to do? Are you malfunctioning? I wasn't told of you.",
-			 "sfx":{ "spawn": "gossipSound", "text": "default"},
+			 "sfx":{ "spawn": "gossipSound"},
 
 	"type": "Happy",
 	"mode": "hectic",

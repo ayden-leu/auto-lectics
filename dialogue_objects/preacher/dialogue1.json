@@ -1,6 +1,6 @@
 {
 	"text": "Okay everyone settle, in for the sermon.",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	 "sfx":{ "spawn": "preacherSound"},
 	
 	"options": [
 		{

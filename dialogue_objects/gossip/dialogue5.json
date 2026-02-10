@@ -1,6 +1,6 @@
 {
 	"text": "All thanks to my flock.",
-				 "sfx":{ "spawn": "gossipSound", "text": "default"},
+				 "sfx":{ "spawn": "gossipSound"},
 
 	"type": "Happy",
 	"options": [

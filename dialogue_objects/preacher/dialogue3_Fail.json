@@ -1,6 +1,6 @@
 {
 	"text": "In due time you will.",
-		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+		 "sfx":{ "spawn": "dialogueFailSound"},
 	
 	"options": [
 		{

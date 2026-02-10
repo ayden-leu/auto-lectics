@@ -1,7 +1,7 @@
 {
 	"text": "WHY WOULD YOU ASK ME THAT!?!?! I'M NOT MALFUNCTIONING!!!",
 	
-		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+		 "sfx":{ "spawn": "dialogueFailSound"},
 	"type": "Angry",
 	"options": [{"text": "[End]"}]
 
