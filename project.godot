@@ -36,7 +36,7 @@ folder_colors={
 "res://dialogue_objects/": "blue",
 "res://dialogue_visuals/": "teal",
 "res://editor_files/": "gray",
-"res://entities/": "blue",
+"res://entities/": "purple",
 "res://entities/npcs/": "purple",
 "res://entities/player/": "orange",
 "res://helpers/": "red",

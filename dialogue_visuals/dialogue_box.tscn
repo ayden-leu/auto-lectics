@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwqide2q2tp3i"]
+[gd_scene load_steps=13 format=3 uid="uid://dwqide2q2tp3i"]
 
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
@@ -24,6 +24,12 @@ size = Vector3(0.195, 1.585, 1.32)
 [sub_resource type="BoxMesh" id="BoxMesh_44dxv"]
 material = ExtResource("3_21gmv")
 size = Vector3(0.195, 1.585, 1.32)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hx4ud"]
+playback_mode = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ane15"]
+playback_mode = 1
 
 [node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("myLabel")]
 script = ExtResource("1_xrnu6")
@@ -183,5 +189,13 @@ metadata/_edit_group_ = true
 
 [node name="Timer" parent="." instance=ExtResource("4_44dxv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2821603, 0)
+
+[node name="SFX" type="Node3D" parent="."]
+
+[node name="text" type="AudioStreamPlayer3D" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_hx4ud")
+
+[node name="spawn" type="AudioStreamPlayer3D" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_ane15")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_bar_timeout"]
