@@ -66,8 +66,11 @@ func stop() -> void:
 
 ## Ran when the the time elapsed is beyond the duration.
 func onTimeout() -> void:
+	if not shouldCountdown:
+		return
+	
 	stop()
-	emit_signal("timeout")
+	timeout.emit()
 
 ## Updates the size of the bar based on the timer's progress.
 func updateBar() -> void:

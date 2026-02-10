@@ -55,14 +55,16 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		#if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
 		emit_signal("mouse_moved", event.relative * mouseSentitivity)
-		
-	if Input.is_action_just_pressed("interact"):
-		emit_signal("interact_button_pressed")
+	
+	if event is InputEventMouseButton:
+		if event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		elif event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	if event.is_action_pressed("interact"):
+		interact_button_pressed.emit()
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 
