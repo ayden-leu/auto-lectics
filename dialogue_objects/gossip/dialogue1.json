@@ -1,6 +1,6 @@
 {
 	"text": "Okay, what do you have for me?",
-		 "sfx":{ "spawn": "gossipSound", "text": "default"},
+		 "sfx":{ "spawn": "gossipSound"},
 
 	"options": [
 		{

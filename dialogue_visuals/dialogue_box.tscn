@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwqide2q2tp3i"]
+[gd_scene load_steps=14 format=3 uid="uid://dwqide2q2tp3i"]
 
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
+[ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/type_writer_label.gd" id="3_ane15"]
 [ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
 [ext_resource type="Script" uid="uid://bix7b5bmj6lso" path="res://dialogue_visuals/hectic_positions.gd" id="4_hx4ud"]
 
@@ -47,6 +48,8 @@ horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2
 width = 400.0
+script = ExtResource("3_ane15")
+fullText = "test message"
 
 [node name="VisualArea" type="Area3D" parent="."]
 collision_layer = 8
@@ -170,19 +173,31 @@ metadata/_edit_group_ = true
 [node name="Top" type="Node3D" parent="OptionPositions/Hectic"]
 
 [node name="1" type="Marker3D" parent="OptionPositions/Hectic/Top"]
-transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.06551936, 1.6779767, 0.0741815)
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.06551936, 1.5519055, 0.35953772)
 metadata/_edit_group_ = true
 
 [node name="2" type="Marker3D" parent="OptionPositions/Hectic/Top"]
-transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.17676836, 2.0487049, -0.15995938)
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.17676836, 1.826174, -0.23174068)
 metadata/_edit_group_ = true
 
 [node name="3" type="Marker3D" parent="OptionPositions/Hectic/Top"]
-transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.06551936, 2.3175268, 0.11812264)
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.06551936, 2.0079834, 0.24010843)
 metadata/_edit_group_ = true
 
 [node name="4" type="Marker3D" parent="OptionPositions/Hectic/Top"]
-transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.22521538, 2.7520456, -0.035671532)
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.22521538, 2.3691308, -0.2042324)
+metadata/_edit_group_ = true
+
+[node name="5" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.38269562, 2.6050103, 0.4384464)
+metadata/_edit_group_ = true
+
+[node name="6" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.6304612, 2.8923411, -0.31423265)
+metadata/_edit_group_ = true
+
+[node name="7" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.6304612, 3.0054848, 0.22590068)
 metadata/_edit_group_ = true
 
 [node name="WarningsContainer" type="Node3D" parent="."]
@@ -204,4 +219,3 @@ stream = SubResource("AudioStreamRandomizer_ane15")
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_bar_timeout"]
-[connection signal="timeout" from="tempTimeer" to="." method="_on_temp_timeer_timeout"]

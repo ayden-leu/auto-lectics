@@ -1,6 +1,6 @@
 {
 	"text": "and plugged in the world to the external power grid.",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	 "sfx":{ "spawn": "preacherSound"},
 	
 	"options": [
 		{

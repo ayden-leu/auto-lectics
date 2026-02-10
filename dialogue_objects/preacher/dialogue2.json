@@ -1,6 +1,6 @@
 {
 	"text": "YOU! ARE YOU TURNED ON?!?!",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	 "sfx":{ "spawn": "preacherSound"},
 	"mode": "hectic",
 	"type": "Angry",
 	"mode": "hectic",

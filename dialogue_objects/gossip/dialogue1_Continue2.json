@@ -1,6 +1,6 @@
 {
 	"text": "Who are you? Where'd you come from? How'd you get here?",
-			 "sfx":{ "spawn": "gossipSound", "text": "default"},
+			 "sfx":{ "spawn": "gossipSound"},
 
 	"type": "Angry",
 	"mode": "hectic",

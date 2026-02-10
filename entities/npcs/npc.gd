@@ -80,7 +80,9 @@ func loadDialogueData(dialogueEntry:Dictionary) -> void:
 	dialogueBox.mode = dialogueEntry.mode
 	if dialogueEntry.mode == "hectic":	
 		dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		dialogueBox.delayBtwnWriteDialogueAndOptions = 0.25  # arbitrary
 	dialogueBox.text = dialogueEntry.text
+	dialogueBox.textWriteSpeed = dialogueEntry.writeSpeedCustom
 	dialogueBox.sfxEventsToLoad = dialogueEntry.sfx
 	dialogueBox.loadOptionData(dialogueEntry.options)
 	dialogueBox.prepare()

@@ -1,6 +1,6 @@
 {
 	"text": "They’re completely ignoring the obvious importance of the great turning.",
-		 "sfx":{ "spawn": "normalSound", "text": "default"},
+		 "sfx":{ "spawn": "normalSound"},
 
 	"font": "default",
 	"type": "neutral",

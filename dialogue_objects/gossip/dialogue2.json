@@ -1,6 +1,6 @@
 {
 	"text": "NEW!?!?! *Parts of the bot fall off*",
-			 "sfx":{ "spawn": "gossipSound", "text": "default"},
+			 "sfx":{ "spawn": "gossipSound"},
 
 	"type": "Happy",
 	"options": [

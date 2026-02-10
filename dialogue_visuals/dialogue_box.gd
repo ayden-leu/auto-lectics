@@ -26,12 +26,12 @@ enum OPTIONS_ANCHOR {
 ## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly. 
 @export var optionsAnchor:OPTIONS_ANCHOR = OPTIONS_ANCHOR.topLeft
 ## Holds a reference to the text label that displays the current dialogue.
-@export var myLabel:Label3D
+@export var myLabel:TypeWriterLabel
 ## Holds the text that displays the current dialogue.  Mainly just used as an easier way to get/set the label text.
 var text:String = "":
 	set(value):
 		text = value
-		myLabel.text = value
+		myLabel.fullText = value
 
 ## Holds a reference to the dialogue option resource.
 const optionScene:Resource = preload(Globals.SCENES.DialogueOption)
@@ -85,6 +85,17 @@ var sfxEventsToLoad:Dictionary:
 	set(value):
 		sfxEventsToLoad = value
 		loadSfx()
+## How fast the text should be written in Characters per Second.
+var textWriteSpeed:float
+## Whether to start writing the text or not.
+var increaseVisibleTextAmount:bool = false:
+	set(value):
+		increaseVisibleTextAmount = value
+		timePassedSinceTextWriting = 0.0
+## The amount of time passed since starting to write text.
+var timePassedSinceTextWriting:float = 0.0
+## A hardcoded delay between when the dialogue text finishes writing and when the options start being created.
+var delayBtwnWriteDialogueAndOptions:float = 1.0
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -92,10 +103,10 @@ func _ready() -> void:
 	else:
 		$WarningPositionAreas.visible = false
 	
-func _process(_delta: float) -> void:
-	#sfxPlayer.text.play()
-	#await sfxPlayer.text.finished
-	pass
+func _process(delta: float) -> void:
+	if increaseVisibleTextAmount:
+		timePassedSinceTextWriting += delta
+		writeText()
 
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
@@ -105,22 +116,40 @@ func loadOptionData(options: Array) -> void:
 ## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
 	if mode == "hectic":
+		optionSpawnPositions.hectic.left = $OptionPositions/Hectic/Left.get_children()
+		optionSpawnPositions.hectic.right = $OptionPositions/Hectic/Right.get_children()
+		optionSpawnPositions.hectic.top = $OptionPositions/Hectic/Top.get_children()
+		
 		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
 		timer.start()
 
 ## Make the dialogue box start doing things.
 func start() -> void:
-	# TODO:  start text writing on effect
-	# 	when all dialogue text is visible:
-	# 		emit signal all_dialogue_text_visible
-	#		createOptions()
-	#		or endDialogue() if there are no options
 	sfxPlayer.spawn.play()
+	myLabel.visibleCharacters = 0
+	increaseVisibleTextAmount = true
+
+## Makes label text visible based on the elapsed time.
+func writeText() -> void:
+	var newVisibleAmount:int = roundi(timePassedSinceTextWriting * textWriteSpeed)
+	myLabel.visibleCharacters = newVisibleAmount
+	sfxPlayer.text.play()
 	
-	# TODO: replace this with emitting a signal from the text writer effect being complete
-	$tempTimeer.start(1.0)
+	if newVisibleAmount >= text.length():
+		finishWritingText()
+
+func finishWritingText() -> void:
+	increaseVisibleTextAmount = false
+	all_dialogue_text_visible.emit()
 	
+	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
+	
+	if optionData.size() == 0:
+		update_me.emit("")
+		return
+	
+	createOptions()
 
 ## Loads the SFX from the files.
 func loadSfx() -> void:
@@ -329,14 +358,6 @@ func _on_timer_bar_timeout() -> void:
 			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
 			printerr("DialogueBox: Also, realOwner variable not set.")
 	_on_option_picked(hecticFailureDialogueID)
-
-
-func _on_temp_timeer_timeout() -> void:
-	if optionData.size() == 0:
-		update_me.emit("")
-		return
-	
-	createOptions()
 
 
 

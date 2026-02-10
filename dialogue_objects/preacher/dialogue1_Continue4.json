@@ -1,6 +1,6 @@
 {
 	"text": "\"I can't see...\"",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	 "sfx":{ "spawn": "preacherSound"},
 	
 	"options": [
 		{

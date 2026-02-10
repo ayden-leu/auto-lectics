@@ -1,7 +1,7 @@
 {
 	"text": "I've been stuck here for a couple hundred years...
 	How are they doing up there?",
-	"sfx":{ "spawn": "normalSound", "text": "default"},
+	"sfx":{ "spawn": "normalSound"},
 
 	"type": "Confused",
 	"options": [

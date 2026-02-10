@@ -1,6 +1,6 @@
 {
 	"text": "I’m just here for entertainment.",
-	 "sfx":{ "spawn": "normalSound", "text": "default"},
+	 "sfx":{ "spawn": "normalSound"},
 	"font": "default",
 	"type": "neutral",
 	"mode": "normal",

@@ -1,6 +1,6 @@
 {
 	"text": "I didn't think this far...",
-	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	 "sfx":{ "spawn": "preacherSound"},
 	
 	"options": [
 		{

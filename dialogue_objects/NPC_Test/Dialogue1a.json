@@ -7,7 +7,7 @@
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 20.0,
 	"sfx": {
-		"spawn": "none",
+		"spawn": "default",
 		"text": "default"
 	},
 	"backgroundTheme": "default",
@@ -30,7 +30,7 @@
 			"writeSpeed": "inherit",
 			"writeSpeedCustom": -1,
 			"sfx": {
-				"spawn": "none",
+				"spawn": "default",
 				"text": "default"
 			},
 			"backgroundTheme": "inherit",
@@ -56,7 +56,7 @@
 			"writeSpeed": "inherit",
 			"writeSpeedCustom": -1,
 			"sfx": {
-				"spawn": "none",
+				"spawn": "default",
 				"text": "default"
 			},
 			"backgroundTheme": "inherit",
@@ -82,7 +82,7 @@
 			"writeSpeed": "inherit",
 			"writeSpeedCustom": -1,
 			"sfx": {
-				"spawn": "none",
+				"spawn": "default",
 				"text": "default"
 			},
 			"backgroundTheme": "inherit",
