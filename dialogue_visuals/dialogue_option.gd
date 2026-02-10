@@ -3,7 +3,7 @@ extends Node3D
 class_name DialogueOption
 
 ## Emitted when this dialogue option is picked.
-signal option_picked
+signal option_picked(nextID:String)
 
 ## Used for referencing how the dialogue option should grow horizontally.
 enum HORIZONTAL_ALIGNMENT{
@@ -92,7 +92,8 @@ func prepare() -> void:
 ## Loads the SFX from the files.
 func loadSfx() -> void:
 	for eventID in sfxPlayer.keys():
-		AudioLoader.loadSFX(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
+		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
 
 ## Applies all configured dialogue option settings.
 func applySettings() -> void:
@@ -169,14 +170,18 @@ func applyBackgroundSettings() -> void:
 ## Kills the dialogue option.
 func kill():
 	goingToDie = true
+	for eventID in sfxPlayer.keys():
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
 	queue_free()
 
 
 
 ## Handles logic for when the dialogue option gets picked.
 func _on_interaction() -> void:
+	visible = false
+	interactionHitbox.disabled = true
 	lifeTimer.stop()
-	emit_signal("option_picked", nextDialogueID)
+	option_picked.emit(nextDialogueID)
 
 ## Handles the logic for when the lifetime of the dialogue option expires.
 func _on_life_timer_timeout() -> void:

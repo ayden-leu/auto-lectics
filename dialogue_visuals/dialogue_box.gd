@@ -81,7 +81,10 @@ var numWarnings:int = 6
 ## Holds references to all spawned warning tiles.
 var spawnedWarningTiles:Array = []
 ## The SFX sound events to load sound files into.
-var sfxEventsToLoad:Dictionary
+var sfxEventsToLoad:Dictionary:
+	set(value):
+		sfxEventsToLoad = value
+		loadSfx()
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -101,26 +104,29 @@ func loadOptionData(options: Array) -> void:
 
 ## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
-	loadSfx()
 	if mode == "hectic":
 		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
 		timer.start()
 
 ## Make the dialogue box start doing things.
-func start(firstTime:bool) -> void:
+func start() -> void:
 	# TODO:  start text writing on effect
 	# 	when all dialogue text is visible:
 	# 		emit signal all_dialogue_text_visible
 	#		createOptions()
 	#		or endDialogue() if there are no options
-	if firstTime:
-		sfxPlayer.spawn.play()
+	sfxPlayer.spawn.play()
+	
+	# TODO: replace this with emitting a signal from the text writer effect being complete
+	$tempTimeer.start(1.0)
+	
 
 ## Loads the SFX from the files.
 func loadSfx() -> void:
 	for eventID in sfxPlayer.keys():
-		AudioLoader.loadSFX(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
+		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
 
 ## Creates each option that the player can choose from for this dialogue object.
 func createOptions() -> void:
@@ -279,6 +285,8 @@ func getWarningTilePosition() -> Vector3:
 
 ## Removes the dialogue box from the world.
 func kill() -> void:
+	for eventID in sfxPlayer.keys():
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
 	queue_free()
 
 
@@ -298,6 +306,27 @@ func _on_option_picked(nextDialogueID:String) -> void:
 	#print("\nnext dialogue: ", nextDialogueID)
 	update_me.emit(nextDialogueID)
 
+## Handles logic for when an option isn't picked in time during hectic mode.
+func _on_timer_bar_timeout() -> void:
+	if hecticFailureDialogueID == "":
+		if realOwner != null:
+			printerr("DialogueBox: Hectic Failure Dialogue ID not set for: ", realOwner.name)
+		else:
+			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
+			printerr("DialogueBox: Also, realOwner variable not set.")
+	_on_option_picked(hecticFailureDialogueID)
+
+
+func _on_temp_timeer_timeout() -> void:
+	if optionData.size() == 0:
+		update_me.emit("")
+		return
+	
+	createOptions()
+
+
+
+
 ## Handles logic for when a warning tile is blocking an important subject.
 func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 	if warningTile.numTimesRepositioned > 3:
@@ -315,13 +344,3 @@ func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 	warningTile.position = getWarningTilePosition()
 	warningTile.lookAtCamera()
 	warningTile.numTimesRepositioned += 1
-
-## Handles logic for when an option isn't picked in time during hectic mode.
-func _on_timer_bar_timeout() -> void:
-	if hecticFailureDialogueID == "":
-		if realOwner != null:
-			printerr("DialogueBox: Hectic Failure Dialogue ID not set for: ", realOwner.name)
-		else:
-			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
-			printerr("DialogueBox: Also, realOwner variable not set.")
-	_on_option_picked(hecticFailureDialogueID)

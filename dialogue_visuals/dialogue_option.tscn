@@ -268,9 +268,11 @@ resource_local_to_scene = true
 size = Vector3(0.13, 0.35, 0.445)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hgihb"]
+resource_local_to_scene = true
 playback_mode = 1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wakav"]
+resource_local_to_scene = true
 playback_mode = 1
 
 [node name="DialogueOption" type="Node3D"]

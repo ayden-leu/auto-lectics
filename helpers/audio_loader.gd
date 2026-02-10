@@ -3,7 +3,7 @@ class_name AudioLoader
 
 const SFX_PATH:String = "res://sounds/sfx/"
 
-static func loadSFX(id:String, audioStream:AudioStreamRandomizer) -> void:
+static func loadAudioFiles(id:String, audioStream:AudioStreamRandomizer) -> void:
 	if id == "none":
 		return
 		
@@ -19,3 +19,7 @@ static func loadSFX(id:String, audioStream:AudioStreamRandomizer) -> void:
 		
 		var audioFile:AudioStreamWAV = AudioStreamWAV.load_from_file(soundIDPath + "/" + filename)
 		audioStream.add_stream(-1, audioFile)
+
+static func clearAudioFiles(audioStream:AudioStreamRandomizer) -> void:
+	for i in range(audioStream.streams_count):
+		audioStream.remove_stream(0)

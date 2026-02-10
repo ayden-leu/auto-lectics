@@ -26,9 +26,11 @@ material = ExtResource("3_21gmv")
 size = Vector3(0.195, 1.585, 1.32)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hx4ud"]
+resource_local_to_scene = true
 playback_mode = 1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ane15"]
+resource_local_to_scene = true
 playback_mode = 1
 
 [node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("myLabel")]
@@ -198,4 +200,8 @@ stream = SubResource("AudioStreamRandomizer_hx4ud")
 [node name="spawn" type="AudioStreamPlayer3D" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_ane15")
 
+[node name="tempTimeer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_bar_timeout"]
+[connection signal="timeout" from="tempTimeer" to="." method="_on_temp_timeer_timeout"]
