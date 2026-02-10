@@ -1,5 +1,7 @@
 {
 	"text": "turning you on, as well.",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

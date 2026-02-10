@@ -1,4 +1,6 @@
 {
 	"text": "Don't worry though, the path to being turned on is a journey we must undertake. I've done it and soon you will too. I shall return",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"options": []
 }

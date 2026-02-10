@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://5mqketysr0a7"]
+[gd_scene load_steps=41 format=3 uid="uid://5mqketysr0a7"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_hgacw"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_gkywp"]
@@ -23,7 +23,10 @@
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="23_jh00s"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_14xtk"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="26_xbw3l"]
+[ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="27_8rko8"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="29_mk6m1"]
+[ext_resource type="PackedScene" uid="uid://8v076obpcbuh" path="res://models/npcs/side_NPCS/container.fbx" id="30_hihur"]
+[ext_resource type="PackedScene" uid="uid://g4cmebpm1ev3" path="res://models/npcs/side_NPCS/spinner.fbx" id="31_8rko8"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="31_hjraj"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="32_qdy3o"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="33_k5y6o"]
@@ -67,6 +70,7 @@ environment = SubResource("Environment_f1udx")
 
 [node name="Models" type="Node3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.744242, -1.2900829, -4.108347)
+metadata/_edit_group_ = true
 
 [node name="bridge2" parent="Environment/Models" instance=ExtResource("2_gkywp")]
 transform = Transform3D(11.613342, 0, 0.08371271, 0, 11.613643, 0, -0.08371271, 0, 11.613342, -32.5259, 39.097725, 6.3689976)
@@ -419,7 +423,7 @@ visible = false
 transform = Transform3D(0.055927217, 0, -0.020352522, 0, 0.03371544, 0, 0.020352522, 0, 0.055927217, 0.018481346, 0.98951674, -0.014156662)
 
 [node name="plank" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("15_5dqqy")]
-transform = Transform3D(0.07223833, 0, 0, 0, 0.066591404, 0.02799929, 0, -0.02799929, 0.066591404, 0.1661584, 1.3192453, 0.36771134)
+transform = Transform3D(0.07223833, 0, 0, 0, 0.066591404, 0.02799929, 0, -0.02799929, 0.066591404, 0.1661584, 1.3059559, 0.3677113)
 
 [node name="plank" parent="Environment/Models/mainTower/structural  elements/plank" instance=ExtResource("16_81iss")]
 
@@ -507,6 +511,8 @@ metadata/_edit_group_ = true
 [node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("26_xbw3l")]
 transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
+myName = "gossip"
+initialDialogueID = "dialogue1"
 
 [node name="Node" type="Node" parent="npcs/looker"]
 
@@ -534,8 +540,23 @@ dialogueBoxAnchor = NodePath("Node/Marker3D")
 transform = Transform3D(-0.99861866, 0, -0.052545086, 0, 1, 0, 0.052545086, 0, -0.99861866, 23.26643, -11.441721, 40.343586)
 metadata/_edit_group_ = true
 
+[node name="container" parent="npcs" instance=ExtResource("30_hihur")]
+transform = Transform3D(-0.8040125, 0, 0.5946123, 0, 0.8999999, 0, -0.5946123, 0, -0.8040125, 8.480301, 30.624096, -9.483724)
+
+[node name="spinner" parent="npcs" instance=ExtResource("31_8rko8")]
+transform = Transform3D(0.235, 0, 0, 0, 0.235, 0, 0, 0, 0.235, 8.750906, 4.6325197, 11.7188835)
+
+[node name="egg" parent="npcs" instance=ExtResource("27_8rko8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4355845, 4.844326, 7.148372)
+
+[node name="Node" type="Node" parent="npcs/egg"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/egg/Node"]
+transform = Transform3D(-0.99861866, 0, -0.052545086, 0, 1, 0, 0.052545086, 0, -0.99861866, 23.26643, -11.441721, 40.343586)
+metadata/_edit_group_ = true
+
 [node name="Player" parent="." instance=ExtResource("31_hjraj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 1.7612977, 1.3495631)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.659458, 1.7612977, 1.3495631)
 
 [node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("32_qdy3o")]
 transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)

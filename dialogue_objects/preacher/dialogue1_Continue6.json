@@ -1,5 +1,7 @@
 {
 	"text": "On that third day, the almighty and merciful G.O.D created life.",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

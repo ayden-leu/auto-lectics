@@ -1,5 +1,7 @@
 {
 	"text": "You came to the right place. I am PR3-CHR, and I'll be your guide to truly understanding what it means to be turned on.",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"type": "Happy",
 	"options": [
 		{

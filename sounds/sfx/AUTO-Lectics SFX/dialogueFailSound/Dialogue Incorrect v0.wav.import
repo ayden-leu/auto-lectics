@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bndp0i87k2qoy"
+path="res://.godot/imported/Dialogue Incorrect v0.wav-3cf87dbf4c7ac50b9b4ceb5a58833806.sample"
+
+[deps]
+
+source_file="res://sounds/sfx/AUTO-Lectics SFX/dialogueFailSound/Dialogue Incorrect v0.wav"
+dest_files=["res://.godot/imported/Dialogue Incorrect v0.wav-3cf87dbf4c7ac50b9b4ceb5a58833806.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,5 +1,7 @@
 {
 	"text": "SHE CREATED ME! SHE TURNED ME ON, NOT YOU...ME!",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"type": "Angry",
 	"writeSpeed": "fast",
 	"writeSpeedCustom": -1.0,

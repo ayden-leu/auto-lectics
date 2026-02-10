@@ -1,5 +1,7 @@
 {
 	"text": "In due time you will.",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

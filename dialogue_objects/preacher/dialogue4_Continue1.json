@@ -1,5 +1,7 @@
 {
 	"text": "Do you feel it yet?",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"type": "Confused",
 	"options": [
 		{

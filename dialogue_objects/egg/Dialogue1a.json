@@ -1,0 +1,32 @@
+{
+	"text": "I’m just here for entertainment.",
+	"font": "default",
+	"type": "neutral",
+	"mode": "normal",
+	"nextOnHecticFailureID": "",
+	"writeSpeed": "medium",
+	"writeSpeedCustom": 20.0,
+	"sfx": {
+		"spawn": "none",
+		"text": "default"
+	},
+	"backgroundTheme": "default",
+	"particles": {
+		"spawn": {
+			"texture": "none"
+		},
+		"text": {
+			"texture": "none"
+		},
+		"ambient": {
+			"texture": "none"
+		}
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "Negative"
+		}
+		
+	]
+}

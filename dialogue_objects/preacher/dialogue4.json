@@ -1,5 +1,7 @@
 {
 	"text": "Great! Uhh...",
+	 "sfx":{ "spawn": "preacherSound", "text": "default"},
+	
 	"options": [
 		{
 			"text": "[Continue]",
