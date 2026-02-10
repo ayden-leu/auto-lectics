@@ -1,5 +1,6 @@
 {
 	
-	"text": "*The bot plays a relaxed tempoed bit of music.*",
+	"text": "*",
+	"sfx":{ "spawn": "hum", "text": "default"},
 	"options": [{"text": "[End]"}]
 }

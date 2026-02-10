@@ -1,4 +1,5 @@
 {		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+"text": "*",
 
 	"options": [	{"text": "[End]"}
 ]

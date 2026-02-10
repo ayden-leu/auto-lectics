@@ -1,5 +1,5 @@
-{		 "sfx":{ "spawn": "dialogueFailSound", "text": "default"},
+{		 "sfx":{ "spawn": "upbeat", "text": "default"},
 
-	"text": "*The bot plays a relaxed tempoed bit of music.*",
+	"text": "*",
 	"options": [{"text": "[End]"}]
 }

@@ -645,7 +645,7 @@ autoplay = true
 max_distance = 147.08
 
 [node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.04191, 0, 15.82423)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -139.30981, 0, 15.82423)
 stream = ExtResource("24_wdgfk")
 attenuation_model = 1
 volume_db = 64.587
@@ -664,7 +664,7 @@ dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
 [node name="Node" type="Node" parent="npcs/dishNPC"]
 
 [node name="DialogueBoxAnchor" type="Marker3D" parent="npcs/dishNPC/Node"]
-transform = Transform3D(0.014214218, 0, -0.6848525, 0, 0.68500006, 0, 0.6848525, 0, 0.014214218, 4.5947924, 1.1005831, -18.945412)
+transform = Transform3D(0.65481657, 0, -0.20109749, 0, 0.68500006, 0, 0.20109749, 0, 0.65481657, -22.84702, 1.1005831, -11.113908)
 metadata/_edit_group_ = true
 
 [node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("22_87qvr")]
@@ -754,7 +754,7 @@ dialogueBoxAnchor = NodePath("Node/Marker3D")
 transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.065751456, -0.6617077, -0.037088916, 0.99766946, -0.057272285, 19.958824, 23.540928, -11.605336)
 
 [node name="Player" parent="." instance=ExtResource("28_to1nd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.99025, 1.7612977, 1.3495631)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.328213, 1.7612958, 0.10652828)
 
 [node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("29_8v7jq")]
 transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
