@@ -29,6 +29,8 @@ const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 
 ## Holds a reference to this NPC's dialogue box scene.
 var dialogueBox:DialogueBox = null
+## If this is the first time spawning the dialogue box for an interaction.
+var firstTimeSpawningDialogue:bool = true
 ## Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
 var connectedDialogueBoxSignals:bool = false
 ## Is true when their dialogue box is visible.
@@ -75,6 +77,7 @@ func loadDialogueData(dialogueEntry:Dictionary) -> void:
 	if dialogueEntry.mode == "hectic":	
 		dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
 	dialogueBox.text = dialogueEntry.text
+	dialogueBox.sfxEventsToLoad = dialogueEntry.sfx
 	dialogueBox.loadOptionData(dialogueEntry.options)
 	dialogueBox.prepare()
 
@@ -90,7 +93,9 @@ func loadNextDialogue(nextDialogueID: String) -> void:
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	#print("dialogue data: ", dialogue)
 	loadDialogueData(dialogue)
-	dialogueBox.start()
+	dialogueBox.start(firstTimeSpawningDialogue)
+	if firstTimeSpawningDialogue:
+		firstTimeSpawningDialogue = false
 	
 	# TODO: remove this section.  move logic to dialogue_box.start()
 	await get_tree().create_timer(delayStartShowingOptions).timeout
@@ -109,6 +114,7 @@ func endDialogue() -> void:
 	dialogueBox = null
 	isTalking = false
 	connectedDialogueBoxSignals = false
+	firstTimeSpawningDialogue = true
 	finished_dialogue.emit()
 
 ## Handles flow of what to do when a player interacts with this NPC.

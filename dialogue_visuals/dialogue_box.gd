@@ -56,6 +56,11 @@ const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 @onready var warningsContainer:Node3D = $WarningsContainer
 ## The timer bar that appears when a hectic dialogue object is loaded.
 @onready var timer:TimerBar = $Timer
+## Holds the AudioStreamPlayer3Ds for each event.
+@onready var sfxPlayer:Dictionary = {
+	"spawn": $SFX/spawn,
+	"text": $SFX/text
+}
 
 ## The owner of this dialogue box.
 var realOwner
@@ -75,6 +80,8 @@ var mode:String = "normal"
 var numWarnings:int = 6
 ## Holds references to all spawned warning tiles.
 var spawnedWarningTiles:Array = []
+## The SFX sound events to load sound files into.
+var sfxEventsToLoad:Dictionary
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -83,6 +90,8 @@ func _ready() -> void:
 		$WarningPositionAreas.visible = false
 	
 func _process(_delta: float) -> void:
+	#sfxPlayer.text.play()
+	#await sfxPlayer.text.finished
 	pass
 
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
@@ -92,19 +101,26 @@ func loadOptionData(options: Array) -> void:
 
 ## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
+	loadSfx()
 	if mode == "hectic":
 		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
 		timer.start()
 
 ## Make the dialogue box start doing things.
-func start() -> void:
+func start(firstTime:bool) -> void:
 	# TODO:  start text writing on effect
 	# 	when all dialogue text is visible:
 	# 		emit signal all_dialogue_text_visible
 	#		createOptions()
 	#		or endDialogue() if there are no options
-	pass
+	if firstTime:
+		sfxPlayer.spawn.play()
+
+## Loads the SFX from the files.
+func loadSfx() -> void:
+	for eventID in sfxPlayer.keys():
+		AudioLoader.loadSFX(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
 
 ## Creates each option that the player can choose from for this dialogue object.
 func createOptions() -> void:
@@ -210,6 +226,8 @@ func getValidHecticAreas() -> Array[String]:
 
 ## Configures aspects of a dialogue option.
 func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
+	instance.sfxEventsToLoad = data.sfx
+	
 	if mode == "normal":
 		setOptionPositionNormal(instance)
 		setOptionAlignmentNormal(instance)
