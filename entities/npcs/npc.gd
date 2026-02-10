@@ -35,8 +35,6 @@ var connectedDialogueBoxSignals:bool = false
 var isTalking: bool = false
 ## Keeps track of which dialogue object to reference at the moment.
 var currentDialogueID: String = ""
-## The dialogue ID of the dialogue object to load when the player fails a hectic dialogue interaction.
-var hecticFailureDialogueID:String = ""
 ## Hardcoded delay between the dialogue being fully displayed, and when the dialogue options can begin spawning.
 var delayStartShowingOptions: float = 1.0
 
@@ -73,27 +71,31 @@ func connectDialogueBoxSignals() -> void:
 func loadDialogueData(dialogueEntry:Dictionary) -> void:
 	dialogueBox.realOwner = self
 	dialogueBox.currentDialogueID = currentDialogueID
-	dialogueBox.hecticFailureDialogueID = hecticFailureDialogueID
 	dialogueBox.mode = dialogueEntry.mode
+	if dialogueEntry.mode == "hectic":	
+		dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
 	dialogueBox.text = dialogueEntry.text
 	dialogueBox.loadOptionData(dialogueEntry.options)
 	dialogueBox.prepare()
 
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
-	if nextDialogueID == "":
+	#print("\nloading dialogue: ", nextDialogueID)
+	
+	if nextDialogueID == "" and isTalking:
 		endDialogue()
 		return
 	currentDialogueID = nextDialogueID
 	
 	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
+	#print("dialogue data: ", dialogue)
 	loadDialogueData(dialogue)
 	dialogueBox.start()
 	
 	# TODO: remove this section.  move logic to dialogue_box.start()
 	await get_tree().create_timer(delayStartShowingOptions).timeout
- 
-	if dialogue.options.size() == 0:
+
+	if dialogue.options.size() == 0 and isTalking:
 		endDialogue()
 		return
 
@@ -101,9 +103,10 @@ func loadNextDialogue(nextDialogueID: String) -> void:
 
 ## Ends the dialogue interaction.
 func endDialogue() -> void:
-	if dialogueBox != null:
-		dialogueBox.kill()
-		dialogueBox = null
+	#print("ending")
+	
+	dialogueBox.kill()
+	dialogueBox = null
 	isTalking = false
 	connectedDialogueBoxSignals = false
 	finished_dialogue.emit()

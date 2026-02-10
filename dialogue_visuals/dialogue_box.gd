@@ -277,6 +277,7 @@ func _on_option_picked(nextDialogueID:String) -> void:
 		toKill.kill()
 	
 	timer.stop()
+	#print("\nnext dialogue: ", nextDialogueID)
 	update_me.emit(nextDialogueID)
 
 ## Handles logic for when a warning tile is blocking an important subject.
