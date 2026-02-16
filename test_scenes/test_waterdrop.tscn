@@ -17,6 +17,12 @@ background_mode = 2
 sky = SubResource("Sky_hyl87")
 tonemap_mode = 2
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0271
+volumetric_fog_albedo = Color(0.56743336, 0.40657452, 0.14172915, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 0.42
+volumetric_fog_anisotropy = 0.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_f1nio"]
 size = Vector3(10, 1, 10)
@@ -58,23 +64,15 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_silsq")
 
-[node name="DebugCamera" parent="." instance=ExtResource("1_qu7pd")]
+[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("1_qu7pd")]
 transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.052335963, 0, -0.052335963, 0.9986295, 0.13, 4.095, 9.739)
+current = true
+mainCamera = NodePath(".")
 
 [node name="Player" parent="." instance=ExtResource("2_wsfuu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
-max_speed = 5.0
 acceleration = 18.0
 deceleration = 28.0
-turn_deceleration_boost = 6.0
-air_acceleration = 10.0
-air_deceleration = 6.0
-air_control = 0.45
-jump_height = 1.2
-time_to_apex = 0.4
-apex_hang_time = 0.04
-fall_gravity_multiplier = 2.0
-low_jump_multiplier = 1.35
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_eqdbr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
@@ -83,7 +81,7 @@ focus = NodePath("../Player")
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_gedth")]
 player = NodePath("../Player")
 wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
-wantsToKnowWhenInteract = [NodePath("../PlayerCamera")]
+wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6444097, 4.565408, 0)
