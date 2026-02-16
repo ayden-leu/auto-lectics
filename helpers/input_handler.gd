@@ -1,6 +1,7 @@
 @tool
 extends Node
 class_name InputHandler
+## Handles all inputs a player can possibly make.  Emits signals when a player input happens.  This *might* be rewritten to be a generic node that gets attached to nodes if time allows for it.
 
 ## Emitted when the mouse moves.
 signal mouse_moved
@@ -17,12 +18,14 @@ var mouseSentitivity:float = 0.15
 	set(value):
 		player = value
 		update_configuration_warnings()
-## A list of nodes that want to know if the mouse has moved.
+## A list of nodes that want to know if the mouse has moved.  Requires them to implement a "_onMouseMoved" function with no parameters.
 @export var wantsToKnowMouseMoved:Array[Node3D]
-## A list of nodes that want to know if the player hit the interact button.
+## A list of nodes that want to know if the player hit the interact button.  Requires them to implement a "_onInteractPressed" function with no parameters.
 @export var wantsToKnowWhenInteract:Array[Node3D]
 
 func _ready() -> void:
+	add_to_group("InputHandler")
+	
 	for listener in wantsToKnowMouseMoved:
 		mouse_moved.connect(listener._onMouseMoved)
 	

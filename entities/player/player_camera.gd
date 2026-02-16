@@ -1,6 +1,7 @@
 @tool
 extends Node3D
 class_name PlayerCamera
+## Holds both the player's camera and the HUD node.  Might be switched to a Camera3D node if time allows us to relook at the camera setup.  Currently, it needs to be added to InputHandler's "Wants To Know When Mouse Moved" list.
 
 ## The target the camera wants to look at.
 @export var focus:Node3D:
