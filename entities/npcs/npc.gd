@@ -24,6 +24,8 @@ signal finished_dialogue
 ## All dialogues belonging to this NPC will be under "dialogue_objects/[NPC name]"
 @export var initialDialogueID:String = ""
 
+@export var talk_only_once: bool = true
+
 ## Holds a reference to the dialogue box resource.
 const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 
@@ -85,7 +87,7 @@ func loadDialogueData(dialogueEntry:Dictionary) -> void:
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String) -> void:
 	if nextDialogueID == "":
-		endDialogue()
+		endDialogue(true)
 		return
 	currentDialogueID = nextDialogueID
 	
@@ -103,14 +105,27 @@ func loadNextDialogue(nextDialogueID: String) -> void:
 	dialogueBox.createOptions()
 
 ## Ends the dialogue interaction.
-func endDialogue() -> void:
+#func endDialogue() -> void:
+	#if dialogueBox != null:
+		#dialogueBox.kill()
+		#dialogueBox = null
+	#isTalking = false
+	#connectedDialogueBoxSignals = false
+	#has_talked_once = true
+	#finished_dialogue.emit()
+
+func endDialogue(mark_talked: bool = true) -> void:
 	if dialogueBox != null:
 		dialogueBox.kill()
 		dialogueBox = null
 	isTalking = false
 	connectedDialogueBoxSignals = false
-	has_talked_once = true
+
+	if talk_only_once and mark_talked:
+		has_talked_once = true
+
 	finished_dialogue.emit()
+	
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
@@ -136,6 +151,21 @@ func _on_dialogue_box_all_options_available() -> void:
 
 func _on_dialogue_box_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
+
+
+
+#function for reset
+func reset_to_default() -> void:
+	if isTalking:
+		endDialogue(false)
+
+	#  重置对话状态
+	currentDialogueID = initialDialogueID
+	hecticFailureDialogueID = ""
+
+	if "has_talked_once" in self:
+		has_talked_once = false
+
 
 
 # Dev-ing stuff
