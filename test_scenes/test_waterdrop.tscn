@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://6ampr08wbamb"]
+[gd_scene load_steps=14 format=3 uid="uid://ce5ufr7w3rky4"]
 
-[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_eawqy"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_nt7id"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_kkbud"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_jvw1w"]
+[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_qu7pd"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_wsfuu"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_eqdbr"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_gedth"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -17,12 +17,29 @@ background_mode = 2
 sky = SubResource("Sky_hyl87")
 tonemap_mode = 2
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0271
+volumetric_fog_albedo = Color(0.56743336, 0.40657452, 0.14172915, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 0.42
+volumetric_fog_anisotropy = 0.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_f1nio"]
 size = Vector3(10, 1, 10)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_silsq"]
 data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hbbb5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6e2s"]
+albedo_color = Color(0.92941177, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6eo2x"]
+material = SubResource("StandardMaterial3D_g6e2s")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="Skin" id="Skin_uvnsu"]
 
 [node name="Test_PlayerMovement" type="Node3D"]
 
@@ -36,7 +53,7 @@ shadow_enabled = true
 environment = SubResource("Environment_x333r")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(0.9991227, -0.01922757, -0.03720491, 0.018245807, 0.999481, -0.026548414, 0.037696082, 0.025846303, 0.9989549, -0.2614876, 0.1510039, -0.11802074)
+transform = Transform3D(0.9982836, -0.05712497, -0.012912117, 0.05642047, 0.9971761, -0.04956478, 0.015707068, 0.04875123, 0.9986875, -0.2657839, 0.1674071, -0.16342661)
 mesh = SubResource("BoxMesh_f1nio")
 skeleton = NodePath("../..")
 
@@ -47,23 +64,30 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_silsq")
 
-[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("1_eawqy")]
+[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("1_qu7pd")]
 transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.052335963, 0, -0.052335963, 0.9986295, 0.13, 4.095, 9.739)
-mainCamera = NodePath("../PlayerCamera/Camera3D")
+current = true
+mainCamera = NodePath(".")
 
-[node name="Player" parent="." instance=ExtResource("2_nt7id")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.549243, 0)
+[node name="Player" parent="." instance=ExtResource("2_wsfuu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
+acceleration = 18.0
+deceleration = 28.0
 
-[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_eqdbr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
 focus = NodePath("../Player")
 
-[node name="Camera3D" parent="PlayerCamera" index="0"]
-current = true
-
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_jvw1w")]
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_gedth")]
 player = NodePath("../Player")
 wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
 
-[editable path="PlayerCamera"]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6444097, 4.565408, 0)
+ignore_occlusion_culling = true
+trail_enabled = true
+trail_lifetime = 0.37
+process_material = SubResource("ParticleProcessMaterial_hbbb5")
+draw_pass_1 = SubResource("BoxMesh_6eo2x")
+draw_skin = SubResource("Skin_uvnsu")

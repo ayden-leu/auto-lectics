@@ -35,6 +35,8 @@ var connectedDialogueBoxSignals:bool = false
 var isTalking: bool = false
 ## Keeps track of which dialogue object to reference at the moment.
 var currentDialogueID: String = ""
+## Keeps track of if the player has interacted with this NPC.  If true, this NPC can no longer be talked to.
+var wasTalkedTo: bool = false
 
 func _ready() -> void:
 	# Makes sure the code after this is only ran in-game
@@ -106,6 +108,7 @@ func endDialogue() -> void:
 	#print("ending")
 	
 	isTalking = false
+	wasTalkedTo = true
 	disconnectDialogueBoxSignals()
 	finished_dialogue.emit()
 	dialogueBox.kill()
@@ -113,6 +116,9 @@ func endDialogue() -> void:
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
+	if wasTalkedTo:
+		return
+	
 	if isTalking:
 		return
 	isTalking = true
