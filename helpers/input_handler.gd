@@ -72,10 +72,11 @@ func _input(event: InputEvent) -> void:
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 	
-	if not player:
-		warnings.push_back(
-			"No player has been assigned to the Player property,
-		")
+	if self != get_tree().edited_scene_root:
+		if not player:
+			warnings.push_back(
+				"No player has been assigned to the Player property,
+			")
 	
 	for listener in wantsToKnowMouseMoved:
 		if not listener.has_method("_onMouseMoved"):
