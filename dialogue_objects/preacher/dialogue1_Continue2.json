@@ -1,5 +1,7 @@
 {
 	"text": "Nothing, just an endless void of nothing. A space of absolute uselessness.",
+	 "sfx":{ "spawn": "preacherSound"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

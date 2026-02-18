@@ -1,6 +1,10 @@
 {
 	"text": "Who are you? Where'd you come from? How'd you get here?",
+			 "sfx":{ "spawn": "gossipSound"},
+
 	"type": "Angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue1_TimeFail",
 	"options": [
 		{
 			"text": "That's not important.",

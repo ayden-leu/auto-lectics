@@ -1,5 +1,7 @@
-{
-	"text": "*The bot plays furious static.*",
+{		 "sfx":{ "spawn": "dialogueFailSound"},
+
+	"text": "*",
+	"sfx":{ "spawn": "static"},
 	"type": "Angry",
-	"options": []
+	"options": [{"text": "[End]"}]
 }

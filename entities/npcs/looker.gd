@@ -1,5 +1,5 @@
 @tool
-extends NPC
+extends InteractableNPC
 
 var time : float
 var base_position : Vector3
@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 		return
 	
 	time += delta;
-	position = Vector3(base_position.x, base_position.y + get_sine(), base_position.z)
+	position = Vector3(base_position.x  + get_sine(), base_position.y, base_position.z)
 	#print(get_sine())
 	pass
 

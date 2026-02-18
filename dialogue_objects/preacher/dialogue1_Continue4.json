@@ -1,5 +1,7 @@
 {
 	"text": "\"I can't see...\"",
+	 "sfx":{ "spawn": "preacherSound"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

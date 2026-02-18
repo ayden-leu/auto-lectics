@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AUTO-Lectics"
-run/main_scene="uid://5mqketysr0a7"
+run/main_scene="uid://bt62vwn7bnq36"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -36,7 +36,7 @@ folder_colors={
 "res://dialogue_objects/": "blue",
 "res://dialogue_visuals/": "teal",
 "res://editor_files/": "gray",
-"res://entities/": "blue",
+"res://entities/": "purple",
 "res://entities/npcs/": "purple",
 "res://entities/player/": "orange",
 "res://helpers/": "red",

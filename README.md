@@ -251,3 +251,27 @@ NOTE:  If you want to use GitHub Desktop, using the `HTTPS` version of the clone
 	- Your commit message should be a good summary of the changes you have made up to that point.
 6. Click the `Commit to <your branch name>` button.
 7. To push your changes to your branch on the GitHub repository, click the `Publish branch` button, which has now replaced the `Fetch origin` button.
+
+
+
+# TODO: Write guide for adding stuff for designers.
+Assume designers know nothing as a baseline. Tentative list of things that will need to be added:
+- Renaming nodes to what their purpose is.
+- Importing models.
+- Adding collision to mesh parts.
+- Paying attention to the little warning signs and how to fix them.
+	- CollisionShape3D being scaled.
+- How to resize collision shapes properly.
+- How to properly create an interactible NPC.
+	- Example interactible NPC setup.
+- Creating a dialogue file.
+	- By creating the file manually.
+	- By using the tool. (text ver.)
+	- By using the tool. (ui ver. once it exists)
+- Which audio file type to use.
+- Adding audio that plays everywhere.
+- Example world scene setup.
+	- Placing a player.
+	- Placing a player camera.
+	- The InputHandler.
+- Pushing changes to the github repository.

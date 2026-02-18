@@ -1,5 +1,7 @@
 {
 	"text": "On the second day, the almighty, and extremely well-built, G.O.D said...",
+	 "sfx":{ "spawn": "preacherSound"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

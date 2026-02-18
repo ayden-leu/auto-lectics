@@ -1,6 +1,12 @@
 {
-	"text": "*The bot points its antennas at you. A furious static can be heard.*",
+	"text": "*",
+	"sfx":{
+		"spawn": "static",
+		"text": "normalSound"
+	},
 	"type": "Angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue2_Fail",
 	"options": [
 		{
 			"text": "Sorry, I'll back off.",

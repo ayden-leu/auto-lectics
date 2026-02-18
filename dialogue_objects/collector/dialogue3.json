@@ -1,0 +1,10 @@
+{
+	"text": "Join the club.",
+		 "sfx":{ "spawn": "normalSound"},
+
+	"type": "Confused",
+	"options": [
+					{"text": "[End]"}
+
+	]
+}

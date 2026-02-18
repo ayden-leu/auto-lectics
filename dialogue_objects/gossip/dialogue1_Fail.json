@@ -1,5 +1,7 @@
 {
 	"text": "FALSE! It is extremely important, but I'll find out all I need to know in due time.",
+		 "sfx":{ "spawn": "dialogueFailSound"},
+
 	"type": "Angry",
-	"options": []
+	"options": [	{"text": "[End]"}	]
 }

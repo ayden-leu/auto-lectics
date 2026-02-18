@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://deqxre2n26g0m"]
 
 [ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="1_rbxnt"]
-[ext_resource type="PackedScene" uid="uid://5mqketysr0a7" path="res://world/week_6_playtest_map.tscn" id="2_rbxnt"]
+[ext_resource type="PackedScene" uid="uid://bt62vwn7bnq36" path="res://world/week_6_playtest.tscn" id="2_rbxnt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ge0g4"]
 shader = ExtResource("1_rbxnt")

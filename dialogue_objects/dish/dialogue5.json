@@ -1,5 +1,6 @@
 {
-	"text": "*The bot plays a fast-tempo music bit.*",
+	"text": "*",
+	"sfx":{ "spawn": "upbeat"},
 	"type": "Happy",
-	"options": []
+	"options": [{"text": "[End]"}]
 }

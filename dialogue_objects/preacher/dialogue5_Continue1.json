@@ -1,5 +1,7 @@
 {
 	"text": "I didn't think this far...",
+	 "sfx":{ "spawn": "preacherSound"},
+	
 	"options": [
 		{
 			"text": "[Continue]",

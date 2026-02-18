@@ -1,0 +1,9 @@
+{
+	"text": "Well. Good for them. I think I'm gonna stay here... 
+	Pretty sure the only way out is down.",
+		 "sfx":{ "spawn": "normalSound"},
+
+	"type": "Confused",
+	"options": [ {"text": "[End]"}
+	]
+}

@@ -1,5 +1,5 @@
 @tool
-extends NPC
+extends InteractableNPC
 
 var time : float
 var base_position : Vector3

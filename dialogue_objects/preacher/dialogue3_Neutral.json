@@ -1,5 +1,7 @@
 {
 	"text": "There's no time for elaboration. Are you in or out?",
+	 "sfx":{ "spawn": "preacherSound"},
+	
 	"options": [
 		{
 			"text": "Okay I'm in.",

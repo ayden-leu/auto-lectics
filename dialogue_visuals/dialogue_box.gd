@@ -26,12 +26,12 @@ enum OPTIONS_ANCHOR {
 ## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly. 
 @export var optionsAnchor:OPTIONS_ANCHOR = OPTIONS_ANCHOR.topLeft
 ## Holds a reference to the text label that displays the current dialogue.
-@export var myLabel:Label3D
+@export var myLabel:TypeWriterLabel
 ## Holds the text that displays the current dialogue.  Mainly just used as an easier way to get/set the label text.
 var text:String = "":
 	set(value):
 		text = value
-		myLabel.text = value
+		myLabel.fullText = value
 
 ## Holds a reference to the dialogue option resource.
 const optionScene:Resource = preload(Globals.SCENES.DialogueOption)
@@ -56,6 +56,11 @@ const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 @onready var warningsContainer:Node3D = $WarningsContainer
 ## The timer bar that appears when a hectic dialogue object is loaded.
 @onready var timer:TimerBar = $Timer
+## Holds the AudioStreamPlayer3Ds for each event.
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
+	"spawn": $SFX/spawn,
+	"text": $SFX/text
+}
 
 ## The owner of this dialogue box.
 var realOwner
@@ -75,6 +80,22 @@ var mode:String = "normal"
 var numWarnings:int = 6
 ## Holds references to all spawned warning tiles.
 var spawnedWarningTiles:Array = []
+## The SFX sound events to load sound files into.
+var sfxEventsToLoad:Dictionary:
+	set(value):
+		sfxEventsToLoad = value
+		loadSfx()
+## How fast the text should be written in Characters per Second.
+var textWriteSpeed:float
+## Whether to start writing the text or not.
+var increaseVisibleTextAmount:bool = false:
+	set(value):
+		increaseVisibleTextAmount = value
+		timePassedSinceTextWriting = 0.0
+## The amount of time passed since starting to write text.
+var timePassedSinceTextWriting:float = 0.0
+## A hardcoded delay between when the dialogue text finishes writing and when the options start being created.
+var delayBtwnWriteDialogueAndOptions:float = 1.0
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -82,8 +103,10 @@ func _ready() -> void:
 	else:
 		$WarningPositionAreas.visible = false
 	
-func _process(_delta: float) -> void:
-	pass
+func _process(delta: float) -> void:
+	if increaseVisibleTextAmount:
+		timePassedSinceTextWriting += delta
+		writeText()
 
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
@@ -93,18 +116,46 @@ func loadOptionData(options: Array) -> void:
 ## Runs any configurations that need to be run before continuing onward.
 func prepare() -> void:
 	if mode == "hectic":
+		optionSpawnPositions.hectic.left = $OptionPositions/Hectic/Left.get_children()
+		optionSpawnPositions.hectic.right = $OptionPositions/Hectic/Right.get_children()
+		optionSpawnPositions.hectic.top = $OptionPositions/Hectic/Top.get_children()
+		
 		createWarningTiles(numWarnings)
 		timer.duration = 5.0  # TODO:  make this customizable
 		timer.start()
 
 ## Make the dialogue box start doing things.
 func start() -> void:
-	# TODO:  start text writing on effect
-	# 	when all dialogue text is visible:
-	# 		emit signal all_dialogue_text_visible
-	#		createOptions()
-	#		or endDialogue() if there are no options
-	pass
+	sfxPlayer.spawn.play()
+	myLabel.visibleCharacters = 0
+	increaseVisibleTextAmount = true
+
+## Makes label text visible based on the elapsed time.
+func writeText() -> void:
+	var newVisibleAmount:int = roundi(timePassedSinceTextWriting * textWriteSpeed)
+	myLabel.visibleCharacters = newVisibleAmount
+	sfxPlayer.text.play()
+	
+	if newVisibleAmount >= text.length():
+		finishWritingText()
+
+func finishWritingText() -> void:
+	increaseVisibleTextAmount = false
+	all_dialogue_text_visible.emit()
+	
+	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
+	
+	if optionData.size() == 0:
+		update_me.emit("")
+		return
+	
+	createOptions()
+
+## Loads the SFX from the files.
+func loadSfx() -> void:
+	for eventID in sfxPlayer.keys():
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
+		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
 
 ## Creates each option that the player can choose from for this dialogue object.
 func createOptions() -> void:
@@ -167,7 +218,8 @@ func setOptionAlignmentNormal(option:DialogueOption) -> void:
 
 ## Updates the position of a dialogue option in hectic mode.
 func setOptionPositionHectic(option:DialogueOption, section:String) -> void:
-	# TODO:  maybe pick a position like we do with the warning tiles.
+	# TODO:  pick a position like we do with the warning tiles.
+	#			its technically possible to run out of positions
 	var potentialPositions:Array = optionSpawnPositions.hectic[section]
 	for usedPosition in optionSpawnPositions.hectic.root.usedPositions:
 		potentialPositions.erase(usedPosition)
@@ -195,21 +247,35 @@ func setOptionAlignmentHectic(option:DialogueOption, section:String) -> void:
 
 ## Gets the appropriate general areas to spawn dialogue options in depending on "optionsAnchor"
 func getValidHecticAreas() -> Array[String]:
+	var toReturn:Array[String] = ["left", "right", "top"]
+	if optionSpawnPositions.hectic.left.size() == 0:
+		toReturn.erase("left")
+	if optionSpawnPositions.hectic.right.size() == 0:
+		toReturn.erase("right")
+	if optionSpawnPositions.hectic.top.size() == 0:
+		toReturn.erase("top")
+	
 	match optionsAnchor:
 		OPTIONS_ANCHOR.topLeft:
-			return ["left", "top"]
+			toReturn.erase("right")
 		OPTIONS_ANCHOR.topRight:
-			return ["right", "top"]
+			toReturn.erase("left")
 		OPTIONS_ANCHOR.bottomLeft:
-			return ["left"]
+			toReturn.erase("right")
+			toReturn.erase("top")
 		OPTIONS_ANCHOR.bottomRight:
-			return ["right"]
+			toReturn.erase("left")
+			toReturn.erase("top")
 		_:
 			printerr("DialogueBox: optionsAnchor value not accounted for")
 			return ["???"]
+	
+	return toReturn
 
 ## Configures aspects of a dialogue option.
 func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
+	instance.sfxEventsToLoad = data.sfx
+	
 	if mode == "normal":
 		setOptionPositionNormal(instance)
 		setOptionAlignmentNormal(instance)
@@ -261,6 +327,8 @@ func getWarningTilePosition() -> Vector3:
 
 ## Removes the dialogue box from the world.
 func kill() -> void:
+	for eventID in sfxPlayer.keys():
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
 	queue_free()
 
 
@@ -277,7 +345,22 @@ func _on_option_picked(nextDialogueID:String) -> void:
 		toKill.kill()
 	
 	timer.stop()
+	#print("\nnext dialogue: ", nextDialogueID)
+	sfxPlayer.spawn.stop()
 	update_me.emit(nextDialogueID)
+
+## Handles logic for when an option isn't picked in time during hectic mode.
+func _on_timer_bar_timeout() -> void:
+	if hecticFailureDialogueID == "":
+		if realOwner != null:
+			printerr("DialogueBox: Hectic Failure Dialogue ID not set for: ", realOwner.name)
+		else:
+			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
+			printerr("DialogueBox: Also, realOwner variable not set.")
+	_on_option_picked(hecticFailureDialogueID)
+
+
+
 
 ## Handles logic for when a warning tile is blocking an important subject.
 func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
@@ -296,13 +379,3 @@ func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
 	warningTile.position = getWarningTilePosition()
 	warningTile.lookAtCamera()
 	warningTile.numTimesRepositioned += 1
-
-## Handles logic for when an option isn't picked in time during hectic mode.
-func _on_timer_bar_timeout() -> void:
-	if hecticFailureDialogueID == "":
-		if realOwner != null:
-			printerr("DialogueBox: Hectic Failure Dialogue ID not set for: ", realOwner.name)
-		else:
-			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
-			printerr("DialogueBox: Also, realOwner variable not set.")
-	_on_option_picked(hecticFailureDialogueID)

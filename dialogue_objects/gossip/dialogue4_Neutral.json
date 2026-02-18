@@ -1,4 +1,6 @@
 {
 	"text": "You can try, but I never could understand what they said.",
-	"options": []
+	
+		 "sfx":{ "spawn": "dialogueFailSound"},
+	"options": [{"text": "[End]"}]
 }

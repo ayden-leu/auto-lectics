@@ -1,5 +1,6 @@
 {
-	"text": "*The bot plays furious static.*",
+	"text": "*",
+	"sfx":{ "spawn": "static"},
 	"type": "Angry",
-	"options": []
+	"options": [{"text": "[End]"}]
 }

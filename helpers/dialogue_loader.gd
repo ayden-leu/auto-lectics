@@ -1,6 +1,9 @@
 extends Node
 class_name DialogueLoader
 
+# TODO: rename writeSpeed to writeSpeedPreset
+# TODO: rename writeSpeedCustom to writeSpeed
+
 ## Loads a single dialogue node file. Returns a dialogue object with all settings.
 static func loadDialogueNodeFile(path: String) -> Dictionary:
 	var json_text := _read_text_file(path)
@@ -41,7 +44,11 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 		DialogueDefaults.DIALOGUE_TYPES,
 		dialogue.type
 	)
-	dialogue.mode = dialogue_obj.get("mode", dialogue.mode).to_lower()
+	dialogue.mode = _verify_in_list(
+		dialogue_obj.get("mode", dialogue.mode).to_lower(),
+		DialogueDefaults.DIALOGUE_MODES,
+		dialogue.mode
+	)
 	dialogue.nextOnHecticFailureID = dialogue_obj.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
 	
 	dialogue.writeSpeed = _verify_in_list(
@@ -53,6 +60,8 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 		dialogue_obj.get("writeSpeedCustom", dialogue.writeSpeedCustom),
 		0.0001 #  arbitrary small value. it just shouldn't be zero.
 	)
+	if dialogue.writeSpeed != "custom":
+		dialogue.writeSpeedCustom = DialogueDefaults.WRITE_SPEED_PRESETS[dialogue.writeSpeed]
 
 	if dialogue_obj.has("sfx"):
 		dialogue.sfx = _merge_sfx(dialogue.sfx, dialogue_obj.sfx)

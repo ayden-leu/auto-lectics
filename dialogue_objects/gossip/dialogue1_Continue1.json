@@ -1,5 +1,7 @@
 {
 	"text": "Ohhhhh woah woah woah, I don't know you...",
+			 "sfx":{ "spawn": "gossipSound"},
+
 	"type": "Confused",
 	"options": [
 		{

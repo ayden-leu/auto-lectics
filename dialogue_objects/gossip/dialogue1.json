@@ -1,10 +1,13 @@
 {
 	"text": "Okay, what do you have for me?",
+		 "sfx":{ "spawn": "gossipSound"},
+
 	"options": [
 		{
 			"text": "[Continue]",
 			"type": "Positive",
 			"nextID": "dialogue1_Continue1"
 		}
+		
 	]
 }

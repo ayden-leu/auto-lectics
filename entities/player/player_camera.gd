@@ -18,6 +18,7 @@ var distanceFromOrigin:Vector3 = Vector3(0, 5, 10)
 
 func _ready() -> void:
 	actAsFocus = true
+	rotation = focus.rotation
 
 func _process(_delta: float) -> void:
 	# Makes sure the code only runs while the game is running

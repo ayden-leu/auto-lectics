@@ -1,5 +1,7 @@
 {
 	"text": "One moment let me check. Step 1: Ask if they want to be turned on. Step 2: Figure out later...",
+	 "sfx":{ "spawn": "preacherSound"},
+	
 	"options": [
 		{
 			"text": "[Continue]",
