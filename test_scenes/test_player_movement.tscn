@@ -53,9 +53,6 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 
 [node name="Player" parent="." instance=ExtResource("2_nt7id")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.549243, 0)
-acceleration = 18.0
-deceleration = 28.0
-airControl = 1.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)

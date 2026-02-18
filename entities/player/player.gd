@@ -29,7 +29,7 @@ class_name Player
 ## The smaller the value, the more time it takes to stop moving.
 @export_range(0.0, 60.0, 0.5) var airDeceleration: float = 6.0
 ## The smaller the value, the more time it takes to accelerate and decelerate.
-@export_range(0.0, 1.0, 0.01) var airControl: float = 0.45
+@export_range(0.0, 1.0, 0.01) var airControl: float = 1.0
 
 @export_group("Jump")
 ## The player's jump height.

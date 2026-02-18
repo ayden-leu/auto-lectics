@@ -39,9 +39,8 @@ var currentDialogueID: String = ""
 var hecticFailureDialogueID:String = ""
 ## Hardcoded delay between the dialogue being fully displayed, and when the dialogue options can begin spawning.
 var delayStartShowingOptions: float = 1.0
-
-## If true, this NPC can no longer be talked to (single-use interaction).
-var has_talked_once: bool = false
+## Keeps track of if the player has interacted with this NPC.  If true, this NPC can no longer be talked to.
+var wasTalkedTo: bool = false
 
 func _ready() -> void:
 	# Makes sure the code after this is only ran in-game
@@ -109,13 +108,12 @@ func endDialogue() -> void:
 		dialogueBox = null
 	isTalking = false
 	connectedDialogueBoxSignals = false
-	has_talked_once = true
+	wasTalkedTo = true
 	finished_dialogue.emit()
 
 ## Handles flow of what to do when a player interacts with this NPC.
 func _on_interaction() -> void:
-		# Only allow one completed dialogue session
-	if has_talked_once:
+	if wasTalkedTo:
 		return
 	
 	if isTalking:
