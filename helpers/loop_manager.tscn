@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcknfeyge415p"]
+
+[ext_resource type="Script" uid="uid://j886chcwck2d" path="res://helpers/loop_manager.gd" id="1_8cw2q"]
+
+[node name="LoopManager" type="Node"]
+script = ExtResource("1_8cw2q")
+manual = null

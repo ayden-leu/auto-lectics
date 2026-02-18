@@ -66,8 +66,7 @@ offset_top = 3.0
 offset_right = 13.0
 offset_bottom = 13.0
 
-[node name="FadeRect" type="ColorRect" parent="." groups=["loop_fade"]]
-visible = false
+[node name="FadeRect" type="ColorRect" parent="." groups=["FadeOverlay"]]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,4 +76,4 @@ offset_bottom = 1000.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.7058824)
