@@ -1,54 +1,52 @@
 # TODO: Write guide for adding stuff for designers.
 Assume designers know nothing as a baseline. Tentative list of things that will need to be added:
-- Renaming nodes to what their purpose is.
-- Importing models.
-- Adding collision to mesh parts.
-- Paying attention to the little warning signs and how to fix them.
-	- CollisionShape3D being scaled.
-- How to resize collision shapes properly.
-- How to properly create an interactible NPC.
-	- Example interactible NPC setup.
-- Creating a dialogue file.
-	- By creating the file manually.
-	- By using the tool. (text ver.)
-	- By using the tool. (ui ver. once it exists)
-- Which audio file type to use.
-- Adding audio that plays everywhere.
-- Example world scene setup.
-	- Placing a player.
-	- Placing a player camera.
-	- The InputHandler.
-- Pushing changes to the github repository.
-
-
-Guides: (assume designers know nothing as a baseline)
 - Naming things properly
-	- Model file objects
 	- Nodes in Godot
-- Warnings and how to avoid them
-	- I.e  the little cation sign that appears next to nodes
-	- E.g  CollisionShape3D being scaled 
 - Adding content
 	- Dialogue
 		- The dialogue file format
 		- Using the dialogue file generator (text ver. and UI ver.)
-	- Importing models
-	- Importing environment models and adding collision to it
-	- Importing audio
-		- Audio filetype to use
-	- Which audio node to use for a specific purpose
-		- I.e  AudioStreamPlayer and its 3D counterpart
-- Creating an NPC
+		- Creating one manually (last resort)
+	- Audio
+		- Filetype to use
+		- How to import it
+		- Which audio node to use for a specific purpose
+			- I.e  AudioStreamPlayer and its 3D counterpart
+			- i.e  how to play audio everywhere and how to play audio at a location
+	- Interactable NPCs
 - Example scenes
-	- World
-		- Placing player
-		- Placing player camera
-		- InputHandler
-	- NPCs
-- Pushing content to the GitHub repository
+	- Environment
+	- Interactable NPC
+- Pushing changes to the github repository.
+
+
+# Contents
+0. [Terminology](#0-terminology)
+1. [Creating Models](#1-creating-models)
+	1. [Rename Things](#1-1-rename-things)
+	2. [Keep Textures With Models](#1-2-keep-textures-with-models)
+	3. [Scale](#1-3-scale)
+2. [Importing Models into Godot](#2-importing-models-into-godot)
+	1. [All-in-One or Separate Parts?](#2-1-all-in-one-or-separate-parts) 
+	2. [Use `.blend` Files For Models](#2-2-use-blend-files-for-models)
+	3. [Configuring Model Import Settings](#2-3-configuring-model-import-settings)
+3. [Setting up the World](#3-setting-up-the-world)
+	1. [Adding Collision to the Environment](#3-1-adding-collision-to-the-environment)
+	2. [Other Visuals](#3-2-other-visuals)
+	3. [Letting the Player Explore the Environment](#3-3-letting-the-player-explore-the-environment)
+4. [Proper Node Setup](#4-proper-node-setup)
+	1. [Generally](#4-1-generally)
+	2. [Built-in Godot Nodes](#4-2-built-in-godot-nodes)
+		- [StaticBody3D & CollisionShape3D](#staticbody3d--collisionshape3d)
+	3. [Nodes Created by Us](#4-3-nodes-created-by-us)
+		- [InputHandler](#input-handler)
+		- [Player](#player)
+		- [PlayerCamera](#player-camera)
+
+
 
 # 0. Terminology
-**Import**:  To drag-n-drop files into Godot ***or*** move files into the Godot project folder directly.  Both methods are treated the same by Godot.
+**Import**:  To drag-n-drop files into Godot ***or*** move files into the Godot project folder via your computer's file explorer.  Both methods are treated the same by Godot.
 
 **MeshInstance3D**:  A Godot node that holds and displays mesh data.  Its icon is a red-ish square with a diagonal line through it.
 
@@ -93,6 +91,8 @@ If you don't do this, while the texture may be able to load perfectly fine on yo
 ## 1-3. Scale
 When scaling your objects, make sure their scale doesn't go into the negatives, especially if the player is supposed to interact with them.  For whatever reason, if one or multiple of the axes are scaled negatively, the player will freeze in place and get softlocked.
 
+
+
 # 2. Importing Models into Godot
 Importing models into Godot is pretty easy as Godot automatically does the main stuff.  However, there arer a few things you should do so doing things with these models in Godot is easy.
 
@@ -129,7 +129,7 @@ The changes you made to the model should now be visible.
 You won't be able to move it for whatever reason.  Here's the official Blender documentation on it:  https://docs.blender.org/manual/en/latest/files/linked_libraries/link_append.html
 
 #### "Why can't I just put the object into a collection and import the collection?"
-While this will seem to work initally, when you get to generating the Occluder for the model in the "[Configuring the Model Import Settings](#2-3-configuring-the-model-import-settings)" section, the generated Occluder mesh for the model will be at the position the model is at in its source Blender file (usually 0,0,0).
+While this will seem to work initally, when you get to generating the Occluder for the model in the "[Configuring the Model Import Settings](#2-3-configuring-model-import-settings)" section, the generated Occluder mesh for the model will be at the position the model is at in its source Blender file (usually 0,0,0).
 <div align="center">
   <img src="./images/external-blender_collection.png">
 </div>
@@ -137,7 +137,7 @@ While this will seem to work initally, when you get to generating the Occluder f
 If you don't care about this model being occluded though, I suppose it's fine to do this?  Ideally everything would have an occlusion mesh though.
 
 
-## 2-2. Import `.blend` Files Over Other File Types
+## 2-2. Use `.blend` Files For Models
 You don't have to export Blender files into a different format, as Godot can auto-import them without too much issue.  Additionally, any edits you save to the imported `.blend` file will automatically be re-imported into Godot without you having to redo the entire import process.  (There are some things you'll have to "redo" again but it's mainly for new stuff you add.  We''ll get to that).
 
 Upon opening a `.blend` file in Godot, you should see something like the following pop-up window.  **Things may take a bit to import depending on the size of the model.**  Don't worry though, just let it sit for a minute or two and Godot should finish loading everything. 
@@ -173,7 +173,7 @@ If there is an issue importing models using the `.blend` method:
 1) Contact Ayden about the issue.  He should be able to assist with the process since he's been able to do this without issue for a couple of test models.  If you cannot get a hold of him, or you need to be able to import models *now*:
 2) Export the model to a `glTF 2.0/glb` model.  This is the recommended file format for models you want to import into Godot.  (`.blend` is in second place due to theoretical workflows using older versions of Blender, and/or not all development-group workflows having everyone with Blender installed).  This will lead to duplicate texture files in the project, so keep that in mind if you decide not to fix your issue with `.blend` files not importing.
 
-## 2-3. Configuring the Model Import Settings
+## 2-3. Configuring Model Import Settings
 Your model is now in Godot!  Before you start using it though, there are some things we recommend you configure before continuing onward.
 
 First, open the model file by double-clicking it in Godot.  This should bring up a pop-up that looks something like this:
@@ -191,9 +191,10 @@ Go to the right panel, and under `Generate > Occluder`, set the value to `Mesh +
   <img src="./images/configure-model_3.png">
 </div>
 
-Now, we recommend doing this with each `MeshInstance3D` node.  You can't multi-select and change this property on multiple nodes at once, so you have to do it one-by-one.  However, this isn't mandatory (yet) as we don't have any performance concerns at the moment.  However however, we will probably have to do this later down the line at some point, so better to do it now than later.
+Now, we recommend doing this with each `MeshInstance3D` node.  You can't multi-select and change this property on multiple nodes at once, so you have to do it one at a time.  However, this isn't mandatory (yet) as we don't have any performance concerns at the moment.  However however, we will probably have to do this later down the line at some point, so better to do it now than later.
 
 Once configuration is complete, click the `Reimport` button.  You'll have to repeat this process for any new meshes you add, but it'll only be for the new mesh instance.  If you modify an existing mesh, Godot will automatically recalculate the occlusion mesh.
+
 
 
 # 3. Setting up the World.
@@ -212,7 +213,7 @@ Next, click the movie clipboard thing next to the eye to open the model in the e
   <img src="./images/using-model_2.png">
 </div>
 
-A new tab named `[unsaved](*)` should be opened with our model visible.  Any changes made to the model file via Blender or being overwritten will made reflected here.  This is ***NOT*** the scene where we put our player character or NPCs.  This is purely for the model of the world.  Be sure to save this new inherited scene into the `world` folder and name it something relevant.  For these screenshots, it's named `test-environment_model`.
+A new tab named `[unsaved](*)` should be opened with our model visible.  Any changes made to the model file via Blender or being overwritten will made reflected here.  This is ***NOT*** the scene where we put our player character or NPCs.  This is purely for the model of the world.  Be sure to save this new inherited scene into the `world` folder and name it something relevant.  For these screenshots going forward, it'll be named `test-environment_model`.
 <div align="center">
   <img src="./images/using-model_3.png">
 </div>
@@ -244,7 +245,14 @@ Now drag and drop the scene we setup the collision in onto the main viewport.  F
   <img src="./images/using-model_8.png">
 </div>
 
-## 3-2.  Other Visuals
+Your environment model with collisions should now be in the world!  Any changes you save to the environment model file should automatically be reflected in Godot when you make Godot focused (i.e click the Godot window).
+
+### "Oo I have to go through the whole collision generating process again whenever I update the model?"
+No and yes.  If you only make a change to a single object's mesh, you won't have to generate collisions for the other objects you didn't modify.  However, for each object mesh you modifed, you will have to regenerate their collision.
+
+You ***do not*** have to make a new inherited scene.  You'll just need to regenerate the collision shapes.
+
+## 3-2. Other Visuals
 Currently, there is only one other node needed to make the environment not look blank.  The view we get in the main viewport is not the world we see once we hit play.
 <div align="center">
   <img src="./images/other-visuals_1.png">
@@ -261,37 +269,56 @@ To fix this, add a `WorldEnvironment` node.  When you do, the main viewport's ba
 The world should look not-gray now.  As of writing, the world should look the same as it did during the Week 6 playtest.  I'm not too sure what each property of the environment resource does, so play around with them!  You can always reset them to their default value by clicking the reset/redo icon next to the property.
 
 
-## 3-3. Letting the Player Explore this Environment.
+## 3-3. Letting the Player Explore the Environment.
 To let the player actually explore this environment, there are three scenes you need to add:
 
 1. `player.tscn`:  Located in `entites > player`
 2. `player_camera.tscn`:  Located in `entities > player`
 3. `input_handler.tscn`:  Located in `helpers`.  You can also add it like any other node.
 
-If there are any unconfigured properties of these nodes that need to be set, a ⚠️ warning sign should appear next to the node.  These will explain what needs to be done to make them go away.  For some warnings, you'll need to save the scene before it detects your changes.  However, some aspects won't warn you when they're not set, whether it be do to an oversight or not *technically* being needed.  For clarity, the proper node setup will be detailed in the [Proper Node Setup](#4-proper-node-setup) section.
+Remember to read the "[Proper Node Setup](#4-proper-node-setup)" section to learn how to properly setup these nodes.
+
 
 
 # 4. Proper Node Setup
 This contains the proper node setup for each node, as well as any other general notes for other built-in Godot nodes.
 
-## StaticBody3D & CollisionShape3D
+## 4-1. Generally
+Built-in Godot nodes and some nodes created by us may have a ⚠️ warning sign appear next to them.  This is because some property of the node isn't configured properly.  If you hover over the ⚠️ warning sign, a tooltip should appear explaining what needs to be done to make them go away.  For some warnings, you'll need to save the scene before it detects your changes.  Also, some improperly configured aspects won't warn you when they're not set.  For built-in Godot nodes, this is (usually) because there's no way for the node to detect it.  For nodes created by us, it may be due to an oversight or not *technically* being needed.
+
+## 4-2. Built-in Godot Nodes
+### StaticBody3D & CollisionShape3D
 `StaticBody3D` is the main node type of a non-moving "solid" object and is usually used for the environment.  `CollisionShape3D` is a general-purpose collision node that handles the shape of collision-related nodes.
 
-Scaling a `StaticBody3D` or `CollisionShape3D` un-uniformly (i.e not the same amount for each axis) will cause a ⚠️ warning sign to appear.  This is because scaling either of them this way can make collision go wonky.  Based on sparse testing, scaling the parent node should be fine though.
+Scaling a `StaticBody3D` or `CollisionShape3D` un-uniformly (i.e not the same amount for each axis) will cause a ⚠️ warning sign to appear.  This is because scaling either of them this way can make collision go wonky.  Based on sparse testing, scaling the parent node should be fine.
 
-## Input Handler
+To modify the size of a collision shape properly, modify the properties of the `CollisionShape3D`'s shape.
+<div align="center">
+  <img src="./images/collision-shape-3d_shape.png">
+</div>
+
+## 4-3. Nodes Created By Us
+### Input Handler
+Corresponding scene file: `helpers/input_handler.tscn`
+
 This handles all potential inputs a player can make.  It has one required property (`Player`) and two optional lists (`Wants To Know Mouse Moved` and `Wants To Know When Interact`).  `Player` gets set to the player node in the current scene.  Nodes in the two optional lists run a pre-defined function when the aformentioned event in the property name happens.
 
 This *might* be rewritten to be a generic node that gets attached to nodes if time allows for it.
 
-## Player
+### Player
+Corresponding scene file: `entities/player/player.tscn`
+
 The main node that gets controlled by the player.  Currently, it needs to be added to the InputHandler's "Wants To Know Mouse Moved" and "Wants To Know When Interact" lists.  The former allows the player to look around, and the latter allows the player to interact with stuff.
 
-## Player Camera
+### Player Camera
+Corresponding scene file: `res://entities/player/player_camera.tscn`
+
 Holds both the player's camera and the HUD node.  It has one required property (`Focus`).  `Focus` gets set to the main object that the player should see a first-person perspective from (e.g  the player character).  Currently, it needs to be added to InputHandler's "Wants To Know When Mouse Moved" list.
 
 Might be switched to a Camera3D node if time allows for us to relook at the camera setup.
 
-## Interactable NPC
+### Interactable NPC
+Corresponding scene file:  `None`
+
 TODO:  creeate a script template
 https://docs.godotengine.org/en/4.5/tutorials/scripting/creating_script_templates.html
