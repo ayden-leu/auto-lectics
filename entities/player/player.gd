@@ -54,9 +54,13 @@ var _timeSinceApex: float = 0.0
 ## If the player should be able to hang around at the aapex of their jump.
 var _apexHangActive: bool = false
 
+## Save last location where character is grounded.
+var _last_position_stood: Vector3
+
 
 func _ready() -> void:
 	_recompute_jump_params()
+	_pitch_deg = cameraAnchor.rotation_degrees.x
 
 func _process(_delta: float) -> void:
 	# Dev-ing stuff
@@ -66,7 +70,6 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-
 	_apply_vertical_physics(delta)
 	move_and_slide()
 
@@ -108,6 +111,8 @@ func _apply_vertical_physics(delta: float) -> void:
 	else:
 		_apexHangActive = false
 		_timeSinceApex = 0.0
+		# Save last grounded position for respawn
+		_last_position_stood = global_position
 
 	_wasOnFloor = is_on_floor()
 
@@ -152,15 +157,26 @@ func handleDirectionInput(direction: Vector3) -> void:
 	velocity.x = current_h.x
 	velocity.z = current_h.z
 
+## Camera controls
+@export var mouse_sensitivity := 1
+## Max angle which the camera can turn to; prevents flipping at top
+@export var max_pitch_degrees := 89.0
+## Store pitch (vertical rotation)
+var _pitch_deg: float = 0.0
 
-## Rotates the player when the mouse moves horizontally.
+## Rotates the player and camera when the mouse moves horizontally.
 func _onMouseMoved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
 	
-	#print(name + ": mouse moved")
-	rotation_degrees.y += -distanceMoved.x
-	interactionRaycast.rotation_degrees.x -= -distanceMoved.y
+	# horizontal rotation
+	rotation_degrees.y += -distanceMoved.x * mouse_sensitivity
+	
+	# pitch (on anchor)
+	_pitch_deg += -distanceMoved.y * mouse_sensitivity
+	# Prevent camera from flipping at top of rotation
+	_pitch_deg = clamp(_pitch_deg, -max_pitch_degrees, max_pitch_degrees)
+	cameraAnchor.rotation_degrees.x = _pitch_deg
 
 ## Handles interaction logic.
 func _onInteractPressed() -> void:
@@ -168,6 +184,11 @@ func _onInteractPressed() -> void:
 	if interactionRaycast.is_colliding():
 		interactionRaycast.get_collider().owner._on_interaction()
 
+## Respawn player upon contact with death plane
+func respawn():
+	velocity = Vector3.ZERO
+	global_position = _last_position_stood
+	global_position.y += 0.1
 
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:

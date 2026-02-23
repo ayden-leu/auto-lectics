@@ -9,6 +9,8 @@
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 2
 script = ExtResource("1_q8vf3")
+mouse_sensitivity = null
+max_pitch_degrees = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_hyl87")
@@ -18,10 +20,11 @@ shape = SubResource("CapsuleShape3D_h4x50")
 
 [node name="CameraAnchor" type="Marker3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, 0, -4.371139e-08, -1, -8.742278e-08, -1, 4.371139e-08, 0, 0.4390247, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4390247, 0)
 
 [node name="InteractionRaycast" type="RayCast3D" parent="CameraAnchor"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 target_position = Vector3(0, 20, 0)
 collision_mask = 4
 collide_with_areas = true

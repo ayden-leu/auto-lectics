@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfx0jhjujr4oe"]
+
+[ext_resource type="Script" uid="uid://ngayr0wn30tw" path="res://helpers/death_plane.gd" id="1_lbfth"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lbfth"]
+
+[node name="Area3D" type="Area3D"]
+script = ExtResource("1_lbfth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.37426758, 0)
+shape = SubResource("WorldBoundaryShape3D_lbfth")
+debug_color = Color(0.9137255, 0, 0, 1)
