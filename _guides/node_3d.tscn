@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://whpsoou5cvff"]
+[gd_scene load_steps=5 format=3 uid="uid://whpsoou5cvff"]
 
 [ext_resource type="PackedScene" uid="uid://bkuv80xjqcy17" path="res://_guides/test_environment_model.tscn" id="1_kyky7"]
 [ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_254sn"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_xoopn"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_xoopn"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_254sn"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_qpafo"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -15,12 +14,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41243458, 0, -0.04579264)
 environment = ExtResource("2_254sn")
 
 [node name="Player" parent="." instance=ExtResource("2_xoopn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.833708, 0)
-
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_qpafo")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.021616, 0)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_254sn")]
 focus = NodePath("../Player")

@@ -251,3 +251,6 @@ NOTE:  If you want to use GitHub Desktop, using the `HTTPS` version of the clone
 	- Your commit message should be a good summary of the changes you have made up to that point.
 6. Click the `Commit to <your branch name>` button.
 7. To push your changes to your branch on the GitHub repository, click the `Publish branch` button, which has now replaced the `Fetch origin` button.
+
+# Credits & Attributions
+`InputHandler` icon:  https://www.freepik.com/free-vector/game-controller-simple-detailed-line-flat_423530024.htm

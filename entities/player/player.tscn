@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://co1nc22ck82l0"]
+[gd_scene load_steps=5 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://entities/player/player.gd" id="1_q8vf3"]
+[ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://helpers/input_handler.gd" id="2_abrql"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
 
@@ -27,3 +28,12 @@ target_position = Vector3(0, 50, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("2_abrql")
+metadata/_custom_type_script = "uid://bvgsjve6ghkfg"
+
+[connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
+[connection signal="jump_pressed" from="InputHandler" to="." method="_on_jump_pressed"]
+[connection signal="mouse_moved" from="InputHandler" to="." method="_on_mouse_moved"]
+[connection signal="update_input_direction" from="InputHandler" to="." method="_on_updated_input_direction"]

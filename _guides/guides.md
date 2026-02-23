@@ -3,6 +3,8 @@ Assume designers know nothing as a baseline. Tentative list of things that will 
 - Naming things properly
 	- Nodes in Godot
 - Adding content
+	- Models
+		- Figure out how bones work with the importing process.
 	- Dialogue
 		- The dialogue file format
 		- Using the dialogue file generator (text ver. and UI ver.)
@@ -14,6 +16,7 @@ Assume designers know nothing as a baseline. Tentative list of things that will 
 			- I.e  AudioStreamPlayer and its 3D counterpart
 			- i.e  how to play audio everywhere and how to play audio at a location
 	- Interactable NPCs
+		- How to create them
 - Example scenes
 	- Environment
 	- Interactable NPC
@@ -36,22 +39,37 @@ Assume designers know nothing as a baseline. Tentative list of things that will 
 	3. [Letting the Player Explore the Environment](#3-3-letting-the-player-explore-the-environment)
 4. [Proper Node Setup](#4-proper-node-setup)
 	1. [Generally](#4-1-generally)
-	2. [Built-in Godot Nodes](#4-2-built-in-godot-nodes)
+	2. [Creating/Adding a Node](#4-2-creatingadding-a-node)
+		1. [Root](#root)
+		2. [Plus Button](#plus-button)
+		3. [Drag-and-Drop](#drag-and-drop)
+	3. [Built-in Godot Nodes](#4-3-built-in-godot-nodes)
 		- [StaticBody3D & CollisionShape3D](#staticbody3d--collisionshape3d)
-	3. [Nodes Created by Us](#4-3-nodes-created-by-us)
-		- [InputHandler](#input-handler)
+	4. [Nodes Created by Us](#4-4-nodes-created-by-us)
+		- [NOTE: Extending Functionality](#note-extending-functionality)
+		- [<img src="./icons/icon_input-handler.svg"> InputHandler](#inputhandler)
 		- [Player](#player)
 		- [PlayerCamera](#player-camera)
+		- [<img src="./icons/icon_NPC.svg"> NPC](#npc)
+		- [<img src="./icons/icon_interactable_NPC.svg"> Interactable NPC](#interactable-npc)
 
 
 
 # 0. Terminology
 **Import**:  To drag-n-drop files into Godot ***or*** move files into the Godot project folder via your computer's file explorer.  Both methods are treated the same by Godot.
 
+**Movie Clipboard Icon**:  In Godot, this symbol means the node has a saved `.tscn` file and is referencing it.  Click this icon to open this scene.
+
+**Scene**:  In Godot, this is a collection of nodes.
+
+**FileSystem**:  The Godot file explorer.  It is located in the left panel on the bottom left.
+
 **MeshInstance3D**:  A Godot node that holds and displays mesh data.  Its icon is a red-ish square with a diagonal line through it.
 
+**Node(basic)**:  A Godot node that all nodes inherit from.  Its icon is a white hollow circle.
+
 # 1. Creating Models
-When creating models for the game, whether it be for the environment or the interactable NPCs, there a few things to keep in mind.
+When creating models for the game, whether it be for the environment or the [<img src="./icons/icon_interactable_NPC.svg"> Interactable NPCs](#interactable-npc), there a few things to keep in mind.
 
 ## 1-1. Rename Things
 Rename any objects or materials you create in Blender.  It'll make things easier both in-engine and while modeling if things are named properly so you can easily reference them later.  There's no established naming scheme (e.g  Camel Case, Snake Case), so just name things so it's easy to tell what they are when reading them. 
@@ -111,7 +129,7 @@ Next, enter the `Mesh` folder.  This holds all of the meshes in the Blender file
   <img src="./images/external-blender_2.png">
 </div>
 
-Your external model is now in the separate Blender file.  You can do whatever you want to do with it in this separate Blender file.  Updating the external model in its Blender file will be reflected in the separate Blender file.  *However*, it won't do this automatically.  There is an addon that adds this functionality (https://extensions.blender.org/add-ons/auto-reload/), but we haven't tested it.  Here's how to do it manually if the addon doesn't work:
+Your external model is now in the separate Blender file.  You can move, rotate, and scale this model in this separate Blender file.  Updating the external model in its Blender file will be reflected in the separate Blender file.  *However*, it won't do this automatically.  There is an addon that adds this functionality (https://extensions.blender.org/add-ons/auto-reload/), but we haven't tested it.  Here's how to do it manually if the addon doesn't work:
 1. Navigate to the Outliner/Object explorer in the top right and click the dropdown menu with the stacked images icon.  This is the `Display Mode` menu for the outliner.
 <div align="center">
   <img src="./images/external-blender_3.png">
@@ -208,7 +226,7 @@ First, drag the model file from the `FileSystem` tab into the main viewport.  Th
   <img src="./images/using-model_1.png">
 </div>
 
-Next, click the movie clipboard thing next to the eye to open the model in the editor.  When asked to confirm, click `New Inherited`.  Clicking `Open Anyway` won't let us save any changes we make to the model through Godot.
+Next, click the Movie Clipboard Icon next to the eye to open the model in the editor.  When asked to confirm, click `New Inherited`.  Clicking `Open Anyway` won't let us save any changes we make to the model through Godot.
 <div align="center">
   <img src="./images/using-model_2.png">
 </div>
@@ -252,6 +270,7 @@ No and yes.  If you only make a change to a single object's mesh, you won't have
 
 You ***do not*** have to make a new inherited scene.  You'll just need to regenerate the collision shapes.
 
+
 ## 3-2. Other Visuals
 Currently, there is only one other node needed to make the environment not look blank.  The view we get in the main viewport is not the world we see once we hit play.
 <div align="center">
@@ -278,6 +297,8 @@ To let the player actually explore this environment, there are three scenes you 
 
 Remember to read the "[Proper Node Setup](#4-proper-node-setup)" section to learn how to properly setup these nodes.
 
+TODO:  continue writing this
+
 
 
 # 4. Proper Node Setup
@@ -286,7 +307,30 @@ This contains the proper node setup for each node, as well as any other general 
 ## 4-1. Generally
 Built-in Godot nodes and some nodes created by us may have a ⚠️ warning sign appear next to them.  This is because some property of the node isn't configured properly.  If you hover over the ⚠️ warning sign, a tooltip should appear explaining what needs to be done to make them go away.  For some warnings, you'll need to save the scene before it detects your changes.  Also, some improperly configured aspects won't warn you when they're not set.  For built-in Godot nodes, this is (usually) because there's no way for the node to detect it.  For nodes created by us, it may be due to an oversight or not *technically* being needed.
 
-## 4-2. Built-in Godot Nodes
+## 4-2. Creating/Adding a Node
+There are three methods for creating/adding one of our custom nodes to a scene.  It is important you choose the right method as some nodes have needed children, which won't be added if you choose the wrong method.  The correct method to do so for each node will be noted in that node's subsection in the "[Nodes Created By Us](#4-4-nodes-created-by-us)" section.
+
+### Root
+This method is for when you're making one of our nodes the root node of a scene.  You'll want to do this if you're using one of our nodes as a base and customizing it (e.g  making a new NPC).
+
+First, create an empty scene by clicking the `+` button located around the top of the middle area under the view switching area.
+<div align="center">
+  <img src="./images/creating-root-scene_1.png">
+</div>
+
+This should create a new tab named `[empty](*)`.  Next, in the left panel, click the `Other Node` button.  This should create a pop-up window where you can select a node.  This will create a pop-up window that lists all of the built-in Godot nodes along with our custom nodes.  You can search for a node by clicking the search area, then typing.  The search area should be auto-selected when the pop-up window appears.  Once you find your node, click the `Create` button, double click the node, or press the `Enter` key.
+
+### Plus Button
+This method is mainly used for nodes that don't have pre-configured children nodes.  Nodes that use this adding method can also be added with the [Drag-and-Drop](#drag-and-drop) method.  This method is also how you add built-in Godot nodes.
+
+Under the scene tab on the left panel, click the `+` button.  This will create a pop-up window that lists all of the built-in Godot nodes along with our custom nodes.  You can search for a node by clicking the search area, then typing.  The search area should be auto-selected when the pop-up window appears.  Once you find your node, click the `Create` button, double click the node, or press the `Enter` key.
+
+### Drag-and-Drop
+This method is mainly used when a node has pre-configured nodes setup in its scene file.  You can also use this method to add nodes that use the [Plus Button](#plus-button) method.
+
+In the FileSystem, you can either search through the folders for the node/scene you want to add, or you can search for them using the `Filter Files` search box.  Nodes/scenes are denoted by the `.tscn` extension.  Once you find your node/scene, drag and drop it onto a node in the `Scene` tab.
+
+## 4-3. Built-in Godot Nodes
 ### StaticBody3D & CollisionShape3D
 `StaticBody3D` is the main node type of a non-moving "solid" object and is usually used for the environment.  `CollisionShape3D` is a general-purpose collision node that handles the shape of collision-related nodes.
 
@@ -297,28 +341,98 @@ To modify the size of a collision shape properly, modify the properties of the `
   <img src="./images/collision-shape-3d_shape.png">
 </div>
 
-## 4-3. Nodes Created By Us
-### Input Handler
-Corresponding scene file: `helpers/input_handler.tscn`
+## 4-4. Nodes Created By Us
+### NOTE: Extending Functionality
+If you want to create additional code for one of our custom nodes (e.g  changing its rotation every frame), you'll want to extend its script.  To do this, first select the node you want to extend its script from.  Then, click the button that looks llike a scroll with an arrow on it.  This will create a pop-up window for attaching a script to this node.
+<div align="center">
+  <img src="./images/extend-script_1.png">
+</div>
+<div align="center">
+  <img src="./images/extend-script_2.png">
+</div>
 
-This handles all potential inputs a player can make.  It has one required property (`Player`) and two optional lists (`Wants To Know Mouse Moved` and `Wants To Know When Interact`).  `Player` gets set to the player node in the current scene.  Nodes in the two optional lists run a pre-defined function when the aformentioned event in the property name happens.
+Next, make sure to set a proper name and save location for the script you're about to create.  For example, if you're creating a new <img src="./icons/icon_NPC.svg"> NPC, save the script to `entities/npcs/` and name it the same name as your <img src="./icons/icon_NPC.svg"> NPC.  **Make sure you don't overwrite any existing files you don't want to overwrite**.  We'll be able to revert files that are backed up on the GitHub repository, but most likely won't be able to for other files.
 
-This *might* be rewritten to be a generic node that gets attached to nodes if time allows for it.
+### <img src="./icons/icon_input-handler.svg"> InputHandler 
+- **Corresponding scene file**: `helpers/input_handler.tscn`
+- **Adding Method**:  [Plus Button](#plus-button)
+
+Handles all potential inputs a player can make.  Should only be used if you need to know when a certain player input happens.  Otherwise, they will automatically setup by us when needed (e.g  [Player](#player) already comes with one).
+
+To properly use an InputHandler, select it then go to the right panel.  Select the `Node` tab and enter the `Signals` tab if it isn't already selected.  You should now see `InputHandler`'s signals.
+
+There are 4 signals the InputHandler emits:
+1. `interact_button_pressed()`:
+	- Emits when the interact button is pressed.
+2. `jump_pressed()`:
+	- Emits when the jump button is pressed.
+3. `mouse_moved(distanceMoved: Vector2)`:
+	- Emits when the mouse is moved.
+	- `distanceMoved` is a `Vector2` that contains the `x` and `y` distance the mouse moved in this frame.
+4. `update_input_direction(newDirection: Vector2)`:
+	- Emits constantly to update the input direct the player is holding.
+	- `newDirection` is a `Vector2` that contains a normalized version of the player's currently held input direction for this frame
+		- e.g  holding right = `(1.0, 0.0)`
+		- e.g  holding up = `(0.0, -1.0)`
+		- e.g  holding up and right = `(sqrt(2), -sqrt(2))`
+
+To connect a signal, select it and click the `Connect` button at the bottom of the panel.  This will open a node selection pop-up.  Now, pick the node you want to connect the signal to and click the `Connect` button.  This will automatically create a new function in your target node's script.
+
+If you already have a function prepared, select the `Pick` button after selecting your target node.  This will open a new pop-up with all of the eligible functions in your target node's script.  If you don't see your function, make sure the types of its parameters are the same as the signal's.
 
 ### Player
-Corresponding scene file: `entities/player/player.tscn`
+- **Corresponding scene file**: `entities/player/player.tscn`
+- **Adding Method**:  [Drag-and-Drop](#drag-and-drop)
 
-The main node that gets controlled by the player.  Currently, it needs to be added to the InputHandler's "Wants To Know Mouse Moved" and "Wants To Know When Interact" lists.  The former allows the player to look around, and the latter allows the player to interact with stuff.
+The main node that gets controlled by the player.  Currently, it needs to be added to [<img src="./icons/icon_input-handler.svg"> InputHandler](#input-handler)'s `Wants To Know Mouse Moved` and `Wants To Know When Interact` lists.  The former allows the player to look around, and the latter allows the player to interact with stuff.
 
 ### Player Camera
-Corresponding scene file: `res://entities/player/player_camera.tscn`
+- **Corresponding scene file**: `entities/player/player_camera.tscn`
+- **Adding Method**:  [Drag-and-Drop](#drag-and-drop)
 
 Holds both the player's camera and the HUD node.  It has one required property (`Focus`).  `Focus` gets set to the main object that the player should see a first-person perspective from (e.g  the player character).  Currently, it needs to be added to InputHandler's "Wants To Know When Mouse Moved" list.
 
 Might be switched to a Camera3D node if time allows for us to relook at the camera setup.
 
-### Interactable NPC
-Corresponding scene file:  `None`
+### <img src="./icons/icon_NPC.svg"> NPC
+- **Corresponding scene file**:  `None`
+- **Adding Method**:  [Root](#root)
 
-TODO:  creeate a script template
-https://docs.godotengine.org/en/4.5/tutorials/scripting/creating_script_templates.html
+Requirements:
+1. A model.
+	- Please see section "[Importing Models into Godot](#2-importing-models-into-godot)" for how to properly import models into Godot.
+	- Not used for anything in the base NPC class, but may be used in classes or scripts that extend the NPC class.
+2. A name.
+	- Not used for anything in the base NPC class, but may be used in classes that extend the NPC class.
+
+A basic NPC that just exists in the world.  Currently, it doesn't do much.
+
+TODO:  explain idle path navigation when that gets implemented.
+
+### <img src="./icons/icon_interactable_NPC.svg"> Interactable NPC
+- **Corresponding scene file**:  `None`
+- **Adding Method**:  [Root](#root)
+- **Inherits**:  [<img src="./icons/icon_NPC.svg"> NPC](#npc)
+
+An NPC that can be interacted with to begin a conversation.  If you do not plan on giving a NPC a dialogue interaction, please create an NPC instead.  All notes and aspects that apply to <img src="./icons/icon_NPC.svg"> NPC also apply to <img src="./icons/icon_interactable_NPC.svg"> Interactable NPC.
+
+Requirements:
+1. Everything from [<img src="./icons/icon_NPC.svg"> NPC](#npc).
+2. A hitbox.
+	- A hitbox is an `Area3D` node with a `CollisionShape3D` child node.  The `CollisionShape3D` node controls the shape and the `Area3D` controls the configurations.
+	- Make sure the `Area3D`'s collision layers are setup correctly.  You can configure these layers under the `Collision` tab on the right.  For <img src="./icons/icon_interactable_NPC.svg"> Interactable NPCs, they require the 3rd bit of the `Layer` aspect to be set, and only that bit.  All bits under `Mask` shouldn't be set, but nothing will break if you forget to change them. 
+3. A dialogue box anchor.
+	- This anchor is a `Marker3D` node and controls where the Dialogue Box spawns when a dialogue event happens.
+	- There are two ways you can add this:
+		1. As a child of the <img src="./icons/icon_interactable_NPC.svg"> Interactable NPC or a different node.  Doing it this way will make the Dialogue Box follow and rotate with the its parent.
+		- <img src="./images/dialogue-anchor_1.png">
+
+		2. As a child of a Node(basic).  This will make the Dialogue Box not move or rotate with any node.
+		- <img src="./images/dialogue-anchor_2.png">
+
+	- **Important:** If you choose option 2, the anchor's position will be relative to world space instead of local space.  What this means in practice is that it's position will be based around the origin of the environment instead of whichever parent node.
+	- <img src="./images/dialogue-anchor_3.png">
+	- <img src="./images/dialogue-anchor_4.png">
+4. Initial dialogue ID
+	- The initial dialogue object the dialogue event will use when the player interacts with this <img src="./icons/icon_interactable_NPC.svg"> Interactable NPC.
+	- Valid dialogue objects are located in `dialogue_objects/[NPC name]/`.

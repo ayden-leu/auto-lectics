@@ -18,6 +18,10 @@ var actAsFocus:bool = true
 var distanceFromOrigin:Vector3 = Vector3(0, 5, 10)
 
 func _ready() -> void:
+	# Makes sure the code only runs while the game is running
+	if Engine.is_editor_hint():
+		return
+	
 	actAsFocus = true
 	rotation = focus.rotation
 
@@ -43,8 +47,8 @@ func _process(_delta: float) -> void:
 	else:
 		thirdPersonMode()
 	
-	if Input.is_action_just_pressed("debug_2"):
-		actAsFocus = !actAsFocus
+	#if Input.is_action_just_pressed("debug_2"):
+		#actAsFocus = !actAsFocus
 
 ## Handles logic for first person mode.
 func firstPersonMode() -> void:
@@ -55,6 +59,15 @@ func firstPersonMode() -> void:
 func thirdPersonMode() -> void:
 	camera.position = distanceFromOrigin
 	camera.look_at(global_position)
+
+## Rotates the camera horizontally and vertically when the mouse moves
+func _on_mouse_moved(distanceMoved:Vector2) -> void:
+	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		return
+		
+	#print(name + ": mouse moved")
+	rotation_degrees.x += -distanceMoved.y
+	rotation_degrees.y += -distanceMoved.x
 
 
 
