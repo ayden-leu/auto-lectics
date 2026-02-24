@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deulqq0xjy43q"
-path.s3tc="res://.godot/imported/rusty-metal.png-5e26b492e6f972415fc0bc8d45bfb09d.s3tc.ctex"
+uid="uid://cqn8u85i74g3q"
+path.s3tc="res://.godot/imported/wood.png-0d851a29931ddc2e3585f79de0dc023b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://_guides/rusty-metal.png"
-dest_files=["res://.godot/imported/rusty-metal.png-5e26b492e6f972415fc0bc8d45bfb09d.s3tc.ctex"]
+source_file="res://_documentation/examples/environment-setup/wood.png"
+dest_files=["res://.godot/imported/wood.png-0d851a29931ddc2e3585f79de0dc023b.s3tc.ctex"]
 
 [params]
 

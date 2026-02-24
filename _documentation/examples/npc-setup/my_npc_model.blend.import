@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bobxmnfvf2c85"
-path="res://.godot/imported/external.blend-c6f950bdd4bb40c7cc96ad15282b5c61.scn"
+uid="uid://b7d4fth4g0bqm"
+path="res://.godot/imported/my_npc_model.blend-9ec35d0a3105cef6cde9df82c6e40100.scn"
 
 [deps]
 
-source_file="res://_guides/external.blend"
-dest_files=["res://.godot/imported/external.blend-c6f950bdd4bb40c7cc96ad15282b5c61.scn"]
+source_file="res://_documentation/examples/npc-setup/my_npc_model.blend"
+dest_files=["res://.godot/imported/my_npc_model.blend-9ec35d0a3105cef6cde9df82c6e40100.scn"]
 
 [params]
 
@@ -37,7 +37,16 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:body": {
+"generate/occluder": 1
+},
+"PATH:head": {
+"generate/occluder": 1
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

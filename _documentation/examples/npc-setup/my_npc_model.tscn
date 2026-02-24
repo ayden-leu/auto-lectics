@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhif641e8neg6"]
+
+[ext_resource type="PackedScene" uid="uid://b7d4fth4g0bqm" path="res://_documentation/examples/npc-setup/my_npc_model.blend" id="1_ro01n"]
+
+[node name="my_npc" instance=ExtResource("1_ro01n")]

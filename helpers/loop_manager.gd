@@ -69,6 +69,7 @@ func getFadeOverlay() -> ColorRect:
 
 ## Fades the darkening overlay in/out.  If the first parameter is true, it will fade the overlay in (visible).  If false, it will fade the overlay out (invisible).
 func fadeOverlay(fadingIn:bool) -> void:
+	getFadeOverlay().visible = true
 	var tween:Tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	var finalVal:float = overlayAlphaVisible if fadingIn else 0.0
 	

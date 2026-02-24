@@ -202,4 +202,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 		elif dialogueBoxAnchor.get_parent() == self:
 			warnings.push_back("Making the marker for the dialogue box a child of the Interactable NPC will make the dialogue box move with it if you move the Interactable NPC's root node (i.e the one with a custom icon). If this is not desired and you must move the Interactable NPC's root node, you can:\n1) Make the marker a not a child of the Interactable NPC or its children.\n2) Add a Node (the white hollow circle) as a child to the NPC, then add the marker as a child of the Node.\nThis must be done within the level scene, as doing it within the Interactable NPC scene will cause the marker to be at the level's origin (0,0,0).")
 	
-	return warnings
+	var inheritedWarnings:PackedStringArray = super()
+	inheritedWarnings.append_array(warnings)
+	
+	return inheritedWarnings
