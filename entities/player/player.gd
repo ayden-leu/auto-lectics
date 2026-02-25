@@ -41,6 +41,12 @@ class_name Player
 ## The higher the value, the faster the player falls.
 @export_range(1.0, 4.0, 0.05) var fallGravityMultiplier: float = 2.0
 
+@export_group("Camera")
+## A multiplier that gets applied to the distance the mouse moves.
+@export var mouse_sensitivity := 1
+## Max angle which the camera can turn to; prevents flipping at top
+@export var max_pitch_degrees := 89.0
+
 ## Calculated in _recompute_jump_params()
 var _jumpVelocity: float = 0.0
 ## Calculated in _recompute_jump_params()
@@ -53,7 +59,8 @@ var _wasOnFloor: bool = false
 var _timeSinceApex: float = 0.0
 ## If the player should be able to hang around at the aapex of their jump.
 var _apexHangActive: bool = false
-
+## Save last location where character is grounded.
+var _last_position_stood: Vector3
 
 func _ready() -> void:
 	_recompute_jump_params()
@@ -66,7 +73,6 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-
 	_apply_vertical_physics(delta)
 	move_and_slide()
 
@@ -84,7 +90,7 @@ func _recompute_jump_params() -> void:
 ## Applies gravity.
 func _apply_vertical_physics(delta: float) -> void:
 	if not is_on_floor():
-		#if jumping, enable the hang
+		# if jumping, enable the hang
 		if velocity.y > 0.0:
 			_timeSinceApex = 0.0
 			_apexHangActive = false
@@ -105,9 +111,10 @@ func _apply_vertical_physics(delta: float) -> void:
 			velocity.y -= _gravityUp * delta
 		else:
 			velocity.y -= _gravityDown * delta
-	else:
+	else: # logic for when on floor
 		_apexHangActive = false
 		_timeSinceApex = 0.0
+		_last_position_stood = global_position
 
 	_wasOnFloor = is_on_floor()
 
@@ -152,22 +159,32 @@ func handleDirectionInput(direction: Vector3) -> void:
 	velocity.x = current_h.x
 	velocity.z = current_h.z
 
+## Respawn player upon contact with death plane
+func respawn():
+	velocity = Vector3.ZERO
+	global_position = _last_position_stood
+	global_position.y += 0.1
 
-## Rotates the player when the mouse moves horizontally.
+## Rotates the player and camera when the mouse moves horizontally.
 func _onMouseMoved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
 	
-	#print(name + ": mouse moved")
-	rotation_degrees.y += -distanceMoved.x
-	interactionRaycast.rotation_degrees.x -= -distanceMoved.y
+	# horizontal rotation
+	rotation_degrees.y += -distanceMoved.x * mouse_sensitivity
+	
+	# pitch (on anchor)
+	cameraAnchor.rotation_degrees.x += -distanceMoved.y * mouse_sensitivity
+	# Prevent camera from flipping at top of rotation
+	cameraAnchor.rotation_degrees.x = clamp(
+		cameraAnchor.rotation_degrees.x, -max_pitch_degrees, max_pitch_degrees
+	)
 
 ## Handles interaction logic.
 func _onInteractPressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():
 		interactionRaycast.get_collider().owner._on_interaction()
-
 
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:

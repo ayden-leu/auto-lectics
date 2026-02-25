@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://6ampr08wbamb"]
+[gd_scene load_steps=11 format=3 uid="uid://6ampr08wbamb"]
 
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_eawqy"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_nt7id"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_kkbud"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_jvw1w"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="5_nt7id"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -63,7 +64,10 @@ current = true
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_jvw1w")]
 player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowMouseMoved = [NodePath("../Player")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
+
+[node name="Area3D" parent="." instance=ExtResource("5_nt7id")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.295865, 0)
 
 [editable path="PlayerCamera"]

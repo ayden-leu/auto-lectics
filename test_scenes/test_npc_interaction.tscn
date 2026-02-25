@@ -74,7 +74,7 @@ focus = NodePath("../Player")
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("5_aue1p")]
 player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowMouseMoved = [NodePath("../Player")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
