@@ -715,8 +715,6 @@ transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.0657
 
 [node name="Player" parent="." instance=ExtResource("28_to1nd")]
 transform = Transform3D(-0.35275638, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275638, 66.40753, 0.9343929, 0.8199239)
-mouse_sensitivity = 1
-max_pitch_degrees = 89.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("30_dt8rv")]
 transform = Transform3D(-0.35275644, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275644, 60.865444, 6.326866, 1.3495631)
@@ -724,7 +722,7 @@ focus = NodePath("../Player")
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("31_ohlsf")]
 player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowMouseMoved = [NodePath("../Player")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [node name="DeathPlane" parent="." instance=ExtResource("38_gpeg5")]

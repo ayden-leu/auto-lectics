@@ -71,8 +71,6 @@ mainCamera = NodePath(".")
 
 [node name="Player" parent="." instance=ExtResource("2_wsfuu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
-acceleration = 18.0
-deceleration = 28.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_eqdbr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
@@ -80,7 +78,7 @@ focus = NodePath("../Player")
 
 [node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_gedth")]
 player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowMouseMoved = [NodePath("../Player")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]

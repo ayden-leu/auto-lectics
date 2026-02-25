@@ -16,22 +16,13 @@ var actAsFocus:bool = true
 ## How far away from the focus the camera should be when in third person mode.
 var distanceFromOrigin:Vector3 = Vector3(0, 5, 10)
 
-### Tune camera sensitivity
-#@export var mouse_sensitivity := 1
-### Max angle which the camera can turn to; prevents flipping at top
-#@export var max_pitch_degrees := 89.0
-### Store pitch (vertical rotation)
-#var _pitch_deg: float = 0.0
-
 func _ready() -> void:
 	actAsFocus = true
 	rotation = focus.rotation
-	## Initialise from current rotation
-	#_pitch_deg = rotation_degrees.x
 
 
-## Since Interaction Raycast is handled by the player's rotation, 
-## I made it so the camera just matches the player and camera anchor's angle.
+# Since Interaction Raycast is handled by the player's rotation, 
+# I made it so the camera just matches the player and camera anchor's angle.
 func _process(_delta: float) -> void:
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
@@ -63,17 +54,6 @@ func firstPersonMode() -> void:
 func thirdPersonMode() -> void:
 	camera.position = distanceFromOrigin
 	camera.look_at(global_position)
-
-## Rotates the camera horizontally and vertically when the mouse moves
-func _onMouseMoved(distanceMoved:Vector2) -> void:
-	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
-		return
-	pass
-	## update camera angle
-	#_pitch_deg += (-distanceMoved.y) * mouse_sensitivity
-	## Clamp pitch so we never flip
-	#_pitch_deg = clamp(_pitch_deg, -max_pitch_degrees, max_pitch_degrees)
-
 
 
 

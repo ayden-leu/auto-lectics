@@ -1,7 +1,7 @@
 extends Area3D
 class_name DeathPlane
+## Death plane is currently set as a world boundary. Can be changed to a box if design calls for it.
 
-## Death plane is currently set as a world boundary; can be changed to a box if design calls for it.
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
