@@ -1,0 +1,29 @@
+[
+	{
+		"backgroundTheme": "",
+		"font": "",
+		"id": "test2",
+		"options": [
+			{
+				"text": "teawda"
+			}
+		],
+		"particles": {
+			"ambient": {
+				"texture": ""
+			},
+			"spawn": {
+				"texture": ""
+			},
+			"text": {
+				"texture": ""
+			}
+		},
+		"sfx": {
+			"spawn": "",
+			"text": ""
+		},
+		"text": "helloa",
+		"writeSpeed": "slow"
+	}
+]

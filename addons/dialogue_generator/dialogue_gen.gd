@@ -1,8 +1,8 @@
 @tool
 extends Control
 
-const DialogueDB = preload("res://addons/dialogue_generator/dialogue_db.gd
-")
+#const DialogueDB = preload("res://addons/dialogue_generator/dialogue_db.gd
+#")
 
 var db := DialogueDB.new()
 var current_path: String = ""
@@ -109,6 +109,19 @@ func _build_inspector_placeholder() -> void:
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inspector.add_child(lbl)
 
+var temp_typeOption:Dictionary = {
+	"Neutral": 0,
+	"Happy": 1,
+	"Angry": 2,
+	"Confused": 3,
+	"Sad": 4
+}
+
+var temp_typeDialogue:Dictionary = {
+	"Normal": 0,
+	"Hectic": 1
+}
+
 func _build_inspector_for_dialogue(d: Dictionary) -> void:
 	_queue_free_children(inspector)
 
@@ -136,9 +149,9 @@ func _build_inspector_for_dialogue(d: Dictionary) -> void:
 
 	var type_opt := OptionButton.new()
 	for t in ["Neutral", "Happy", "Angry", "Confused", "Sad"]:
-		type_opt.add_item(t)
+		type_opt.add_item(t, temp_typeOption[t])
 	var cur_t := str(d.get("type", "Neutral"))
-	var index := type_opt.find_item(cur_t)
+	var index := type_opt.get_item_index(temp_typeOption[cur_t])
 	type_opt.select(index if index != -1 else 0)
 
 	type_opt.item_selected.connect(func(idx: int):
@@ -154,7 +167,7 @@ func _build_inspector_for_dialogue(d: Dictionary) -> void:
 	for m in ["Normal", "Hectic"]:
 		mode_opt.add_item(m)
 	var cur_m := str(d.get("mode", "Normal"))
-	mode_opt.select(max(0, mode_opt.get_item_index(cur_m)))
+	mode_opt.select(max(0, mode_opt.get_item_index(temp_typeDialogue[cur_m])))
 	mode_opt.item_selected.connect(func(idx: int):
 		d["mode"] = mode_opt.get_item_text(idx)
 	)
@@ -177,7 +190,7 @@ func _build_inspector_for_dialogue(d: Dictionary) -> void:
 	inspector.add_child(btn_add_opt)
 
 	for i in range(opts.size()):
-		var opt := opts[i]
+		var opt = opts[i]
 		if typeof(opt) != TYPE_DICTIONARY: continue
 
 		var row := VBoxContainer.new()
@@ -192,6 +205,8 @@ func _build_inspector_for_dialogue(d: Dictionary) -> void:
 			_update_node_ports(str(d.get("id","")))
 		)
 		row.add_child(le)
+		
+		print(opt)
 
 		var next_lbl := Label.new()
 		next_lbl.text = "nextID: %s" % DialogueDB._get_next_id(opt)

@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5o5n3jy08obe"]
+
+[ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dialogue_object.gd" id="1_6gxnk"]
+
+[node name="DialogueObject" type="GraphNode"]
+offset_right = 416.0
+offset_bottom = 389.0
+resizable = true
+title = "New Dialogue Object"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_6gxnk")
+
+[node name="Entries" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="DialogueID" type="HBoxContainer" parent="Entries"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Entries/DialogueID"]
+layout_mode = 2
+text = "Dialogue ID: "
+
+[node name="LineEdit" type="LineEdit" parent="Entries/DialogueID"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "e.g  Dialogue1"
+
+[node name="Text" type="HBoxContainer" parent="Entries"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Entries/Text"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Text: "
+
+[node name="TextEdit" type="TextEdit" parent="Entries/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+wrap_mode = 1
+scroll_fit_content_height = true
+
+[node name="Options" type="HBoxContainer" parent="Entries"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Entries/Options"]
+layout_mode = 2
+text = "Options: "
+
+[node name="Button" type="Button" parent="Entries"]
+layout_mode = 2
+text = "Add Another Option"
+
+[node name="Button2" type="Button" parent="Entries"]
+layout_mode = 2
+text = "Debug"
+
+[connection signal="text_changed" from="Entries/DialogueID/LineEdit" to="." method="_on_dialogue_id_updated"]

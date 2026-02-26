@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://drh1uormkjsbh"]
+
+[ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dialogue_option_object.gd" id="1_tt0ct"]
+
+[node name="DialogueOptionObject" type="GraphNode"]
+offset_right = 416.0
+offset_bottom = 129.0
+resizable = true
+title = "Dialogue Option"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_tt0ct")
+
+[node name="Entries" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Text" type="HBoxContainer" parent="Entries"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Entries/Text"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Text: "
+
+[node name="TextEdit" type="TextEdit" parent="Entries/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+wrap_mode = 1
+scroll_fit_content_height = true
+
+[node name="NextID" type="HBoxContainer" parent="Entries"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Entries/NextID"]
+layout_mode = 2
+text = "Next ID: "
+
+[node name="LineEdit" type="LineEdit" parent="Entries/NextID"]
+layout_mode = 2
+size_flags_horizontal = 3

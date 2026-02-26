@@ -1,0 +1,29 @@
+[
+	{
+		"backgroundTheme": "",
+		"font": "",
+		"id": "test",
+		"options": [
+			{
+				"text": "New Option"
+			}
+		],
+		"particles": {
+			"ambient": {
+				"texture": ""
+			},
+			"spawn": {
+				"texture": ""
+			},
+			"text": {
+				"texture": ""
+			}
+		},
+		"sfx": {
+			"spawn": "",
+			"text": ""
+		},
+		"text": "hello",
+		"writeSpeed": "slow"
+	}
+]

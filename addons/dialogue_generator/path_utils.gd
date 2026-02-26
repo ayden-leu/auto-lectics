@@ -2,7 +2,7 @@ extends RefCounted
 class_name DialoguePathUtils
 
 # Base root where everything goes (writeable)
-const BASE_DIR := "res://dialogue/npcs"
+const BASE_DIR := "res://dialogue_objects"
 
 # Make a folder-safe name (avoids weird characters)
 static func sanitize_name(s: String) -> String:
