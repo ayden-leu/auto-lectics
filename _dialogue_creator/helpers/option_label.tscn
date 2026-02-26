@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cjuc58ngbb0lm"]
+
+[node name="OptionLabel" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "1"
+horizontal_alignment = 2

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dialogue_object.gd" id="1_6gxnk"]
 
-[node name="DialogueObject" type="GraphNode"]
+[node name="DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField")]
 offset_right = 416.0
 offset_bottom = 389.0
 resizable = true
@@ -16,32 +16,76 @@ slot/0/right_type = 0
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
 script = ExtResource("1_6gxnk")
+dialogueIDField = NodePath("DialogueID/LineEdit")
+textField = NodePath("Text/TextEdit")
 
-[node name="Entries" type="VBoxContainer" parent="."]
+[node name="DialogueID" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="DialogueID" type="HBoxContainer" parent="Entries"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Entries/DialogueID"]
+[node name="Label" type="Label" parent="DialogueID"]
 layout_mode = 2
 text = "Dialogue ID: "
 
-[node name="LineEdit" type="LineEdit" parent="Entries/DialogueID"]
+[node name="LineEdit" type="LineEdit" parent="DialogueID"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "e.g  Dialogue1"
 
-[node name="Text" type="HBoxContainer" parent="Entries"]
+[node name="Text" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Entries/Text"]
+[node name="Label" type="Label" parent="Text"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Text: "
 
-[node name="TextEdit" type="TextEdit" parent="Entries/Text"]
+[node name="TextEdit" type="TextEdit" parent="Text"]
 layout_mode = 2
 size_flags_horizontal = 3
 emoji_menu_enabled = false
@@ -50,19 +94,24 @@ empty_selection_clipboard_enabled = false
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="Options" type="HBoxContainer" parent="Entries"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Entries/Options"]
+[node name="Options" type="Label" parent="."]
 layout_mode = 2
 text = "Options: "
+horizontal_alignment = 2
 
-[node name="Button" type="Button" parent="Entries"]
+[node name="AddOption" type="Button" parent="."]
 layout_mode = 2
-text = "Add Another Option"
+text = "Add Option"
 
-[node name="Button2" type="Button" parent="Entries"]
+[node name="RemoveOption" type="Button" parent="."]
+layout_mode = 2
+text = "Remove Option"
+
+[node name="Debug" type="Button" parent="."]
 layout_mode = 2
 text = "Debug"
 
-[connection signal="text_changed" from="Entries/DialogueID/LineEdit" to="." method="_on_dialogue_id_updated"]
+[connection signal="text_changed" from="DialogueID/LineEdit" to="." method="_on_dialogue_id_updated"]
+[connection signal="pressed" from="AddOption" to="." method="_on_add_option_pressed"]
+[connection signal="pressed" from="RemoveOption" to="." method="_on_remove_option_pressed"]
+[connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

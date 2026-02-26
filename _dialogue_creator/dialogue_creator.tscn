@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
 
-[node name="Control" type="Control"]
+[node name="DialogueCreator" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,13 +24,20 @@ text = "Add Dialogue Object"
 layout_mode = 2
 text = "Add Dialogue Option Object"
 
+[node name="SaveDialogue" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Save All Dialogue"
+
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 0
 offset_top = 40.0
 offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
+right_disconnects = true
 
 [connection signal="pressed" from="HBoxContainer/CreateDialogueObject" to="." method="_on_create_object_pressed"]
 [connection signal="pressed" from="HBoxContainer/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
+[connection signal="pressed" from="HBoxContainer/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
