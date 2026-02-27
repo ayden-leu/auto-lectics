@@ -6,6 +6,7 @@ var base_position : Vector3
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	base_position = rotation
+	super()
 	pass # Replace with fun ction body.
 
 
@@ -13,7 +14,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+	super(delta)
+	if patrol_path:
+		return
 	time += delta;
 	rotation = Vector3(0, base_position.y +get_sine(), 0)
 	#position = Vector3(base_position.x, base_position.y + get_sine(), base_position.z)

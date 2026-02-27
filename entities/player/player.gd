@@ -184,7 +184,7 @@ func _onMouseMoved(distanceMoved:Vector2) -> void:
 func _onInteractPressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():
-		interactionRaycast.get_collider().owner._on_interaction()
+		interactionRaycast.get_collider().owner._on_interaction(self)
 
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:
