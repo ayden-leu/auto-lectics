@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://stwpbfk20ea4"]
 
 [ext_resource type="Script" uid="uid://bt5hw7k0jqkks" path="res://entities/npcs/preacher.gd" id="1_hswvp"]
-[ext_resource type="PackedScene" uid="uid://bu1smqla7x43w" path="res://models/npcs/preacher.fbx" id="2_67wvj"]
+[ext_resource type="PackedScene" uid="uid://bu1smqla7x43w" path="res://models/week6playtestStuff/npcs/preacher.fbx" id="2_67wvj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.0087891, 1.8596134, 0.97631836)
