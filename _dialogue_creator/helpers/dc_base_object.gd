@@ -1,7 +1,8 @@
 extends GraphNode
-class_name DC_Object
+class_name DC_BaseObject
 
-signal disconnect_all(node:DC_Object)
+signal disconnect_all(node:DC_BaseObject)
+signal deleting(node:DC_BaseObject)
 
 @onready var closeButtonScene:PackedScene = preload("uid://ccer37a12iyow")
 
@@ -9,8 +10,11 @@ enum PORT_TYPE{
 	OPTION,
 	DIALOGUE
 }
+const PORT_COLOR:Dictionary = {
+	OPTION = Color.TOMATO,
+	DIALOGUE = Color.AQUA
+}
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	createCloseButton()
 
@@ -20,6 +24,7 @@ func createCloseButton() -> void:
 	close.pressed.connect(_on_close_button_pressed)
 
 func delete() -> void:
+	deleting.emit(self)
 	queue_free()
 
 # ---------------------------

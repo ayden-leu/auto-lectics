@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
 
-[node name="DialogueCreator" type="Control"]
+[node name="DialogueCreator" type="Control" node_paths=PackedStringArray("npcNameField")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,10 +10,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_emjdv")
+npcNameField = NodePath("HBoxContainer/NPCName")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
+offset_right = 1152.0
 offset_bottom = 40.0
 
 [node name="CreateDialogueObject" type="Button" parent="HBoxContainer"]
@@ -22,11 +23,24 @@ text = "Add Dialogue Object"
 
 [node name="CreateDialogueOptionObject" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-text = "Add Dialogue Option Object"
+text = "Add Dialogue Option"
 
 [node name="SaveDialogue" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 text = "Save All Dialogue"
+
+[node name="LoadDialogueTree" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Load Dialogue Tree"
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "NPC Name: "
+
+[node name="NPCName" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "put name here"
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 0
@@ -39,5 +53,7 @@ right_disconnects = true
 [connection signal="pressed" from="HBoxContainer/CreateDialogueObject" to="." method="_on_create_object_pressed"]
 [connection signal="pressed" from="HBoxContainer/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
+[connection signal="pressed" from="HBoxContainer/LoadDialogueTree" to="." method="loadDialogueTree"]
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]

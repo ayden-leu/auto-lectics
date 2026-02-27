@@ -1,9 +1,9 @@
-extends DC_Object
+extends DC_BaseObject
 class_name DC_DialogueObject
 
 signal id_updated(newID:String)
-signal disconnect_right(port:int)
-signal disconnect_all_right
+signal disconnect_option(port:int)
+signal disconnect_all_options
 
 @export var dialogueIDField:LineEdit
 @export var textField:TextEdit
@@ -11,6 +11,21 @@ signal disconnect_all_right
 @onready var optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
 const numNodesAboveOptions:int = 3
+
+var id:String:
+	set(value):
+		id = value
+		if not idUpdateFromField:
+			dialogueIDField.text = value
+			idUpdateFromField = true
+		title = "Dialogue: " + value
+		id_updated.emit(value)
+var idUpdateFromField:bool = true
+
+var text:String:
+	set(value):
+		text = value
+		textField.text = value
 
 var options:Array[Dictionary] = []
 var optionPorts:Array[Label] = []
@@ -22,13 +37,15 @@ var numOptions:int = 0:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	createCloseButton()
+	
+	set_slot_color_left(0, PORT_COLOR.DIALOGUE)
 
 func createCloseButton() -> void:
 	var close:Button = closeButtonScene.instantiate()
 	get_titlebar_hbox().add_child(close)
 	close.pressed.connect(_on_close_button_pressed)
 
-func createSlot() -> void:
+func createOptionPort() -> void:
 	var optionLabel:Label = optionLabelScene.instantiate()
 	optionLabel.text = str(numOptions)
 	add_child(optionLabel)
@@ -37,7 +54,7 @@ func createSlot() -> void:
 	
 	set_slot(numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
-		true, PORT_TYPE.OPTION, Color.WEB_MAROON
+		true, PORT_TYPE.OPTION, PORT_COLOR.OPTION
 	)
 	options.push_back({})
 	numOptions += 1
@@ -49,32 +66,34 @@ func removeSlot() -> void:
 	options.pop_back()
 	toRemove.queue_free()
 	
-	disconnect_right.emit(numOptions)
+	disconnect_option.emit(numOptions)
 
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
 		"id": dialogueIDField.text,
-		"text": textField.text,
-		"options": options
+		"text": textField.text
 	}
+	
+	if options != []:
+		currentValues.options = options
 	
 	return currentValues
 
-func rightPortDisconnected(port:int) -> void:
+func optionDisconnected(port:int) -> void:
 	options[port] = {}
 
 func delete() -> void:
-	disconnect_all_right.emit()
+	disconnect_all_options.emit()
 	super()
 
 # ---------------------------
 
 func _on_dialogue_id_updated(newID:String) -> void:
-	title = "Dialogue: " + newID
-	id_updated.emit(newID)
+	idUpdateFromField = true
+	id = newID
 
 func _on_add_option_pressed() -> void:
-	createSlot()
+	createOptionPort()
 
 func _on_remove_option_pressed() -> void:
 	removeSlot()

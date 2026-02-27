@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://drh1uormkjsbh"]
 
-[ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dialogue_option_object.gd" id="1_tt0ct"]
+[ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dc_dialogue_option.gd" id="1_sx0xf"]
 
-[node name="DialogueOptionObject" type="GraphNode" node_paths=PackedStringArray("textField", "nextIDField")]
-offset_right = 416.0
-offset_bottom = 129.0
+[node name="DC_DialogueOption" type="GraphNode" node_paths=PackedStringArray("textField")]
+offset_right = 346.0
+offset_bottom = 149.0
 resizable = true
 title = "Dialogue Option"
-slot/0/left_enabled = false
+slot/0/left_enabled = true
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
 slot/0/left_icon = null
@@ -20,7 +20,7 @@ slot/1/left_enabled = false
 slot/1/left_type = 0
 slot/1/left_color = Color(1, 1, 1, 1)
 slot/1/left_icon = null
-slot/1/right_enabled = false
+slot/1/right_enabled = true
 slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
@@ -34,9 +34,8 @@ slot/2/right_type = 0
 slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
-script = ExtResource("1_tt0ct")
+script = ExtResource("1_sx0xf")
 textField = NodePath("Text/TextEdit")
-nextIDField = NodePath("NextID/LineEdit")
 
 [node name="Text" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -60,16 +59,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="NextID"]
 layout_mode = 2
-text = "Next ID: "
-
-[node name="LineEdit" type="LineEdit" parent="NextID"]
-layout_mode = 2
 size_flags_horizontal = 3
+text = "Next ID: "
+horizontal_alignment = 2
 
 [node name="Debug" type="Button" parent="."]
 layout_mode = 2
 text = "Debug"
 
 [connection signal="text_changed" from="Text/TextEdit" to="." method="_on_attribute_modified"]
-[connection signal="text_changed" from="NextID/LineEdit" to="." method="_on_next_id_modified"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

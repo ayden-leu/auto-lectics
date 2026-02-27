@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://c5o5n3jy08obe"]
 
-[ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dialogue_object.gd" id="1_6gxnk"]
+[ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
 
-[node name="DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField")]
-offset_right = 416.0
-offset_bottom = 389.0
+[node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField")]
+offset_right = 418.0
+offset_bottom = 251.0
 resizable = true
 title = "New Dialogue Object"
-slot/0/left_enabled = false
+slot/0/left_enabled = true
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
 slot/0/left_icon = null
@@ -61,7 +61,7 @@ slot/5/right_type = 0
 slot/5/right_color = Color(1, 1, 1, 1)
 slot/5/right_icon = null
 slot/5/draw_stylebox = true
-script = ExtResource("1_6gxnk")
+script = ExtResource("1_g3bfk")
 dialogueIDField = NodePath("DialogueID/LineEdit")
 textField = NodePath("Text/TextEdit")
 
