@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bt62vwn7bnq36"]
+[gd_scene load_steps=50 format=3 uid="uid://bt62vwn7bnq36"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_d02ib"]
@@ -30,11 +30,12 @@
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="24_wdgfk"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="26_aw1g7"]
 [ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="27_ug5cj"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="28_to1nd"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="28_to1nd"]
 [ext_resource type="PackedScene" uid="uid://bu511kjk81y1o" path="res://models/npcs/side_NPCS/birds.fbx" id="29_els8b"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="30_dt8rv"]
 [ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="30_ha65o"]
 [ext_resource type="PackedScene" uid="uid://cacib06ypgbbs" path="res://entities/npcs/sideNPCS/container.tscn" id="31_ha65o"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="31_ohlsf"]
 [ext_resource type="PackedScene" uid="uid://cdn26x78pvors" path="res://Week6PlaytestWorldAssets/MainTube/tankTubeUpsiderDow.fbx" id="33_pcetu"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="38_gpeg5"]
 
@@ -74,7 +75,7 @@ size = Vector3(8.547119, 60.115936, 172.20242)
 [sub_resource type="Curve3D" id="Curve3D_gpeg5"]
 closed = true
 _data = {
-"points": PackedVector3Array(1.112071, 0, -1.9030209, -1.112071, 0, 1.9030209, -10.356, 0, 13.843, 4.7394505, 0, -0.45396996, -4.7394505, 0, 0.45396996, -19.149271, 0, 21.58156, 2.6893005, 0, 4.6738024, -2.6893005, 0, -4.6738024, -39.418056, 0, 10.101672, -2.3279915, 0, 3.7018476, 2.3279915, 0, -3.7018476, -41.716606, 0, -8.504805, -5.1532097, 0, 0.8692455, 5.1532097, 0, -0.8692455, -28.846, 0, -16.654, -2.3068523, 0, -2.678853, 2.3068523, 0, 2.678853, -15.23, 0, -13.488, -0.5084858, 0.033935547, -2.210063, 0.5084858, -0.033935547, 2.210063, -7.9009457, 0, -2.828, 0.57842255, 0.03556609, -2.6328864, -0.57842255, -0.03556609, 2.6328864, -7.198, 0, 4.763),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -10.356, 0, 13.843, 0, 0, 0, 0, 0, 0, -25.639, 0, 13.224, 0, 0, 0, 0, 0, 0, -40.559, 0, 4.815, 0, 0, 0, 0, 0, 0, -41.389, 0, -11.325, 0, 0, 0, 0, 0, 0, -28.846, 0, -16.654, 0, 0, 0, 0, 0, 0, -15.23, 0, -13.488, 0, 0, 0, 0, 0, 0, -4.475, 0, -2.828, 0, 0, 0, 0, 0, 0, -7.198, 0, 4.763),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 8
@@ -628,7 +629,6 @@ autoplay = true
 [node name="dishNPC" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("21_072tr")]
 transform = Transform3D(-0.47506624, 0, -0.49349466, 0, 0.685, 0, 0.49349466, 0, -0.47506624, -25.27201, 0.04699976, -7.569971)
 dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/dishNPC"]
 
@@ -639,9 +639,8 @@ metadata/_edit_group_ = true
 [node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("22_87qvr")]
 transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-initialDialogueID = "dialogue1"
 myName = "gossip"
-lookAtPlayer = null
+initialDialogueID = "dialogue1"
 
 [node name="Node" type="Node" parent="npcs/looker"]
 
@@ -652,7 +651,6 @@ metadata/_edit_group_ = true
 [node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("23_qr6ly")]
 transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -0.5170965, 7.2353964, 26.201641)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/preacher"]
 
@@ -663,7 +661,6 @@ metadata/_edit_group_ = true
 [node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("24_e57of")]
 transform = Transform3D(-0.71693957, 0, -0.49687183, 0, 0.8722866, 0, 0.49687183, 0, -0.71693957, 29.016579, -12.451921, 54.780178)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/collector"]
 
@@ -674,9 +671,8 @@ metadata/_edit_group_ = true
 [node name="egg" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor", "patrol_path") instance=ExtResource("26_aw1g7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4254055, 0.1696164, 12.737)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = true
-patrol_path = NodePath("../../EggPath")
-patrol_speed = 4.0
+patrol_path = NodePath("../../Path3D")
+patrol_speed = 10.0
 
 [node name="Node" type="Node" parent="npcs/egg"]
 
@@ -686,7 +682,6 @@ transform = Transform3D(0.834271, 0, -0.5513548, 0, 1, 0, 0.5513548, 0, 0.834271
 [node name="spinner" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("27_ug5cj")]
 transform = Transform3D(0.71970016, 0, 0, 0, 1, 0, 0, 0, 0.71970016, 4.310974, 4.827329, 18.570747)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/spinner"]
 
@@ -722,7 +717,6 @@ script = ExtResource("30_ha65o")
 [node name="container" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("31_ha65o")]
 transform = Transform3D(0.7338738, 0, 0.6271863, 0, 0.9653669, 0, -0.6271863, 0, 0.7338738, 19.63311, 17.308321, -21.130909)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/container"]
 
@@ -736,9 +730,14 @@ transform = Transform3D(-0.35275638, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35
 transform = Transform3D(-0.35275644, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275644, 60.865444, 6.326866, 1.3495631)
 focus = NodePath("../Player")
 
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("31_ohlsf")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player")]
+wantsToKnowWhenInteract = [NodePath("../Player")]
+
 [node name="DeathPlane" parent="." instance=ExtResource("38_gpeg5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.041534, -7.0753856, 2.8729353)
 
-[node name="EggPath" type="Path3D" parent="."]
+[node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 0)
 curve = SubResource("Curve3D_gpeg5")

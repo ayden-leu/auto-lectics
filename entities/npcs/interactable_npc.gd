@@ -25,6 +25,8 @@ signal finished_dialogue
 @export var initialDialogueID:String = ""
 ## If this Interactable NPC should only respond to interactions once.
 @export var talkOnlyOnce:bool = true
+# TODO:  write what this does
+@export var lookAtPlayer:bool = false
 
 ## Holds a reference to the diaslogue box resource.
 const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
@@ -41,15 +43,27 @@ var isTalking: bool = false
 var currentDialogueID: String = ""
 ## Keeps track of if the player has interacted with this Interactable NPC.  If true, this NPC can no longer be talked to.
 var wasTalkedTo: bool = false
+## Tracks who is interacting with this NPC; curently can only be the player
+var currentInteractor:Node3D
+## Tracks whether the NPC should be patrolling
+var shouldPatrol:bool
 
 func _ready() -> void:
-	super()
 	# Makes sure the code after this is only ran in-game
 	if Engine.is_editor_hint():
 		return
+	super()
+	shouldPatrol = patrol_enabled
 	
 	currentDialogueID = initialDialogueID
 	hitboxShapes = getHitboxShapes()
+	add_to_group("NPCs")
+
+func _process(delta: float) -> void:
+	super(delta)
+	# Look at player when spoken to if required
+	if isTalking and currentInteractor and lookAtPlayer:
+		_face_player(delta)
 
 ## Gets the hitbox's collision shapes.
 func getHitboxShapes() -> Array[CollisionShape3D]:
@@ -125,6 +139,9 @@ func endDialogue() -> void:
 		dialogueBox = null
 	
 	isTalking = false
+	currentInteractor = null
+	if shouldPatrol:
+		patrol_enabled = true
 	if talkOnlyOnce:
 		wasTalkedTo = true
 
@@ -150,18 +167,30 @@ func reset() -> void:
 	wasTalkedTo = false
 
 
-## Handles flow of what to do when a player interacts with this Interactable NPC.
-func _on_interaction() -> void:
-	if wasTalkedTo:
+## Handles flow of what to do when a player interacts with this NPC.
+func _on_interaction(player: Node3D = null) -> void:
+	if wasTalkedTo or isTalking:
 		return
+		
+	currentInteractor = player
 	
-	if isTalking:
-		return
 	isTalking = true
-	
+	patrol_enabled = false
 	spawnDialogueBox()
 	connectDialogueBoxSignals()
 	loadNextDialogue(initialDialogueID)
+
+## Function to face the player when spoken to. Useful for moving NPCs.
+func _face_player(delta: float) -> void:
+	var target_pos: Vector3 = currentInteractor.global_position
+	var my_pos: Vector3 = global_position
+	
+	var direction := target_pos - my_pos
+	direction.y = 0.0
+	
+	direction = direction.normalized()
+	var target_dir := atan2(-direction.x, -direction.z)
+	rotation.y = lerp_angle(rotation.y, target_dir, 5 * delta)
 
 ## Emits the "option_available" signal.
 func _on_dialogue_box_new_option_spawned() -> void:
@@ -190,7 +219,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 		
 	if not hitbox:
-		warnings.push_back("This Interactable NPC doesn't have a hitbox assigned yet. This is needed to allow the player to interact with them. A hitbox is an Area3D node.")
+		warnings.push_back("This NPC doesn't have a hitbox assigned yet. This is needed to allow the player to interact with them. A hitbox is an Area3D node.")
 	elif hitbox.collision_layer != 4:
 		warnings.push_back("The hitbox's collision layer should only have square #3/Bit 2/the Interactable NPC layer enabled.")
 	
