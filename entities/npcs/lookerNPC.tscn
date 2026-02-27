@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bxfsxhyjvsml8"]
 
-[ext_resource type="PackedScene" uid="uid://cxmlmdlsqdkd6" path="res://models/npcs/looker.fbx" id="2_2ow1n"]
+[ext_resource type="PackedScene" uid="uid://cxmlmdlsqdkd6" path="res://models/week6playtestStuff/npcs/looker.fbx" id="2_2ow1n"]
 [ext_resource type="Script" uid="uid://y3bv4bjrakvy" path="res://entities/npcs/looker.gd" id="3_y34t1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
