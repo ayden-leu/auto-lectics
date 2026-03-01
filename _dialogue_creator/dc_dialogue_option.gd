@@ -23,7 +23,10 @@ func _ready() -> void:
 	createCloseButton()
 	
 	set_slot_color_left(0, PORT_COLOR.OPTION)
+	set_slot_type_left(0, PORT_TYPE.OPTION)
+	
 	set_slot_color_right(1, PORT_COLOR.DIALOGUE)
+	set_slot_type_right(1, PORT_TYPE.DIALOGUE)
 
 func createCloseButton() -> void:
 	var close:Button = closeButton.instantiate()
@@ -49,6 +52,9 @@ func delete() -> void:
 
 # -----------------
 
+func _on_close_button_pressed() -> void:
+	super()
+
 func _on_attribute_modified() -> void:
 	#print("option modified, emitting")
 	values_updated.emit(port, getFields())
@@ -59,11 +65,10 @@ func _on_text_field_updated() -> void:
 
 func _on_next_object_id_modified(newID:String) -> void:
 	nextID = newID
+	_on_attribute_modified()
 
 func _on_debug_pressed() -> void:
+	print("------ Dialogue Option ------")
 	print("Port: ", port)
+	print("Text:", text)
 	print("nextID: ", nextID)
-
-func _on_close_button_pressed() -> void:
-	print("eggs")
-	super()

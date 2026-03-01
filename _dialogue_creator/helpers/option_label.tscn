@@ -3,5 +3,6 @@
 [node name="OptionLabel" type="Label"]
 offset_right = 40.0
 offset_bottom = 23.0
+size_flags_horizontal = 8
 text = "1"
 horizontal_alignment = 2

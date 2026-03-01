@@ -134,11 +134,6 @@ func loadDialogueTree() -> void:
 	
 	await get_tree().create_timer(0.0001).timeout
 	
-	for optionObject in dialogueOptions:
-		graphArea.set_selected(optionObject)
-	for dialogueObject in dialogueObjects:
-		graphArea.set_selected(dialogueObject)
-	
 	graphArea.arrange_nodes()
 
 # --------------
@@ -158,12 +153,12 @@ func disconnectObjectOptionPortToOption(obj:DC_DialogueObject, option:DC_Dialogu
 	option.dialogueDisconnected()
 
 func connectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
-	option.nextID = obj.id
 	obj.id_updated.connect(option._on_next_object_id_modified)
+	option._on_next_object_id_modified(obj.id)
 
 func disconnectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
-	option.nextID = ""
 	obj.id_updated.disconnect(option._on_next_object_id_modified)
+	option._on_next_object_id_modified("")
 
 # -------------------------
 
@@ -191,17 +186,15 @@ func _on_save_all_dialogue_pressed() -> void:
 func _on_dialogue_object_option_removed(port:int) -> void:
 	for connection in graphArea.connections:
 		if connection.from_port == port:
-			graphArea.disconnect_node(
-				connection.from_node, connection.from_port,
-				connection.to_node, connection.to_port
-			)
-			
 			var object:DC_DialogueObject = getNode(connection.from_node)
 			var option:DC_DialogueOption = getNode(connection.to_node)
 			
 			disconnectObjectOptionPortToOption(object, option)
 			
-			option.dialogueDisconnected()
+			graphArea.disconnect_node(
+				connection.from_node, connection.from_port,
+				connection.to_node, connection.to_port
+			)
 
 func _on_base_object_disconnect_all(obj:DC_BaseObject) -> void:
 	for connection in graphArea.connections:
@@ -224,7 +217,7 @@ func _on_base_object_deleting(obj:DC_BaseObject) -> void:
 func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	var fromNode:DC_BaseObject = getNode(from_node)
 	var toNode:DC_BaseObject = getNode(to_node)
-	
+
 	if fromNode is DC_DialogueObject and toNode is DC_DialogueOption:
 		fromNode = fromNode as DC_DialogueObject
 		toNode = toNode as DC_DialogueOption

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b38hwl8plmrky"]
+[gd_scene load_steps=4 format=3 uid="uid://b38hwl8plmrky"]
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
+[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_vav2e"]
+[ext_resource type="Material" uid="uid://cui7p5wbx7u80" path="res://_dialogue_creator/theming/dialogue_creator_background.tres" id="3_vav2e"]
 
 [node name="DialogueCreator" type="Control" node_paths=PackedStringArray("npcNameField")]
 layout_mode = 3
@@ -9,8 +11,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
 npcNameField = NodePath("HBoxContainer/NPCName")
+
+[node name="Background" type="ColorRect" parent="."]
+material = ExtResource("3_vav2e")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -44,10 +54,11 @@ placeholder_text = "put name here"
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 0
-offset_top = 40.0
+offset_top = 45.0
 offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
+scroll_offset = Vector2(-18.947388, -12)
 right_disconnects = true
 
 [connection signal="pressed" from="HBoxContainer/CreateDialogueObject" to="." method="_on_create_object_pressed"]

@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://drh1uormkjsbh"]
+[gd_scene load_steps=3 format=3 uid="uid://drh1uormkjsbh"]
 
 [ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dc_dialogue_option.gd" id="1_sx0xf"]
+[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
 
 [node name="DC_DialogueOption" type="GraphNode" node_paths=PackedStringArray("textField")]
 offset_right = 346.0
 offset_bottom = 149.0
+theme = ExtResource("1_ynasb")
+theme_type_variation = &"DialogueOption"
 resizable = true
 title = "Dialogue Option"
 slot/0/left_enabled = true
@@ -43,7 +46,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Text"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Text: "
+text = "Text"
 
 [node name="TextEdit" type="TextEdit" parent="Text"]
 layout_mode = 2
@@ -52,15 +55,16 @@ emoji_menu_enabled = false
 middle_mouse_paste_enabled = false
 empty_selection_clipboard_enabled = false
 wrap_mode = 1
+tab_input_mode = false
 scroll_fit_content_height = true
 
 [node name="NextID" type="HBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 8
 
 [node name="Label" type="Label" parent="NextID"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Next ID: "
+text = "Next ID"
 horizontal_alignment = 2
 
 [node name="Debug" type="Button" parent="."]

@@ -21,12 +21,10 @@ var id:String:
 		title = "Dialogue: " + value
 		id_updated.emit(value)
 var idUpdateFromField:bool = true
-
 var text:String:
 	set(value):
 		text = value
 		textField.text = value
-
 var options:Array[Dictionary] = []
 var optionPorts:Array[Label] = []
 var numOptions:int = 0:
@@ -34,11 +32,11 @@ var numOptions:int = 0:
 		if value >= 0:
 			numOptions = value
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	createCloseButton()
 	
 	set_slot_color_left(0, PORT_COLOR.DIALOGUE)
+	set_slot_type_left(0, PORT_TYPE.DIALOGUE)
 
 func createCloseButton() -> void:
 	var close:Button = closeButtonScene.instantiate()
@@ -75,7 +73,14 @@ func getFields() -> Dictionary:
 	}
 	
 	if options != []:
-		currentValues.options = options
+		var optionsToAdd:Array[Dictionary] = []
+		for option in options:
+			if option == {}:
+				continue
+			optionsToAdd.push_back(option)
+		
+		if optionsToAdd != []:
+			currentValues.options = optionsToAdd
 	
 	return currentValues
 
@@ -102,6 +107,8 @@ func _on_option_updated(index:int, newValue:Dictionary) -> void:
 	options[index] = newValue
 
 func _on_debug_pressed() -> void:
+	print("------ ", title, " ------")
+	print("Text:", text)
 	print("Options: ", options)
 	print("OptionPorts: ", optionPorts)
 	print("numOptions: ", numOptions)

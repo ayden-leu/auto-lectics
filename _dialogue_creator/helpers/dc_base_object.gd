@@ -11,8 +11,8 @@ enum PORT_TYPE{
 	DIALOGUE
 }
 const PORT_COLOR:Dictionary = {
-	OPTION = Color.TOMATO,
-	DIALOGUE = Color.AQUA
+	OPTION = Color("d9543d"),
+	DIALOGUE = Color("00b5b5")
 }
 
 func _ready() -> void:

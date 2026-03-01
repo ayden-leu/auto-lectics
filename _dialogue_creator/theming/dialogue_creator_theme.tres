@@ -1,0 +1,50 @@
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://caibapog63fvf"]
+
+[ext_resource type="StyleBox" uid="uid://ct0bjhg2emo4j" path="res://_dialogue_creator/theming/button_normal.tres" id="1_5nxpm"]
+[ext_resource type="StyleBox" uid="uid://dml1nhie6wo7k" path="res://_dialogue_creator/theming/focus.tres" id="1_8vgy3"]
+[ext_resource type="StyleBox" uid="uid://ck447yxyove4q" path="res://_dialogue_creator/theming/button_hovered.tres" id="1_ky6xr"]
+[ext_resource type="StyleBox" uid="uid://dnug2li70pic4" path="res://_dialogue_creator/theming/button_pressed.tres" id="2_j2834"]
+[ext_resource type="StyleBox" uid="uid://cc1624t6f0gn0" path="res://_dialogue_creator/theming/dialogue_object_titlebar_selected.tres" id="5_7xgx1"]
+[ext_resource type="StyleBox" uid="uid://bo18kpe0v736c" path="res://_dialogue_creator/theming/dialogue_object_titlebar_normal.tres" id="5_upo1i"]
+[ext_resource type="StyleBox" uid="uid://bvaujfswb71qf" path="res://_dialogue_creator/theming/dialogue_option_titlebar_normal.tres" id="6_upo1i"]
+[ext_resource type="StyleBox" uid="uid://csk67e3d1dwkm" path="res://_dialogue_creator/theming/graph_node_panel_normal.tres" id="7_ie1gl"]
+[ext_resource type="StyleBox" uid="uid://b31i23prtwe0r" path="res://_dialogue_creator/theming/graph_node_panel_selected.tres" id="8_7xgx1"]
+[ext_resource type="StyleBox" uid="uid://d2gvtierqerp7" path="res://_dialogue_creator/theming/dialogue_option_titlebar_selected.tres" id="8_mstms"]
+[ext_resource type="StyleBox" uid="uid://dpagrcohgb1u5" path="res://_dialogue_creator/theming/line_edit_normal.tres" id="9_8vgy3"]
+[ext_resource type="StyleBox" uid="uid://dkatwda1j8ygd" path="res://_dialogue_creator/theming/graph_node_titlebar_normal.tres" id="9_upo1i"]
+[ext_resource type="StyleBox" uid="uid://dmmw267cu0amm" path="res://_dialogue_creator/theming/text_edit_normal.tres" id="10_ie1gl"]
+[ext_resource type="StyleBox" uid="uid://xhoalws558og" path="res://_dialogue_creator/theming/graph_node_titlebar_selected.tres" id="10_mstms"]
+[ext_resource type="StyleBox" uid="uid://e7hl051yg1xa" path="res://_dialogue_creator/theming/graph_node_titlebar_label_normal.tres" id="13_73qit"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mstms"]
+
+[resource]
+Button/styles/focus = ExtResource("1_8vgy3")
+Button/styles/hover = ExtResource("1_ky6xr")
+Button/styles/normal = ExtResource("1_5nxpm")
+Button/styles/pressed = ExtResource("2_j2834")
+DialogueObject/base_type = &"GraphNode"
+DialogueObject/styles/titlebar = ExtResource("5_upo1i")
+DialogueObject/styles/titlebar_selected = ExtResource("5_7xgx1")
+DialogueOption/base_type = &"GraphNode"
+DialogueOption/styles/titlebar = ExtResource("6_upo1i")
+DialogueOption/styles/titlebar_selected = ExtResource("8_mstms")
+GraphEdit/colors/connection_hover_tint_color = Color(1, 1, 1, 0.6627451)
+GraphEdit/colors/connection_rim_color = Color(0, 0, 0, 1)
+GraphEdit/colors/grid_major = Color(1, 1, 1, 0.42745098)
+GraphEdit/colors/grid_minor = Color(1, 1, 1, 0.11764706)
+GraphEdit/constants/port_hotzone_inner_extent = 40
+GraphEdit/styles/menu_panel = SubResource("StyleBoxEmpty_mstms")
+GraphNode/colors/resizer_color = Color(0.71000004, 0.81149995, 1, 1)
+GraphNode/constants/separation = 10
+GraphNode/styles/panel = ExtResource("7_ie1gl")
+GraphNode/styles/panel_focus = ExtResource("1_8vgy3")
+GraphNode/styles/panel_selected = ExtResource("8_7xgx1")
+GraphNode/styles/titlebar = ExtResource("9_upo1i")
+GraphNode/styles/titlebar_selected = ExtResource("10_mstms")
+GraphNodeTitleLabel/styles/normal = ExtResource("13_73qit")
+Label/styles/normal = ExtResource("1_5nxpm")
+LineEdit/styles/focus = ExtResource("1_8vgy3")
+LineEdit/styles/normal = ExtResource("9_8vgy3")
+TextEdit/styles/focus = ExtResource("1_8vgy3")
+TextEdit/styles/normal = ExtResource("10_ie1gl")

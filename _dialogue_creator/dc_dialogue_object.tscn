@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5o5n3jy08obe"]
+[gd_scene load_steps=5 format=3 uid="uid://c5o5n3jy08obe"]
 
+[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
+[ext_resource type="Texture2D" uid="uid://c1ufgk5chws8m" path="res://_dialogue_creator/helpers/plus.png" id="2_t7ld2"]
+[ext_resource type="Texture2D" uid="uid://cqvofb0k4gqm0" path="res://_dialogue_creator/helpers/minus.png" id="3_558q2"]
 
 [node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField")]
 offset_right = 418.0
-offset_bottom = 251.0
+offset_bottom = 222.0
+theme = ExtResource("1_1f1bm")
+theme_type_variation = &"DialogueObject"
 resizable = true
 title = "New Dialogue Object"
 slot/0/left_enabled = true
@@ -43,24 +48,6 @@ slot/3/right_type = 0
 slot/3/right_color = Color(1, 1, 1, 1)
 slot/3/right_icon = null
 slot/3/draw_stylebox = true
-slot/4/left_enabled = false
-slot/4/left_type = 0
-slot/4/left_color = Color(1, 1, 1, 1)
-slot/4/left_icon = null
-slot/4/right_enabled = false
-slot/4/right_type = 0
-slot/4/right_color = Color(1, 1, 1, 1)
-slot/4/right_icon = null
-slot/4/draw_stylebox = true
-slot/5/left_enabled = false
-slot/5/left_type = 0
-slot/5/left_color = Color(1, 1, 1, 1)
-slot/5/left_icon = null
-slot/5/right_enabled = false
-slot/5/right_type = 0
-slot/5/right_color = Color(1, 1, 1, 1)
-slot/5/right_icon = null
-slot/5/draw_stylebox = true
 script = ExtResource("1_g3bfk")
 dialogueIDField = NodePath("DialogueID/LineEdit")
 textField = NodePath("Text/TextEdit")
@@ -70,7 +57,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="DialogueID"]
 layout_mode = 2
-text = "Dialogue ID: "
+text = "Dialogue ID"
 
 [node name="LineEdit" type="LineEdit" parent="DialogueID"]
 layout_mode = 2
@@ -82,8 +69,9 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Text"]
 layout_mode = 2
-size_flags_vertical = 0
-text = "Text: "
+size_flags_vertical = 1
+text = "Text"
+vertical_alignment = 1
 
 [node name="TextEdit" type="TextEdit" parent="Text"]
 layout_mode = 2
@@ -92,26 +80,33 @@ emoji_menu_enabled = false
 middle_mouse_paste_enabled = false
 empty_selection_clipboard_enabled = false
 wrap_mode = 1
+tab_input_mode = false
 scroll_fit_content_height = true
 
-[node name="Options" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-text = "Options: "
+size_flags_horizontal = 8
+
+[node name="Options" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Options"
 horizontal_alignment = 2
 
-[node name="AddOption" type="Button" parent="."]
+[node name="AddOption" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-text = "Add Option"
+icon = ExtResource("2_t7ld2")
+icon_alignment = 1
 
-[node name="RemoveOption" type="Button" parent="."]
+[node name="RemoveOption" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-text = "Remove Option"
+icon = ExtResource("3_558q2")
+icon_alignment = 1
 
 [node name="Debug" type="Button" parent="."]
 layout_mode = 2
 text = "Debug"
 
 [connection signal="text_changed" from="DialogueID/LineEdit" to="." method="_on_dialogue_id_updated"]
-[connection signal="pressed" from="AddOption" to="." method="_on_add_option_pressed"]
-[connection signal="pressed" from="RemoveOption" to="." method="_on_remove_option_pressed"]
+[connection signal="pressed" from="HBoxContainer/AddOption" to="." method="_on_add_option_pressed"]
+[connection signal="pressed" from="HBoxContainer/RemoveOption" to="." method="_on_remove_option_pressed"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]
