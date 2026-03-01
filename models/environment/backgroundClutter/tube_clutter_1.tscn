@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dytucwmjofvdw"]
 
-[ext_resource type="PackedScene" uid="uid://b5h1i0hu6oaqn" path="res://models/environment/TubeClutter1.blend" id="1_ugj85"]
+[ext_resource type="PackedScene" uid="uid://b5h1i0hu6oaqn" path="res://models/BlendFiles/TubeClutter1.blend" id="1_ugj85"]
 
 [node name="TubeClutter1" instance=ExtResource("1_ugj85")]
 
