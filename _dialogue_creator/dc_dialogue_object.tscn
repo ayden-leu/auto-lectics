@@ -57,6 +57,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="DialogueID"]
 layout_mode = 2
+theme_type_variation = &"LabelDialogueID"
 text = "Dialogue ID"
 
 [node name="LineEdit" type="LineEdit" parent="DialogueID"]
@@ -89,6 +90,7 @@ size_flags_horizontal = 8
 
 [node name="Options" type="Label" parent="HBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"LabelOption"
 text = "Options"
 horizontal_alignment = 2
 

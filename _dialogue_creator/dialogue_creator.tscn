@@ -58,8 +58,16 @@ offset_top = 45.0
 offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
-scroll_offset = Vector2(-18.947388, -12)
 right_disconnects = true
+type_names = {
+0: "Option",
+1: "Dialogue"
+}
+connection_lines_curvature = 0.25
+connection_lines_thickness = 5.0
+zoom_min = 0.05
+zoom_max = 1.5
+show_zoom_label = true
 
 [connection signal="pressed" from="HBoxContainer/CreateDialogueObject" to="." method="_on_create_object_pressed"]
 [connection signal="pressed" from="HBoxContainer/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]

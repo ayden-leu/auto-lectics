@@ -45,10 +45,12 @@ func createCloseButton() -> void:
 
 func createOptionPort() -> void:
 	var optionLabel:Label = optionLabelScene.instantiate()
-	optionLabel.text = str(numOptions)
+	optionPorts.push_back(optionLabel)
+	
 	add_child(optionLabel)
 	move_child(optionLabel, numNodesAboveOptions + numOptions)
-	optionPorts.push_back(optionLabel)
+	optionLabel.text = str(numOptions)
+	optionLabel.theme_type_variation = "LabelOption"
 	
 	set_slot(numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
