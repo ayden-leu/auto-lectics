@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://cfhvhm2eh6x6d"]
 
-[ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="4_0p05i"]
-[ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/environment/MainTube/bridgeExport.fbx" id="5_x1rgg"]
-[ext_resource type="PackedScene" uid="uid://cd7b08a2mc271" path="res://models/environment/MainTube/tubeTower.fbx" id="6_dwpu2"]
-[ext_resource type="PackedScene" uid="uid://b51xh2721j882" path="res://models/environment/embellishments/halfArch.fbx" id="7_6lton"]
-[ext_resource type="PackedScene" uid="uid://dufay0uj34o2h" path="res://models/environment/embellishments/longPipe.fbx" id="8_4vvcs"]
-[ext_resource type="PackedScene" uid="uid://3eigb8r05ox4" path="res://models/environment/embellishments/tubeTower.fbx" id="9_vovux"]
-[ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/environment/embellishments/scaffoldRound.fbx" id="10_2dwms"]
-[ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/environment/embellishments/bigFence.fbx" id="11_qyveo"]
+[ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/week6playtestStuff/environment/bridge.fbx" id="4_0p05i"]
+[ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/week6playtestStuff/environment/MainTube/bridgeExport.fbx" id="5_x1rgg"]
+[ext_resource type="PackedScene" uid="uid://cd7b08a2mc271" path="res://models/week6playtestStuff/environment/MainTube/tubeTower.fbx" id="6_dwpu2"]
+[ext_resource type="PackedScene" uid="uid://b51xh2721j882" path="res://models/week6playtestStuff/environment/embellishments/halfArch.fbx" id="7_6lton"]
+[ext_resource type="PackedScene" uid="uid://dufay0uj34o2h" path="res://models/week6playtestStuff/environment/embellishments/longPipe.fbx" id="8_4vvcs"]
+[ext_resource type="PackedScene" uid="uid://3eigb8r05ox4" path="res://models/week6playtestStuff/environment/embellishments/tubeTower.fbx" id="9_vovux"]
+[ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/week6playtestStuff/environment/embellishments/scaffoldRound.fbx" id="10_2dwms"]
+[ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/week6playtestStuff/environment/embellishments/bigFence.fbx" id="11_qyveo"]
 
 [node name="Node3D" type="Node3D"]
 

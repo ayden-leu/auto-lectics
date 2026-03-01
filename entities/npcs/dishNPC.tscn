@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bq3oe7fa42f38"]
 
-[ext_resource type="PackedScene" uid="uid://b14kyj776kh6y" path="res://models/npcs/dish.fbx" id="2_tmrmk"]
+[ext_resource type="PackedScene" uid="uid://b14kyj776kh6y" path="res://models/week6playtestStuff/npcs/dish.fbx" id="2_tmrmk"]
 [ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="3_ac2w6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1g2y5"]
