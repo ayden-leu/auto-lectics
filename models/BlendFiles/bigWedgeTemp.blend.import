@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dv545q1ms32vr"
-path="res://.godot/imported/roundTank.blend-a253a92345d5dc8271eaac0d1cb7be92.scn"
+uid="uid://cm0raywcnfphc"
+path="res://.godot/imported/bigWedgeTemp.blend-f555fd16a906ca1d44d8949a1d9cc3ec.scn"
 
 [deps]
 
-source_file="res://models/environment/backgroundClutter/roundTank.blend"
-dest_files=["res://.godot/imported/roundTank.blend-a253a92345d5dc8271eaac0d1cb7be92.scn"]
+source_file="res://models/BlendFiles/bigWedgeTemp.blend"
+dest_files=["res://.godot/imported/bigWedgeTemp.blend-f555fd16a906ca1d44d8949a1d9cc3ec.scn"]
 
 [params]
 
@@ -38,12 +38,16 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={
-"nodes": {
-"PATH:Camera": {
-"import/skip_import": true
+"materials": {
+"RedRust": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/RedRust.tres",
+"use_external/path": "uid://c1m0ge3n7utw6"
 },
-"PATH:Light": {
-"import/skip_import": true
+"YellowRust": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/YellowRust.tres",
+"use_external/path": "uid://3gptlwtllu4x"
 }
 }
 }
@@ -60,8 +64,8 @@ blender/meshes/export_geometry_nodes_instances=false
 blender/meshes/tangents=true
 blender/meshes/skins=2
 blender/meshes/export_bones_deforming_mesh_only=false
-blender/materials/unpack_enabled=true
-blender/materials/export_materials=1
+blender/materials/unpack_enabled=false
+blender/materials/export_materials=2
 blender/animation/limit_playback=true
 blender/animation/always_sample=true
 blender/animation/group_tracks=true

@@ -1,0 +1,163 @@
+[gd_scene load_steps=21 format=3 uid="uid://b136twd43appk"]
+
+[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
+[ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_x8ppq"]
+[ext_resource type="PackedScene" uid="uid://b5tfuo3exv3ff" path="res://test_scenes/week_10_playtest.tscn" id="4_r3hxu"]
+[ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="5_l4h2v"]
+[ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="6_4h56d"]
+[ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="7_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="8_a6ycu"]
+[ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="9_tgtyg"]
+[ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="10_musp6"]
+[ext_resource type="PackedScene" uid="uid://bu511kjk81y1o" path="res://models/week6playtestStuff/npcs/side_NPCS/birds.fbx" id="11_7p6d6"]
+[ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="12_bb1ch"]
+[ext_resource type="PackedScene" uid="uid://cacib06ypgbbs" path="res://entities/npcs/sideNPCS/container.tscn" id="13_qqa75"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="14_whg7e"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="15_ooa8t"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="16_k6p8l"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="17_doxto"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
+panorama = ExtResource("1_uxxn7")
+
+[sub_resource type="Sky" id="Sky_aue1p"]
+sky_material = SubResource("PanoramaSkyMaterial_qo27r")
+
+[sub_resource type="Environment" id="Environment_f1udx"]
+background_mode = 2
+sky = SubResource("Sky_aue1p")
+ambient_light_sky_contribution = 0.0
+glow_intensity = 0.0
+
+[node name="week_6_playtest" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_f1udx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("2_5oweu")
+volume_db = -10.0
+autoplay = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("3_x8ppq")
+volume_db = -16.0
+autoplay = true
+
+[node name="week10playtest" parent="Environment" instance=ExtResource("4_r3hxu")]
+transform = Transform3D(-0.11982492, 0, -0.99279505, 0, 1, 0, 0.99279505, 0, -0.11982492, 68.109604, -0.4580288, -0.22058725)
+
+[node name="npcs" type="Node" parent="."]
+
+[node name="dishNPC" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("5_l4h2v")]
+transform = Transform3D(-0.47506624, 0, -0.49349466, 0, 0.685, 0, 0.49349466, 0, -0.47506624, -25.27201, 0.04699976, -7.569971)
+dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
+
+[node name="Node" type="Node" parent="npcs/dishNPC"]
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="npcs/dishNPC/Node"]
+transform = Transform3D(0.65481657, 0, -0.20109749, 0, 0.68500006, 0, 0.20109749, 0, 0.65481657, -22.84702, 1.1005831, -11.113908)
+metadata/_edit_group_ = true
+
+[node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("6_4h56d")]
+transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+myName = "gossip"
+initialDialogueID = "dialogue1"
+
+[node name="Node" type="Node" parent="npcs/looker"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/looker/Node"]
+transform = Transform3D(0.20240945, 0.16826245, 1.5173407, -0.86017233, 1.2770988, -0.026876323, -1.2612439, -0.8439833, 0.2618389, 24.246983, 6.8383894, 5.856095)
+metadata/_edit_group_ = true
+
+[node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("7_mw4j8")]
+transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -0.5170965, 7.2353964, 26.201641)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/preacher"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/preacher/Node"]
+transform = Transform3D(0.42860356, 0.29127365, 0.9709255, -0.5996677, 0.922762, -0.012108367, -0.8172731, -0.5243165, 0.51806825, 0.007958651, 10.335478, 24.446424)
+metadata/_edit_group_ = true
+
+[node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("8_a6ycu")]
+transform = Transform3D(-0.71693957, 0, -0.49687183, 0, 0.8722866, 0, 0.49687183, 0, -0.71693957, 29.016579, -12.451921, 54.780178)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/collector"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/collector/Node"]
+transform = Transform3D(-0.9656453, 0, 0.25986427, 0, 1, 0, -0.25986427, 0, -0.9656453, 31.26779, -10.8463955, 53.44703)
+metadata/_edit_group_ = true
+
+[node name="egg" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("9_tgtyg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.056404, 4.461979, 12.220449)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/egg"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/egg/Node"]
+transform = Transform3D(0.834271, 0, -0.5513548, 0, 1, 0, 0.5513548, 0, 0.834271, -7.14736, 6.583264, 11.284586)
+
+[node name="spinner" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("10_musp6")]
+transform = Transform3D(0.71970016, 0, 0, 0, 1, 0, 0, 0, 0.71970016, 4.310974, 4.827329, 18.570747)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/spinner"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/spinner/Node"]
+transform = Transform3D(-0.6631427, 0, 0.7484932, 0, 1, 0, -0.7484932, 0, -0.6631427, 5.1465254, 6.583265, 18.93366)
+
+[node name="Node3D" type="Node3D" parent="npcs"]
+
+[node name="birds" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 28.882927, 14.696882, 0)
+script = ExtResource("12_bb1ch")
+
+[node name="birds2" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 24.031094, 27.615396, -34.99405)
+script = ExtResource("12_bb1ch")
+
+[node name="birds3" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -5.100329, 25.431995, 27.202068)
+script = ExtResource("12_bb1ch")
+
+[node name="birds4" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -7.71135, 25.431995, 26.641573)
+script = ExtResource("12_bb1ch")
+
+[node name="birds5" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -37.8219, 34.65417, -15.096623)
+script = ExtResource("12_bb1ch")
+
+[node name="birds6" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 1.2749557, 9.41077, -36.829082)
+script = ExtResource("12_bb1ch")
+
+[node name="container" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("13_qqa75")]
+transform = Transform3D(0.7338738, 0, 0.6271863, 0, 0.9653669, 0, -0.6271863, 0, 0.7338738, 19.63311, 17.308321, -21.130909)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/container"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/container/Node"]
+transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.065751456, -0.6617077, -0.037088916, 0.99766946, -0.057272285, 19.958824, 23.540928, -11.605336)
+
+[node name="Player" parent="." instance=ExtResource("14_whg7e")]
+transform = Transform3D(-0.35275638, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275638, 66.40753, 0.9343929, 0.8199239)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("15_ooa8t")]
+transform = Transform3D(-0.35275644, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275644, 60.865444, 6.326866, 1.3495631)
+focus = NodePath("../Player")
+
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("16_k6p8l")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player")]
+wantsToKnowWhenInteract = [NodePath("../Player")]
+
+[node name="DeathPlane" parent="." instance=ExtResource("17_doxto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.041534, -20.391027, 2.8729353)

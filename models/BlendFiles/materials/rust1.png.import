@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1mo3p26pnyxk"
-path.s3tc="res://.godot/imported/roundTank_yellowRust.png-c1e60ff3b84766a0fa63d3e986869bfc.s3tc.ctex"
+uid="uid://ca2f5m2iq351g"
+path.s3tc="res://.godot/imported/rust1.png-3a0b84fa1bb7d0755a6d3e60e03ccba9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "4f10b6b53ed2c32d0d0034945404847e"
-}
 
 [deps]
 
-source_file="res://models/environment/backgroundClutter/roundTank_yellowRust.png"
-dest_files=["res://.godot/imported/roundTank_yellowRust.png-c1e60ff3b84766a0fa63d3e986869bfc.s3tc.ctex"]
+source_file="res://models/BlendFiles/materials/rust1.png"
+dest_files=["res://.godot/imported/rust1.png-3a0b84fa1bb7d0755a6d3e60e03ccba9.s3tc.ctex"]
 
 [params]
 

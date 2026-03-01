@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b3f6wsupd5ys4"
-path="res://.godot/imported/MetalBigFlat.blend-5b37fe846e650aa62593a86635c6fa91.scn"
+uid="uid://bnyo03dsq5s0l"
+path="res://.godot/imported/TowerPrototype.blend-fe65f116ec43f18a72b2154dfa717fda.scn"
 
 [deps]
 
-source_file="res://models/environment/MetalBigFlat.blend"
-dest_files=["res://.godot/imported/MetalBigFlat.blend-5b37fe846e650aa62593a86635c6fa91.scn"]
+source_file="res://models/BlendFiles/TowerPrototype.blend"
+dest_files=["res://.godot/imported/TowerPrototype.blend-fe65f116ec43f18a72b2154dfa717fda.scn"]
 
 [params]
 
@@ -37,7 +37,30 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"FillMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/FillMaterial.tres",
+"use_external/path": "uid://mn2rkvit24uh"
+},
+"PlateMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/PlateMaterial.tres",
+"use_external/path": "uid://ct0qf0kxqttca"
+},
+"RedRust": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/RedRust.tres",
+"use_external/path": "uid://c1m0ge3n7utw6"
+},
+"YellowRust": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/YellowRust.tres",
+"use_external/path": "uid://3gptlwtllu4x"
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

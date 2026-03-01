@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ct0qf0kxqttca"]
+
+[ext_resource type="Texture2D" uid="uid://ca2f5m2iq351g" path="res://models/BlendFiles/materials/rust1.png" id="1_yh2xk"]
+
+[resource]
+resource_name = "PlateMaterial"
+cull_mode = 2
+albedo_texture = ExtResource("1_yh2xk")

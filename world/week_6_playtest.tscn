@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bt62vwn7bnq36"]
+[gd_scene load_steps=50 format=3 uid="uid://bt62vwn7bnq36"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/week6playtestStuff/environment/bridge.fbx" id="2_d02ib"]
@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="31_ohlsf"]
 [ext_resource type="PackedScene" uid="uid://cdn26x78pvors" path="res://models/week6playtestStuff/Week6PlaytestWorldAssets/MainTube/tankTubeUpsiderDow.fbx" id="33_pcetu"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="38_gpeg5"]
+[ext_resource type="PackedScene" uid="uid://ifmiob48msu4" path="res://models/environment/animated_plate.tscn" id="39_t6f3i"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_cjsxm")
@@ -719,3 +720,18 @@ focus = NodePath("../Player")
 
 [node name="DeathPlane" parent="." instance=ExtResource("38_gpeg5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.041534, -7.0753856, 2.8729353)
+
+[node name="animatedPlate" parent="." instance=ExtResource("39_t6f3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 0, -11)
+
+[node name="animatedPlate2" parent="." instance=ExtResource("39_t6f3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.069435, 0, 4.5049667)
+
+[node name="animatedPlate3" parent="." instance=ExtResource("39_t6f3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5283, 0, 9.339962)
+
+[node name="animatedPlate4" parent="." instance=ExtResource("39_t6f3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.751976, 0, -6.8792343)
+
+[node name="animatedPlate5" parent="." instance=ExtResource("39_t6f3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.751976, 0, -6.8792343)
