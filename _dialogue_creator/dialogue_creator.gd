@@ -215,9 +215,13 @@ func _on_base_object_deleting(obj:DC_BaseObject) -> void:
 
 
 func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	if graphArea.get_connection_count(from_node, from_port) > 0:
+		return
+	
 	var fromNode:DC_BaseObject = getNode(from_node)
 	var toNode:DC_BaseObject = getNode(to_node)
-
+	
+	# dialoge object option port to dialogue option
 	if fromNode is DC_DialogueObject and toNode is DC_DialogueOption:
 		fromNode = fromNode as DC_DialogueObject
 		toNode = toNode as DC_DialogueOption
