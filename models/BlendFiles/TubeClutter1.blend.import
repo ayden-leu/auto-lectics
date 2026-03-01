@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dnr4q2ehmudfm"
-path="res://.godot/imported/bigFloorArc.blend-758b1d29cf20442daef56ad2d9dc127e.scn"
+uid="uid://b5h1i0hu6oaqn"
+path="res://.godot/imported/TubeClutter1.blend-aaa405d036fe23fd4f44adfa4b21a26d.scn"
 
 [deps]
 
-source_file="res://models/environment/bigFloorArc.blend"
-dest_files=["res://.godot/imported/bigFloorArc.blend-758b1d29cf20442daef56ad2d9dc127e.scn"]
+source_file="res://models/BlendFiles/TubeClutter1.blend"
+dest_files=["res://.godot/imported/TubeClutter1.blend-aaa405d036fe23fd4f44adfa4b21a26d.scn"]
 
 [params]
 
@@ -38,15 +38,56 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={
+"materials": {
+"FillMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/FillMaterial.tres",
+"use_external/path": "uid://mn2rkvit24uh"
+},
+"PlateMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/PlateMaterial.tres",
+"use_external/path": "uid://ct0qf0kxqttca"
+},
+"YellowRust": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/YellowRust.tres",
+"use_external/path": "uid://3gptlwtllu4x"
+}
+},
 "nodes": {
-"PATH:Arc_005": {
+"PATH:Catenary": {
 "generate/occluder": 1
 },
-"PATH:Camera": {
-"import/skip_import": true
+"PATH:Catenary_001": {
+"generate/occluder": 1
 },
-"PATH:Light": {
-"import/skip_import": true
+"PATH:Cube_148": {
+"generate/occluder": 1
+},
+"PATH:Cube_149": {
+"generate/occluder": 1
+},
+"PATH:Cube_150": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_021": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_026": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_027": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_028": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_029": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_030": {
+"generate/occluder": 1
 }
 }
 }
@@ -63,8 +104,8 @@ blender/meshes/export_geometry_nodes_instances=false
 blender/meshes/tangents=true
 blender/meshes/skins=2
 blender/meshes/export_bones_deforming_mesh_only=false
-blender/materials/unpack_enabled=true
-blender/materials/export_materials=1
+blender/materials/unpack_enabled=false
+blender/materials/export_materials=2
 blender/animation/limit_playback=true
 blender/animation/always_sample=true
 blender/animation/group_tracks=true

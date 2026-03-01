@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ikcwqn0jjgeh"
-path.s3tc="res://.godot/imported/TubeClutter1_yellowRust.png-0b00b3769a30c5a07abe09e1f0d1f345.s3tc.ctex"
+uid="uid://c8dtlnxss68a3"
+path.s3tc="res://.godot/imported/redRust.png-8a8e8ac12715d571bcb6259d902b7b6b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "4f10b6b53ed2c32d0d0034945404847e"
-}
 
 [deps]
 
-source_file="res://models/environment/TubeClutter1_yellowRust.png"
-dest_files=["res://.godot/imported/TubeClutter1_yellowRust.png-0b00b3769a30c5a07abe09e1f0d1f345.s3tc.ctex"]
+source_file="res://models/BlendFiles/materials/redRust.png"
+dest_files=["res://.godot/imported/redRust.png-8a8e8ac12715d571bcb6259d902b7b6b.s3tc.ctex"]
 
 [params]
 
