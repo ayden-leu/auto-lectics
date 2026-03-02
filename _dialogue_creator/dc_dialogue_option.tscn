@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
 
 [node name="DC_DialogueOption" type="GraphNode" node_paths=PackedStringArray("textField")]
+texture_filter = 2
 offset_right = 346.0
 offset_bottom = 149.0
 theme = ExtResource("1_ynasb")
@@ -64,6 +65,7 @@ size_flags_horizontal = 8
 
 [node name="Label" type="Label" parent="NextID"]
 layout_mode = 2
+theme_type_variation = &"LabelDialogueID"
 text = "Next ID"
 horizontal_alignment = 2
 

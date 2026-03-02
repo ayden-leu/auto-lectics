@@ -8,6 +8,9 @@ signal disconnect_dialogue(port:int)
 
 @onready var closeButton:PackedScene = preload("uid://ccer37a12iyow")
 
+const optionPort:int = 0
+const nextIDPort:int = 0
+
 var port:int = -1
 var text:String:
 	set(value):

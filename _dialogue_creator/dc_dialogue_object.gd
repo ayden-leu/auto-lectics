@@ -4,6 +4,7 @@ class_name DC_DialogueObject
 signal id_updated(newID:String)
 signal disconnect_option(port:int)
 signal disconnect_all_options
+signal save_me(data:Dictionary)
 
 @export var dialogueIDField:LineEdit
 @export var textField:TextEdit
@@ -11,6 +12,7 @@ signal disconnect_all_options
 @onready var optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
 const numNodesAboveOptions:int = 3
+const dialogueIDPort:int = 0
 
 var id:String:
 	set(value):
@@ -35,8 +37,8 @@ var numOptions:int = 0:
 func _ready() -> void:
 	createCloseButton()
 	
-	set_slot_color_left(0, PORT_COLOR.DIALOGUE)
-	set_slot_type_left(0, PORT_TYPE.DIALOGUE)
+	set_slot_color_left(dialogueIDPort, PORT_COLOR.DIALOGUE)
+	set_slot_type_left(dialogueIDPort, PORT_TYPE.DIALOGUE)
 
 func createCloseButton() -> void:
 	var close:Button = closeButtonScene.instantiate()
@@ -86,6 +88,14 @@ func getFields() -> Dictionary:
 	
 	return currentValues
 
+func saveToFile() -> void:
+	var data:Dictionary = getFields()
+		
+	if data.id == "":
+		printerr("DC_DialogueObject/saveToFile(): Dialogue Object ID not set.")
+	
+	save_me.emit(data)
+
 func optionDisconnected(port:int) -> void:
 	options[port] = {}
 
@@ -98,6 +108,9 @@ func delete() -> void:
 func _on_dialogue_id_updated(newID:String) -> void:
 	idUpdateFromField = true
 	id = newID
+
+func _on_save_pressed() -> void:
+	saveToFile()
 
 func _on_add_option_pressed() -> void:
 	createOptionPort()

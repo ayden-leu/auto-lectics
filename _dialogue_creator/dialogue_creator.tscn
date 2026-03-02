@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b38hwl8plmrky"]
+[gd_scene load_steps=7 format=3 uid="uid://b38hwl8plmrky"]
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_vav2e"]
 [ext_resource type="Material" uid="uid://cui7p5wbx7u80" path="res://_dialogue_creator/theming/dialogue_creator_background.tres" id="3_vav2e"]
+[ext_resource type="Texture2D" uid="uid://c1ufgk5chws8m" path="res://_dialogue_creator/helpers/plus.png" id="4_nefsf"]
+[ext_resource type="Texture2D" uid="uid://bikn6ba1vf1bb" path="res://_dialogue_creator/helpers/save.png" id="5_r38su"]
+[ext_resource type="Texture2D" uid="uid://5b1xl7anndey" path="res://_dialogue_creator/helpers/load.png" id="6_acglc"]
 
 [node name="DialogueCreator" type="Control" node_paths=PackedStringArray("npcNameField")]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
-npcNameField = NodePath("HBoxContainer/NPCName")
+npcNameField = NodePath("VBoxContainer/HBoxContainer/NPCName")
 
 [node name="Background" type="ColorRect" parent="."]
 material = ExtResource("3_vav2e")
@@ -22,57 +26,77 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 40.0
-
-[node name="CreateDialogueObject" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Add Dialogue Object"
-
-[node name="CreateDialogueOptionObject" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Add Dialogue Option"
-
-[node name="SaveDialogue" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Save All Dialogue"
-
-[node name="LoadDialogueTree" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Load Dialogue Tree"
-
-[node name="Label" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-text = "NPC Name: "
-
-[node name="NPCName" type="LineEdit" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "put name here"
-
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 0
-offset_top = 45.0
 offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
+scroll_offset = Vector2(0, -45)
 right_disconnects = true
 type_names = {
 0: "Option",
 1: "Dialogue"
 }
 connection_lines_curvature = 0.25
-connection_lines_thickness = 5.0
+connection_lines_thickness = 3.0
 zoom_min = 0.05
 zoom_max = 1.5
 show_zoom_label = true
 
-[connection signal="pressed" from="HBoxContainer/CreateDialogueObject" to="." method="_on_create_object_pressed"]
-[connection signal="pressed" from="HBoxContainer/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
-[connection signal="pressed" from="HBoxContainer/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
-[connection signal="pressed" from="HBoxContainer/LoadDialogueTree" to="." method="loadDialogueTree"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 765.0
+offset_top = 9.0
+offset_right = 1141.0
+offset_bottom = 77.0
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 1.5
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "NPC Name"
+
+[node name="NPCName" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "put name here"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateDialogueObject" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"ButtonCreateObject"
+text = "Dialogue"
+icon = ExtResource("4_nefsf")
+
+[node name="CreateDialogueOptionObject" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"ButtonCreateOption"
+text = "Option"
+icon = ExtResource("4_nefsf")
+
+[node name="SaveDialogue" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Save All"
+icon = ExtResource("5_r38su")
+
+[node name="LoadDialogueTree" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Load Tree"
+icon = ExtResource("6_acglc")
+
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CreateDialogueObject" to="." method="_on_create_object_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/LoadDialogueTree" to="." method="loadDialogueTree"]
