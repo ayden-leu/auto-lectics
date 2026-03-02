@@ -188,6 +188,7 @@ func _on_create_object_pressed() -> void:
 	var newObj:DC_DialogueObject = dialogueObjectScene.instantiate()
 	newObj.disconnect_option.connect(_on_object_option_removed)
 	newObj.save_me.connect(_on_object_save_me)
+	newObj.disconnect_hectic_port.connect(_on_object_disconnect_hectic_port)
 	dialogueObjects.push_back(newObj)
 	createObject(newObj)
 
@@ -217,7 +218,7 @@ func _on_object_option_removed(port:int) -> void:
 			)
 			break
 
-func _on_object_disconnect_hectic_fail(port:int) -> void:
+func _on_object_disconnect_hectic_port(port:int) -> void:
 	for connection in graphArea.connections:
 		if connection.from_port == port:
 			var objectFrom:DC_DialogueObject = getNode(connection.from_node)

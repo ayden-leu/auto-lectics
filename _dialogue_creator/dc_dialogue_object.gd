@@ -7,6 +7,9 @@ signal disconnect_option(port:int)
 signal disconnect_all_options
 signal save_me(data:Dictionary)
 signal disconnect_hectic_port(port:int)
+signal reconnect_hectic_port(port:int)
+## For internal use.  Do not use.
+signal _option_amount_changed()
 
 @export var dialogueIDField:LineEdit
 @export var textField:TextEdit
@@ -38,6 +41,7 @@ var numOptions:int = 0:
 		if value >= 0:
 			numOptions = value
 var nextOnHecticFailId:String = ""
+var nextOnHecticPortEnabled:bool = false
 
 func _ready() -> void:
 	createCloseButton()
@@ -59,14 +63,22 @@ func createOptionPort() -> void:
 	optionLabel.text = str(numOptions)
 	optionLabel.theme_type_variation = "LabelOption"
 	
+	if nextOnHecticPortEnabled:
+		shiftHecticPort(1)
+	
 	set_slot(numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
 		true, PORT_TYPE.OPTION, PORT_COLOR.OPTION
 	)
 	options.push_back({})
 	numOptions += 1
+	
+	_option_amount_changed.emit()
 
 func removeOptionPort() -> void:
+	if nextOnHecticPortEnabled:
+		shiftHecticPort(-1)
+	
 	numOptions -= 1	
 	var toRemove:Label = optionPorts.pop_back()
 	clear_slot(numNodesAboveOptions + numOptions)
@@ -74,6 +86,24 @@ func removeOptionPort() -> void:
 	toRemove.queue_free()
 	
 	disconnect_option.emit(numOptions)
+	
+	_option_amount_changed.emit()
+
+func shiftHecticPort(amount:int) -> void:
+	var currentSlot:int = numNodesAboveOptions + numOptions
+	
+	disconnect_hectic_port.emit(numOptions)
+	set_slot(currentSlot,
+		false, 0, Color.TRANSPARENT,
+		false, 0, Color.TRANSPARENT
+	)
+	
+	await _option_amount_changed
+	
+	set_slot(currentSlot + amount,
+		false, 0, Color.TRANSPARENT,
+		true, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
+	)
 
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
@@ -134,8 +164,6 @@ func _on_option_updated(index:int, newValue:Dictionary) -> void:
 	options[index] = newValue
 
 func _on_set_hectic_port(on: bool) -> void:
-	# TODO:  fix connection not being disconnected
-	# TODO:  fix adding/removing options stealing this connection
 	if not on:
 		disconnect_hectic_port.emit(numOptions)
 	
@@ -143,6 +171,7 @@ func _on_set_hectic_port(on: bool) -> void:
 		false, 0, Color.TRANSPARENT,
 		on, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
 	)
+	nextOnHecticPortEnabled = on
 	
 
 func _on_hectic_fail_updated(newID:String) -> void:
