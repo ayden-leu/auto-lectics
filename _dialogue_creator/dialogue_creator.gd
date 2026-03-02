@@ -160,17 +160,33 @@ func disconnectObjectOptionPortToOption(obj:DC_DialogueObject, option:DC_Dialogu
 
 func connectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
 	obj.id_updated.connect(option._on_next_object_id_modified)
+	obj.disconnect_id.connect(option.dialogueDisconnected)
+	
 	option._on_next_object_id_modified(obj.id)
 
 func disconnectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
 	obj.id_updated.disconnect(option._on_next_object_id_modified)
+	obj.disconnect_id.disconnect(option.dialogueDisconnected)
+	
 	option._on_next_object_id_modified("")
+
+func connectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_DialogueObject) -> void:
+	objTo.id_updated.connect(objFrom._on_hectic_fail_updated)
+	objTo.disconnect_id.connect(objFrom.nextOnHecticFailIdDisconnected)
+	
+	objFrom._on_hectic_fail_updated(objTo.id)
+
+func disconnectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_DialogueObject) -> void:
+	objTo.id_updated.disconnect(objFrom._on_hectic_fail_updated)
+	objTo.disconnect_id.disconnect(objFrom.nextOnHecticFailIdDisconnected)
+	
+	objFrom.nextOnHecticFailIdDisconnected()
 
 # -------------------------
 
 func _on_create_object_pressed() -> void:
 	var newObj:DC_DialogueObject = dialogueObjectScene.instantiate()
-	newObj.disconnect_option.connect(_on_dialogue_object_option_removed)
+	newObj.disconnect_option.connect(_on_object_option_removed)
 	newObj.save_me.connect(_on_object_save_me)
 	dialogueObjects.push_back(newObj)
 	createObject(newObj)
@@ -187,7 +203,7 @@ func _on_save_all_dialogue_pressed() -> void:
 	for dialogueObject in dialogueObjects:
 		dialogueObject.saveToFile()
 
-func _on_dialogue_object_option_removed(port:int) -> void:
+func _on_object_option_removed(port:int) -> void:
 	for connection in graphArea.connections:
 		if connection.from_port == port:
 			var object:DC_DialogueObject = getNode(connection.from_node)
@@ -199,6 +215,21 @@ func _on_dialogue_object_option_removed(port:int) -> void:
 				connection.from_node, connection.from_port,
 				connection.to_node, connection.to_port
 			)
+			break
+
+func _on_object_disconnect_hectic_fail(port:int) -> void:
+	for connection in graphArea.connections:
+		if connection.from_port == port:
+			var objectFrom:DC_DialogueObject = getNode(connection.from_node)
+			var objectTo:DC_DialogueObject = getNode(connection.to_node)
+			
+			disconnectObjectHecticFailPortToObject(objectFrom, objectTo)
+			
+			graphArea.disconnect_node(
+				connection.from_node, connection.from_port,
+				connection.to_node, connection.to_port
+			)
+			break
 
 func _on_base_object_disconnect_all(obj:DC_BaseObject) -> void:
 	for connection in graphArea.connections:
@@ -231,7 +262,7 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 	var fromNode:DC_BaseObject = getNode(from_node)
 	var toNode:DC_BaseObject = getNode(to_node)
 	
-	# dialoge object option port to dialogue option
+	# dialogue object option port to dialogue option
 	if fromNode is DC_DialogueObject and toNode is DC_DialogueOption:
 		fromNode = fromNode as DC_DialogueObject
 		toNode = toNode as DC_DialogueOption
@@ -240,11 +271,19 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 		toNode.port = from_port
 		toNode._on_attribute_modified()
 	
-	if fromNode is DC_DialogueOption and toNode is DC_DialogueObject: 
+	# dialogue option next id port to dialogue object
+	elif fromNode is DC_DialogueOption and toNode is DC_DialogueObject: 
 		fromNode = fromNode as DC_DialogueOption
 		toNode = toNode as DC_DialogueObject
 		
 		connectOptionObjectPortToObject(fromNode, toNode)
+	
+	# dialogue object next on hectic fail to dialogue object
+	elif fromNode is DC_DialogueObject and toNode is DC_DialogueObject:
+		fromNode = fromNode as DC_DialogueObject
+		toNode = toNode as DC_DialogueObject
+		
+		connectObjectHecticFailPortToObject(fromNode, toNode)
 	
 	graphArea.connect_node(from_node, from_port, to_node, to_port)
 
@@ -264,6 +303,12 @@ func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int,
 		toNode = toNode as DC_DialogueObject
 		
 		disconnectOptionObjectPortToObject(fromNode, toNode)
+	
+	elif fromNode is DC_DialogueObject and toNode is DC_DialogueObject:
+		fromNode = fromNode as DC_DialogueObject
+		toNode = toNode as DC_DialogueObject
+		
+		disconnectObjectHecticFailPortToObject(fromNode, toNode)
 	
 	graphArea.disconnect_node(from_node, from_port, to_node, to_port)
 

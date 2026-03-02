@@ -2,12 +2,16 @@ extends DC_BaseObject
 class_name DC_DialogueObject
 
 signal id_updated(newID:String)
+signal disconnect_id()
 signal disconnect_option(port:int)
 signal disconnect_all_options
 signal save_me(data:Dictionary)
+signal disconnect_hectic_port(port:int)
 
 @export var dialogueIDField:LineEdit
 @export var textField:TextEdit
+@export var typeField:OptionButton
+@export var modeField:OptionButton
 
 @onready var optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
@@ -33,6 +37,7 @@ var numOptions:int = 0:
 	set(value):
 		if value >= 0:
 			numOptions = value
+var nextOnHecticFailId:String = ""
 
 func _ready() -> void:
 	createCloseButton()
@@ -61,7 +66,7 @@ func createOptionPort() -> void:
 	options.push_back({})
 	numOptions += 1
 
-func removeSlot() -> void:
+func removeOptionPort() -> void:
 	numOptions -= 1	
 	var toRemove:Label = optionPorts.pop_back()
 	clear_slot(numNodesAboveOptions + numOptions)
@@ -73,7 +78,10 @@ func removeSlot() -> void:
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
 		"id": dialogueIDField.text,
-		"text": textField.text
+		"text": textField.text,
+		"font": "",
+		"type": DialogueDefaults.OPTION_TYPES[typeField.selected],
+		"mode": DialogueDefaults.DIALOGUE_MODES[modeField.selected]
 	}
 	
 	if options != []:
@@ -99,8 +107,12 @@ func saveToFile() -> void:
 func optionDisconnected(port:int) -> void:
 	options[port] = {}
 
+func nextOnHecticFailIdDisconnected() -> void:
+	nextOnHecticFailId = ""
+
 func delete() -> void:
 	disconnect_all_options.emit()
+	disconnect_id.emit()
 	super()
 
 # ---------------------------
@@ -116,14 +128,32 @@ func _on_add_option_pressed() -> void:
 	createOptionPort()
 
 func _on_remove_option_pressed() -> void:
-	removeSlot()
+	removeOptionPort()
 
 func _on_option_updated(index:int, newValue:Dictionary) -> void:
 	options[index] = newValue
 
+func _on_set_hectic_port(on: bool) -> void:
+	# TODO:  fix connection not being disconnected
+	# TODO:  fix adding/removing options stealing this connection
+	if not on:
+		disconnect_hectic_port.emit(numOptions)
+	
+	set_slot(numNodesAboveOptions + numOptions,
+		false, 0, Color.TRANSPARENT,
+		on, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
+	)
+	
+
+func _on_hectic_fail_updated(newID:String) -> void:
+	nextOnHecticFailId = newID
+
 func _on_debug_pressed() -> void:
 	print("------ ", title, " ------")
-	print("Text:", text)
+	print("Text: ", text)
 	print("Options: ", options)
 	print("OptionPorts: ", optionPorts)
 	print("numOptions: ", numOptions)
+	print("Type: ", DialogueDefaults.OPTION_TYPES[typeField.selected])
+	print("Mode: ", DialogueDefaults.DIALOGUE_MODES[modeField.selected])
+	print("Next On Hectic Fail: ", nextOnHecticFailId)

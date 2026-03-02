@@ -1,6 +1,6 @@
 extends CheckBox
 
-@export var fields:Array[HBoxContainer]
+@export var fields:Array[Container]
 
 func _ready() -> void:
 	for field in fields:

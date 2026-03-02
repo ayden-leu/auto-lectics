@@ -48,15 +48,13 @@ func getFields() -> Dictionary:
 
 func dialogueDisconnected() -> void:
 	port = -1
+	nextID = ""
 
 func delete() -> void:
 	disconnect_dialogue.emit(port)
 	super()
 
 # -----------------
-
-func _on_close_button_pressed() -> void:
-	super()
 
 func _on_attribute_modified() -> void:
 	#print("option modified, emitting")

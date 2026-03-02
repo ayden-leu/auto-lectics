@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5o5n3jy08obe"]
+[gd_scene load_steps=8 format=3 uid="uid://c5o5n3jy08obe"]
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
@@ -6,8 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://cqvofb0k4gqm0" path="res://_dialogue_creator/helpers/minus.png" id="3_558q2"]
 [ext_resource type="Texture2D" uid="uid://bikn6ba1vf1bb" path="res://_dialogue_creator/helpers/save.png" id="3_ss33c"]
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/button_advanced_toggle.gd" id="6_je0p8"]
+[ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_dialogue_creator/option_button_mode.gd" id="7_rapsn"]
 
-[node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField")]
+[node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField")]
 texture_filter = 2
 offset_right = 418.0
 offset_bottom = 268.0
@@ -81,6 +82,8 @@ slot/6/draw_stylebox = true
 script = ExtResource("1_g3bfk")
 dialogueIDField = NodePath("DialogueID/LineEdit")
 textField = NodePath("Text/TextEdit")
+typeField = NodePath("GridContainer/Type/OptionButton")
+modeField = NodePath("GridContainer/Mode/OptionButton")
 
 [node name="DialogueID" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -142,33 +145,71 @@ layout_mode = 2
 icon = ExtResource("3_558q2")
 icon_alignment = 1
 
-[node name="Advanced" type="CheckBox" parent="." node_paths=PackedStringArray("fields")]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Advanced" type="CheckBox" parent="HBoxContainer" node_paths=PackedStringArray("fields")]
 texture_filter = 1
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Advanced"
 script = ExtResource("6_je0p8")
-fields = [NodePath("../Font"), NodePath("../Type")]
+fields = [NodePath("../../HBoxContainer2/Font"), NodePath("../../GridContainer")]
 
-[node name="Font" type="HBoxContainer" parent="."]
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"LabelDialogueID"
+text = "Next On Hectic Fail"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Font"]
+[node name="Font" type="HBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer2/Font"]
 layout_mode = 2
 theme_type_variation = &"LabelDisabled"
 text = "Font"
 
-[node name="OptionButton" type="OptionButton" parent="Font"]
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer2/Font"]
 layout_mode = 2
 disabled = true
 
-[node name="Type" type="HBoxContainer" parent="."]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+columns = 3
+
+[node name="Type" type="HBoxContainer" parent="GridContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Type"]
+[node name="Label" type="Label" parent="GridContainer/Type"]
 layout_mode = 2
 text = "Type"
 
-[node name="OptionButton" type="OptionButton" parent="Type"]
+[node name="OptionButton" type="OptionButton" parent="GridContainer/Type"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Positive"
+popup/item_0/id = 0
+popup/item_1/text = "Neutral"
+popup/item_1/id = 1
+popup/item_2/text = "Negative"
+popup/item_2/id = 2
+
+[node name="VSeparator" type="VSeparator" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Mode" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="GridContainer/Mode" node_paths=PackedStringArray("hecticPortLabel")]
 layout_mode = 2
 selected = 0
 item_count = 2
@@ -176,6 +217,12 @@ popup/item_0/text = "Normal"
 popup/item_0/id = 0
 popup/item_1/text = "Hectic"
 popup/item_1/id = 1
+script = ExtResource("7_rapsn")
+hecticPortLabel = NodePath("../../../HBoxContainer/Label")
+
+[node name="Label" type="Label" parent="GridContainer/Mode"]
+layout_mode = 2
+text = "Mode"
 
 [node name="Debug" type="Button" parent="."]
 layout_mode = 2
@@ -185,5 +232,7 @@ text = "Debug"
 [connection signal="pressed" from="DialogueID/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Options/AddOption" to="." method="_on_add_option_pressed"]
 [connection signal="pressed" from="Options/RemoveOption" to="." method="_on_remove_option_pressed"]
-[connection signal="toggled" from="Advanced" to="Advanced" method="_on_toggled"]
+[connection signal="toggled" from="HBoxContainer/Advanced" to="HBoxContainer/Advanced" method="_on_toggled"]
+[connection signal="item_selected" from="GridContainer/Mode/OptionButton" to="GridContainer/Mode/OptionButton" method="_on_item_selected"]
+[connection signal="set_hectic_port" from="GridContainer/Mode/OptionButton" to="." method="_on_set_hectic_port"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

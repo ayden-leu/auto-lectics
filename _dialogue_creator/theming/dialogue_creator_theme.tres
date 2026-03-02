@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://caibapog63fvf"]
+[gd_resource type="Theme" load_steps=30 format=3 uid="uid://caibapog63fvf"]
 
 [ext_resource type="StyleBox" uid="uid://ct0bjhg2emo4j" path="res://_dialogue_creator/theming/button_normal.tres" id="1_5nxpm"]
 [ext_resource type="StyleBox" uid="uid://dml1nhie6wo7k" path="res://_dialogue_creator/theming/focus.tres" id="1_8vgy3"]
@@ -31,6 +31,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_73qit"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7lyv4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k4yq8"]
 
 [resource]
 Button/styles/focus = ExtResource("1_8vgy3")
@@ -87,3 +89,4 @@ LineEdit/styles/normal = ExtResource("9_8vgy3")
 OptionButton/icons/arrow = ExtResource("12_k4yq8")
 TextEdit/styles/focus = ExtResource("1_8vgy3")
 TextEdit/styles/normal = ExtResource("10_ie1gl")
+VSeparator/styles/separator = SubResource("StyleBoxEmpty_k4yq8")
