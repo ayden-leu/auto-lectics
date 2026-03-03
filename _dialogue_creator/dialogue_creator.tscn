@@ -17,21 +17,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
-npcNameField = NodePath("VBoxContainer/HBoxContainer/NPCName")
+npcNameField = NodePath("MenuButtons/VBoxContainer/HBoxContainer/NPCName")
 
 [node name="Background" type="ColorRect" parent="."]
 material = ExtResource("3_vav2e")
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
-scroll_offset = Vector2(0, -648)
+scroll_offset = Vector2(-1440, -810)
 right_disconnects = true
 type_names = {
 0: "Option",
@@ -43,60 +49,73 @@ zoom_min = 0.05
 zoom_max = 1.5
 show_zoom_label = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 765.0
+[node name="MenuButtons" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -11.0
 offset_top = 9.0
-offset_right = 1141.0
-offset_bottom = 77.0
+offset_right = -11.0
+offset_bottom = 9.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuButtons"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -481.05884
+offset_bottom = 87.0
+grow_horizontal = 0
 alignment = 1
 metadata/_edit_group_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
-size_flags_stretch_ratio = 1.5
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="MenuButtons/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "NPC Name"
 
-[node name="NPCName" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+[node name="NPCName" type="LineEdit" parent="MenuButtons/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "put name here"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
 
-[node name="CreateDialogueObject" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="CreateDialogueObject" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_type_variation = &"ButtonCreateObject"
 text = "Dialogue"
 icon = ExtResource("4_nefsf")
 
-[node name="CreateDialogueOptionObject" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="CreateDialogueOptionObject" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_type_variation = &"ButtonCreateOption"
 text = "Option"
 icon = ExtResource("4_nefsf")
 
-[node name="SaveDialogue" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="SaveDialogue" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Save All"
 icon = ExtResource("5_r38su")
 
-[node name="LoadDialogueTree" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="LoadDialogueTree" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Load Tree"
 icon = ExtResource("6_acglc")
 
+[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CreateDialogueObject" to="." method="_on_create_object_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/LoadDialogueTree" to="." method="loadDialogueTree"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateDialogueObject" to="." method="_on_create_object_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/LoadDialogueTree" to="." method="loadDialogueTree"]

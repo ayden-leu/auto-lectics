@@ -317,3 +317,12 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 	for nodeName in nodes:
 		var node:DC_BaseObject = getNode(nodeName)
 		node._on_close_button_pressed()
+
+
+func _on_item_rect_changed() -> void:
+	var newSize:Vector2 = Globals.getScreenSize()
+	set_deferred("size", newSize)
+	$Background.size = newSize
+	$MenuButtons.position.x = newSize.x - 11
+	if graphArea:
+		graphArea.size = newSize

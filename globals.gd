@@ -35,6 +35,9 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 		)
 	return dialogue
 
+func getScreenSize() -> Vector2:
+	return get_viewport().get_visible_rect().size
+
 ## Unused. enum mapping for collision layers.
 enum COLLISION_LAYER {
 	player = 1,

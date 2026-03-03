@@ -10,8 +10,8 @@
 
 [node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField")]
 texture_filter = 2
-offset_right = 418.0
-offset_bottom = 268.0
+offset_right = 468.0
+offset_bottom = 420.0
 theme = ExtResource("1_1f1bm")
 theme_type_variation = &"DialogueObject"
 resizable = true
