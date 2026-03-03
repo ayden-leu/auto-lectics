@@ -189,6 +189,7 @@ func _on_create_object_pressed() -> void:
 	newObj.disconnect_option.connect(_on_object_option_removed)
 	newObj.save_me.connect(_on_object_save_me)
 	newObj.disconnect_hectic_port.connect(_on_object_disconnect_hectic_port)
+	newObj.reconnect_hectic_port.connect(_on_object_reconnect_hectic_port)
 	dialogueObjects.push_back(newObj)
 	createObject(newObj)
 
@@ -231,6 +232,15 @@ func _on_object_disconnect_hectic_port(port:int) -> void:
 				connection.to_node, connection.to_port
 			)
 			break
+
+func _on_object_reconnect_hectic_port(connection:Dictionary) -> void:
+	if connection.me == "" or connection.toNode == "":
+		return
+	
+	_on_graph_edit_connection_request(
+		connection.me, connection.mePort,
+		connection.toNode, connection.toPort
+	)
 
 func _on_base_object_disconnect_all(obj:DC_BaseObject) -> void:
 	for connection in graphArea.connections:
@@ -285,6 +295,10 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 		toNode = toNode as DC_DialogueObject
 		
 		connectObjectHecticFailPortToObject(fromNode, toNode)
+		fromNode.nextOnHecticPortConnection.me = from_node
+		fromNode.nextOnHecticPortConnection.mePort = from_port
+		fromNode.nextOnHecticPortConnection.toNode = to_node
+		fromNode.nextOnHecticPortConnection.toPort = to_port
 	
 	graphArea.connect_node(from_node, from_port, to_node, to_port)
 

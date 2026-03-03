@@ -12,7 +12,7 @@
 [node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField", "writeSpeedAspectsHandler")]
 texture_filter = 2
 offset_right = 468.0
-offset_bottom = 420.0
+offset_bottom = 559.0
 theme = ExtResource("1_1f1bm")
 theme_type_variation = &"DialogueObject"
 resizable = true
@@ -71,6 +71,15 @@ slot/5/right_type = 0
 slot/5/right_color = Color(1, 1, 1, 1)
 slot/5/right_icon = null
 slot/5/draw_stylebox = true
+slot/6/left_enabled = false
+slot/6/left_type = 0
+slot/6/left_color = Color(1, 1, 1, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
 script = ExtResource("1_g3bfk")
 dialogueIDField = NodePath("DialogueID/LineEdit")
 textField = NodePath("Text/TextEdit")
@@ -273,13 +282,17 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Debug"
 
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+
 [connection signal="text_changed" from="DialogueID/LineEdit" to="." method="_on_dialogue_id_updated"]
 [connection signal="pressed" from="DialogueID/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Options/AddOption" to="." method="_on_add_option_pressed"]
 [connection signal="pressed" from="Options/RemoveOption" to="." method="_on_remove_option_pressed"]
+[connection signal="resize" from="HBoxContainer/Advanced" to="." method="_on_resize_height"]
 [connection signal="toggled" from="HBoxContainer/Advanced" to="HBoxContainer/Advanced" method="_on_toggled"]
 [connection signal="item_selected" from="AdvancedOptions/Row1/Mode/OptionButton" to="AdvancedOptions/Row1/Mode/OptionButton" method="_on_item_selected"]
 [connection signal="set_hectic_port" from="AdvancedOptions/Row1/Mode/OptionButton" to="." method="_on_set_hectic_port"]
-[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_preset_chooser_item_selected"]
-[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_value_setter_value_changed"]
+[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_chooser_item_selected"]
+[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_setter_value_changed"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

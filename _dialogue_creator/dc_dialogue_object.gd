@@ -7,7 +7,7 @@ signal disconnect_option(port:int)
 signal disconnect_all_options
 signal save_me(data:Dictionary)
 signal disconnect_hectic_port(port:int)
-signal reconnect_hectic_port(port:int)
+signal reconnect_hectic_port(connection:Dictionary)
 ## For internal use.  Do not use.
 signal _option_amount_changed()
 
@@ -43,6 +43,12 @@ var numOptions:int = 0:
 			numOptions = value
 var nextOnHecticFailId:String = ""
 var nextOnHecticPortEnabled:bool = false
+var nextOnHecticPortConnection:Dictionary = {
+	"me": "",
+	"mePort": 0,
+	"toNode": "",
+	"toPort": 0
+}
 
 func _ready() -> void:
 	createCloseButton()
@@ -105,6 +111,8 @@ func shiftHecticPort(amount:int) -> void:
 		false, 0, Color.TRANSPARENT,
 		true, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
 	)
+	nextOnHecticPortConnection.mePort += amount
+	reconnect_hectic_port.emit(nextOnHecticPortConnection)
 
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
@@ -185,10 +193,12 @@ func _on_set_hectic_port(on: bool) -> void:
 		on, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
 	)
 	nextOnHecticPortEnabled = on
-	
 
 func _on_hectic_fail_updated(newID:String) -> void:
 	nextOnHecticFailId = newID
+
+func _on_resize_height() -> void:
+	size.y = get_minimum_size().y
 
 func _on_debug_pressed() -> void:
 	print("------ ", title, " ------")
