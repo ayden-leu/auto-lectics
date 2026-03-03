@@ -1,0 +1,12 @@
+{
+	"text": "I power\nTurn motion into energy\n\nThe motion\nB: Must be maintained, can not stop",
+	"font": "",
+	"type": "positive",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Ok.",
+			"nextID": "a"
+		}
+	]
+}
