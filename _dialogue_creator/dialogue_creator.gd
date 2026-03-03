@@ -322,7 +322,7 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 func _on_item_rect_changed() -> void:
 	var newSize:Vector2 = Globals.getScreenSize()
 	set_deferred("size", newSize)
-	$Background.size = newSize
-	$MenuButtons.position.x = newSize.x - 11
+	$Background.set_deferred("size", newSize)
+	$MenuButtons.set_deferred("position.x", newSize.x - 11)
 	if graphArea:
-		graphArea.size = newSize
+		graphArea.set_deferred("size", newSize)

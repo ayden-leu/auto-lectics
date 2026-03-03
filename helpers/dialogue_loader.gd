@@ -21,7 +21,7 @@ static func loadDialogueNodeFile(path: String) -> Dictionary:
 
 ## Fills in any missing fields from the dialogue node file with default values.
 static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionary:
-	var dialogue:Dictionary = DialogueDefaults.default_dialogue()
+	var dialogue:Dictionary = DialogueDefaults.defaultDialogue
 	
 	# Mandatory fields
 	dialogue.text = dialogue_obj.get("text", dialogue.text)
@@ -79,7 +79,7 @@ static func _fill_dialogue_missing_fields(dialogue_obj: Dictionary) -> Dictionar
 
 ## Fills in any missing fields from the option object with default values.
 static func _fill_option_missing_fields(option_obj: Dictionary, dialogue_owner: Dictionary) -> Dictionary:
-	var option:Dictionary = DialogueDefaults.default_option()
+	var option:Dictionary = DialogueDefaults.defaultOption
 
 	# Mandatory
 	option.text = option_obj.get("text", option.text)

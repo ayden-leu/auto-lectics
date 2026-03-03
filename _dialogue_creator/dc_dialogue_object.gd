@@ -15,6 +15,7 @@ signal _option_amount_changed()
 @export var textField:TextEdit
 @export var typeField:OptionButton
 @export var modeField:OptionButton
+@export var writeSpeedAspectsHandler:Control
 
 @onready var optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
@@ -109,10 +110,22 @@ func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
 		"id": dialogueIDField.text,
 		"text": textField.text,
-		"font": "",
+		#"font": "",
 		"type": DialogueDefaults.OPTION_TYPES[typeField.selected],
 		"mode": DialogueDefaults.DIALOGUE_MODES[modeField.selected]
 	}
+	
+	#if font != "":  # not used yet
+		#currentValues.font = font
+	
+	if currentValues.mode == "hectic" and nextOnHecticFailId == "":
+		# TODO:  make the warning pop up on screen
+		printerr("Next On Hectic Fail not set!")
+	
+	if writeSpeedAspectsHandler.getPreset() != DialogueDefaults.defaultDialogue.writeSpeed:
+		currentValues.writeSpeed = writeSpeedAspectsHandler.getPreset()
+		if currentValues.writeSpeed == "custom":
+			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.getValue()
 	
 	if options != []:
 		var optionsToAdd:Array[Dictionary] = []

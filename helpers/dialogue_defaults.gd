@@ -42,61 +42,59 @@ const SFX_EVENTS:Array[String] = [
 	"spawn", "text"
 ]
 
-## Returns a default dialogue object.
-static func default_dialogue() -> Dictionary:
-	return {
-		# === Mandatory ===
-		"text": "",
-		"options": [],
+## The default settings for a dialogue object.
+const defaultDialogue:Dictionary = {
+	# === Mandatory ===
+	"text": "",
+	"options": [],
 
-		# === Optional ===
-		"mode": "normal",
-		"nextOnHecticFailureID": "",
-		"font": "default",
-		"type": "neutral",
-		"writeSpeed": "medium",
-		"writeSpeedCustom": -1.0,
+	# === Optional ===
+	"mode": "normal",
+	"nextOnHecticFailureID": "",
+	"font": "default",
+	"type": "neutral",
+	"writeSpeed": "medium",
+	"writeSpeedCustom": -1.0,
 
-		"sfx": {
-			"spawn": "none",
-			"text": "default"
-		},
+	"sfx": {
+		"spawn": "none",
+		"text": "default"
+	},
 
-		"backgroundTheme": "default",
+	"backgroundTheme": "default",
 
-		"particles": {
-			"spawn": { "texture": "none" },
-			"text": { "texture": "none" },
-			"ambient": { "texture": "none" }
-		}
+	"particles": {
+		"spawn": { "texture": "none" },
+		"text": { "texture": "none" },
+		"ambient": { "texture": "none" }
 	}
+}
 
-## Returns a default option object.
-static func default_option() -> Dictionary:
-	return {
-		# === Mandatory ===
-		"text": "",
-		"nextID": "",
+## The default settings for a dialogue option.
+const defaultOption:Dictionary = {
+	# === Mandatory ===
+	"text": "",
+	"nextID": "",
 
-		# === Optional ===
-		"font": "inherit",
-		"type": "neutral",
-		"writeSpeed": "inherit",
-		"writeSpeedCustom": -1.0,
+	# === Optional ===
+	"font": "inherit",
+	"type": "neutral",
+	"writeSpeed": "inherit",
+	"writeSpeedCustom": -1.0,
 
-		"sfx": {
-			"spawn": "inherit",
-			"text": "inherit"
-		},
+	"sfx": {
+		"spawn": "inherit",
+		"text": "inherit"
+	},
 
-		"backgroundTheme": "inherit",
+	"backgroundTheme": "inherit",
 
-		"particles": {
-			"spawn": { "texture": "inherit" },
-			"text": { "texture": "inherit" },
-			"ambient": { "texture": "inherit" }
-		},
+	"particles": {
+		"spawn": { "texture": "inherit" },
+		"text": { "texture": "inherit" },
+		"ambient": { "texture": "inherit" }
+	},
 
-		"spawnDelay": 0.0,
-		"lifetime": -1.0,
-	}
+	"spawnDelay": 0.0,
+	"lifetime": -1.0,
+}
