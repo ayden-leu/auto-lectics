@@ -13,9 +13,9 @@ class_name DialogueCreator
 var initialObjectPosition:Vector2 = Vector2(100, 100)
 var dialogueObjects:Array[DC_DialogueObject] = []
 var dialogueOptions:Array[DC_DialogueOption] = []
+var loadingDialogueFiles:bool = false
 
 var savePath:String = "res://dialogue_objects/"
-var npcName:String
 var fileExtension:String = ".json"
 
 func createObject(obj:DC_BaseObject) -> void:
@@ -38,14 +38,20 @@ func getNode(nodeName:StringName) -> DC_BaseObject:
 	
 	return node
 
+func deleteAllNodes() -> void:
+	for _i in range(dialogueOptions.size()):
+		dialogueOptions[0]._on_close_button_pressed()
+		
+	for _i in range(dialogueObjects.size()):
+		dialogueObjects[0]._on_close_button_pressed()
+
 func saveFile(data:Dictionary) -> void:
-	npcName = npcNameField.text
-	var filename:String = data.id + fileExtension
-	var fullPath:String = savePath + npcName + "/" + filename
-	
-	if npcName == "":
+	if npcNameField.text == "":
 		printerr("DialogueCreator/saveFile(): NPC Name is empty.")
 		return
+	
+	var filename:String = data.id + fileExtension
+	var fullPath:String = savePath + npcNameField.text + "/" + filename
 	
 	data.erase("id")
 	print("----------")
@@ -55,91 +61,86 @@ func saveFile(data:Dictionary) -> void:
 	print("----------")
 	
 	# ensure file directory exists
-	DirAccess.make_dir_absolute(savePath + npcName)
+	DirAccess.make_dir_absolute(savePath + npcNameField.text)
 	
-	var f := FileAccess.open(fullPath, FileAccess.WRITE)
-	if f == null:
+	var file := FileAccess.open(fullPath, FileAccess.WRITE)
+	if file == null:
 		printerr("Failed to write: %s %d" %(fullPath) %(FileAccess.get_open_error()))
 		return
-	f.store_string(JSON.stringify(data, "\t", false))
+	file.store_string(JSON.stringify(data, "\t", false))
 	print("Saved: ", (fullPath))
 
+func createNodesFromFile(filename:String) -> void:
+	var filePath:String = savePath + npcNameField.text + "/" + filename
+	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
+	var data:Dictionary = JSON.parse_string(file.get_as_text())
+	
+	# create object
+	_on_create_object_pressed()
+	var targetObject:DC_DialogueObject = dialogueObjects.back()
+	targetObject.idUpdateFromField = false
+	targetObject.id = filename.split(".")[0]
+	targetObject.name = targetObject.id
+	targetObject.text = data.text
+	
+	if not data.has("options"):
+		return
+	
+	# create options
+	var optionIndex:int = 0
+	for option in data.options:
+		_on_create_option_object_pressed()
+		var targetOption:DC_DialogueOption = dialogueOptions.back()
+		targetOption.textUpdateFromField = false
+		targetOption.text = option.text
+		
+		if option.has("nextID"):
+			targetOption.nextID = option.nextID
+		
+		targetObject.createOptionPort()
+		
+		_on_graph_edit_connection_request(
+			targetObject.name, optionIndex,
+			targetOption.name, targetOption.optionPort
+		)
+		optionIndex += 1
+
 func loadDialogueTree() -> void:
-	print(dialogueOptions)
-	for optionObject in dialogueOptions:
-		optionObject._on_close_button_pressed()
-	
-	print(dialogueObjects)
-	for dialogueObject in dialogueObjects:
-		dialogueObject._on_close_button_pressed()
-	
-	npcName = npcNameField.text
-	if npcName == "":
+	if npcNameField.text == "":
 		printerr("DialogueCreator/loadDialogueTree(): NPC Name is empty.")
 		return
 	
 	var tempDirAccess:DirAccess = DirAccess.open(savePath)
-	if not tempDirAccess.dir_exists(npcName):
-		printerr("DialogueCreator: Could not find the NPC folder: ", npcName)
+	if not tempDirAccess.dir_exists(npcNameField.text):
+		printerr("DialogueCreator: Could not find the NPC folder: ", npcNameField.text)
+		return
 	
-	var dialogueFilePath:String = savePath + npcName
-	var dialogueFileNames:PackedStringArray = ResourceLoader.list_directory(dialogueFilePath)
+	var dialogueFileNames:PackedStringArray = ResourceLoader.list_directory(savePath + npcNameField.text)
 	if dialogueFileNames.is_empty():
-		printerr("DialogueCreator: Could not find any Dialogue files in NPC folder: ", npcName)
+		printerr("DialogueCreator: Could not find any Dialogue files in NPC folder: ", npcNameField.text)
+		return
+	
+	deleteAllNodes()
+	# needed so arrangement is the same each time
+	await get_tree().process_frame
+	loadingDialogueFiles = true
 	
 	for filename in dialogueFileNames:
 		if not filename.ends_with(".json"):
 			continue
 		
-		var filePath:String = dialogueFilePath + "/" + filename
-		var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
-		var data:Dictionary = JSON.parse_string(file.get_as_text())
-		
-		# create object
-		_on_create_object_pressed()
-		var targetObject:DC_DialogueObject = dialogueObjects.back()
-		targetObject.idUpdateFromField = false
-		targetObject.id = filename.split(".")[0]
-		targetObject.name = targetObject.id
-		targetObject.text = data.text
-		
-		if not data.has("options"):
-			continue
-		
-		# create options
-		var optionIndex:int = 0
-		for option in data.options:
-			_on_create_option_object_pressed()
-			var targetOption:DC_DialogueOption = dialogueOptions.back()
-			targetOption.textUpdateFromField = false
-			targetOption.text = option.text
-			
-			if option.has("nextID"):
-				targetOption.nextID = option.nextID
-			
-			targetObject.createOptionPort()
-			
-			_on_graph_edit_connection_request(
-				targetObject.name, optionIndex,
-				targetOption.name, 0
-			)
-			optionIndex += 1
+		createNodesFromFile(filename)
 	
+	# connect option objects to dialogue objects
 	for optionObject in dialogueOptions:
 		if optionObject.nextID:
 			_on_graph_edit_connection_request(
-				optionObject.name, 0,
-				optionObject.nextID, 0
+				optionObject.name, optionObject.nextIDPort,
+				optionObject.nextID, DC_DialogueObject.dialogueIDPort
 			)
 	
-	await get_tree().create_timer(0.0001).timeout
-	
-	for optionObject in dialogueOptions:
-		graphArea.set_selected(optionObject)
-	for dialogueObject in dialogueObjects:
-		graphArea.set_selected(dialogueObject)
-	
 	graphArea.arrange_nodes()
+	loadingDialogueFiles = false
 
 # --------------
 
@@ -158,18 +159,35 @@ func disconnectObjectOptionPortToOption(obj:DC_DialogueObject, option:DC_Dialogu
 	option.dialogueDisconnected()
 
 func connectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
-	option.nextID = obj.id
 	obj.id_updated.connect(option._on_next_object_id_modified)
+	obj.disconnect_id.connect(option.dialogueDisconnected)
+	
+	option._on_next_object_id_modified(obj.id)
 
 func disconnectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
-	option.nextID = ""
 	obj.id_updated.disconnect(option._on_next_object_id_modified)
+	obj.disconnect_id.disconnect(option.dialogueDisconnected)
+	
+	option._on_next_object_id_modified("")
+
+func connectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_DialogueObject) -> void:
+	objTo.id_updated.connect(objFrom._on_hectic_fail_updated)
+	objTo.disconnect_id.connect(objFrom.nextOnHecticFailIdDisconnected)
+	
+	objFrom._on_hectic_fail_updated(objTo.id)
+
+func disconnectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_DialogueObject) -> void:
+	objTo.id_updated.disconnect(objFrom._on_hectic_fail_updated)
+	objTo.disconnect_id.disconnect(objFrom.nextOnHecticFailIdDisconnected)
+	
+	objFrom.nextOnHecticFailIdDisconnected()
 
 # -------------------------
 
 func _on_create_object_pressed() -> void:
 	var newObj:DC_DialogueObject = dialogueObjectScene.instantiate()
-	newObj.disconnect_option.connect(_on_dialogue_object_option_removed)
+	newObj.disconnect_option.connect(_on_object_option_removed)
+	newObj.save_me.connect(_on_object_save_me)
 	dialogueObjects.push_back(newObj)
 	createObject(newObj)
 
@@ -178,30 +196,40 @@ func _on_create_option_object_pressed() -> void:
 	dialogueOptions.push_back(newObj)
 	createObject(newObj)
 
+func _on_object_save_me(data:Dictionary) -> void:
+	saveFile(data)
+
 func _on_save_all_dialogue_pressed() -> void:
 	for dialogueObject in dialogueObjects:
-		var data:Dictionary = dialogueObject.getFields()
-		
-		if data.id == "":
-			printerr("DialogueCreator/_on_save_all_dialogue_pressed(): Dialogue Object ID not set.")
-			continue
-		
-		saveFile(data)
+		dialogueObject.saveToFile()
 
-func _on_dialogue_object_option_removed(port:int) -> void:
+func _on_object_option_removed(port:int) -> void:
 	for connection in graphArea.connections:
 		if connection.from_port == port:
-			graphArea.disconnect_node(
-				connection.from_node, connection.from_port,
-				connection.to_node, connection.to_port
-			)
-			
 			var object:DC_DialogueObject = getNode(connection.from_node)
 			var option:DC_DialogueOption = getNode(connection.to_node)
 			
 			disconnectObjectOptionPortToOption(object, option)
 			
-			option.dialogueDisconnected()
+			graphArea.disconnect_node(
+				connection.from_node, connection.from_port,
+				connection.to_node, connection.to_port
+			)
+			break
+
+func _on_object_disconnect_hectic_fail(port:int) -> void:
+	for connection in graphArea.connections:
+		if connection.from_port == port:
+			var objectFrom:DC_DialogueObject = getNode(connection.from_node)
+			var objectTo:DC_DialogueObject = getNode(connection.to_node)
+			
+			disconnectObjectHecticFailPortToObject(objectFrom, objectTo)
+			
+			graphArea.disconnect_node(
+				connection.from_node, connection.from_port,
+				connection.to_node, connection.to_port
+			)
+			break
 
 func _on_base_object_disconnect_all(obj:DC_BaseObject) -> void:
 	for connection in graphArea.connections:
@@ -220,11 +248,21 @@ func _on_base_object_deleting(obj:DC_BaseObject) -> void:
 	elif obj is DC_DialogueOption:
 		dialogueOptions.erase(obj)
 
-
 func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	# from documentation on get_connection_list_from_node()
+	var fromNodeConnections = graphArea.get_connection_list_from_node(from_node)
+	var fromPortConnectionAmount:int = 0
+	for connection in fromNodeConnections:
+		if connection.from_node == from_node and connection.from_port == from_port:
+			fromPortConnectionAmount += 1
+
+	if fromPortConnectionAmount > 0 and not loadingDialogueFiles:
+		return
+	
 	var fromNode:DC_BaseObject = getNode(from_node)
 	var toNode:DC_BaseObject = getNode(to_node)
 	
+	# dialogue object option port to dialogue option
 	if fromNode is DC_DialogueObject and toNode is DC_DialogueOption:
 		fromNode = fromNode as DC_DialogueObject
 		toNode = toNode as DC_DialogueOption
@@ -233,11 +271,19 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 		toNode.port = from_port
 		toNode._on_attribute_modified()
 	
-	if fromNode is DC_DialogueOption and toNode is DC_DialogueObject: 
+	# dialogue option next id port to dialogue object
+	elif fromNode is DC_DialogueOption and toNode is DC_DialogueObject: 
 		fromNode = fromNode as DC_DialogueOption
 		toNode = toNode as DC_DialogueObject
 		
 		connectOptionObjectPortToObject(fromNode, toNode)
+	
+	# dialogue object next on hectic fail to dialogue object
+	elif fromNode is DC_DialogueObject and toNode is DC_DialogueObject:
+		fromNode = fromNode as DC_DialogueObject
+		toNode = toNode as DC_DialogueObject
+		
+		connectObjectHecticFailPortToObject(fromNode, toNode)
 	
 	graphArea.connect_node(from_node, from_port, to_node, to_port)
 
@@ -257,6 +303,12 @@ func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int,
 		toNode = toNode as DC_DialogueObject
 		
 		disconnectOptionObjectPortToObject(fromNode, toNode)
+	
+	elif fromNode is DC_DialogueObject and toNode is DC_DialogueObject:
+		fromNode = fromNode as DC_DialogueObject
+		toNode = toNode as DC_DialogueObject
+		
+		disconnectObjectHecticFailPortToObject(fromNode, toNode)
 	
 	graphArea.disconnect_node(from_node, from_port, to_node, to_port)
 

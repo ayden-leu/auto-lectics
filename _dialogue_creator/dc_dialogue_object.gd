@@ -2,15 +2,21 @@ extends DC_BaseObject
 class_name DC_DialogueObject
 
 signal id_updated(newID:String)
+signal disconnect_id()
 signal disconnect_option(port:int)
 signal disconnect_all_options
+signal save_me(data:Dictionary)
+signal disconnect_hectic_port(port:int)
 
 @export var dialogueIDField:LineEdit
 @export var textField:TextEdit
+@export var typeField:OptionButton
+@export var modeField:OptionButton
 
 @onready var optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
 const numNodesAboveOptions:int = 3
+const dialogueIDPort:int = 0
 
 var id:String:
 	set(value):
@@ -21,24 +27,23 @@ var id:String:
 		title = "Dialogue: " + value
 		id_updated.emit(value)
 var idUpdateFromField:bool = true
-
 var text:String:
 	set(value):
 		text = value
 		textField.text = value
-
 var options:Array[Dictionary] = []
 var optionPorts:Array[Label] = []
 var numOptions:int = 0:
 	set(value):
 		if value >= 0:
 			numOptions = value
+var nextOnHecticFailId:String = ""
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	createCloseButton()
 	
-	set_slot_color_left(0, PORT_COLOR.DIALOGUE)
+	set_slot_color_left(dialogueIDPort, PORT_COLOR.DIALOGUE)
+	set_slot_type_left(dialogueIDPort, PORT_TYPE.DIALOGUE)
 
 func createCloseButton() -> void:
 	var close:Button = closeButtonScene.instantiate()
@@ -47,10 +52,12 @@ func createCloseButton() -> void:
 
 func createOptionPort() -> void:
 	var optionLabel:Label = optionLabelScene.instantiate()
-	optionLabel.text = str(numOptions)
+	optionPorts.push_back(optionLabel)
+	
 	add_child(optionLabel)
 	move_child(optionLabel, numNodesAboveOptions + numOptions)
-	optionPorts.push_back(optionLabel)
+	optionLabel.text = str(numOptions)
+	optionLabel.theme_type_variation = "LabelOption"
 	
 	set_slot(numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
@@ -59,7 +66,7 @@ func createOptionPort() -> void:
 	options.push_back({})
 	numOptions += 1
 
-func removeSlot() -> void:
+func removeOptionPort() -> void:
 	numOptions -= 1	
 	var toRemove:Label = optionPorts.pop_back()
 	clear_slot(numNodesAboveOptions + numOptions)
@@ -71,19 +78,41 @@ func removeSlot() -> void:
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
 		"id": dialogueIDField.text,
-		"text": textField.text
+		"text": textField.text,
+		"font": "",
+		"type": DialogueDefaults.OPTION_TYPES[typeField.selected],
+		"mode": DialogueDefaults.DIALOGUE_MODES[modeField.selected]
 	}
 	
 	if options != []:
-		currentValues.options = options
+		var optionsToAdd:Array[Dictionary] = []
+		for option in options:
+			if option == {}:
+				continue
+			optionsToAdd.push_back(option)
+		
+		if optionsToAdd != []:
+			currentValues.options = optionsToAdd
 	
 	return currentValues
+
+func saveToFile() -> void:
+	var data:Dictionary = getFields()
+		
+	if data.id == "":
+		printerr("DC_DialogueObject/saveToFile(): Dialogue Object ID not set.")
+	
+	save_me.emit(data)
 
 func optionDisconnected(port:int) -> void:
 	options[port] = {}
 
+func nextOnHecticFailIdDisconnected() -> void:
+	nextOnHecticFailId = ""
+
 func delete() -> void:
 	disconnect_all_options.emit()
+	disconnect_id.emit()
 	super()
 
 # ---------------------------
@@ -92,16 +121,39 @@ func _on_dialogue_id_updated(newID:String) -> void:
 	idUpdateFromField = true
 	id = newID
 
+func _on_save_pressed() -> void:
+	saveToFile()
+
 func _on_add_option_pressed() -> void:
 	createOptionPort()
 
 func _on_remove_option_pressed() -> void:
-	removeSlot()
+	removeOptionPort()
 
 func _on_option_updated(index:int, newValue:Dictionary) -> void:
 	options[index] = newValue
 
+func _on_set_hectic_port(on: bool) -> void:
+	# TODO:  fix connection not being disconnected
+	# TODO:  fix adding/removing options stealing this connection
+	if not on:
+		disconnect_hectic_port.emit(numOptions)
+	
+	set_slot(numNodesAboveOptions + numOptions,
+		false, 0, Color.TRANSPARENT,
+		on, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
+	)
+	
+
+func _on_hectic_fail_updated(newID:String) -> void:
+	nextOnHecticFailId = newID
+
 func _on_debug_pressed() -> void:
+	print("------ ", title, " ------")
+	print("Text: ", text)
 	print("Options: ", options)
 	print("OptionPorts: ", optionPorts)
 	print("numOptions: ", numOptions)
+	print("Type: ", DialogueDefaults.OPTION_TYPES[typeField.selected])
+	print("Mode: ", DialogueDefaults.DIALOGUE_MODES[modeField.selected])
+	print("Next On Hectic Fail: ", nextOnHecticFailId)
