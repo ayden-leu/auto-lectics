@@ -1,11 +1,11 @@
 {
-	"text": "Dont follow\nYou do not follow the pattern",
+	"text": "Begone now\nBut keep following the pattern",
 	"font": "",
 	"type": "positive",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "Ok."
+			"text": "[EXIT]"
 		}
 	]
 }

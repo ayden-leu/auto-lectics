@@ -5,7 +5,8 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "Yes I do!\nI understand the pattern well."
+			"text": "Yes I do!\nI understand the pattern well.",
+			"nextID": "h"
 		},
 		{
 			"text": "Of course I follow the pattern\nIt’s essential after all isn’t it?",
