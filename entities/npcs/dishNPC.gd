@@ -21,4 +21,4 @@ func _process(delta: float) -> void:
 	pass
 
 func get_sine():
-	return sin(time * 0.5) * 2
+	return sin(time * 0.5) * 0.05

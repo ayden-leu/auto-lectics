@@ -1,0 +1,115 @@
+[gd_scene load_steps=17 format=3 uid="uid://c5l0jyvat6c51"]
+
+[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_hbcv5"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_axtib"]
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_v3yie"]
+[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_7dg45"]
+[ext_resource type="PackedScene" uid="uid://b24erx4bp037i" path="res://models/environment/backgroundClutter/big_ring.tscn" id="3_v3yie"]
+[ext_resource type="PackedScene" uid="uid://bullwudoypwel" path="res://models/environment/backgroundClutter/round_tank.tscn" id="4_kbv61"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_q8v2a"]
+[ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="5_e5jee"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_hbcv5"]
+[ext_resource type="PackedScene" uid="uid://wtvso5hy2hpw" path="res://entities/npcs/generatorNPC.tscn" id="6_kbv61"]
+[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_v3yie"]
+[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="7_7dg45"]
+[ext_resource type="PackedScene" uid="uid://dytucwmjofvdw" path="res://models/environment/backgroundClutter/tube_clutter_1.tscn" id="8_q8v2a"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rlvxa"]
+panorama = ExtResource("1_hbcv5")
+
+[sub_resource type="Sky" id="Sky_aue1p"]
+sky_material = SubResource("PanoramaSkyMaterial_rlvxa")
+
+[sub_resource type="Environment" id="Environment_kbv61"]
+background_mode = 2
+sky = SubResource("Sky_aue1p")
+ambient_light_sky_contribution = 0.0
+glow_intensity = 0.0
+
+[node name="Test_NPCInteraction" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_kbv61")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("2_v3yie")
+volume_db = -10.0
+autoplay = true
+
+[node name="bigRing" parent="Environment" instance=ExtResource("3_v3yie")]
+transform = Transform3D(-4.3711385e-08, 3.522101, 0, -0.9999999, -1.5395592e-07, 0, 0, 0, 1, 2.5294595, 6.7589626, -0.008958697)
+
+[node name="bigRing2" parent="Environment" instance=ExtResource("3_v3yie")]
+transform = Transform3D(-4.3711378e-08, 6.0103035, 0, -0.99999976, -2.6271871e-07, 0, 0, 0, 1, 55.963524, 6.7589626, -0.008958697)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.059196, 2.5407557, -1.9677763)
+light_color = Color(0.23846659, 0.7369058, 0.9949028, 1)
+light_energy = 3.33
+light_specular = 0.655
+shadow_enabled = true
+omni_range = 9.009086
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4547653, 8.80673, -5.108594)
+light_color = Color(0.23846659, 0.7369058, 0.9949028, 1)
+light_energy = 3.33
+shadow_enabled = true
+omni_range = 9.009086
+
+[node name="roundTank" parent="Environment" instance=ExtResource("4_kbv61")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.594645, -14.898981, -11.730159)
+
+[node name="bigWedgeTemp" parent="Environment" instance=ExtResource("5_e5jee")]
+transform = Transform3D(-4.371138e-08, -1, 2.1175824e-22, 0.22743317, -9.941415e-09, -0.9737936, 0.9737936, -4.2565873e-08, 0.22743317, -11.656443, 15.554609, 0.62507343)
+
+[node name="npcs" type="Node" parent="."]
+
+[node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("6_kbv61")]
+transform = Transform3D(0.3389215, 0, 0.3839579, 0, 0.51214397, 0, -0.3839579, 0, 0.3389215, -1.2458615, -0.3950684, 2.3442676)
+dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
+
+[node name="Node" type="Node" parent="npcs/collector"]
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="npcs/collector/Node"]
+transform = Transform3D(0.116428435, 0, 0.67503285, 0, 0.68500006, 0, -0.67503285, 0, 0.116428435, 1.8940315, 2.714757, 2.9325376)
+metadata/_edit_group_ = true
+
+[node name="Player" parent="." instance=ExtResource("2_axtib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
+
+[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("3_7dg45")]
+transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
+mainCamera = NodePath("../PlayerCamera/Camera3D")
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_q8v2a")]
+focus = NodePath("../Player")
+
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("5_hbcv5")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player")]
+wantsToKnowWhenInteract = [NodePath("../Player")]
+
+[node name="LoopManager" parent="." instance=ExtResource("6_v3yie")]
+manual = false
+loopDuration = 3.0
+
+[node name="MetalBigFlat" parent="." instance=ExtResource("7_7dg45")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7037182, 0, -0.8789165)
+
+[node name="MetalBigFlat2" parent="." instance=ExtResource("7_7dg45")]
+transform = Transform3D(1, 0, 0, 0, 0.25881907, 0.9659258, 0, -0.9659258, 0.25881907, 1.7037182, 1.8816628, 4.506555)
+
+[node name="MetalBigFlat3" parent="." instance=ExtResource("7_7dg45")]
+transform = Transform3D(1, 0, 0, 0, 0.25881907, 0.9659258, 0, -0.9659258, 0.25881907, 10.8074665, 1.8816628, 4.506555)
+
+[node name="MetalBigFlat5" parent="." instance=ExtResource("7_7dg45")]
+transform = Transform3D(1, 0, 0, 0, -0.9465929, 0.32243094, 0, -0.32243094, -0.9465929, 10.8074665, 7.4144697, 2.343728)
+
+[node name="TubeClutter1" parent="." instance=ExtResource("8_q8v2a")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -9.073484, 2.6315613, -8.10927)
+
+[node name="TubeClutter2" parent="." instance=ExtResource("8_q8v2a")]
+transform = Transform3D(-0.6705173, 0, -0.74189395, 0, 1, 0, 0.74189395, 0, -0.6705173, -55.1391, 2.6315613, -25.259716)
