@@ -39,14 +39,14 @@ volume_db = -10.0
 autoplay = true
 
 [node name="bigRing" parent="Environment" instance=ExtResource("3_v3yie")]
-transform = Transform3D(-4.3711385e-08, 3.522101, 0, -0.9999999, -1.5395592e-07, 0, 0, 0, 1, 2.5294595, 6.7589626, -0.008958697)
+transform = Transform3D(-4.371138e-08, 3.522101, -1.1100218e-16, 0.56866246, 8.754895e-08, 0.8225711, 0.8225709, 1.2663966e-07, -0.56866246, 2.5294595, 6.7589626, -0.008958697)
 
 [node name="bigRing2" parent="Environment" instance=ExtResource("3_v3yie")]
 transform = Transform3D(-4.3711378e-08, 6.0103035, 0, -0.99999976, -2.6271871e-07, 0, 0, 0, 1, 55.963524, 6.7589626, -0.008958697)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.059196, 2.5407557, -1.9677763)
-light_color = Color(0.23846659, 0.7369058, 0.9949028, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2783177, 5.4317408, -1.7746499)
+light_color = Color(0.7474962, 0.68094367, 0.5509845, 1)
 light_energy = 3.33
 light_specular = 0.655
 shadow_enabled = true
@@ -64,6 +64,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.594645, -14.898981, -11.73
 
 [node name="bigWedgeTemp" parent="Environment" instance=ExtResource("5_e5jee")]
 transform = Transform3D(-4.371138e-08, -1, 2.1175824e-22, 0.22743317, -9.941415e-09, -0.9737936, 0.9737936, -4.2565873e-08, 0.22743317, -11.656443, 15.554609, 0.62507343)
+
+[node name="MetalBigFlat" parent="Environment" instance=ExtResource("7_7dg45")]
+transform = Transform3D(7.0511665, 0, 0, 0, -3.0821627e-07, -7.0511665, 0, 7.0511665, -3.0821627e-07, -47.69265, 0, -11.3608885)
 
 [node name="npcs" type="Node" parent="."]
 
