@@ -20,8 +20,8 @@
 [ext_resource type="StyleBox" uid="uid://dmmw267cu0amm" path="res://_dialogue_creator/theming/text_edit_normal.tres" id="10_ie1gl"]
 [ext_resource type="StyleBox" uid="uid://xhoalws558og" path="res://_dialogue_creator/theming/graph_node_titlebar_selected.tres" id="10_mstms"]
 [ext_resource type="StyleBox" uid="uid://dys0dl4vlqipb" path="res://_dialogue_creator/theming/button_create_option_pressed.tres" id="10_xhrd7"]
-[ext_resource type="Texture2D" uid="uid://c1n6wria1mwto" path="res://_dialogue_creator/helpers/arrow_up.png" id="11_xhrd7"]
-[ext_resource type="Texture2D" uid="uid://duvgjavn8qok4" path="res://_dialogue_creator/helpers/arrow_down.png" id="12_k4yq8"]
+[ext_resource type="Texture2D" uid="uid://bfxiyocsfvkmp" path="res://_dialogue_creator/helpers/arrow_down.svg" id="11_k4yq8"]
+[ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_dialogue_creator/helpers/arrow_up.svg" id="12_g4rfl"]
 [ext_resource type="StyleBox" uid="uid://bd08mj68c71dr" path="res://_dialogue_creator/theming/label_dialogue_id.tres" id="14_fcqsy"]
 [ext_resource type="StyleBox" uid="uid://botbqvnho3n8n" path="res://_dialogue_creator/theming/label_option.tres" id="14_nn4ja"]
 [ext_resource type="StyleBox" uid="uid://cpphfo0nhhcaf" path="res://_dialogue_creator/theming/label_disabled.tres" id="22_k4yq8"]
@@ -51,8 +51,8 @@ ButtonCreateOption/styles/hover = ExtResource("8_7lyv4")
 ButtonCreateOption/styles/normal = ExtResource("9_f1adm")
 ButtonCreateOption/styles/pressed = ExtResource("10_xhrd7")
 CheckBox/font_sizes/font_size = 24
-CheckBox/icons/checked = ExtResource("12_k4yq8")
-CheckBox/icons/unchecked = ExtResource("11_xhrd7")
+CheckBox/icons/checked = ExtResource("11_k4yq8")
+CheckBox/icons/unchecked = ExtResource("12_g4rfl")
 DialogueObject/base_type = &"GraphNode"
 DialogueObject/styles/titlebar = ExtResource("5_upo1i")
 DialogueObject/styles/titlebar_selected = ExtResource("5_7xgx1")
@@ -91,7 +91,7 @@ LineEdit/font_sizes/font_size = 24
 LineEdit/styles/focus = ExtResource("1_8vgy3")
 LineEdit/styles/normal = ExtResource("9_8vgy3")
 OptionButton/font_sizes/font_size = 24
-OptionButton/icons/arrow = ExtResource("12_k4yq8")
+OptionButton/icons/arrow = ExtResource("11_k4yq8")
 TextEdit/font_sizes/font_size = 24
 TextEdit/styles/focus = ExtResource("1_8vgy3")
 TextEdit/styles/normal = ExtResource("10_ie1gl")

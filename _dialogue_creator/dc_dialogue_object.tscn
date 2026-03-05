@@ -2,9 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
-[ext_resource type="Texture2D" uid="uid://c1ufgk5chws8m" path="res://_dialogue_creator/helpers/plus.png" id="2_t7ld2"]
-[ext_resource type="Texture2D" uid="uid://cqvofb0k4gqm0" path="res://_dialogue_creator/helpers/minus.png" id="3_558q2"]
-[ext_resource type="Texture2D" uid="uid://bikn6ba1vf1bb" path="res://_dialogue_creator/helpers/save.png" id="3_ss33c"]
+[ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_dialogue_creator/helpers/save.svg" id="3_u2mdd"]
+[ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_dialogue_creator/helpers/plus.svg" id="4_mug1a"]
+[ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_dialogue_creator/helpers/minus.svg" id="5_i0lsd"]
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/button_advanced_toggle.gd" id="6_je0p8"]
 [ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_dialogue_creator/option_button_mode.gd" id="7_rapsn"]
 [ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_dialogue_creator/write_speed_aspects.gd" id="8_u2mdd"]
@@ -104,7 +104,7 @@ placeholder_text = "e.g  Dialogue1"
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 0
-icon = ExtResource("3_ss33c")
+icon = ExtResource("3_u2mdd")
 
 [node name="Text" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -136,22 +136,19 @@ text = "Options"
 horizontal_alignment = 2
 
 [node name="AddOption" type="Button" parent="Options"]
-texture_filter = 1
 layout_mode = 2
-icon = ExtResource("2_t7ld2")
+icon = ExtResource("4_mug1a")
 icon_alignment = 1
 
 [node name="RemoveOption" type="Button" parent="Options"]
-texture_filter = 1
 layout_mode = 2
-icon = ExtResource("3_558q2")
+icon = ExtResource("5_i0lsd")
 icon_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="Advanced" type="CheckBox" parent="HBoxContainer" node_paths=PackedStringArray("fields")]
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Advanced"
