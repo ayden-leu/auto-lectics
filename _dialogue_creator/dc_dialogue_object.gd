@@ -3,20 +3,20 @@ class_name DC_DialogueObject
 
 signal id_updated(newID:String)
 signal disconnect_id()
-signal disconnect_option(port:int)
+signal disconnect_option(myName:String, port:int)
 signal disconnect_all_options
 signal save_me(data:Dictionary)
-signal disconnect_hectic_port(port:int)
+signal disconnect_hectic_port(myName:String, port:int)
 signal reconnect_hectic_port(connection:Dictionary)
 ## For internal use.  Do not use.
 signal _option_amount_changed()
 
 @export var dialogueIDField:LineEdit
 @export var textField:TextEdit
-@export var typeField:OptionButton
-@export var modeField:DC_ModeChooser
-@export var writeSpeedAspectsHandler:DC_WriteSpeedAspects
-@export var sfxEventAspectsHandler:DC_SfxAspects
+@export var typeField:DC_TypeFieldOption
+@export var modeField:DC_ModeFieldOption
+@export var writeSpeedAspectsHandler:DC_AspectsWriteSpeed
+@export var sfxEventAspectsHandler:DC_AspectsSfx
 
 @onready var optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
@@ -33,15 +33,25 @@ var id:String:
 		id_updated.emit(value)
 var idUpdateFromField:bool = true
 var text:String:
-	set(value):
-		text = value
-		textField.text = value
-var options:Array[Dictionary] = []
-var optionPorts:Array[Label] = []
-var numOptions:int = 0:
-	set(value):
-		if value >= 0:
-			numOptions = value
+	set(newText):
+		textField.text = newText
+	get():
+		return textField.text
+var type:String:
+	set(newType):
+		typeField.option = newType
+	get():
+		return typeField.option
+var mode:String:
+	set(newMode):
+		modeField.option = newMode
+	get():
+		return modeField.option
+var sfxEventAspects:Dictionary:
+	set(newSfxEventAspects):
+		sfxEventAspectsHandler.aspects = newSfxEventAspects
+	get():
+		return sfxEventAspectsHandler.aspects
 var nextOnHecticFailId:String = ""
 var nextOnHecticPortEnabled:bool = false
 var nextOnHecticPortConnection:Dictionary = {
@@ -50,6 +60,22 @@ var nextOnHecticPortConnection:Dictionary = {
 	"toNode": "",
 	"toPort": 0
 }
+var writeSpeedPreset:String:
+	set(newPreset):
+		writeSpeedAspectsHandler.preset = newPreset
+	get():
+		return writeSpeedAspectsHandler.preset
+var writeSpeedValue:float:
+	set(newSpeed):
+		writeSpeedAspectsHandler.value = newSpeed
+	get():
+		return writeSpeedAspectsHandler.value
+var options:Array[Dictionary] = []
+var optionPorts:Array[Label] = []
+var numOptions:int = 0:
+	set(value):
+		if value >= 0:
+			numOptions = value
 
 func _ready() -> void:
 	createCloseButton()
@@ -96,14 +122,14 @@ func removeOptionPort() -> void:
 	options.pop_back()
 	toRemove.queue_free()
 	
-	disconnect_option.emit(numOptions)
+	disconnect_option.emit(name, numOptions)
 	
 	_option_amount_changed.emit()
 
 func shiftHecticPort(amount:int) -> void:
 	var currentSlot:int = numNodesAboveOptions + numOptions
 	
-	disconnect_hectic_port.emit(numOptions)
+	disconnect_hectic_port.emit(name, numOptions)
 	set_slot(currentSlot,
 		false, 0, Color.TRANSPARENT,
 		false, 0, Color.TRANSPARENT
@@ -129,24 +155,23 @@ func getFields() -> Dictionary:
 	#if font != "":
 		#currentValues.font = font
 	
-	currentValues.type = DialogueDefaults.OPTION_TYPES[typeField.selected]
-	currentValues.mode = DialogueDefaults.DIALOGUE_MODES[modeField.selected]
+	currentValues.type = type
+	currentValues.mode = mode
 	
-	if currentValues.mode == "hectic" and nextOnHecticFailId == "":
+	if mode == "hectic" and not nextOnHecticFailId:
 		# TODO:  make the warning pop up on screen
 		printerr("Next On Hectic Fail not set!")
 	else:
-		currentValues.nextOnHecticFailureID = nextOnHecticFailId
+		if nextOnHecticFailId:
+			currentValues.nextOnHecticFailureID = nextOnHecticFailId
 	
-	var writeSpeedPreset:String = writeSpeedAspectsHandler.getPreset()
 	if writeSpeedPreset != DialogueDefaults.defaultDialogue.writeSpeed:
 		currentValues.writeSpeed = writeSpeedPreset
 		if currentValues.writeSpeed == "custom":
-			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.getValue()
+			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.value
 	
-	var sfxAspects:Dictionary = sfxEventAspectsHandler.getAspects()
-	if sfxAspects != {}:
-		currentValues.sfx = sfxAspects
+	if sfxEventAspects != {}:
+		currentValues.sfx = sfxEventAspects
 	
 	# background theme (unused atm)
 	# particles (unused atm)
@@ -202,7 +227,7 @@ func _on_option_updated(index:int, newValue:Dictionary) -> void:
 
 func _on_set_hectic_port(on: bool) -> void:
 	if not on:
-		disconnect_hectic_port.emit(numOptions)
+		disconnect_hectic_port.emit(name, numOptions)
 	
 	set_slot(numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
@@ -222,17 +247,17 @@ func _on_debug_pressed() -> void:
 	print("Options: ", options)
 	print("OptionPorts: ", optionPorts)
 	print("numOptions: ", numOptions)
-	print("Type: ", DialogueDefaults.OPTION_TYPES[typeField.selected])
-	print("Mode: ", DialogueDefaults.DIALOGUE_MODES[modeField.selected])
+	print("Type: ", typeField.option)
+	print("Mode: ", modeField.option)
 	
-	if DialogueDefaults.DIALOGUE_MODES[modeField.selected] == "hectic":
+	if modeField.option == "hectic":
 		print("Next On Hectic Fail: ", nextOnHecticFailId)
 	
-	if writeSpeedAspectsHandler.getPreset() != DialogueDefaults.defaultDialogue.writeSpeed:
-		print("Write Speed Preset: ", writeSpeedAspectsHandler.getPreset())
-		print("Write Speed Value: ", writeSpeedAspectsHandler.getValue())
+	if writeSpeedAspectsHandler.preset != DialogueDefaults.defaultDialogue.writeSpeed:
+		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
+		print("Write Speed Value: ", writeSpeedAspectsHandler.value)
 	
-	var aspects:Dictionary = sfxEventAspectsHandler.getAspects()
+	var aspects:Dictionary = sfxEventAspectsHandler.aspects
 	if aspects != {}:
 		print("SFX Aspects:")
 		for event in aspects:

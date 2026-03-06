@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5o5n3jy08obe"]
+[gd_scene load_steps=12 format=3 uid="uid://c5o5n3jy08obe"]
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
 [ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_dialogue_creator/visual_assets/save.svg" id="3_u2mdd"]
+[ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_dialogue_creator/helpers/field_option_type.gd" id="4_i0lsd"]
 [ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_dialogue_creator/visual_assets/plus.svg" id="4_mug1a"]
 [ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_dialogue_creator/visual_assets/minus.svg" id="5_i0lsd"]
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/helpers/button_toggle_area.gd" id="6_je0p8"]
-[ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_dialogue_creator/helpers/option_button_mode.gd" id="7_rapsn"]
-[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_dialogue_creator/helpers/write_speed_aspects.gd" id="8_u2mdd"]
-[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_dialogue_creator/helpers/sfx_aspects.gd" id="9_mug1a"]
+[ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_dialogue_creator/helpers/field_option_mode.gd" id="7_rapsn"]
+[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_dialogue_creator/helpers/aspects_write_speed.gd" id="8_u2mdd"]
+[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_dialogue_creator/helpers/aspects_sfx.gd" id="9_mug1a"]
+[ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_dialogue_creator/helpers/field_option_write_speed_preset.gd" id="10_1plpy"]
 
 [node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler")]
 texture_filter = 2
@@ -84,8 +86,8 @@ slot/6/draw_stylebox = true
 script = ExtResource("1_g3bfk")
 dialogueIDField = NodePath("DialogueID/LineEdit")
 textField = NodePath("Text/TextEdit")
-typeField = NodePath("Row1/Type/OptionButton")
-modeField = NodePath("AdvancedOptions/Row1/Mode/OptionButton")
+typeField = NodePath("Row1/TypeField")
+modeField = NodePath("AdvancedOptions/Row1/ModeField")
 writeSpeedAspectsHandler = NodePath("AdvancedOptions/WriteSpeedAspects")
 sfxEventAspectsHandler = NodePath("AdvancedOptions/SfxAspects")
 
@@ -130,24 +132,18 @@ scroll_fit_content_height = true
 [node name="Row1" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Type" type="HBoxContainer" parent="Row1"]
+[node name="TypeField" type="HBoxContainer" parent="Row1" node_paths=PackedStringArray("chooser")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("4_i0lsd")
+chooser = NodePath("OptionButton")
 
-[node name="Label" type="Label" parent="Row1/Type"]
+[node name="Label" type="Label" parent="Row1/TypeField"]
 layout_mode = 2
 text = "Type"
 
-[node name="OptionButton" type="OptionButton" parent="Row1/Type"]
+[node name="OptionButton" type="OptionButton" parent="Row1/TypeField"]
 layout_mode = 2
-selected = 1
-item_count = 3
-popup/item_0/text = "Positive"
-popup/item_0/id = 0
-popup/item_1/text = "Neutral"
-popup/item_1/id = 1
-popup/item_2/text = "Negative"
-popup/item_2/id = 2
 
 [node name="Options" type="HBoxContainer" parent="Row1"]
 layout_mode = 2
@@ -207,22 +203,17 @@ disabled = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Mode" type="HBoxContainer" parent="AdvancedOptions/Row1"]
+[node name="ModeField" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("hecticPortLabel", "chooser")]
 layout_mode = 2
 size_flags_horizontal = 8
-
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/Mode" node_paths=PackedStringArray("hecticPortLabel")]
-layout_mode = 2
-selected = 0
-item_count = 2
-popup/item_0/text = "Normal"
-popup/item_0/id = 0
-popup/item_1/text = "Hectic"
-popup/item_1/id = 1
 script = ExtResource("7_rapsn")
-hecticPortLabel = NodePath("../../../../Row2/Label")
+hecticPortLabel = NodePath("../../../Row2/Label")
+chooser = NodePath("OptionButton")
 
-[node name="Label" type="Label" parent="AdvancedOptions/Row1/Mode"]
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/ModeField"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/ModeField"]
 layout_mode = 2
 text = "Mode"
 
@@ -230,18 +221,16 @@ text = "Mode"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetChooser", "valueSetter")]
+[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetHandler", "valueSetter")]
 layout_mode = 2
 script = ExtResource("8_u2mdd")
-presetChooser = NodePath("WriteSpeedPreset/OptionButton")
+presetHandler = NodePath("WriteSpeedPreset")
 valueSetter = NodePath("WriteSpeedValue/SpinBox")
 
-[node name="WriteSpeedPreset" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects"]
+[node name="WriteSpeedPreset" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects" node_paths=PackedStringArray("chooser")]
 layout_mode = 2
+script = ExtResource("10_1plpy")
+chooser = NodePath("OptionButton")
 
 [node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
 layout_mode = 2
@@ -249,16 +238,6 @@ text = "Write Speed Preset"
 
 [node name="OptionButton" type="OptionButton" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
 layout_mode = 2
-selected = 1
-item_count = 4
-popup/item_0/text = "Slow"
-popup/item_0/id = 0
-popup/item_1/text = "Medium"
-popup/item_1/id = 1
-popup/item_2/text = "Fast"
-popup/item_2/id = 2
-popup/item_3/text = "Custom"
-popup/item_3/id = 3
 
 [node name="HSeparator" type="HSeparator" parent="AdvancedOptions/WriteSpeedAspects"]
 layout_mode = 2
@@ -279,10 +258,11 @@ size_flags_horizontal = 4
 layout_mode = 2
 size_flags_horizontal = 0
 min_value = 1.0
+max_value = 120.0
 value = 1.0
 allow_greater = true
 
-[node name="VSeparator3" type="VSeparator" parent="AdvancedOptions"]
+[node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -299,13 +279,14 @@ layout_mode = 2
 theme_type_variation = &"OptionButtonDisabled"
 disabled = true
 
-[node name="VSeparator4" type="VSeparator" parent="AdvancedOptions"]
+[node name="VSeparator3" type="VSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
+[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("toggler", "eventHolder")]
 layout_mode = 2
 script = ExtResource("9_mug1a")
+toggler = NodePath("CheckBox")
 eventHolder = NodePath("Events")
 
 [node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
@@ -318,7 +299,7 @@ fields = [NodePath("../Events")]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="VSeparator5" type="VSeparator" parent="AdvancedOptions"]
+[node name="VSeparator4" type="VSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -352,9 +333,10 @@ layout_mode = 2
 [connection signal="pressed" from="Row1/Options/RemoveOption" to="." method="_on_remove_option_pressed"]
 [connection signal="resize" from="Row2/Advanced" to="." method="_on_resize_height"]
 [connection signal="toggled" from="Row2/Advanced" to="Row2/Advanced" method="_on_toggled"]
-[connection signal="item_selected" from="AdvancedOptions/Row1/Mode/OptionButton" to="AdvancedOptions/Row1/Mode/OptionButton" method="_on_item_selected"]
-[connection signal="set_hectic_port" from="AdvancedOptions/Row1/Mode/OptionButton" to="." method="_on_set_hectic_port"]
-[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_chooser_item_selected"]
-[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_setter_value_changed"]
+[connection signal="set_hectic_port" from="AdvancedOptions/Row1/ModeField" to="." method="_on_set_hectic_port"]
+[connection signal="item_selected" from="AdvancedOptions/Row1/ModeField/OptionButton" to="AdvancedOptions/Row1/ModeField" method="_on_item_selected"]
+[connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
+[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
+[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_changed"]
 [connection signal="toggled" from="AdvancedOptions/SfxAspects/CheckBox" to="AdvancedOptions/SfxAspects/CheckBox" method="_on_toggled"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

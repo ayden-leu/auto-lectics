@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://citmsrjh10i13"]
 
-[ext_resource type="Script" uid="uid://cvofpenqxwii5" path="res://_dialogue_creator/helpers/sfx_event.gd" id="1_0cuys"]
+[ext_resource type="Script" uid="uid://cvofpenqxwii5" path="res://_dialogue_creator/helpers/field_option_sfx_event.gd" id="1_sed0e"]
 
 [node name="SfxEvent" type="HBoxContainer" node_paths=PackedStringArray("label", "chooser")]
 size_flags_horizontal = 8
-script = ExtResource("1_0cuys")
+script = ExtResource("1_sed0e")
 label = NodePath("Label")
 chooser = NodePath("OptionButton")
 
@@ -14,6 +14,3 @@ text = "Event ID"
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2
-selected = 0
-item_count = 1
-popup/item_0/id = 0

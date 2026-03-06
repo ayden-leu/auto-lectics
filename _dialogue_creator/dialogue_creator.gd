@@ -69,11 +69,14 @@ func saveFile(data:Dictionary) -> void:
 		return
 	file.store_string(JSON.stringify(data, "\t", false))
 	print("Saved: ", (fullPath))
+	
+	file.close()
 
 func createNodesFromFile(filename:String) -> void:
 	var filePath:String = savePath + npcNameField.text + "/" + filename
 	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
 	var data:Dictionary = JSON.parse_string(file.get_as_text())
+	file.close()
 	
 	# create object
 	_on_create_object_pressed()
@@ -82,6 +85,24 @@ func createNodesFromFile(filename:String) -> void:
 	targetObject.id = filename.split(".")[0]
 	targetObject.name = targetObject.id
 	targetObject.text = data.text
+	
+	if data.has("type"):
+		targetObject.type = data.type
+	
+	if data.has("mode"):
+		targetObject.mode = data.mode
+	
+	if data.has("nextOnHecticFailureID"):
+		targetObject.nextOnHecticFailId = data.nextOnHecticFailureID
+	
+	if data.has("writeSpeed"):
+		targetObject.writeSpeedPreset = data.writeSpeed
+	
+	if data.has("writeSpeedCustom"):
+		targetObject.writeSpeedValue = data.writeSpeedCustom
+	
+	if data.has("sfx") and data.sfx != {}:
+		targetObject.sfxEventAspects = data.sfx
 	
 	if not data.has("options"):
 		return
@@ -123,20 +144,33 @@ func loadDialogueTree() -> void:
 	deleteAllNodes()
 	# needed so arrangement is the same each time
 	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
 	loadingDialogueFiles = true
 	
 	for filename in dialogueFileNames:
 		if not filename.ends_with(".json"):
 			continue
-		
 		createNodesFromFile(filename)
 	
+	#await get_tree().process_frame
+		
 	# connect option objects to dialogue objects
 	for optionObject in dialogueOptions:
 		if optionObject.nextID:
 			_on_graph_edit_connection_request(
 				optionObject.name, optionObject.nextIDPort,
 				optionObject.nextID, DC_DialogueObject.dialogueIDPort
+			)
+	
+	#await get_tree().process_frame
+	
+	# connect object hectic port to object if needed
+	for dialogueObject in dialogueObjects:
+		if dialogueObject.nextOnHecticFailId:
+			_on_graph_edit_connection_request(
+				dialogueObject.name, dialogueObject.numOptions,
+				dialogueObject.nextOnHecticFailId, DC_DialogueObject.dialogueIDPort
 			)
 	
 	graphArea.arrange_nodes()
@@ -205,9 +239,9 @@ func _on_save_all_dialogue_pressed() -> void:
 	for dialogueObject in dialogueObjects:
 		dialogueObject.saveToFile()
 
-func _on_object_option_removed(port:int) -> void:
+func _on_object_option_removed(nodeName:String, port:int) -> void:
 	for connection in graphArea.connections:
-		if connection.from_port == port:
+		if connection.from_node == nodeName and connection.from_port == port:
 			var object:DC_DialogueObject = getNode(connection.from_node)
 			var option:DC_DialogueOption = getNode(connection.to_node)
 			
@@ -219,9 +253,9 @@ func _on_object_option_removed(port:int) -> void:
 			)
 			break
 
-func _on_object_disconnect_hectic_port(port:int) -> void:
+func _on_object_disconnect_hectic_port(nodeName:String, port:int) -> void:
 	for connection in graphArea.connections:
-		if connection.from_port == port:
+		if connection.from_node == nodeName and connection.from_port == port:
 			var objectFrom:DC_DialogueObject = getNode(connection.from_node)
 			var objectTo:DC_DialogueObject = getNode(connection.to_node)
 			

@@ -200,4 +200,6 @@ static func _read_text_file(path: String) -> String:
 		printerr("DialogueLoader: Could not open file: ", path)
 		return ""
 	
-	return file.get_as_text()
+	var contents:String = file.get_as_text()
+	file.close()
+	return contents
