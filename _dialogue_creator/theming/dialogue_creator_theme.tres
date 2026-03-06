@@ -1,7 +1,8 @@
-[gd_resource type="Theme" load_steps=30 format=3 uid="uid://caibapog63fvf"]
+[gd_resource type="Theme" load_steps=33 format=3 uid="uid://caibapog63fvf"]
 
 [ext_resource type="StyleBox" uid="uid://ct0bjhg2emo4j" path="res://_dialogue_creator/theming/button_normal.tres" id="1_5nxpm"]
 [ext_resource type="StyleBox" uid="uid://dml1nhie6wo7k" path="res://_dialogue_creator/theming/focus.tres" id="1_8vgy3"]
+[ext_resource type="StyleBox" uid="uid://cpphfo0nhhcaf" path="res://_dialogue_creator/theming/disabled.tres" id="1_g4rfl"]
 [ext_resource type="StyleBox" uid="uid://ck447yxyove4q" path="res://_dialogue_creator/theming/button_hovered.tres" id="1_ky6xr"]
 [ext_resource type="StyleBox" uid="uid://dnug2li70pic4" path="res://_dialogue_creator/theming/button_pressed.tres" id="2_j2834"]
 [ext_resource type="StyleBox" uid="uid://cc1624t6f0gn0" path="res://_dialogue_creator/theming/dialogue_object_titlebar_selected.tres" id="5_7xgx1"]
@@ -20,11 +21,13 @@
 [ext_resource type="StyleBox" uid="uid://dmmw267cu0amm" path="res://_dialogue_creator/theming/text_edit_normal.tres" id="10_ie1gl"]
 [ext_resource type="StyleBox" uid="uid://xhoalws558og" path="res://_dialogue_creator/theming/graph_node_titlebar_selected.tres" id="10_mstms"]
 [ext_resource type="StyleBox" uid="uid://dys0dl4vlqipb" path="res://_dialogue_creator/theming/button_create_option_pressed.tres" id="10_xhrd7"]
-[ext_resource type="Texture2D" uid="uid://bfxiyocsfvkmp" path="res://_dialogue_creator/helpers/arrow_down.svg" id="11_k4yq8"]
-[ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_dialogue_creator/helpers/arrow_up.svg" id="12_g4rfl"]
+[ext_resource type="Texture2D" uid="uid://bfxiyocsfvkmp" path="res://_dialogue_creator/visual_assets/arrow_down.svg" id="11_k4yq8"]
+[ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_dialogue_creator/visual_assets/arrow_up.svg" id="12_g4rfl"]
+[ext_resource type="Texture2D" uid="uid://bhbjoqnwsi2pr" path="res://_dialogue_creator/visual_assets/arrow_down_darker.svg" id="13_cix03"]
 [ext_resource type="StyleBox" uid="uid://bd08mj68c71dr" path="res://_dialogue_creator/theming/label_dialogue_id.tres" id="14_fcqsy"]
 [ext_resource type="StyleBox" uid="uid://botbqvnho3n8n" path="res://_dialogue_creator/theming/label_option.tres" id="14_nn4ja"]
-[ext_resource type="StyleBox" uid="uid://cpphfo0nhhcaf" path="res://_dialogue_creator/theming/label_disabled.tres" id="22_k4yq8"]
+[ext_resource type="Texture2D" uid="uid://baw87kpqxqp4l" path="res://_dialogue_creator/visual_assets/arrow_up_darker.svg" id="15_jdkg6"]
+[ext_resource type="StyleBox" uid="uid://yq4q7xbxno4y" path="res://_dialogue_creator/theming/button_pressed_alt.tres" id="25_g4rfl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1adm"]
 
@@ -36,6 +39,7 @@
 
 [resource]
 Button/font_sizes/font_size = 24
+Button/styles/disabled = ExtResource("1_g4rfl")
 Button/styles/focus = ExtResource("1_8vgy3")
 Button/styles/hover = ExtResource("1_ky6xr")
 Button/styles/normal = ExtResource("1_5nxpm")
@@ -50,9 +54,15 @@ ButtonCreateOption/constants/outline_size = 5
 ButtonCreateOption/styles/hover = ExtResource("8_7lyv4")
 ButtonCreateOption/styles/normal = ExtResource("9_f1adm")
 ButtonCreateOption/styles/pressed = ExtResource("10_xhrd7")
+ButtonNoPress/base_type = &"Button"
+ButtonNoPress/styles/pressed = ExtResource("1_5nxpm")
 CheckBox/font_sizes/font_size = 24
 CheckBox/icons/checked = ExtResource("11_k4yq8")
+CheckBox/icons/checked_disabled = ExtResource("13_cix03")
 CheckBox/icons/unchecked = ExtResource("12_g4rfl")
+CheckBox/icons/unchecked_disabled = ExtResource("15_jdkg6")
+CheckBox/styles/hover_pressed = ExtResource("1_ky6xr")
+CheckBox/styles/pressed = ExtResource("1_5nxpm")
 DialogueObject/base_type = &"GraphNode"
 DialogueObject/styles/titlebar = ExtResource("5_upo1i")
 DialogueObject/styles/titlebar_selected = ExtResource("5_7xgx1")
@@ -83,7 +93,7 @@ LabelDialogueID/constants/outline_size = 5
 LabelDialogueID/styles/normal = ExtResource("14_fcqsy")
 LabelDisabled/base_type = &"Label"
 LabelDisabled/colors/font_color = Color(1, 1, 1, 0.38431373)
-LabelDisabled/styles/normal = ExtResource("22_k4yq8")
+LabelDisabled/styles/normal = ExtResource("1_g4rfl")
 LabelOption/base_type = &"Label"
 LabelOption/constants/outline_size = 5
 LabelOption/styles/normal = ExtResource("14_nn4ja")
@@ -92,6 +102,9 @@ LineEdit/styles/focus = ExtResource("1_8vgy3")
 LineEdit/styles/normal = ExtResource("9_8vgy3")
 OptionButton/font_sizes/font_size = 24
 OptionButton/icons/arrow = ExtResource("11_k4yq8")
+OptionButton/styles/pressed = ExtResource("25_g4rfl")
+OptionButtonDisabled/base_type = &"OptionButton"
+OptionButtonDisabled/icons/arrow = ExtResource("13_cix03")
 TextEdit/font_sizes/font_size = 24
 TextEdit/styles/focus = ExtResource("1_8vgy3")
 TextEdit/styles/normal = ExtResource("10_ie1gl")

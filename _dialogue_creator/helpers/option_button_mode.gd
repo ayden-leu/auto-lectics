@@ -1,4 +1,5 @@
 extends OptionButton
+class_name DC_ModeChooser
 
 signal set_hectic_port(on:bool)
 

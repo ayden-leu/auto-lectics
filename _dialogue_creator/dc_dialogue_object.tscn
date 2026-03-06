@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5o5n3jy08obe"]
+[gd_scene load_steps=10 format=3 uid="uid://c5o5n3jy08obe"]
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
-[ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_dialogue_creator/helpers/save.svg" id="3_u2mdd"]
-[ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_dialogue_creator/helpers/plus.svg" id="4_mug1a"]
-[ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_dialogue_creator/helpers/minus.svg" id="5_i0lsd"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/button_advanced_toggle.gd" id="6_je0p8"]
-[ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_dialogue_creator/option_button_mode.gd" id="7_rapsn"]
-[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_dialogue_creator/write_speed_aspects.gd" id="8_u2mdd"]
+[ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_dialogue_creator/visual_assets/save.svg" id="3_u2mdd"]
+[ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_dialogue_creator/visual_assets/plus.svg" id="4_mug1a"]
+[ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_dialogue_creator/visual_assets/minus.svg" id="5_i0lsd"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/helpers/button_toggle_area.gd" id="6_je0p8"]
+[ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_dialogue_creator/helpers/option_button_mode.gd" id="7_rapsn"]
+[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_dialogue_creator/helpers/write_speed_aspects.gd" id="8_u2mdd"]
+[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_dialogue_creator/helpers/sfx_aspects.gd" id="9_mug1a"]
 
-[node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField", "writeSpeedAspectsHandler")]
+[node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler")]
 texture_filter = 2
 offset_right = 468.0
 offset_bottom = 559.0
@@ -83,9 +84,10 @@ slot/6/draw_stylebox = true
 script = ExtResource("1_g3bfk")
 dialogueIDField = NodePath("DialogueID/LineEdit")
 textField = NodePath("Text/TextEdit")
-typeField = NodePath("AdvancedOptions/Type/OptionButton")
+typeField = NodePath("Row1/Type/OptionButton")
 modeField = NodePath("AdvancedOptions/Row1/Mode/OptionButton")
 writeSpeedAspectsHandler = NodePath("AdvancedOptions/WriteSpeedAspects")
+sfxEventAspectsHandler = NodePath("AdvancedOptions/SfxAspects")
 
 [node name="DialogueID" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -125,37 +127,59 @@ wrap_mode = 1
 tab_input_mode = false
 scroll_fit_content_height = true
 
-[node name="Options" type="HBoxContainer" parent="."]
+[node name="Row1" type="HBoxContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 8
 
-[node name="Label" type="Label" parent="Options"]
+[node name="Type" type="HBoxContainer" parent="Row1"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="Row1/Type"]
+layout_mode = 2
+text = "Type"
+
+[node name="OptionButton" type="OptionButton" parent="Row1/Type"]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "Positive"
+popup/item_0/id = 0
+popup/item_1/text = "Neutral"
+popup/item_1/id = 1
+popup/item_2/text = "Negative"
+popup/item_2/id = 2
+
+[node name="Options" type="HBoxContainer" parent="Row1"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Label" type="Label" parent="Row1/Options"]
 layout_mode = 2
 theme_type_variation = &"LabelOption"
 text = "Options"
 horizontal_alignment = 2
 
-[node name="AddOption" type="Button" parent="Options"]
+[node name="AddOption" type="Button" parent="Row1/Options"]
 layout_mode = 2
 icon = ExtResource("4_mug1a")
 icon_alignment = 1
 
-[node name="RemoveOption" type="Button" parent="Options"]
+[node name="RemoveOption" type="Button" parent="Row1/Options"]
 layout_mode = 2
 icon = ExtResource("5_i0lsd")
 icon_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Row2" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Advanced" type="CheckBox" parent="HBoxContainer" node_paths=PackedStringArray("fields")]
+[node name="Advanced" type="CheckBox" parent="Row2" node_paths=PackedStringArray("fields")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Advanced"
 script = ExtResource("6_je0p8")
 fields = [NodePath("../../AdvancedOptions")]
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="Row2"]
 layout_mode = 2
 theme_type_variation = &"LabelDialogueID"
 text = "Next On Hectic Fail"
@@ -176,6 +200,7 @@ text = "Font"
 
 [node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/Font"]
 layout_mode = 2
+theme_type_variation = &"OptionButtonDisabled"
 disabled = true
 
 [node name="VSeparator" type="VSeparator" parent="AdvancedOptions/Row1"]
@@ -195,31 +220,17 @@ popup/item_0/id = 0
 popup/item_1/text = "Hectic"
 popup/item_1/id = 1
 script = ExtResource("7_rapsn")
-hecticPortLabel = NodePath("../../../../HBoxContainer/Label")
+hecticPortLabel = NodePath("../../../../Row2/Label")
 
 [node name="Label" type="Label" parent="AdvancedOptions/Row1/Mode"]
 layout_mode = 2
 text = "Mode"
 
-[node name="Type" type="HBoxContainer" parent="AdvancedOptions"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="AdvancedOptions/Type"]
-layout_mode = 2
-text = "Type"
-
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Type"]
-layout_mode = 2
-selected = 0
-item_count = 3
-popup/item_0/text = "Positive"
-popup/item_0/id = 0
-popup/item_1/text = "Neutral"
-popup/item_1/id = 1
-popup/item_2/text = "Negative"
-popup/item_2/id = 2
-
 [node name="VSeparator" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -238,7 +249,7 @@ text = "Write Speed Preset"
 
 [node name="OptionButton" type="OptionButton" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
 layout_mode = 2
-selected = 0
+selected = 1
 item_count = 4
 popup/item_0/text = "Slow"
 popup/item_0/id = 0
@@ -271,9 +282,62 @@ min_value = 1.0
 value = 1.0
 allow_greater = true
 
-[node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
+[node name="VSeparator3" type="VSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="BackgroundTheme" type="HBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/BackgroundTheme"]
+layout_mode = 2
+theme_type_variation = &"LabelDisabled"
+text = "Background Theme"
+
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/BackgroundTheme"]
+layout_mode = 2
+theme_type_variation = &"OptionButtonDisabled"
+disabled = true
+
+[node name="VSeparator4" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
+layout_mode = 2
+script = ExtResource("9_mug1a")
+eventHolder = NodePath("Events")
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+text = "SFX Events"
+script = ExtResource("6_je0p8")
+fields = [NodePath("../Events")]
+
+[node name="Events" type="VBoxContainer" parent="AdvancedOptions/SfxAspects"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VSeparator5" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ParticleAspects" type="VBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/ParticleAspects"]
+layout_mode = 2
+disabled = true
+text = "Particles"
+script = ExtResource("6_je0p8")
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/ParticleAspects"]
+layout_mode = 2
+
+[node name="Particles" type="VBoxContainer" parent="AdvancedOptions/ParticleAspects"]
+layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="Debug" type="Button" parent="."]
 layout_mode = 2
@@ -284,12 +348,13 @@ layout_mode = 2
 
 [connection signal="text_changed" from="DialogueID/LineEdit" to="." method="_on_dialogue_id_updated"]
 [connection signal="pressed" from="DialogueID/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="Options/AddOption" to="." method="_on_add_option_pressed"]
-[connection signal="pressed" from="Options/RemoveOption" to="." method="_on_remove_option_pressed"]
-[connection signal="resize" from="HBoxContainer/Advanced" to="." method="_on_resize_height"]
-[connection signal="toggled" from="HBoxContainer/Advanced" to="HBoxContainer/Advanced" method="_on_toggled"]
+[connection signal="pressed" from="Row1/Options/AddOption" to="." method="_on_add_option_pressed"]
+[connection signal="pressed" from="Row1/Options/RemoveOption" to="." method="_on_remove_option_pressed"]
+[connection signal="resize" from="Row2/Advanced" to="." method="_on_resize_height"]
+[connection signal="toggled" from="Row2/Advanced" to="Row2/Advanced" method="_on_toggled"]
 [connection signal="item_selected" from="AdvancedOptions/Row1/Mode/OptionButton" to="AdvancedOptions/Row1/Mode/OptionButton" method="_on_item_selected"]
 [connection signal="set_hectic_port" from="AdvancedOptions/Row1/Mode/OptionButton" to="." method="_on_set_hectic_port"]
 [connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_chooser_item_selected"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_setter_value_changed"]
+[connection signal="toggled" from="AdvancedOptions/SfxAspects/CheckBox" to="AdvancedOptions/SfxAspects/CheckBox" method="_on_toggled"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

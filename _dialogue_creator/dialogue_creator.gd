@@ -15,7 +15,7 @@ var dialogueObjects:Array[DC_DialogueObject] = []
 var dialogueOptions:Array[DC_DialogueOption] = []
 var loadingDialogueFiles:bool = false
 
-var savePath:String = "res://dialogue_objects/"
+var savePath:String = Globals.STORAGE_PATH.DIALOGUE
 var fileExtension:String = ".json"
 
 func createObject(obj:DC_BaseObject) -> void:

@@ -41,6 +41,16 @@ func getFields() -> Dictionary:
 		"text": textField.text
 	}
 	
+	# font (unused atm)
+	# type
+	# writeSpeed
+	# writeSpeedCustom
+	# sfx (unused atm)
+	# backgroundTheme (unused atm)
+	# particles (unused atm)
+	# spawnDelay
+	# lifetime
+	
 	if nextID != "":
 		currentValues["nextID"] = nextID
 

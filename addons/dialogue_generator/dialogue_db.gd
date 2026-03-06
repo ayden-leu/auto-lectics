@@ -76,7 +76,7 @@ func rebuild_index() -> void:
 			by_id[id] = d
 
 static  func get_json_dir() -> String:
-	var dir := "res://dialogue_objects"
+	var dir := Globals.STORAGE_PATH.DIALOGUE
 	DirAccess.make_dir_absolute(dir)
 	return dir
 	

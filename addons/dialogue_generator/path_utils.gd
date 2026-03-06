@@ -2,7 +2,7 @@ extends RefCounted
 class_name DialoguePathUtils
 
 # Base root where everything goes (writeable)
-const BASE_DIR := "res://dialogue_objects"
+const BASE_DIR := Globals.STORAGE_PATH.DIALOGUE
 
 # Make a folder-safe name (avoids weird characters)
 static func sanitize_name(s: String) -> String:

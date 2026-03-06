@@ -1,4 +1,5 @@
 extends VBoxContainer
+class_name DC_WriteSpeedAspects
 
 @export var presetChooser:OptionButton
 @export var valueSetter:SpinBox
