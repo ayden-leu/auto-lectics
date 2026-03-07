@@ -1,33 +1,37 @@
 extends GraphNode
-class_name DC_BaseObject
+class_name DC_BaseNode
+## The base class used for custom nodes for the [DialogueCreator]. This should only be extended by other classes/scripts.
 
-signal disconnect_all(node:DC_BaseObject)
-signal deleting(node:DC_BaseObject)
+## Emitted when this wants to disconnect all connections it currently has.
+signal disconnect_all(node:DC_BaseNode)
+## Emitted when this plans on deleting itself.
+signal deleting(node:DC_BaseNode)
 
-@onready var closeButtonScene:PackedScene = preload("uid://ccer37a12iyow")
+@onready var _closeButtonScene:PackedScene = preload("uid://ccer37a12iyow")
 
-enum PORT_TYPE{
+## The types of ports that can be setup.
+enum PORT_TYPE {
 	OPTION,
 	DIALOGUE
 }
+## The color for the various ports that can be setup.
 const PORT_COLOR:Dictionary = {
 	OPTION = Color("d9543d"),
 	DIALOGUE = Color("00b5b5")
 }
 
 func _ready() -> void:
-	createCloseButton()
+	_createCloseButton()
 
-func createCloseButton() -> void:
-	var close:Button = closeButtonScene.instantiate()
+func _createCloseButton() -> void:
+	var close:Button = _closeButtonScene.instantiate()
 	get_titlebar_hbox().add_child(close)
 	close.pressed.connect(_on_close_button_pressed)
 
+## Deletes this node.
 func delete() -> void:
 	deleting.emit(self)
 	queue_free()
-
-# ---------------------------
 
 func _on_close_button_pressed() -> void:
 	disconnect_all.emit(self)
@@ -35,3 +39,6 @@ func _on_close_button_pressed() -> void:
 
 func _on_resize_height() -> void:
 	size.y = get_minimum_size().y
+
+func _on_toggle_visibility(isVisible:bool) -> void:
+	visible = visible

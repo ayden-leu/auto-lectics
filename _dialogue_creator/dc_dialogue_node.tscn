@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://c5o5n3jy08obe"]
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
-[ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_object.gd" id="1_g3bfk"]
+[ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_dialogue_creator/dc_dialogue_node.gd" id="1_g3bfk"]
 [ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_dialogue_creator/visual_assets/save.svg" id="3_u2mdd"]
 [ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_dialogue_creator/helpers/field_option_type.gd" id="4_i0lsd"]
 [ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_dialogue_creator/visual_assets/plus.svg" id="4_mug1a"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_dialogue_creator/helpers/aspects_sfx.gd" id="9_mug1a"]
 [ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_dialogue_creator/helpers/field_option_write_speed_preset.gd" id="10_1plpy"]
 
-[node name="DC_DialogueObject" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler")]
+[node name="DC_DialogueNode" type="GraphNode" node_paths=PackedStringArray("dialogueIDField", "textField", "typeField", "modeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler")]
 texture_filter = 2
 offset_right = 468.0
 offset_bottom = 559.0
@@ -283,10 +283,9 @@ disabled = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("toggler", "eventHolder")]
+[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
 layout_mode = 2
 script = ExtResource("9_mug1a")
-toggler = NodePath("CheckBox")
 eventHolder = NodePath("Events")
 
 [node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]

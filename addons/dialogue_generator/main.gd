@@ -8,6 +8,9 @@ var npc_name: String = "NPC_Test2"
 var json_path: String = ""
 var dialogues: Array = [] # Array[Dictionary] 但为了兼容你DB里的函数这里不强类型
 
+func _ready() -> void:
+	printerr("WARNING: small aspects about addons/dialogue_generator/mainn.gd might not be up-to-date. Use at your own risk.")
+
 # ----------------------------
 # UI refs - basic
 # ----------------------------

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_dialogue_creator/visual_assets/save.svg" id="5_acglc"]
 [ext_resource type="Texture2D" uid="uid://c1ramlq6b7v5a" path="res://_dialogue_creator/visual_assets/load.svg" id="6_acglc"]
 
-[node name="DialogueCreator" type="Control" node_paths=PackedStringArray("npcNameField")]
+[node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_background", "_menuButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +16,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
-npcNameField = NodePath("MenuButtons/VBoxContainer/HBoxContainer/NPCName")
+_npcNameField = NodePath("MenuButtons/VBoxContainer/HBoxContainer/NPCName")
+_background = NodePath("Background")
+_menuButtons = NodePath("GraphEdit")
 
 [node name="Background" type="ColorRect" parent="."]
 material = ExtResource("3_vav2e")
@@ -81,13 +83,13 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
 
-[node name="CreateDialogueObject" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
+[node name="CreateDialogueNode" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_type_variation = &"ButtonCreateObject"
 text = "Dialogue"
 icon = ExtResource("4_acglc")
 
-[node name="CreateDialogueOptionObject" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
+[node name="CreateOptionNode" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_type_variation = &"ButtonCreateOption"
 text = "Option"
@@ -107,7 +109,7 @@ icon = ExtResource("6_acglc")
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateDialogueObject" to="." method="_on_create_object_pressed"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateDialogueOptionObject" to="." method="_on_create_option_object_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateDialogueNode" to="." method="_on_create_dialogue_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateOptionNode" to="." method="_on_create_option_pressed"]
 [connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/LoadDialogueTree" to="." method="loadDialogueTree"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/LoadDialogueTree" to="." method="_on_load_dialogue_tree_pressed"]

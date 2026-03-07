@@ -1,5 +1,6 @@
 extends Node
 class_name DialogueDefaults
+### Holds default definitions for all dialogue-related aspects.
 
 ## The types of dialogue that exist.
 const DIALOGUE_TYPES:Array[String] = [

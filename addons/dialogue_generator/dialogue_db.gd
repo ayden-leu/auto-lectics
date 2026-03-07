@@ -4,6 +4,9 @@ class_name DialogueDB
 var dialogues: Array[Dictionary] = []
 var by_id: Dictionary = {}
 
+func _ready() -> void:
+	printerr("WARNING: small aspects about dialogue_db.gd might not be up-to-date. Use at your own risk.")
+
 # ----------------------------
 # Schema defaults (match your project needs)
 # ----------------------------

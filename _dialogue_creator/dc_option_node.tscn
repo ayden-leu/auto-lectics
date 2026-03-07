@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://drh1uormkjsbh"]
 
-[ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dc_dialogue_option.gd" id="1_sx0xf"]
+[ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dc_option_node.gd" id="1_sx0xf"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
 [ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_dialogue_creator/helpers/field_option_type.gd" id="3_3u2q4"]
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/helpers/button_toggle_area.gd" id="4_l41k6"]
@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_dialogue_creator/helpers/field_option_write_speed_preset.gd" id="7_vpr3c"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_dialogue_creator/helpers/aspects_sfx.gd" id="8_jt2el"]
 
-[node name="DC_DialogueOption" type="GraphNode" node_paths=PackedStringArray("textField", "typeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler", "spawnDelayField", "lifetimeField")]
+[node name="DC_OptionNode" type="GraphNode" node_paths=PackedStringArray("textField", "typeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler", "spawnDelayField", "lifetimeField")]
 texture_filter = 2
 offset_right = 400.0
 offset_bottom = 572.0
@@ -243,11 +243,9 @@ disabled = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("toggler", "eventHolder")]
+[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
 layout_mode = 2
 script = ExtResource("8_jt2el")
-type = 1
-toggler = NodePath("CheckBox")
 eventHolder = NodePath("Events")
 
 [node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]

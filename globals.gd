@@ -37,6 +37,7 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 		)
 	return dialogue
 
+### Gets the current size of the screen.
 func getScreenSize() -> Vector2:
 	return get_viewport().get_visible_rect().size
 
