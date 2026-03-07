@@ -3,7 +3,7 @@ class_name DC_SfxEventFieldOption
 
 @export var label:Label
 
-var sfxIDs:Array[String] = ["none"]
+var sfxIDs:Array[String] = ["none", "inherit"]
 var eventID:String = "":
 	set(value):
 		eventID = value

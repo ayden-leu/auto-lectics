@@ -10,6 +10,8 @@ var option:String:
 
 func _ready() -> void:
 	fillValueToOptionIndex(DialogueDefaults.WRITE_SPEED_PRESETS.keys())
+	
+	option = DialogueDefaults.defaultDialogue.writeSpeed
 
 func _on_item_selected(_index: int) -> void:
 	option = option

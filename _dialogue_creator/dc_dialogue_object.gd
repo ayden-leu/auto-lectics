@@ -78,15 +78,11 @@ var numOptions:int = 0:
 			numOptions = value
 
 func _ready() -> void:
-	createCloseButton()
-	
+	super()
 	set_slot_color_left(dialogueIDPort, PORT_COLOR.DIALOGUE)
 	set_slot_type_left(dialogueIDPort, PORT_TYPE.DIALOGUE)
-
-func createCloseButton() -> void:
-	var close:Button = closeButtonScene.instantiate()
-	get_titlebar_hbox().add_child(close)
-	close.pressed.connect(_on_close_button_pressed)
+	
+	sfxEventAspects = DialogueDefaults.defaultDialogue.sfx
 
 func createOptionPort() -> void:
 	var optionLabel:Label = optionLabelScene.instantiate()
@@ -151,9 +147,7 @@ func getFields() -> Dictionary:
 		"text": textField.text,
 	}
 	
-	# unused
-	#if font != "":
-		#currentValues.font = font
+	# font (unused atm)
 	
 	currentValues.type = type
 	currentValues.mode = mode
@@ -237,9 +231,6 @@ func _on_set_hectic_port(on: bool) -> void:
 
 func _on_hectic_fail_updated(newID:String) -> void:
 	nextOnHecticFailId = newID
-
-func _on_resize_height() -> void:
-	size.y = get_minimum_size().y
 
 func _on_debug_pressed() -> void:
 	print("------ ", title, " ------")

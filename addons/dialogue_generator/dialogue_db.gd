@@ -120,6 +120,7 @@ func load_or_create(path : String) -> Array:
 		var f := FileAccess.open(path, FileAccess.WRITE)
 		if f != null:
 			f. store_string(JSON.stringify([],"\t"))
+		f.flush()
 		f.close()
 		return []
 		
@@ -130,6 +131,7 @@ func save(path : String, dialogues: Array) -> void:
 		return
 	f.store_string(JSON.stringify(dialogues, "\t"))
 	print("Saved: ", path)
+	f.flush()
 	f.close()
 	
 func find_dialogue(dialogues: Array, did: String) -> Dictionary:

@@ -11,7 +11,7 @@ const DIALOGUE_MODES:Array[String] = [
 ]
 ## The types of options that exist.
 const OPTION_TYPES:Array[String] = [
-	"positive", "neutral", "negative"
+	"neutral", "positive", "negative"
 ]
 ## Text write speed presets.
 const WRITE_SPEED_PRESETS:Dictionary = {
@@ -54,7 +54,7 @@ const defaultDialogue:Dictionary = {
 	"font": "default",
 	"type": "neutral",
 	"writeSpeed": "medium",
-	"writeSpeedCustom": -1.0,
+	"writeSpeedCustom": 0.0,
 
 	"sfx": {
 		"spawn": "none",
@@ -83,8 +83,8 @@ const defaultOption:Dictionary = {
 	"writeSpeedCustom": -1.0,
 
 	"sfx": {
-		"spawn": "inherit",
-		"text": "inherit"
+		"spawn": "none",
+		"text": "none"
 	},
 
 	"backgroundTheme": "inherit",

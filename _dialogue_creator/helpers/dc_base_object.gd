@@ -32,3 +32,6 @@ func delete() -> void:
 func _on_close_button_pressed() -> void:
 	disconnect_all.emit(self)
 	self.delete()
+
+func _on_resize_height() -> void:
+	size.y = get_minimum_size().y

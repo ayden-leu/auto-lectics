@@ -70,6 +70,7 @@ func saveFile(data:Dictionary) -> void:
 	file.store_string(JSON.stringify(data, "\t", false))
 	print("Saved: ", (fullPath))
 	
+	file.flush()
 	file.close()
 
 func createNodesFromFile(filename:String) -> void:
@@ -114,6 +115,24 @@ func createNodesFromFile(filename:String) -> void:
 		var targetOption:DC_DialogueOption = dialogueOptions.back()
 		targetOption.textUpdateFromField = false
 		targetOption.text = option.text
+		
+		if option.has("type"):
+			targetOption.type = option.type
+		
+		if option.has("writeSpeed"):
+			targetOption.writeSpeedPreset = option.writeSpeed
+		
+		if option.has("writeSpeedCustom"):
+			targetOption.writeSpeedValue = option.writeSpeedCustom
+		
+		if option.has("sfx") and option.sfx != {}:
+			targetOption.sfxEventAspects = option.sfx
+		
+		if option.has("spawnDelay"):
+			targetOption.spawnDelay = option.spawnDelay
+		
+		if option.has("lifetime"):
+			targetOption.lifetime = option.lifetime
 		
 		if option.has("nextID"):
 			targetOption.nextID = option.nextID

@@ -15,9 +15,6 @@ var value:float:
 	get():
 		return valueSetter.value
 
-func _ready() -> void:
-	preset = "medium"
-
 func _on_preset_changed() -> void:
 	if preset == "custom":
 		return

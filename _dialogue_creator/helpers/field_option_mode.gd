@@ -15,6 +15,8 @@ var option:String:
 func _ready() -> void:
 	fillValueToOptionIndex(DialogueDefaults.DIALOGUE_MODES)
 	hecticPortLabel.visible = false
+	
+	option = DialogueDefaults.defaultDialogue.mode
 
 func enableHecticPort() -> void:
 	_on_item_selected(valueToOptionIndex.hectic)
