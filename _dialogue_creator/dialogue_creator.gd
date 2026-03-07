@@ -99,8 +99,8 @@ func createNodesFromFile(filename:String) -> void:
 	if data.has("writeSpeed"):
 		targetObject.writeSpeedPreset = data.writeSpeed
 	
-	if data.has("writeSpeedCustom"):
-		targetObject.writeSpeedValue = data.writeSpeedCustom
+		if data.writeSpeed == "custom" and data.has("writeSpeedCustom"):
+			targetObject.writeSpeedValue = data.writeSpeedCustom
 	
 	if data.has("sfx") and data.sfx != {}:
 		targetObject.sfxEventAspects = data.sfx

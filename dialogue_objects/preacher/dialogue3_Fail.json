@@ -1,11 +1,14 @@
 {
 	"text": "In due time you will.",
-		 "sfx":{ "spawn": "dialogueFailSound"},
-	
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
 	"options": [
 		{
 			"text": "[End]",
-			"type": "Negative"
+			"type": "negative"
 		}
 	]
 }

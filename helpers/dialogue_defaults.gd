@@ -15,6 +15,7 @@ const OPTION_TYPES:Array[String] = [
 ]
 ## Text write speed presets.
 const WRITE_SPEED_PRESETS:Dictionary = {
+	"inherit": -1.0,
 	"slow": 30.0,
 	"medium": 60.0,
 	"fast": 120.0,

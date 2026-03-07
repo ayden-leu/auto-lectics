@@ -1,31 +1,35 @@
 {
 	"text": "Who are you? Where'd you come from? How'd you get here?",
-			 "sfx":{ "spawn": "gossipSound"},
-
-	"type": "Angry",
+	"type": "angry",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "dialogue1_TimeFail",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "That's not important.",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue1_Fail"
 		},
 		{
 			"text": "Excuse me?",
+			"type": "neutral",
 			"nextID": "dialogue1_Neutral"
 		},
 		{
 			"text": "Are you okay?",
+			"type": "neutral",
 			"nextID": "dialogue1_Neutral"
 		},
 		{
 			"text": "Who are you?",
+			"type": "neutral",
 			"nextID": "dialogue1_Neutral"
 		},
 		{
 			"text": "I'm new here.",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue2"
 		}
 	]

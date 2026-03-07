@@ -1,14 +1,15 @@
 {
 	"text": "SHE CREATED ME! SHE TURNED ME ON, NOT YOU...ME!",
-	 "sfx":{ "spawn": "preacherSound"},
-	
-	"type": "Angry",
+	"type": "angry",
+	"mode": "normal",
 	"writeSpeed": "fast",
-	"writeSpeedCustom": -1.0,
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[Continue]",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue1_Continue8"
 		}
 	]

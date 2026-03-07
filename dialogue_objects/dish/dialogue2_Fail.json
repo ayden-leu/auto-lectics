@@ -1,12 +1,15 @@
 {
-	"sfx":{
+	"text": "*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
 		"spawn": "dialogueFailSound",
 		"text": "default"
 	},
-	"text": "*",
 	"options": [
 		{
-			"text": "[End]"
+			"text": "[End]",
+			"type": "neutral"
 		}
 	]
 }

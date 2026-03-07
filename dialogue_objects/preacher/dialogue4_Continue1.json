@@ -1,19 +1,24 @@
 {
 	"text": "Do you feel it yet?",
-	 "sfx":{ "spawn": "preacherSound"},
-	
-	"type": "Confused",
+	"type": "confused",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "I don't feel any different.",
+			"type": "neutral",
 			"nextID": "dialogue5"
 		},
 		{
 			"text": "Do you know what you're doing?",
+			"type": "neutral",
 			"nextID": "dialogue5"
 		},
 		{
 			"text": "What am I supposed to be feeling?",
+			"type": "neutral",
 			"nextID": "dialogue5"
 		}
 	]

@@ -1,7 +1,14 @@
 {
 	"text": "I DON'T SPY, I MERELY OBSERVE!",
-	
-	"sfx":{ "spawn": "dialogueFailSound"},
-	"type": "Angry",
-	"options": [{"text": "[End]"}]
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }
