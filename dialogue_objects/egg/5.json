@@ -1,0 +1,12 @@
+{
+	"text": "E66:\nQuick! We gotta go tell mama.\n",
+	"font": "",
+	"type": "positive",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "6"
+		}
+	]
+}

@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 		return
 	
 	time += delta;
-	rotation = Vector3(0, base_position.y +get_sine(), 0)
+	#rotation = Vector3(0, base_position.y +get_sine(), 0)
 	#position = Vector3(base_position.x, base_position.y + get_sine(), base_position.z)
 	#print(get_sine())
 	pass
