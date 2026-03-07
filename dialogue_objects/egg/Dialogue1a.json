@@ -1,15 +1,12 @@
 {
-	"text": "I’m just here for entertainment.",
-	"type": "neutral",
+	"text": "a404:\nHey, mister!\n",
+	"font": "",
+	"type": "positive",
 	"mode": "normal",
-	"sfx": {
-		"spawn": "normalSound",
-		"text": "default"
-	},
 	"options": [
 		{
-			"text": "[End]",
-			"type": "negative"
+			"text": "->",
+			"nextID": "1"
 		}
 	]
 }

@@ -1,0 +1,12 @@
+{
+	"text": "E66:\nUp here!\n",
+	"font": "",
+	"type": "positive",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "2"
+		}
+	]
+}
