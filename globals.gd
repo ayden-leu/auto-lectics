@@ -13,15 +13,17 @@ const SCENES = {
 	"DialogueWarningTile": "uid://wm6t0orfpjfl"
 }
 
-## Holds information for where the dialogue object files are stored and their file type.
-const DIALOGUE = {
-	"storageLocation": "res://dialogue_objects/",
-	"fileType": ".json"
+## Holds information for where certain aspects are stored in the project.
+const STORAGE_PATH = {
+	"DIALOGUE": "res://dialogue_objects/",
+	"SFX": "res://sounds/sfx/"
 }
+## Determines the file type of the dialogue objects.
+const DIALOGUE_FILE_TYPE = ".json"
 
 ## Gets the path to a dialogue object.
 func getDialoguePath(entityName:String, id:String) -> String:
-	return DIALOGUE.storageLocation + entityName + "/" + id + DIALOGUE.fileType
+	return STORAGE_PATH.DIALOGUE + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
 ## Gets the dialogue information within a dialogue object.
 func getDialogueNode(entityName:String, id: String) -> Dictionary:
@@ -31,9 +33,13 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 	if dialogue.is_empty():
 		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, path])
 		return DialogueLoader.loadDialogueNodeFile(
-			DIALOGUE.storageLocation + "fallback" + DIALOGUE.fileType
+			STORAGE_PATH.DIALOGUE + "fallback" + DIALOGUE_FILE_TYPE
 		)
 	return dialogue
+
+### Gets the current size of the screen.
+func getScreenSize() -> Vector2:
+	return get_viewport().get_visible_rect().size
 
 ## Unused. enum mapping for collision layers.
 enum COLLISION_LAYER {

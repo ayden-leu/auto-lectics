@@ -1,11 +1,14 @@
 {
 	"text": "On the second day, the almighty, and extremely well-built, G.O.D said...",
-	 "sfx":{ "spawn": "preacherSound"},
-	
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[Continue]",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue1_Continue4"
 		}
 	]

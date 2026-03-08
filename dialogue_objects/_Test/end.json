@@ -1,0 +1,11 @@
+{
+	"text": "bye",
+	"type": "sad",
+	"mode": "normal",
+	"writeSpeed": "custom",
+	"writeSpeedCustom": 45.0,
+	"sfx": {
+		"spawn": "static",
+		"text": "michaelwave"
+	}
+}

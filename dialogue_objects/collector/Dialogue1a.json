@@ -1,38 +1,19 @@
 {
 	"text": "I don't think youre supposed to be here.",
-	 "sfx":{ "spawn": "normalSound"},
-	"font": "default",
 	"type": "neutral",
 	"mode": "normal",
-	"nextOnHecticFailureID": "",
-	"writeSpeed": "medium",
-	"writeSpeedCustom": 20.0,
 	"sfx": {
-		"spawn": "none",
-		"text": "default"
-	},
-	"backgroundTheme": "default",
-	"particles": {
-		"spawn": {
-			"texture": "none"
-		},
-		"text": {
-			"texture": "none"
-		},
-		"ambient": {
-			"texture": "none"
-		}
+		"spawn": "normalSound"
 	},
 	"options": [
 		{
 			"text": "Are you?",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue2"
 		},
-		
 		{
 			"text": "Sorry, I generally have no idea what I'm doing.",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue3"
 		}
 	]

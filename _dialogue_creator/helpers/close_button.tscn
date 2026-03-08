@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccer37a12iyow"]
+
+[ext_resource type="Texture2D" uid="uid://bled2tf6esuqd" path="res://_dialogue_creator/visual_assets/close.svg" id="1_urnj1"]
+
+[node name="CloseButton" type="Button"]
+offset_right = 24.0
+offset_bottom = 24.0
+icon = ExtResource("1_urnj1")
+icon_alignment = 1

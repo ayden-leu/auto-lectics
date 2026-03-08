@@ -1,25 +1,26 @@
 {
 	"text": "*",
-	"sfx":{
+	"type": "angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue2_Fail",
+	"sfx": {
 		"spawn": "static",
 		"text": "normalSound"
 	},
-	"type": "Angry",
-	"mode": "hectic",
-	"nextOnHecticFailureID": "dialogue2_Fail",
 	"options": [
 		{
 			"text": "Sorry, I'll back off.",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue2_Fail"
 		},
 		{
 			"text": "What are you doing here?",
+			"type": "neutral",
 			"nextID": "dialogue2_Neutral"
 		},
 		{
 			"text": "Am I interrupting?",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue3"
 		}
 	]

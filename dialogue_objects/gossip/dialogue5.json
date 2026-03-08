@@ -1,21 +1,24 @@
 {
 	"text": "All thanks to my flock.",
-				 "sfx":{ "spawn": "gossipSound"},
-
-	"type": "Happy",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "So you spy on them?",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue5_Fail"
 		},
 		{
 			"text": "The birds?",
+			"type": "neutral",
 			"nextID": "dialogue5_Neutral"
 		},
 		{
 			"text": "Nice talking to you.",
-			"type": "Positive"
+			"type": "positive"
 		}
 	]
 }

@@ -1,20 +1,24 @@
 {
 	"text": "*",
-	"sfx":{ "spawn": "upbeat"},
-	"type": "Happy",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "upbeat"
+	},
 	"options": [
 		{
 			"text": "Can you not speak?",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue3_Fail"
 		},
 		{
 			"text": "Listening to anything good?",
+			"type": "neutral",
 			"nextID": "dialogue3_Neutral"
 		},
 		{
 			"text": "What's going on here?",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue4"
 		}
 	]

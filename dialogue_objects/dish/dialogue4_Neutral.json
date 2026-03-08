@@ -1,6 +1,14 @@
 {
-	
 	"text": "*",
-	"sfx":{ "spawn": "michaelwave"},
-	"options": [{"text": "[End]"}]
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "michaelwave"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }

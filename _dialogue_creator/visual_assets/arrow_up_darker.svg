@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666665 8.4666665"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="arrow_up_darker.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="16"
+     inkscape:cx="18.96875"
+     inkscape:cy="21.75"
+     inkscape:window-width="2048"
+     inkscape:window-height="1198"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs1" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-0.03141086,-0.03141113)"><path
+       id="path1"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.05833;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="outline"
+       d="M 6.9041738,6.8680045 V 5.809671 5.800371 4.742038 L 4.2686758,2.0887095 1.6037221,4.742036 v 1.058333 0.0093 1.0583335 h 1.055233 L 4.2686758,5.265516 5.8566923,6.8680025 Z" /><path
+       style="display:inline;fill:#323638;fill-opacity:1;stroke-width:0.066146;stroke-opacity:0.39484"
+       d="M 6.9042053,6.9129935 H 5.8565998 L 4.2687053,5.3106265 2.6590439,6.9129935 H 1.6037054 V 5.845493 l 2.6649999,-2.6534541 2.6355,2.6534541 z"
+       id="path3"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="arrow_wall" /><path
+       style="display:inline;fill:#686f73;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+       d="M 6.9042053,5.8546585 H 5.8565998 L 4.2687053,4.2522924 2.6590439,5.8546585 H 1.6037054 V 4.7871586 l 2.6649999,-2.6534525 2.6355,2.6534525 z"
+       id="path4"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="arrow_top" /></g></svg>

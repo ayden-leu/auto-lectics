@@ -1,16 +1,19 @@
 {
 	"text": "There's no time for elaboration. Are you in or out?",
-	 "sfx":{ "spawn": "preacherSound"},
-	
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "Okay I'm in.",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue4"
 		},
 		{
 			"text": "I don't want to be turned on.",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue3_Fail"
 		}
 	]

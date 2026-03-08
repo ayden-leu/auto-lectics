@@ -1,6 +1,14 @@
 {
 	"text": "You can try, but I never could understand what they said.",
-	
-		 "sfx":{ "spawn": "dialogueFailSound"},
-	"options": [{"text": "[End]"}]
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }

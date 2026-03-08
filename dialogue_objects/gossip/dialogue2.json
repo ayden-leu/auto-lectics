@@ -1,12 +1,14 @@
 {
 	"text": "NEW!?!?! *Parts of the bot fall off*",
-			 "sfx":{ "spawn": "gossipSound"},
-
-	"type": "Happy",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "[Continue]",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue2_Continue1"
 		}
 	]
