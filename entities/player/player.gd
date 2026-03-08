@@ -1,7 +1,7 @@
 @tool
 extends CharacterBody3D
 class_name Player
-## The main node that gets controlled by the player.  Currently, it needs to be added to the InputHandler's "Wants To Know Mouse Moved" and "Wants To Know When Interact" lists.
+## The main node that gets controlled by the player.
 
 ## The anchor for the player camera to attach itself to.
 @onready var cameraAnchor:Marker3D = %CameraAnchor
