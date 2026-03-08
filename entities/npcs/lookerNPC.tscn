@@ -6,11 +6,12 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.47114
 
-[node name="looker" type="Node3D" node_paths=PackedStringArray("model")]
+[node name="looker" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
 script = ExtResource("3_y34t1")
+hitbox = NodePath("Hitbox")
+initialDialogueID = "Dialogue1a"
 model = NodePath("lookerModel")
 myName = "looker"
-initialDialogueID = "Dialogue1a"
 
 [node name="lookerModel" parent="." instance=ExtResource("2_2ow1n")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)

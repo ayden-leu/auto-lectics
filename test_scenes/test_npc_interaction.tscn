@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=11 format=3 uid="uid://dbtcrr1c8clsr"]
 
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="3_aue1p"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_aue1p"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="16_ejbbu"]
 
@@ -72,11 +71,5 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")
 
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("5_aue1p")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
-
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
-manual = false
-loopDuration = 3.0
+loopDurationSeconds = 5.0

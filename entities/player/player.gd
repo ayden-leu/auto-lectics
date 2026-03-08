@@ -1,6 +1,7 @@
 @tool
 extends CharacterBody3D
 class_name Player
+## The main node that gets controlled by the player.
 
 ## The anchor for the player camera to attach itself to.
 @onready var cameraAnchor:Marker3D = %CameraAnchor
@@ -165,8 +166,8 @@ func respawn():
 	global_position = _last_position_stood
 	global_position.y += 0.1
 
-## Rotates the player and camera when the mouse moves horizontally.
-func _onMouseMoved(distanceMoved:Vector2) -> void:
+## Rotates the player when the mouse moves horizontally.
+func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
 	
@@ -180,26 +181,15 @@ func _onMouseMoved(distanceMoved:Vector2) -> void:
 		cameraAnchor.rotation_degrees.x, -max_pitch_degrees, max_pitch_degrees
 	)
 
-## Handles interaction logic.
-func _onInteractPressed() -> void:
+func _on_interact_pressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():
 		interactionRaycast.get_collider().owner._on_interaction()
 
-# Dev-ing stuff
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings:Array[String] = []
-	var numInputHandlers:int = get_tree().get_node_count_in_group("InputHandler")
-	
-	if numInputHandlers < 1 and self != get_tree().edited_scene_root:
-		warnings.push_back(
-			"There isn't a InputHandler node, so the player won't be able to the player character.
-			Consider adding an InputHandler node from the helpers folder.
-		")
-	elif numInputHandlers > 1:
-		warnings.push_back(
-			"There are too many InputHandler nodes.
-			This won't crash the game, but it may lead to unexpected behavior.
-		")
-	
-	return warnings
+func _on_jump_pressed() -> void:
+	if is_on_floor():
+		jump()
+
+func _on_updated_input_direction(newDirection:Vector2) -> void:
+	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
+	handleDirectionInput(direction)

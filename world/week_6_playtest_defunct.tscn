@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://5mqketysr0a7"]
+[gd_scene load_steps=40 format=3 uid="uid://5mqketysr0a7"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_hgacw"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_gkywp"]
@@ -27,10 +27,9 @@
 [ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="27_qx7mq"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="29_mk6m1"]
 [ext_resource type="PackedScene" uid="uid://8v076obpcbuh" path="res://models/npcs/side_NPCS/container.fbx" id="30_hihur"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="31_hjraj"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="31_hjraj"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="32_qdy3o"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="33_k5y6o"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="34_1xcun"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_hgacw")
@@ -512,8 +511,8 @@ metadata/_edit_group_ = true
 [node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("26_xbw3l")]
 transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-myName = "gossip"
 initialDialogueID = "dialogue1"
+myName = "gossip"
 
 [node name="Node" type="Node" parent="npcs/looker"]
 
@@ -575,10 +574,5 @@ focus = NodePath("../Player")
 
 [node name="Camera3D" parent="PlayerCamera" index="0"]
 current = true
-
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("34_1xcun")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [editable path="PlayerCamera"]

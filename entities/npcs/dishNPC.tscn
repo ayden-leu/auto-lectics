@@ -6,11 +6,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_1g2y5"]
 size = Vector3(3.7146912, 3.3453865, 3.8427734)
 
-[node name="dishNPC" type="Node3D" node_paths=PackedStringArray("model")]
+[node name="dishNPC" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
 script = ExtResource("3_ac2w6")
+hitbox = NodePath("Hitbox")
+initialDialogueID = "dialogue1"
 model = NodePath("dishmodel")
 myName = "dish"
-initialDialogueID = "dialogue1"
 
 [node name="dishmodel" parent="." instance=ExtResource("2_tmrmk")]
 transform = Transform3D(0.3630648, 0, 0.9317639, 0, 1, 0, -0.9317639, 0, 0.3630648, 0, -0.10553214, 0)

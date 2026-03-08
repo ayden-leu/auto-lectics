@@ -55,7 +55,6 @@ folder_colors={
 
 [global_group]
 
-InputHandler=""
 NPCs=""
 
 [input]
@@ -117,3 +116,7 @@ dc_select_all={
 3d_physics/layer_2="Environment"
 3d_physics/layer_3="NPC"
 3d_physics/layer_4="Visuals"
+
+[rendering]
+
+occlusion_culling/use_occlusion_culling=true

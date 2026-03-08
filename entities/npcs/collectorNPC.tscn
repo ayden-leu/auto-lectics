@@ -6,11 +6,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
 size = Vector3(1.59375, 7.617676, 1.5296631)
 
-[node name="collector" type="Node3D" node_paths=PackedStringArray("model")]
+[node name="collector" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
 script = ExtResource("1_j8r5x")
+hitbox = NodePath("Area3D")
+initialDialogueID = "Dialogue1a"
 model = NodePath("collector")
 myName = "collector"
-initialDialogueID = "Dialogue1a"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
 
 [node name="collector" parent="." instance=ExtResource("2_q0ys8")]

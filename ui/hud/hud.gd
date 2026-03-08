@@ -14,7 +14,7 @@ var crosshairSpriteNormal:Resource = preload("uid://dnfswnomwkg02")
 var crosshairSpriteInteract:Resource = preload("uid://dtfn27ojmhrxx")
 
 func _ready() -> void:
-	pass
+	$FadeRect.visible = false
 
 func _process(_delta: float) -> void:
 	if not player_camera or not player_camera.focus:
