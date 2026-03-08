@@ -8,7 +8,9 @@ radius = 1.8026067
 
 [node name="egg" type="Node3D" node_paths=PackedStringArray("model", "hitbox")]
 script = ExtResource("1_560c1")
+model = NodePath("egg")
 hitbox = NodePath("Hitbox")
+myName = "egg"
 initialDialogueID = "Dialogue1a"
 model = NodePath("egg")
 hitbox = NodePath("Hitbox")
