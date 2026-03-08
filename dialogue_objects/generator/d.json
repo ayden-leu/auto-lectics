@@ -1,23 +1,26 @@
 {
 	"text": " Won’t tell you \nYou do not follow the pattern \n",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "Yes I do!\nI understand the pattern well.",
+			"type": "neutral",
 			"nextID": "h"
 		},
 		{
 			"text": "Of course I follow the pattern\nIt’s essential after all isn’t it?",
+			"type": "neutral",
 			"nextID": "f"
 		},
 		{
 			"text": "The pattern won’t save you\nYou need to accept things are changing.",
+			"type": "neutral",
 			"nextID": "f"
 		},
 		{
 			"text": "It won’t work\nYou’re already trapped in an endless loop.",
+			"type": "neutral",
 			"nextID": "f"
 		}
 	]

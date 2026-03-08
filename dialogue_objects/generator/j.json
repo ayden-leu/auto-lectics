@@ -1,15 +1,16 @@
 {
 	"text": "Um um oops\nBroke the pattern, dont worry\n\nIt will be \nBe fine, be fine, be fine, be fine\n\nPattern can\nbe hard to keep track of sometimes",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "I can see\nIt seems like a tough job, good luck.",
+			"type": "neutral",
 			"nextID": "k"
 		},
 		{
 			"text": "The pattern...\nMight be easier if you stopped",
+			"type": "neutral",
 			"nextID": "l"
 		}
 	]

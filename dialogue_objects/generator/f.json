@@ -1,11 +1,11 @@
 {
 	"text": "Dont follow\nYou do not follow the pattern",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[EXIT]"
+			"text": "[EXIT]",
+			"type": "neutral"
 		}
 	]
 }

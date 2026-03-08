@@ -1,14 +1,15 @@
 {
 	"text": "...The problem  \nNot enough energy for GOD\n\nCan not run\nGOD, maintenance, + embryo\n\nThe vat thing\nEmbryo only makes things worse\n\nWretched thing \nWe ask too much of ancient parts \n\n",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "That is rough\nGood luck with the pattern and stuff\n"
+			"text": "That is rough\nGood luck with the pattern and stuff\n",
+			"type": "neutral"
 		},
 		{
 			"text": "The pattern\nWhat is that, why must you follow?",
+			"type": "neutral",
 			"nextID": "i"
 		}
 	]
