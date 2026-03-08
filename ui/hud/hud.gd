@@ -40,7 +40,7 @@ func _update_crosshair(canInteract: bool) -> void:
 ## Update the size of the HUD when the screen size changes
 func _on_item_rect_changed() -> void:
 	var newSize:Vector2 = Globals.getScreenSize()
-	size = newSize
-	$ShaderOverlay.size = newSize
-	$CenterContainer.size = newSize
-	$FadeRect.size = newSize
+	#size = newSize
+	#$ShaderOverlay.size = newSize
+	#$CenterContainer.size = newSize
+	#$FadeRect.size = newSize

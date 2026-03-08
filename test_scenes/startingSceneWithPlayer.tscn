@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dx8nrvh1tmxa"]
+[gd_scene load_steps=13 format=3 uid="uid://dx8nrvh1tmxa"]
 
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="1_28o6d"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="1_28o6d"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="2_3tthm"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_3jobp"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="4_x0j5p"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="5_6d7mt"]
 [ext_resource type="PackedScene" uid="uid://pvjkit80e1ea" path="res://test_scenes/startingScene.tscn" id="6_4ktpj"]
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="7_5qgma"]
@@ -41,14 +40,7 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_3jobp")]
 focus = NodePath("../Player")
 
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("4_x0j5p")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
-
 [node name="LoopManager" parent="." instance=ExtResource("5_6d7mt")]
-manual = false
-loopDuration = 3.0
 
 [node name="Test_NPCInteraction" parent="." instance=ExtResource("6_4ktpj")]
 transform = Transform3D(0.9999978, -0.0016553474, -0.0012672258, 0.001657173, 0.9999976, 0.0014337051, 0.0012648375, -0.0014358127, 0.9999981, 0, 0, 0)
