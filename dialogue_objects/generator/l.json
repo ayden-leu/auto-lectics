@@ -1,11 +1,11 @@
 {
 	"text": "I will not\nAnything could happen, begone",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[EXIT]"
+			"text": "[EXIT]",
+			"type": "neutral"
 		}
 	]
 }

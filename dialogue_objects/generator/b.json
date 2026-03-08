@@ -1,11 +1,11 @@
 {
 	"text": "A problem\nChange will bring ruin, not safe",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "->",
+			"type": "neutral",
 			"nextID": "a"
 		}
 	]

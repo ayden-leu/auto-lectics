@@ -1,11 +1,11 @@
 {
 	"text": "I thank you \nSpread  the pattern, keep them all safe",
-	"font": "",
-	"type": "positive",
+	"type": "happy",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[EXIT]"
+			"text": "[EXIT]",
+			"type": "neutral"
 		}
 	]
 }
