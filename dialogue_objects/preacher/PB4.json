@@ -1,0 +1,12 @@
+{
+	"text": "On that third day, the Almighty and Merciful created life.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "PB5"
+		}
+	]
+}

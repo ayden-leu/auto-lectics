@@ -1,0 +1,12 @@
+{
+	"text": "Alright, everyone, get comfortable for the sermon.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "PB2"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "I HAVE SEEN THE LIGHT AND IT IS BRIGHT!",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "PB7"
+		}
+	]
+}

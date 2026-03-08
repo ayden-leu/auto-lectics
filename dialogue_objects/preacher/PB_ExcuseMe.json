@@ -1,0 +1,17 @@
+{
+	"text": "The Divine has no time for questions! When she approaches you, you submit. The almighty loves the submissive. So I ask again, are you turned on!?!? [Hectic Mode]",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "No?",
+			"type": "neutral",
+			"nextID": "PB_No"
+		},
+		{
+			"text": "Yes, I think so.",
+			"type": "neutral",
+			"nextID": "PB_IThink"
+		}
+	]
+}

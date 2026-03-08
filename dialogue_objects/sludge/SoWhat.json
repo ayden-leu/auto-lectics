@@ -1,0 +1,17 @@
+{
+	"text": "So what!?!?! So my life just means nothing to you is that it?",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Yes.",
+			"type": "neutral",
+			"nextID": "JokeAround"
+		},
+		{
+			"text": "No, that's not what I meant.",
+			"type": "neutral",
+			"nextID": "Apologize2"
+		}
+	]
+}

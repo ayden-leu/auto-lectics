@@ -1,0 +1,32 @@
+{
+	"text": "Who are you? Where'd you come from? How'd you get here? [Hectic Mode]",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "That's not important.",
+			"type": "neutral",
+			"nextID": "dialogue1_Fail"
+		},
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Are you okay?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Who are you?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "I'm new here.",
+			"type": "neutral",
+			"nextID": "dialogue2"
+		}
+	]
+}

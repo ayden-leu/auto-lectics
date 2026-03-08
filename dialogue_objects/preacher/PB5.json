@@ -1,0 +1,12 @@
+{
+	"text": "SHE CREATED ME. SHE TURNED ME ON, NOT YOU…ME!",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "PB6"
+		}
+	]
+}

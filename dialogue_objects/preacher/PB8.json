@@ -1,0 +1,22 @@
+{
+	"text": "YOU! ARE YOU TURNED ON?!?! [Hectic Mode]",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "No?",
+			"type": "neutral",
+			"nextID": "PB_No"
+		},
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "PB_ExcuseMe"
+		},
+		{
+			"text": "Yes, I think so.",
+			"type": "neutral",
+			"nextID": "PB_IThink"
+		}
+	]
+}

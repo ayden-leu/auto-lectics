@@ -1,0 +1,22 @@
+{
+	"text": "Why do you wish to know? (≖_≖ ) [Hectic Mode]",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Just curious.",
+			"type": "neutral",
+			"nextID": "Curious"
+		},
+		{
+			"text": "That's none of your concern.",
+			"type": "neutral",
+			"nextID": "Preacher Conversation Fail"
+		},
+		{
+			"text": "I think she can answer my questions.",
+			"type": "neutral",
+			"nextID": "Curious"
+		}
+	]
+}
