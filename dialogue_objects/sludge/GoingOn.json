@@ -1,0 +1,22 @@
+{
+	"text": "What do you mean? We're working, can't you see that? What are you doing? [Hectic Mode]",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Evaluating the facility.",
+			"type": "neutral",
+			"nextID": "Evaluation"
+		},
+		{
+			"text": "That's none of your concern.",
+			"type": "neutral",
+			"nextID": "Concern"
+		},
+		{
+			"text": "Just chatting.",
+			"type": "neutral",
+			"nextID": "Chatting"
+		}
+	]
+}

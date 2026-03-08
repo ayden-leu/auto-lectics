@@ -1,0 +1,17 @@
+{
+	"text": "Anyways, I am PR3, but everyone calls me Preacher, and I will be your guide to getting turned on. Feel free to ask me anything.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What's going on here?",
+			"type": "neutral",
+			"nextID": "TOO"
+		},
+		{
+			"text": "What is your designated task?",
+			"type": "neutral",
+			"nextID": "TOI"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "Unfortunately, I don't know where to find her. Trust me, if I did, I wouldn't be here. Let's say that.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Preacher Conversation End Good"
+		}
+	]
+}

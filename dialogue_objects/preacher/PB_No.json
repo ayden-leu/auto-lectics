@@ -1,0 +1,12 @@
+{
+	"text": "YOU ARE LOST! But that's okay, for I am here to help.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "PreacherBot"
+		}
+	]
+}

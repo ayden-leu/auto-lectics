@@ -1,0 +1,22 @@
+{
+	"text": "Ah, so you want to hear about what it takes to be turned on? ≖‿≖",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "That's not what I asked. ",
+			"type": "neutral",
+			"nextID": "Apologies1"
+		},
+		{
+			"text": "Yes.",
+			"type": "neutral",
+			"nextID": "TOI2"
+		},
+		{
+			"text": "No.",
+			"type": "neutral",
+			"nextID": "Preacher Conversation Fail"
+		}
+	]
+}

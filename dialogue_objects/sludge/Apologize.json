@@ -1,0 +1,22 @@
+{
+	"text": "Sorry? SORRY! You could've killed me. [Hectic Mode]",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I said I was sorry!",
+			"type": "neutral",
+			"nextID": "Apologize2"
+		},
+		{
+			"text": "Then don't stand there!",
+			"type": "neutral",
+			"nextID": "DontStand"
+		},
+		{
+			"text": "So what?",
+			"type": "neutral",
+			"nextID": "SoWhat"
+		}
+	]
+}

@@ -1,0 +1,22 @@
+{
+	"text": "WAIT! Back up, don't get too close. This case is fragile, are you crazy?!?!",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What are you?",
+			"type": "neutral",
+			"nextID": "Question"
+		},
+		{
+			"text": "Oh, sorry.",
+			"type": "neutral",
+			"nextID": "Apologize"
+		},
+		{
+			"text": "I'm looking for something.",
+			"type": "neutral",
+			"nextID": "SludgeBot"
+		}
+	]
+}
