@@ -1,26 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://dx8nrvh1tmxa"]
+[gd_scene load_steps=11 format=3 uid="uid://dx8nrvh1tmxa"]
 
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="1_28o6d"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="2_3tthm"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_3jobp"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="5_6d7mt"]
+[ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="6_3jobp"]
 [ext_resource type="PackedScene" uid="uid://pvjkit80e1ea" path="res://test_scenes/startingScene.tscn" id="6_4ktpj"]
-[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="7_5qgma"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="8_jormd"]
+[ext_resource type="AudioStream" uid="uid://cm7xbp4ft3f10" path="res://test_scenes/space-station-generator.mp3" id="8_x0j5p"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="9_3jobp"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="10_x0j5p"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7dg45"]
-panorama = ExtResource("7_5qgma")
-
-[sub_resource type="Sky" id="Sky_aue1p"]
-sky_material = SubResource("PanoramaSkyMaterial_7dg45")
-
-[sub_resource type="Environment" id="Environment_q8v2a"]
-background_mode = 2
-sky = SubResource("Sky_aue1p")
-ambient_light_sky_contribution = 0.0
-glow_intensity = 0.0
 
 [node name="Test_NPCInteraction" type="Node3D"]
 
@@ -46,12 +35,16 @@ focus = NodePath("../Player")
 transform = Transform3D(0.9999978, -0.0016553474, -0.0012672258, 0.001657173, 0.9999976, 0.0014337051, 0.0012648375, -0.0014358127, 0.9999981, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_q8v2a")
+environment = ExtResource("6_3jobp")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_jormd")
 volume_db = 7.174
 autoplay = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_x0j5p")
+volume_db = 17.175
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2725344, 10.321629, -12.547269)
