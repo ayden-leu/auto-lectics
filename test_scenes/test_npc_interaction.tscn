@@ -72,5 +72,4 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 focus = NodePath("../Player")
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
-manual = false
-loopDuration = 3.0
+loopDurationSeconds = 5.0

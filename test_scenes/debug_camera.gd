@@ -24,10 +24,10 @@ func _process(_delta: float) -> void:
 		mainCamera.current = !mainCamera.current
 		current = !mainCamera.current
 	
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	#else:
+		#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 

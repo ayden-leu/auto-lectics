@@ -26,7 +26,6 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	print(input_dir)
 	update_input_direction.emit(input_dir)
 	
 	# Handle jump.
@@ -39,6 +38,12 @@ func _physics_process(_delta: float) -> void:
 	#player.handleDirectionInput(direction)
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		interact_button_pressed.emit()
+	
+	elif event.is_action_pressed("jump"):
+		jump_pressed.emit()
+	
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
 		#if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
@@ -50,8 +55,4 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-	elif event.is_action_pressed("interact"):
-		interact_button_pressed.emit()
 	
-	elif event.is_action_pressed("jump"):
-		jump_pressed.emit()

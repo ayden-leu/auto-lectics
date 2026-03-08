@@ -13,7 +13,7 @@ signal faded_out
 ## If the looping system should be handled externally or not.  Mainly for testing.
 @export var manual:bool
 ## How long a loop lasts.  Default value = 10 minutes.
-@export var loopDuration: float = 10 * 60
+@export var loopDurationSeconds: float = 10 * 60
 ## How long it takes for the overlay to fade in.
 @export var timeFadeOut: float = 0.6
 ## How long the overlay stays visible.
@@ -38,8 +38,10 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	overlayAlphaVisible = getFadeOverlay().color.a
-	getFadeOverlay().color.a = 0
+	var fadeRect:ColorRect = getFadeOverlay()
+	overlayAlphaVisible = fadeRect.color.a
+	fadeRect.color.a = 0
+	fadeRect.visible = true
 	connectSignals()
 	createLoopTimer()
 	configureTimer()
@@ -54,7 +56,7 @@ func createLoopTimer() -> void:
 
 ## Configures the loop timer based on the export variables.
 func configureTimer() -> void:
-	timer.wait_time = loopDuration
+	timer.wait_time = loopDurationSeconds
 	timer.one_shot = true
 	timer.connect("timeout", _on_loop_timer_timeout)
 

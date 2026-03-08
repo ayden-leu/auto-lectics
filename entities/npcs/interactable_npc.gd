@@ -43,6 +43,7 @@ var currentDialogueID: String = ""
 var wasTalkedTo: bool = false
 
 func _ready() -> void:
+	super()
 	# Makes sure the code after this is only ran in-game
 	if Engine.is_editor_hint():
 		return
