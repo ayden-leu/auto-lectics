@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1n51qylg3q2r"]
+[gd_scene load_steps=12 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_y8ghn"]
@@ -79,7 +79,7 @@ metadata/_edit_group_ = true
 transform = Transform3D(-0.2595526, 0, -0.5175029, 0, 0.5789445, 0, 0.5175029, 0, -0.2595526, -1.9158239, 0.29390883, -11.292264)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
 myName = "gossip"
-initialDialogueID = "SB1"
+initialDialogueID = "GB1"
 talkOnlyOnce = false
 
 [node name="Node" type="Node" parent="npcs/preacher3"]
@@ -104,5 +104,5 @@ wantsToKnowMouseMoved = [NodePath("../Player")]
 wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [node name="LoopManager" parent="." instance=ExtResource("6_hmrtd")]
-manual = false
+manual = true
 loopDuration = 3.0
