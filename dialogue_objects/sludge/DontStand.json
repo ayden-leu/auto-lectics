@@ -1,7 +1,8 @@
 {
 	"text": "Don't stand here?!?! Are you saying that because I don't have any legs!?!?",
 	"type": "neutral",
-	"mode": "normal",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "SoWhat_HecticFail",
 	"options": [
 		{
 			"text": "Yes.",
