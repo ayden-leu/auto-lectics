@@ -2,6 +2,7 @@
 	"text": "I HAVE SEEN THE LIGHT AND IT IS BRIGHT!",
 	"type": "neutral",
 	"mode": "normal",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "[Continue]",

@@ -1,7 +1,8 @@
 {
 	"text": "SHE CREATED ME. SHE TURNED ME ON, NOT YOU…ME!",
-	"type": "neutral",
+	"type": "happy",
 	"mode": "normal",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "[Continue]",
