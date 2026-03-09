@@ -1,0 +1,17 @@
+{
+	"text": "The original plan was to make it perfect. A space with no flaws. I was made to watch over the laborers.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What do you do now?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "So, you are not perfect.",
+			"type": "neutral",
+			"nextID": "Perfection"
+		}
+	]
+}

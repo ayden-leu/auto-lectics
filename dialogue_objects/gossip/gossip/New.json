@@ -1,0 +1,15 @@
+{
+	"text": "NEW!?!?! \n\n*Parts of the bot fall off*",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "positive",
+			"nextID": "QuestionPurpose"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"text": "I have said enough.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

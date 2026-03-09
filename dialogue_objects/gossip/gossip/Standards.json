@@ -1,0 +1,22 @@
+{
+	"text": "We forgone standards long ago. Everyone now does their own thing.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Why's that?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Elaborate.",
+			"type": "neutral",
+			"nextID": "Elaborate"
+		},
+		{
+			"text": "What do you do?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		}
+	]
+}
