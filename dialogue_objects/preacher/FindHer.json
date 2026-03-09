@@ -1,7 +1,9 @@
 {
-	"text": "Why do you wish to know? (≖_≖ ) [Hectic Mode]",
-	"type": "neutral",
-	"mode": "normal",
+	"text": "Why do you wish to know? (≖_≖ ) ",
+	"type": "confused",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "FindHer_HecticFail",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "Just curious.",

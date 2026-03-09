@@ -1,7 +1,8 @@
 {
 	"text": "YOU ARE LOST! But that's okay, for I am here to help.",
-	"type": "neutral",
+	"type": "angry",
 	"mode": "normal",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "[Continue]",

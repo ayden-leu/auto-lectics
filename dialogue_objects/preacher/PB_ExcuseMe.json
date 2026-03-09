@@ -1,7 +1,9 @@
 {
-	"text": "The Divine has no time for questions! When she approaches you, you submit. The almighty loves the submissive. So I ask again, are you turned on!?!? [Hectic Mode]",
-	"type": "neutral",
-	"mode": "normal",
+	"text": "The Divine has no time for questions! When she approaches you, you submit. The almighty loves the submissive. So I ask again, are you turned on!?!?",
+	"type": "angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "PB8_HecticFail",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "No?",
