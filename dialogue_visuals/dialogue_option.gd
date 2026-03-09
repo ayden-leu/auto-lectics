@@ -61,6 +61,8 @@ var lifetime:float = 0.0
 var nextDialogueID:String
 ## The SFX sound events to load sound files into.
 var sfxEventsToLoad:Dictionary
+## Make it possible for dialogue to change a flag.
+var setFlags: Array = []
 
 func _ready() -> void:
 	# Makes sure the code only runs while the game is running
