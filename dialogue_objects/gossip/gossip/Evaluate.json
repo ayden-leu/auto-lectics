@@ -1,0 +1,25 @@
+{
+	"text": "What is there to evaluate?",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "This place is a mess.",
+			"type": "neutral",
+			"nextID": "Mess"
+		},
+		{
+			"text": "Checking to see if this place is up to standards.",
+			"type": "neutral",
+			"nextID": "Standards"
+		},
+		{
+			"text": "Not much, this place is perfect.",
+			"type": "neutral",
+			"nextID": "EvaluatePerfect"
+		}
+	]
+}

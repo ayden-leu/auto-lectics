@@ -1,0 +1,32 @@
+{
+	"text": "That doesn't matter. I ask again: Who are you?",
+	"type": "neutral",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "GB3_HecticFail",
+	"options": [
+		{
+			"text": "That's not important.",
+			"type": "neutral",
+			"nextID": "QuestionImportance"
+		},
+		{
+			"text": "Who are you?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "I'm new here.",
+			"type": "neutral"
+		},
+		{
+			"text": "Are you okay?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "What?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		}
+	]
+}

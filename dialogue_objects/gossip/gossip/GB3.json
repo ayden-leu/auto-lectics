@@ -1,0 +1,38 @@
+{
+	"text": "Who are you? Where'd you come from? How'd you get here?\n\n*Bot begins to spark*",
+	"type": "neutral",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "GB3_HecticFail",
+	"options": [
+		{
+			"text": "That's not important.",
+			"type": "neutral",
+			"nextID": "dialogue1_Fail"
+		},
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
+		},
+		{
+			"text": "Are you okay?",
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
+		},
+		{
+			"text": "Who are you?",
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
+		},
+		{
+			"text": "That's not important.",
+			"type": "neutral",
+			"nextID": "QuestionImportance"
+		},
+		{
+			"text": "I'm new.",
+			"type": "neutral",
+			"nextID": "New"
+		}
+	]
+}
