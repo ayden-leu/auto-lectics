@@ -26,7 +26,13 @@
 		{
 			"text": "I'm new here.",
 			"type": "Positive",
-			"nextID": "dialogue2"
+			"nextID": "dialogue2",
+			"setFlag": [
+				{
+					"flagName": "testFlag",
+					"value": true
+				}
+			]
 		}
 	]
 }

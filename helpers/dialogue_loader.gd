@@ -92,6 +92,9 @@ static func _fill_option_missing_fields(option_obj: Dictionary, dialogue_owner: 
 		option.type
 	)
 	option.font = option_obj.get("font", option.font)
+	
+	option.checkFlag = option_obj.get("checkFlag", option.checkFlag)
+	option.setFlag = option_obj.get("setFlag", option.setFlag)
 		
 	option.writeSpeed = _verify_in_list(
 		option_obj.get("writeSpeed", option.writeSpeed).to_lower(),

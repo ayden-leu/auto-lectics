@@ -629,7 +629,6 @@ autoplay = true
 [node name="dishNPC" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("21_072tr")]
 transform = Transform3D(-0.47506624, 0, -0.49349466, 0, 0.685, 0, 0.49349466, 0, -0.47506624, -25.27201, 0.04699976, -7.569971)
 dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/dishNPC"]
 
@@ -642,7 +641,6 @@ transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.75086
 dialogueBoxAnchor = NodePath("Node/Marker3D")
 myName = "gossip"
 initialDialogueID = "dialogue1"
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/looker"]
 
@@ -653,7 +651,6 @@ metadata/_edit_group_ = true
 [node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("23_qr6ly")]
 transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -0.5170965, 7.2353964, 26.201641)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/preacher"]
 
@@ -664,7 +661,6 @@ metadata/_edit_group_ = true
 [node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("24_e57of")]
 transform = Transform3D(-0.71693957, 0, -0.49687183, 0, 0.8722866, 0, 0.49687183, 0, -0.71693957, 29.016579, -12.451921, 54.780178)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/collector"]
 
@@ -687,7 +683,6 @@ transform = Transform3D(0.834271, 0, -0.5513548, 0, 1, 0, 0.5513548, 0, 0.834271
 [node name="spinner" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("27_ug5cj")]
 transform = Transform3D(0.71970016, 0, 0, 0, 1, 0, 0, 0, 0.71970016, 4.310974, 4.827329, 18.570747)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/spinner"]
 
@@ -723,7 +718,6 @@ script = ExtResource("30_ha65o")
 [node name="container" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("31_ha65o")]
 transform = Transform3D(0.7338738, 0, 0.6271863, 0, 0.9653669, 0, -0.6271863, 0, 0.7338738, 19.63311, 17.308321, -21.130909)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-lookAtPlayer = null
 
 [node name="Node" type="Node" parent="npcs/container"]
 

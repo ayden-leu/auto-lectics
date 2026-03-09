@@ -47,6 +47,7 @@ offset_bottom = 156.0
 script = ExtResource("1_xmswo")
 
 [node name="ShaderOverlay" type="SubViewportContainer" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_e0nub")
 layout_mode = 0
 offset_right = 1152.0
@@ -58,7 +59,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="ShaderOverlay"]
 handle_input_locally = false
 size = Vector2i(1152, 652)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0

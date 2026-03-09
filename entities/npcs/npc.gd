@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 		_follower.progress = clamp(_follower.progress, 0.0, curve_len)
 	
 	# Move NPC directly
-	print("move")
+	#print("move")
 	var target := _follower.global_position
 	global_position = target
 	

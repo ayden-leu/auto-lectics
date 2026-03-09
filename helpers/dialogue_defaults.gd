@@ -81,6 +81,8 @@ static func default_option() -> Dictionary:
 		# === Optional ===
 		"font": "inherit",
 		"type": "neutral",
+		"checkFlag": [],
+		"setFlag": [],
 		"writeSpeed": "inherit",
 		"writeSpeedCustom": -1.0,
 
