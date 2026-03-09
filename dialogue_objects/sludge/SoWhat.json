@@ -1,7 +1,8 @@
 {
 	"text": "So what!?!?! So my life just means nothing to you is that it?",
 	"type": "neutral",
-	"mode": "normal",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "SoWhat_HecticFail",
 	"options": [
 		{
 			"text": "Yes.",
