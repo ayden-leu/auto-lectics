@@ -1,67 +1,74 @@
 extends Control
 class_name DialogueCreator
+## A tool for creating dialogue files to be used in-game.
+
+signal _set_node_visibility(visible:bool)
 
 # Referenced:
 # 	https://www.youtube.com/watch?v=ZD9X3uvyWmg
 
-@export var npcNameField:LineEdit
+@export var _npcNameField:LineEdit
+@export var _background:ColorRect
+@export var _menuButtons:Control
 
-@onready var dialogueObjectScene:PackedScene = preload("uid://c5o5n3jy08obe")
-@onready var dialogueOptionObjectScene:PackedScene = preload("uid://drh1uormkjsbh")
-@onready var graphArea:GraphEdit = $GraphEdit
+@onready var _dialogueNodeScene:PackedScene = preload("uid://c5o5n3jy08obe")
+@onready var _optionNodeScene:PackedScene = preload("uid://drh1uormkjsbh")
+@onready var _graphArea:GraphEdit = $GraphEdit
 
-var initialObjectPosition:Vector2 = Vector2(100, 100)
-var dialogueObjects:Array[DC_DialogueObject] = []
-var dialogueOptions:Array[DC_DialogueOption] = []
+#const initialObjectPosition:Vector2 = Vector2(100, 100)
+const _savePath:String = Globals.STORAGE_PATH.DIALOGUE
+const _fileExtension:String = Globals.DIALOGUE_FILE_TYPE
+
+var _dialogueNodes:Array[DC_DialogueNode] = []
+var _optionNodes:Array[DC_OptionNode] = []
+## If the creator is currently in the process of creating dialogue and option nodes from a dialogue tree.
 var loadingDialogueFiles:bool = false
 
-var savePath:String = "res://dialogue_objects/"
-var fileExtension:String = ".json"
+func _configureNode(node:DC_BaseNode) -> void:
+	node.disconnect_all.connect(_on_base_node_disconnect_all)
+	node.deleting.connect(_on_base_node_deleting)
+	_graphArea.add_child(node)
+	_setNodePosition(node)
 
-func createObject(obj:DC_BaseObject) -> void:
-	obj.disconnect_all.connect(_on_base_object_disconnect_all)
-	obj.deleting.connect(_on_base_object_deleting)
-	graphArea.add_child(obj)
-	setObjectPosition(obj)
-
-func setObjectPosition(obj:GraphNode) -> void:
+func _setNodePosition(obj:DC_BaseNode) -> void:
 	# line of code from:
 	#	https://forum.godotengine.org/t/setting-position-of-graph-node-to-centre-of-graph-edit-view/49403
-	obj.position_offset = (graphArea.scroll_offset + graphArea.size / 2) / graphArea.zoom - obj.size / 2
+	obj.position_offset = (_graphArea.scroll_offset + _graphArea.size / 2) / _graphArea.zoom - obj.size / 2
 
-func getNode(nodeName:StringName) -> DC_BaseObject:
+## Obtains a [DC_BaseNode] reference to one of the [GraphEdit]'s children by the node's name. 
+func getNode(nodeName:StringName) -> DC_BaseNode:
 	# section of code from:
 	#	https://stackoverflow.com/a/77131486
-	var node:DC_BaseObject = graphArea.get_node(
+	var node:DC_BaseNode = _graphArea.get_node(
 		NodePath(nodeName)
 	)
 	
 	return node
 
-func deleteAllNodes() -> void:
-	for _i in range(dialogueOptions.size()):
-		dialogueOptions[0]._on_close_button_pressed()
+func _deleteAllNodes() -> void:
+	for _i in range(_optionNodes.size()):
+		_optionNodes[0]._on_close_button_pressed()
 		
-	for _i in range(dialogueObjects.size()):
-		dialogueObjects[0]._on_close_button_pressed()
+	for _i in range(_dialogueNodes.size()):
+		_dialogueNodes[0]._on_close_button_pressed()
 
-func saveFile(data:Dictionary) -> void:
-	if npcNameField.text == "":
-		printerr("DialogueCreator/saveFile(): NPC Name is empty.")
+func _saveFile(data:Dictionary) -> void:
+	if _npcNameField.text == "":
+		printerr("DialogueCreator/_saveFile(): NPC Name is empty.")
 		return
 	
-	var filename:String = data.id + fileExtension
-	var fullPath:String = savePath + npcNameField.text + "/" + filename
+	var filename:String = data.id + _fileExtension
+	var fullPath:String = _savePath + _npcNameField.text + "/" + filename
 	
 	data.erase("id")
 	print("----------")
 	print("filename: ", filename)
 	print("data: ", data)
-	print("path: ", savePath + filename)
+	print("path: ", _savePath + filename)
 	print("----------")
 	
 	# ensure file directory exists
-	DirAccess.make_dir_absolute(savePath + npcNameField.text)
+	DirAccess.make_dir_absolute(_savePath + _npcNameField.text)
 	
 	var file := FileAccess.open(fullPath, FileAccess.WRITE)
 	if file == null:
@@ -69,19 +76,42 @@ func saveFile(data:Dictionary) -> void:
 		return
 	file.store_string(JSON.stringify(data, "\t", false))
 	print("Saved: ", (fullPath))
+	
+	file.flush()
+	file.close()
 
-func createNodesFromFile(filename:String) -> void:
-	var filePath:String = savePath + npcNameField.text + "/" + filename
+func _createNodesFromFile(filename:String) -> void:
+	var filePath:String = _savePath + _npcNameField.text + "/" + filename
 	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
 	var data:Dictionary = JSON.parse_string(file.get_as_text())
+	file.close()
 	
 	# create object
-	_on_create_object_pressed()
-	var targetObject:DC_DialogueObject = dialogueObjects.back()
-	targetObject.idUpdateFromField = false
-	targetObject.id = filename.split(".")[0]
-	targetObject.name = targetObject.id
-	targetObject.text = data.text
+	_on_create_dialogue_pressed()
+	var newDialogueNode:DC_DialogueNode = _dialogueNodes.back()
+	_set_node_visibility.connect(newDialogueNode._on_toggle_visibility)
+	newDialogueNode.idUpdateFromField = false
+	newDialogueNode.id = filename.split(".")[0]
+	newDialogueNode.name = newDialogueNode.id
+	newDialogueNode.text = data.text
+	
+	if data.has("type"):
+		newDialogueNode.type = data.type
+	
+	if data.has("mode"):
+		newDialogueNode.mode = data.mode
+	
+	if data.has("nextOnHecticFailureID"):
+		newDialogueNode.nextOnHecticFailId = data.nextOnHecticFailureID
+	
+	if data.has("writeSpeed"):
+		newDialogueNode.writeSpeedPreset = data.writeSpeed
+	
+		if data.writeSpeed == "custom" and data.has("writeSpeedCustom"):
+			newDialogueNode.writeSpeedValue = data.writeSpeedCustom
+	
+	if data.has("sfx") and data.sfx != {}:
+		newDialogueNode.sfxEventAspects = data.sfx
 	
 	if not data.has("options"):
 		return
@@ -89,94 +119,132 @@ func createNodesFromFile(filename:String) -> void:
 	# create options
 	var optionIndex:int = 0
 	for option in data.options:
-		_on_create_option_object_pressed()
-		var targetOption:DC_DialogueOption = dialogueOptions.back()
-		targetOption.textUpdateFromField = false
-		targetOption.text = option.text
+		_on_create_option_pressed()
+		var newOptionNode:DC_OptionNode = _optionNodes.back()
+		_set_node_visibility.connect(newOptionNode._on_toggle_visibility)
+		newOptionNode.textUpdateFromField = false
+		newOptionNode.text = option.text
+		
+		if option.has("type"):
+			newOptionNode.type = option.type
+		
+		if option.has("writeSpeed"):
+			newOptionNode.writeSpeedPreset = option.writeSpeed
+		
+		if option.has("writeSpeedCustom"):
+			newOptionNode.writeSpeedValue = option.writeSpeedCustom
+		
+		if option.has("sfx") and option.sfx != {}:
+			newOptionNode.sfxEventAspects = option.sfx
+		
+		if option.has("spawnDelay"):
+			newOptionNode.spawnDelay = option.spawnDelay
+		
+		if option.has("lifetime"):
+			newOptionNode.lifetime = option.lifetime
 		
 		if option.has("nextID"):
-			targetOption.nextID = option.nextID
+			newOptionNode.nextID = option.nextID
 		
-		targetObject.createOptionPort()
+		newDialogueNode.createOptionPort()
 		
 		_on_graph_edit_connection_request(
-			targetObject.name, optionIndex,
-			targetOption.name, targetOption.optionPort
+			newDialogueNode.name, optionIndex,
+			newOptionNode.name, newOptionNode.optionPort
 		)
 		optionIndex += 1
 
-func loadDialogueTree() -> void:
-	if npcNameField.text == "":
-		printerr("DialogueCreator/loadDialogueTree(): NPC Name is empty.")
+func _loadDialogueTree() -> void:
+	if _npcNameField.text == "":
+		printerr("DialogueCreator/_loadDialogueTree(): NPC Name is empty.")
 		return
 	
-	var tempDirAccess:DirAccess = DirAccess.open(savePath)
-	if not tempDirAccess.dir_exists(npcNameField.text):
-		printerr("DialogueCreator: Could not find the NPC folder: ", npcNameField.text)
+	var tempDirAccess:DirAccess = DirAccess.open(_savePath)
+	if not tempDirAccess.dir_exists(_npcNameField.text):
+		printerr("DialogueCreator: Could not find the NPC folder: ", _npcNameField.text)
 		return
 	
-	var dialogueFileNames:PackedStringArray = ResourceLoader.list_directory(savePath + npcNameField.text)
+	var dialogueFileNames:PackedStringArray = ResourceLoader.list_directory(_savePath + _npcNameField.text)
 	if dialogueFileNames.is_empty():
-		printerr("DialogueCreator: Could not find any Dialogue files in NPC folder: ", npcNameField.text)
+		printerr("DialogueCreator: Could not find any Dialogue files in NPC folder: ", _npcNameField.text)
 		return
 	
-	deleteAllNodes()
+	_deleteAllNodes()
 	# needed so arrangement is the same each time
 	await get_tree().process_frame
+	#await get_tree().process_frame
+	#await get_tree().process_frame
 	loadingDialogueFiles = true
 	
 	for filename in dialogueFileNames:
 		if not filename.ends_with(".json"):
 			continue
-		
-		createNodesFromFile(filename)
+		_createNodesFromFile(filename)
 	
+	#await get_tree().process_frame
+		
 	# connect option objects to dialogue objects
-	for optionObject in dialogueOptions:
+	for optionObject in _optionNodes:
 		if optionObject.nextID:
 			_on_graph_edit_connection_request(
 				optionObject.name, optionObject.nextIDPort,
-				optionObject.nextID, DC_DialogueObject.dialogueIDPort
+				optionObject.nextID, DC_DialogueNode.dialogueIDPort
 			)
 	
-	graphArea.arrange_nodes()
+	#await get_tree().process_frame
+	
+	# connect object hectic port to object if needed
+	for dialogueObject in _dialogueNodes:
+		if dialogueObject.nextOnHecticFailId:
+			_on_graph_edit_connection_request(
+				dialogueObject.name, dialogueObject.numOptions,
+				dialogueObject.nextOnHecticFailId, DC_DialogueNode.dialogueIDPort
+			)
+	
+	_set_node_visibility.emit(false)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	_graphArea.arrange_nodes()
 	loadingDialogueFiles = false
+	_set_node_visibility.emit(true)
 
 # --------------
 
-func connectObjectOptionPortToOption(obj:DC_DialogueObject, option:DC_DialogueOption) -> void:
-	obj.disconnect_all_options.connect(option.dialogueDisconnected)
+func _connectDialogueOptionPortToOption(dialogue:DC_DialogueNode, option:DC_OptionNode) -> void:
+	dialogue.disconnect_all_options.connect(option.dialogueDisconnected)
 	
-	option.values_updated.connect(obj._on_option_updated)
-	option.disconnect_dialogue.connect(obj.optionDisconnected)
+	option.values_updated.connect(dialogue._on_option_updated)
+	option.disconnect_dialogue.connect(dialogue.optionDisconnected)
 
-func disconnectObjectOptionPortToOption(obj:DC_DialogueObject, option:DC_DialogueOption) -> void:
-	obj.disconnect_all_options.disconnect(option.dialogueDisconnected)
+func _disconnectDialogueOptionPortToOption(dialogue:DC_DialogueNode, option:DC_OptionNode) -> void:
+	dialogue.disconnect_all_options.disconnect(option.dialogueDisconnected)
 	
-	option.values_updated.disconnect(obj._on_option_updated)
-	option.disconnect_dialogue.disconnect(obj.optionDisconnected)
+	option.values_updated.disconnect(dialogue._on_option_updated)
+	option.disconnect_dialogue.disconnect(dialogue.optionDisconnected)
 	
 	option.dialogueDisconnected()
 
-func connectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
-	obj.id_updated.connect(option._on_next_object_id_modified)
-	obj.disconnect_id.connect(option.dialogueDisconnected)
+func _connectOptionDialoguePortToDialogue(option:DC_OptionNode, dialogue:DC_DialogueNode) -> void:
+	dialogue.id_updated.connect(option._on_next_object_id_modified)
+	dialogue.disconnect_id.connect(option.dialogueDisconnected)
 	
-	option._on_next_object_id_modified(obj.id)
+	option._on_next_object_id_modified(dialogue.id)
 
-func disconnectOptionObjectPortToObject(option:DC_DialogueOption, obj:DC_DialogueObject) -> void:
-	obj.id_updated.disconnect(option._on_next_object_id_modified)
-	obj.disconnect_id.disconnect(option.dialogueDisconnected)
+func _disconnectOptionDialoguePortToDialogue(option:DC_OptionNode, dialogue:DC_DialogueNode) -> void:
+	dialogue.id_updated.disconnect(option._on_next_object_id_modified)
+	dialogue.disconnect_id.disconnect(option.dialogueDisconnected)
 	
 	option._on_next_object_id_modified("")
 
-func connectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_DialogueObject) -> void:
-	objTo.id_updated.connect(objFrom._on_hectic_fail_updated)
-	objTo.disconnect_id.connect(objFrom.nextOnHecticFailIdDisconnected)
+func _connectDialogueHecticPortToDialogue(dialogueFrom:DC_DialogueNode, dialogueTo:DC_DialogueNode) -> void:
+	dialogueTo.id_updated.connect(dialogueFrom._on_hectic_fail_updated)
+	dialogueTo.disconnect_id.connect(dialogueFrom.nextOnHecticFailIdDisconnected)
 	
-	objFrom._on_hectic_fail_updated(objTo.id)
+	dialogueFrom._on_hectic_fail_updated(dialogueTo.id)
 
-func disconnectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_DialogueObject) -> void:
+func _disconnectDialogueHecticPortToDialogue(objFrom:DC_DialogueNode, objTo:DC_DialogueNode) -> void:
 	objTo.id_updated.disconnect(objFrom._on_hectic_fail_updated)
 	objTo.disconnect_id.disconnect(objFrom.nextOnHecticFailIdDisconnected)
 	
@@ -184,73 +252,88 @@ func disconnectObjectHecticFailPortToObject(objFrom:DC_DialogueObject, objTo:DC_
 
 # -------------------------
 
-func _on_create_object_pressed() -> void:
-	var newObj:DC_DialogueObject = dialogueObjectScene.instantiate()
-	newObj.disconnect_option.connect(_on_object_option_removed)
-	newObj.save_me.connect(_on_object_save_me)
-	dialogueObjects.push_back(newObj)
-	createObject(newObj)
+func _on_create_dialogue_pressed() -> void:
+	var newDialogueNode:DC_DialogueNode = _dialogueNodeScene.instantiate()
+	newDialogueNode.disconnect_option.connect(_on_option_node_removed)
+	newDialogueNode.save_me.connect(_on_dialogue_node_save_me)
+	newDialogueNode.disconnect_hectic_port.connect(_on_dialogue_node_disconnect_hectic_port)
+	newDialogueNode.reconnect_hectic_port.connect(_on_dialogue_node_reconnect_hectic_port)
+	_dialogueNodes.push_back(newDialogueNode)
+	_configureNode(newDialogueNode)
 
-func _on_create_option_object_pressed() -> void:
-	var newObj:DC_DialogueOption = dialogueOptionObjectScene.instantiate()
-	dialogueOptions.push_back(newObj)
-	createObject(newObj)
+func _on_create_option_pressed() -> void:
+	var newOptionNode:DC_OptionNode = _optionNodeScene.instantiate()
+	_optionNodes.push_back(newOptionNode)
+	_configureNode(newOptionNode)
 
-func _on_object_save_me(data:Dictionary) -> void:
-	saveFile(data)
+func _on_dialogue_node_save_me(data:Dictionary) -> void:
+	_saveFile(data)
 
 func _on_save_all_dialogue_pressed() -> void:
-	for dialogueObject in dialogueObjects:
-		dialogueObject.saveToFile()
+	for dialogueNode in _dialogueNodes:
+		dialogueNode.saveToFile()
 
-func _on_object_option_removed(port:int) -> void:
-	for connection in graphArea.connections:
-		if connection.from_port == port:
-			var object:DC_DialogueObject = getNode(connection.from_node)
-			var option:DC_DialogueOption = getNode(connection.to_node)
+func _on_load_dialogue_tree_pressed() -> void:
+	_loadDialogueTree()
+
+func _on_option_node_removed(nodeName:String, port:int) -> void:
+	for connection in _graphArea.connections:
+		if connection.from_node == nodeName and connection.from_port == port:
+			var dialogue:DC_DialogueNode = getNode(connection.from_node)
+			var option:DC_OptionNode = getNode(connection.to_node)
 			
-			disconnectObjectOptionPortToOption(object, option)
+			_disconnectDialogueOptionPortToOption(dialogue, option)
 			
-			graphArea.disconnect_node(
+			_graphArea.disconnect_node(
 				connection.from_node, connection.from_port,
 				connection.to_node, connection.to_port
 			)
 			break
 
-func _on_object_disconnect_hectic_fail(port:int) -> void:
-	for connection in graphArea.connections:
-		if connection.from_port == port:
-			var objectFrom:DC_DialogueObject = getNode(connection.from_node)
-			var objectTo:DC_DialogueObject = getNode(connection.to_node)
+func _on_dialogue_node_disconnect_hectic_port(nodeName:String, port:int) -> void:
+	for connection in _graphArea.connections:
+		if connection.from_node == nodeName and connection.from_port == port:
+			var dialogueFrom:DC_DialogueNode = getNode(connection.from_node)
+			var dialogueTo:DC_DialogueNode = getNode(connection.to_node)
 			
-			disconnectObjectHecticFailPortToObject(objectFrom, objectTo)
+			_disconnectDialogueHecticPortToDialogue(dialogueFrom, dialogueTo)
 			
-			graphArea.disconnect_node(
+			_graphArea.disconnect_node(
 				connection.from_node, connection.from_port,
 				connection.to_node, connection.to_port
 			)
 			break
 
-func _on_base_object_disconnect_all(obj:DC_BaseObject) -> void:
-	for connection in graphArea.connections:
-		var fromNode:DC_BaseObject = getNode(connection.from_node)
-		var toNode:DC_BaseObject = getNode(connection.to_node)
+func _on_dialogue_node_reconnect_hectic_port(connection:Dictionary) -> void:
+	if connection.me == "" or connection.toNode == "":
+		return
+	
+	_on_graph_edit_connection_request(
+		connection.me, connection.mePort,
+		connection.toNode, connection.toPort
+	)
+
+func _on_base_node_disconnect_all(node:DC_BaseNode) -> void:
+	for connection in _graphArea.connections:
+		var fromNode:DC_BaseNode = getNode(connection.from_node)
+		var toNode:DC_BaseNode = getNode(connection.to_node)
 		
-		if fromNode == obj or toNode == obj:
-			graphArea.disconnect_node(
+		if fromNode == node or toNode == node:
+			_graphArea.disconnect_node(
 				connection.from_node, connection.from_port,
 				connection.to_node, connection.to_port
 			)
 
-func _on_base_object_deleting(obj:DC_BaseObject) -> void:
-	if obj is DC_DialogueObject:
-		dialogueObjects.erase(obj)
-	elif obj is DC_DialogueOption:
-		dialogueOptions.erase(obj)
+func _on_base_node_deleting(node:DC_BaseNode) -> void:
+	if node is DC_DialogueNode:
+		_dialogueNodes.erase(node)
+	elif node is DC_OptionNode:
+		_optionNodes.erase(node)
 
 func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	# from documentation on get_connection_list_from_node()
-	var fromNodeConnections = graphArea.get_connection_list_from_node(from_node)
+	# limit the number of outgoing connects a port can have to 1
+	var fromNodeConnections = _graphArea.get_connection_list_from_node(from_node)
 	var fromPortConnectionAmount:int = 0
 	for connection in fromNodeConnections:
 		if connection.from_node == from_node and connection.from_port == from_port:
@@ -259,60 +342,74 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 	if fromPortConnectionAmount > 0 and not loadingDialogueFiles:
 		return
 	
-	var fromNode:DC_BaseObject = getNode(from_node)
-	var toNode:DC_BaseObject = getNode(to_node)
+	var fromNode:DC_BaseNode = getNode(from_node)
+	var toNode:DC_BaseNode = getNode(to_node)
 	
 	# dialogue object option port to dialogue option
-	if fromNode is DC_DialogueObject and toNode is DC_DialogueOption:
-		fromNode = fromNode as DC_DialogueObject
-		toNode = toNode as DC_DialogueOption
+	if fromNode is DC_DialogueNode and toNode is DC_OptionNode:
+		#fromNode = fromNode as DC_DialogueNode  # mainly for code completion hints
+		#toNode = toNode as DC_OptionNode        # mainly for code completion hints
 		
-		connectObjectOptionPortToOption(fromNode, toNode)
+		_connectDialogueOptionPortToOption(fromNode, toNode)
 		toNode.port = from_port
 		toNode._on_attribute_modified()
 	
 	# dialogue option next id port to dialogue object
-	elif fromNode is DC_DialogueOption and toNode is DC_DialogueObject: 
-		fromNode = fromNode as DC_DialogueOption
-		toNode = toNode as DC_DialogueObject
+	elif fromNode is DC_OptionNode and toNode is DC_DialogueNode: 
+		#fromNode = fromNode as DC_OptionNode  # mainly for code completion hints
+		#toNode = toNode as DC_DialogueNode    # mainly for code completion hints
 		
-		connectOptionObjectPortToObject(fromNode, toNode)
+		_connectOptionDialoguePortToDialogue(fromNode, toNode)
 	
 	# dialogue object next on hectic fail to dialogue object
-	elif fromNode is DC_DialogueObject and toNode is DC_DialogueObject:
-		fromNode = fromNode as DC_DialogueObject
-		toNode = toNode as DC_DialogueObject
+	elif fromNode is DC_DialogueNode and toNode is DC_DialogueNode:
+		#fromNode = fromNode as DC_DialogueNode  # mainly for code completion hints
+		#toNode = toNode as DC_DialogueNode      # mainly for code completion hints
 		
-		connectObjectHecticFailPortToObject(fromNode, toNode)
+		_connectDialogueHecticPortToDialogue(fromNode, toNode)
+		fromNode.nextOnHecticPortConnection = {
+			"me": from_node,
+			"mePort": from_port,
+			"toNode": to_node,
+			"toPort": to_port
+		}
 	
-	graphArea.connect_node(from_node, from_port, to_node, to_port)
+	_graphArea.connect_node(from_node, from_port, to_node, to_port)
 
 func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	var fromNode:DC_BaseObject = getNode(from_node)
-	var toNode:DC_BaseObject = getNode(to_node)
+	var fromNode:DC_BaseNode = getNode(from_node)
+	var toNode:DC_BaseNode = getNode(to_node)
 	
-	if fromNode is DC_DialogueObject and toNode is DC_DialogueOption:
-		fromNode = fromNode as DC_DialogueObject
-		toNode = toNode as DC_DialogueOption
+	if fromNode is DC_DialogueNode and toNode is DC_OptionNode:
+		#fromNode = fromNode as DC_DialogueNode  # mainly for code completion hints
+		#toNode = toNode as DC_OptionNode        # mainly for code completion hints
 		
-		disconnectObjectOptionPortToOption(fromNode, toNode)
+		_disconnectDialogueOptionPortToOption(fromNode, toNode)
 		fromNode.optionDisconnected(from_port)
 	
-	elif fromNode is DC_DialogueOption and toNode is DC_DialogueObject: 
-		fromNode = fromNode as DC_DialogueOption
-		toNode = toNode as DC_DialogueObject
+	elif fromNode is DC_OptionNode and toNode is DC_DialogueNode: 
+		#fromNode = fromNode as DC_OptionNode  # mainly for code completion hints
+		#toNode = toNode as DC_DialogueNode    # mainly for code completion hints
 		
-		disconnectOptionObjectPortToObject(fromNode, toNode)
+		_disconnectOptionDialoguePortToDialogue(fromNode, toNode)
 	
-	elif fromNode is DC_DialogueObject and toNode is DC_DialogueObject:
-		fromNode = fromNode as DC_DialogueObject
-		toNode = toNode as DC_DialogueObject
+	elif fromNode is DC_DialogueNode and toNode is DC_DialogueNode:
+		#fromNode = fromNode as DC_DialogueNode  # mainly for code completion hints
+		#toNode = toNode as DC_DialogueNode      # mainly for code completion hints
 		
-		disconnectObjectHecticFailPortToObject(fromNode, toNode)
+		_disconnectDialogueHecticPortToDialogue(fromNode, toNode)
 	
-	graphArea.disconnect_node(from_node, from_port, to_node, to_port)
+	_graphArea.disconnect_node(from_node, from_port, to_node, to_port)
 
 func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 	for nodeName in nodes:
-		var node:DC_BaseObject = getNode(nodeName)
+		var node:DC_BaseNode = getNode(nodeName)
 		node._on_close_button_pressed()
+
+func _on_item_rect_changed() -> void:
+	var newSize:Vector2 = Globals.getScreenSize()
+	set_deferred("size", newSize)
+	_background.set_deferred("size", newSize)
+	_menuButtons.set_deferred("position.x", newSize.x - 11)
+	if _graphArea:
+		_graphArea.set_deferred("size", newSize)

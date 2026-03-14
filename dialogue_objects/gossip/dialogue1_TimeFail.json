@@ -1,7 +1,14 @@
 {
 	"text": "Guh. What's the point in talking to you if you're just gonna be boring.",
-		 "sfx":{ "spawn": "dialogueFailSound"},
-
-	"type": "Angry",
-	"options": [	{"text": "[End]"}	]
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }

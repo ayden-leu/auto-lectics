@@ -1,5 +1,14 @@
-{		 "sfx":{ "spawn": "upbeat"},
-
+{
 	"text": "*",
-	"options": [{"text": "[End]"}]
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "upbeat"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }

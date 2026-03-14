@@ -1,17 +1,15 @@
 extends Node
 class_name AudioLoader
 
-const SFX_PATH:String = "res://sounds/sfx/"
-
 static func loadAudioFiles(id:String, audioStream:AudioStreamRandomizer) -> void:
 	if id == "none":
 		return
 		
-	var tempDirAccess:DirAccess = DirAccess.open(SFX_PATH)
+	var tempDirAccess:DirAccess = DirAccess.open(Globals.STORAGE_PATH.SFX)
 	if not tempDirAccess.dir_exists(id):
 		printerr("AudioLoader: Could not find the SFX ID folder: ", id)
 	
-	var soundIDPath:String = SFX_PATH + id
+	var soundIDPath:String = Globals.STORAGE_PATH.SFX + id
 	var audioFileNames:PackedStringArray = ResourceLoader.list_directory(soundIDPath)
 	if audioFileNames.is_empty():
 		printerr("AudioLoader: Could not find any SFX in SFX ID folder: ", id)

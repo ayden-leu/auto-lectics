@@ -1,11 +1,14 @@
 {
 	"text": "turning you on, as well.",
-	 "sfx":{ "spawn": "preacherSound"},
-	
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[Continue]",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue2"
 		}
 	]

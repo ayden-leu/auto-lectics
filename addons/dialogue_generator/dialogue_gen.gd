@@ -20,6 +20,7 @@ var selected_node_id: String = ""
 var selected_option_index: int = -1
 
 func _ready() -> void:
+	printerr("WARNING: I don't know how you're using dialogue_gen.gd as opening it gives a bunch of errors in the console output.")
 	_build_ui()
 
 func _build_ui() -> void:

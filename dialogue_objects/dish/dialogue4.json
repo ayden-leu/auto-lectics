@@ -1,20 +1,24 @@
 {
 	"text": "*",
-	"sfx":{ "spawn": "weird"},
-	"type": "Happy",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "weird"
+	},
 	"options": [
 		{
 			"text": "I can't understand you.",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue4_Fail"
 		},
 		{
 			"text": "Uhh...",
+			"type": "neutral",
 			"nextID": "dialogue4_Neutral"
 		},
 		{
 			"text": "Seems like a lot has been going on.",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue5"
 		}
 	]

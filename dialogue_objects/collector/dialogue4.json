@@ -1,9 +1,14 @@
 {
-	"text": "Well. Good for them. I think I'm gonna stay here... 
-	Pretty sure the only way out is down.",
-		 "sfx":{ "spawn": "normalSound"},
-
-	"type": "Confused",
-	"options": [ {"text": "[End]"}
+	"text": "Well. Good for them. I think I'm gonna stay here... \nPretty sure the only way out is down.",
+	"type": "confused",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "normalSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
 	]
 }

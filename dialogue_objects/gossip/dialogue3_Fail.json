@@ -1,7 +1,14 @@
 {
 	"text": "Oh no, I already said too much. I don't give information away for free.",
-	
-		 "sfx":{ "spawn": "dialogueFailSound"},
-	"type": "Angry",
-	"options": [{"text": "[End]"}]
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }

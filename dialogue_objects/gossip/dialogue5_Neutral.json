@@ -1,6 +1,14 @@
 {
 	"text": "Birds? *A piece of the bot falls off*",
-	"sfx":{ "spawn": "dialogueFailSound"},
-	"type": "Confused",
-	"options": [{"text": "[End]"}]
+	"type": "confused",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }

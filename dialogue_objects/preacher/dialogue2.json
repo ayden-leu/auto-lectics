@@ -1,26 +1,26 @@
 {
 	"text": "YOU! ARE YOU TURNED ON?!?!",
-	 "sfx":{ "spawn": "preacherSound"},
-	"mode": "hectic",
-	"type": "Angry",
+	"type": "angry",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "dialogue2_Fail",
 	"writeSpeed": "fast",
-	"writeSpeedCustom": -1.0,
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
-
 		{
 			"text": "I don't want to be turned on.",
-			"type": "Negative",
+			"type": "negative",
 			"nextID": "dialogue2_Fail"
 		},
 		{
 			"text": "Yes, I think so.",
+			"type": "neutral",
 			"nextID": "dialogue2_Neutral"
 		},
 		{
 			"text": "What?",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue3"
 		}
 	]

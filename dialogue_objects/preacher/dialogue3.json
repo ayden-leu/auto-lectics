@@ -1,12 +1,14 @@
 {
 	"text": "Everyone feast your eyes on this newly activated body...",
-	 "sfx":{ "spawn": "preacherSound"},
-	
-	"type": "Happy",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[Continue]",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue3_Continue1"
 		}
 	]

@@ -4,6 +4,9 @@ class_name DialogueDB
 var dialogues: Array[Dictionary] = []
 var by_id: Dictionary = {}
 
+func _ready() -> void:
+	printerr("WARNING: small aspects about dialogue_db.gd might not be up-to-date. Use at your own risk.")
+
 # ----------------------------
 # Schema defaults (match your project needs)
 # ----------------------------
@@ -76,7 +79,7 @@ func rebuild_index() -> void:
 			by_id[id] = d
 
 static  func get_json_dir() -> String:
-	var dir := "res://dialogue_objects"
+	var dir := Globals.STORAGE_PATH.DIALOGUE
 	DirAccess.make_dir_absolute(dir)
 	return dir
 	
@@ -114,11 +117,14 @@ func load_or_create(path : String) -> Array:
 		if typeof(parsed) != TYPE_ARRAY:
 			push_error("Root JSON must be an array.")
 			return []
+		f.close()
 		return parsed
 	else:
 		var f := FileAccess.open(path, FileAccess.WRITE)
 		if f != null:
 			f. store_string(JSON.stringify([],"\t"))
+		f.flush()
+		f.close()
 		return []
 		
 func save(path : String, dialogues: Array) -> void:
@@ -128,6 +134,8 @@ func save(path : String, dialogues: Array) -> void:
 		return
 	f.store_string(JSON.stringify(dialogues, "\t"))
 	print("Saved: ", path)
+	f.flush()
+	f.close()
 	
 func find_dialogue(dialogues: Array, did: String) -> Dictionary:
 	for d in dialogues:

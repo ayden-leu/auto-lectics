@@ -1,8 +1,14 @@
 {
 	"text": "WHY WOULD YOU ASK ME THAT!?!?! I'M NOT MALFUNCTIONING!!!",
-	
-		 "sfx":{ "spawn": "dialogueFailSound"},
-	"type": "Angry",
-	"options": [{"text": "[End]"}]
-
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
 }
