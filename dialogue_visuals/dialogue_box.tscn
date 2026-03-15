@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dwqide2q2tp3i"]
+[gd_scene load_steps=15 format=3 uid="uid://dwqide2q2tp3i"]
 
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
+[ext_resource type="FontFile" uid="uid://cse630fceihkc" path="res://dialogue_visuals/Bitcount/static/Bitcount_Roman-Medium.ttf" id="3_0kl3i"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
 [ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/type_writer_label.gd" id="3_ane15"]
 [ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
@@ -44,6 +45,8 @@ mesh = SubResource("BoxMesh_ilnc5")
 [node name="DialogueLabel" type="Label3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.09841019, 1.1696776, 0.99419135)
 text = "test message"
+font = ExtResource("3_0kl3i")
+outline_size = 0
 horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2

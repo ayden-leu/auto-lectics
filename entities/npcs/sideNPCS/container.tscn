@@ -6,9 +6,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_g1gq4"]
 size = Vector3(15.211182, 4.095703, 6.5566406)
 
-[node name="container" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
+[node name="container" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("1_gw5m8")
 hitbox = NodePath("Hitbox")
+dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAttachMethod = 1
 initialDialogueID = "Dialogue1a"
 model = NodePath("container")
 myName = "container"
@@ -25,3 +27,6 @@ monitoring = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1925826, -1.6259651, -2.0249405)
 shape = SubResource("BoxShape3D_g1gq4")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.6129593, -0.6041043, -0.5092533, -0.6844793, -0.08404344, -0.7241719, 0.39467594, 0.7924611, -0.4650121, -6.150137, 6.461483, 7.729146)

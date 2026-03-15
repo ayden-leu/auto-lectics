@@ -41,4 +41,4 @@ func _on_resize_height() -> void:
 	size.y = get_minimum_size().y
 
 func _on_toggle_visibility(isVisible:bool) -> void:
-	visible = visible
+	visible = isVisible

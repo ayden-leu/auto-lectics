@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AUTO-Lectics"
-run/main_scene="uid://dx8nrvh1tmxa"
+run/main_scene="uid://dynwn4finljcb"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -24,6 +24,7 @@ Globals="*res://globals.gd"
 window/size/viewport_width=1440
 window/size/viewport_height=810
 window/size/mode=2
+window/stretch/aspect="expand"
 
 [editor]
 
