@@ -4,99 +4,133 @@ extends Node3D
 class_name NPC
 ## The base class of all NPCs in the game.  
 
+## The ways an [NPC] can follow a [member patrolPath].
+enum PATH_FOLLOW_METHOD {
+	LOOP,  ## When this [NPC] reaches the last point on the [member patrolPath], it will go to the starting point on the [member patrolPath] directly.
+	PING_PONG  ## When this [NPC] reaches the last point on the [member patrolPath], it will turn around and follow the [member patrolPath] in reverse.
+}
+
 ## The main model of the NPC.  Not used for anything in the base NPC class, but may be used in classes or scripts that extend the NPC class.
 @export var model:Node3D
 ## The name of the NPC.  Not used for anything in the base NPC class, but may be used in classes that extend the NPC class.
 @export var myName:String = ""
 
-# TODO:  write what these do
-@export var patrol_path: Path3D
-@export var patrol_enabled: bool = true
-@export var patrol_speed: float = 2.0
-@export var loop_path: bool = true
-@export var ping_pong: bool = false
-@export var wait_at_ends: float = 0.0
-@export var face_move_direction: bool = true
+## If this [NPC] should start patrolling.
+@export var patrolEnabled: bool = false:
+	set(value):
+		patrolEnabled = value
+		notify_property_list_changed()
 
-var _follower: PathFollow3D
-var _dir: float = 1.0
-var _waiting: bool = false
-var _last_position: Vector3
+@export_category("Patrolling")
+## The path this [NPC] follows while patrolling.
+@export var patrolPath: Path3D
+## How fast this [NPC] should move along the [member patrolPath]. 
+@export var patrolSpeed: float = 2.0
+## How this [NPC] should patrol on its [member patrolPath].
+@export var pathFollowMode:PATH_FOLLOW_METHOD:
+	set(value):
+		pathFollowMode = value
+		notify_property_list_changed()
+## If [member pathFollowMode] is set to [constant PING_PONG] and this [NPC] reaches the end of the path, it will wait this long in seconds before traversing the path backwards.
+@export var waitAtEndDuration: float = 0.0
+# unused, but could be helpful in the future
+#@export var face_move_direction: bool = true
+
+## The position that this [NPC] should look at.  Set to Vector3.ZERO if you don't want them to look at anything.  Cannot set to null due to [url]https://github.com/godotengine/godot-proposals/issues/162[/url]
+var lookAtPosition:Vector3 = Vector3.ZERO
+# Used to figure out the next position this NPC should go to along the patrolPath.
+var _pathFollower: PathFollow3D
+# Technically this can also modify the patrolSpeed, but it's only used for flipping the direction this NPC follows a path.
+var _pathFollowDirection: float = 1.0
+var _stopFollowingPath: bool = false
 
 func _ready() -> void:
 	add_to_group("NPCs")
 
 	if Engine.is_editor_hint():
 		return
-	_setup_path_follow()
-	_last_position = global_position
-
-func _setup_path_follow() -> void:
-	if patrol_path == null:
-		return
 	
-	## Create PathFollow3D child node
-	_follower = PathFollow3D.new()
-	_follower.name = "PathFollow"
-	_follower.loop = loop_path and not ping_pong
-	patrol_path.add_child(_follower)
-	
-	# Start at closest point
-	if patrol_path.curve:
-		var offset := patrol_path.curve.get_closest_offset(patrol_path.to_local(global_position))
-		_follower.progress = offset
-	else:
-		_follower.progress = 0.0
+	if patrolEnabled:
+		_setup_path_follow()
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	if not patrol_enabled or patrol_path == null or _follower == null:
-		return
-	if _waiting:
+	
+	if patrolEnabled and not _stopFollowingPath and patrolPath:
+		_moveOnPath(delta)
+	
+	if lookAtPosition != Vector3.ZERO:
+		_turnToLookAtPosition(delta)
+
+func _setup_path_follow() -> void:
+	if patrolPath == null:
 		return
 	
-	var curve_len := patrol_path.curve.get_baked_length()
-	_follower.progress += patrol_speed * delta * _dir
+	# Create PathFollow3D child node
+	_pathFollower = PathFollow3D.new()
+	_pathFollower.loop = (pathFollowMode == PATH_FOLLOW_METHOD.LOOP)
+	patrolPath.add_child(_pathFollower)
+	
+	# Start at closest point
+	if patrolPath.curve:
+		var offset := patrolPath.curve.get_closest_offset(patrolPath.to_local(global_position))
+		_pathFollower.progress = offset
+	else:
+		_pathFollower.progress = 0.0
+
+func _moveOnPath(delta:float) -> void:
+	var curve_len := patrolPath.curve.get_baked_length()
+	_pathFollower.progress += patrolSpeed * delta * _pathFollowDirection
 	
 	# Behavior when ping pong (going back and forth on path)
-	if ping_pong:
-		if _follower.progress >= curve_len:
-			_follower.progress = curve_len
-			_dir = -1.0
+	if (pathFollowMode == PATH_FOLLOW_METHOD.PING_PONG):
+		if _pathFollower.progress >= curve_len:
+			_pathFollower.progress = curve_len
+			_pathFollowDirection = -1.0
 			_maybe_wait()
-		elif _follower.progress <= 0.0:
-			_follower.progress = 0.0
-			_dir = 1.0
+		elif _pathFollower.progress <= 0.0:
+			_pathFollower.progress = 0.0
+			_pathFollowDirection = 1.0
 			_maybe_wait()
 	
 	# Behavior when on a closed curve w/ looping enabled
-	elif loop_path:
-		_follower.progress = fposmod(_follower.progress, curve_len)
+	elif (pathFollowMode == PATH_FOLLOW_METHOD.LOOP):
+		_pathFollower.progress = fposmod(_pathFollower.progress, curve_len)
+	
 	# Undefined behavior - follows path once to completion
 	else:
-		_follower.progress = clamp(_follower.progress, 0.0, curve_len)
-	
-	# Move NPC directly
-	print("move")
-	var target := _follower.global_position
-	global_position = target
+		_pathFollower.progress = clamp(_pathFollower.progress, 0.0, curve_len)
 	
 	# Face forward on path
-	if face_move_direction:
-		var move_dir := target - _last_position
-		move_dir.y = 0.0
-		if move_dir.length() > 0.01:
-			look_at(global_position + move_dir, Vector3.UP)
-	_last_position = target
+	lookAtPosition = _pathFollower.global_position
+	
+	# wait for this NPC to turn "forward"
+	await get_tree().process_frame
+	
+	# Move NPC on path
+	global_position = _pathFollower.global_position
 
-## Wait at end of path before going back, if wait time is declared
+# Function to face whoever interacted with this [InteractableNPC]. Useful for moving NPCs.
+func _turnToLookAtPosition(delta: float) -> void:
+	var direction := lookAtPosition - global_position
+	direction.y = 0.0
+	
+	direction = direction.normalized()
+	var target_dir := atan2(-direction.x, -direction.z)
+	
+	rotation.y = lerp_angle(rotation.y, target_dir, 5 * delta)
+	#rotation.y = target_dir
+	#model.rotation.y = lerp_angle(model.rotation.y, target_dir, 5 * delta)
+
+# Wait at end of path before going back, if wait time is declared
 func _maybe_wait() -> void:
-	if wait_at_ends <= 0.0:
+	if waitAtEndDuration <= 0.0:
 		return
-	_waiting = true
-	await get_tree().create_timer(wait_at_ends).timeout
-	_waiting = false
+	
+	_stopFollowingPath = true
+	await get_tree().create_timer(waitAtEndDuration).timeout
+	_stopFollowingPath = false
 
 
 
@@ -111,3 +145,13 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.push_back("This NPC doesn't have a name yet.")
 	
 	return warnings
+
+# Credit for how to do this:
+# https://github.com/godotengine/godot-proposals/issues/1056
+func _validate_property(property: Dictionary) -> void:
+	if property.name in ["patrolPath", "patrolSpeed", "pathFollowMode", "waitAtEndDuration"] \
+		and not patrolEnabled:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	
+	if property.name in ["waitAtEndDuration"] and pathFollowMode != PATH_FOLLOW_METHOD.PING_PONG:
+		property.usage = PROPERTY_USAGE_NO_EDITOR

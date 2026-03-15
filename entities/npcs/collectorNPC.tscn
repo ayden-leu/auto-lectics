@@ -6,9 +6,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
 size = Vector3(1.59375, 7.617676, 1.5296631)
 
-[node name="collector" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
+[node name="collector" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("1_j8r5x")
 hitbox = NodePath("Area3D")
+dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAttachMethod = 1
 initialDialogueID = "Dialogue1a"
 model = NodePath("collector")
 myName = "collector"
@@ -24,3 +26,6 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005859375, 3.6818848, -0.038391113)
 shape = SubResource("BoxShape3D_25xfv")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.6456478, 0, -0.7636353, 0, 1, 0, 0.7636353, 0, 0.6456478, -2.991764, 1.8405943, -0.21392822)

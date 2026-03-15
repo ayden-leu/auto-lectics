@@ -177,7 +177,7 @@ func kill():
 
 
 ## Handles logic for when the dialogue option gets picked.
-func _on_interaction(Node3D) -> void:
+func _on_interaction(_interactor:Node3D) -> void:
 	visible = false
 	interactionHitbox.disabled = true
 	lifeTimer.stop()
