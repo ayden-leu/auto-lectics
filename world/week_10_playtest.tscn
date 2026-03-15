@@ -1,22 +1,30 @@
-[gd_scene load_steps=21 format=3 uid="uid://b136twd43appk"]
+[gd_scene load_steps=29 format=3 uid="uid://dynwn4finljcb"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_x8ppq"]
-[ext_resource type="PackedScene" uid="uid://b5tfuo3exv3ff" path="res://test_scenes/week_10_playtest.tscn" id="4_r3hxu"]
+[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="4_musp6"]
+[ext_resource type="PackedScene" uid="uid://bullwudoypwel" path="res://models/environment/backgroundClutter/round_tank.tscn" id="5_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="5_l4h2v"]
-[ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="6_4h56d"]
-[ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="7_mw4j8"]
-[ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="8_a6ycu"]
+[ext_resource type="PackedScene" uid="uid://dnr4q2ehmudfm" path="res://models/BlendFiles/bigFloorArc.blend" id="6_bb1ch"]
+[ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="7_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="8_whg7e"]
+[ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="9_a6ycu"]
+[ext_resource type="PackedScene" uid="uid://5tf7frxomx2y" path="res://models/environment/bridge.tscn" id="9_musp6"]
+[ext_resource type="PackedScene" uid="uid://dytucwmjofvdw" path="res://models/environment/backgroundClutter/tube_clutter_1.tscn" id="9_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="9_tgtyg"]
+[ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="10_7p6d6"]
+[ext_resource type="PackedScene" uid="uid://dgim7xtnvx8nn" path="res://models/environment/big_floor_arc.tscn" id="10_k6p8l"]
 [ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="10_musp6"]
-[ext_resource type="PackedScene" uid="uid://bu511kjk81y1o" path="res://models/week6playtestStuff/npcs/side_NPCS/birds.fbx" id="11_7p6d6"]
-[ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="12_bb1ch"]
+[ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="11_7p6d6"]
+[ext_resource type="PackedScene" uid="uid://dv545q1ms32vr" path="res://models/BlendFiles/roundTank.blend" id="11_doxto"]
+[ext_resource type="PackedScene" uid="uid://cgsl375svaj1x" path="res://models/BlendFiles/dropPod.blend" id="11_musp6"]
 [ext_resource type="PackedScene" uid="uid://cacib06ypgbbs" path="res://entities/npcs/sideNPCS/container.tscn" id="13_qqa75"]
 [ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="14_whg7e"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="15_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="16_k6p8l"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="17_doxto"]
+[ext_resource type="PackedScene" uid="uid://bd6hju22mfeci" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_uxxn7")
@@ -27,137 +35,384 @@ sky_material = SubResource("PanoramaSkyMaterial_qo27r")
 [sub_resource type="Environment" id="Environment_f1udx"]
 background_mode = 2
 sky = SubResource("Sky_aue1p")
+ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
+ambient_light_energy = 2.38
 glow_intensity = 0.0
 
 [node name="week_6_playtest" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.38268343, -0.36098847, 0.85043555, 0, 0.92050487, 0.39073113, -0.9238795, -0.14952633, 0.35226196, -2.4403229, 0, -130.50633)
+light_color = Color(0.98435444, 0.81607527, 0.73283553, 1)
+shadow_enabled = true
+shadow_blur = 0.296
+directional_shadow_max_distance = 4096.0
 
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_f1udx")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -166.02122)
 stream = ExtResource("2_5oweu")
-volume_db = -10.0
-autoplay = true
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22.947601)
 stream = ExtResource("3_x8ppq")
-volume_db = -16.0
-autoplay = true
 
-[node name="week10playtest" parent="Environment" instance=ExtResource("4_r3hxu")]
-transform = Transform3D(-0.11982492, 0, -0.99279505, 0, 1, 0, 0.99279505, 0, -0.11982492, 68.109604, -0.4580288, -0.22058725)
+[node name="Models" type="Node3D" parent="Environment"]
+
+[node name="Interactable" type="Node3D" parent="Environment/Models"]
+
+[node name="TrussCorner" type="Node" parent="Environment/Models/Interactable"]
+
+[node name="bigtrussing" parent="Environment/Models/Interactable/TrussCorner" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-5.9547208e-08, -0.29756936, -2.3075523, -2.3266602, 2.0177157e-15, 5.9604645e-08, -1.0573278e-08, 2.3075526, -0.29756925, -36.422646, -4.2115383, -91.76671)
+
+[node name="bigtrussing8" parent="Environment/Models/Interactable/TrussCorner" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-1.0573279e-08, 2.3075526, -0.29756916, -2.3266602, 1.9014966e-15, 5.960464e-08, 5.954721e-08, 0.29756927, 2.3075523, -14.757896, -4.2115383, -91.87064)
+
+[node name="MetalBigFlat3" parent="Environment/Models/Interactable/TrussCorner" instance=ExtResource("4_musp6")]
+transform = Transform3D(3.150884e-08, -0.36290854, -2.5789618, -2.6043699, -1.13597146e-07, -3.240091e-08, -1.01965e-07, 2.5789618, -0.36290848, -29.479515, 7.0891924, -88.25968)
+
+[node name="MetalBigFlat4" parent="Environment/Models/Interactable/TrussCorner" instance=ExtResource("4_musp6")]
+transform = Transform3D(-1.01964986e-07, 2.5789611, -0.36290842, -2.6043699, -1.13597146e-07, -3.240091e-08, -3.150884e-08, 0.36290836, 2.5789618, -11.250874, 7.0891924, -98.81378)
+
+[node name="TrussCorner2" type="Node3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.747284, -38.385254, -173.19125)
+
+[node name="largePipe4" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(1.7374777, -0.6262499, 6.3076e-08, 0, -8.07303e-08, -4.255631, 0.6262499, 1.7374777, -1.749991e-07, 12.779549, 106.13139, -6.7596474)
+
+[node name="bigtrussing" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-5.198933e-09, -2.3059416, -0.3098085, -2.3266602, 1.1104644e-16, 5.960465e-08, -6.0254756e-08, 0.30980855, -2.305941, 7.936775, 48.77603, -30.755085)
+
+[node name="bigtrussing8" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-6.025474e-08, 0.3098086, -2.305941, -2.3266597, -1.765399e-15, 5.9604627e-08, 5.198947e-09, 2.305941, 0.3098086, 13.644417, 48.77603, -9.855434)
+
+[node name="MetalBigFlat3" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("4_musp6")]
+transform = Transform3D(1.066457e-07, -2.5850134, -0.31694162, -2.6043696, -1.1359714e-07, -3.2400916e-08, 4.0447254e-09, 0.31694132, -2.5850134, 6.3462524, 60.07676, -23.140858)
+
+[node name="MetalBigFlat4" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("4_musp6")]
+transform = Transform3D(4.0447183e-09, 0.31694156, -2.585013, -2.6043696, -1.1359714e-07, -3.2400905e-08, -1.0664571e-07, 2.5850127, 0.31694174, 30.700356, 60.07676, -5.0094414)
+
+[node name="bigtrussing3" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-5.198933e-09, -2.3059416, -0.3098085, -2.3266602, 1.1104644e-16, 5.960465e-08, -6.0254756e-08, 0.30980855, -2.305941, 7.936775, 22.319342, -30.755085)
+
+[node name="bigtrussing10" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-6.025474e-08, 0.3098086, -2.305941, -2.3266597, -1.765399e-15, 5.9604627e-08, 5.198947e-09, 2.305941, 0.3098086, 13.644417, 22.319342, -9.855434)
+
+[node name="MetalBigFlat7" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.22116359, -2.575535, -0.3169415, -2.5948205, -0.22281979, -4.8528623e-08, -0.027116254, 0.3157792, -2.5850136, 6.3462524, 33.62007, -23.140858)
+
+[node name="MetalBigFlat8" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("4_musp6")]
+transform = Transform3D(4.044729e-09, 0.4845717, -2.5588934, -2.6043696, -1.1226724e-07, -3.9224584e-08, -1.066457e-07, 2.5588934, 0.48457187, 30.700356, 33.62007, -5.0094414)
+
+[node name="bigtrussing2" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-5.198933e-09, -2.3059416, -0.3098085, -2.3266602, 1.1104644e-16, 5.960465e-08, -6.0254756e-08, 0.30980855, -2.305941, 7.936775, -4.2115383, -30.755085)
+
+[node name="bigtrussing9" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-6.025474e-08, 0.3098086, -2.305941, -2.3266597, -1.765399e-15, 5.9604627e-08, 5.198947e-09, 2.305941, 0.3098086, 13.644417, -4.2115383, -9.855434)
+
+[node name="MetalBigFlat5" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("4_musp6")]
+transform = Transform3D(-0.091523126, -2.5833926, -0.31694162, -2.602737, 0.092208505, -2.7949769e-08, 0.011221416, 0.31674266, -2.5850134, 6.3462524, 7.0891924, -23.140858)
+
+[node name="MetalBigFlat6" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("4_musp6")]
+transform = Transform3D(2.5850003, 0.3169418, 0.008076006, 0.008136475, -2.7059555e-10, -2.6043572, -0.31693983, 2.585013, -0.0009901435, 30.700356, 7.0891924, -5.0094414)
+
+[node name="MetalBigFlat" parent="Environment/Models/Interactable" instance=ExtResource("4_musp6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08475542, 0)
+visible = false
+
+[node name="roundTank" parent="Environment/Models/Interactable" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.974518, 30.579483, -14.758265)
+visible = false
+
+[node name="bigFloorArc" parent="Environment/Models/Interactable" instance=ExtResource("6_bb1ch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.937511, -0.5030694, 37.00229)
+visible = false
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(7.9911885, 0, -2.8803139, 0, 782.9325, 0, 2.8803139, 0, 7.9911885, 19.78486, -58.32274, -192.16823)
+radius = 1.378
+height = 0.1817627
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(7.9911885, 0, -2.8803139, 0, 782.9325, 0, 2.8803139, 0, 7.9911885, 19.4408, -69.30679, -193.49136)
+radius = 2.052246
+height = 0.18432617
+
+[node name="CSGBox3D35" type="CSGBox3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 3.0211086, -0.34004402, -132.81668)
+size = Vector3(2.7602081, 0.18604687, 10.856201)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(-0.697728, 0, -0.71636283, 0, 1, 0, 0.71636283, 0, -0.697728, -4.7664795, -29.980415, -164.19373)
+size = Vector3(26.259674, 59.09669, 62.58496)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(0.83300817, 0, -0.5532607, 0, 1, 0, 0.5532607, 0, 0.83300817, -20.710083, 13.290038, -104.424774)
+size = Vector3(2.3993683, 0.001, 62.58496)
+
+[node name="CSGBox3D22" type="CSGBox3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(-0.1301282, 0, 0.9914972, 0, 1, 0, -0.9914972, 0, -0.1301282, 76.17686, -28.014877, -194.75543)
+size = Vector3(21.211914, 58.069733, 65.27649)
+
+[node name="CSGBox3D23" type="CSGBox3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(-0.1301282, 0, 0.9914972, 0, 1, 0, -0.9914972, 0, -0.1301282, 74.33793, -24.241783, -208.7669)
+size = Vector3(20.19159, 65.61592, 65.27649)
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(0.94075656, 0.33908275, 1.4821777e-08, 0, -4.371139e-08, 1, 0.33908275, -0.94075656, -4.1121773e-08, -81.55134, 1.0277519, -192.31073)
+shadow_enabled = true
+omni_range = 42.860355
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Environment/Models/Interactable"]
+transform = Transform3D(0.94075656, 0.33908275, 1.4821778e-08, 0, -4.371139e-08, 1, 0.33908275, -0.94075656, -4.1121776e-08, -13.652939, 1.0277596, -66.44838)
+shadow_enabled = true
+omni_range = 77.75424
+
+[node name="bigtrussing3" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-0.2975692, 0, -2.307552, 0, 2.3266594, 0, 2.307552, 0, -0.2975692, -16.814728, -4.2115383, -67.89078)
+
+[node name="bigtrussing4" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(1.4368434, 1.829866, -0.02044385, -0.16868131, 0.15831712, 2.3151305, 1.8221895, -1.4282416, 0.2304338, -24.868336, 71.358116, -45.546707)
+
+[node name="bigtrussing9" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(2.31201, 0.028002532, 0.25917572, -0.07657143, 2.2841082, 0.4362762, -0.24918465, -0.44205877, 2.2706466, 35.07164, 84.56957, -29.570114)
+
+[node name="bigtrussing5" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-0.008582433, 1.4387909, -2.500444, -2.8848364, 0.0020583104, 0.011086188, 0.0073131416, 2.5004582, 1.4387736, -92.69602, 8.774241, -63.706116)
+visible = false
+
+[node name="bigtrussing6" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-0.010553739, 0.5056898, -2.8401723, -2.8848362, 0.0020583097, 0.011086188, 0.003969731, 2.8401918, 0.50567836, -109.86992, 69.754166, -87.60466)
+
+[node name="bigtrussing8" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-0.0073874565, 1.7978206, -2.2561474, -2.8848362, 0.0020583097, 0.011086189, 0.008518549, 2.256159, 1.797801, -70.276505, 116.01659, -119.93457)
+
+[node name="bigtrussing7" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(0.16207439, 2.8802836, 0.010553872, 0.003370611, -0.010760305, 2.8848372, 2.8803008, -0.16206074, -0.003969799, 4.83873, -8.926289, -68.92052)
+
+[node name="bigtrussing2" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-0.29769212, 0, -2.308505, 0, 2.3276207, 0, 2.308505, 0, -0.29769212, -43.409966, -3.062564, -60.883812)
+
+[node name="bigFloorArc2" parent="Environment/Models/Interactable" instance=ExtResource("10_k6p8l")]
+transform = Transform3D(0.374321, 0, -0.13491885, 0, 0.3978936, 0, 0.13491885, 0, 0.374321, -13.19648, 0, -53.85646)
+
+[node name="bigFloorArc4" parent="Environment/Models/Interactable" instance=ExtResource("10_k6p8l")]
+transform = Transform3D(0.23959637, 0, -0.3163324, 0, 0.39682817, 0, 0.3163324, 0, 0.23959637, -31.746239, -1.1083107, -44.19371)
+
+[node name="bigFloorArc3" parent="Environment/Models/Interactable" instance=ExtResource("10_k6p8l")]
+transform = Transform3D(0.23228174, 0, -0.119515, 0, 0.2612253, 0, 0.119515, 0, 0.23228174, -21.730648, 3.8146973e-06, -66.776535)
+
+[node name="Background" type="Node3D" parent="Environment/Models"]
+
+[node name="CEOHolder" parent="Environment/Models/Background" instance=ExtResource("10_7p6d6")]
+transform = Transform3D(0.44070414, 0, 6.4035387, 0, 6.418686, 0, -6.4035387, 0, 0.44070414, 0, 58.15988, -177.32164)
+
+[node name="CEOBottomTube" parent="Environment/Models/Background" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(2.9337199, 0, -1.3758786, 0, 3.2403324, 0, 1.3758786, 0, 2.9337199, 0, 15.352955, -177.84186)
+
+[node name="CEOBottomTube3" parent="Environment/Models/Background" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(-6.0325274, -2.8910992e-07, 2.8291812, 5.273802e-07, -3.3070319, -2.4733484e-07, 2.8291812, 0, 6.0325274, 0, 105.253456, -177.84186)
+
+[node name="CEOBottomTube2" parent="Environment/Models/Background" instance=ExtResource("11_7p6d6")]
+transform = Transform3D(0.1195817, 0, -5.289858, 0, 5.291209, 0, 5.289858, 0, 0.1195817, 0, -27.463205, -177.84186)
+
+[node name="largePipe" parent="Environment/Models/Background" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(4.0035124, -1.4430109, 6.3076016e-08, 0, -1.8601953e-07, -4.2556305, 1.4430109, 4.0035124, -1.749991e-07, 39.277313, 106.131386, -91.02588)
+
+[node name="largePipe5" parent="Environment/Models/Background" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(4.0035124, -1.4430109, 6.3076016e-08, 0, -1.8601953e-07, -4.2556305, 1.4430109, 4.0035124, -1.749991e-07, 24.17849, 138.26424, -69.44441)
+
+[node name="startingTower" parent="Environment/Models/Background" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(2.3044357, -3.5777037, 6.307601e-08, -1.129657e-07, -1.477904e-07, -4.25563, 3.5777037, 2.3044357, -1.7499909e-07, 0.4571514, -27.82331, 0.20458984)
+
+[node name="dropPod" parent="Environment/Models/Background/startingTower" instance=ExtResource("11_musp6")]
+transform = Transform3D(0.087848626, -4.440892e-16, 0.14293005, -0.14293005, -7.333403e-09, 0.087848626, 6.247667e-09, -0.1677688, -3.839985e-09, 7.450581e-09, 0.14736018, -7.175058)
+
+[node name="MetalBigFlat" parent="Environment/Models/Background/startingTower" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.16620746, -0.022701355, -0.0024721697, -1.1641532e-09, -0.018162599, 0.16678281, -0.022835568, -0.1652306, -0.017993564, 0.13725051, 0.30476716, -6.2972174)
+
+[node name="MetalBigFlat2" parent="Environment/Models/Background/startingTower" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.1673524, 0.00018294156, 0.011811487, -0.010863908, 0.068259835, 0.15286905, -0.004639031, -0.15325451, 0.06810228, 0.42036527, -0.4972886, -6.221437)
+
+[node name="bridge" parent="Environment/Models/Background/startingTower" instance=ExtResource("9_musp6")]
+transform = Transform3D(3.0211914, 0, 0, 0, -1.3206046e-07, 3.0211914, 0, -3.0211914, -1.3206046e-07, -0.0054077986, -4.408285, -2.6532185)
+
+[node name="bridge2" parent="Environment/Models/Background/startingTower" instance=ExtResource("9_musp6")]
+transform = Transform3D(-0.020195246, -1.4210855e-14, -5.157637, 3.021124, -1.3206046e-07, -0.034477353, -1.3205752e-07, -3.0211914, 1.5070469e-09, -6.7330313, -8.291034, -2.6532183)
+
+[node name="largePipe3" parent="Environment/Models/Background" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(8.414646, -3.0329442, 7.843277e-09, 0, -3.909788e-07, -0.52917254, 3.0329432, 8.414648, -2.1760513e-08, -1.7274666, 161.64618, -178.97258)
+
+[node name="largePipe2" parent="Environment/Models/Background" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(1.7374777, -0.6262499, 6.3076e-08, 0, -8.07303e-08, -4.255631, 0.6262499, 1.7374777, -1.749991e-07, 66.3738, 106.13139, -87.96333)
+
+[node name="bigWedgeTemp" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(-5.1114407, 0, -5.4104924, 0, 7.4431343, 0, 5.4104924, 0, -5.1114407, -2.7286167, 47.87755, -130.0228)
+
+[node name="bigWedgeTemp6" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(-0.445863, 0, -10.086737, 0, 10.096585, 0, 10.086737, 0, -0.445863, 16.337103, 47.877563, -155.21538)
+
+[node name="bigWedgeTemp9" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(6.0181394, 0, -8.106977, 0, 10.096585, 0, 8.106977, 0, 6.0181394, 23.236183, 47.877563, -164.25139)
+
+[node name="bigWedgeTemp10" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(9.964639, -1.575117, 0.40742755, -1.5838897, -8.81384, 4.66353, -0.37186837, -4.6664987, -8.945755, 23.236183, 43.25437, -164.25139)
+
+[node name="bigWedgeTemp11" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(13.775503, -2.1775029, 0.5632436, -2.1896305, -12.184594, 6.4470444, -0.51408523, -6.4511485, -12.366959, -31.180061, 15.647064, -181.12177)
+
+[node name="bigWedgeTemp5" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(10.03126, 0, 1.4752051, 0, 10.139151, 0, -1.4752051, 0, 10.03126, 32.43618, 47.87755, -220.25323)
+
+[node name="bigWedgeTemp7" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(7.226507, 0, 17.446333, 0, 18.883772, 0, -17.446333, 0, 7.226507, 15.772749, 34.435608, -164.24869)
+
+[node name="bigWedgeTemp8" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(-7.226508, 2.3841858e-06, -17.446337, 0.90972567, -18.858082, -0.37682188, -17.422598, -0.98468, 7.216677, 15.772749, 82.38455, -164.24869)
+
+[node name="bigWedgeTemp4" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(-6.05542, 5.072759e-06, -4.328064, 2.211662e-07, 47.21019, 1.0659573e-06, 4.328064, 4.6848627e-06, -6.055421, -7.581727, -393.88373, -136.77847)
+
+[node name="bigWedgeTemp3" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(-7.416802, 0, 0.62554324, 0, 7.4431343, 0, -0.62554324, 0, -7.416802, -41.98786, 46.16314, -148.35326)
+
+[node name="bigWedgeTemp2" parent="Environment/Models/Background" instance=ExtResource("8_whg7e")]
+transform = Transform3D(7.064496, 0, -2.343747, 0, 7.443134, 0, 2.343747, 0, 7.064496, 59.691612, 23.198858, -183.76434)
+
+[node name="largePipe4" parent="Environment/Models/Background" instance=ExtResource("9_a6ycu")]
+transform = Transform3D(2.7155867, -0.97879577, 8.5418364e-08, 0, -1.2617721e-07, -5.76303, 0.97879577, 2.7155867, -2.3698607e-07, 30.068659, -37.826874, -20.537445)
+
+[node name="roundTank" parent="Environment/Models/Background" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(-4.1121776e-08, 0.6108639, -0.79173553, -1, -3.685474e-08, 2.3503484e-08, -1.4821778e-08, 0.79173553, 0.6108639, 60.086052, 61.983982, -202.79562)
+
+[node name="roundTank2" parent="Environment/Models/Background" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(0.94075656, -0.33908275, 1.4821778e-08, 0, -4.371139e-08, -1, 0.33908275, 0.94075656, -4.1121776e-08, -4.121212, 59.655487, -79.01863)
+
+[node name="TubeClutter1" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(-0.11140736, 0.40114397, -0.9092151, -0.23532377, 0.8782408, 0.41631263, 0.9655108, 0.26034027, -0.0034437338, 48.166405, 96.29624, -174.22397)
+
+[node name="TubeClutter2" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.63991964, 0.63991976, 0.42544752, -0.70710677, 0.7071067, -7.7062445e-08, -0.30083686, -0.3008368, 0.90498304, -42.79236, 61.948128, -163.73492)
+
+[node name="roundTank3" parent="Environment/Models/Background" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, -56.393967, 26.783083, -107.66758)
+
+[node name="roundTank6" parent="Environment/Models/Background" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(0.33315155, 0, -0.12007989, 0, 0.35413152, 0, 0.12007989, 0, 0.33315155, -38.537827, 26.783083, -123.38405)
+
+[node name="roundTank4" parent="Environment/Models/Background" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(0.56106496, 0.100739256, 8.448963e-09, 1.2458557e-08, -2.1578854e-08, -0.57003707, -0.100739256, 0.56106496, -2.3440938e-08, 38.53161, 61.196365, -78.2422)
+
+[node name="roundTank5" parent="Environment/Models/Background" instance=ExtResource("5_7p6d6")]
+transform = Transform3D(0.23805879, -0.08700408, 3.7567203e-09, -4.930775e-11, -1.1078957e-08, -0.2534595, 0.08700408, 0.23805879, -1.0422704e-08, 34.69404, 35.166004, -81.63429)
+
+[node name="TubeClutter4" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.09647116, 0, -0.9953358, 0, 1, 0, 0.9953358, 0, 0.09647116, -88.38348, 18.563976, -101.02023)
+
+[node name="TubeClutter6" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.0253582, -0.32258892, -0.9461994, 0.41135496, 0.86602545, -0.28423068, 0.9111223, -0.38201627, 0.15465939, -90.58327, -32.169807, -103.625275)
+
+[node name="TubeClutter5" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.09647116, 0, -0.9953358, 0, 1, 0, 0.9953358, 0, 0.09647116, -93.946556, 5.8492966, -103.025375)
+
+[node name="TubeClutter7" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.6451777, 0, -0.76403254, 0, 1, 0, 0.76403254, 0, 0.6451777, -41.55182, 18.563976, -121.4319)
+
+[node name="TubeClutter8" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.5587403, -0.32258886, -0.7640326, 0.5, 0.8660254, -1.4901161e-08, 0.6616716, -0.38201627, 0.6451777, -45.01528, -24.860023, -125.53342)
+
+[node name="TubeClutter9" parent="Environment/Models/Background" instance=ExtResource("9_ooa8t")]
+transform = Transform3D(0.6451777, 0, -0.76403254, 0, 1, 0, 0.76403254, 0, 0.6451777, -47.1149, 5.8492966, -123.43704)
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Environment/Models"]
+transform = Transform3D(0.94075656, 0.33908275, 1.4821777e-08, 0, -4.371139e-08, 1, 0.33908275, -0.94075656, -4.1121773e-08, -5.010908, 35.31108, -123.37445)
+light_energy = 16.0
+shadow_enabled = true
+spot_range = 47.42153
+
+[node name="roundTank" parent="Environment" instance=ExtResource("11_doxto")]
+transform = Transform3D(0.94075656, 1.4901161e-08, -0.33908275, -1.7763568e-15, 1, 0, 0.33908275, -2.9802322e-08, 0.9407565, 55.365036, -13.542666, -151.16902)
+
+[node name="roundTank2" parent="Environment" instance=ExtResource("11_doxto")]
+transform = Transform3D(-9.372968e-09, 0.21442851, -0.9767397, -1, -4.371139e-08, 0, -4.2694648e-08, 0.9767397, 0.21442851, 332.68076, 120.565125, -259.5515)
+
+[node name="roundTank3" parent="Environment" instance=ExtResource("11_doxto")]
+transform = Transform3D(-9.372968e-09, 0.21442851, -0.9767397, -1, -4.371139e-08, 0, -4.2694648e-08, 0.9767397, 0.21442851, 26.906765, 83.3894, -214.6025)
+
+[node name="MetalBigFlat13" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.16245323, 3.735751, -4.428133, -5.7902665, 0.25179586, -9.349094e-09, 0.1923801, 4.4239516, 3.7392812, -50.017784, 0.4273491, -124.951904)
+
+[node name="MetalBigFlat14" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.09786258, 2.2504318, -5.3400908, -5.790266, 0.25179583, -9.349092e-09, 0.23200016, 5.335048, 2.2525582, -100.8241, 0.42734903, -106.0335)
+
+[node name="MetalBigFlat15" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.16245323, 3.735751, -4.428133, -5.7902665, 0.25179586, -9.349094e-09, 0.1923801, 4.4239516, 3.7392812, -50.017784, 53.157654, -124.951904)
+
+[node name="MetalBigFlat17" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(-0.8886427, 1.2026583e-05, -7.2351995, -7.768762e-08, -137.56808, -6.325212e-07, -1.5391746, 0, 4.1772437, -51.887714, 103.43268, -150.49258)
+
+[node name="MetalBigFlat20" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.0067312717, -57.270893, -10.510695, 4.656613e-10, -125.07988, 4.8126493, -1.7772728, -0.21690874, -0.03980842, 39.6569, 94.43447, -181.93835)
+
+[node name="MetalBigFlat18" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.7840419, 1.2026583e-05, -7.497614, 6.85431e-08, -137.56808, -6.5546226e-07, -1.5949991, -9.094947e-13, -3.6855466, -46.70515, 120.34358, -191.98833)
+
+[node name="MetalBigFlat19" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(1.6774241, -20.190578, -2.4737911, 1.7881393e-07, -123.25763, 3.7102578, -0.5873597, -57.661736, -7.0648293, -75.6162, 108.86057, -187.89552)
+
+[node name="MetalBigFlat21" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(1.677424, -3.5733552, -2.7524614, 1.7881393e-07, -137.14249, 0.6566481, -0.5873597, -10.205086, -7.8606763, 94.30774, 105.66477, -204.4479)
+
+[node name="MetalBigFlat16" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(0.013397619, 0.30808568, -5.787529, -5.7902656, 0.2517958, -2.8644877e-08, 0.2514392, 5.7820654, 0.30837607, -99.60897, 53.157654, -104.6865)
+
+[node name="MetalBigFlat9" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(1.7326589, 0, -0.40845925, 0, 1, 0, 0.1794197, 0, 3.9444985, -3.4664612, -0.2929592, -85.27508)
+
+[node name="MetalBigFlat11" parent="Environment" instance=ExtResource("4_musp6")]
+transform = Transform3D(2.7153764, -0.069214925, -5.169289, 0, 0.99058133, -1.4135536, 1.5908092, 0.11814398, 8.823537, 33.52411, 5.89534, -169.69937)
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="dishNPC" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("5_l4h2v")]
-transform = Transform3D(-0.47506624, 0, -0.49349466, 0, 0.685, 0, 0.49349466, 0, -0.47506624, -25.27201, 0.04699976, -7.569971)
-dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
+[node name="dishNPC" parent="npcs" instance=ExtResource("5_l4h2v")]
+transform = Transform3D(-0.6142572, 0, -0.30317158, 0, 0.68500006, 0, 0.30317158, 0, -0.6142572, -23.648289, 0.046998978, -146.19714)
 
 [node name="Node" type="Node" parent="npcs/dishNPC"]
 
-[node name="DialogueBoxAnchor" type="Marker3D" parent="npcs/dishNPC/Node"]
-transform = Transform3D(0.65481657, 0, -0.20109749, 0, 0.68500006, 0, 0.20109749, 0, 0.65481657, -22.84702, 1.1005831, -11.113908)
-metadata/_edit_group_ = true
-
-[node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("6_4h56d")]
-transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
-myName = "gossip"
-initialDialogueID = "dialogue1"
-
-[node name="Node" type="Node" parent="npcs/looker"]
-
-[node name="Marker3D" type="Marker3D" parent="npcs/looker/Node"]
-transform = Transform3D(0.20240945, 0.16826245, 1.5173407, -0.86017233, 1.2770988, -0.026876323, -1.2612439, -0.8439833, 0.2618389, 24.246983, 6.8383894, 5.856095)
-metadata/_edit_group_ = true
-
-[node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("7_mw4j8")]
-transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -0.5170965, 7.2353964, 26.201641)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
-
-[node name="Node" type="Node" parent="npcs/preacher"]
-
-[node name="Marker3D" type="Marker3D" parent="npcs/preacher/Node"]
-transform = Transform3D(0.42860356, 0.29127365, 0.9709255, -0.5996677, 0.922762, -0.012108367, -0.8172731, -0.5243165, 0.51806825, 0.007958651, 10.335478, 24.446424)
-metadata/_edit_group_ = true
-
-[node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("8_a6ycu")]
-transform = Transform3D(-0.71693957, 0, -0.49687183, 0, 0.8722866, 0, 0.49687183, 0, -0.71693957, 29.016579, -12.451921, 54.780178)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
-
-[node name="Node" type="Node" parent="npcs/collector"]
-
-[node name="Marker3D" type="Marker3D" parent="npcs/collector/Node"]
-transform = Transform3D(-0.9656453, 0, 0.25986427, 0, 1, 0, -0.25986427, 0, -0.9656453, 31.26779, -10.8463955, 53.44703)
-metadata/_edit_group_ = true
-
-[node name="egg" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("9_tgtyg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.056404, 4.461979, 12.220449)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
+[node name="egg" parent="npcs" instance=ExtResource("9_tgtyg")]
+transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, -11.340916, 4.461979, -120.724396)
 
 [node name="Node" type="Node" parent="npcs/egg"]
 
-[node name="Marker3D" type="Marker3D" parent="npcs/egg/Node"]
-transform = Transform3D(0.834271, 0, -0.5513548, 0, 1, 0, 0.5513548, 0, 0.834271, -7.14736, 6.583264, 11.284586)
-
-[node name="spinner" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("10_musp6")]
-transform = Transform3D(0.71970016, 0, 0, 0, 1, 0, 0, 0, 0.71970016, 4.310974, 4.827329, 18.570747)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
+[node name="spinner" parent="npcs" instance=ExtResource("10_musp6")]
+transform = Transform3D(0.67706263, 0, -0.24403791, 0, 1, 0, 0.24403791, 0, 0.67706263, -4.6817703, 4.8273296, -111.57399)
 
 [node name="Node" type="Node" parent="npcs/spinner"]
 
-[node name="Marker3D" type="Marker3D" parent="npcs/spinner/Node"]
-transform = Transform3D(-0.6631427, 0, 0.7484932, 0, 1, 0, -0.7484932, 0, -0.6631427, 5.1465254, 6.583265, 18.93366)
-
-[node name="Node3D" type="Node3D" parent="npcs"]
-
-[node name="birds" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 28.882927, 14.696882, 0)
-script = ExtResource("12_bb1ch")
-
-[node name="birds2" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 24.031094, 27.615396, -34.99405)
-script = ExtResource("12_bb1ch")
-
-[node name="birds3" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -5.100329, 25.431995, 27.202068)
-script = ExtResource("12_bb1ch")
-
-[node name="birds4" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -7.71135, 25.431995, 26.641573)
-script = ExtResource("12_bb1ch")
-
-[node name="birds5" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, -37.8219, 34.65417, -15.096623)
-script = ExtResource("12_bb1ch")
-
-[node name="birds6" parent="npcs/Node3D" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 1.2749557, 9.41077, -36.829082)
-script = ExtResource("12_bb1ch")
-
-[node name="container" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("13_qqa75")]
-transform = Transform3D(0.7338738, 0, 0.6271863, 0, 0.9653669, 0, -0.6271863, 0, 0.7338738, 19.63311, 17.308321, -21.130909)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
+[node name="container" parent="npcs" instance=ExtResource("13_qqa75")]
+transform = Transform3D(0.90306455, 0, 0.3411856, 0, 0.9653668, 0, -0.3411856, 0, 0.90306455, 23.194773, 17.308321, -143.7281)
 
 [node name="Node" type="Node" parent="npcs/container"]
 
-[node name="Marker3D" type="Marker3D" parent="npcs/container/Node"]
-transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.065751456, -0.6617077, -0.037088916, 0.99766946, -0.057272285, 19.958824, 23.540928, -11.605336)
+[node name="ship" parent="npcs" instance=ExtResource("23_7p6d6")]
+transform = Transform3D(0.9947905, -0.10186358, -0.003956265, 0.10027153, 0.9847615, -0.14209339, 0.018370118, 0.14095646, 0.98984534, 0.34545442, 0.06106341, -0.38361678)
+
+[node name="Node" type="Node" parent="npcs/ship"]
 
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
-transform = Transform3D(-0.35275638, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275638, 66.40753, 0.9343929, 0.8199239)
+transform = Transform3D(-0.014573008, 0, 0.9998938, 0, 1, 0, -0.9998938, 0, -0.014573008, 59.754967, 0.9343929, -107.21732)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("15_ooa8t")]
-transform = Transform3D(-0.35275644, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275644, 60.865444, 6.326866, 1.3495631)
+transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, 6.326866, -108.59828)
 focus = NodePath("../Player")
 
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("16_k6p8l")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
+[node name="InputHandler" parent="." instance=ExtResource("16_k6p8l")]
 
 [node name="DeathPlane" parent="." instance=ExtResource("17_doxto")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.041534, -20.391027, 2.8729353)
+transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 70.00359, -20.39103, -101.34105)

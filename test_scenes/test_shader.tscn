@@ -1,6 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://blbfoatmcceb6"]
+[gd_scene load_steps=5 format=3 uid="uid://blbfoatmcceb6"]
 
 [ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="1_67jda"]
+[ext_resource type="Shader" uid="uid://c5gu33uw2tj8u" path="res://shaders/shadowtint.gdshader" id="1_xjhq3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6v283"]
+render_priority = 0
+shader = ExtResource("1_xjhq3")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/offset = Vector3(0, 0, 0)
+shader_parameter/scale = 0.75
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q5r8k"]
 shader = ExtResource("1_67jda")
@@ -31,6 +39,18 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_6v283")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(40, 40)
+render_target_update_mode = 4
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("ShaderMaterial_q5r8k")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dbtcrr1c8clsr"]
 
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="16_ejbbu"]
@@ -72,4 +72,4 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 focus = NodePath("../Player")
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
-loopDurationSeconds = 5.0
+loopDurationSeconds = 1000.0
