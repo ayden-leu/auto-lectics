@@ -1,17 +1,21 @@
 [gd_scene load_steps=4 format=3 uid="uid://h1q7nwfs2wpl"]
 
-[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_560c1"]
+[ext_resource type="Script" uid="uid://cmnptj1cb0rou" path="res://entities/npcs/sideNPCS/egg.gd" id="1_560c1"]
 [ext_resource type="PackedScene" uid="uid://cs05y8fjcnq14" path="res://models/npcs/side_NPCS/egg.fbx" id="2_560c1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.47114
 
-[node name="egg" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
+[node name="egg" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("1_560c1")
 hitbox = NodePath("Hitbox")
+dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAttachMethod = 1
 initialDialogueID = "Dialogue1a"
+lookAtInteractorWhileTalking = true
 model = NodePath("egg")
 myName = "egg"
+patrolEnabled = true
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 1.2036605, -0.15410192)
@@ -23,4 +27,8 @@ monitoring = false
 shape = SubResource("SphereShape3D_u8dq6")
 
 [node name="egg" parent="." instance=ExtResource("2_560c1")]
-transform = Transform3D(-3.4138765e-08, 0, -0.7810039, 0, 0.78100383, 0, 0.7810039, 0, -3.4138765e-08, -0.09420586, 0.6893296, -0.33881092)
+transform = Transform3D(-3.4138765e-08, 0, 0.7810039, 0, 0.78100383, 0, -0.7810039, 0, -3.4138765e-08, -0.09420586, 0.6893296, -0.33881092)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(-0.39063475, 0, 0.9205458, 0, 1, 0, -0.9205458, 0, -0.39063475, 2.3360927, 1.2595302, -1.4667239)
+metadata/_edit_group_ = true

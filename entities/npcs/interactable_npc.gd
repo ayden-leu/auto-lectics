@@ -4,10 +4,6 @@ extends NPC
 class_name InteractableNPC
 ## The base class of all Interactable NPCs in the game.  Interactable NPCs allow the player to interact with them and initiate a dialogue event.
 
-# TODO:  make configuration for how the DialogueBox should stick to the dialogueBoxAnchor
-#			option 1:  stick to it always (make it a child, current implementation)
-#			option 2:  use its position on the frame it spawns (don't make it a child)
-
 ## Emitted when a dialogue entry is fully displayed.
 signal dialogue_all_visible
 ## Emitted when a dialogue option is spawned.
@@ -17,17 +13,26 @@ signal all_options_available
 ## Emitted when the dialogue tree reaches an end.
 signal finished_dialogue
 
+## Attach methods for the [DialogueBox]
+enum ATTACH_METHOD {
+	FOLLOW,  ## When spawned, the [DialogueBox] will be in the same relative position and rotation as this [InteractableNPC] all of the time.  If the [InteractableNPC] moves left, the DialogueBox will move left.  If the the [member dialogueBoxAnchor] is right above the [InteractableNPC] and the [InteractableNPC] flips upside down, the [DialogueBox] will be physically below the [InteractableNPC] and upside down.
+	STAY  ## When spawned, the [DialogueBox] will take the position and rotation of the [member dialogueBoxAnchor] at that moment and stay there.  If the [InteractableNPC] moves or rotates after this moment, the [DialogueBox] will stay in place.
+}
+
 ## The hitbox of this Interactable NPC.
 @export var hitbox:Area3D
 ## Tells the game where to spawn a dialogue box when a player interacts with the Interactable NPC.
 @export var dialogueBoxAnchor:Marker3D
+## How the [DialogueBox] should act after beind spawned.
+@export var dialogueBoxAttachMethod:ATTACH_METHOD
 ## All dialogues belonging to this Interactable NPC will be under "dialogue_objects/[NPC name]"
 @export var initialDialogueID:String = ""
 ## If this Interactable NPC should only respond to interactions once.
 @export var talkOnlyOnce:bool = true
+## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
+@export var lookAtInteractorWhileTalking:bool = false
 
-## Holds a reference to the diaslogue box resource.
-const dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
+const _dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
 
 ## The hitbox's collision shape.  Gets set when the node is ready.
 var hitboxShapes:Array[CollisionShape3D]
@@ -41,15 +46,28 @@ var isTalking: bool = false
 var currentDialogueID: String = ""
 ## Keeps track of if the player has interacted with this Interactable NPC.  If true, this NPC can no longer be talked to.
 var wasTalkedTo: bool = false
+## Tracks who is interacting with this NPC; curently can only be the player
+var currentInteractor:Node3D
+## Tracks whether the NPC should be patrolling
+var shouldPatrol:bool
 
 func _ready() -> void:
-	super()
 	# Makes sure the code after this is only ran in-game
 	if Engine.is_editor_hint():
 		return
+	super()
+	shouldPatrol = patrolEnabled
 	
 	currentDialogueID = initialDialogueID
 	hitboxShapes = getHitboxShapes()
+
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+		
+	super(delta)
+	if lookAtInteractorWhileTalking and currentInteractor and isTalking:
+		lookAtPosition = currentInteractor.global_position
 
 ## Gets the hitbox's collision shapes.
 func getHitboxShapes() -> Array[CollisionShape3D]:
@@ -66,8 +84,16 @@ func spawnDialogueBox() -> void:
 	if dialogueBox != null:
 		return
 	
-	dialogueBox = dialogueBoxScene.instantiate()
-	dialogueBoxAnchor.add_child(dialogueBox)
+	dialogueBox = _dialogueBoxScene.instantiate()
+	if(dialogueBoxAttachMethod == ATTACH_METHOD.FOLLOW):
+		dialogueBoxAnchor.add_child(dialogueBox)
+		
+		# undo the scaling being inherited from this InteractableNPC
+		dialogueBox.scale += Vector3.ONE - scale 
+	elif(dialogueBoxAttachMethod == ATTACH_METHOD.STAY):
+		get_parent().add_child(dialogueBox)
+		dialogueBox.global_position = dialogueBoxAnchor.global_position
+		dialogueBox.global_rotation = dialogueBoxAnchor.global_rotation
 
 ## Connects the dialogue box's signals to functions. Only needs to be ran once.
 func connectDialogueBoxSignals() -> void:
@@ -125,6 +151,9 @@ func endDialogue() -> void:
 		dialogueBox = null
 	
 	isTalking = false
+	currentInteractor = null
+	if shouldPatrol:
+		patrolEnabled = true
 	if talkOnlyOnce:
 		wasTalkedTo = true
 
@@ -150,18 +179,32 @@ func reset() -> void:
 	wasTalkedTo = false
 
 
-## Handles flow of what to do when a player interacts with this Interactable NPC.
-func _on_interaction() -> void:
-	if wasTalkedTo:
+## Handles flow of what to do when this [InteractableNPC] is interacted with.
+func _on_interaction(interactor: Node3D = null) -> void:
+	if wasTalkedTo or isTalking:
 		return
 	
-	if isTalking:
-		return
+	# rotate to face player immediately to properly spawn dialogue box
+	var currentRotation:Vector3 = rotation
+	if lookAtInteractorWhileTalking:
+		look_at(Vector3(
+			interactor.global_position.x,
+			global_position.y,
+			interactor.global_position.z
+		))
+		lookAtPosition = interactor.global_position
+		
 	isTalking = true
+	patrolEnabled = false
+	currentInteractor = interactor
+	
 	
 	spawnDialogueBox()
 	connectDialogueBoxSignals()
 	loadNextDialogue(initialDialogueID)
+	
+	rotation = currentRotation
+	
 
 ## Emits the "option_available" signal.
 func _on_dialogue_box_new_option_spawned() -> void:
@@ -185,23 +228,21 @@ func _on_hud_overlay_faded_out() -> void:
 	enable()
 
 
+
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 		
 	if not hitbox:
-		warnings.push_back("This Interactable NPC doesn't have a hitbox assigned yet. This is needed to allow the player to interact with them. A hitbox is an Area3D node.")
+		warnings.push_back("This NPC doesn't have a hitbox assigned yet. This is needed to allow the player to interact with them. A hitbox is an Area3D node.")
 	elif hitbox.collision_layer != 4:
 		warnings.push_back("The hitbox's collision layer should only have square #3/Bit 2/the Interactable NPC layer enabled.")
 	
 	if initialDialogueID == "":
 		warnings.push_back("The initial dialogue ID is not set.")
 	
-	if self != get_tree().edited_scene_root:
-		if not dialogueBoxAnchor:
-			warnings.push_back("A marker for the dialogue box has not been set yet.")
-		elif dialogueBoxAnchor.get_parent() == self:
-			warnings.push_back("Making the marker for the dialogue box a child of the Interactable NPC will make the dialogue box move with it if you move the Interactable NPC's root node (i.e the one with a custom icon). If this is not desired and you must move the Interactable NPC's root node, you can:\n1) Make the marker a not a child of the Interactable NPC or its children.\n2) Add a Node (the white hollow circle) as a child to the NPC, then add the marker as a child of the Node.\nThis must be done within the level scene, as doing it within the Interactable NPC scene will cause the marker to be at the level's origin (0,0,0).")
+	if not dialogueBoxAnchor:
+		warnings.push_back("A marker for the dialogue box has not been set yet.")
 	
 	var inheritedWarnings:PackedStringArray = super()
 	inheritedWarnings.append_array(warnings)

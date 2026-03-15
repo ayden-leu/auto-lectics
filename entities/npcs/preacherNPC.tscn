@@ -6,9 +6,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.0087891, 1.8596134, 0.97631836)
 
-[node name="preacher" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
+[node name="preacher" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("1_hswvp")
 hitbox = NodePath("Hitbox")
+dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAttachMethod = 1
 initialDialogueID = "dialogue1"
 model = NodePath("preacherModel")
 myName = "preacher"
@@ -24,3 +26,6 @@ monitoring = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92883015, -0.045532227)
 shape = SubResource("BoxShape3D_vefio")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.83823633, 0.5449841, 0.018767463, -0.54487395, 0.83844584, -0.011002143, -0.021731494, -0.0010035047, 0.99976337, 2.05048, 3.5539703, -0.45476627)

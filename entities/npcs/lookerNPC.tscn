@@ -6,9 +6,11 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.47114
 
-[node name="looker" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
+[node name="looker" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("3_y34t1")
 hitbox = NodePath("Hitbox")
+dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAttachMethod = 1
 initialDialogueID = "Dialogue1a"
 model = NodePath("lookerModel")
 myName = "looker"
@@ -24,3 +26,6 @@ monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("SphereShape3D_u8dq6")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.639599, 0.44399902, 0.6275173, -0.5585533, 0.8292851, -0.017452292, -0.52813953, -0.33933935, 0.77840704, 2.6581755, 7.550861, 2.1158104)

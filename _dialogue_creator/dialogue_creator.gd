@@ -24,6 +24,12 @@ var _optionNodes:Array[DC_OptionNode] = []
 ## If the creator is currently in the process of creating dialogue and option nodes from a dialogue tree.
 var loadingDialogueFiles:bool = false
 
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	get_tree().root.size_changed.connect(_on_window_size_changed)
+
 func _configureNode(node:DC_BaseNode) -> void:
 	node.disconnect_all.connect(_on_base_node_disconnect_all)
 	node.deleting.connect(_on_base_node_deleting)
@@ -406,10 +412,10 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 		var node:DC_BaseNode = getNode(nodeName)
 		node._on_close_button_pressed()
 
-func _on_item_rect_changed() -> void:
+func _on_window_size_changed() -> void:
 	var newSize:Vector2 = Globals.getScreenSize()
-	set_deferred("size", newSize)
-	_background.set_deferred("size", newSize)
-	_menuButtons.set_deferred("position.x", newSize.x - 11)
+	size = newSize
+	_background.size = newSize
+	_menuButtons.position.x = newSize.x - 11
 	if _graphArea:
-		_graphArea.set_deferred("size", newSize)
+		_graphArea.size = newSize

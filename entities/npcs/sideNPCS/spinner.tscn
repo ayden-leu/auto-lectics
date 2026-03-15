@@ -7,9 +7,11 @@
 height = 1.0175781
 radius = 3.0581055
 
-[node name="spinner" type="Node3D" node_paths=PackedStringArray("hitbox", "model")]
+[node name="spinner" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("1_5b655")
 hitbox = NodePath("Hitbox")
+dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAttachMethod = 1
 initialDialogueID = "Dialogue1a"
 model = NodePath("spinner")
 myName = "spinner"
@@ -25,3 +27,7 @@ shape = SubResource("CylinderShape3D_5b655")
 
 [node name="spinner" parent="." instance=ExtResource("2_5b655")]
 transform = Transform3D(0.4279061, 0, 0, 0, 0.4279061, 0, 0, 0, 0.4279061, 0, 0, 0)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(-0.92373925, 0, 0.38302207, 0, 1, 0, -0.38302207, 0, -0.92373925, 1.1609716, 1.7559357, 0.5042553)
+metadata/_edit_group_ = true
