@@ -184,7 +184,7 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 func _on_interact_pressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():
-		interactionRaycast.get_collider().owner._on_interaction()
+		interactionRaycast.get_collider().owner._on_interaction(self)
 
 func _on_jump_pressed() -> void:
 	if is_on_floor():

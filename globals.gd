@@ -40,6 +40,8 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 ### Gets the current size of the screen.
 func getScreenSize() -> Vector2:
 	return get_viewport().get_visible_rect().size
+	#return DisplayServer.screen_get_size()
+	#return get_window().size
 
 ## Unused. enum mapping for collision layers.
 enum COLLISION_LAYER {

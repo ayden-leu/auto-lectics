@@ -4,9 +4,6 @@ extends Control
 #			currently, it's part of the PlayerCamera scene, but this makes it inaccessible to other nodes (unless you use workarounds)
 #			should probably be part of the theorhetial "Scene Manager" node that we'll have to implement once we add menus.
 
-@export var normal_color: Color = Color.WHITE
-@export var highlight_color: Color = Color(0.3, 1.0, 0.3)
-
 @onready var crosshair:Sprite2D = %CrosshairSprite
 @onready var player_camera: PlayerCamera = get_parent() as PlayerCamera
 
@@ -15,6 +12,7 @@ var crosshairSpriteInteract:Resource = preload("uid://dtfn27ojmhrxx")
 
 func _ready() -> void:
 	$FadeRect.visible = false
+	get_tree().root.size_changed.connect(_on_window_size_changed)
 
 func _process(_delta: float) -> void:
 	if not player_camera or not player_camera.focus:
@@ -38,7 +36,7 @@ func _update_crosshair(canInteract: bool) -> void:
 	crosshair.texture = crosshairSpriteNormal
 
 ## Update the size of the HUD when the screen size changes
-func _on_item_rect_changed() -> void:
+func _on_window_size_changed() -> void:
 	var newSize:Vector2 = Globals.getScreenSize()
 	size = newSize
 	$ShaderOverlay.size = newSize
