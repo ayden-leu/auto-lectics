@@ -3,12 +3,8 @@
 	"type": "neutral",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "GB3_HecticFail",
+	"writeSpeed": "fast",
 	"options": [
-		{
-			"text": "That's not important.",
-			"type": "neutral",
-			"nextID": "dialogue1_Fail"
-		},
 		{
 			"text": "Excuse me?",
 			"type": "neutral",
@@ -20,19 +16,13 @@
 			"nextID": "GB3_FailGuard"
 		},
 		{
-			"text": "Who are you?",
-			"type": "neutral",
-			"nextID": "GB3_FailGuard"
+			"text": "I'm new.",
+			"type": "neutral"
 		},
 		{
 			"text": "That's not important.",
 			"type": "neutral",
 			"nextID": "QuestionImportance"
-		},
-		{
-			"text": "I'm new.",
-			"type": "neutral",
-			"nextID": "New"
 		}
 	]
 }

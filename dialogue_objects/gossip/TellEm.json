@@ -12,6 +12,11 @@
 			"text": "So, you are not perfect.",
 			"type": "neutral",
 			"nextID": "Perfection"
+		},
+		{
+			"text": "How'd you watch them?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
 		}
 	]
 }
