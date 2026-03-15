@@ -9,16 +9,14 @@
 
 [node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_background", "_menuButtons")]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1440.0
+offset_bottom = 810.0
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
 _npcNameField = NodePath("MenuButtons/VBoxContainer/HBoxContainer/NPCName")
 _background = NodePath("Background")
-_menuButtons = NodePath("GraphEdit")
+_menuButtons = NodePath("MenuButtons")
 
 [node name="Background" type="ColorRect" parent="."]
 material = ExtResource("3_vav2e")
@@ -32,6 +30,7 @@ layout_mode = 1
 offset_right = 1440.0
 offset_bottom = 810.0
 size_flags_horizontal = 3
+scroll_offset = Vector2(-391, -96)
 right_disconnects = true
 type_names = {
 0: "Option",
@@ -105,7 +104,6 @@ layout_mode = 2
 text = "Load Tree"
 icon = ExtResource("6_acglc")
 
-[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
