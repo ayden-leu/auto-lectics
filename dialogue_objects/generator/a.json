@@ -1,7 +1,7 @@
 {
 	"text": "Who are you?\nWhat is purpose for being here? ",
 	"font": "",
-	"type": "positive",
+	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{

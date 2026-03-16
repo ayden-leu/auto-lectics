@@ -212,10 +212,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2821603, 0)
 
 [node name="SFX" type="Node3D" parent="."]
 
-[node name="text" type="AudioStreamPlayer3D" parent="SFX"]
+[node name="text" type="AudioStreamPlayer" parent="SFX"]
+unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_hx4ud")
 
-[node name="spawn" type="AudioStreamPlayer3D" parent="SFX"]
+[node name="spawn" type="AudioStreamPlayer" parent="SFX"]
+unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_ane15")
 
 [node name="tempTimeer" type="Timer" parent="."]

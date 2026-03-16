@@ -56,9 +56,9 @@ const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 ## The timer bar that appears when a hectic dialogue object is loaded.
 @onready var timer:TimerBar = $Timer
 ## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
-	"spawn": $SFX/spawn,
-	"text": $SFX/text
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": %spawn,
+	"text": %text
 }
 
 ## The owner of this dialogue box.
@@ -125,6 +125,7 @@ func prepare() -> void:
 
 ## Make the dialogue box start doing things.
 func start() -> void:
+	print("starting new dialogue")
 	sfxPlayer.spawn.play()
 	myLabel.visibleCharacters = 0
 	increaseVisibleTextAmount = true

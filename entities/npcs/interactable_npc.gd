@@ -89,7 +89,7 @@ func spawnDialogueBox() -> void:
 		dialogueBoxAnchor.add_child(dialogueBox)
 		
 		# undo the scaling being inherited from this InteractableNPC
-		dialogueBox.scale += Vector3.ONE - scale 
+		#dialogueBox.scale += Vector3.ONE - scale 
 	elif(dialogueBoxAttachMethod == ATTACH_METHOD.STAY):
 		get_parent().add_child(dialogueBox)
 		dialogueBox.global_position = dialogueBoxAnchor.global_position

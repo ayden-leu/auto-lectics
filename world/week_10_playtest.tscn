@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dynwn4finljcb"]
+[gd_scene load_steps=36 format=3 uid="uid://dynwn4finljcb"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
@@ -23,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://ia3m4r8gqxaa" path="res://models/environment/environmentscenes/battery_block2.tscn" id="14_bb1ch"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="14_whg7e"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="15_ooa8t"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="16_k6p8l"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="17_doxto"]
 [ext_resource type="PackedScene" uid="uid://cs0qqc1w808ww" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
@@ -64,19 +63,13 @@ directional_shadow_max_distance = 4096.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_f1udx")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.461521, -166.02122)
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("2_5oweu")
-volume_db = 80.0
-unit_size = 46.66
+volume_db = 17.0
 autoplay = true
-parameters/looping = true
 
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06827831, 7.064661)
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("3_x8ppq")
-volume_db = 1.467
-parameters/looping = true
 
 [node name="Models" type="Node3D" parent="Environment"]
 
@@ -215,7 +208,7 @@ light_energy = 16.0
 spot_range = 14.514431
 
 [node name="MetalBigFlat" parent="Environment/Models/Interactable" instance=ExtResource("4_musp6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08475542, 0)
+transform = Transform3D(0.7726136, -0.05927012, 0.01343867, 0.060414948, 0.76764446, -0.087732494, -0.0066015567, 0.088509925, 0.769901, 10.059, -0.075, 1.528)
 visible = false
 
 [node name="roundTank" parent="Environment/Models/Interactable" instance=ExtResource("5_7p6d6")]
@@ -420,7 +413,8 @@ transform = Transform3D(4.0035124, -1.4430109, 6.3076016e-08, 0, -1.8601953e-07,
 transform = Transform3D(2.3044357, -3.5777037, 6.307601e-08, -1.129657e-07, -1.477904e-07, -4.25563, 3.5777037, 2.3044357, -1.7499909e-07, 0.45715126, -28.11258, 0.20459025)
 
 [node name="dropPod" parent="Environment/Models/Background/startingTower" instance=ExtResource("11_musp6")]
-transform = Transform3D(0.087848626, -4.440892e-16, 0.14293005, -0.14293005, -7.333403e-09, 0.087848626, 6.247667e-09, -0.1677688, -3.839985e-09, 7.450581e-09, 0.14736018, -7.175058)
+transform = Transform3D(0.08784862, -3.4934224e-09, 0.14293005, -0.14293005, -6.2476704e-09, 0.08784862, 3.4934229e-09, -0.1677688, -6.247671e-09, 7.450581e-09, 0.14736018, -7.175058)
+visible = false
 
 [node name="bridge" parent="Environment/Models/Background/startingTower" instance=ExtResource("9_musp6")]
 transform = Transform3D(3.0211914, 0, 0, 0, -1.1090364, 2.8102732, 0, -2.8102732, -1.1090364, -0.0054078153, -3.4952207, -1.7915721)
@@ -577,7 +571,7 @@ transform = Transform3D(2.7337987, 0, -0.40845925, 0, 1, 0, 0.2830894, 0, 3.9444
 [node name="npcs" type="Node" parent="."]
 
 [node name="ship" parent="npcs" instance=ExtResource("23_7p6d6")]
-transform = Transform3D(0.9947905, -0.10186358, -0.003956265, 0.10027153, 0.9847615, -0.14209339, 0.018370118, 0.14095646, 0.98984534, 0.13056353, -0.18843894, -0.93904674)
+transform = Transform3D(0.71465504, 0.01516811, 0.016220232, -0.014972712, 0.7147898, -0.008735156, -0.016400773, 0.008391276, 0.71476257, 0.005, 2.302, 0.571)
 
 [node name="generator" parent="npcs" instance=ExtResource("19_mw4j8")]
 transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -33.360706, -24.101482, -39.169537)
@@ -587,6 +581,7 @@ transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.9666850
 
 [node name="looker" parent="npcs" instance=ExtResource("25_qqa75")]
 transform = Transform3D(-0.41753963, 0.41224906, -0.2337281, 0.35972434, 0.47850618, 0.20136459, 0.30850694, 0, -0.55112696, -25.186935, -8.628218, -50.550636)
+initialDialogueID = "GB2"
 
 [node name="miniboss" parent="npcs" instance=ExtResource("26_whg7e")]
 transform = Transform3D(-1.4099991, 0, -0.8140635, 0, 1.6281269, 0, 0.8140635, 0, -1.4099991, -9.08695, -12.778088, -89.92949)
@@ -602,13 +597,11 @@ transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, -0
 transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.5307432, -1.8941944, 0.24167566)
 
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
-transform = Transform3D(-0.014573008, 0, 0.9998938, 0, 1, 0, -0.9998938, 0, -0.014573008, 59.754967, -9.527128, -107.21732)
+transform = Transform3D(0.9979101, 0, -0.06461941, 0, 1, 0, 0.06461941, 0, 0.9979101, -1.7460065, 0.86489105, 2.8846312)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("15_ooa8t")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)
 focus = NodePath("../Player")
-
-[node name="InputHandler" parent="." instance=ExtResource("16_k6p8l")]
 
 [node name="DeathPlane" parent="." instance=ExtResource("17_doxto")]
 transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 70.00359, -30.85255, -101.34105)
