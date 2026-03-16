@@ -13,7 +13,7 @@ script = ExtResource("1_abuul")
 hitbox = NodePath("Hitbox")
 dialogueBoxAnchor = NodePath("Marker3D")
 dialogueBoxAttachMethod = 1
-initialDialogueID = "a"
+initialDialogueID = "start"
 talkOnlyOnce = false
 model = NodePath("miniboss")
 myName = "miniboss"
@@ -29,7 +29,7 @@ transform = Transform3D(9.893562, 0, 0, 0, 8.656033, -4.791207, 0, 4.791207, 8.6
 shape = SubResource("BoxShape3D_4c5lk")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(0.6690606, 0.29787123, 1.2681075, -0.50583595, 1.3731346, -0.05565984, -1.2003974, -0.41260204, 0.7302538, -2.2868805, 1.4784107, -9.922366)
+transform = Transform3D(0.71357155, 0.16771546, 1.2677355, -0.44082618, 1.3950261, 0.063572645, -1.2003975, -0.41260213, 0.7302539, -2.2868805, 1.4784107, -9.922366)
 
 [node name="miniboss" parent="." instance=ExtResource("2_abuul")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2942533, 0)
