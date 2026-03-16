@@ -1,0 +1,16 @@
+{
+	"text": "The office has sent you to this planet to find what lies at the center of this factory. ",
+	"type": "neutral",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "normalSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "2"
+		}
+	]
+}

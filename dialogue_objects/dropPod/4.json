@@ -1,0 +1,15 @@
+{
+	"text": "P.S. If you try to throw yourself off a cliff this drop pod will reprint you. Wouldn't want you filing a workplace injury suit now would we. ",
+	"type": "neutral",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "normalSound"
+	},
+	"options": [
+		{
+			"text": "Agree and exit.",
+			"type": "neutral"
+		}
+	]
+}
