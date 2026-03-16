@@ -1,5 +1,5 @@
 {
-	"text": "Great! Uhh...",
+	"text": "Great! Uhh... think about what the Almighty wants you to do. Feel your purpose. Not just your standard role, but something greater.",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -7,7 +7,7 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "positive",
 			"nextID": "dialogue4_Continue1"
 		}

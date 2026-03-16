@@ -1,5 +1,5 @@
 {
-	"text": "You don't know...you sound like PR3-CHR. When he lost his last position, he really began to lose it.",
+	"text": "You don't know...you sound like PR3-CHR. ",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -7,9 +7,9 @@
 	},
 	"options": [
 		{
-			"text": "Tell me more.",
-			"type": "negative",
-			"nextID": "dialogue3_Fail"
+			"text": "What's wrong with not knowing what you're doing?",
+			"type": "neutral",
+			"nextID": "diasldfkasdf"
 		},
 		{
 			"text": "I should go talk to him.",
@@ -17,9 +17,9 @@
 			"nextID": "dialogue3_Neutral"
 		},
 		{
-			"text": "I spotted another bot too.",
-			"type": "positive",
-			"nextID": "dialogue4"
+			"text": "Actually I do have a purpose.",
+			"type": "neutral",
+			"nextID": "asdfasdfasdfasdfas"
 		}
 	]
 }

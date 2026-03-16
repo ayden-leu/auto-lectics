@@ -1,13 +1,8 @@
 {
-	"text": "This facility used to follow strict procedures. Everything had to be perfect, for anything less would mean complete failure. The original plan died with the procedures.",
+	"text": "This facility used to follow strict procedures. Everything had to be perfect, for anything less would mean complete failure. But that vision is long since dead.",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
-		{
-			"text": "How was it perfect?",
-			"type": "neutral",
-			"nextID": "Conversation End Bad"
-		},
 		{
 			"text": "What was the original plan?",
 			"type": "neutral",

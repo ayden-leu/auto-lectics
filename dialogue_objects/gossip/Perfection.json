@@ -1,5 +1,5 @@
 {
-	"text": "I may not be now, but I will be soon. Once I learn everything, I shall be perfect.",
+	"text": "Once I learn everything, I shall be perfect. But right now I really need to know what those rebels are doing with that embyro thing in the other part of the factory.",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
@@ -17,11 +17,6 @@
 			"text": "Being perfect is not important.",
 			"type": "neutral",
 			"nextID": "QuestionImportance"
-		},
-		{
-			"text": "You will do this alone.",
-			"type": "neutral",
-			"nextID": "Not Alone"
 		}
 	]
 }

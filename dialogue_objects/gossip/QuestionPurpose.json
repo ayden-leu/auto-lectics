@@ -1,5 +1,5 @@
 {
-	"text": "So what were you made to do? Are you malfunctioning? I wasn't told about you.\n\n*Bot keeps sparking*",
+	"text": "So what were you made to do? Are you malfunctioning? I wasn't told about you.",
 	"type": "happy",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "QuestionPurpose_HecticFail",
@@ -19,7 +19,7 @@
 			"nextID": "Conversation End Bad"
 		},
 		{
-			"text": "I'm here to evaluate the facility.",
+			"text": "I'm here to look at the center of the factory. ",
 			"type": "neutral",
 			"nextID": "Evaluate"
 		}

@@ -5,9 +5,9 @@
 	"writeSpeed": "fast",
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "neutral",
-			"nextID": "PB7"
+			"nextID": "PB7Alt"
 		}
 	]
 }

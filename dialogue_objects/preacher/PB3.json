@@ -4,9 +4,9 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "neutral",
-			"nextID": "PB4"
+			"nextID": "PB4alt"
 		}
 	]
 }

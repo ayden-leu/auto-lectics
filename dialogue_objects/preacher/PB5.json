@@ -1,13 +1,13 @@
 {
-	"text": "SHE CREATED ME. SHE TURNED ME ON, NOT YOU…ME!",
+	"text": "The Almighty built and turned on the dumb machines, and the dumb machines created us, the wise machines.",
 	"type": "happy",
 	"mode": "normal",
 	"writeSpeed": "fast",
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "neutral",
-			"nextID": "PB6"
+			"nextID": "PB6alt"
 		}
 	]
 }

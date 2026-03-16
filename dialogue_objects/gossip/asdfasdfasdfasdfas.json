@@ -1,12 +1,12 @@
 {
-	"text": "Oh, my apologies.",
+	"text": "Well obviously! Now...",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "->",
 			"type": "neutral",
-			"nextID": "TOO"
+			"nextID": "QuestionPurpose"
 		}
 	]
 }

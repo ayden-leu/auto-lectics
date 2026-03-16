@@ -5,8 +5,7 @@
 	"options": [
 		{
 			"text": "The flock?",
-			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"type": "neutral"
 		},
 		{
 			"text": "You're spying.",
@@ -15,8 +14,7 @@
 		},
 		{
 			"text": "Tell me about this flock.",
-			"type": "neutral",
-			"nextID": "Flock"
+			"type": "neutral"
 		}
 	]
 }

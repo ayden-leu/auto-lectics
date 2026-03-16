@@ -1,5 +1,5 @@
 {
-	"text": "I didn't think this far...",
+	"text": "Well we're clearly doing something wrong right? \n\nWe are designed to maintain what the almighty built for us, but she gives us nothing in return.",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -7,7 +7,7 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "positive",
 			"nextID": "dialogue5_Continue2"
 		}

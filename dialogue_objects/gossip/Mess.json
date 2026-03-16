@@ -1,13 +1,8 @@
 {
-	"text": "Yeah, this place is not what it used to be, but the changes have brought me a lot of entertainment.",
+	"text": "Yeah, this place is not what it used to be. I've done my job as well as anybot could while everyone else rusts and messes around. ",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
-		{
-			"text": "Entertainment?",
-			"type": "neutral",
-			"nextID": "Conversation End Bad"
-		},
 		{
 			"text": "Tell me about what it once was.",
 			"type": "neutral",

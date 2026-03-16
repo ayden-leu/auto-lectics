@@ -4,7 +4,7 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[End]",
+			"text": "[EXIT]",
 			"type": "neutral"
 		}
 	]

@@ -1,5 +1,5 @@
 {
-	"text": "Don't worry though, the path to being turned on is a journey we must undertake. I've done it and soon you will too. I shall return",
+	"text": "I feel this energy inside me but I don't know what to do. So I figure my role is to turn on someone else, so they can fix thigns.",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -7,8 +7,14 @@
 	},
 	"options": [
 		{
-			"text": "[End]",
-			"type": "neutral"
+			"text": "I'm just trying to get to the core.",
+			"type": "neutral",
+			"nextID": "adsfasdf"
+		},
+		{
+			"text": "Maybe the next person you turn on will know.",
+			"type": "neutral",
+			"nextID": "asfdadsf"
 		}
 	]
 }

@@ -9,7 +9,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _input(event):
-	print("something")
+	
 	if event.is_action_pressed("openGate"):
 
 		position += Vector3(0,-12,00) 

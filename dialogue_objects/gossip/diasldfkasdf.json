@@ -1,0 +1,11 @@
+{
+	"text": "Guh! Don't ask me those kinds of questions!!! I know nothing about being a purposeless fool like you.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
+}

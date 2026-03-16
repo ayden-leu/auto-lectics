@@ -5,7 +5,7 @@
 	"writeSpeed": "fast",
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "neutral",
 			"nextID": "PreacherBot"
 		}

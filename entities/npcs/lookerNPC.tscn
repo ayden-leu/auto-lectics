@@ -9,7 +9,7 @@ radius = 1.47114
 [node name="looker" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
 script = ExtResource("3_y34t1")
 hitbox = NodePath("Hitbox")
-dialogueBoxAnchor = NodePath("Marker3D")
+dialogueBoxAnchor = NodePath("Marker3D2")
 dialogueBoxAttachMethod = 1
 initialDialogueID = "GB1"
 talkOnlyOnce = false
@@ -26,6 +26,9 @@ monitoring = false
 shape = SubResource("SphereShape3D_u8dq6")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(0.5422666, -0.26763076, 0.79644257, -0.3162325, 0.8132002, 0.48857215, -0.778424, -0.5167974, 0.35633758, 3.9497128, 4.921157, -0.35817134)
+transform = Transform3D(0.31304133, 0.42087275, 0.8513936, -0.16348585, 0.90694785, -0.3882242, -0.9355625, -0.017660497, 0.35271883, 3.9497128, 1.8179889, -2.4683223)
 
 [node name="looker" parent="." instance=ExtResource("2_uvki3")]
+
+[node name="Marker3D2" type="Marker3D" parent="."]
+transform = Transform3D(0.7944691, 0.4361625, 0.42258894, -0.16288802, 0.8233856, -0.5436025, -0.5850527, 0.36304092, 0.7252, -0.15679878, 1.1391492, -5.6575284)

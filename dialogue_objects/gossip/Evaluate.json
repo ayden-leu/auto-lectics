@@ -1,5 +1,5 @@
 {
-	"text": "What is there to evaluate?",
+	"text": "Well if your job is to check things out? What do you think? ",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -12,9 +12,8 @@
 			"nextID": "Mess"
 		},
 		{
-			"text": "Checking to see if this place is up to standards.",
-			"type": "neutral",
-			"nextID": "Standards"
+			"text": "It seems to kept up to- kind of standard.",
+			"type": "neutral"
 		},
 		{
 			"text": "Not much, this place is perfect.",

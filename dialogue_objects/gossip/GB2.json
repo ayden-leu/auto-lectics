@@ -4,7 +4,7 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "neutral",
 			"nextID": "GB3"
 		}

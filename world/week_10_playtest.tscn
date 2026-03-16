@@ -327,6 +327,15 @@ transform = Transform3D(0.96592575, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965925
 [node name="batteryBlock8" parent="Environment/Models/Interactable" instance=ExtResource("14_bb1ch")]
 transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, -33, 27, -45)
 
+[node name="bigtrussing" parent="Environment/Models/Interactable" instance=ExtResource("7_mw4j8")]
+transform = Transform3D(-2.599556e-08, -1.5108095, 0.8722662, 1.7445326, -6.17606e-08, -5.157368e-08, 6.49889e-08, 0.8722662, 1.5108095, -19.253227, -11.8010645, -75.79888)
+
+[node name="bigFloorArc4" parent="Environment/Models/Interactable" instance=ExtResource("10_k6p8l")]
+transform = Transform3D(-0.028872339, 0.0021623073, -0.15514424, 0.011786655, 0.15738201, 0, 0.15471098, -0.011586615, -0.028953195, -49.147774, -10.051016, -53.11095)
+
+[node name="bigFloorArc5" parent="Environment/Models/Interactable" instance=ExtResource("10_k6p8l")]
+transform = Transform3D(-0.12955737, 0.002162307, -0.09010126, 0.008386481, 0.15738203, -0.008282039, 0.08973616, -0.011586615, -0.12931046, -46.316402, -11.206877, -68.282715)
+
 [node name="MetalBigFlat" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(0.9162299, 0, -0.4006529, 0, 1, 0, 0.4006529, 0, 0.9162299, -39.851532, -11.833922, -70.944084)
 
@@ -334,7 +343,7 @@ transform = Transform3D(0.9162299, 0, -0.4006529, 0, 1, 0, 0.4006529, 0, 0.91622
 transform = Transform3D(0.9162299, -0.2026715, -0.8843825, 0, 0.8626196, -1.2944251, 0.40065292, 0.46347776, 2.0224435, -45.89087, -18.259449, -57.133083)
 
 [node name="MetalBigFlat2" parent="Environment/Models" instance=ExtResource("4_musp6")]
-transform = Transform3D(0.9162299, 0, -0.4006529, 0, 1, 0, 0.4006529, 0, 0.9162299, -48.847393, -22.208252, -49.41808)
+transform = Transform3D(0.9162299, 0, -0.4006529, 0, 1, 0, 0.4006529, 0, 0.9162299, -48.847393, -23.774403, -49.41808)
 
 [node name="powerTower" parent="Environment/Models" instance=ExtResource("10_mw4j8")]
 transform = Transform3D(0.21405327, 0, 0.46813726, 0, 0.5147536, 0, -0.46813726, 0, 0.21405327, -41.050274, -20.767157, -37.234676)
@@ -577,7 +586,7 @@ transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.977958
 transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
 
 [node name="looker" parent="npcs" instance=ExtResource("25_qqa75")]
-transform = Transform3D(0.47850618, 0.4122491, 0, -0.4122491, 0.47850618, 0, 0, 0, 0.6315991, -23.369476, -9.001124, -58.920563)
+transform = Transform3D(-0.41753963, 0.41224906, -0.2337281, 0.35972434, 0.47850618, 0.20136459, 0.30850694, 0, -0.55112696, -25.186935, -8.628218, -50.550636)
 
 [node name="miniboss" parent="npcs" instance=ExtResource("26_whg7e")]
 transform = Transform3D(-1.4099991, 0, -0.8140635, 0, 1.6281269, 0, 0.8140635, 0, -1.4099991, -9.08695, -12.778088, -89.92949)

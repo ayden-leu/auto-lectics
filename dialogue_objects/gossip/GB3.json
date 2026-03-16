@@ -1,5 +1,5 @@
 {
-	"text": "Who are you? Where'd you come from? How'd you get here?\n\n*Bot begins to spark*",
+	"text": "Who are you? Where'd you come from? How'd you get here?",
 	"type": "neutral",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "GB3_HecticFail",
