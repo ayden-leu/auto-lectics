@@ -1,5 +1,5 @@
 {
-	"text": "Well if your job is to check things out? What do you think? ",
+	"text": "Well if your job is to check things out, tell me- what do you think? ",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -12,12 +12,12 @@
 			"nextID": "Mess"
 		},
 		{
-			"text": "It seems to kept up to- kind of standard.",
+			"text": "It seems to kept up to some kind of standard.",
 			"type": "neutral",
 			"nextID": "Mess"
 		},
 		{
-			"text": "Not much, this place is perfect.",
+			"text": "This place is perfect.",
 			"type": "neutral",
 			"nextID": "EvaluatePerfect"
 		}

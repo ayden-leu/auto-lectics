@@ -3,7 +3,7 @@
 	"type": "happy",
 	"mode": "normal",
 	"sfx": {
-		"spawn": "gossipSound"
+		"spawn": "michaelwave"
 	},
 	"options": [
 		{

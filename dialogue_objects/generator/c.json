@@ -5,7 +5,7 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "Ok.",
+			"text": "->",
 			"nextID": "a"
 		}
 	]

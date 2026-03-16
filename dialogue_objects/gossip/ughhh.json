@@ -5,7 +5,8 @@
 	"options": [
 		{
 			"text": "->",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "title"
 		}
 	]
 }

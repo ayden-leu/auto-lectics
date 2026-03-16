@@ -9,7 +9,7 @@
 			"nextID": "TOO"
 		},
 		{
-			"text": "What is your designated task?",
+			"text": "What are you *actually* supposed to do?",
 			"type": "neutral",
 			"nextID": "TOI"
 		}
