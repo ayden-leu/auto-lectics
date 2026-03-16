@@ -1,5 +1,11 @@
 {
-	"text": "Change? Oh you want to change things???? I see what you are. Get out of here and talk to some reasonable bots till you have some sense in you .",
+	"text": "Change? Oh you want to change things???? I see what you are. Get out of here and talk to some reasonable bots till you have some sense in you.",
 	"type": "neutral",
-	"mode": "normal"
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
 }

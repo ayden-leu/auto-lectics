@@ -1,0 +1,17 @@
+{
+	"text": "Obviously... And so what are you going to do if I let you by. ",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I'll stop the embyro projects because its taking up too much power. ",
+			"type": "neutral",
+			"nextID": "goodEnd"
+		},
+		{
+			"text": "To stop the subversive bots from building their spaceship. ",
+			"type": "neutral",
+			"nextID": "Test3Fail1"
+		}
+	]
+}

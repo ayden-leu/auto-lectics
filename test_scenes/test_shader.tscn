@@ -1,30 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://blbfoatmcceb6"]
-
-[ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="1_67jda"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5r8k"]
-shader = ExtResource("1_67jda")
-shader_parameter/overlay = false
-shader_parameter/scanlines_opacity = 0.05
-shader_parameter/scanlines_width = 0.0
-shader_parameter/grille_opacity = 0.1
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/pixelate = true
-shader_parameter/roll = false
-shader_parameter/roll_speed = 1.0
-shader_parameter/roll_size = 0.0
-shader_parameter/roll_variation = 0.1
-shader_parameter/distort_intensity = 0.05
-shader_parameter/noise_opacity = 0.4
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.06
-shader_parameter/aberration = 0.01
-shader_parameter/brightness = 1.4
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 0.1
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.1
-shader_parameter/vignette_opacity = 0.5
+[gd_scene format=3 uid="uid://blbfoatmcceb6"]
 
 [node name="test_shader" type="Control"]
 layout_mode = 3
@@ -33,15 +7,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-material = SubResource("ShaderMaterial_q5r8k")
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 652.0
+offset_right = 1398.0
+offset_bottom = 797.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1152, 652)
+size = Vector2i(1398, 797)
 render_target_update_mode = 4

@@ -1,32 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4qdi730tv5hl"]
+[gd_scene load_steps=3 format=3 uid="uid://b4qdi730tv5hl"]
 
 [ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://ui/hud/hud.gd" id="1_xmswo"]
-[ext_resource type="Shader" uid="uid://d3id881vobe75" path="res://shaders/crtshader.gdshader" id="2_4d6w6"]
 [ext_resource type="Texture2D" uid="uid://dnfswnomwkg02" path="res://textures/crosshair_normal.png" id="3_e0nub"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0nub"]
-shader = ExtResource("2_4d6w6")
-shader_parameter/overlay = false
-shader_parameter/scanlines_opacity = 0.05
-shader_parameter/scanlines_width = 0.0
-shader_parameter/grille_opacity = 0.1
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/pixelate = true
-shader_parameter/roll = false
-shader_parameter/roll_speed = 1.0
-shader_parameter/roll_size = 0.0
-shader_parameter/roll_variation = 0.1
-shader_parameter/distort_intensity = 0.05
-shader_parameter/noise_opacity = 0.4
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.06
-shader_parameter/aberration = 0.01
-shader_parameter/brightness = 1.4
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 0.1
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.1
-shader_parameter/vignette_opacity = 0.5
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -36,7 +11,7 @@ offset_bottom = 810.0
 script = ExtResource("1_xmswo")
 
 [node name="ShaderOverlay" type="SubViewportContainer" parent="."]
-material = SubResource("ShaderMaterial_e0nub")
+visible = false
 layout_mode = 1
 offset_right = 1440.0
 offset_bottom = 810.0
@@ -47,7 +22,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="ShaderOverlay"]
 handle_input_locally = false
 size = Vector2i(1440, 810)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(32, 32)

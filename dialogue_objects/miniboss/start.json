@@ -4,13 +4,14 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "I think I need to get past you? ",
+			"text": "I think I need to get past you.",
 			"type": "neutral",
 			"nextID": "notSafe"
 		},
 		{
 			"text": "How's your day going? ",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "doingJob"
 		},
 		{
 			"text": "What do you do",

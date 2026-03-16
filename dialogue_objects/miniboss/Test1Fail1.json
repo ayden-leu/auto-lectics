@@ -1,5 +1,11 @@
 {
 	"text": "The boss hasn't said anything for a thousand years!  Talk to me when you have a clue what you're saying. ",
 	"type": "neutral",
-	"mode": "normal"
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
 }

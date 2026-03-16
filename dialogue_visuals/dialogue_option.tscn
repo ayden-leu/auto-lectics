@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cl13xh13e428b" path="res://dialogue_visuals/dialogue_option.gd" id="1_vbb0e"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_hgihb"]
-[ext_resource type="FontFile" uid="uid://b8jmp7njbbs43" path="res://dialogue_visuals/Bitcount/static/Bitcount_Roman-Light.ttf" id="3_wakav"]
+[ext_resource type="FontFile" uid="uid://cd8j8vcaiagot" path="res://dialogue_visuals/Datatype/static/Datatype_ExtraExpanded-Regular.ttf" id="3_wakav"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2d7vg"]
 resource_local_to_scene = true
 material = ExtResource("2_hgihb")
-size = Vector3(0.08, 0.225, 0.34)
+size = Vector3(0.08, 0.22999999, 0.29999998)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgihb"]
 resource_local_to_scene = true
-size = Vector3(0.13, 0.275, 0.39000002)
+size = Vector3(0.13, 0.28, 0.35)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hgihb"]
 resource_local_to_scene = true
@@ -25,7 +25,7 @@ playback_mode = 1
 script = ExtResource("1_vbb0e")
 
 [node name="Background" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.377387, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1125, 0.17)
+transform = Transform3D(0.377387, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.114999995, 0.14999999)
 mesh = SubResource("BoxMesh_2d7vg")
 
 [node name="TextLabel" type="Label3D" parent="."]
@@ -45,7 +45,7 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1125, 0.17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.114999995, 0.14999999)
 shape = SubResource("BoxShape3D_hgihb")
 disabled = true
 

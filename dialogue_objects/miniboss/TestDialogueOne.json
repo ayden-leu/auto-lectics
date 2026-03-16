@@ -5,7 +5,8 @@
 	"options": [
 		{
 			"text": "Because the boss needs our help.",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "TestDialogue2"
 		},
 		{
 			"text": "Because I'm on a mission from the boss. ",
@@ -14,7 +15,8 @@
 		},
 		{
 			"text": "Because the factory is broken.",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "TestDialogue2"
 		},
 		{
 			"text": "Because there's been a change in plans.",
