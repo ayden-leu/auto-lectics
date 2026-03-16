@@ -3,6 +3,7 @@
 	"type": "happy",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "QuestionPurpose_HecticFail",
+	"writeSpeed": "fast",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
@@ -15,11 +16,11 @@
 		{
 			"text": "Are you sure you're ok?",
 			"type": "neutral",
-			"nextID": "dialogue2_Neutral"
+			"nextID": "Conversation End Bad"
 		},
 		{
 			"text": "I'm here to evaluate the facility.",
-			"type": "positive",
+			"type": "neutral",
 			"nextID": "Evaluate"
 		}
 	]

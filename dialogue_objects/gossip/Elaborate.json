@@ -1,11 +1,22 @@
 {
-	"text": "I have said enough.",
+	"text": "This facility used to follow strict procedures. Everything had to be perfect, for anything less would mean complete failure. The original plan died with the procedures.",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[End]",
-			"type": "neutral"
+			"text": "How was it perfect?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "What was the original plan?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Tell me more.",
+			"type": "neutral",
+			"nextID": "TellEm"
 		}
 	]
 }
