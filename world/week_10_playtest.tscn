@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dynwn4finljcb"]
+[gd_scene load_steps=32 format=3 uid="uid://dynwn4finljcb"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="17_doxto"]
 [ext_resource type="PackedScene" uid="uid://wtvso5hy2hpw" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
+[ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_bb1ch"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_uxxn7")
@@ -239,7 +240,7 @@ transform = Transform3D(0.089386076, 0.033439446, -0.71704346, -0.036879137, 0.7
 transform = Transform3D(0.26629075, -9.313226e-10, -0.09598082, -3.7252903e-09, 0.28306028, 5.122274e-09, 0.09598084, -7.683411e-09, 0.26629075, 1.180439, -16.630562, -2.2902975)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Environment/Models/Interactable/pulipit"]
-transform = Transform3D(1.3577222, 0.23615746, 0.10916454, -0.111289114, 0.0028709085, 1.3779345, 0.23516372, -1.362101, 0.021830969, -0.41653442, 8.152978, 0.32828903)
+transform = Transform3D(1.3577222, 0.23615746, 0.10916454, -0.111289114, 0.0028709085, 1.3779345, 0.23516372, -1.362101, 0.021830969, 3.7196724, 7.9144335, -5.2980595)
 light_color = Color(0.9204394, 0.79801035, 0.6182901, 1)
 light_energy = 16.0
 spot_range = 14.514431
@@ -524,10 +525,11 @@ transform = Transform3D(2.7153764, -0.069214925, -5.169289, 0, 0.99058133, -1.41
 [node name="ship" parent="npcs" instance=ExtResource("23_7p6d6")]
 transform = Transform3D(0.9947905, -0.10186358, -0.003956265, 0.10027153, 0.9847615, -0.14209339, 0.018370118, 0.14095646, 0.98984534, 0.13056353, -0.18843894, -0.93904674)
 
-[node name="Node" type="Node" parent="npcs/ship"]
-
 [node name="generator" parent="npcs" instance=ExtResource("19_mw4j8")]
 transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -29.873392, -24.768522, -37.53321)
+
+[node name="preacher" parent="npcs" instance=ExtResource("24_bb1ch")]
+transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
 
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
 transform = Transform3D(-0.014573008, 0, 0.9998938, 0, 1, 0, -0.9998938, 0, -0.014573008, 59.754967, -9.527128, -107.21732)
