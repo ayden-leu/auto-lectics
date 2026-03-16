@@ -1,0 +1,14 @@
+{
+	"text": "Management? I'm the Mini-Boss around here and I don't know anything about managment other than me. Come back when you're talking more sense.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
+}

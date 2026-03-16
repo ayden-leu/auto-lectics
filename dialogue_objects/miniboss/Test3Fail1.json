@@ -1,5 +1,11 @@
 {
-	"text": "I'd have to check with the other overseer's. I haven't heard of anythign liek that. ",
+	"text": "I haven't heard of anything like that! That's ridiculous, get out of here! ",
 	"type": "neutral",
-	"mode": "normal"
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
 }

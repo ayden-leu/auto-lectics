@@ -5,23 +5,28 @@
 	"options": [
 		{
 			"text": "Because management says I need to get to the center of the factory.",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "ManagementFail"
 		},
 		{
 			"text": "Because there's been a change in plans.",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "Test1Fail2"
 		},
 		{
 			"text": "Because the factory is broken.",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "TestDialogue2"
 		},
 		{
 			"text": "Because I'm on a mission from the boss. ",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "Test1Fail1"
 		},
 		{
 			"text": "Because the boss needs our help.",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "TestDialogue2"
 		}
 	]
 }
