@@ -13,7 +13,7 @@ hitbox = NodePath("Area3D")
 initialDialogueID = "a"
 talkOnlyOnce = false
 model = NodePath("GeneratorNPC")
-myName = "generator"
+myName = "collector"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
 
 [node name="Area3D" type="Area3D" parent="."]
