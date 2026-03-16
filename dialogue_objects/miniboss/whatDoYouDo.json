@@ -1,7 +1,10 @@
 {
-	"text": "I should be asking what you do!? Look at you, arms, legs, some kind of head! What purpose do you even serve?  \n",
+	"text": "I should be asking what you do!? Look at you: arms, legs, some kind of head! \n\nWhat purpose do you even serve?  \n",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "I just want to know whats going on.",

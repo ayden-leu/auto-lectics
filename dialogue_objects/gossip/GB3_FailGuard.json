@@ -12,7 +12,8 @@
 		},
 		{
 			"text": "What?",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
 		},
 		{
 			"text": "I'm new here.",

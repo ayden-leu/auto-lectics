@@ -1,5 +1,11 @@
 {
-	"text": "Try pressing your 'P' key on your keyboard, should open the gate.",
+	"text": "Try pressing your 'K' key on your keyboard, should open the gate.",
 	"type": "neutral",
-	"mode": "normal"
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
 }

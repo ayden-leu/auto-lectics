@@ -9,7 +9,7 @@
 			"nextID": "Test2DialogueSuccess"
 		},
 		{
-			"text": "Because we need them to complete finish this project.",
+			"text": "Because we need them to complete the project.",
 			"type": "neutral",
 			"nextID": "Test2DialogueFail2"
 		},

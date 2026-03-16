@@ -4,9 +4,9 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "How will you learn everything?",
+			"text": "What's stopping you?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "ughhh"
 		},
 		{
 			"text": "What is there to learn?",

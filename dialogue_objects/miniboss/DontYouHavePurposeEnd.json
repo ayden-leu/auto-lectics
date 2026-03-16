@@ -2,9 +2,12 @@
 	"text": "Don’t you have a purpose? Go do that and quit bothering me.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
-			"text": "[Exit]",
+			"text": "[EXIT]",
 			"type": "neutral"
 		}
 	]
