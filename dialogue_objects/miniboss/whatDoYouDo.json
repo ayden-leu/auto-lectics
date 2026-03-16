@@ -1,0 +1,12 @@
+{
+	"text": "I should be asking what you do!? Look at you, arms, legs, some kind of head! What purpose do you even serve?  \n",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I just want to know whats going on.",
+			"type": "neutral",
+			"nextID": "DontYouHavePurposeEnd"
+		}
+	]
+}

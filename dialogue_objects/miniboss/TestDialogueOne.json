@@ -1,0 +1,25 @@
+{
+	"text": "I'm listening. ",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Because the boss needs our help.",
+			"type": "neutral"
+		},
+		{
+			"text": "Because I'm on a mission from the boss. ",
+			"type": "neutral",
+			"nextID": "Test1Fail1"
+		},
+		{
+			"text": "Because the factory is broken.",
+			"type": "neutral"
+		},
+		{
+			"text": "Because there's been a change in plans.",
+			"type": "neutral",
+			"nextID": "Test1Fail2"
+		}
+	]
+}

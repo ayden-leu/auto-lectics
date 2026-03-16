@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dynwn4finljcb"]
+[gd_scene load_steps=33 format=3 uid="uid://dynwn4finljcb"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
@@ -6,28 +6,29 @@
 [ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="4_musp6"]
 [ext_resource type="PackedScene" uid="uid://bullwudoypwel" path="res://models/environment/backgroundClutter/round_tank.tscn" id="5_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://dnr4q2ehmudfm" path="res://models/BlendFiles/bigFloorArc.blend" id="6_bb1ch"]
-[ext_resource type="PackedScene" path="res://models/environment/bigtrussing.tscn" id="7_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="7_mw4j8"]
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="8_whg7e"]
-[ext_resource type="PackedScene" path="res://models/environment/large_pipe.tscn" id="9_a6ycu"]
-[ext_resource type="PackedScene" path="res://models/environment/bridge.tscn" id="9_musp6"]
+[ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="9_a6ycu"]
+[ext_resource type="PackedScene" uid="uid://5tf7frxomx2y" path="res://models/environment/bridge.tscn" id="9_musp6"]
 [ext_resource type="PackedScene" uid="uid://dytucwmjofvdw" path="res://models/environment/backgroundClutter/tube_clutter_1.tscn" id="9_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="10_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://dgim7xtnvx8nn" path="res://models/environment/big_floor_arc.tscn" id="10_k6p8l"]
-[ext_resource type="PackedScene" path="res://models/environment/power_tower.tscn" id="10_mw4j8"]
-[ext_resource type="PackedScene" path="res://models/environment/pulipit.tscn" id="10_tgtyg"]
-[ext_resource type="PackedScene" path="res://models/environment/ceo_bottom_tube.tscn" id="11_7p6d6"]
+[ext_resource type="PackedScene" uid="uid://ciygohqncwr2e" path="res://models/environment/power_tower.tscn" id="10_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://bqvxxcdh7iapl" path="res://models/environment/pulipit.tscn" id="10_tgtyg"]
+[ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="11_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://dmkoidkma4qj3" path="res://models/BlendFiles/cable.blend" id="11_a6ycu"]
 [ext_resource type="PackedScene" uid="uid://dv545q1ms32vr" path="res://models/BlendFiles/roundTank.blend" id="11_doxto"]
 [ext_resource type="PackedScene" uid="uid://cgsl375svaj1x" path="res://models/BlendFiles/dropPod.blend" id="11_musp6"]
 [ext_resource type="PackedScene" uid="uid://ckjpbarwajofg" path="res://models/environment/environmentscenes/battery_block.tscn" id="13_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://ia3m4r8gqxaa" path="res://models/environment/environmentscenes/battery_block2.tscn" id="14_bb1ch"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="14_whg7e"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="14_whg7e"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="15_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="16_k6p8l"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="17_doxto"]
-[ext_resource type="PackedScene" uid="uid://wtvso5hy2hpw" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://cs0qqc1w808ww" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_bb1ch"]
+[ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="25_qqa75"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_uxxn7")
@@ -530,6 +531,9 @@ transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.977958
 
 [node name="preacher" parent="npcs" instance=ExtResource("24_bb1ch")]
 transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
+
+[node name="looker" parent="npcs" instance=ExtResource("25_qqa75")]
+transform = Transform3D(0.47850618, 0.4122491, 0, -0.4122491, 0.47850618, 0, 0, 0, 0.6315991, -21.98389, -7.392845, -58.920563)
 
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
 transform = Transform3D(-0.014573008, 0, 0.9998938, 0, 1, 0, -0.9998938, 0, -0.014573008, 59.754967, -9.527128, -107.21732)

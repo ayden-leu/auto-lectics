@@ -1,0 +1,12 @@
+{
+	"text": "Yeah, an unregistered object like you might do anything in there! Back when there were birds one got stuck in a cooling fan and this whole place nearly went up in smoke. How do I know you’re not gonna get stuck in a cooling fan huh? ",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Well.... listen.",
+			"type": "neutral",
+			"nextID": "TestDialogueOne"
+		}
+	]
+}

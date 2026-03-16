@@ -1,0 +1,11 @@
+{
+	"text": "Don’t you have a purpose? Go do that and quit bothering me.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Exit]",
+			"type": "neutral"
+		}
+	]
+}

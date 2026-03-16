@@ -1,0 +1,21 @@
+{
+	"text": "What do you want?",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I think I need to get past you? ",
+			"type": "neutral",
+			"nextID": "notSafe"
+		},
+		{
+			"text": "How's your day going? ",
+			"type": "neutral"
+		},
+		{
+			"text": "What do you do",
+			"type": "neutral",
+			"nextID": "whatDoYouDo"
+		}
+	]
+}

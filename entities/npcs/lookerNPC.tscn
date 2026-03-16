@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bxfsxhyjvsml8"]
 
-[ext_resource type="PackedScene" uid="uid://cxmlmdlsqdkd6" path="res://models/week6playtestStuff/npcs/looker.fbx" id="2_2ow1n"]
+[ext_resource type="PackedScene" uid="uid://d3uxuhqgkv0qc" path="res://entities/npcs/gossip.tscn" id="2_uvki3"]
 [ext_resource type="Script" uid="uid://y3bv4bjrakvy" path="res://entities/npcs/looker.gd" id="3_y34t1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
@@ -12,14 +12,11 @@ hitbox = NodePath("Hitbox")
 dialogueBoxAnchor = NodePath("Marker3D")
 dialogueBoxAttachMethod = 1
 initialDialogueID = "Dialogue1a"
-model = NodePath("lookerModel")
-myName = "looker"
-
-[node name="lookerModel" parent="." instance=ExtResource("2_2ow1n")]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+model = NodePath("")
+myName = "gossip"
 
 [node name="Hitbox" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 7.646444, -0.15410192)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 6.396848, -0.15410192)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
@@ -29,3 +26,5 @@ shape = SubResource("SphereShape3D_u8dq6")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(0.639599, 0.44399902, 0.6275173, -0.5585533, 0.8292851, -0.017452292, -0.52813953, -0.33933935, 0.77840704, 2.6581755, 7.550861, 2.1158104)
+
+[node name="looker" parent="." instance=ExtResource("2_uvki3")]
