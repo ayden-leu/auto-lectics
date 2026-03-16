@@ -581,7 +581,6 @@ transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.9666850
 
 [node name="looker" parent="npcs" instance=ExtResource("25_qqa75")]
 transform = Transform3D(-0.41753963, 0.41224906, -0.2337281, 0.35972434, 0.47850618, 0.20136459, 0.30850694, 0, -0.55112696, -25.186935, -8.628218, -50.550636)
-initialDialogueID = "GB2"
 
 [node name="miniboss" parent="npcs" instance=ExtResource("26_whg7e")]
 transform = Transform3D(-1.4099991, 0, -0.8140635, 0, 1.6281269, 0, 0.8140635, 0, -1.4099991, -9.08695, -12.778088, -89.92949)
