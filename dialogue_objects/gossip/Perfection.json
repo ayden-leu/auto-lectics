@@ -4,8 +4,24 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[End]",
-			"type": "neutral"
+			"text": "How will you learn everything?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "What is there to learn?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Being perfect is not important.",
+			"type": "neutral",
+			"nextID": "QuestionImportance"
+		},
+		{
+			"text": "You will do this alone.",
+			"type": "neutral",
+			"nextID": "Not Alone"
 		}
 	]
 }

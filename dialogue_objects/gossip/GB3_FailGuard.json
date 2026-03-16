@@ -1,8 +1,9 @@
 {
-	"text": "That doesn't matter. I ask again: Who are you?",
+	"text": "DON'T EVER QUESTION ME, YOU INSIGNIFICANT SPECK! Now I ask again, who are you?",
 	"type": "neutral",
 	"mode": "hectic",
 	"nextOnHecticFailureID": "GB3_HecticFail",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "That's not important.",
@@ -10,21 +11,16 @@
 			"nextID": "QuestionImportance"
 		},
 		{
-			"text": "Who are you?",
-			"type": "neutral",
-			"nextID": "Conversation End Bad"
-		},
-		{
-			"text": "I'm new here.",
+			"text": "What?",
 			"type": "neutral"
 		},
 		{
-			"text": "Are you okay?",
+			"text": "I'm new here.",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "New"
 		},
 		{
-			"text": "What?",
+			"text": "Are you okay?",
 			"type": "neutral",
 			"nextID": "Conversation End Bad"
 		}
