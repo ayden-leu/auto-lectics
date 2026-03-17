@@ -1,5 +1,6 @@
 @tool
 extends Node
+class_name LoopManager
 
 # TODO:  create a proper test scene to test functionality.
 

@@ -36,7 +36,6 @@ offset_bottom = 810.0
 script = ExtResource("1_xmswo")
 
 [node name="ShaderOverlay" type="SubViewportContainer" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_e0nub")
 layout_mode = 1
 offset_right = 1440.0

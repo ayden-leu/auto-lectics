@@ -3,7 +3,7 @@ extends Node3D
 class_name DialogueOption
 
 ## Emitted when this dialogue option is picked.
-signal option_picked(nextID:String)
+signal option_picked(option:DialogueOption, nextID:String)
 
 ## Used for referencing how the dialogue option should grow horizontally.
 enum HORIZONTAL_ALIGNMENT{
@@ -184,7 +184,7 @@ func _on_interaction(_interactor:Node3D) -> void:
 	interactionHitbox.disabled = true
 	lifeTimer.stop()
 	sfxPlayer.spawn.stop()
-	option_picked.emit(nextDialogueID)
+	option_picked.emit(self, nextDialogueID)
 
 ## Handles the logic for when the lifetime of the dialogue option expires.
 func _on_life_timer_timeout() -> void:

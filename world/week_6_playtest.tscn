@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bt62vwn7bnq36"]
+[gd_scene load_steps=49 format=3 uid="uid://bt62vwn7bnq36"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_d02ib"]

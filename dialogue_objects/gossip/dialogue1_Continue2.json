@@ -29,7 +29,7 @@
 		},
 		{
 			"text": "I'm new here.",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue2",
 			"setFlag": [
 				{

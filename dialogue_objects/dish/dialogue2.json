@@ -20,7 +20,7 @@
 		},
 		{
 			"text": "Am I interrupting?",
-			"type": "Positive",
+			"type": "positive",
 			"nextID": "dialogue3",
 			"checkFlag": [
 				{
