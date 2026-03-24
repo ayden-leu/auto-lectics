@@ -149,6 +149,12 @@ func _createNodesFromFile(filename:String) -> void:
 		if option.has("lifetime"):
 			newOptionNode.lifetime = option.lifetime
 		
+		if option.has("setFlags"):
+			newOptionNode.setFlags = option.setFlags
+		
+		if option.has("checkFlags"):
+			newOptionNode.checkFlags = option.checkFlags
+		
 		if option.has("nextID"):
 			newOptionNode.nextID = option.nextID
 		

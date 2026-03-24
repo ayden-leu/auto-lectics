@@ -30,7 +30,6 @@ layout_mode = 1
 offset_right = 1440.0
 offset_bottom = 810.0
 size_flags_horizontal = 3
-scroll_offset = Vector2(-391, -96)
 right_disconnects = true
 type_names = {
 0: "Option",
