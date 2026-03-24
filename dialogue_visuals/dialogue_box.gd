@@ -116,7 +116,7 @@ func loadOptionData(options: Array) -> void:
 			continue
 		
 		#Don't show any options that don't pass check_flag
-		var check_flags: Array = option.get("checkFlag", [])
+		var check_flags: Dictionary = option.checkFlags
 		if StoryFlags.passes_check_flags(check_flags):
 			optionData.push_back(option)
 	
@@ -299,7 +299,7 @@ func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
 	instance.text = data.text
 	instance.nextDialogueID = data.nextID
 	instance.lifetime = data.lifetime
-	instance.setFlags = data.get("setFlag", [])
+	instance.setFlags = data.setFlags
 	#instance.connect("option_picked", _on_option_picked.bind(instance))
 	instance.option_picked.connect(_on_option_picked)
 
@@ -345,7 +345,8 @@ func kill() -> void:
 
 ## Handles logic for when a dialogue option is picked.
 func _on_option_picked(pickedOption:DialogueOption, nextDialogueID:String) -> void:
-	StoryFlags.apply_set_flags(pickedOption.setFlags)
+	if pickedOption:
+		StoryFlags.apply_set_flags(pickedOption.setFlags)
 
 	for _i in range(spawnedOptions.size()):
 		var toKill = spawnedOptions.pop_front()

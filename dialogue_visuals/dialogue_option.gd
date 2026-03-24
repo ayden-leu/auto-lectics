@@ -41,7 +41,7 @@ var text:String = "":
 ## Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
 @onready var lifeTimer:Timer = $LifeTimer
 ## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": $SFX/spawn,
 	"text": $SFX/text
 }
@@ -62,7 +62,7 @@ var nextDialogueID:String
 ## The SFX sound events to load sound files into.
 var sfxEventsToLoad:Dictionary
 ## Make it possible for dialogue to change a flag.
-var setFlags: Array = []
+var setFlags: Dictionary = {}
 
 func _ready() -> void:
 	# Makes sure the code only runs while the game is running
