@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=14 format=3 uid="uid://dbtcrr1c8clsr"]
 
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="6_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_wd7ni"]
+[ext_resource type="PackedScene" uid="uid://dmfdcsykvqvw" path="res://ui/hud/fade_to_black_hitbox.tscn" id="7_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="16_ejbbu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
@@ -93,3 +94,5 @@ metadata/_edit_group_ = true
 shape = SubResource("BoxShape3D_wd7ni")
 debug_color = Color(0, 0.5950001, 0.7, 1)
 metadata/_edit_lock_ = true
+
+[node name="FadeToBlackHitbox" parent="." instance=ExtResource("7_qo27r")]

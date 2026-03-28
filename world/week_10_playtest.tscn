@@ -575,6 +575,8 @@ transform = Transform3D(0.71465504, 0.01516811, 0.016220232, -0.014972712, 0.714
 
 [node name="generator" parent="npcs" instance=ExtResource("19_mw4j8")]
 transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -33.360706, -24.101482, -39.169537)
+initialDialogueID = "2"
+talkOnlyOnce = false
 
 [node name="preacher" parent="npcs" instance=ExtResource("24_bb1ch")]
 transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
