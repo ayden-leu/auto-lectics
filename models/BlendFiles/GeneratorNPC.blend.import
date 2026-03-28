@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://2kyvrxci7iaa"
+uid="uid://d15d5jgi2udcs"
 path="res://.godot/imported/GeneratorNPC.blend-bfa7ba987c044f209b615d534b21ffa5.scn"
 
 [deps]
@@ -37,37 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"nodes": {
-"PATH:AnimationPlayer": {
-"optimizer/enabled": false
-},
-"PATH:BasicWall_002": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_033": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_033/Cube_171": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_033/Cube_171/Cylinder_034": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_033/Cylinder_071": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_101": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_109": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_119": {
-"generate/occluder": 1
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true
@@ -86,4 +56,4 @@ blender/materials/export_materials=1
 blender/animation/limit_playback=true
 blender/animation/always_sample=true
 blender/animation/group_tracks=true
-gltf/naming_version=2
+gltf/naming_version=0

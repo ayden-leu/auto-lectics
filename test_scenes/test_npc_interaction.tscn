@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=13 format=3 uid="uid://dbtcrr1c8clsr"]
 
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="3_aue1p"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
+[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="6_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="16_ejbbu"]
 
@@ -24,6 +25,9 @@ size = Vector2(18.48, 37.805)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wd7ni"]
 data = PackedVector3Array(9.24, 0, 18.9025, -9.24, 0, 18.9025, 9.24, 0, -18.9025, -9.24, 0, 18.9025, -9.24, 0, -18.9025, 9.24, 0, -18.9025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wd7ni"]
+size = Vector3(2.772461, 1, 2.220459)
 
 [node name="Test_NPCInteraction" type="Node3D"]
 
@@ -51,15 +55,21 @@ shape = SubResource("ConcavePolygonShape3D_wd7ni")
 [node name="npcs" type="Node" parent="."]
 
 [node name="NPC_Test" parent="npcs" instance=ExtResource("16_ejbbu")]
-transform = Transform3D(0.8575176, 0, 0.5144545, 0, 1, 0, -0.5144545, 0, 0.8575176, -1.5451202, 0.093871966, 1.7243452)
+transform = Transform3D(0.6762848, 0, -0.7366402, 0, 1, 0, 0.7366402, 0, 0.6762848, -1.5451202, 0.093871966, 1.7243452)
+talkOnlyOnce = false
+myName = "collector"
 
 [node name="NPC_Test2" parent="npcs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(0.88667214, 0, -0.4623987, 0, 1, 0, 0.4623987, 0, 0.88667214, -1.6743507, 0.0938721, -3.7855754)
-initialDialogueID = "Dialogue1b"
+initialDialogueID = "GB3"
+talkOnlyOnce = false
+myName = "gossip"
 
 [node name="NPC_Test3" parent="npcs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.20124891, 0, -0.9795401, 0, 1, 0, 0.9795401, 0, -0.20124891, 4.453091, 0.09387207, -6.449946)
-initialDialogueID = "Dialogue1a_hectic"
+initialDialogueID = "start"
+talkOnlyOnce = false
+myName = "miniboss"
 
 [node name="Player" parent="." instance=ExtResource("3_aue1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
@@ -73,3 +83,13 @@ focus = NodePath("../Player")
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
 loopDurationSeconds = 1000.0
+
+[node name="StartDialogueAreaTemp" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_qo27r")]
+transform = Transform3D(0.8352511, 0, 0.54986864, 0, 1, 0, -0.54986864, 0, 0.8352511, -0.103065014, 0.67852855, 3.4629617)
+interactableNpcToInitiate = NodePath("../npcs/NPC_Test")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartDialogueAreaTemp"]
+shape = SubResource("BoxShape3D_wd7ni")
+debug_color = Color(0, 0.5950001, 0.7, 1)
+metadata/_edit_lock_ = true

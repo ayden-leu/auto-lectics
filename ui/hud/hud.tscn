@@ -45,3 +45,9 @@ offset_right = 1440.0
 offset_bottom = 810.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.7058824)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1439.0
+offset_bottom = 936.0

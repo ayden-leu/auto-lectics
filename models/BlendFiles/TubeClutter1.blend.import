@@ -47,7 +47,7 @@ _subresources={
 "PlateMaterial": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/PlateMaterial.tres",
-"use_external/path": "uid://ct0qf0kxqttca"
+"use_external/path": "uid://dxpybx6f7q15b"
 },
 "YellowRust": {
 "use_external/enabled": true,

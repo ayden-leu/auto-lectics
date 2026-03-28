@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=6 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://helpers/input_handler.gd" id="2_abrql"]
@@ -6,6 +6,8 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h4x50"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 2
@@ -32,6 +34,13 @@ collide_with_bodies = false
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("2_abrql")
 metadata/_custom_type_script = "uid://bvgsjve6ghkfg"
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape3D_abrql")
+debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
 
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
 [connection signal="jump_pressed" from="InputHandler" to="." method="_on_jump_pressed"]
