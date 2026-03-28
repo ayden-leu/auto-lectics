@@ -1,5 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://dynwn4finljcb"]
+[gd_scene load_steps=38 format=3 uid="uid://dynwn4finljcb"]
 
+[ext_resource type="Script" uid="uid://7h0eysfwvhfj" path="res://world/reloadTheScene.gd" id="1_doxto"]
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_x8ppq"]
@@ -31,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="26_whg7e"]
 [ext_resource type="Script" uid="uid://bocggstjplylv" path="res://world/gate.gd" id="27_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="28_k6p8l"]
+[ext_resource type="PackedScene" uid="uid://ddx37yx83ddcw" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_uxxn7")
@@ -50,6 +52,7 @@ glow_intensity = 0.0
 albedo_color = Color(0, 0, 0, 1)
 
 [node name="week_6_playtest" type="Node3D"]
+script = ExtResource("1_doxto")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)
@@ -518,7 +521,7 @@ size = Vector3(1, 10.697998, 28.476639)
 material = SubResource("StandardMaterial3D_k6p8l")
 
 [node name="Label3D" type="Label3D" parent="Environment/Models/CSGBox3D"]
-transform = Transform3D(-2.6864473e-07, 0, 6.1458745, 0, 6.1458745, 0, -6.1458745, 0, -2.6864473e-07, 1.2891006, 0, 0)
+transform = Transform3D(-2.6864473e-07, 0, 6.1458745, 0, 6.1458745, 0, -6.1458745, 0, -2.6864473e-07, 1.289101, 0, 9.141879)
 text = "That's all folks. 
 
 For now..."
@@ -588,11 +591,11 @@ transform = Transform3D(-0.41753963, 0.41224906, -0.2337281, 0.35972434, 0.47850
 transform = Transform3D(-1.4099991, 0, -0.8140635, 0, 1.6281269, 0, 0.8140635, 0, -1.4099991, -9.08695, -12.778088, -89.92949)
 
 [node name="Node3D" type="Node3D" parent="npcs/miniboss"]
-transform = Transform3D(-4.174111, 0, 2.4099243, 0, 4.8198476, 0, -2.4099243, 0, -4.174111, -5.9355335, 6.4124784, -0.88181305)
+transform = Transform3D(-4.1741114, 0, 2.4099245, 0, 4.8198476, 0, -2.4099245, 0, -4.1741114, -5.9355335, 6.4124784, -0.88181305)
 script = ExtResource("27_ooa8t")
 
 [node name="gate" parent="npcs/miniboss/Node3D" instance=ExtResource("28_k6p8l")]
-transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, -0.058712035, -1.8941944, 0.24167566)
+transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, -0.058712035, -1.8896812, 0.24167566)
 
 [node name="gate2" parent="npcs/miniboss/Node3D" instance=ExtResource("28_k6p8l")]
 transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.5307432, -1.8941944, 0.24167566)
@@ -606,3 +609,6 @@ focus = NodePath("../Player")
 
 [node name="DeathPlane" parent="." instance=ExtResource("17_doxto")]
 transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 70.00359, -30.85255, -101.34105)
+
+[node name="FadeToBlackHitbox" parent="." instance=ExtResource("32_k6p8l")]
+transform = Transform3D(-0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881904, -12.2903385, -8.6202755, -102.146935)

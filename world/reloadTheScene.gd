@@ -1,17 +1,13 @@
 extends Node3D
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-			
-
-func _input(event):
-	
-	if event.is_action_pressed("openGate"):
-		rotation.x = -90.0		
+func _process(delta: float) -> void:
+	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
+		get_tree().reload_current_scene()
 		
-		#position += Vector3(0,-12,00) 
-		pass
-			 

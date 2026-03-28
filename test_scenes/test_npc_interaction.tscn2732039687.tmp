@@ -1,6 +1,5 @@
-[gd_scene load_steps=15 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=14 format=3 uid="uid://dbtcrr1c8clsr"]
 
-[ext_resource type="Script" uid="uid://7h0eysfwvhfj" path="res://world/reloadTheScene.gd" id="1_lahna"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
@@ -32,7 +31,6 @@ data = PackedVector3Array(9.24, 0, 18.9025, -9.24, 0, 18.9025, 9.24, 0, -18.9025
 size = Vector3(2.772461, 1, 2.220459)
 
 [node name="Test_NPCInteraction" type="Node3D"]
-script = ExtResource("1_lahna")
 
 [node name="Environment" type="Node" parent="."]
 
