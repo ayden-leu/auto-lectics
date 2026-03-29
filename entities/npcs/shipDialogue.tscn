@@ -17,6 +17,7 @@ myName = "dropPod"
 [node name="dropPod" parent="." instance=ExtResource("2_fax51")]
 
 [node name="Hitbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45.403595, 0)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
@@ -26,5 +27,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7936833, -4.1192694)
 shape = SubResource("BoxShape3D_6ak60")
 
 [node name="DialogueBoxAnchor" type="Marker3D" parent="."]
-transform = Transform3D(-0.04073181, -0.14345445, -1.3648776, -1.8626451e-09, 1.3654786, -0.14351761, 1.3723958, -0.0042576324, -0.04050868, 0.15089741, -0.8201417, -1.9994764)
+transform = Transform3D(-0.04073181, -0.14345445, -1.3648776, -1.8626451e-09, 1.3654786, -0.14351761, 1.3723958, -0.0042576324, -0.04050868, 0.15089741, -1.115136, -0.45080566)
 metadata/_edit_group_ = true

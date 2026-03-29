@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dynwn4finljcb"]
+[gd_scene load_steps=40 format=3 uid="uid://dynwn4finljcb"]
 
 [ext_resource type="Script" uid="uid://7h0eysfwvhfj" path="res://world/reloadTheScene.gd" id="1_doxto"]
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="26_whg7e"]
 [ext_resource type="Script" uid="uid://bocggstjplylv" path="res://world/gate.gd" id="27_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="28_k6p8l"]
+[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
 [ext_resource type="PackedScene" uid="uid://ddx37yx83ddcw" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
@@ -51,6 +52,8 @@ glow_intensity = 0.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6p8l"]
 albedo_color = Color(0, 0, 0, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hsv1o"]
+
 [node name="week_6_playtest" type="Node3D"]
 script = ExtResource("1_doxto")
 
@@ -66,10 +69,24 @@ directional_shadow_max_distance = 4096.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_f1udx")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
+stream = ExtResource("3_x8ppq")
+volume_db = 22.018
+unit_size = 4.55
+autoplay = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment/AudioStreamPlayer3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
+stream = ExtResource("2_5oweu")
+volume_db = 22.018
+unit_size = 8.85
+max_db = 6.0
+autoplay = true
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("2_5oweu")
 volume_db = 17.0
-autoplay = true
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("3_x8ppq")
@@ -603,12 +620,19 @@ transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
 transform = Transform3D(0.9979101, 0, -0.06461941, 0, 1, 0, 0.06461941, 0, 0.9979101, -1.7460065, 0.86489105, 2.8846312)
 
+[node name="StartDialogueAreaTemp" parent="Player" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("31_gitkm")]
+interactableNpcToInitiate = NodePath("../../npcs/ship")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/StartDialogueAreaTemp"]
+transform = Transform3D(4.91608, 0, 0, 0, 4.91608, 0, 0, 0, 4.91608, 0, 0, 0)
+shape = SubResource("BoxShape3D_hsv1o")
+
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("15_ooa8t")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)
 focus = NodePath("../Player")
 
 [node name="DeathPlane" parent="." instance=ExtResource("17_doxto")]
-transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 70.00359, -30.85255, -101.34105)
+transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 48.671253, -72.754974, -109.03)
 
 [node name="FadeToBlackHitbox" parent="." instance=ExtResource("32_k6p8l")]
 transform = Transform3D(-0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881904, -12.2903385, -8.6202755, -102.146935)
