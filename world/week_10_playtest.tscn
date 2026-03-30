@@ -1,6 +1,5 @@
 [gd_scene load_steps=40 format=3 uid="uid://dynwn4finljcb"]
 
-[ext_resource type="Script" uid="uid://7h0eysfwvhfj" path="res://world/reloadTheScene.gd" id="1_doxto"]
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_x8ppq"]
@@ -35,6 +34,22 @@
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
 [ext_resource type="PackedScene" uid="uid://ddx37yx83ddcw" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 
+[sub_resource type="GDScript" id="GDScript_doxto"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta: float) -> void:
+#	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
+#		get_tree().reload_current_scene()
+		
+"
+
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_uxxn7")
 
@@ -55,7 +70,7 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hsv1o"]
 
 [node name="week_6_playtest" type="Node3D"]
-script = ExtResource("1_doxto")
+script = SubResource("GDScript_doxto")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)

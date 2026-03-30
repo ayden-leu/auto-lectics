@@ -17,7 +17,7 @@ func _input(event: InputEvent) -> void:
 							
 	elif event.is_action_pressed("close_game_from_title_screen"):
 		if amIOnTheTitleScreen == true and $CanvasLayer/Label2.visible == true: 
-			SceneTree.quit
+			get_tree().quit()
 		
 	
 
