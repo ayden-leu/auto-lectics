@@ -213,14 +213,14 @@ func _loadDialogueTree() -> void:
 				dialogueObject.nextOnHecticFailId, DC_DialogueNode.dialogueIDPort
 			)
 	
-	_set_node_visibility.emit(false)
+	#_set_node_visibility.emit(false)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
 	_graphArea.arrange_nodes()
 	loadingDialogueFiles = false
-	_set_node_visibility.emit(true)
+	#_set_node_visibility.emit(true)
 
 # --------------
 
