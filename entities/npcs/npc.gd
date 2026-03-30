@@ -134,21 +134,6 @@ func _maybe_wait() -> void:
 
 
 
-
-#function for reset
-func reset_to_default() -> void:
-	if isTalking:
-		endDialogue(false)
-
-	#  重置对话状态
-	currentDialogueID = initialDialogueID
-	hecticFailureDialogueID = ""
-
-	if "has_talked_once" in self:
-		has_talked_once = false
-
-
-
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
