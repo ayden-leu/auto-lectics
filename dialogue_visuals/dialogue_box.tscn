@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
-[ext_resource type="FontFile" uid="uid://cckkl6xaakwhs" path="res://dialogue_visuals/Datatype/static/Datatype_Condensed-Bold.ttf" id="3_0kl3i"]
+[ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="3_0kl3i"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
 [ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/type_writer_label.gd" id="3_ane15"]
 [ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
@@ -37,20 +37,23 @@ playback_mode = 1
 
 [node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("myLabel")]
 script = ExtResource("1_xrnu6")
+optionsAnchor = 3
 myLabel = NodePath("DialogueLabel")
 
 [node name="Background" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_ilnc5")
 
 [node name="DialogueLabel" type="Label3D" parent="."]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.09841019, 1.1696776, 0.99419135)
+transform = Transform3D(-3.291402e-08, 0, 0.752985, 0, 0.752985, 0, -0.752985, 0, -3.291402e-08, 0.09841019, 1.1696776, 0.99419135)
+pixel_size = 0.0025
 text = "test message"
 font = ExtResource("3_0kl3i")
+font_size = 80
 outline_size = 0
 horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2
-width = 400.0
+width = 1100.0
 script = ExtResource("3_ane15")
 fullText = "test message"
 

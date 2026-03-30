@@ -33,22 +33,6 @@ tracks/1/keys = {
 "values": []
 }
 
-[sub_resource type="Animation" id="Animation_jt82x"]
-resource_name = "text_fade_in"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:label_settings:font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.47, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(0.88211286, 0.5588008, 0.1516236, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_5q5f6"]
 resource_name = "cut_to_black"
 length = 2.0
@@ -63,6 +47,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.04, 0, 0.025333328, 1), Color(0.04, 0, 0.025333328, 1), Color(0.04, 0, 0.025333328, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jt82x"]
+resource_name = "text_fade_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.47, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(0.88211286, 0.5588008, 0.1516236, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p1l23"]
@@ -112,14 +112,24 @@ offset_right = 166.0
 offset_bottom = 50.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "AUTO-Lectics
-Part 1
-
-Marcelle Weaver and put in all their names"
 label_settings = SubResource("LabelSettings_c44wk")
 metadata/_edit_use_anchors_ = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Label"]
+[node name="Label2" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 28.0
+offset_top = 691.0
+offset_right = 294.0
+offset_bottom = 792.0
+text = "AUTO-Lectics 
+Part 1
+
+By Marcelle Weaver,  Li Zijian, Raphael Fonseca, Ayden Leu, Tang Yixiang
+
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Label2"]
+root_node = NodePath("../../Label")
 libraries = {
 &"": SubResource("AnimationLibrary_p1l23")
 }
