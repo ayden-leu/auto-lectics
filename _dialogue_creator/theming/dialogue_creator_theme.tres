@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=33 format=3 uid="uid://caibapog63fvf"]
+[gd_resource type="Theme" load_steps=35 format=3 uid="uid://caibapog63fvf"]
 
 [ext_resource type="StyleBox" uid="uid://ct0bjhg2emo4j" path="res://_dialogue_creator/theming/button_normal.tres" id="1_5nxpm"]
 [ext_resource type="StyleBox" uid="uid://dml1nhie6wo7k" path="res://_dialogue_creator/theming/focus.tres" id="1_8vgy3"]
@@ -23,7 +23,9 @@
 [ext_resource type="StyleBox" uid="uid://dys0dl4vlqipb" path="res://_dialogue_creator/theming/button_create_option_pressed.tres" id="10_xhrd7"]
 [ext_resource type="Texture2D" uid="uid://bfxiyocsfvkmp" path="res://_dialogue_creator/visual_assets/arrow_down.svg" id="11_k4yq8"]
 [ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_dialogue_creator/visual_assets/arrow_up.svg" id="12_g4rfl"]
+[ext_resource type="Texture2D" uid="uid://tjwyk7kn3cfa" path="res://_dialogue_creator/visual_assets/checked.svg" id="12_y8afi"]
 [ext_resource type="Texture2D" uid="uid://bhbjoqnwsi2pr" path="res://_dialogue_creator/visual_assets/arrow_down_darker.svg" id="13_cix03"]
+[ext_resource type="Texture2D" uid="uid://dsr5bjhrs3hc6" path="res://_dialogue_creator/visual_assets/unchecked.svg" id="13_yaiq3"]
 [ext_resource type="StyleBox" uid="uid://bd08mj68c71dr" path="res://_dialogue_creator/theming/label_dialogue_id.tres" id="14_fcqsy"]
 [ext_resource type="StyleBox" uid="uid://botbqvnho3n8n" path="res://_dialogue_creator/theming/label_option.tres" id="14_nn4ja"]
 [ext_resource type="Texture2D" uid="uid://baw87kpqxqp4l" path="res://_dialogue_creator/visual_assets/arrow_up_darker.svg" id="15_jdkg6"]
@@ -57,12 +59,15 @@ ButtonCreateOption/styles/pressed = ExtResource("10_xhrd7")
 ButtonNoPress/base_type = &"Button"
 ButtonNoPress/styles/pressed = ExtResource("1_5nxpm")
 CheckBox/font_sizes/font_size = 24
-CheckBox/icons/checked = ExtResource("11_k4yq8")
-CheckBox/icons/checked_disabled = ExtResource("13_cix03")
-CheckBox/icons/unchecked = ExtResource("12_g4rfl")
-CheckBox/icons/unchecked_disabled = ExtResource("15_jdkg6")
+CheckBox/icons/checked = ExtResource("12_y8afi")
+CheckBox/icons/unchecked = ExtResource("13_yaiq3")
 CheckBox/styles/hover_pressed = ExtResource("1_ky6xr")
 CheckBox/styles/pressed = ExtResource("1_5nxpm")
+CheckBoxFold/base_type = &"CheckBox"
+CheckBoxFold/icons/checked = ExtResource("11_k4yq8")
+CheckBoxFold/icons/checked_disabled = ExtResource("13_cix03")
+CheckBoxFold/icons/unchecked = ExtResource("12_g4rfl")
+CheckBoxFold/icons/unchecked_disabled = ExtResource("15_jdkg6")
 DialogueObject/base_type = &"GraphNode"
 DialogueObject/styles/titlebar = ExtResource("5_upo1i")
 DialogueObject/styles/titlebar_selected = ExtResource("5_7xgx1")
@@ -105,6 +110,15 @@ OptionButton/icons/arrow = ExtResource("11_k4yq8")
 OptionButton/styles/pressed = ExtResource("25_g4rfl")
 OptionButtonDisabled/base_type = &"OptionButton"
 OptionButtonDisabled/icons/arrow = ExtResource("13_cix03")
+SpinBox/constants/buttons_vertical_separation = 8
+SpinBox/icons/down = ExtResource("11_k4yq8")
+SpinBox/icons/down_disabled = ExtResource("13_cix03")
+SpinBox/icons/down_hover = ExtResource("11_k4yq8")
+SpinBox/icons/down_pressed = ExtResource("11_k4yq8")
+SpinBox/icons/up = ExtResource("12_g4rfl")
+SpinBox/icons/up_disabled = ExtResource("15_jdkg6")
+SpinBox/icons/up_hover = ExtResource("12_g4rfl")
+SpinBox/icons/up_pressed = ExtResource("12_g4rfl")
 TextEdit/font_sizes/font_size = 24
 TextEdit/styles/focus = ExtResource("1_8vgy3")
 TextEdit/styles/normal = ExtResource("10_ie1gl")

@@ -109,7 +109,17 @@ func _process(delta: float) -> void:
 
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
-	optionData = options
+	optionData.clear()
+	
+	for option in options:
+		if typeof(option) != TYPE_DICTIONARY:
+			continue
+		
+		#Don't show any options that don't pass check_flag
+		var check_flags: Dictionary = option.checkFlags
+		if StoryFlags.passes_check_flags(check_flags):
+			optionData.push_back(option)
+	
 	optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
 
 ## Runs any configurations that need to be run before continuing onward.
@@ -289,7 +299,9 @@ func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
 	instance.text = data.text
 	instance.nextDialogueID = data.nextID
 	instance.lifetime = data.lifetime
-	instance.connect("option_picked", _on_option_picked)
+	instance.setFlags = data.setFlags
+	#instance.connect("option_picked", _on_option_picked.bind(instance))
+	instance.option_picked.connect(_on_option_picked)
 
 ## Creates "amount" warning tiles.
 func createWarningTiles(amount:int) -> void:
@@ -332,7 +344,10 @@ func kill() -> void:
 
 
 ## Handles logic for when a dialogue option is picked.
-func _on_option_picked(nextDialogueID:String) -> void:
+func _on_option_picked(pickedOption:DialogueOption, nextDialogueID:String) -> void:
+	if pickedOption:
+		StoryFlags.apply_set_flags(pickedOption.setFlags)
+
 	for _i in range(spawnedOptions.size()):
 		var toKill = spawnedOptions.pop_front()
 		if toKill:
@@ -356,7 +371,7 @@ func _on_timer_bar_timeout() -> void:
 		else:
 			printerr("DialogueBox: Hectic Failure Dialogue ID not set for whoever loads this dialogue: ", currentDialogueID)
 			printerr("DialogueBox: Also, realOwner variable not set.")
-	_on_option_picked(hecticFailureDialogueID)
+	_on_option_picked(null, hecticFailureDialogueID)
 
 
 

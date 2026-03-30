@@ -30,7 +30,10 @@
 		{
 			"text": "I'm new here.",
 			"type": "positive",
-			"nextID": "dialogue2"
+			"nextID": "dialogue2",
+			"setFlags": {
+				"testFlag": true
+			}
 		}
 	]
 }

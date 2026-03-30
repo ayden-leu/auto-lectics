@@ -149,6 +149,12 @@ func _createNodesFromFile(filename:String) -> void:
 		if option.has("lifetime"):
 			newOptionNode.lifetime = option.lifetime
 		
+		if option.has("setFlags"):
+			newOptionNode.setFlags = option.setFlags
+		
+		if option.has("checkFlags"):
+			newOptionNode.checkFlags = option.checkFlags
+		
 		if option.has("nextID"):
 			newOptionNode.nextID = option.nextID
 		
@@ -207,14 +213,14 @@ func _loadDialogueTree() -> void:
 				dialogueObject.nextOnHecticFailId, DC_DialogueNode.dialogueIDPort
 			)
 	
-	_set_node_visibility.emit(false)
+	#_set_node_visibility.emit(false)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
 	_graphArea.arrange_nodes()
 	loadingDialogueFiles = false
-	_set_node_visibility.emit(true)
+	#_set_node_visibility.emit(true)
 
 # --------------
 

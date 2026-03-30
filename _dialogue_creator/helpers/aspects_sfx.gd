@@ -2,6 +2,8 @@ extends VBoxContainer
 class_name DC_AspectsSfx
 ## Manages the possible SFX events you can configure for [DC_DialogueNode] and [DC_OptionNode].
 
+signal value_changed()
+
 ## Holds all SFX Event configuration fields that are created.
 @export var eventHolder:Control
 
@@ -46,6 +48,7 @@ func _createEventSection(eventName:String) -> void:
 	eventHolder.add_child(VSeparator.new())
 	eventHolder.add_child(newEvent)
 	_sfxEventFieldOptions[eventName] = newEvent
+	newEvent.option_changed.connect(_on_field_updated)
 
 func _getAspects() -> Dictionary:
 	var all:Dictionary = {}
@@ -53,3 +56,6 @@ func _getAspects() -> Dictionary:
 		if eventFieldOption.option != "none":
 			all[eventFieldOption.eventID] = eventFieldOption.option
 	return all
+
+func _on_field_updated() -> void:
+	value_changed.emit()

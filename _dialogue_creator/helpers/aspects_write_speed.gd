@@ -2,6 +2,8 @@ extends VBoxContainer
 class_name DC_AspectsWriteSpeed
 ## Manages the write speed aspects you can configure for [DC_DialogueNode] and [DC_OptionNode].
 
+signal value_changed()
+
 ## The node that handles the write speed presets you can choose.
 @export var presetHandler:DC_WriteSpeedPresetFieldOption
 ## The node that handles the write speed value you can choose.
@@ -50,6 +52,7 @@ func _on_preset_changed() -> void:
 		return
 	
 	value = DialogueDefaults.WRITE_SPEED_PRESETS[preset]
+	value_changed.emit()
 
 func _on_value_changed(newValue: float) -> void:	
 	match newValue:
@@ -61,3 +64,4 @@ func _on_value_changed(newValue: float) -> void:
 			preset = "fast"
 		_:
 			preset = "custom"
+	value_changed.emit()

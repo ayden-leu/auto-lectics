@@ -3,7 +3,7 @@ extends Node3D
 class_name DialogueOption
 
 ## Emitted when this dialogue option is picked.
-signal option_picked(nextID:String)
+signal option_picked(option:DialogueOption, nextID:String)
 
 ## Used for referencing how the dialogue option should grow horizontally.
 enum HORIZONTAL_ALIGNMENT{
@@ -41,7 +41,7 @@ var text:String = "":
 ## Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
 @onready var lifeTimer:Timer = $LifeTimer
 ## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": $SFX/spawn,
 	"text": $SFX/text
 }
@@ -61,6 +61,8 @@ var lifetime:float = 0.0
 var nextDialogueID:String
 ## The SFX sound events to load sound files into.
 var sfxEventsToLoad:Dictionary
+## Make it possible for dialogue to change a flag.
+var setFlags: Dictionary = {}
 
 func _ready() -> void:
 	# Makes sure the code only runs while the game is running
@@ -182,7 +184,7 @@ func _on_interaction(_interactor:Node3D) -> void:
 	interactionHitbox.disabled = true
 	lifeTimer.stop()
 	sfxPlayer.spawn.stop()
-	option_picked.emit(nextDialogueID)
+	option_picked.emit(self, nextDialogueID)
 
 ## Handles the logic for when the lifetime of the dialogue option expires.
 func _on_life_timer_timeout() -> void:

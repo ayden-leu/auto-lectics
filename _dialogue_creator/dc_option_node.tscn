@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://drh1uormkjsbh"]
+[gd_scene load_steps=11 format=3 uid="uid://drh1uormkjsbh"]
 
 [ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_dialogue_creator/dc_option_node.gd" id="1_sx0xf"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
@@ -6,12 +6,15 @@
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_dialogue_creator/helpers/button_toggle_area.gd" id="4_l41k6"]
 [ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_dialogue_creator/helpers/aspects_write_speed.gd" id="6_kcxjf"]
 [ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_dialogue_creator/helpers/field_option_write_speed_preset.gd" id="7_vpr3c"]
+[ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_dialogue_creator/visual_assets/plus.svg" id="8_hpmiq"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_dialogue_creator/helpers/aspects_sfx.gd" id="8_jt2el"]
+[ext_resource type="Script" uid="uid://c0jj7mbxe1pi" path="res://_dialogue_creator/helpers/aspects_set_flags.gd" id="8_pgdkv"]
+[ext_resource type="Script" uid="uid://dp0wpt264bnof" path="res://_dialogue_creator/helpers/aspects_check_flags.gd" id="10_bc53s"]
 
-[node name="DC_OptionNode" type="GraphNode" node_paths=PackedStringArray("textField", "typeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler", "spawnDelayField", "lifetimeField")]
+[node name="DC_OptionNode" type="GraphNode" node_paths=PackedStringArray("textField", "typeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler", "spawnDelayField", "lifetimeField", "setFlagsAspectsHandler", "checkFlagsAspectsHandler")]
 texture_filter = 2
-offset_right = 400.0
-offset_bottom = 572.0
+offset_right = 428.0
+offset_bottom = 774.0
 theme = ExtResource("1_ynasb")
 theme_type_variation = &"DialogueOption"
 resizable = true
@@ -68,6 +71,8 @@ writeSpeedAspectsHandler = NodePath("AdvancedOptions/WriteSpeedAspects")
 sfxEventAspectsHandler = NodePath("AdvancedOptions/SfxAspects")
 spawnDelayField = NodePath("AdvancedOptions/SpawnDelayField/SpinBox")
 lifetimeField = NodePath("AdvancedOptions/LifetimeField/SpinBox")
+setFlagsAspectsHandler = NodePath("AdvancedOptions/StoryFlags/HBoxContainer/SetFlags")
+checkFlagsAspectsHandler = NodePath("AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags")
 
 [node name="Text" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -113,6 +118,7 @@ horizontal_alignment = 2
 [node name="Advanced" type="CheckBox" parent="." node_paths=PackedStringArray("fields")]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_type_variation = &"CheckBoxFold"
 text = "Advanced"
 script = ExtResource("4_l41k6")
 fields = [NodePath("../AdvancedOptions")]
@@ -250,6 +256,7 @@ eventHolder = NodePath("Events")
 
 [node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("4_l41k6")
 fields = [NodePath("../Events")]
@@ -267,6 +274,7 @@ layout_mode = 2
 
 [node name="CheckBox" type="CheckBox" parent="AdvancedOptions/ParticleAspects"]
 layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
 disabled = true
 text = "Particles"
 script = ExtResource("4_l41k6")
@@ -279,15 +287,101 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 
+[node name="StoryFlags" type="VBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/StoryFlags" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "Story Flags"
+script = ExtResource("4_l41k6")
+fields = [NodePath("../HBoxContainer")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/StoryFlags"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AdvancedOptions/StoryFlags"]
+layout_mode = 2
+
+[node name="SetFlags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer" node_paths=PackedStringArray("flagHolder")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("8_pgdkv")
+flagHolder = NodePath("Flags")
+
+[node name="Buttons" type="HBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AddButton" type="Button" parent="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons"]
+layout_mode = 2
+icon = ExtResource("8_hpmiq")
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"CheckBoxFold"
+text = "Set Flags"
+icon_alignment = 2
+script = ExtResource("4_l41k6")
+fields = [NodePath("../AddButton"), NodePath("../../Flags")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="Flags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags"]
+layout_mode = 2
+
+[node name="CheckFlags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer" node_paths=PackedStringArray("flagHolder")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("10_bc53s")
+flagHolder = NodePath("Flags")
+
+[node name="Buttons" type="HBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"CheckBoxFold"
+text = "Check Flags"
+icon_alignment = 2
+script = ExtResource("4_l41k6")
+fields = [NodePath("../AddButton"), NodePath("../../Flags")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="AddButton" type="Button" parent="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons"]
+layout_mode = 2
+icon = ExtResource("8_hpmiq")
+
+[node name="Flags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags"]
+layout_mode = 2
+
 [node name="Debug" type="Button" parent="."]
 layout_mode = 2
 text = "Debug"
 
 [connection signal="text_changed" from="Text/TextEdit" to="." method="_on_attribute_modified"]
+[connection signal="option_changed" from="Row1/TypeField" to="." method="_on_attribute_modified"]
+[connection signal="item_selected" from="Row1/TypeField/OptionButton" to="Row1/TypeField" method="_on_chooser_updated"]
 [connection signal="resize" from="Advanced" to="." method="_on_resize_height"]
 [connection signal="toggled" from="Advanced" to="Advanced" method="_on_toggled"]
+[connection signal="value_changed" from="AdvancedOptions/SpawnDelayField/SpinBox" to="." method="_on_attribute_modified_parameter"]
+[connection signal="value_changed" from="AdvancedOptions/LifetimeField/SpinBox" to="." method="_on_attribute_modified_parameter"]
+[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects" to="." method="_on_attribute_modified"]
 [connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
 [connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_changed"]
+[connection signal="value_changed" from="AdvancedOptions/SfxAspects" to="." method="_on_attribute_modified"]
 [connection signal="toggled" from="AdvancedOptions/SfxAspects/CheckBox" to="AdvancedOptions/SfxAspects/CheckBox" method="_on_toggled"]
+[connection signal="toggled" from="AdvancedOptions/StoryFlags/CheckBox" to="AdvancedOptions/StoryFlags/CheckBox" method="_on_toggled"]
+[connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" to="." method="_on_attribute_modified"]
+[connection signal="pressed" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/AddButton" to="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" method="_on_add_button_pressed"]
+[connection signal="toggled" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/CheckBox" to="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/CheckBox" method="_on_toggled"]
+[connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" to="." method="_on_attribute_modified"]
+[connection signal="toggled" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/CheckBox" to="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/CheckBox" method="_on_toggled"]
+[connection signal="pressed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/AddButton" to="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" method="_on_add_button_pressed"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

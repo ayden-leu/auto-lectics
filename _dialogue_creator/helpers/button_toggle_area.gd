@@ -7,7 +7,7 @@ class_name DC_SectionToggle
 signal resize
 
 ## The nodes to hide/show when the button is pressed.
-@export var fields:Array[Container]
+@export var fields:Array[Control]
 
 func _ready() -> void:
 	toggle_mode = true

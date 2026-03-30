@@ -84,6 +84,9 @@ const defaultOption:Dictionary = {
 	"writeSpeed": "inherit",
 	"writeSpeedCustom": -1.0,
 
+	"checkFlags": {},
+	"setFlags": {},
+
 	"sfx": {
 		"spawn": "none",
 		"text": "none"

@@ -20,6 +20,10 @@ signal disconnect_dialogue(port:int)
 ## The lifetime field you can set.
 @export var lifetimeField:SpinBox
 
+@export var setFlagsAspectsHandler:DC_AspectsSetFlags
+@export var checkFlagsAspectsHandler:DC_AspectsCheckFlags
+
+
 ## The port number of the incoming option port
 const optionPort:int = 0
 ## The port number of the outgoing next dialogue ID port.
@@ -177,6 +181,18 @@ var lifetime:float:
 		_on_attribute_modified()
 	get():
 		return lifetimeField.value
+
+var setFlags:Dictionary:
+	set(newFlags):
+		setFlagsAspectsHandler.currentFlags = newFlags
+	get():
+		return setFlagsAspectsHandler.currentFlags
+var checkFlags:Dictionary:
+	set(newFlags):
+		checkFlagsAspectsHandler.currentFlags = newFlags
+	get():
+		return checkFlagsAspectsHandler.currentFlags
+
 ## The [member DC_DialogueNode.id] to load when a player chooses this option.
 var nextID:String = ""
 
@@ -220,6 +236,13 @@ func _getFields() -> Dictionary:
 	
 	if nextID != "":
 		currentValues.nextID = nextID
+	
+	if setFlags != {}:
+		currentValues.setFlags = setFlags
+	
+	if checkFlags != {}:
+		currentValues.checkFlags = checkFlags
+	
 
 	return currentValues
 
@@ -237,6 +260,9 @@ func delete() -> void:
 func _on_attribute_modified() -> void:
 	#print("option modified, emitting")
 	values_updated.emit(port, _getFields())
+
+func _on_attribute_modified_parameter(_ignore_me) -> void:
+	_on_attribute_modified()
 
 func _on_text_field_updated() -> void:
 	textUpdateFromField = true
@@ -256,12 +282,25 @@ func _on_debug_pressed() -> void:
 		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
 		print("Write Speed Value: ", writeSpeedAspectsHandler.value)
 	
-	var aspects:Dictionary = sfxEventAspectsHandler.aspects
+	var aspects:Dictionary = sfxEventAspects
 	if aspects != {}:
-		print("SFX Aspects:")
+		print("sfxAspects:")
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
 	
 	print("spawnDelay: ", spawnDelay)
 	print("lifetime: ", lifetime)
+
+	var currentSetFlags:Dictionary = setFlags
+	if currentSetFlags != {}:
+		print("setFlags:")
+		for flagID in currentSetFlags.keys():
+			print("\t", flagID, ": ", currentSetFlags[flagID])
+			
+	var currentCheckFlags:Dictionary = checkFlags
+	if currentCheckFlags != {}:
+		print("checkFlags:")
+		for flagID in currentCheckFlags.keys():
+			print("\t", flagID, ": ", currentCheckFlags[flagID])
+	
 	print("nextID: ", nextID)
