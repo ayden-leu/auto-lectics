@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddx37yx83ddcw"]
+[gd_scene load_steps=8 format=3 uid="uid://bk5yr8o3mt4ro"]
 
 [ext_resource type="Script" uid="uid://jkkt4sbfyv6h" path="res://fade_to_black_hitbox.gd" id="1_2gk5l"]
 [ext_resource type="Animation" uid="uid://bu6x1kcymen6d" path="res://ui/animations/fade_to_black.res" id="2_7gsoq"]
@@ -73,9 +73,6 @@ _data = {
 &"text_fade_in": SubResource("Animation_jt82x")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_c44wk"]
-font_color = Color(1, 1, 1, 0)
-
 [node name="FadeToBlackHitbox" type="Node3D"]
 script = ExtResource("1_2gk5l")
 
@@ -100,21 +97,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_p1l23")
 }
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -166.0
-offset_top = -50.5
-offset_right = 166.0
-offset_bottom = 50.5
-grow_horizontal = 2
-grow_vertical = 2
-label_settings = SubResource("LabelSettings_c44wk")
-metadata/_edit_use_anchors_ = true
-
 [node name="Label2" type="Label" parent="CanvasLayer"]
 visible = false
 offset_left = 28.0
@@ -129,7 +111,7 @@ By Marcelle Weaver,  Li Zijian, Raphael Fonseca, Ayden Leu, Tang Yixiang
 "
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Label2"]
-root_node = NodePath("../../Label")
+root_node = NodePath("")
 libraries = {
 &"": SubResource("AnimationLibrary_p1l23")
 }
@@ -137,7 +119,10 @@ libraries = {
 [node name="Timer" type="Timer" parent="."]
 wait_time = 15.0
 
+[node name="Inactivity Timer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Inactivity Timer" to="." method="_on_inactivity_timer_timeout"]

@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://diyxywem2nqfb"]
+[gd_scene load_steps=5 format=3 uid="uid://dj8tyg3rmvo48"]
 
-[ext_resource type="Script" uid="uid://cquqmkx6siglx" path="res://startingScreenHandler.gd" id="1_5cnai"]
-[ext_resource type="Script" uid="uid://d2y4vanofmml3" path="res://ui/label.gd" id="2_2oeew"]
+[ext_resource type="Script" path="res://startingScreenHandler.gd" id="1_5cnai"]
+[ext_resource type="Script" path="res://ui/label.gd" id="2_2oeew"]
 [ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="3_j2nwy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pmluo"]

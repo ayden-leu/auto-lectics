@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://pvjkit80e1ea"]
 
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="5_a82uu"]
-[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="7_v6l0k"]
+[ext_resource type="PackedScene" path="res://models/environment/metal_big_flat.tscn" id="7_v6l0k"]
 [ext_resource type="PackedScene" uid="uid://dytucwmjofvdw" path="res://models/environment/backgroundClutter/tube_clutter_1.tscn" id="14_4k7m8"]
 
 [node name="startingSceneModel" type="Node3D"]
