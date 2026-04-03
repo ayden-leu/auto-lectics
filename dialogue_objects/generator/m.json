@@ -1,0 +1,12 @@
+{
+	"text": "Batteries\nPower production and storage\n\nOne of the\nLast places stil mostly working",
+	"font": "",
+	"type": "positive",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Mostly?",
+			"nextID": "h"
+		}
+	]
+}

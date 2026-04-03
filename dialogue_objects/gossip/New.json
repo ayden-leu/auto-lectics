@@ -1,0 +1,15 @@
+{
+	"text": "NEW!?!?! ",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "michaelwave"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "positive",
+			"nextID": "QuestionPurpose"
+		}
+	]
+}

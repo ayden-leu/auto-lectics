@@ -1,0 +1,12 @@
+{
+	"text": "Just doin, my job.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "start"
+		}
+	]
+}

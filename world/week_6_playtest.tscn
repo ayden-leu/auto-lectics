@@ -1,41 +1,41 @@
-[gd_scene load_steps=49 format=3 uid="uid://bt62vwn7bnq36"]
+[gd_scene load_steps=48 format=3 uid="uid://bt62vwn7bnq36"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_cjsxm"]
-[ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_d02ib"]
-[ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/environment/MainTube/bridgeExport.fbx" id="3_6cu6n"]
-[ext_resource type="PackedScene" uid="uid://cd7b08a2mc271" path="res://models/environment/MainTube/tubeTower.fbx" id="4_pcetu"]
-[ext_resource type="PackedScene" uid="uid://dufay0uj34o2h" path="res://models/environment/embellishments/longPipe.fbx" id="5_els8b"]
-[ext_resource type="PackedScene" uid="uid://clhh6q34r8jlj" path="res://models/environment/tubes/fishhook.fbx" id="6_ha65o"]
-[ext_resource type="PackedScene" uid="uid://b51xh2721j882" path="res://models/environment/embellishments/halfArch.fbx" id="7_wx00b"]
-[ext_resource type="PackedScene" uid="uid://coeq57ci2drv1" path="res://models/environment/MainTube/flooring.fbx" id="8_tspnx"]
-[ext_resource type="PackedScene" uid="uid://3eigb8r05ox4" path="res://models/environment/embellishments/tubeTower.fbx" id="9_t0ah7"]
-[ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/environment/embellishments/scaffoldRound.fbx" id="10_lvwjc"]
-[ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/environment/embellishments/bigFence.fbx" id="11_5gp77"]
-[ext_resource type="PackedScene" uid="uid://cjm7e1rpufunn" path="res://models/environment/MainTube/box.fbx" id="12_7v333"]
-[ext_resource type="PackedScene" uid="uid://dloital66b4nj" path="res://models/environment/MainTube/catwalk_with_collision.tscn" id="13_rlsos"]
-[ext_resource type="PackedScene" uid="uid://cx0ylib0hd1fb" path="res://models/environment/MainTube/catwalkSupport.fbx" id="14_q7pnq"]
-[ext_resource type="PackedScene" uid="uid://c4tgf65dl5wfu" path="res://models/environment/MainTube/plank.fbx" id="15_wfbps"]
-[ext_resource type="PackedScene" uid="uid://c3hd7y2hgpe7p" path="res://models/environment/MainTube/plank.tscn" id="16_5kofa"]
-[ext_resource type="PackedScene" uid="uid://coq7r7deuegla" path="res://models/environment/tubes/classicBend.fbx" id="17_1ic4n"]
-[ext_resource type="PackedScene" uid="uid://ct2et45cxpofk" path="res://models/environment/tank.tscn" id="17_6cu6n"]
-[ext_resource type="PackedScene" uid="uid://c3qpb5m75xhx0" path="res://models/environment/embellishments/flyingButrresses.fbx" id="18_5emgu"]
-[ext_resource type="PackedScene" uid="uid://coaheuyscy527" path="res://models/environment/MainTube/littleHut.fbx" id="19_s6h0q"]
-[ext_resource type="PackedScene" uid="uid://p4xhfr40wogj" path="res://models/environment/embellishments/grid.fbx" id="20_mj1xb"]
+[ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/week6playtestStuff/environment/bridge.fbx" id="2_d02ib"]
+[ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/week6playtestStuff/environment/MainTube/bridgeExport.fbx" id="3_6cu6n"]
+[ext_resource type="PackedScene" uid="uid://cd7b08a2mc271" path="res://models/week6playtestStuff/environment/MainTube/tubeTower.fbx" id="4_pcetu"]
+[ext_resource type="PackedScene" uid="uid://dufay0uj34o2h" path="res://models/week6playtestStuff/environment/embellishments/longPipe.fbx" id="5_els8b"]
+[ext_resource type="PackedScene" uid="uid://clhh6q34r8jlj" path="res://models/week6playtestStuff/environment/tubes/fishhook.fbx" id="6_ha65o"]
+[ext_resource type="PackedScene" uid="uid://b51xh2721j882" path="res://models/week6playtestStuff/environment/embellishments/halfArch.fbx" id="7_wx00b"]
+[ext_resource type="PackedScene" uid="uid://coeq57ci2drv1" path="res://models/week6playtestStuff/environment/MainTube/flooring.fbx" id="8_tspnx"]
+[ext_resource type="PackedScene" uid="uid://3eigb8r05ox4" path="res://models/week6playtestStuff/environment/embellishments/tubeTower.fbx" id="9_t0ah7"]
+[ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/week6playtestStuff/environment/embellishments/scaffoldRound.fbx" id="10_lvwjc"]
+[ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/week6playtestStuff/environment/embellishments/bigFence.fbx" id="11_5gp77"]
+[ext_resource type="PackedScene" uid="uid://cjm7e1rpufunn" path="res://models/week6playtestStuff/environment/MainTube/box.fbx" id="12_7v333"]
+[ext_resource type="PackedScene" uid="uid://dloital66b4nj" path="res://models/week6playtestStuff/environment/MainTube/catwalk_with_collision.tscn" id="13_rlsos"]
+[ext_resource type="PackedScene" uid="uid://cx0ylib0hd1fb" path="res://models/week6playtestStuff/environment/MainTube/catwalkSupport.fbx" id="14_q7pnq"]
+[ext_resource type="PackedScene" uid="uid://c4tgf65dl5wfu" path="res://models/week6playtestStuff/environment/MainTube/plank.fbx" id="15_wfbps"]
+[ext_resource type="PackedScene" uid="uid://c3hd7y2hgpe7p" path="res://models/week6playtestStuff/environment/MainTube/plank.tscn" id="16_5kofa"]
+[ext_resource type="PackedScene" uid="uid://coq7r7deuegla" path="res://models/week6playtestStuff/environment/tubes/classicBend.fbx" id="17_1ic4n"]
+[ext_resource type="PackedScene" uid="uid://ct2et45cxpofk" path="res://models/week6playtestStuff/environment/tank.tscn" id="17_6cu6n"]
+[ext_resource type="PackedScene" uid="uid://c3qpb5m75xhx0" path="res://models/week6playtestStuff/environment/embellishments/flyingButrresses.fbx" id="18_5emgu"]
+[ext_resource type="PackedScene" uid="uid://coaheuyscy527" path="res://models/week6playtestStuff/environment/MainTube/littleHut.fbx" id="19_s6h0q"]
+[ext_resource type="PackedScene" uid="uid://p4xhfr40wogj" path="res://models/week6playtestStuff/environment/embellishments/grid.fbx" id="20_mj1xb"]
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="21_072tr"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="22_87qvr"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="23_qr6ly"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="24_18efa"]
-[ext_resource type="PackedScene" uid="uid://ddhddoogpswwf" path="res://Week6PlaytestWorldAssets/MainTube/tankTube.fbx" id="24_cjsxm"]
+[ext_resource type="PackedScene" uid="uid://ddhddoogpswwf" path="res://models/week6playtestStuff/Week6PlaytestWorldAssets/MainTube/tankTube.fbx" id="24_cjsxm"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_e57of"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="24_wdgfk"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="26_aw1g7"]
 [ext_resource type="PackedScene" uid="uid://dnqgd786a5g3q" path="res://entities/npcs/sideNPCS/spinner.tscn" id="27_ug5cj"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="28_to1nd"]
-[ext_resource type="PackedScene" uid="uid://bu511kjk81y1o" path="res://models/npcs/side_NPCS/birds.fbx" id="29_els8b"]
+[ext_resource type="PackedScene" uid="uid://bu511kjk81y1o" path="res://models/week6playtestStuff/npcs/side_NPCS/birds.fbx" id="29_els8b"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="30_dt8rv"]
 [ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="30_ha65o"]
 [ext_resource type="PackedScene" uid="uid://cacib06ypgbbs" path="res://entities/npcs/sideNPCS/container.tscn" id="31_ha65o"]
-[ext_resource type="PackedScene" uid="uid://cdn26x78pvors" path="res://Week6PlaytestWorldAssets/MainTube/tankTubeUpsiderDow.fbx" id="33_pcetu"]
+[ext_resource type="PackedScene" uid="uid://cdn26x78pvors" path="res://models/week6playtestStuff/Week6PlaytestWorldAssets/MainTube/tankTubeUpsiderDow.fbx" id="33_pcetu"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="38_gpeg5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
@@ -70,14 +70,6 @@ radius = 36.1875
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cjsxm"]
 size = Vector3(8.547119, 60.115936, 172.20242)
-
-[sub_resource type="Curve3D" id="Curve3D_gpeg5"]
-closed = true
-_data = {
-"points": PackedVector3Array(1.112071, 0, -1.9030209, -1.112071, 0, 1.9030209, -10.356, 0, 13.843, 4.7394505, 0, -0.45396996, -4.7394505, 0, 0.45396996, -19.149271, 0, 21.58156, 2.6893005, 0, 4.6738024, -2.6893005, 0, -4.6738024, -39.418056, 0, 10.101672, -2.3279915, 0, 3.7018476, 2.3279915, 0, -3.7018476, -41.716606, 0, -8.504805, -5.1532097, 0, 0.8692455, 5.1532097, 0, -0.8692455, -28.846, 0, -16.654, -2.3068523, 0, -2.678853, 2.3068523, 0, 2.678853, -15.23, 0, -13.488, -0.5084858, 0.033935547, -2.210063, 0.5084858, -0.033935547, 2.210063, -7.9009457, 0, -2.828, 0.57842255, 0.03556609, -2.6328864, -0.57842255, -0.03556609, 2.6328864, -7.198, 0, 4.763),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 8
 
 [node name="week_6_playtest" type="Node3D"]
 
@@ -343,9 +335,6 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Models/mainTower/structural  elements/floor/StaticBody3D"]
 shape = SubResource("CylinderShape3D_rfx78")
-
-[node name="flooring" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("8_tspnx")]
-transform = Transform3D(0.3612845, 0, 0, 0, 0.03371544, 0, 0, 0, 0.3612845, 0.040554915, 1.0135504, -0.008268977)
 
 [node name="catwalk_with_collision" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("13_rlsos")]
 transform = Transform3D(0.0600285, 0, 0, 0, 0.0016192042, 0, 0, 0, 0.0600285, 0.018481346, 1.4581476, -0.014156662)
@@ -625,31 +614,65 @@ autoplay = true
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="dishNPC" parent="npcs" instance=ExtResource("21_072tr")]
+[node name="dishNPC" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("21_072tr")]
 transform = Transform3D(-0.47506624, 0, -0.49349466, 0, 0.685, 0, 0.49349466, 0, -0.47506624, -25.27201, 0.04699976, -7.569971)
+dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
 
-[node name="looker" parent="npcs" instance=ExtResource("22_87qvr")]
+[node name="Node" type="Node" parent="npcs/dishNPC"]
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="npcs/dishNPC/Node"]
+transform = Transform3D(0.65481657, 0, -0.20109749, 0, 0.68500006, 0, 0.20109749, 0, 0.65481657, -22.84702, 1.1005831, -11.113908)
+metadata/_edit_group_ = true
+
+[node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("22_87qvr")]
 transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
 initialDialogueID = "dialogue1"
 myName = "gossip"
 
-[node name="preacher" parent="npcs" instance=ExtResource("23_qr6ly")]
+[node name="Node" type="Node" parent="npcs/looker"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/looker/Node"]
+transform = Transform3D(0.20240945, 0.16826245, 1.5173407, -0.86017233, 1.2770988, -0.026876323, -1.2612439, -0.8439833, 0.2618389, 24.246983, 6.8383894, 5.856095)
+metadata/_edit_group_ = true
+
+[node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("23_qr6ly")]
 transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -0.5170965, 7.2353964, 26.201641)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
 
-[node name="collector" parent="npcs" instance=ExtResource("24_e57of")]
+[node name="Node" type="Node" parent="npcs/preacher"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/preacher/Node"]
+transform = Transform3D(0.42860356, 0.29127365, 0.9709255, -0.5996677, 0.922762, -0.012108367, -0.8172731, -0.5243165, 0.51806825, 0.007958651, 10.335478, 24.446424)
+metadata/_edit_group_ = true
+
+[node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("24_e57of")]
 transform = Transform3D(-0.71693957, 0, -0.49687183, 0, 0.8722866, 0, 0.49687183, 0, -0.71693957, 29.016579, -12.451921, 54.780178)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
 
-[node name="egg" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("26_aw1g7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.91136, 0, 13.235489)
-patrolPath = NodePath("../EggPath")
-patrolSpeed = 4.0
+[node name="Node" type="Node" parent="npcs/collector"]
 
-[node name="EggPath" type="Path3D" parent="npcs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 0)
-curve = SubResource("Curve3D_gpeg5")
+[node name="Marker3D" type="Marker3D" parent="npcs/collector/Node"]
+transform = Transform3D(-0.9656453, 0, 0.25986427, 0, 1, 0, -0.25986427, 0, -0.9656453, 31.26779, -10.8463955, 53.44703)
+metadata/_edit_group_ = true
 
-[node name="spinner" parent="npcs" instance=ExtResource("27_ug5cj")]
+[node name="egg" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("26_aw1g7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.056404, 4.461979, 12.220449)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/egg"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/egg/Node"]
+transform = Transform3D(0.834271, 0, -0.5513548, 0, 1, 0, 0.5513548, 0, 0.834271, -7.14736, 6.583264, 11.284586)
+
+[node name="spinner" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("27_ug5cj")]
 transform = Transform3D(0.71970016, 0, 0, 0, 1, 0, 0, 0, 0.71970016, 4.310974, 4.827329, 18.570747)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/spinner"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/spinner/Node"]
+transform = Transform3D(-0.6631427, 0, 0.7484932, 0, 1, 0, -0.7484932, 0, -0.6631427, 5.1465254, 6.583265, 18.93366)
 
 [node name="Node3D" type="Node3D" parent="npcs"]
 
@@ -677,11 +700,17 @@ script = ExtResource("30_ha65o")
 transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 1.2749557, 9.41077, -36.829082)
 script = ExtResource("30_ha65o")
 
-[node name="container" parent="npcs" instance=ExtResource("31_ha65o")]
+[node name="container" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("31_ha65o")]
 transform = Transform3D(0.7338738, 0, 0.6271863, 0, 0.9653669, 0, -0.6271863, 0, 0.7338738, 19.63311, 17.308321, -21.130909)
+dialogueBoxAnchor = NodePath("Node/Marker3D")
+
+[node name="Node" type="Node" parent="npcs/container"]
+
+[node name="Marker3D" type="Marker3D" parent="npcs/container/Node"]
+transform = Transform3D(0.6639313, -0.018233115, -0.7475714, -0.7468735, -0.065751456, -0.6617077, -0.037088916, 0.99766946, -0.057272285, 19.958824, 23.540928, -11.605336)
 
 [node name="Player" parent="." instance=ExtResource("28_to1nd")]
-transform = Transform3D(-0.1099078, 0, 0.9939418, 0, 1, 0, -0.9939418, 0, -0.1099078, 67.760475, 0.9343929, 0.56310165)
+transform = Transform3D(-0.35275638, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275638, 66.40753, 0.9343929, 0.8199239)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("30_dt8rv")]
 transform = Transform3D(-0.35275644, 0, 0.9357152, 0, 1, 0, -0.9357152, 0, -0.35275644, 60.865444, 6.326866, 1.3495631)
@@ -689,7 +718,3 @@ focus = NodePath("../Player")
 
 [node name="DeathPlane" parent="." instance=ExtResource("38_gpeg5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.041534, -7.0753856, 2.8729353)
-
-[node name="EggPath" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 0)
-curve = SubResource("Curve3D_gpeg5")

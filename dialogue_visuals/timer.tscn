@@ -4,6 +4,7 @@
 [ext_resource type="Material" uid="uid://durbaepi13cj1" path="res://materials/blue_flat.tres" id="1_t50gg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_uks04"]
+resource_local_to_scene = true
 material = ExtResource("1_t50gg")
 size = Vector3(0.14, 0.12, 2.075)
 

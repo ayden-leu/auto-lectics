@@ -8,7 +8,7 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "positive",
 			"nextID": "dialogue1_Continue8"
 		}

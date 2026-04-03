@@ -1,0 +1,29 @@
+{
+	"text": "DON'T EVER QUESTION ME, YOU INSIGNIFICANT SPECK! Now I ask again, who are you?",
+	"type": "neutral",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "GB3_HecticFail",
+	"writeSpeed": "fast",
+	"options": [
+		{
+			"text": "That's not important.",
+			"type": "neutral",
+			"nextID": "QuestionImportance"
+		},
+		{
+			"text": "What?",
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
+		},
+		{
+			"text": "I'm new here.",
+			"type": "neutral",
+			"nextID": "New"
+		},
+		{
+			"text": "Are you okay?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		}
+	]
+}

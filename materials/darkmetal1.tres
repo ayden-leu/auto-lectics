@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://c5o7mu2jwbqba"]
+
+[ext_resource type="Texture2D" uid="uid://bd1gjejdmiwmm" path="res://materials/darkmetal1_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://74ywlxf21ia6" path="res://materials/darkmetal1_normal.png" id="3"]
+
+[resource]
+albedo_color = Color(0.54296875, 0.5111542, 0.5111542, 1)
+albedo_texture = ExtResource("1")
+metallic = 0.75
+roughness = 0.84
+normal_enabled = true
+normal_scale = 0.24
+normal_texture = ExtResource("3")

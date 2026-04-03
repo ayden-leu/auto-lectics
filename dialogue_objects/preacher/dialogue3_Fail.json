@@ -4,11 +4,5 @@
 	"mode": "normal",
 	"sfx": {
 		"spawn": "dialogueFailSound"
-	},
-	"options": [
-		{
-			"text": "[End]",
-			"type": "negative"
-		}
-	]
+	}
 }

@@ -1,0 +1,12 @@
+{
+	"text": "On the second day, the Almighty boss felt cold and alone",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB4alt"
+		}
+	]
+}

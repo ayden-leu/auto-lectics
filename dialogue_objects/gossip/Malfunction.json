@@ -1,0 +1,14 @@
+{
+	"text": "WHY WOULD YOU ASK ME THAT!?!?! I'M NOT MALFUNCTIONING!!!",
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
+}

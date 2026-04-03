@@ -1,0 +1,13 @@
+{
+	"text": "YOU ARE LOST! But that's okay, for I am here to help.",
+	"type": "angry",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PreacherBot"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"text": "Anyways, you've already wasted enough of my time. I hope to not see you again.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

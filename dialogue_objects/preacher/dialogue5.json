@@ -1,5 +1,5 @@
 {
-	"text": "One moment let me check. Step 1: Ask if they want to be turned on. Step 2: Figure out later...",
+	"text": "Well, my role is to turn bots on, so that they can actually do the thing the almighty wants done.",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -7,7 +7,7 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "So you don't know what being turned on actually means?",
 			"type": "positive",
 			"nextID": "dialogue5_Continue1"
 		}

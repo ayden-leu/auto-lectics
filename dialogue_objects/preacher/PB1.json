@@ -1,0 +1,17 @@
+{
+	"text": "Alright, everyone, get comfortable for the sermon.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB2"
+		},
+		{
+			"text": "I've heard this before.",
+			"type": "neutral",
+			"nextID": "thatsRude"
+		}
+	]
+}

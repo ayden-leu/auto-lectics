@@ -1,0 +1,11 @@
+{
+	"text": "What's the point in talking to you if you're just gonna be boring?",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
+}

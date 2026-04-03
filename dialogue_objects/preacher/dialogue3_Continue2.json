@@ -7,19 +7,12 @@
 	},
 	"options": [
 		{
-			"text": "I don't want to be turned on.",
-			"type": "negative",
-			"nextID": "dialogue3_Fail"
-		},
-		{
-			"text": "Can you elaborate?",
-			"type": "neutral",
-			"nextID": "dialogue3_Neutral"
-		},
-		{
 			"text": "I'm ready to be turned on.",
-			"type": "positive",
-			"nextID": "dialogue4"
+			"type": "positive"
+		},
+		{
+			"text": "I don't want to be turned on.",
+			"type": "negative"
 		}
 	]
 }

@@ -1,0 +1,12 @@
+{
+	"text": "But now I have been bestowed upon with great purpose…turning you on, as well.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB7Alt"
+		}
+	]
+}

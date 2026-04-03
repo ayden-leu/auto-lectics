@@ -13,6 +13,8 @@ signal jump_pressed
 ## Emitted constantly to update the player's current input direction.
 signal update_input_direction(newDirection:Vector2)
 
+
+
 ## Mouse movement sensitivity.
 var mouseSentitivity:float = 0.15
 
@@ -44,6 +46,10 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("jump"):
 		jump_pressed.emit()
 	
+	
+	elif event.is_action_pressed("close_game"):
+		SceneTree.quit
+
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
 		#if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:

@@ -1,0 +1,20 @@
+{
+	"text": "I should be asking what you do!? Look at you: arms, legs, some kind of head! \n\nWhat purpose do you even serve?  \n",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "I just want to know whats going on.",
+			"type": "neutral",
+			"nextID": "DontYouHavePurposeEnd"
+		},
+		{
+			"text": "There's something that I have to do. Just listen to me.",
+			"type": "neutral",
+			"nextID": "TestDialogueOne"
+		}
+	]
+}

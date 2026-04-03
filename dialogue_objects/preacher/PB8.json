@@ -1,0 +1,24 @@
+{
+	"text": "YOU! ARE YOU TURNED ON?!?! ",
+	"type": "neutral",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "PB8_HecticFail",
+	"writeSpeed": "fast",
+	"options": [
+		{
+			"text": "No?",
+			"type": "neutral",
+			"nextID": "PB_No"
+		},
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "PB_ExcuseMe"
+		},
+		{
+			"text": "Yes, I think so.",
+			"type": "neutral",
+			"nextID": "PB_IThink"
+		}
+	]
+}

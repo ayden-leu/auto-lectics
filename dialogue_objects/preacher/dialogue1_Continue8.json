@@ -7,7 +7,7 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "positive",
 			"nextID": "dialogue2"
 		}

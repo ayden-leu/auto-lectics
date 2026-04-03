@@ -1,0 +1,20 @@
+{
+	"text": "Who are you?\nWhat is purpose for being here? ",
+	"font": "",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I'm not from here.",
+			"nextID": "b"
+		},
+		{
+			"text": "What do you do?",
+			"nextID": "c"
+		},
+		{
+			"text": "Can you tell me what's going on here?",
+			"nextID": "d"
+		}
+	]
+}

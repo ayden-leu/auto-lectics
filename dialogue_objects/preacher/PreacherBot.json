@@ -1,0 +1,17 @@
+{
+	"text": "Anyways, I am PR3-CHR, and I will be your guide to getting turned on. Feel free to ask me anything.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What's going on here?",
+			"type": "neutral",
+			"nextID": "TOO"
+		},
+		{
+			"text": "What are you *actually* supposed to do?",
+			"type": "neutral",
+			"nextID": "TOI"
+		}
+	]
+}

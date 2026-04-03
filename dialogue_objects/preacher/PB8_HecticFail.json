@@ -1,0 +1,12 @@
+{
+	"text": "Not much of a talker, huh?",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PreacherBot"
+		}
+	]
+}

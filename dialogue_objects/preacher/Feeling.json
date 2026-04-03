@@ -1,0 +1,12 @@
+{
+	"text": "Let me tell you,  it's amazing I feel the need to act coursing through my circuits. ",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I asked about the dark room.",
+			"type": "neutral",
+			"nextID": "DarkRoom"
+		}
+	]
+}

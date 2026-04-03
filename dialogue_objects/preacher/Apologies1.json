@@ -1,0 +1,12 @@
+{
+	"text": "Oh, my apologies.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "TOO"
+		}
+	]
+}

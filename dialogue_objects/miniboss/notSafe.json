@@ -1,0 +1,20 @@
+{
+	"text": "You. You? You want to get through here. I don’t know how you got here but I don’t really care. What’s your role?  It’s not safe. ",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "Safe?",
+			"type": "neutral",
+			"nextID": "bird"
+		},
+		{
+			"text": "No it's a good idea. Let me explain. ",
+			"type": "neutral",
+			"nextID": "TestDialogueOne"
+		}
+	]
+}

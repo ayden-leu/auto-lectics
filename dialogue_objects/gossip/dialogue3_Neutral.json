@@ -1,5 +1,5 @@
 {
-	"text": "I wouldn't recommend it. He's a real gear box.",
+	"text": "I wouldn't recommend it. He's a real gear box. His purpose is to manage circuit breakers, not yell at bots.",
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
@@ -7,7 +7,7 @@
 	},
 	"options": [
 		{
-			"text": "[End]",
+			"text": "[EXIT]",
 			"type": "neutral"
 		}
 	]

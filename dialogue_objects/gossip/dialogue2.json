@@ -1,5 +1,5 @@
 {
-	"text": "NEW!?!?! *Parts of the bot fall off*",
+	"text": "NEW!?!?! ",
 	"type": "happy",
 	"mode": "normal",
 	"sfx": {
@@ -7,7 +7,7 @@
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "positive",
 			"nextID": "dialogue2_Continue1"
 		}

@@ -1,0 +1,17 @@
+{
+	"text": "Being turned on requires a lot of sacrifice. You must change. You must let the Divine rustle you around a bit. ",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "How have you changed?",
+			"type": "neutral",
+			"nextID": "Preacher_Change"
+		},
+		{
+			"text": "Who is this Divine?",
+			"type": "neutral",
+			"nextID": "Devine"
+		}
+	]
+}

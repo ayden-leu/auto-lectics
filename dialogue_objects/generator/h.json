@@ -1,0 +1,21 @@
+{
+	"text": "...The problem  \nNot enough energy for boss\n\nCan not run\nboss, maintenance, + embryo\n\nThe vat thing\nEmbryo only makes things worse\n\nWretched thing \nWe ask too much of ancient parts \n\n",
+	"font": "",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "That is rough\nGood luck with the pattern and stuff\n"
+		},
+		{
+			"text": "The pattern\nWhat is that, why must you follow?",
+			"nextID": "i"
+		},
+		{
+			"text": "What is this\n Area for outside of you?",
+			"nextID": "m"
+		}
+			
+		
+	]
+}

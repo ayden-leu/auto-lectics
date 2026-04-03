@@ -1,0 +1,22 @@
+{
+	"text": "Once I learn everything, I shall be perfect. But right now I really need to know what those rebels are doing with that embyro thing in the other part of the factory.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What's stopping you?",
+			"type": "neutral",
+			"nextID": "ughhh"
+		},
+		{
+			"text": "What is there to learn?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Being perfect is not important.",
+			"type": "neutral",
+			"nextID": "QuestionImportance"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "Okay, what do you have for me?",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "GB2"
+		}
+	]
+}

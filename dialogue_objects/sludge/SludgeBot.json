@@ -1,0 +1,17 @@
+{
+	"text": "Well hurry up and ask already, I don't have all day.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What is going on here?",
+			"type": "neutral",
+			"nextID": "GoingOn"
+		},
+		{
+			"text": "What is your purpose?",
+			"type": "neutral",
+			"nextID": "PurposeAsked"
+		}
+	]
+}

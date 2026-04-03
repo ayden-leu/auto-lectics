@@ -1,0 +1,12 @@
+{
+	"text": "Well that's rude! I've got an important question someone like you.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB8"
+		}
+	]
+}

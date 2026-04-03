@@ -1,0 +1,11 @@
+{
+	"text": "Just get away from me.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

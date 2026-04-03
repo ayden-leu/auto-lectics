@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://stwpbfk20ea4"]
 
 [ext_resource type="Script" uid="uid://bt5hw7k0jqkks" path="res://entities/npcs/preacher.gd" id="1_hswvp"]
-[ext_resource type="PackedScene" uid="uid://bu1smqla7x43w" path="res://models/npcs/preacher.fbx" id="2_67wvj"]
+[ext_resource type="PackedScene" uid="uid://bu1smqla7x43w" path="res://models/week6playtestStuff/npcs/preacher.fbx" id="2_67wvj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.0087891, 1.8596134, 0.97631836)
@@ -11,7 +11,8 @@ script = ExtResource("1_hswvp")
 hitbox = NodePath("Hitbox")
 dialogueBoxAnchor = NodePath("Marker3D")
 dialogueBoxAttachMethod = 1
-initialDialogueID = "dialogue1"
+initialDialogueID = "PB1"
+talkOnlyOnce = false
 model = NodePath("preacherModel")
 myName = "preacher"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
@@ -28,4 +29,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92883015, -0.045532227)
 shape = SubResource("BoxShape3D_vefio")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(0.83823633, 0.5449841, 0.018767463, -0.54487395, 0.83844584, -0.011002143, -0.021731494, -0.0010035047, 0.99976337, 2.05048, 3.5539703, -0.45476627)
+transform = Transform3D(0.9657929, -0.008126809, -0.25918725, -0.0060162675, 0.9985379, -0.053726137, 0.25924468, 0.053447694, 0.96433187, 1.282794, 1.3191749, -0.45476627)

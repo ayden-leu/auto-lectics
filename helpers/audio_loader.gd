@@ -18,7 +18,7 @@ static func loadAudioFiles(id:String, audioStream:AudioStreamRandomizer) -> void
 		if not filename.ends_with(".wav"):
 			continue
 		
-		var audioFile:AudioStreamWAV = AudioStreamWAV.load_from_file(soundIDPath + "/" + filename)
+		var audioFile:AudioStreamWAV = load(soundIDPath + "/" + filename)
 		audioStream.add_stream(-1, audioFile)
 
 static func clearAudioFiles(audioStream:AudioStreamRandomizer) -> void:
