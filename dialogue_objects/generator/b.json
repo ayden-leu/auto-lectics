@@ -3,6 +3,10 @@
 	"font": "",
 	"type": "neutral",
 	"mode": "normal",
+	
+	"sfx": {
+		"spawn": "generatorSound"
+	},
 	"options": [
 		{
 			"text": "->",

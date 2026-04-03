@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cs0qqc1w808ww"]
+[gd_scene load_steps=5 format=3 uid="uid://dgbsdtvmc1s3s"]
 
 [ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_kn3ys"]
 [ext_resource type="PackedScene" uid="uid://roy354pxsfxt" path="res://models/npcs/generator_npc.tscn" id="2_si75v"]
@@ -12,6 +12,7 @@ script = ExtResource("1_kn3ys")
 hitbox = NodePath("Area3D")
 dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 initialDialogueID = "a"
+talkOnlyOnce = false
 model = NodePath("GeneratorNPC")
 myName = "generator"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
