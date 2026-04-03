@@ -89,8 +89,16 @@ func _saveFile(data:Dictionary) -> void:
 func _createNodesFromFile(filename:String) -> void:
 	var filePath:String = _savePath + _npcNameField.text + "/" + filename
 	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
-	var data:Dictionary = JSON.parse_string(file.get_as_text())
+	if file == null:
+		printerr("DialogueCreator: Error opening file: ", filePath)
+		return
+	
+	var data = JSON.parse_string(file.get_as_text())
 	file.close()
+	if data == null:
+		printerr("DialogueCreator: Failed to parse file [", filePath, "] as JSON.")
+		return
+	data = data as Dictionary
 	
 	# create object
 	_on_create_dialogue_pressed()

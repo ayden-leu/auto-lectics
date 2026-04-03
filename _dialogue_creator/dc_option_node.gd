@@ -189,6 +189,7 @@ var setFlags:Dictionary:
 		return setFlagsAspectsHandler.currentFlags
 var checkFlags:Dictionary:
 	set(newFlags):
+		print(newFlags)
 		checkFlagsAspectsHandler.currentFlags = newFlags
 	get():
 		return checkFlagsAspectsHandler.currentFlags
@@ -198,11 +199,11 @@ var nextID:String = ""
 
 func _ready() -> void:
 	super()
-	set_slot_color_left(0, PORT_COLOR.OPTION)
-	set_slot_type_left(0, PORT_TYPE.OPTION)
+	set_slot_color_left(0, PortColor.OPTION)
+	set_slot_type_left(0, PortType.OPTION)
 	
-	set_slot_color_right(1, PORT_COLOR.DIALOGUE)
-	set_slot_type_right(1, PORT_TYPE.DIALOGUE)
+	set_slot_color_right(1, PortColor.DIALOGUE)
+	set_slot_type_right(1, PortType.DIALOGUE)
 	
 	sfxEventAspects = DialogueDefaults.defaultOption.sfx
 	spawnDelay = DialogueDefaults.defaultOption.spawnDelay
@@ -252,7 +253,7 @@ func dialogueDisconnected() -> void:
 	nextID = ""
 
 ## Disconnects any connected [DC_DialogueNode]s, then prepares for deletion.
-func delete() -> void:
+func _delete() -> void:
 	disconnect_dialogue.emit(port)
 	super()
 
@@ -304,3 +305,15 @@ func _on_debug_pressed() -> void:
 			print("\t", flagID, ": ", currentCheckFlags[flagID])
 	
 	print("nextID: ", nextID)
+
+## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
+func _on_close_button_pressed() -> void:
+	super()
+
+## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
+func _on_resize_height() -> void:
+	super()
+
+## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
+func _on_toggle_visibility(isVisible:bool) -> void:
+	super(isVisible)

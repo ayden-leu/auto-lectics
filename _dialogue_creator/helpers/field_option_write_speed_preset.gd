@@ -9,7 +9,11 @@ var option:String:
 		return DialogueDefaults.WRITE_SPEED_PRESETS.keys()[chooser.selected]
 
 func _ready() -> void:
-	fillValueToOptionIndex(DialogueDefaults.WRITE_SPEED_PRESETS.keys())
+	var keys:Array = DialogueDefaults.WRITE_SPEED_PRESETS.keys()
+	var typingMoment:Array[String] = []
+	for key in keys:
+		typingMoment.push_back(key as String)
+	fillValueToOptionIndex(typingMoment)
 	
 	option = DialogueDefaults.defaultDialogue.writeSpeed
 

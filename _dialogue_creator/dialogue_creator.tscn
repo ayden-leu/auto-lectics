@@ -78,27 +78,27 @@ placeholder_text = "put name here"
 [node name="HSeparator" type="HSeparator" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
+[node name="Buttons" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
 
-[node name="CreateDialogueNode" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
+[node name="CreateDialogueNode" type="Button" parent="MenuButtons/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_type_variation = &"ButtonCreateObject"
 text = "Dialogue"
 icon = ExtResource("4_acglc")
 
-[node name="CreateOptionNode" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
+[node name="CreateOptionNode" type="Button" parent="MenuButtons/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_type_variation = &"ButtonCreateOption"
 text = "Option"
 icon = ExtResource("4_acglc")
 
-[node name="SaveDialogue" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
+[node name="SaveDialogue" type="Button" parent="MenuButtons/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Save All"
 icon = ExtResource("5_acglc")
 
-[node name="LoadDialogueTree" type="Button" parent="MenuButtons/VBoxContainer/HBoxContainer2"]
+[node name="LoadDialogueTree" type="Button" parent="MenuButtons/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Load Tree"
 icon = ExtResource("6_acglc")
@@ -106,7 +106,7 @@ icon = ExtResource("6_acglc")
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateDialogueNode" to="." method="_on_create_dialogue_pressed"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/CreateOptionNode" to="." method="_on_create_option_pressed"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/HBoxContainer2/LoadDialogueTree" to="." method="_on_load_dialogue_tree_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/CreateDialogueNode" to="." method="_on_create_dialogue_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/CreateOptionNode" to="." method="_on_create_option_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/LoadDialogueTree" to="." method="_on_load_dialogue_tree_pressed"]

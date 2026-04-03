@@ -202,8 +202,8 @@ var numOptions:int = 0:
 
 func _ready() -> void:
 	super()
-	set_slot_color_left(dialogueIDPort, PORT_COLOR.DIALOGUE)
-	set_slot_type_left(dialogueIDPort, PORT_TYPE.DIALOGUE)
+	set_slot_color_left(dialogueIDPort, PortColor.DIALOGUE)
+	set_slot_type_left(dialogueIDPort, PortType.DIALOGUE)
 	
 	sfxEventAspects = DialogueDefaults.defaultDialogue.sfx
 
@@ -222,7 +222,7 @@ func createOptionPort() -> void:
 	
 	set_slot(_numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
-		true, PORT_TYPE.OPTION, PORT_COLOR.OPTION
+		true, PortType.OPTION, PortColor.OPTION
 	)
 	_options.push_back({})
 	numOptions += 1
@@ -259,7 +259,7 @@ func _shiftHecticPort(amount:int) -> void:
 	
 	set_slot(currentSlot + amount,
 		false, 0, Color.TRANSPARENT,
-		true, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
+		true, PortType.DIALOGUE, PortColor.DIALOGUE
 	)
 	nextOnHecticPortConnection.mePort += amount
 	reconnect_hectic_port.emit(nextOnHecticPortConnection)
@@ -325,7 +325,7 @@ func nextOnHecticFailIdDisconnected() -> void:
 	nextOnHecticFailId = ""
 
 ## Disconnects all connections to itself, then prepares for deletion.
-func delete() -> void:
+func _delete() -> void:
 	disconnect_all_options.emit()
 	disconnect_id.emit()
 	super()
@@ -353,7 +353,7 @@ func _on_set_hectic_port(on: bool) -> void:
 	
 	set_slot(_numNodesAboveOptions + numOptions,
 		false, 0, Color.TRANSPARENT,
-		on, PORT_TYPE.DIALOGUE, PORT_COLOR.DIALOGUE
+		on, PortType.DIALOGUE, PortColor.DIALOGUE
 	)
 	_nextOnHecticPortEnabled = on
 

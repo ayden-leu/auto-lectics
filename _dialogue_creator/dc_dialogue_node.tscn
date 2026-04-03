@@ -336,7 +336,7 @@ layout_mode = 2
 [connection signal="resize" from="Row2/Advanced" to="." method="_on_resize_height"]
 [connection signal="toggled" from="Row2/Advanced" to="Row2/Advanced" method="_on_toggled"]
 [connection signal="set_hectic_port" from="AdvancedOptions/Row1/ModeField" to="." method="_on_set_hectic_port"]
-[connection signal="item_selected" from="AdvancedOptions/Row1/ModeField/OptionButton" to="AdvancedOptions/Row1/ModeField" method="_on_item_selected"]
+[connection signal="item_selected" from="AdvancedOptions/Row1/ModeField/OptionButton" to="AdvancedOptions/Row1/ModeField" method="_on_chooser_updated"]
 [connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
 [connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_changed"]
