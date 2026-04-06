@@ -41,19 +41,21 @@ func _run_loop() -> void:
 	_looping = false
 
 func _fade_to(alpha: float, duration: float) -> void:
-	var rect := _get_fade_rect()
-	#if rect == null:
-		#return
-
-	rect.visible = true
-
-	var target := rect.modulate
-	target.a = alpha
-
-	var t := get_tree().create_tween()
-	t.tween_property(rect, "modulate", target, duration)
-	await t.finished
-
+	pass
+	##kept crashing once we added the fog in 
+	#var rect := _get_fade_rect()
+	##if rect == null:
+		##return
+#
+	#rect.visible = true
+#
+	#var target := rect.modulate
+	#target.a = alpha
+#
+	#var t := get_tree().create_tween()
+	#t.tween_property(rect, "modulate", target, duration)
+	#await t.finished
+#
 
 func reset_all_npcs() -> void:
 	var npcs = get_tree().get_nodes_in_group("npcs")

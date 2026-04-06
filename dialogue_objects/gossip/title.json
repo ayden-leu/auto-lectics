@@ -2,6 +2,9 @@
 	"text": "They say I'm too curious and if I talk to the rebels I'll flip sides. I think it's just an excuse to not open that gate. They love not opening that gate. ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "Any idea how I could convince them to let me through?",

@@ -2,6 +2,9 @@
 	"text": "We don't need to the boss to finish the project, they ARE the project. Come back when you want to talk a little more sense.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
 			"text": "[EXIT]",

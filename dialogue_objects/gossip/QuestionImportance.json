@@ -2,6 +2,9 @@
 	"text": "DON'T EVER QUESTION WHAT I THINK IS IMPORTANT!\n",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "[EXIT]",

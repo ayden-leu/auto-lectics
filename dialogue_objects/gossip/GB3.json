@@ -4,6 +4,9 @@
 	"mode": "hectic",
 	"nextOnHecticFailureID": "GB3_HecticFail",
 	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "Excuse me?",

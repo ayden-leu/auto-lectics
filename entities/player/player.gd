@@ -12,7 +12,7 @@ class_name Player
 # =======================
 @export_group("Movement - Ground")
 ## The player's maximum speed.
-@export_range(0.0, 30.0, 0.1) var maxSpeed: float = 5.0
+@export_range(0.0, 30.0, 0.1) var maxSpeed: float = 20.0
 ## The player's acceleration.
 ## The smaller the value, the more time it takes to reach max speed.
 @export_range(0.0, 80.0, 0.5) var acceleration: float = 18.0
@@ -181,6 +181,8 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 		cameraAnchor.rotation_degrees.x, -max_pitch_degrees, max_pitch_degrees
 	)
 
+
+	
 func _on_interact_pressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():

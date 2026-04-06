@@ -2,9 +2,12 @@
 	"text": "Obviously... And so what are you going to do if I let you by. ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
-			"text": "I'll stop the embyro projects because its taking up too much power. ",
+			"text": "I'll stop the embyro project because its taking up too much power. ",
 			"type": "neutral",
 			"nextID": "goodEnd"
 		},

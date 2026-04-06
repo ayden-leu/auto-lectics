@@ -1,9 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=25 format=3 uid="uid://dbtcrr1c8clsr"]
 
-[ext_resource type="Script" uid="uid://7h0eysfwvhfj" path="res://world/reloadTheScene.gd" id="1_lahna"]
+[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_qkp2w"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
+[ext_resource type="Script" path="res://world/fog.gd" id="2_vl577"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
+[ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_uobc2"]
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_4ll5p"]
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="6_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://ddx37yx83ddcw" path="res://ui/hud/fade_to_black_hitbox.tscn" id="7_qo27r"]
@@ -30,6 +33,28 @@ size = Vector2(18.48, 37.805)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wd7ni"]
 data = PackedVector3Array(9.24, 0, 18.9025, -9.24, 0, 18.9025, 9.24, 0, -18.9025, -9.24, 0, 18.9025, -9.24, 0, -18.9025, 9.24, 0, -18.9025)
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4jy51"]
+panorama = ExtResource("1_qkp2w")
+
+[sub_resource type="Sky" id="Sky_rfx78"]
+sky_material = SubResource("PanoramaSkyMaterial_4jy51")
+
+[sub_resource type="Environment" id="Environment_g0qxl"]
+background_mode = 2
+sky = SubResource("Sky_rfx78")
+ambient_light_color = Color(0.20399997, 0, 0.24, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 2.38
+glow_intensity = 0.0
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.95, 0.6, 0.3, 1)
+fog_sky_affect = 0.0
+fog_depth_begin = 140.0
+fog_depth_end = 1000.0
+volumetric_fog_density = 0.005
+volumetric_fog_anisotropy = 1.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_lahna"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wd7ni"]
@@ -39,7 +64,6 @@ size = Vector3(2.772461, 1, 2.220459)
 font = ExtResource("9_3psyo")
 
 [node name="Test_NPCInteraction" type="Node3D"]
-script = ExtResource("1_lahna")
 
 [node name="Environment" type="Node" parent="."]
 
@@ -61,6 +85,26 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_wd7ni")
+
+[node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_g0qxl")
+script = ExtResource("2_vl577")
+anisotropy = 1.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
+stream = ExtResource("3_uobc2")
+volume_db = 22.018
+unit_size = 4.55
+autoplay = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23/AudioStreamPlayer3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
+stream = ExtResource("4_4ll5p")
+volume_db = 22.018
+unit_size = 8.85
+max_db = 6.0
+autoplay = true
 
 [node name="npcs" type="Node" parent="."]
 
@@ -99,7 +143,6 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 focus = NodePath("../Player")
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
-loopDurationSeconds = 1000.0
 
 [node name="StartDialogueAreaTemp" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_qo27r")]
 transform = Transform3D(0.8352511, 0, 0.54986864, 0, 1, 0, -0.54986864, 0, 0.8352511, -0.103065014, 0.67852855, 3.4629617)

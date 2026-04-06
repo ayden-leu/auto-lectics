@@ -3,7 +3,7 @@
 	"type": "angry",
 	"mode": "normal",
 	"sfx": {
-		"spawn": "dialogueFailSound"
+		"spawn": "gossipSound"
 	},
 	"options": [
 		{

@@ -2,6 +2,9 @@
 	"text": "That may be true... but why is the boss so important. ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
 			"text": "Because they made all of us and we are indebted to their service. ",

@@ -2,6 +2,9 @@
 	"text": "I don't know what managment you're talking about. The only managment is me, the other Mini-Bosses, and the Big Boss themself. \n\nCome back when your talking more sense. ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
 			"text": "[EXIT[",

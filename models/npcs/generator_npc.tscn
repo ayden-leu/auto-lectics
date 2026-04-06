@@ -37,6 +37,9 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_101/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_splu2")
 
+[node name="Cylinder_033" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, -0.72719294, 0.68643314, 0, -0.68643314, -0.72719294, 0, 3.9904034, 0)
+
 [node name="StaticBody3D" type="StaticBody3D" parent="BasicWall_002" index="0"]
 collision_layer = 2
 collision_mask = 0

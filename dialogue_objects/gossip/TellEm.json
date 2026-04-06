@@ -2,6 +2,9 @@
 	"text": "The original plan was to make it perfect. A space with no flaws that would last forever. I was made to watch over the other bots, do analytics, check maintenance. ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "What do you do now?",

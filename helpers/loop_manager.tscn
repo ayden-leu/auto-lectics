@@ -4,3 +4,4 @@
 
 [node name="LoopManager" type="Node"]
 script = ExtResource("1_8cw2q")
+manual = true
