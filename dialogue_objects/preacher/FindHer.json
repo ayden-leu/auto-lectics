@@ -4,6 +4,9 @@
 	"mode": "hectic",
 	"nextOnHecticFailureID": "FindHer_HecticFail",
 	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "Just curious.",

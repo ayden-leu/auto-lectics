@@ -2,6 +2,9 @@
 	"text": "I've already tried turning on on every other bot I know... ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[EXIT]",

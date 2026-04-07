@@ -4,6 +4,9 @@
 	"mode": "hectic",
 	"nextOnHecticFailureID": "PB8_HecticFail",
 	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "No?",

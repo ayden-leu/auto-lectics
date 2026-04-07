@@ -3,6 +3,9 @@
 	"font": "",
 	"type": "positive",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "generatorSound"
+	},
 	"options": [
 		{
 			"text": "Mostly?",

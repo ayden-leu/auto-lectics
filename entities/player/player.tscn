@@ -13,7 +13,7 @@
 collision_layer = 5
 collision_mask = 2
 script = ExtResource("1_q8vf3")
-maxSpeed = 20.2
+maxSpeed = 17.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_hyl87")

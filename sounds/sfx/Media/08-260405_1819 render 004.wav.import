@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://mnktptk867as"
+path="res://.godot/imported/08-260405_1819 render 004.wav-1c308af456c758031f45c3e4c22d41eb.sample"
+
+[deps]
+
+source_file="res://sounds/sfx/Media/08-260405_1819 render 004.wav"
+dest_files=["res://.godot/imported/08-260405_1819 render 004.wav-1c308af456c758031f45c3e4c22d41eb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

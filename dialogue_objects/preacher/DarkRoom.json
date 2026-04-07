@@ -2,6 +2,9 @@
 	"text": "Why do you care so much about this room?!?! It's a horrible place, I'm not going back!",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[Continue]",

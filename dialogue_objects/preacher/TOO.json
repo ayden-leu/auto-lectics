@@ -2,6 +2,9 @@
 	"text": "Ah, so you wanted to learn about my turning on story? ",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "That's not what I asked. ",

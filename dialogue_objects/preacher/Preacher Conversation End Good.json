@@ -2,6 +2,9 @@
 	"text": "Because he says it'll make him look bad to have bots like me come from his area... Anyways thats all for today. Remember, the path to turning on is not only long, but also hard.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "[End]",
