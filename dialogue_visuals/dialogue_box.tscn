@@ -8,10 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
 [ext_resource type="Script" uid="uid://bix7b5bmj6lso" path="res://dialogue_visuals/hectic_positions.gd" id="4_hx4ud"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_ilnc5"]
-material = ExtResource("2_c2e7b")
-size = Vector3(0.14, 2.42, 2.075)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_21gmv"]
 size = Vector3(0.18579102, 2.4591217, 2.102539)
 
@@ -35,13 +31,12 @@ playback_mode = 1
 resource_local_to_scene = true
 playback_mode = 1
 
-[node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("myLabel")]
+[node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("_myLabel")]
 script = ExtResource("1_xrnu6")
-optionsAnchor = 3
-myLabel = NodePath("DialogueLabel")
+_myLabel = NodePath("DialogueLabel")
 
 [node name="Background" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_ilnc5")
+mesh = ExtResource("2_ane15")
 
 [node name="DialogueLabel" type="Label3D" parent="."]
 transform = Transform3D(-3.291402e-08, 0, 0.752985, 0, 0.752985, 0, -0.752985, 0, -3.291402e-08, 0.09841019, 1.1696776, 0.99419135)
@@ -207,13 +202,17 @@ transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 
 metadata/_edit_group_ = true
 
 [node name="WarningsContainer" type="Node3D" parent="."]
+unique_name_in_owner = true
 
 [node name="OptionsContainer" type="Node3D" parent="."]
+unique_name_in_owner = true
 
 [node name="Timer" parent="." instance=ExtResource("4_44dxv")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2821603, 0)
 
 [node name="SFX" type="Node3D" parent="."]
+unique_name_in_owner = true
 
 [node name="text" type="AudioStreamPlayer" parent="SFX"]
 unique_name_in_owner = true

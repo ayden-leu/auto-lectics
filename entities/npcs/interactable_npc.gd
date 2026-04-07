@@ -121,8 +121,8 @@ func disconnectDialogueConsoleSignals() -> void:
 	dialogueConsole.all_options_available.disconnect(_on_dialogue_box_all_options_available)
 	dialogueConsole.all_dialogue_text_visible.disconnect(_on_dialogue_box_all_dialogue_text_visible)
 
-## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
-func loadDialogueData(dialogueEntry: Dictionary) -> void:
+## Loads the data of a dialogue object into the dialogue console. Make sure currentDialogueID is set to the dialogue you want to load before running.
+func loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	dialogueConsole.realOwner = self
 	dialogueConsole.currentDialogueID = currentDialogueID
 	dialogueConsole.mode = dialogueEntry.mode
@@ -137,6 +137,21 @@ func loadDialogueData(dialogueEntry: Dictionary) -> void:
 	dialogueConsole.loadOptionData(dialogueEntry.options)
 	dialogueConsole.prepare()
 
+## @deprecated
+## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
+func loadDialogueBoxData(dialogueEntry:Dictionary) -> void:
+	dialogueBox.realOwner = self
+	dialogueBox.currentDialogueID = currentDialogueID
+	dialogueBox.mode = dialogueEntry.mode
+	if dialogueEntry.mode == "hectic":	
+		dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		dialogueBox.delayBtwnWriteDialogueAndOptions = 0.25  # arbitrary
+	dialogueBox.text = dialogueEntry.text
+	dialogueBox.textWriteSpeed = dialogueEntry.writeSpeedCustom
+	dialogueBox.loadSfx(dialogueEntry.sfx)
+	dialogueBox.loadOptionData(dialogueEntry.options)
+	dialogueBox.prepare()
+
 ## Loads the next dialogue to display.
 func loadNextDialogue(nextDialogueID: String, addToHistory: bool = true) -> void:
 	if nextDialogueID == "" and isTalking:
@@ -149,7 +164,7 @@ func loadNextDialogue(nextDialogueID: String, addToHistory: bool = true) -> void
 		dialogueHistory.push_back(currentDialogueID)
 	
 	var dialogue: Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
-	loadDialogueData(dialogue)
+	loadDialogueConsoleData(dialogue)
 	dialogueConsole.start()
 
 
