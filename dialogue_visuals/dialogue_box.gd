@@ -43,7 +43,7 @@ const _NUM_WARNINGS:int = 6
 ## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly. 
 @export var _optionsAnchor:_OptionAnchor = _OptionAnchor.TOP_LEFT
 ## The label that displays the current dialogue.
-@export var _myLabel:TypeWriterLabel
+@export var _myLabel:TypeWriterLabel3D
 
 # ------------------------------------------------
 # onready variables
