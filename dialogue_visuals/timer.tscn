@@ -6,8 +6,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_7l3sg"]
 size = Vector3(0.17871094, 0.16308594, 2.1113281)
 
-[node name="Timer" type="Node3D"]
+[node name="Timer" type="Node3D" node_paths=PackedStringArray("bar")]
 script = ExtResource("1_7l3sg")
+bar = NodePath("Bar")
 
 [node name="Bar" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_7l3sg")
