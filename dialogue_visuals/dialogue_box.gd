@@ -31,7 +31,7 @@ enum _OptionAnchor {
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Holds a reference to the dialogue option resource.
-const _OPTION_SCENE:Resource = preload(Globals.SCENES.DialogueOption)
+const _OPTION_SCENE:Resource = preload(Globals.SCENES.DialogueBoxOption)
 ## [b]Internal-use only.[/b]  Holds a reference to the warning tile resource.
 const _WARNING_TILE_SCENE:Resource = preload(Globals.SCENES.DialogueWarningTile)
 ## [b]Internal-use only.[/b]  The number of warning tiles to spawn during hectic mode.
@@ -214,28 +214,28 @@ func _createOptions() -> void:
 			return
 		prevDelay += spawnDelay - 0.001
 		
-		var newOption:DialogueOption = _spawnOption()
-		_configureDialogueOption(newOption, optionObjectData)
+		var newOption:DialogueBoxOption = _spawnOption()
+		_configureDialogueBoxOption(newOption, optionObjectData)
 		newOption.prepare()
 		new_option_available.emit()
 	
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Creates a dialogue option scene and saves a reference to it in "_spawnedOptions"
-func _spawnOption() -> DialogueOption:
-	var option:DialogueOption = _OPTION_SCENE.instantiate()
+func _spawnOption() -> DialogueBoxOption:
+	var option:DialogueBoxOption = _OPTION_SCENE.instantiate()
 	_optionContainer.add_child(option)
 	_spawnedOptions.push_back(option)
 	return option
 
 ## [b]Internal-use only.[/b]  Updates the position of a dialogue option in normal mode.
-func _setOptionPositionNormal(option:DialogueOption) -> void:
+func _setOptionPositionNormal(option:DialogueBoxOption) -> void:
 	if _spawnedOptions.size() == 1:
 		option.position = _optionSpawnPositions.normal[_optionsAnchor].position
 		option.rotation_degrees = _optionSpawnPositions.normal[_optionsAnchor].rotation_degrees
 		return
 	
-	var lastOption:DialogueOption = _spawnedOptions[-2]
+	var lastOption:DialogueBoxOption = _spawnedOptions[-2]
 	var offsetMultiplier:float = 1.001
 	if _optionsAnchor == _OptionAnchor.BOTTOM_LEFT or _optionsAnchor == _OptionAnchor.BOTTOM_RIGHT:
 		offsetMultiplier *= -1
@@ -244,23 +244,23 @@ func _setOptionPositionNormal(option:DialogueOption) -> void:
 	option.rotation_degrees = lastOption.rotation_degrees
 
 ## [b]Internal-use only.[/b]  Updates the alignment of a dialogue option in normal mode.
-func _setOptionAlignmentNormal(option:DialogueOption) -> void:
+func _setOptionAlignmentNormal(option:DialogueBoxOption) -> void:
 	match _optionsAnchor:
 		_OptionAnchor.TOP_LEFT:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.top
+			option.horizontalAlignment = option.HorizAlignment.RIGHT
+			option.verticalAlignment = option.VertiAlignment.TOP
 		_OptionAnchor.TOP_RIGHT:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.top
+			option.horizontalAlignment = option.HorizAlignment.LEFT
+			option.verticalAlignment = option.VertiAlignment.TOP
 		_OptionAnchor.BOTTOM_LEFT:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+			option.horizontalAlignment = option.HorizAlignment.RIGHT
+			option.verticalAlignment = option.VertiAlignment.BOTTOM
 		_OptionAnchor.BOTTOM_RIGHT:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+			option.horizontalAlignment = option.HorizAlignment.LEFT
+			option.verticalAlignment = option.VertiAlignment.BOTTOM
 
 ## [b]Internal-use only.[/b]  Updates the position of a dialogue option in hectic mode.
-func _setOptionPositionHectic(option:DialogueOption, section:String) -> void:
+func _setOptionPositionHectic(option:DialogueBoxOption, section:String) -> void:
 	var potentialPositions:Array = _optionSpawnPositions.hectic[section]
 	for usedPosition in _optionSpawnPositions.hectic.root.usedPositions:
 		potentialPositions.erase(usedPosition)
@@ -272,17 +272,17 @@ func _setOptionPositionHectic(option:DialogueOption, section:String) -> void:
 	option.rotation_degrees = newPosition.rotation_degrees
 
 ## [b]Internal-use only.[/b]  Updates the alignment of a dialogue option in hectic mode.
-func _setOptionAlignmentHectic(option:DialogueOption, section:String) -> void:
+func _setOptionAlignmentHectic(option:DialogueBoxOption, section:String) -> void:
 	match section:
 		"left":
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
+			option.horizontalAlignment = option.HorizAlignment.RIGHT
+			option.verticalAlignment = option.VertiAlignment.CENTER
 		"right":
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
+			option.horizontalAlignment = option.HorizAlignment.LEFT
+			option.verticalAlignment = option.VertiAlignment.CENTER
 		"top":
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.center
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+			option.horizontalAlignment = option.HorizAlignment.CENTER
+			option.verticalAlignment = option.VertiAlignment.BOTTOM
 		_:
 			printerr("DialogueBox: Unexpected section value. Got: ", section)
 
@@ -314,7 +314,7 @@ func _getValidHecticAreas() -> Array[String]:
 	return toReturn
 
 ## [b]Internal-use only.[/b]  Configures aspects of a dialogue option.
-func _configureDialogueOption(option:DialogueOption, data:Dictionary) -> void:
+func _configureDialogueBoxOption(option:DialogueBoxOption, data:Dictionary) -> void:
 	option.sfxEventsToLoad = data.sfx
 	
 	if mode == "normal":
@@ -371,7 +371,7 @@ func _getWarningTilePosition() -> Vector3:
 # functions that run when a signal is emitted
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Runs when a dialogue option is picked.
-func _on_option_picked(pickedOption:DialogueOption, nextDialogueID:String) -> void:
+func _on_option_picked(pickedOption:DialogueBoxOption, nextDialogueID:String) -> void:
 	if pickedOption:
 		StoryFlags.apply_set_flags(pickedOption.setFlags)
 
