@@ -15,8 +15,10 @@ section_length = 0.01
 
 [node name="WarningTile" type="Node3D"]
 script = ExtResource("2_jti8w")
+shakingEnabled = false
 
 [node name="VisualArea" type="Area3D" parent="."]
+unique_name_in_owner = true
 collision_layer = 8
 collision_mask = 8
 
@@ -25,14 +27,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.90356445)
 shape = SubResource("BoxShape3D_jti8w")
 
 [node name="Background" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 0.0088356715, -0.016394746, 0)
+unique_name_in_owner = true
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("TubeTrailMesh_ted7g")
 
 [node name="TextLabel" type="Label3D" parent="Background"]
+unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 6.129507e-10, -0.020977322, 0)
 text = "WARNING"
 
 [node name="ShakeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 0.1
 
 [connection signal="area_entered" from="VisualArea" to="." method="_on_visual_area_area_entered"]
