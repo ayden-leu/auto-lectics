@@ -1,69 +1,457 @@
-[gd_scene load_steps=9 format=3 uid="uid://crll5200m2esb"]
+[gd_scene load_steps=8 format=3 uid="uid://deb04l8yner3u"]
 
-[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="1_axsc5"]
-[ext_resource type="Script" uid="uid://cn67u5ck832c2" path="res://test_scenes/test_dialogue.gd" id="1_ic3ec"]
+[ext_resource type="Script" uid="uid://dr0lleyomueuq" path="res://test_scenes/test_dialogue.gd" id="1_gwiao"]
+[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ic3ec"]
+[ext_resource type="Script" uid="uid://calvasnmkd447" path="res://test_scenes/test_dialogue_draggable_header.gd" id="3_etraf"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_g6gns"]
-size = Vector2(44, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ic3ec"]
+size = Vector2(222, 40)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_4o76d"]
-size = Vector2(73, 11)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_etraf"]
+size = Vector2(254, 40)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ic3ec"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2lst"]
+size = Vector2(276, 40)
 
-[sub_resource type="Sky" id="Sky_bmedq"]
-sky_material = SubResource("ProceduralSkyMaterial_ic3ec")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqxr1"]
+size = Vector2(222, 40)
 
-[sub_resource type="Environment" id="Environment_etraf"]
-background_mode = 2
-sky = SubResource("Sky_bmedq")
-tonemap_mode = 2
-glow_enabled = true
-
-[sub_resource type="LabelSettings" id="LabelSettings_ic3ec"]
-font_size = 66
-
-[node name="Test_Dialogue" type="Node3D"]
-script = ExtResource("1_ic3ec")
-
-[node name="Environment" type="Node" parent="."]
-
-[node name="floor" type="MeshInstance3D" parent="Environment"]
-mesh = SubResource("PlaneMesh_g6gns")
-skeleton = NodePath("../..")
-
-[node name="wall" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 0.18702123, -0.9823559, 0, 0.9823559, 0.18702123, 0, 4.406572, -12.002214)
-mesh = SubResource("PlaneMesh_4o76d")
-skeleton = NodePath("../..")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 0.0842692, 0.99644303, 0, -0.99644303, 0.0842692, 0, 4.275903, 0)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_etraf")
-
-[node name="NPC_Test" parent="." instance=ExtResource("1_axsc5")]
-transform = Transform3D(-0.29419053, 0, -0.95574695, 0, 1, 0, 0.95574695, 0, -0.29419053, 1.083954, 0.052559137, 0.14762259)
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2986922, 2.2938116, 5.485113)
-current = true
-
-[node name="Control" type="Control" parent="."]
+[node name="Test_Dialogue" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_ic3ec")
+script = ExtResource("1_gwiao")
+metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 226.0
-offset_bottom = 79.0
-text = "test"
-label_settings = SubResource("LabelSettings_ic3ec")
+offset_left = 30.0
+offset_top = 9.0
+offset_right = 252.0
+offset_bottom = 137.0
+mouse_filter = 2
+metadata/_edit_group_ = true
 
-[connection signal="finished_dialogue" from="NPC_Test" to="." method="_on_npc_test_finished_dialogue"]
-[connection signal="options_available" from="NPC_Test" to="." method="_on_npc_test_options_available"]
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick your convo"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "NPC: "
+
+[node name="NpcField" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "File: "
+
+[node name="FileField" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LoadButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Load"
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer" node_paths=PackedStringArray("contents")]
+collision_priority = 10.0
+script = ExtResource("3_etraf")
+contents = NodePath("..")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Area2D"]
+position = Vector2(111, 20)
+shape = SubResource("RectangleShape2D_ic3ec")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 172.0
+offset_right = 283.0
+offset_bottom = 564.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Dialogue Attributes:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Dialogue: "
+
+[node name="DialogueText" type="Label" parent="VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Mode: "
+
+[node name="DialogueMode" type="Label" parent="VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Hectic Fail ID: "
+
+[node name="DialogueHecticFailID" type="Label" parent="VBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer4"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Font: "
+
+[node name="DialogueFont" type="Label" parent="VBoxContainer2/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Type: "
+
+[node name="DialogueType" type="Label" parent="VBoxContainer2/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer6"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Write Speed Preset: "
+
+[node name="DialogueWriteSpeedPreset" type="Label" parent="VBoxContainer2/HBoxContainer6"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer7"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Write Speed Value: "
+
+[node name="DialogueWriteSpeedValue" type="Label" parent="VBoxContainer2/HBoxContainer7"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer8"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Background Theme: "
+
+[node name="DialogueBackgroundTheme" type="Label" parent="VBoxContainer2/HBoxContainer8"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer2" node_paths=PackedStringArray("contents")]
+collision_priority = 10.0
+script = ExtResource("3_etraf")
+contents = NodePath("..")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer2/Area2D"]
+position = Vector2(127, 20)
+shape = SubResource("RectangleShape2D_etraf")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 603.0
+offset_right = 300.0
+offset_bottom = 731.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer3"]
+layout_mode = 2
+text = "Configured SFX Events (Dialogue): "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer3/HBoxContainer"]
+layout_mode = 2
+text = "Spawn: "
+
+[node name="DialogueSfxEventSpawn" type="Label" parent="VBoxContainer3/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer3/HBoxContainer2"]
+layout_mode = 2
+text = "Text: "
+
+[node name="DialogueSfxEventText" type="Label" parent="VBoxContainer3/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer3" node_paths=PackedStringArray("contents")]
+collision_priority = 10.0
+script = ExtResource("3_etraf")
+contents = NodePath("..")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer3/Area2D"]
+position = Vector2(138, 20)
+shape = SubResource("RectangleShape2D_p2lst")
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 751.0
+offset_top = 68.0
+offset_right = 1005.0
+offset_bottom = 548.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer4"]
+layout_mode = 2
+text = "Option Attributes: "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer"]
+layout_mode = 2
+text = "Option: "
+
+[node name="OptionField" type="OptionButton" parent="VBoxContainer4/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer2"]
+layout_mode = 2
+text = "Text: "
+
+[node name="OptionText" type="Label" parent="VBoxContainer4/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer3"]
+layout_mode = 2
+text = "Next ID: "
+
+[node name="OptionNextID" type="Label" parent="VBoxContainer4/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer4"]
+layout_mode = 2
+text = "Font: "
+
+[node name="OptionFont" type="Label" parent="VBoxContainer4/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer5"]
+layout_mode = 2
+text = "Type: "
+
+[node name="OptionType" type="Label" parent="VBoxContainer4/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer6"]
+layout_mode = 2
+text = "Write Speed Preset: "
+
+[node name="OptionWriteSpeedPreset" type="Label" parent="VBoxContainer4/HBoxContainer6"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer7"]
+layout_mode = 2
+text = "Write Speed Value: "
+
+[node name="OptionWriteSpeedValue" type="Label" parent="VBoxContainer4/HBoxContainer7"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer8"]
+layout_mode = 2
+text = "Background Theme: "
+
+[node name="OptionBackgroundTheme" type="Label" parent="VBoxContainer4/HBoxContainer8"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer9"]
+layout_mode = 2
+text = "Spawn Delay: "
+
+[node name="OptionSpawnDelay" type="Label" parent="VBoxContainer4/HBoxContainer9"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer10"]
+layout_mode = 2
+text = "Lifetime: "
+
+[node name="OptionLifetime" type="Label" parent="VBoxContainer4/HBoxContainer10"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer4" node_paths=PackedStringArray("contents")]
+collision_priority = 10.0
+script = ExtResource("3_etraf")
+contents = NodePath("..")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer4/Area2D"]
+position = Vector2(111, 20)
+shape = SubResource("RectangleShape2D_hqxr1")
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 643.0
+offset_top = 632.0
+offset_right = 1043.0
+offset_bottom = 760.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer5"]
+layout_mode = 2
+text = "Configured SFX Events (Option): "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer5"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer5/HBoxContainer"]
+layout_mode = 2
+text = "Spawn: "
+
+[node name="OptionSfxEventSpawn" type="Label" parent="VBoxContainer5/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer5"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer5/HBoxContainer2"]
+layout_mode = 2
+text = "Text: "
+
+[node name="OptionSfxEventText" type="Label" parent="VBoxContainer5/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer5" node_paths=PackedStringArray("contents")]
+collision_priority = 10.0
+script = ExtResource("3_etraf")
+contents = NodePath("..")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer5/Area2D"]
+position = Vector2(138, 20)
+shape = SubResource("RectangleShape2D_p2lst")
+
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/NpcField" to="." method="_on_npc_field_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/FileField" to="." method="_on_file_field_item_selected"]
+[connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Area2D" to="VBoxContainer/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="VBoxContainer/Area2D" to="VBoxContainer/Area2D" method="_on_mouse_exited_area"]
+[connection signal="mouse_entered" from="VBoxContainer2/Area2D" to="VBoxContainer2/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="VBoxContainer2/Area2D" to="VBoxContainer2/Area2D" method="_on_mouse_exited_area"]
+[connection signal="mouse_entered" from="VBoxContainer3/Area2D" to="VBoxContainer3/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="VBoxContainer3/Area2D" to="VBoxContainer3/Area2D" method="_on_mouse_exited_area"]
+[connection signal="item_selected" from="VBoxContainer4/HBoxContainer/OptionField" to="." method="_on_option_field_item_selected"]
+[connection signal="mouse_entered" from="VBoxContainer4/Area2D" to="VBoxContainer4/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="VBoxContainer4/Area2D" to="VBoxContainer4/Area2D" method="_on_mouse_exited_area"]
+[connection signal="mouse_entered" from="VBoxContainer5/Area2D" to="VBoxContainer5/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="VBoxContainer5/Area2D" to="VBoxContainer5/Area2D" method="_on_mouse_exited_area"]
