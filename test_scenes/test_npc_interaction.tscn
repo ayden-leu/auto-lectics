@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=10 format=3 uid="uid://dbtcrr1c8clsr"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_qkp2w"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
@@ -120,12 +120,10 @@ myName = "gossip"
 [node name="Player" parent="." instance=ExtResource("3_aue1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
 
-[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("3_s4y84")]
-transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
-mainCamera = NodePath("../PlayerCamera/Camera3D")
-
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")
+_actAsFocus = true
+_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
 manual = true
