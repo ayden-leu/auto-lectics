@@ -205,7 +205,7 @@ func _ready() -> void:
 	set_slot_color_left(DIALOGUE_ID_PORT, PortColor.DIALOGUE)
 	set_slot_type_left(DIALOGUE_ID_PORT, PortType.DIALOGUE)
 	
-	sfxEventAspects = DialogueDefaults.defaultDialogue.sfx
+	sfxEventAspects = DialogueDefaults.DEFAULT_DIALOGUE.sfx
 
 ## Creates an option port for thie [DC_DialogueNode] under the buttons that let you create and remove option ports.
 func createOptionPort() -> void:
@@ -265,7 +265,7 @@ func _shiftHecticPort(amount:int) -> void:
 	reconnect_hectic_port.emit(nextOnHecticPortConnection)
 	_on_resize_height()
 
-## Returns the currently configured fields for thie [DC_DialogueNode].  If a field matches its corresponding field in [member DialogueDefaults.defaultDialogue], it is not included in the return payload.
+## Returns the currently configured fields for thie [DC_DialogueNode].  If a field matches its corresponding field in [member DialogueDefaults.DEFAULT_DIALOGUE], it is not included in the return payload.
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
 		"id": dialogueIDField.text,
@@ -284,7 +284,7 @@ func getFields() -> Dictionary:
 		if nextOnHecticFailId:
 			currentValues.nextOnHecticFailureID = nextOnHecticFailId
 	
-	if writeSpeedPreset != DialogueDefaults.defaultDialogue.writeSpeed:
+	if writeSpeedPreset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		currentValues.writeSpeed = writeSpeedPreset
 		if currentValues.writeSpeed == "custom":
 			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.value
@@ -372,7 +372,7 @@ func _on_debug_pressed() -> void:
 	if modeField.option == "hectic":
 		print("Next On Hectic Fail: ", nextOnHecticFailId)
 	
-	if writeSpeedAspectsHandler.preset != DialogueDefaults.defaultDialogue.writeSpeed:
+	if writeSpeedAspectsHandler.preset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
 		print("Write Speed Value: ", writeSpeedAspectsHandler.value)
 	

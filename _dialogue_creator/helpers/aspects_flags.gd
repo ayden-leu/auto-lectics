@@ -7,7 +7,7 @@ class_name DC_AspectsFlags
 # ------------------------------------------------
 ## Emitted when any field managed by this node is modified.
 signal value_changed()
-## Emitted when a [member StoryFlags.default_flags] flag is being used by a [DC_StoryFlagFieldOption].
+## Emitted when a [member StoryFlags.DEFAULT_FLAGS] flag is being used by a [DC_StoryFlagFieldOption].
 signal update_available_flags()
 
 # ------------------------------------------------
@@ -70,7 +70,7 @@ var _currentFlagFields:Array[DC_StoryFlagFieldOption]
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	var keys:Array = StoryFlags.default_flags.keys()
+	var keys:Array = StoryFlags.DEFAULT_FLAGS.keys()
 	var typingMoment:Array[String]
 	for key in keys:
 		typingMoment.push_back(key as String)
@@ -90,9 +90,9 @@ func _getFields() -> Dictionary:
 		result.set(field.flagID, field.enabled)
 	return result
 
-## [b]Internal-use only.[/b]  Find the first unused [member StoryFlag.default_flags] in-order.
+## [b]Internal-use only.[/b]  Find the first unused [member StoryFlag.DEFAULT_FLAGS] in-order.
 func _getUnusedStoryFlag() -> String:
-	for flag in StoryFlags.default_flags.keys():
+	for flag in StoryFlags.DEFAULT_FLAGS.keys():
 		if flag not in _usedFlags:
 			return flag
 			
@@ -100,7 +100,7 @@ func _getUnusedStoryFlag() -> String:
 	return ""
 
 ## [b]Internal-use only.[/b]  Creates and configures a [DC_StoryFlagFieldOption]
-## field for the first unused [member StoryFlag.default_flags] flag.
+## field for the first unused [member StoryFlag.DEFAULT_FLAGS] flag.
 func _createStoryFlagSection() -> void:
 	var flagID:String = _getUnusedStoryFlag()
 	if flagID == "":
@@ -128,7 +128,7 @@ func _createStoryFlagSection() -> void:
 ## [b]Internal-use only.[/b]  Updates the possible choices for every currently
 ## created [DC_StoryFlagFieldOption] field.
 func _updateUnusedFlags() -> void:
-	var daCopy:Array = StoryFlags.default_flags.keys()
+	var daCopy:Array = StoryFlags.DEFAULT_FLAGS.keys()
 	for used in _usedFlags:
 		daCopy.erase(used)
 	var typingMoment:Array[String] = []

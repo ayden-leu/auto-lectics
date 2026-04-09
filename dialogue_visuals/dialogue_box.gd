@@ -159,7 +159,7 @@ func loadOptionData(options: Array) -> void:
 		
 		#Don't show any options that don't pass check_flag
 		var check_flags: Dictionary = option.checkFlags
-		if StoryFlags.passes_check_flags(check_flags):
+		if StoryFlags.flagsMatch(check_flags):
 			_optionData.push_back(option)
 	
 	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
@@ -167,13 +167,13 @@ func loadOptionData(options: Array) -> void:
 ## Loads the SFX from the files.
 func loadSfx(sfxEventsToLoad:Dictionary) -> void:
 	for eventID in _sfxPlayers.keys():
-		AudioLoader.clearAudioFiles(_sfxPlayers[eventID].stream)
-		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], _sfxPlayers[eventID].stream)
+		AudioLoader.clearAudioRandomizer(_sfxPlayers[eventID].stream)
+		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayers[eventID].stream)
 
 ## Removes the dialogue box from the world.
 func kill() -> void:
 	for eventID in _sfxPlayers.keys():
-		AudioLoader.clearAudioFiles(_sfxPlayers[eventID].stream)
+		AudioLoader.clearAudioRandomizer(_sfxPlayers[eventID].stream)
 	queue_free()
 
 # ------------------------------------------------
@@ -394,7 +394,7 @@ func _deleteAllWarningTiles() -> void:
 ## [b]Internal-use only.[/b]  Runs when a dialogue option is picked.
 func _on_option_picked(pickedOption:DialogueBoxOption, nextDialogueID:String) -> void:
 	if pickedOption:
-		StoryFlags.apply_set_flags(pickedOption.setFlags)
+		StoryFlags.updateFlags(pickedOption.setFlags)
 	
 	_killAllOptions()
 	_deleteAllWarningTiles()

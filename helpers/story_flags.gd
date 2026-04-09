@@ -4,44 +4,78 @@ class_name StoryFlags
 # --------------------------------------------------
 # Designers add flags here
 # --------------------------------------------------
-static var default_flags: Dictionary = {
+## The default values for each StoryFlag.  This is also where you define each flag.
+const DEFAULT_FLAGS: Dictionary = {
 	"testFlag": false,
 	"anotherFlag": true,
 	"aThirdFlag": false,
 	"doorOpen": false
 }
 #---------------------------------------------------
-static var current_flags: Dictionary = default_flags.duplicate(true)
 
-# Using flags
-static func passes_check_flags(flag_data: Dictionary) -> bool:
-	for flag_id in flag_data.keys():
-		var current_value: Variant = current_flags[flag_id]
+## A copy of [member DEFAULT_FLAGS] that can be modified during run time.
+static var currentFlags: Dictionary = DEFAULT_FLAGS.duplicate(true)
+
+## Allows you to check the values of multiple flags.[br][br]
+## Example:
+## [codeblock]
+## var flagsToCheck:Dictionary = {
+## 	"testFlag": false,
+## 	"anotherFlag": true
+## }
+## 
+## if StoryFlags.flagsMatch(flagsToCheck):
+## 	print("All flags pass.")
+## else:
+## 	print("Not all flags passed.")
+## [/codeblock]
+## If you only need to check against one flag, you can just read [member currentFlags] directly.
+## [codeblock]
+## if StoryFlags.currentFlags.testFlag:
+## 	print("testFlag is true")
+## [/codeblock]
+static func flagsMatch(flagsToCheck: Dictionary) -> bool:
+	for flagID in flagsToCheck.keys():
+		var currentValue: Variant = currentFlags[flagID]
 		
-		if current_value != flag_data[flag_id]:
-			print(flag_id, " fails check.")
+		if currentValue != flagsToCheck[flagID]:
+			print(flagID, " fails check.")
 			return false
 	return true
 
-#Updating flag upon condition met
-static func apply_set_flags(flag_data: Dictionary) -> void:
-	for flag_id in flag_data.keys():
-		var value: Variant = flag_data[flag_id]
-		var current_value: Variant = current_flags[flag_id]
+## Allows you to update the values of multiple flags.[br][br]
+## Example:
+## [codeblock]
+## var flagsToUpdate:Dictionary = {
+## 	"testFlag": false,
+## 	"anotherFlag": true
+## }
+## 
+## StoryFlags.updateFlags(flagsToUpdate)
+## [/codeblock]
+## If you only need to check against one flag, you can just read [member currentFlags] directly.
+## [codeblock]
+## StoryFlags.currentFlags.testFlag = true
+## [/codeblock]
+static func updateFlags(flagsToUpdate: Dictionary) -> void:
+	for flagID in flagsToUpdate.keys():
+		var value: Variant = flagsToUpdate[flagID]
+		var currentValue: Variant = currentFlags[flagID]
 		
 		# support increment / decrement for int flags
 		if typeof(value) == TYPE_STRING and value == "increment":
-			if typeof(current_value) == TYPE_INT:
-				current_flags[flag_id] = current_value + 1
+			if typeof(currentValue) == TYPE_INT:
+				currentFlags[flagID] = currentValue + 1
 			else:
-				push_warning("StoryFlags: Tried to increment non-int flag '%s'" % flag_id)
+				push_warning("StoryFlags: Tried to increment non-int flag '%s'" % flagID)
 		elif typeof(value) == TYPE_STRING and value == "decrement":
-			if typeof(current_value) == TYPE_INT:
-				current_flags[flag_id] = current_value - 1
+			if typeof(currentValue) == TYPE_INT:
+				currentFlags[flagID] = currentValue - 1
 			else:
-				push_warning("StoryFlags: Tried to decrement non-int flag '%s'" % flag_id)
+				push_warning("StoryFlags: Tried to decrement non-int flag '%s'" % flagID)
 		else:
-			current_flags[flag_id] = value
+			currentFlags[flagID] = value
 
-static func reset_flags() -> void:
-	current_flags = default_flags.duplicate(true)
+## Resets all flags to their default values.
+static func resetFlags() -> void:
+	currentFlags = DEFAULT_FLAGS.duplicate(true)

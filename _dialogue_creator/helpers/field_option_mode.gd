@@ -60,7 +60,7 @@ func _ready() -> void:
 	fillValueToOptionIndex(DialogueDefaults.DIALOGUE_MODES)
 	hecticPortLabel.visible = false
 	
-	option = DialogueDefaults.defaultDialogue.mode
+	option = DialogueDefaults.DEFAULT_DIALOGUE.mode
 
 # ------------------------------------------------
 # functions referenced outside of this script

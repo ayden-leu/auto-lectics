@@ -205,9 +205,9 @@ func _ready() -> void:
 	set_slot_color_right(1, PortColor.DIALOGUE)
 	set_slot_type_right(1, PortType.DIALOGUE)
 	
-	sfxEventAspects = DialogueDefaults.defaultOption.sfx
-	spawnDelay = DialogueDefaults.defaultOption.spawnDelay
-	lifetime = DialogueDefaults.defaultOption.lifetime
+	sfxEventAspects = DialogueDefaults.DEFAULT_OPTION.sfx
+	spawnDelay = DialogueDefaults.DEFAULT_OPTION.spawnDelay
+	lifetime = DialogueDefaults.DEFAULT_OPTION.lifetime
 
 func _getFields() -> Dictionary:
 	var currentValues:Dictionary = {
@@ -218,7 +218,7 @@ func _getFields() -> Dictionary:
 	
 	currentValues.type = type
 	
-	if writeSpeedPreset != DialogueDefaults.defaultDialogue.writeSpeed:
+	if writeSpeedPreset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		currentValues.writeSpeed = writeSpeedPreset
 		if currentValues.writeSpeed == "custom":
 			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.value
@@ -229,10 +229,10 @@ func _getFields() -> Dictionary:
 	# background theme (unused atm)
 	# particles (unused atm)
 	
-	if spawnDelay != DialogueDefaults.defaultOption.spawnDelay:
+	if spawnDelay != DialogueDefaults.DEFAULT_OPTION.spawnDelay:
 		currentValues.spawnDelay = spawnDelay
 	
-	if lifetime != DialogueDefaults.defaultOption.lifetime:
+	if lifetime != DialogueDefaults.DEFAULT_OPTION.lifetime:
 		currentValues.lifetime = lifetime
 	
 	if nextID != "":
@@ -279,7 +279,7 @@ func _on_debug_pressed() -> void:
 	print("Text: ", text)
 	print("Type: ", typeField.option)
 	
-	if writeSpeedAspectsHandler.preset != DialogueDefaults.defaultDialogue.writeSpeed:
+	if writeSpeedAspectsHandler.preset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
 		print("Write Speed Value: ", writeSpeedAspectsHandler.value)
 	

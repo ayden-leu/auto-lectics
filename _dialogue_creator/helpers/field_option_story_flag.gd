@@ -1,7 +1,7 @@
 extends DC_FieldOption
 class_name DC_StoryFlagFieldOption
 ## [b]Internal-use only.[/b]  Handles the state of a flag.
-## All flags can be found in [member StoryFlags.default_flags].
+## All flags can be found in [member StoryFlags.DEFAULT_FLAGS].
 
 # ------------------------------------------------
 # signals
@@ -35,7 +35,7 @@ signal option_changed_history(oldFlagID:String, newFlagID:String)
 ## The [VSeparator] that gets created along with this field.
 var separator:VSeparator
 
-## Used to get and set the flag ID this field handles.  All flag IDs can be found in [member StoryFlags.default_flags].
+## Used to get and set the flag ID this field handles.  All flag IDs can be found in [member StoryFlags.DEFAULT_FLAGS].
 ## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
 ## [br][br]
 ## Usage:

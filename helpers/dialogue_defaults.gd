@@ -22,19 +22,23 @@ const WRITE_SPEED_PRESETS:Dictionary = {
 	"fast": 120.0,
 	"custom": -1.0
 }
+## @deprecated
 ## Background theme presets.
 const BACKGROUND_THEME:Dictionary = {
 	# TODO:  add background theme presets.
 	"default": "todo"
 }
+## @deprecated
 ## Events where a particle can spawn.
 const PARTICLE_EVENTS:Array[String] = [
 	"spawn", "text", "ambient"
 ]
+## @deprecated
 ## Attributes a particle event has.
 const PARTICLE_EVENT_ATTRIBUTES:Array[String] = [
 	"texture"
 ]
+## @deprecated
 ## Paths to particle textures.
 const PARTICLE_TEXTURE:Dictionary = {
 	# TODO:  add particle textures
@@ -45,7 +49,7 @@ const SFX_EVENTS:Array[String] = [
 ]
 
 ## The default settings for a dialogue object.
-const defaultDialogue:Dictionary = {
+const DEFAULT_DIALOGUE:Dictionary = {
 	# === Mandatory ===
 	"text": "",
 	"options": [],
@@ -73,7 +77,7 @@ const defaultDialogue:Dictionary = {
 }
 
 ## The default settings for a dialogue option.
-const defaultOption:Dictionary = {
+const DEFAULT_OPTION:Dictionary = {
 	# === Mandatory ===
 	"text": "",
 	"nextID": "",

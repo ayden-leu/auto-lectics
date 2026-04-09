@@ -1,11 +1,11 @@
 extends Area3D
 class_name DeathPlane
-## Death plane is currently set as a world boundary. Can be changed to a box if design calls for it.
+## Runs a colliding body's [code]respawn()[/code] function upon collision.
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
-## Causes player to respawn at last grounded location if they touch the death plane.
+## [b]Internal-use only.[/b]  Does the thing this class is meant to do upon collision.
 func _on_body_entered(body: Node) -> void:
 	if body.has_method("respawn"):
 		## plays anmiation

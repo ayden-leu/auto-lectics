@@ -1,7 +1,9 @@
 extends Node
 class_name AudioLoader
+## Helper script to load audio files from project file structure.
 
-static func loadAudioFiles(id:String, audioStream:AudioStreamRandomizer) -> void:
+## Loads audio files related to a given ID and loads theem into a given [AudioStreamRandomizer].
+static func loadSfxFromId(id:String, audioStream:AudioStreamRandomizer) -> void:
 	if id == "none":
 		return
 		
@@ -21,6 +23,6 @@ static func loadAudioFiles(id:String, audioStream:AudioStreamRandomizer) -> void
 		var audioFile:AudioStreamWAV = load(soundIDPath + "/" + filename)
 		audioStream.add_stream(-1, audioFile)
 
-static func clearAudioFiles(audioStream:AudioStreamRandomizer) -> void:
+static func clearAudioRandomizer(audioStream:AudioStreamRandomizer) -> void:
 	for i in range(audioStream.streams_count):
 		audioStream.remove_stream(0)

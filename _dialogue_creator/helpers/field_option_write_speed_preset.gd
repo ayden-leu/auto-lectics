@@ -15,7 +15,7 @@ func _ready() -> void:
 		typingMoment.push_back(key as String)
 	fillValueToOptionIndex(typingMoment)
 	
-	option = DialogueDefaults.defaultDialogue.writeSpeed
+	option = DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed
 
 func _on_item_selected(_index: int) -> void:
 	option = option

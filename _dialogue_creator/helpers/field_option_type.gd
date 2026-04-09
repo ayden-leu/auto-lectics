@@ -25,4 +25,4 @@ func _ready() -> void:
 	elif type == VALID_TYPES.OPTION:
 		fillValueToOptionIndex(DialogueDefaults.OPTION_TYPES)
 	
-	option = DialogueDefaults.defaultDialogue.type
+	option = DialogueDefaults.DEFAULT_DIALOGUE.type

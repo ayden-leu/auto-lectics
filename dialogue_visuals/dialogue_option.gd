@@ -78,7 +78,7 @@ var lifetime:float = 0.0
 var nextDialogueID:String
 ## The SFX sound events to load sound files into.
 var sfxEventsToLoad:Dictionary
-## The [member StoryFlags.default_flags] this updates when picked.
+## The [member StoryFlags.DEFAULT_FLAGS] this updates when picked.
 var setFlags: Dictionary = {}
 
 # ------------------------------------------------
@@ -123,8 +123,8 @@ func prepare() -> void:
 ## Loads the SFX from the files.
 func loadSfx() -> void:
 	for eventID in _sfxPlayer.keys():
-		AudioLoader.clearAudioFiles(_sfxPlayer[eventID].stream)
-		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
+		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
+		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
 
 ## Disables this option.
 func disable() -> void:
@@ -137,7 +137,7 @@ func disable() -> void:
 func kill():
 	_goingToDie = true
 	for eventID in _sfxPlayer.keys():
-		AudioLoader.clearAudioFiles(_sfxPlayer[eventID].stream)
+		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
 	queue_free()
 # ------------------------------------------------
 # functions only referenced inside this script
