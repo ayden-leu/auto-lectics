@@ -1,33 +1,59 @@
 @tool
 extends Node3D
 class_name PlayerCamera
-## Holds both the player's camera and the HUD node.  Might be switched to a Camera3D node if time allows us to relook at the camera setup.
+## Holds both the player's camera.
+## Might be switched to a Camera3D node if time allows us to relook at the camera setup.
 
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
+
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
+
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
+
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
 ## The target the camera wants to look at.
 @export var focus:Node3D:
 	set(newFocus):
 		focus = newFocus
 		update_configuration_warnings()
-
-## The actual camera.
-@onready var camera:Camera3D = $Camera3D
-
 ## Whether the camera is in first person mode or not.
-var actAsFocus:bool = true
+@export var _actAsFocus:bool = true
 ## How far away from the focus the camera should be when in third person mode.
-var distanceFromOrigin:Vector3 = Vector3(0, 5, 10)
+@export var _distanceFromOrigin:Vector3 = Vector3(0, 5, 10)
 
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+## The actual camera.
+@onready var camera:Camera3D = %Camera3D
+
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables only referenced in script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
 		return
 	
-	actAsFocus = true
+	_actAsFocus = true
 	rotation = focus.rotation
 
-
-# Since Interaction Raycast is handled by the player's rotation, 
-# I made it so the camera just matches the player and camera anchor's angle.
 func _process(_delta: float) -> void:
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
@@ -35,32 +61,34 @@ func _process(_delta: float) -> void:
 	if not focus:
 		return
 	
-	#global_position = focus.cameraAnchor.global_position
 	global_transform = focus.cameraAnchor.global_transform
 	
-	## follow player yaw (horizontal rotation). pitch is handled by camera
-	#rotation_degrees.y = focus.rotation_degrees.y
-	#rotation_degrees.x = _pitch_deg
-	
-	if(actAsFocus):
-		firstPersonMode()
+	if(_actAsFocus):
+		_firstPersonMode()
 	else:
-		thirdPersonMode()
-	
-	#if Input.is_action_just_pressed("debug_2"):
-		#actAsFocus = !actAsFocus
+		_thirdPersonMode()
 
-## Handles logic for first person mode.
-func firstPersonMode() -> void:
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Handles logic for first person mode.
+func _firstPersonMode() -> void:
 	camera.position = Vector3.ZERO
 	camera.rotation_degrees = Vector3.ZERO
 
-## Handles logic for third person mode.
-func thirdPersonMode() -> void:
-	camera.position = distanceFromOrigin
+## [b]Internal-use only.[/b]  Handles logic for third person mode.
+func _thirdPersonMode() -> void:
+	camera.position = _distanceFromOrigin
 	camera.look_at(global_position)
 
-## Rotates the camera horizontally and vertically when the mouse moves
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Rotates the camera horizontally and vertically when the mouse moves
 func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
@@ -69,9 +97,9 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	rotation_degrees.x += -distanceMoved.y
 	rotation_degrees.y += -distanceMoved.x
 
-
-
-# Dev-ing stuff
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 	
