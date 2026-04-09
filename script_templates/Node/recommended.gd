@@ -36,14 +36,6 @@ extends _BASE_
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-
-# ------------------------------------------------
-# functions referenced outside of this script
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions only referenced inside this script
-# ------------------------------------------------
 #func _ready() -> void:
 _TS_# super()  # needed if inheriting a custom class with its own _ready().  Will run the inherited class' _ready() function.
 
@@ -52,6 +44,14 @@ _TS_#super(delta)  # needed if inheriting a custom class with its own _process()
 
 #func _physics_process(delta: float) -> void:
 _TS_#super(delta)  # needed if inheriting a custom class with its own _physics_process().  Will run the inherited class' _physics_process() function.
+
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# ------------------------------------------------
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
