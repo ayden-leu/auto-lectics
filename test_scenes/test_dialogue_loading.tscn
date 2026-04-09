@@ -31,6 +31,15 @@ theme = ExtResource("1_noga8")
 script = ExtResource("2_1h1tb")
 metadata/_edit_lock_ = true
 
+[node name="Notes" type="Label" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -246.0
+offset_right = 271.0
+offset_bottom = -206.0
+text = "This is just to test if the data retrieved from the DialogueLoader is correct or not.
+This is teeeeechnically covered by DialogueCreator but its best to have a separate thing to test it."
+
 [node name="Pick" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 30.0
