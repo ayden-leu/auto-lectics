@@ -10,6 +10,7 @@ const SCENES = {
 	"NPC_test": "uid://bq04u0nihuu52",
 	"DialogueBox": "uid://dwqide2q2tp3i",
 	"DialogueOption": "uid://pdwngeenin11",
+	"DialogueConsoleUI": "uid://b8oqtsvu488a",
 	"DialogueWarningTile": "uid://wm6t0orfpjfl"
 }
 

@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8oqtsvu488a"]
+
+[ext_resource type="Script" uid="uid://by12perg4x8bb" path="res://dialogue_visuals/dialogue_console_ui.gd" id="1_5m35e"]
+[ext_resource type="PackedScene" uid="uid://4opwac4ndc2k" path="res://dialogue_visuals/option_window.tscn" id="2_mgd8n"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5m35e")
+option_window_scene = ExtResource("2_mgd8n")
+
+[node name="Window" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 129.0
+
+[node name="Label" type="Label" parent="Window"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="InputLine" type="LineEdit" parent="Window"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 97.0
+offset_right = 69.5625
+offset_bottom = 128.0
+
+[node name="Options" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

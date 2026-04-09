@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://4opwac4ndc2k"]
+
+[ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://dialogue_visuals/option_window.gd" id="1_rh22u"]
+
+[node name="Panel" type="Panel"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_rh22u")
+
+[node name="IDLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="OptionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
