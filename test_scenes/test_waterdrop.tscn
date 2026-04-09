@@ -23,10 +23,10 @@ volumetric_fog_gi_inject = 0.42
 volumetric_fog_anisotropy = 0.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_f1nio"]
-size = Vector3(10, 1, 10)
+size = Vector3(10, 0.5, 10)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_silsq"]
-data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0wuky"]
+data = PackedVector3Array(-5, 0.25, 5, 5, 0.25, 5, -5, -0.25, 5, 5, 0.25, 5, 5, -0.25, 5, -5, -0.25, 5, 5, 0.25, -5, -5, 0.25, -5, 5, -0.25, -5, -5, 0.25, -5, -5, -0.25, -5, 5, -0.25, -5, 5, 0.25, 5, 5, 0.25, -5, 5, -0.25, 5, 5, 0.25, -5, 5, -0.25, -5, 5, -0.25, 5, -5, 0.25, -5, -5, 0.25, 5, -5, -0.25, -5, -5, 0.25, 5, -5, -0.25, 5, -5, -0.25, -5, 5, 0.25, 5, -5, 0.25, 5, 5, 0.25, -5, -5, 0.25, 5, -5, 0.25, -5, 5, 0.25, -5, -5, -0.25, 5, 5, -0.25, 5, -5, -0.25, -5, 5, -0.25, 5, 5, -0.25, -5, -5, -0.25, -5)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hbbb5"]
 
@@ -51,7 +51,7 @@ shadow_enabled = true
 environment = SubResource("Environment_x333r")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(0.9982836, -0.05712497, -0.012912117, 0.05642047, 0.9971761, -0.04956478, 0.015707068, 0.04875123, 0.9986875, -0.2657839, 0.1674071, -0.16342661)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2657839, 0.1674071, -0.16342661)
 mesh = SubResource("BoxMesh_f1nio")
 skeleton = NodePath("../..")
 
@@ -60,7 +60,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_silsq")
+shape = SubResource("ConcavePolygonShape3D_0wuky")
 
 [node name="Player" parent="." instance=ExtResource("2_wsfuu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
