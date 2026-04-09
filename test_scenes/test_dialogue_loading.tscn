@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://deb04l8yner3u"]
 
-[ext_resource type="Script" uid="uid://dr0lleyomueuq" path="res://test_scenes/test_dialogue.gd" id="1_gwiao"]
-[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ic3ec"]
-[ext_resource type="Script" uid="uid://calvasnmkd447" path="res://test_scenes/test_dialogue_draggable_header.gd" id="3_etraf"]
+[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_noga8"]
+[ext_resource type="Script" uid="uid://dr0lleyomueuq" path="res://test_scenes/test_dialogue_loading.gd" id="2_1h1tb"]
+[ext_resource type="Script" uid="uid://calvasnmkd447" path="res://test_scenes/test_dialogue_loading_draggable_header.gd" id="3_a2vm3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ic3ec"]
 size = Vector2(200, 40)
@@ -27,8 +27,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_ic3ec")
-script = ExtResource("1_gwiao")
+theme = ExtResource("1_noga8")
+script = ExtResource("2_1h1tb")
 metadata/_edit_lock_ = true
 
 [node name="Pick" type="VBoxContainer" parent="."]
@@ -70,7 +70,7 @@ text = "Load"
 
 [node name="Area2D" type="Area2D" parent="Pick" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
-script = ExtResource("3_etraf")
+script = ExtResource("3_a2vm3")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
@@ -205,7 +205,7 @@ size_flags_vertical = 1
 
 [node name="Area2D" type="Area2D" parent="DialogueAttributes" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
-script = ExtResource("3_etraf")
+script = ExtResource("3_a2vm3")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
@@ -252,7 +252,7 @@ size_flags_horizontal = 3
 
 [node name="Area2D" type="Area2D" parent="DialogueConfigSfx" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
-script = ExtResource("3_etraf")
+script = ExtResource("3_a2vm3")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
@@ -394,7 +394,7 @@ size_flags_horizontal = 3
 
 [node name="Area2D" type="Area2D" parent="OptionAttributes" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
-script = ExtResource("3_etraf")
+script = ExtResource("3_a2vm3")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
@@ -440,7 +440,7 @@ size_flags_horizontal = 3
 
 [node name="Area2D" type="Area2D" parent="OptionConfigSfx" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
-script = ExtResource("3_etraf")
+script = ExtResource("3_a2vm3")
 contents = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OptionConfigSfx/Area2D"]

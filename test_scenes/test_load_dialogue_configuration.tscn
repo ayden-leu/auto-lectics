@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwr5umj6rpgil"]
-
-[ext_resource type="Script" uid="uid://jpxgsil6makn" path="res://test_scenes/test_load_dialogue_configuration.gd" id="1_v5i2o"]
-
-[node name="Test_LoadDialogueConfiguration" type="Node3D"]
-script = ExtResource("1_v5i2o")
