@@ -128,6 +128,8 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 focus = NodePath("../Player")
 
 [node name="LoopManager" parent="." instance=ExtResource("6_wd7ni")]
+manual = true
+loopDurationSeconds = 5.0
 
 [node name="StartDialogueAreaTemp" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_qo27r")]
 transform = Transform3D(0.8352511, 0, 0.54986864, 0, 1, 0, -0.54986864, 0, 0.8352511, -0.103065014, 0.67852855, 3.4629617)

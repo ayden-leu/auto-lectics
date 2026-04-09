@@ -248,11 +248,12 @@ func _disconnectDialogueBoxSignals() -> void:
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
 func _loadDialogueData(dialogueEntry:Dictionary) -> void:
 	_dialogueBox.realOwner = self
-	_dialogueBox._currentDialogueID = _currentDialogueID
+	_dialogueBox.currentDialogueID = _currentDialogueID
 	_dialogueBox.mode = dialogueEntry.mode
 	if dialogueEntry.mode == "hectic":
 		_dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
-		_dialogueBox.delayBtwnWriteDialogueAndOptions = 0.25  # arbitrary
+	else:
+		_dialogueBox.hecticFailureDialogueID = ""
 	_dialogueBox.text = dialogueEntry.text
 	_dialogueBox.textWriteSpeed = dialogueEntry.writeSpeedCustom
 	_dialogueBox.loadSfx(dialogueEntry.sfx)
