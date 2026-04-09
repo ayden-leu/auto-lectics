@@ -233,42 +233,42 @@ func _loadDialogueTree() -> void:
 # --------------
 
 func _connectDialogueOptionPortToOption(dialogue:DC_DialogueNode, option:DC_OptionNode) -> void:
-	dialogue.disconnect_all_options.connect(option.dialogueDisconnected)
+	dialogue.disconnect_all_options.connect(option._on_dialogue_node_disconnected)
 	
 	option.values_updated.connect(dialogue._on_option_updated)
-	option.disconnect_dialogue.connect(dialogue.optionDisconnected)
+	option.disconnect_dialogue.connect(dialogue._on_option_disconnected)
 
 func _disconnectDialogueOptionPortToOption(dialogue:DC_DialogueNode, option:DC_OptionNode) -> void:
-	dialogue.disconnect_all_options.disconnect(option.dialogueDisconnected)
+	dialogue.disconnect_all_options.disconnect(option._on_dialogue_node_disconnected)
 	
 	option.values_updated.disconnect(dialogue._on_option_updated)
-	option.disconnect_dialogue.disconnect(dialogue.optionDisconnected)
+	option.disconnect_dialogue.disconnect(dialogue._on_option_disconnected)
 	
 	option.dialogueDisconnected()
 
 func _connectOptionDialoguePortToDialogue(option:DC_OptionNode, dialogue:DC_DialogueNode) -> void:
 	dialogue.id_updated.connect(option._on_next_object_id_modified)
-	dialogue.disconnect_id.connect(option.dialogueDisconnected)
+	dialogue.disconnect_id.connect(option._on_dialogue_node_disconnected)
 	
 	option._on_next_object_id_modified(dialogue.id)
 
 func _disconnectOptionDialoguePortToDialogue(option:DC_OptionNode, dialogue:DC_DialogueNode) -> void:
 	dialogue.id_updated.disconnect(option._on_next_object_id_modified)
-	dialogue.disconnect_id.disconnect(option.dialogueDisconnected)
+	dialogue.disconnect_id.disconnect(option._on_dialogue_node_disconnected)
 	
 	option._on_next_object_id_modified("")
 
 func _connectDialogueHecticPortToDialogue(dialogueFrom:DC_DialogueNode, dialogueTo:DC_DialogueNode) -> void:
 	dialogueTo.id_updated.connect(dialogueFrom._on_hectic_fail_updated)
-	dialogueTo.disconnect_id.connect(dialogueFrom.nextOnHecticFailIdDisconnected)
+	dialogueTo.disconnect_id.connect(dialogueFrom._on_hectic_fail_disconnected)
 	
 	dialogueFrom._on_hectic_fail_updated(dialogueTo.id)
 
-func _disconnectDialogueHecticPortToDialogue(objFrom:DC_DialogueNode, objTo:DC_DialogueNode) -> void:
-	objTo.id_updated.disconnect(objFrom._on_hectic_fail_updated)
-	objTo.disconnect_id.disconnect(objFrom.nextOnHecticFailIdDisconnected)
+func _disconnectDialogueHecticPortToDialogue(dialogueFrom:DC_DialogueNode, dialogueTo:DC_DialogueNode) -> void:
+	dialogueTo.id_updated.disconnect(dialogueFrom._on_hectic_fail_updated)
+	dialogueTo.disconnect_id.disconnect(dialogueFrom._on_hectic_fail_disconnected)
 	
-	objFrom.nextOnHecticFailIdDisconnected()
+	dialogueFrom.nextOnHecticFailIdDisconnected()
 
 # -------------------------
 

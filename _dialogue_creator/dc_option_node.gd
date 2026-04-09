@@ -2,33 +2,53 @@ extends DC_BaseNode
 class_name DC_OptionNode
 ## The node in [DialogueCreator] that represents an option in a dialogue object file that wills be used in-game.
 
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
 ## Emitted whenever a field gets updated.
 signal values_updated(port:int, newValues:Dictionary)
 ## Emitted when this is planning on being deleted.  Listen to this if you are connected to the dialogue port.
 signal disconnect_dialogue(port:int)
 
-## The text field you can edit.
-@export var textField:TextEdit
-## The node that handles the type you can choose.
-@export var typeField:DC_TypeFieldOption
-## The node that handles the write speed aspects you can modify.
-@export var writeSpeedAspectsHandler:DC_AspectsWriteSpeed
-## The node that handles the SFX event SFX IDs you can choose.
-@export var sfxEventAspectsHandler:DC_AspectsSfx
-## The spawn delay field you can set.
-@export var spawnDelayField:SpinBox
-## The lifetime field you can set.
-@export var lifetimeField:SpinBox
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
 
-@export var setFlagsAspectsHandler:DC_AspectsSetFlags
-@export var checkFlagsAspectsHandler:DC_AspectsCheckFlags
-
-
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
 ## The port number of the incoming option port
 const OPTION_PORT:int = 0
 ## The port number of the outgoing next dialogue ID port.
 const NEXT_ID_PORT:int = 0
 
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
+## The text field you can edit.
+@onready var textField:TextEdit = %TextField
+## The node that handles the type you can choose.
+@onready var typeField:DC_TypeFieldOption = %TypeField
+## The node that handles the write speed aspects you can modify.
+@onready var writeSpeedAspectsHandler:DC_AspectsWriteSpeed = %WriteSpeedAspects
+## The node that handles the SFX event SFX IDs you can choose.
+@onready var sfxEventAspectsHandler:DC_AspectsSfx = %SfxAspects
+## The spawn delay field you can set.
+@onready var spawnDelayField:SpinBox = %SpawnDelayField
+## The lifetime field you can set.
+@onready var lifetimeField:SpinBox = %LifetimeField
+## The node that handles all [StoryFlags] to set when this option is picked.
+@onready var setFlagsAspectsHandler:DC_AspectsSetFlags = %SetFlags
+## The node that handles all [StoryFlags] to check wheen loading this option.
+@onready var checkFlagsAspectsHandler:DC_AspectsCheckFlags = %CheckFlags
+
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
 ## The option port of the [DC_DiaalogueNode] this is connected to.
 var port:int = -1
 
@@ -182,14 +202,40 @@ var lifetime:float:
 	get():
 		return lifetimeField.value
 
+## Used to get and set the [StoryFlags] to set for this [DC_OptionNode].
+## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
+## [br][br]
+## Usage:
+## [codeblock]
+## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
+##
+## # Get the flags that will be set and their new value when this option is picked
+## print(optionNode.setFlags)  # {"testFlag": false}
+## 
+## # Set the flags that will be set and their new value when this option is picked
+## optionNode.setFlags = {"testFlag": true}
+## [/codeblock]
 var setFlags:Dictionary:
 	set(newFlags):
 		setFlagsAspectsHandler.currentFlags = newFlags
 	get():
 		return setFlagsAspectsHandler.currentFlags
+
+## Used to get and set the [StoryFlags] to check the value of for this [DC_OptionNode].
+## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
+## [br][br]
+## Usage:
+## [codeblock]
+## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
+##
+## # Get the flags that will be checked and the value to check against when this option is picked
+## print(optionNode.checkFlags)  # {"testFlag": false}
+## 
+## # Set the flags that will checked and the value to check against when this option is picked
+## optionNode.checkFlags = {"testFlag": true}
+## [/codeblock]
 var checkFlags:Dictionary:
 	set(newFlags):
-		print(newFlags)
 		checkFlagsAspectsHandler.currentFlags = newFlags
 	get():
 		return checkFlagsAspectsHandler.currentFlags
@@ -197,6 +243,13 @@ var checkFlags:Dictionary:
 ## The [member DC_DialogueNode.id] to load when a player chooses this option.
 var nextID:String = ""
 
+# ------------------------------------------------
+# normal variables only referenced in script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
 	super()
 	set_slot_color_left(0, PortColor.OPTION)
@@ -209,7 +262,24 @@ func _ready() -> void:
 	spawnDelay = DialogueDefaults.DEFAULT_OPTION.spawnDelay
 	lifetime = DialogueDefaults.DEFAULT_OPTION.lifetime
 
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+## Sets [member port] to be "empty" sets [member nextID] to be an empty string.
+func dialogueDisconnected() -> void:
+	port = -1
+	nextID = ""
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# ------------------------------------------------
+## Returns the currently configured fields for thie [DC_OptionNode].
+## If a field matches its corresponding field in [member DialogueDefaults.DEFAULT_OPTION],
+## it is not included in the return payload.
 func _getFields() -> Dictionary:
+	if not textField:
+		return {"error": "textField not loaded"}
+	
 	var currentValues:Dictionary = {
 		"text": textField.text
 	}
@@ -243,36 +313,43 @@ func _getFields() -> Dictionary:
 	
 	if checkFlags != {}:
 		currentValues.checkFlags = checkFlags
-	
 
 	return currentValues
-
-## Sets [member port] to be "empty" sets [member nextID] to be an empty string.
-func dialogueDisconnected() -> void:
-	port = -1
-	nextID = ""
 
 ## Disconnects any connected [DC_DialogueNode]s, then prepares for deletion.
 func _delete() -> void:
 	disconnect_dialogue.emit(port)
 	super()
 
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Handles logic for when the connected [DC_DialogueNode]
+## gets disconneected
+func _on_dialogue_node_disconnected() -> void:
+	dialogueDisconnected()
 
+## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
 func _on_attribute_modified() -> void:
 	#print("option modified, emitting")
 	values_updated.emit(port, _getFields())
 
+## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
 func _on_attribute_modified_parameter(_ignore_me) -> void:
 	_on_attribute_modified()
 
+## [b]Internal-use only.[/b]  Handles logic for when the [member textField] gets updated.
 func _on_text_field_updated() -> void:
 	textUpdateFromField = true
 	_on_attribute_modified()
 
+## [b]Internal-use only.[/b]  Handles logic for when the next [DC_DialogueNode]'s
+## ID gets updatedd.
 func _on_next_object_id_modified(newID:String) -> void:
 	nextID = newID
 	_on_attribute_modified()
 
+## [b]Internal-use only.[/b]  Handles logic for when the debug button gets pressed.
 func _on_debug_pressed() -> void:
 	print("------ Dialogue Option ------")
 	print("Port: ", port)
@@ -317,3 +394,7 @@ func _on_resize_height() -> void:
 ## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
 func _on_toggle_visibility(isVisible:bool) -> void:
 	super(isVisible)
+
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------
