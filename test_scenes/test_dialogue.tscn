@@ -1,20 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://deb04l8yner3u"]
+[gd_scene load_steps=9 format=3 uid="uid://deb04l8yner3u"]
 
 [ext_resource type="Script" uid="uid://dr0lleyomueuq" path="res://test_scenes/test_dialogue.gd" id="1_gwiao"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ic3ec"]
 [ext_resource type="Script" uid="uid://calvasnmkd447" path="res://test_scenes/test_dialogue_draggable_header.gd" id="3_etraf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ic3ec"]
-size = Vector2(222, 40)
+size = Vector2(200, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_etraf"]
-size = Vector2(254, 40)
+size = Vector2(244, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2lst"]
-size = Vector2(276, 40)
+size = Vector2(399, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqxr1"]
 size = Vector2(222, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrtad"]
+size = Vector2(378, 40)
 
 [node name="Test_Dialogue" type="Control"]
 layout_mode = 3
@@ -28,7 +31,7 @@ theme = ExtResource("1_ic3ec")
 script = ExtResource("1_gwiao")
 metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Pick" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 9.0
@@ -37,44 +40,45 @@ offset_bottom = 137.0
 mouse_filter = 2
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="Pick"]
 layout_mode = 2
-text = "Pick your convo"
+size_flags_horizontal = 0
+text = "Pick your convo: "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Pick"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Pick/HBoxContainer"]
 layout_mode = 2
 text = "NPC: "
 
-[node name="NpcField" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+[node name="NpcField" type="OptionButton" parent="Pick/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Label" parent="Pick/HBoxContainer"]
 layout_mode = 2
 text = "File: "
 
-[node name="FileField" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+[node name="FileField" type="OptionButton" parent="Pick/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="LoadButton" type="Button" parent="VBoxContainer"]
+[node name="LoadButton" type="Button" parent="Pick"]
 layout_mode = 2
 text = "Load"
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer" node_paths=PackedStringArray("contents")]
+[node name="Area2D" type="Area2D" parent="Pick" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
 script = ExtResource("3_etraf")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Area2D"]
-position = Vector2(111, 20)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pick/Area2D"]
+position = Vector2(100, 20)
 shape = SubResource("RectangleShape2D_ic3ec")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="DialogueAttributes" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 172.0
@@ -82,133 +86,134 @@ offset_right = 283.0
 offset_bottom = 564.0
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="VBoxContainer2"]
+[node name="Label" type="Label" parent="DialogueAttributes"]
 layout_mode = 2
-text = "Dialogue Attributes:"
+size_flags_horizontal = 0
+text = "Dialogue Attributes: "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Dialogue: "
 
-[node name="DialogueText" type="Label" parent="VBoxContainer2/HBoxContainer"]
+[node name="DialogueText" type="Label" parent="DialogueAttributes/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer2"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Mode: "
 
-[node name="DialogueMode" type="Label" parent="VBoxContainer2/HBoxContainer2"]
+[node name="DialogueMode" type="Label" parent="DialogueAttributes/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer3"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Hectic Fail ID: "
 
-[node name="DialogueHecticFailID" type="Label" parent="VBoxContainer2/HBoxContainer3"]
+[node name="DialogueHecticFailID" type="Label" parent="DialogueAttributes/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer4"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer4"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Font: "
 
-[node name="DialogueFont" type="Label" parent="VBoxContainer2/HBoxContainer4"]
+[node name="DialogueFont" type="Label" parent="DialogueAttributes/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer5"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer5"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Type: "
 
-[node name="DialogueType" type="Label" parent="VBoxContainer2/HBoxContainer5"]
+[node name="DialogueType" type="Label" parent="DialogueAttributes/HBoxContainer5"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer6"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer6"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Write Speed Preset: "
 
-[node name="DialogueWriteSpeedPreset" type="Label" parent="VBoxContainer2/HBoxContainer6"]
+[node name="DialogueWriteSpeedPreset" type="Label" parent="DialogueAttributes/HBoxContainer6"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer7" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer7"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer7"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Write Speed Value: "
 
-[node name="DialogueWriteSpeedValue" type="Label" parent="VBoxContainer2/HBoxContainer7"]
+[node name="DialogueWriteSpeedValue" type="Label" parent="DialogueAttributes/HBoxContainer7"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer8" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer8" type="HBoxContainer" parent="DialogueAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer8"]
+[node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer8"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Background Theme: "
 
-[node name="DialogueBackgroundTheme" type="Label" parent="VBoxContainer2/HBoxContainer8"]
+[node name="DialogueBackgroundTheme" type="Label" parent="DialogueAttributes/HBoxContainer8"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer2" node_paths=PackedStringArray("contents")]
+[node name="Area2D" type="Area2D" parent="DialogueAttributes" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
 script = ExtResource("3_etraf")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer2/Area2D"]
-position = Vector2(127, 20)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueAttributes/Area2D"]
+position = Vector2(122, 20)
 shape = SubResource("RectangleShape2D_etraf")
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+[node name="DialogueConfigSfx" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 603.0
@@ -216,45 +221,46 @@ offset_right = 300.0
 offset_bottom = 731.0
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="VBoxContainer3"]
+[node name="Label" type="Label" parent="DialogueConfigSfx"]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Configured SFX Events (Dialogue): "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="DialogueConfigSfx"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer3/HBoxContainer"]
+[node name="Label" type="Label" parent="DialogueConfigSfx/HBoxContainer"]
 layout_mode = 2
 text = "Spawn: "
 
-[node name="DialogueSfxEventSpawn" type="Label" parent="VBoxContainer3/HBoxContainer"]
+[node name="DialogueSfxEventSpawn" type="Label" parent="DialogueConfigSfx/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer3"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="DialogueConfigSfx"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer3/HBoxContainer2"]
+[node name="Label" type="Label" parent="DialogueConfigSfx/HBoxContainer2"]
 layout_mode = 2
 text = "Text: "
 
-[node name="DialogueSfxEventText" type="Label" parent="VBoxContainer3/HBoxContainer2"]
+[node name="DialogueSfxEventText" type="Label" parent="DialogueConfigSfx/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer3" node_paths=PackedStringArray("contents")]
+[node name="Area2D" type="Area2D" parent="DialogueConfigSfx" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
 script = ExtResource("3_etraf")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer3/Area2D"]
-position = Vector2(138, 20)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueConfigSfx/Area2D"]
+position = Vector2(199.5, 20)
 shape = SubResource("RectangleShape2D_p2lst")
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="."]
+[node name="OptionAttributes" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 751.0
 offset_top = 68.0
@@ -262,196 +268,196 @@ offset_right = 1005.0
 offset_bottom = 548.0
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="VBoxContainer4"]
+[node name="Label" type="Label" parent="OptionAttributes"]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Option Attributes: "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer"]
 layout_mode = 2
 text = "Option: "
 
-[node name="OptionField" type="OptionButton" parent="VBoxContainer4/HBoxContainer"]
+[node name="OptionField" type="OptionButton" parent="OptionAttributes/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer2"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer2"]
 layout_mode = 2
 text = "Text: "
 
-[node name="OptionText" type="Label" parent="VBoxContainer4/HBoxContainer2"]
+[node name="OptionText" type="Label" parent="OptionAttributes/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer3"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer3"]
 layout_mode = 2
 text = "Next ID: "
 
-[node name="OptionNextID" type="Label" parent="VBoxContainer4/HBoxContainer3"]
+[node name="OptionNextID" type="Label" parent="OptionAttributes/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer4"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer4"]
 layout_mode = 2
 text = "Font: "
 
-[node name="OptionFont" type="Label" parent="VBoxContainer4/HBoxContainer4"]
+[node name="OptionFont" type="Label" parent="OptionAttributes/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer5"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer5"]
 layout_mode = 2
 text = "Type: "
 
-[node name="OptionType" type="Label" parent="VBoxContainer4/HBoxContainer5"]
+[node name="OptionType" type="Label" parent="OptionAttributes/HBoxContainer5"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer6"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer6"]
 layout_mode = 2
 text = "Write Speed Preset: "
 
-[node name="OptionWriteSpeedPreset" type="Label" parent="VBoxContainer4/HBoxContainer6"]
+[node name="OptionWriteSpeedPreset" type="Label" parent="OptionAttributes/HBoxContainer6"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer7" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer7"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer7"]
 layout_mode = 2
 text = "Write Speed Value: "
 
-[node name="OptionWriteSpeedValue" type="Label" parent="VBoxContainer4/HBoxContainer7"]
+[node name="OptionWriteSpeedValue" type="Label" parent="OptionAttributes/HBoxContainer7"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer8" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer8" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer8"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer8"]
 layout_mode = 2
 text = "Background Theme: "
 
-[node name="OptionBackgroundTheme" type="Label" parent="VBoxContainer4/HBoxContainer8"]
+[node name="OptionBackgroundTheme" type="Label" parent="OptionAttributes/HBoxContainer8"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer9" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer9" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer9"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer9"]
 layout_mode = 2
 text = "Spawn Delay: "
 
-[node name="OptionSpawnDelay" type="Label" parent="VBoxContainer4/HBoxContainer9"]
+[node name="OptionSpawnDelay" type="Label" parent="OptionAttributes/HBoxContainer9"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer10" type="HBoxContainer" parent="VBoxContainer4"]
+[node name="HBoxContainer10" type="HBoxContainer" parent="OptionAttributes"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer4/HBoxContainer10"]
+[node name="Label" type="Label" parent="OptionAttributes/HBoxContainer10"]
 layout_mode = 2
 text = "Lifetime: "
 
-[node name="OptionLifetime" type="Label" parent="VBoxContainer4/HBoxContainer10"]
+[node name="OptionLifetime" type="Label" parent="OptionAttributes/HBoxContainer10"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer4" node_paths=PackedStringArray("contents")]
+[node name="Area2D" type="Area2D" parent="OptionAttributes" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
 script = ExtResource("3_etraf")
 contents = NodePath("..")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer4/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OptionAttributes/Area2D"]
 position = Vector2(111, 20)
 shape = SubResource("RectangleShape2D_hqxr1")
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="."]
+[node name="OptionConfigSfx" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 643.0
 offset_top = 632.0
 offset_right = 1043.0
 offset_bottom = 760.0
-metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="VBoxContainer5"]
+[node name="Label" type="Label" parent="OptionConfigSfx"]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Configured SFX Events (Option): "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer5"]
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionConfigSfx"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer5/HBoxContainer"]
+[node name="Label" type="Label" parent="OptionConfigSfx/HBoxContainer"]
 layout_mode = 2
 text = "Spawn: "
 
-[node name="OptionSfxEventSpawn" type="Label" parent="VBoxContainer5/HBoxContainer"]
+[node name="OptionSfxEventSpawn" type="Label" parent="OptionConfigSfx/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer5"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="OptionConfigSfx"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer5/HBoxContainer2"]
+[node name="Label" type="Label" parent="OptionConfigSfx/HBoxContainer2"]
 layout_mode = 2
 text = "Text: "
 
-[node name="OptionSfxEventText" type="Label" parent="VBoxContainer5/HBoxContainer2"]
+[node name="OptionSfxEventText" type="Label" parent="OptionConfigSfx/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer5" node_paths=PackedStringArray("contents")]
+[node name="Area2D" type="Area2D" parent="OptionConfigSfx" node_paths=PackedStringArray("contents")]
 collision_priority = 10.0
 script = ExtResource("3_etraf")
 contents = NodePath("..")
-metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer5/Area2D"]
-position = Vector2(138, 20)
-shape = SubResource("RectangleShape2D_p2lst")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OptionConfigSfx/Area2D"]
+position = Vector2(189, 20)
+shape = SubResource("RectangleShape2D_rrtad")
 
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer/NpcField" to="." method="_on_npc_field_item_selected"]
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer/FileField" to="." method="_on_file_field_item_selected"]
-[connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer/Area2D" to="VBoxContainer/Area2D" method="_on_mouse_entered_area"]
-[connection signal="mouse_exited" from="VBoxContainer/Area2D" to="VBoxContainer/Area2D" method="_on_mouse_exited_area"]
-[connection signal="mouse_entered" from="VBoxContainer2/Area2D" to="VBoxContainer2/Area2D" method="_on_mouse_entered_area"]
-[connection signal="mouse_exited" from="VBoxContainer2/Area2D" to="VBoxContainer2/Area2D" method="_on_mouse_exited_area"]
-[connection signal="mouse_entered" from="VBoxContainer3/Area2D" to="VBoxContainer3/Area2D" method="_on_mouse_entered_area"]
-[connection signal="mouse_exited" from="VBoxContainer3/Area2D" to="VBoxContainer3/Area2D" method="_on_mouse_exited_area"]
-[connection signal="item_selected" from="VBoxContainer4/HBoxContainer/OptionField" to="." method="_on_option_field_item_selected"]
-[connection signal="mouse_entered" from="VBoxContainer4/Area2D" to="VBoxContainer4/Area2D" method="_on_mouse_entered_area"]
-[connection signal="mouse_exited" from="VBoxContainer4/Area2D" to="VBoxContainer4/Area2D" method="_on_mouse_exited_area"]
-[connection signal="mouse_entered" from="VBoxContainer5/Area2D" to="VBoxContainer5/Area2D" method="_on_mouse_entered_area"]
-[connection signal="mouse_exited" from="VBoxContainer5/Area2D" to="VBoxContainer5/Area2D" method="_on_mouse_exited_area"]
+[connection signal="item_selected" from="Pick/HBoxContainer/NpcField" to="." method="_on_npc_field_item_selected"]
+[connection signal="item_selected" from="Pick/HBoxContainer/FileField" to="." method="_on_file_field_item_selected"]
+[connection signal="pressed" from="Pick/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="mouse_entered" from="Pick/Area2D" to="Pick/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="Pick/Area2D" to="Pick/Area2D" method="_on_mouse_exited_area"]
+[connection signal="mouse_entered" from="DialogueAttributes/Area2D" to="DialogueAttributes/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="DialogueAttributes/Area2D" to="DialogueAttributes/Area2D" method="_on_mouse_exited_area"]
+[connection signal="mouse_entered" from="DialogueConfigSfx/Area2D" to="DialogueConfigSfx/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="DialogueConfigSfx/Area2D" to="DialogueConfigSfx/Area2D" method="_on_mouse_exited_area"]
+[connection signal="item_selected" from="OptionAttributes/HBoxContainer/OptionField" to="." method="_on_option_field_item_selected"]
+[connection signal="mouse_entered" from="OptionAttributes/Area2D" to="OptionAttributes/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="OptionAttributes/Area2D" to="OptionAttributes/Area2D" method="_on_mouse_exited_area"]
+[connection signal="mouse_entered" from="OptionConfigSfx/Area2D" to="OptionConfigSfx/Area2D" method="_on_mouse_entered_area"]
+[connection signal="mouse_exited" from="OptionConfigSfx/Area2D" to="OptionConfigSfx/Area2D" method="_on_mouse_exited_area"]

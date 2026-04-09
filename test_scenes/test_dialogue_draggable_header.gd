@@ -12,7 +12,6 @@ extends Area2D
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-const _OFFSET_FROM_MOUSE:Vector2 = Vector2(-5, -5)
 
 # ------------------------------------------------
 # export variables
@@ -32,6 +31,8 @@ const _OFFSET_FROM_MOUSE:Vector2 = Vector2(-5, -5)
 # ------------------------------------------------
 var _mouseHovering:bool = false
 var _mouseDragging:bool = false
+var _offsetFromMouse:Vector2 = Vector2.ZERO
+static var _beingDragged:Area2D
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -42,11 +43,20 @@ var _mouseDragging:bool = false
 func _process(_delta: float) -> void:
 	if _mouseHovering and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		_mouseDragging = true
+		if _beingDragged == null:
+			_beingDragged = self
+		if _offsetFromMouse == Vector2.ZERO:
+			_offsetFromMouse = get_global_mouse_position() - contents.global_position
 	elif not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		_mouseDragging = false
+		if _beingDragged == self:
+			_beingDragged = null
+		_offsetFromMouse = Vector2.ZERO
 	
-	if _mouseDragging:
-		contents.global_position = get_global_mouse_position() + _OFFSET_FROM_MOUSE
+	if _mouseDragging and _beingDragged == self:
+		contents.global_position = get_global_mouse_position() - _offsetFromMouse
+	
+	print(_offsetFromMouse)
 
 #func _physics_process(delta: float) -> void:
 	#super(delta)  # needed if inheriting a custom class with its own _physics_process().  Will run the inherited class' _physics_process() function.
