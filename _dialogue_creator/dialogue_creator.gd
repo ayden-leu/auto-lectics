@@ -16,8 +16,8 @@ signal _set_node_visibility(visible:bool)
 @onready var _graphArea:GraphEdit = $GraphEdit
 
 #const initialObjectPosition:Vector2 = Vector2(100, 100)
-const _savePath:String = Globals.STORAGE_PATH.DIALOGUE
-const _fileExtension:String = Globals.DIALOGUE_FILE_TYPE
+const _SAVE_PATH:String = Globals.STORAGE_PATH.DIALOGUE
+const _FILE_EXTENSION:String = Globals.DIALOGUE_FILE_TYPE
 
 var _dialogueNodes:Array[DC_DialogueNode] = []
 var _optionNodes:Array[DC_OptionNode] = []
@@ -63,18 +63,18 @@ func _saveFile(data:Dictionary) -> void:
 		printerr("DialogueCreator/_saveFile(): NPC Name is empty.")
 		return
 	
-	var filename:String = data.id + _fileExtension
-	var fullPath:String = _savePath + _npcNameField.text + "/" + filename
+	var filename:String = data.id + _FILE_EXTENSION
+	var fullPath:String = _SAVE_PATH + _npcNameField.text + "/" + filename
 	
 	data.erase("id")
 	print("----------")
 	print("filename: ", filename)
 	print("data: ", data)
-	print("path: ", _savePath + filename)
+	print("path: ", _SAVE_PATH + filename)
 	print("----------")
 	
 	# ensure file directory exists
-	DirAccess.make_dir_absolute(_savePath + _npcNameField.text)
+	DirAccess.make_dir_absolute(_SAVE_PATH + _npcNameField.text)
 	
 	var file := FileAccess.open(fullPath, FileAccess.WRITE)
 	if file == null:
@@ -87,7 +87,7 @@ func _saveFile(data:Dictionary) -> void:
 	file.close()
 
 func _createNodesFromFile(filename:String) -> void:
-	var filePath:String = _savePath + _npcNameField.text + "/" + filename
+	var filePath:String = _SAVE_PATH + _npcNameField.text + "/" + filename
 	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
 	if file == null:
 		printerr("DialogueCreator: Error opening file: ", filePath)
@@ -170,7 +170,7 @@ func _createNodesFromFile(filename:String) -> void:
 		
 		_on_graph_edit_connection_request(
 			newDialogueNode.name, optionIndex,
-			newOptionNode.name, newOptionNode.optionPort
+			newOptionNode.name, newOptionNode.OPTION_PORT
 		)
 		optionIndex += 1
 
@@ -179,12 +179,12 @@ func _loadDialogueTree() -> void:
 		printerr("DialogueCreator/_loadDialogueTree(): NPC Name is empty.")
 		return
 	
-	var tempDirAccess:DirAccess = DirAccess.open(_savePath)
+	var tempDirAccess:DirAccess = DirAccess.open(_SAVE_PATH)
 	if not tempDirAccess.dir_exists(_npcNameField.text):
 		printerr("DialogueCreator: Could not find the NPC folder: ", _npcNameField.text)
 		return
 	
-	var dialogueFileNames:PackedStringArray = ResourceLoader.list_directory(_savePath + _npcNameField.text)
+	var dialogueFileNames:PackedStringArray = ResourceLoader.list_directory(_SAVE_PATH + _npcNameField.text)
 	if dialogueFileNames.is_empty():
 		printerr("DialogueCreator: Could not find any Dialogue files in NPC folder: ", _npcNameField.text)
 		return
@@ -207,8 +207,8 @@ func _loadDialogueTree() -> void:
 	for optionObject in _optionNodes:
 		if optionObject.nextID:
 			_on_graph_edit_connection_request(
-				optionObject.name, optionObject.nextIDPort,
-				optionObject.nextID, DC_DialogueNode.dialogueIDPort
+				optionObject.name, optionObject.NEXT_ID_PORT,
+				optionObject.nextID, DC_DialogueNode.DIALOGUE_ID_PORT
 			)
 	
 	#await get_tree().process_frame
@@ -218,7 +218,7 @@ func _loadDialogueTree() -> void:
 		if dialogueObject.nextOnHecticFailId:
 			_on_graph_edit_connection_request(
 				dialogueObject.name, dialogueObject.numOptions,
-				dialogueObject.nextOnHecticFailId, DC_DialogueNode.dialogueIDPort
+				dialogueObject.nextOnHecticFailId, DC_DialogueNode.DIALOGUE_ID_PORT
 			)
 	
 	#_set_node_visibility.emit(false)

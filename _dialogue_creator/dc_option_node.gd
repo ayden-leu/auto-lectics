@@ -25,9 +25,9 @@ signal disconnect_dialogue(port:int)
 
 
 ## The port number of the incoming option port
-const optionPort:int = 0
+const OPTION_PORT:int = 0
 ## The port number of the outgoing next dialogue ID port.
-const nextIDPort:int = 0
+const NEXT_ID_PORT:int = 0
 
 ## The option port of the [DC_DiaalogueNode] this is connected to.
 var port:int = -1

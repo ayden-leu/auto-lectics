@@ -33,9 +33,9 @@ signal _option_amount_changed()
 
 @onready var _optionLabelScene:PackedScene = preload("uid://cjuc58ngbb0lm")
 
-const _numNodesAboveOptions:int = 3
+const _NUM_NODES_ABOVE_OPTIONS:int = 3
 ## The port number of the incoming dialogue ID port.
-const dialogueIDPort:int = 0
+const DIALOGUE_ID_PORT:int = 0
 
 ## Used to get and set the ID for this [DC_DialogueNode].
 ## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
@@ -202,8 +202,8 @@ var numOptions:int = 0:
 
 func _ready() -> void:
 	super()
-	set_slot_color_left(dialogueIDPort, PortColor.DIALOGUE)
-	set_slot_type_left(dialogueIDPort, PortType.DIALOGUE)
+	set_slot_color_left(DIALOGUE_ID_PORT, PortColor.DIALOGUE)
+	set_slot_type_left(DIALOGUE_ID_PORT, PortType.DIALOGUE)
 	
 	sfxEventAspects = DialogueDefaults.defaultDialogue.sfx
 
@@ -213,14 +213,14 @@ func createOptionPort() -> void:
 	_optionPorts.push_back(optionLabel)
 	
 	add_child(optionLabel)
-	move_child(optionLabel, _numNodesAboveOptions + numOptions)
+	move_child(optionLabel, _NUM_NODES_ABOVE_OPTIONS + numOptions)
 	optionLabel.text = str(numOptions)
 	optionLabel.theme_type_variation = "LabelOption"
 	
 	if _nextOnHecticPortEnabled:
 		_shiftHecticPort(1)
 	
-	set_slot(_numNodesAboveOptions + numOptions,
+	set_slot(_NUM_NODES_ABOVE_OPTIONS + numOptions,
 		false, 0, Color.TRANSPARENT,
 		true, PortType.OPTION, PortColor.OPTION
 	)
@@ -238,7 +238,7 @@ func _removeOptionPort() -> void:
 	
 	numOptions -= 1
 	var toRemove:Label = _optionPorts.pop_back()
-	clear_slot(_numNodesAboveOptions + numOptions)
+	clear_slot(_NUM_NODES_ABOVE_OPTIONS + numOptions)
 	_options.pop_back()
 	toRemove.queue_free()
 	
@@ -247,7 +247,7 @@ func _removeOptionPort() -> void:
 	_option_amount_changed.emit()
 
 func _shiftHecticPort(amount:int) -> void:
-	var currentSlot:int = _numNodesAboveOptions + numOptions
+	var currentSlot:int = _NUM_NODES_ABOVE_OPTIONS + numOptions
 	
 	disconnect_hectic_port.emit(name, numOptions)
 	set_slot(currentSlot,
@@ -351,7 +351,7 @@ func _on_set_hectic_port(on: bool) -> void:
 	if not on:
 		disconnect_hectic_port.emit(name, numOptions)
 	
-	set_slot(_numNodesAboveOptions + numOptions,
+	set_slot(_NUM_NODES_ABOVE_OPTIONS + numOptions,
 		false, 0, Color.TRANSPARENT,
 		on, PortType.DIALOGUE, PortColor.DIALOGUE
 	)

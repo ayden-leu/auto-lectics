@@ -62,7 +62,7 @@ const _NUM_WARNINGS:int = 6
 ## [b]Internal-use only.[/b]   Holds all spawned options.
 @onready var _optionContainer = %OptionsContainer
 ## [b]Internal-use only.[/b]   Holds all spawned warning tiles.
-@onready var _warningsContainer:Node3D = %_warningsContainer
+@onready var _warningsContainer:Node3D = %WarningsContainer
 ## [b]Internal-use only.[/b]   Holds the available spawn positions for warning tiles.
 @onready var _warningAreas:Array = $WarningPositionAreas.get_children()
 ## [b]Internal-use only.[/b]   The timer bar that appears when a hectic dialogue object is loaded.
@@ -93,6 +93,8 @@ var mode:String = "normal"
 var textWriteSpeed:float
 ## A hardcoded delay between when the dialogue text finishes writing and when the options start being created.
 var delayBtwnWriteDialogueAndOptions:float = 1.0
+## A hardcoded delay between when the dialogue text finishes writing and when the options start being created.
+var delayBtwnWriteDialogueAndOptionsHectic:float = 0.25
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -192,7 +194,10 @@ func _finishWritingText() -> void:
 	_increaseVisibleTextAmount = false
 	all_dialogue_text_visible.emit()
 	
-	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
+	var delay:float = delayBtwnWriteDialogueAndOptions \
+		if hecticFailureDialogueID == "" \
+		else delayBtwnWriteDialogueAndOptionsHectic
+	await get_tree().create_timer(delay).timeout
 	
 	if _optionData.size() == 0:
 		update_me.emit("")
@@ -367,6 +372,22 @@ func _getWarningTilePosition() -> Vector3:
 	)
 	return chosenArea.position + offset
 
+## [b]Internal-use only.[/b]  Kills all spawned [DialogueBoxOption]s
+## in [member _spawnedOptions].
+func _killAllOptions() -> void:
+	for _i in range(_spawnedOptions.size()):
+		var toKill = _spawnedOptions.pop_front()
+		if toKill:
+			toKill.kill()
+	_optionSpawnPositions.hectic.root.usedPositions.clear()
+
+## [b]Internal-use only.[/b]  Deletes all spawned [WarningTile]s
+## in [member _spawnedWarningTiles]
+func _deleteAllWarningTiles() -> void:
+	for _i in range(_spawnedWarningTiles.size()):
+		var toKill:WarningTile = _spawnedWarningTiles.pop_front()
+		toKill.kill()
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
@@ -374,16 +395,9 @@ func _getWarningTilePosition() -> Vector3:
 func _on_option_picked(pickedOption:DialogueBoxOption, nextDialogueID:String) -> void:
 	if pickedOption:
 		StoryFlags.apply_set_flags(pickedOption.setFlags)
-
-	for _i in range(_spawnedOptions.size()):
-		var toKill = _spawnedOptions.pop_front()
-		if toKill:
-			toKill.kill()
-	_optionSpawnPositions.hectic.root.usedPositions.clear()
 	
-	for _i in range(_spawnedWarningTiles.size()):
-		var toKill:WarningTile = _spawnedWarningTiles.pop_front()
-		toKill.kill()
+	_killAllOptions()
+	_deleteAllWarningTiles()
 	
 	_timer.stop()
 	#print("\nnext dialogue: ", nextDialogueID)

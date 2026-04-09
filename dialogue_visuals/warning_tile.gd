@@ -18,11 +18,11 @@ signal blocking_visual(tile:WarningTile)
 # constants
 # ------------------------------------------------
 ## The mathematical relationship between the warning tile's radius and the label's pixel size.
-const radiusToLabelPixelRatio:float = 0.005/0.6
+const _RADIUS_TO_LABEL_RATIO:float = 0.005/0.6
 ## How often the warning tile visually shakes.
-const shakeUpdateInterval:float = 0.1
+const _SHAKE_UPDATE_INTERVAL:float = 0.1
 ## How far the warning tile can shake from its origin.
-const offsetRange:Dictionary = {
+const _OFFSET_RANGE:Dictionary = {
 	"x": 0.03,
 	"y": 0.03
 }
@@ -64,7 +64,7 @@ var _rng:RandomNumberGenerator = RandomNumberGenerator.new()
 # ------------------------------------------------
 func _ready() -> void:
 	_updateSize()
-	_shakeTimer.wait_time = shakeUpdateInterval
+	_shakeTimer.wait_time = _SHAKE_UPDATE_INTERVAL
 	_shakeTimer.start()
 
 func _process(_delta: float) -> void:
@@ -85,15 +85,15 @@ func kill() -> void:
 ## Updates the size of the warning tile.
 func _updateSize() -> void:
 	_background.mesh.radius = radius
-	_label.pixel_size = radius * radiusToLabelPixelRatio
-	_visualArea.shape.size.x = (radius + offsetRange.x) * 2
-	_visualArea.shape.size.y = (radius + offsetRange.y) * 2
+	_label.pixel_size = radius * _RADIUS_TO_LABEL_RATIO
+	_visualArea.shape.size.x = (radius + _OFFSET_RANGE.x) * 2
+	_visualArea.shape.size.y = (radius + _OFFSET_RANGE.y) * 2
 
 ## Shakes the warning tile.
 func _shake() -> void:
 	_rng.randomize()
-	var offsetX = _rng.randf_range(-offsetRange.x, offsetRange.x)
-	var offsetY = _rng.randf_range(-offsetRange.y, offsetRange.y)
+	var offsetX = _rng.randf_range(-_OFFSET_RANGE.x, _OFFSET_RANGE.x)
+	var offsetY = _rng.randf_range(-_OFFSET_RANGE.y, _OFFSET_RANGE.y)
 	
 	_background.position.x = offsetX * radius/0.6
 	_background.position.y = offsetY * radius/0.6
@@ -104,7 +104,7 @@ func _resetPosition() -> void:
 	_background.position.y = 0
 
 ## Makes the warning tile look at the player's camera.
-func _lookAtCamera():
+func lookAtCamera():
 	if Engine.is_editor_hint():
 		return
 	look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
@@ -118,7 +118,7 @@ func _on_shake_timer_timeout() -> void:
 		_shake()
 	else:
 		_resetPosition()
-	_lookAtCamera()
+	lookAtCamera()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the warning tile blocks something important.
 func _on_visual_area_area_entered(_area: Area3D) -> void:

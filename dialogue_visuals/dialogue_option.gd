@@ -31,7 +31,7 @@ enum VertiAlignment{ # not named HorizontalAlignment due to it already existing
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Padding amount for the interaction hitbox.
-const _interactionHitboxPadding:float = 0.05
+const _INTERACTION_HITBOX_PADDING:float = 0.05
 
 # ------------------------------------------------
 # export variables
@@ -57,7 +57,7 @@ const _interactionHitboxPadding:float = 0.05
 ## [b]Internal-use only.[/b]  Holds a reference to the lifetime timer that activates if this dialogue option has a lifetime.
 @onready var _lifeTimer:Timer = $LifeTimer
 ## [b]Internal-use only.[/b]  Holds the AudioStreamPlayer3Ds for each event.
-@onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
+@onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer3D] = {
 	"spawn": %SFX/spawn,
 	"text": %SFX/text
 }
@@ -208,7 +208,7 @@ func _applyBackgroundSettings() -> void:
 		_:
 			printerr("DialogueBoxOption: Unhandled vertical alignment for _background: ", verticalAlignment)
 
-	_interactionHitbox.shape.size = _background.mesh.size + Vector3.ONE * _interactionHitboxPadding
+	_interactionHitbox.shape.size = _background.mesh.size + Vector3.ONE * _INTERACTION_HITBOX_PADDING
 	_interactionHitbox.position.y = _background.position.y
 	_interactionHitbox.position.z = _background.position.z
 	
