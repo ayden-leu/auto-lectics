@@ -4,19 +4,19 @@
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_gitkm"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_x8ppq"]
-[ext_resource type="PackedScene" path="res://models/environment/metal_big_flat.tscn" id="4_musp6"]
+[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="4_musp6"]
 [ext_resource type="PackedScene" uid="uid://bullwudoypwel" path="res://models/environment/backgroundClutter/round_tank.tscn" id="5_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://dnr4q2ehmudfm" path="res://models/BlendFiles/bigFloorArc.blend" id="6_bb1ch"]
-[ext_resource type="PackedScene" path="res://models/environment/bigtrussing.tscn" id="7_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="7_mw4j8"]
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="8_whg7e"]
-[ext_resource type="PackedScene" path="res://models/environment/large_pipe.tscn" id="9_a6ycu"]
-[ext_resource type="PackedScene" path="res://models/environment/bridge.tscn" id="9_musp6"]
+[ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="9_a6ycu"]
+[ext_resource type="PackedScene" uid="uid://5tf7frxomx2y" path="res://models/environment/bridge.tscn" id="9_musp6"]
 [ext_resource type="PackedScene" uid="uid://dytucwmjofvdw" path="res://models/environment/backgroundClutter/tube_clutter_1.tscn" id="9_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="10_7p6d6"]
-[ext_resource type="PackedScene" path="res://models/environment/big_floor_arc.tscn" id="10_k6p8l"]
-[ext_resource type="PackedScene" path="res://models/environment/power_tower.tscn" id="10_mw4j8"]
-[ext_resource type="PackedScene" path="res://models/environment/pulipit.tscn" id="10_tgtyg"]
-[ext_resource type="PackedScene" path="res://models/environment/ceo_bottom_tube.tscn" id="11_7p6d6"]
+[ext_resource type="PackedScene" uid="uid://dgim7xtnvx8nn" path="res://models/environment/big_floor_arc.tscn" id="10_k6p8l"]
+[ext_resource type="PackedScene" uid="uid://ciygohqncwr2e" path="res://models/environment/power_tower.tscn" id="10_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://bqvxxcdh7iapl" path="res://models/environment/pulipit.tscn" id="10_tgtyg"]
+[ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="11_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://dmkoidkma4qj3" path="res://models/BlendFiles/cable.blend" id="11_a6ycu"]
 [ext_resource type="PackedScene" uid="uid://dv545q1ms32vr" path="res://models/BlendFiles/roundTank.blend" id="11_doxto"]
 [ext_resource type="PackedScene" uid="uid://cgsl375svaj1x" path="res://models/BlendFiles/dropPod.blend" id="11_musp6"]
@@ -25,14 +25,14 @@
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="14_whg7e"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="15_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="17_doxto"]
-[ext_resource type="PackedScene" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
-[ext_resource type="PackedScene" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
+[ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
+[ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_bb1ch"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="25_qqa75"]
-[ext_resource type="PackedScene" path="res://entities/npcs/miniboss.tscn" id="26_whg7e"]
-[ext_resource type="Script" path="res://world/gate.gd" id="27_ooa8t"]
-[ext_resource type="PackedScene" path="res://models/environment/gate.tscn" id="28_k6p8l"]
-[ext_resource type="PackedScene" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
+[ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="26_whg7e"]
+[ext_resource type="Script" uid="uid://bocggstjplylv" path="res://world/gate.gd" id="27_ooa8t"]
+[ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="28_k6p8l"]
+[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 
 [sub_resource type="GDScript" id="GDScript_doxto"]
@@ -607,7 +607,6 @@ transform = Transform3D(0.71465504, 0.01516811, 0.016220232, -0.014972712, 0.714
 
 [node name="generator" parent="npcs" instance=ExtResource("19_mw4j8")]
 transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -33.360706, -25.501127, -39.169537)
-talkOnlyOnce = false
 
 [node name="preacher" parent="npcs" instance=ExtResource("24_bb1ch")]
 transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
@@ -647,4 +646,4 @@ focus = NodePath("../Player")
 transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 48.671253, -72.754974, -109.03)
 
 [node name="FadeToBlackHitbox" parent="." instance=ExtResource("32_k6p8l")]
-transform = Transform3D(-0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881904, -12.2903385, -8.6202755, -102.146935)
+transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30690813, -10.712891, -11.071636, -99.01719)

@@ -2,14 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_qkp2w"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
-[ext_resource type="Script" path="res://world/fog.gd" id="2_vl577"]
+[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_vl577"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_s4y84"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_uobc2"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_4ll5p"]
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="6_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_wd7ni"]
-[ext_resource type="PackedScene" uid="uid://ddx37yx83ddcw" path="res://ui/hud/fade_to_black_hitbox.tscn" id="7_qo27r"]
+[ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="7_qo27r"]
 [ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="9_3psyo"]
 [ext_resource type="Script" uid="uid://d2y4vanofmml3" path="res://ui/label.gd" id="9_pex7q"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/npc_test.tscn" id="16_ejbbu"]
@@ -33,15 +33,15 @@ size = Vector2(18.48, 37.805)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wd7ni"]
 data = PackedVector3Array(9.24, 0, 18.9025, -9.24, 0, 18.9025, 9.24, 0, -18.9025, -9.24, 0, 18.9025, -9.24, 0, -18.9025, 9.24, 0, -18.9025)
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4jy51"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qkp2w"]
 panorama = ExtResource("1_qkp2w")
 
-[sub_resource type="Sky" id="Sky_rfx78"]
-sky_material = SubResource("PanoramaSkyMaterial_4jy51")
+[sub_resource type="Sky" id="Sky_vl577"]
+sky_material = SubResource("PanoramaSkyMaterial_qkp2w")
 
-[sub_resource type="Environment" id="Environment_g0qxl"]
+[sub_resource type="Environment" id="Environment_uobc2"]
 background_mode = 2
-sky = SubResource("Sky_rfx78")
+sky = SubResource("Sky_vl577")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -87,7 +87,7 @@ collision_mask = 0
 shape = SubResource("ConcavePolygonShape3D_wd7ni")
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_g0qxl")
+environment = SubResource("Environment_uobc2")
 script = ExtResource("2_vl577")
 anisotropy = 1.0
 
@@ -157,6 +157,7 @@ metadata/_edit_lock_ = true
 [node name="FadeToBlackHitbox" parent="." instance=ExtResource("7_qo27r")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("9_pex7q")
 
 [node name="Label" type="Label" parent="CanvasLayer"]
