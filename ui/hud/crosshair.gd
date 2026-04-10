@@ -42,6 +42,9 @@ const SPRITE_INTERACTABLE:Resource = preload("uid://dtfn27ojmhrxx")
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	player.looking_at_interactable.connect(_on_player_looking_at_interactable)
 	player.no_longer_looking_at_interactable.connect(_on_player_no_longer_looking_at_interactable)
 

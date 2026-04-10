@@ -87,7 +87,7 @@ var interactableThing:Node3D = null:
 			return
 		interactableThing = thing
 		
-		if thing == null:
+		if thing == _loadBearingDummy:
 			no_longer_looking_at_interactable.emit()
 		else:
 			looking_at_interactable.emit()
@@ -95,6 +95,12 @@ var interactableThing:Node3D = null:
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  Purely to fix a bug where when looking at a thing
+## and that thing becomes [code]null[/code] (e.g via [method queue_free()],
+## the "looking_at_interactable" signals don't emit due to
+## the old value of [member interactableThing] becoming [code]null[/code] on
+## the same frame as the new value being [code]null[/code].
+var _loadBearingDummy:Node3D = Node3D.new()
 ## [b]Internal-use only.[/b]  The vertical velocity applied when jumping.
 ## Calculated in [method _recomputeJumpParameters]
 var _jumpVelocity: float = 0.0
@@ -123,12 +129,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
-	
-	if interactionRaycast.is_colliding():
-		var hit = interactionRaycast.get_collider().owner
-		interactableThing = _determineIfValidInteractable(hit)
-	else:
-		interactableThing = null
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -138,6 +138,22 @@ func _physics_process(delta: float) -> void:
 		return
 	_applyVerticalPhysics(delta)
 	move_and_slide()
+	
+	#if interactionRaycast.get_collider() != null:
+		#var hit = interactionRaycast.get_collider().owner
+		#if _determineIfValidInteractable(hit):
+			#interactableThing = hit
+	#elif interactableThing != null:
+		#interactableThing = null
+	
+	#print(interactionRaycast.get_collider())
+	if interactionRaycast.get_collider() != null:
+		var hit = interactionRaycast.get_collider().owner
+		if _determineIfValidInteractable(hit):
+			interactableThing = hit
+	else:
+		interactableThing = _loadBearingDummy
+	
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -241,11 +257,11 @@ func set_input_frozen(value: bool) -> void:
 	input_frozen = value
 
 ## [b]Internal-use only.[/b]  Determines if a passed in node is a valid interactable.
-func _determineIfValidInteractable(interactable:Node3D) -> Node3D:
+func _determineIfValidInteractable(interactable:Node3D) -> bool:
 	if interactable.has_method("_on_interaction"):
-		return interactable
+		return true
 	
-	return null
+	return false
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -270,7 +286,7 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 ## with something.
 func _on_interact_pressed() -> void:
 	#print(name + ": interact pressed")
-	if interactableThing:
+	if interactableThing and interactableThing != _loadBearingDummy:
 		interactableThing._on_interaction(self)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the player tries to jump.
