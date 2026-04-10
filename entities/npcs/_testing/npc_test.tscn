@@ -11,9 +11,10 @@ size = Vector3(1.1191406, 1.1877441, 1.2324219)
 script = ExtResource("1_vefio")
 _hitbox = NodePath("Hitbox")
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
-initialDialogueID = "Dialogue1a"
+_talkOnlyOnce = false
+initialDialogueID = "1"
 model = NodePath("model")
-myName = "NPC_Test"
+myName = "ReplaceMe"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

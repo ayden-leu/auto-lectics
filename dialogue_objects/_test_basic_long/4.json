@@ -1,0 +1,12 @@
+{
+	"text": "four",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "4",
+			"type": "neutral",
+			"nextID": "5"
+		}
+	]
+}
