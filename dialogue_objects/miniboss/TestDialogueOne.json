@@ -2,6 +2,9 @@
 	"text": "I'm listening. Why should I let you past the gate?",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
 			"text": "Because management says I need to get to the center of the factory.",

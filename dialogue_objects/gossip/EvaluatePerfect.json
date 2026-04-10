@@ -2,6 +2,9 @@
 	"text": "You wouldn't know what perfection looks like.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "Then tell me.",

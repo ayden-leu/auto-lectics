@@ -2,6 +2,9 @@
 	"text": "Try pressing your 'K' key on your keyboard, should open the gate.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
 			"text": "[EXIT]",

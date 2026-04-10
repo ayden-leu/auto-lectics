@@ -1,8 +1,8 @@
 [gd_scene load_steps=40 format=3 uid="uid://vklv12onwi1k"]
 
-[ext_resource type="Script" uid="uid://7h0eysfwvhfj" path="res://world/reloadTheScene.gd" id="1_doxto"]
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
+[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_gitkm"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_x8ppq"]
 [ext_resource type="PackedScene" path="res://models/environment/metal_big_flat.tscn" id="4_musp6"]
 [ext_resource type="PackedScene" uid="uid://bullwudoypwel" path="res://models/environment/backgroundClutter/round_tank.tscn" id="5_7p6d6"]
@@ -35,27 +35,48 @@
 [ext_resource type="PackedScene" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
+[sub_resource type="GDScript" id="GDScript_doxto"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta: float) -> void:
+#	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
+#		get_tree().reload_current_scene()
+		
+"
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gitkm"]
 panorama = ExtResource("1_uxxn7")
 
-[sub_resource type="Sky" id="Sky_aue1p"]
-sky_material = SubResource("PanoramaSkyMaterial_qo27r")
+[sub_resource type="Sky" id="Sky_hsv1o"]
+sky_material = SubResource("PanoramaSkyMaterial_gitkm")
 
-[sub_resource type="Environment" id="Environment_f1udx"]
+[sub_resource type="Environment" id="Environment_4m6mo"]
 background_mode = 2
-sky = SubResource("Sky_aue1p")
+sky = SubResource("Sky_hsv1o")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
 glow_intensity = 0.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6p8l"]
-albedo_color = Color(0, 0, 0, 1)
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.95, 0.6, 0.3, 1)
+fog_sky_affect = 0.0
+fog_depth_begin = 140.0
+fog_depth_end = 1000.0
+volumetric_fog_density = 0.005
+volumetric_fog_anisotropy = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hsv1o"]
 
 [node name="week_6_playtest" type="Node3D"]
-script = ExtResource("1_doxto")
+script = SubResource("GDScript_doxto")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)
@@ -66,17 +87,19 @@ directional_shadow_max_distance = 4096.0
 
 [node name="Environment" type="Node" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_f1udx")
+[node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_4m6mo")
+script = ExtResource("2_gitkm")
+anisotropy = 1.0
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
 stream = ExtResource("3_x8ppq")
 volume_db = 22.018
 unit_size = 4.55
 autoplay = true
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment/AudioStreamPlayer3D"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23/AudioStreamPlayer3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
 stream = ExtResource("2_5oweu")
 volume_db = 22.018
@@ -532,60 +555,49 @@ light_energy = 16.0
 shadow_enabled = true
 spot_range = 47.42153
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Environment/Models"]
-transform = Transform3D(2.3304093, 0, 0, 0, 2.3304093, 0, 0, 0, 2.3304093, -36.807404, -1.748749, -122.77256)
-size = Vector3(1, 10.697998, 28.476639)
-material = SubResource("StandardMaterial3D_k6p8l")
-
-[node name="Label3D" type="Label3D" parent="Environment/Models/CSGBox3D"]
-transform = Transform3D(-2.6864473e-07, 0, 6.1458745, 0, 6.1458745, 0, -6.1458745, 0, -2.6864473e-07, 1.289101, 0, 9.141879)
-text = "That's all folks. 
-
-For now..."
-
-[node name="roundTank" parent="Environment" instance=ExtResource("11_doxto")]
+[node name="roundTank" parent="Environment/Models" instance=ExtResource("11_doxto")]
 transform = Transform3D(0.94075656, 1.4901161e-08, -0.33908275, -1.7763568e-15, 1, 0, 0.33908275, -2.9802322e-08, 0.9407565, 55.365036, -24.004189, -151.16902)
 
-[node name="roundTank3" parent="Environment" instance=ExtResource("11_doxto")]
+[node name="roundTank3" parent="Environment/Models" instance=ExtResource("11_doxto")]
 transform = Transform3D(-9.372968e-09, 0.21442851, -0.9767397, -1, -4.371139e-08, 0, -4.2694648e-08, 0.9767397, 0.21442851, 26.906765, 72.92787, -214.6025)
 
-[node name="MetalBigFlat13" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat13" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(0.16245323, 3.735751, -4.428133, -5.7902665, 0.25179586, -9.349094e-09, 0.1923801, 4.4239516, 3.7392812, -49.825104, -16.901817, -124.72373)
 
-[node name="MetalBigFlat14" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat14" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(0.09786258, 2.2504318, -5.3400908, -5.790266, 0.25179583, -9.349092e-09, 0.23200016, 5.335048, 2.2525582, -100.95317, -2.3970547, -106.3395)
 
-[node name="MetalBigFlat15" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat15" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(0.16245323, 3.735751, -4.428133, -5.7902665, 0.25179586, -9.349094e-09, 0.1923801, 4.4239516, 3.7392812, -66.27043, 42.4737, -117.92224)
 
-[node name="MetalBigFlat17" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat17" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(-0.8886427, 1.2026583e-05, -7.2351995, -7.768762e-08, -137.56808, -6.325212e-07, -1.5391746, 0, 4.1772437, -51.887714, 92.97116, -150.49258)
 
-[node name="MetalBigFlat22" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat22" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(-0.8886427, 1.2026583e-05, -13.74688, -7.768762e-08, -137.56808, -1.2017904e-06, -1.5391746, 0, 7.9367633, -104.01811, 110.48172, -310.02777)
 
-[node name="MetalBigFlat20" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat20" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(0.0067312717, -57.270893, -10.510695, 4.656613e-10, -125.07988, 4.8126493, -1.7772728, -0.21690874, -0.03980842, 39.6569, 83.972946, -181.93835)
 
-[node name="MetalBigFlat18" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat18" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(1.0012805, 1.2026582e-05, -19.500046, 8.753471e-08, -137.56807, -1.7047481e-06, -2.0369341, -9.0949465e-13, -9.585493, -46.70515, 109.882065, -191.98833)
 
-[node name="MetalBigFlat19" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat19" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(1.6774241, -20.190578, -2.4737911, 1.7881393e-07, -123.25763, 3.7102578, -0.5873597, -57.661736, -7.0648293, -75.6162, 98.39905, -187.89552)
 
-[node name="MetalBigFlat21" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat21" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(1.677424, -3.5733552, -2.7524614, 1.7881393e-07, -137.14249, 0.6566481, -0.5873597, -10.205086, -7.8606763, 94.30774, 95.20325, -204.4479)
 
-[node name="MetalBigFlat16" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat16" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(0.013397619, 0.30808568, -5.787529, -5.7902656, 0.2517958, -2.8644877e-08, 0.2514392, 5.7820654, 0.30837607, -135.03285, 42.696133, -102.79901)
 
-[node name="MetalBigFlat9" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat9" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(1.7326589, 0, -0.40845925, 0, 1, 0, 0.1794197, 0, 3.9444985, -3.4664612, -12.087195, -85.27508)
 
-[node name="MetalBigFlat10" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat10" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(1.7326589, 0, -0.40845925, 0, 1, 0, 0.1794197, 0, 3.9444985, -0.6190815, -12.087195, -112.77228)
 
-[node name="MetalBigFlat11" parent="Environment" instance=ExtResource("4_musp6")]
+[node name="MetalBigFlat11" parent="Environment/Models" instance=ExtResource("4_musp6")]
 transform = Transform3D(2.7337987, 0, -0.40845925, 0, 1, 0, 0.2830894, 0, 3.9444985, -22.73875, -12.087195, -115.062805)
 
 [node name="npcs" type="Node" parent="."]
@@ -594,8 +606,7 @@ transform = Transform3D(2.7337987, 0, -0.40845925, 0, 1, 0, 0.2830894, 0, 3.9444
 transform = Transform3D(0.71465504, 0.01516811, 0.016220232, -0.014972712, 0.7147898, -0.008735156, -0.016400773, 0.008391276, 0.71476257, -1.9010806, 2.302, 0.571)
 
 [node name="generator" parent="npcs" instance=ExtResource("19_mw4j8")]
-transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -33.360706, -24.101482, -39.169537)
-initialDialogueID = "2"
+transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -33.360706, -25.501127, -39.169537)
 talkOnlyOnce = false
 
 [node name="preacher" parent="npcs" instance=ExtResource("24_bb1ch")]
@@ -619,6 +630,7 @@ transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.
 
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
 transform = Transform3D(0.9979101, 0, -0.06461941, 0, 1, 0, 0.06461941, 0, 0.9979101, -1.7460065, 0.86489105, 2.8846312)
+maxSpeed = 5.0
 
 [node name="StartDialogueAreaTemp" parent="Player" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("31_gitkm")]
 interactableNpcToInitiate = NodePath("../../npcs/ship")

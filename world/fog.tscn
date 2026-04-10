@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cfwl7pu6nk30f"]
+[gd_scene load_steps=39 format=3 uid="uid://cfwl7pu6nk30f"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_p18v3"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="2_1cb3g"]
@@ -25,20 +25,21 @@
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="22_lp4es"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="23_h7x46"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_4awyc"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="25_l8c0b"]
+[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="25_l8c0b"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="26_uyloo"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="27_t7mbn"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="28_tiui6"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_p18v3"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1cb3g"]
 panorama = ExtResource("1_p18v3")
 energy_multiplier = 2.2
 
-[sub_resource type="Sky" id="Sky_1cb3g"]
-sky_material = SubResource("PanoramaSkyMaterial_p18v3")
+[sub_resource type="Sky" id="Sky_d312g"]
+sky_material = SubResource("PanoramaSkyMaterial_1cb3g")
 
-[sub_resource type="Environment" id="Environment_d312g"]
+[sub_resource type="Environment" id="Environment_eo0mw"]
 background_mode = 2
-sky = SubResource("Sky_1cb3g")
+sky = SubResource("Sky_d312g")
 glow_enabled = true
 fog_enabled = true
 fog_mode = 1
@@ -73,7 +74,7 @@ radius = 28.77295
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_d312g")
+environment = SubResource("Environment_eo0mw")
 script = ExtResource("2_d312g")
 smog_density = 0.035
 fog_start = 80.0
@@ -552,6 +553,8 @@ metadata/_edit_group_ = true
 
 [node name="Player" parent="." instance=ExtResource("25_l8c0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 1.7612977, 1.3495631)
+acceleration = 18.0
+deceleration = 28.0
 
 [node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("26_uyloo")]
 transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
@@ -563,5 +566,10 @@ focus = NodePath("../Player")
 
 [node name="Camera3D" parent="PlayerCamera" index="0"]
 current = true
+
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("28_tiui6")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
+wantsToKnowWhenInteract = [NodePath("../Player")]
 
 [editable path="PlayerCamera"]

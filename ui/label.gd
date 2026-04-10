@@ -6,6 +6,7 @@ class_name StartingScreenForRealThisTime
 @onready var startText = $Label2
 
 var isStartTextGoing = false
+var didAudioPlay = false
 
 func _ready() -> void:
 	flavorText.visible_ratio = 0
@@ -15,9 +16,11 @@ func _updateFlavorText() -> void:
 	
 	flavorText.visible_ratio += 0.001
 	
-	if flavorText.visible_ratio >= 1 :
-		await get_tree().create_timer(1.0).timeout
+	if flavorText.visible_ratio >= 1 and didAudioPlay == false:
+		$startUp.play()
 
+		await get_tree().create_timer(1.0).timeout
+		didAudioPlay = true
 		flavorText.visible = false
 		startText.visible = true
 		isStartTextGoing = true

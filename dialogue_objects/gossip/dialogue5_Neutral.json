@@ -3,7 +3,7 @@
 	"type": "confused",
 	"mode": "normal",
 	"sfx": {
-		"spawn": "dialogueFailSound"
+		"spawn": "gossipSound"
 	},
 	"options": [
 		{

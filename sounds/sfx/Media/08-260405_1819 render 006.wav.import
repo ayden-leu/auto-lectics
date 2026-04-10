@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cmuel4tu0s8x4"
+path="res://.godot/imported/08-260405_1819 render 006.wav-340146011f1391350e7ec977997dd675.sample"
+
+[deps]
+
+source_file="res://sounds/sfx/Media/08-260405_1819 render 006.wav"
+dest_files=["res://.godot/imported/08-260405_1819 render 006.wav-340146011f1391350e7ec977997dd675.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

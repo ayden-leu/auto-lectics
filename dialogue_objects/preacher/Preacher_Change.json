@@ -2,6 +2,9 @@
 	"text": "I changed completely and yet not at all. I complete the same task, but with a different purpose. From lights to minds, I now guide these workers with new ways of thinking rather than vision.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "But what was your previous job?",

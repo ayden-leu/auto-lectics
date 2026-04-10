@@ -2,6 +2,9 @@
 	"text": "Ughhhh Mini-Boss",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "->",

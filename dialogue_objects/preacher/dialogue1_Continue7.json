@@ -10,7 +10,7 @@
 		{
 			"text": "->",
 			"type": "positive",
-			"nextID": "dialogue1_Continue8"
+			"nextID": "dialogue1_Continue6"
 		}
 	]
 }

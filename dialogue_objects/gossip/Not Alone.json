@@ -2,6 +2,9 @@
 	"text": "I'm not alone, for I have the flock. They help me watch over everything.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
 	"options": [
 		{
 			"text": "The flock?",

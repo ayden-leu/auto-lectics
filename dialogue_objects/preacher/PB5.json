@@ -3,6 +3,9 @@
 	"type": "happy",
 	"mode": "normal",
 	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
 	"options": [
 		{
 			"text": "->",

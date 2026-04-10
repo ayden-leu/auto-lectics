@@ -9,7 +9,7 @@
 		{
 			"text": "[Continue]",
 			"type": "positive",
-			"nextID": "dialogue1_Continue4"
+			"nextID": "dialogue1_Continue2"
 		}
 	]
 }

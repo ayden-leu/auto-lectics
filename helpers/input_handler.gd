@@ -48,8 +48,8 @@ func _input(event: InputEvent) -> void:
 	
 	
 	elif event.is_action_pressed("close_game"):
-		SceneTree.quit
-
+		get_tree().quit()
+		
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
 		#if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:

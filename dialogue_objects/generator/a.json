@@ -3,8 +3,7 @@
 	"font": "",
 	"type": "neutral",
 	"mode": "normal",
-	
-	"sfx": {
+		"sfx": {
 		"spawn": "generatorSound"
 	},
 	"options": [

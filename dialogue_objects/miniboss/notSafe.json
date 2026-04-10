@@ -3,7 +3,7 @@
 	"type": "neutral",
 	"mode": "normal",
 	"sfx": {
-		"spawn": "gossipSound"
+		"spawn": "miniboss"
 	},
 	"options": [
 		{

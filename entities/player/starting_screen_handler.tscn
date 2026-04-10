@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dj8tyg3rmvo48"]
+[gd_scene load_steps=6 format=3 uid="uid://diyxywem2nqfb"]
 
-[ext_resource type="Script" path="res://startingScreenHandler.gd" id="1_5cnai"]
-[ext_resource type="Script" path="res://ui/label.gd" id="2_2oeew"]
+[ext_resource type="Script" uid="uid://cquqmkx6siglx" path="res://startingScreenHandler.gd" id="1_5cnai"]
+[ext_resource type="Script" uid="uid://d2y4vanofmml3" path="res://ui/label.gd" id="2_2oeew"]
 [ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="3_j2nwy"]
+[ext_resource type="AudioStream" uid="uid://dyhex8tcqj5gr" path="res://sounds/sfx/dstartUp.wav" id="4_j2nwy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pmluo"]
 font = ExtResource("3_j2nwy")
@@ -425,3 +426,6 @@ z_index = -1
 offset_right = 4000.0
 offset_bottom = 4000.0
 color = Color(0.04, 0, 0.024000015, 1)
+
+[node name="startUp" type="AudioStreamPlayer" parent="CanvasLayer"]
+stream = ExtResource("4_j2nwy")
