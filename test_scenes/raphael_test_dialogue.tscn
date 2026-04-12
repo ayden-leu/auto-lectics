@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_y8ghn"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_y8ghn"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_sbnkj"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_r7opt"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_vekyi"]
@@ -54,38 +54,13 @@ shape = SubResource("ConcavePolygonShape3D_wd7ni")
 [node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("1_k4mrd")]
 transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -5.009552, 0.70307016, -0.41599846)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
-talkOnlyOnce = false
+initialDialogueID = "DB1"
+myName = "dish"
 
 [node name="Node" type="Node" parent="npcs/preacher"]
 
 [node name="Marker3D" type="Marker3D" parent="npcs/preacher/Node"]
 transform = Transform3D(1.1005625, 0, 0, 0, 1.1005625, 0, 0, 0, 1.1005625, -4.893957, 1.7124732, 1.416)
-metadata/_edit_group_ = true
-
-[node name="preacher2" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("1_k4mrd")]
-transform = Transform3D(-0.39961982, 0, 0.6474941, 0, 0.76088405, 0, -0.6474941, 0, -0.39961982, 0.045383453, 1.316349, 7.960273)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
-myName = "sludge"
-initialDialogueID = "SB1"
-talkOnlyOnce = false
-
-[node name="Node" type="Node" parent="npcs/preacher2"]
-
-[node name="Marker3D" type="Marker3D" parent="npcs/preacher2/Node"]
-transform = Transform3D(1.1005625, 0, 0, 0, 1.1005625, 0, 0, 0, 1.1005625, 1.2855558, 1.7124732, 8.775383)
-metadata/_edit_group_ = true
-
-[node name="preacher3" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("1_k4mrd")]
-transform = Transform3D(-0.2595526, 0, -0.5175029, 0, 0.5789445, 0, 0.5175029, 0, -0.2595526, -1.9158239, 0.29390883, -11.292264)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
-myName = "gossip"
-initialDialogueID = "GB1"
-talkOnlyOnce = false
-
-[node name="Node" type="Node" parent="npcs/preacher3"]
-
-[node name="Marker3D" type="Marker3D" parent="npcs/preacher3/Node"]
-transform = Transform3D(1.1005625, 0, 0, 0, 1.1005625, 0, 0, 0, 1.1005625, -2.0891223, 1.7124732, -8.66266)
 metadata/_edit_group_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_y8ghn")]
@@ -98,11 +73,7 @@ mainCamera = NodePath("../PlayerCamera/Camera3D")
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_r7opt")]
 focus = NodePath("../Player")
 
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("5_vekyi")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
+[node name="InputHandler" parent="." instance=ExtResource("5_vekyi")]
 
 [node name="LoopManager" parent="." instance=ExtResource("6_hmrtd")]
 manual = true
-loopDuration = 3.0
