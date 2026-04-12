@@ -1,0 +1,23 @@
+{
+	"text": "*play angry.wav*",
+	"type": "neutral",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "Converstaion Fail",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "dbAngry"
+	},
+	"options": [
+		{
+			"text": "Sorry I didn't mean to offend.",
+			"type": "neutral",
+			"writeSpeed": "fast",
+			"nextID": "Apology Accepted"
+		},
+		{
+			"text": "Still can't understand you.",
+			"type": "neutral",
+			"nextID": "Converstaion Fail"
+		}
+	]
+}

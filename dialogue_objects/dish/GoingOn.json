@@ -1,0 +1,25 @@
+{
+	"text": "*play neutral.wav*\n*play angry.wav*\n*play angry.wav*\n*play happy.wav*\n*play neutral.wav*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dbGoingOn"
+	},
+	"options": [
+		{
+			"text": "I don't understand.",
+			"type": "neutral",
+			"nextID": "DifficultExplaination"
+		},
+		{
+			"text": "So everything is good?",
+			"type": "neutral",
+			"nextID": "DifficultExplaination"
+		},
+		{
+			"text": "So everything is bad?",
+			"type": "neutral",
+			"nextID": "DifficultExplainationAlt"
+		}
+	]
+}
