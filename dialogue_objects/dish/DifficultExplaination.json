@@ -1,0 +1,14 @@
+{
+	"text": "*play happy.wav*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dbHappy"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}
