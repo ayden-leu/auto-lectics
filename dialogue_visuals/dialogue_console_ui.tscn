@@ -1,15 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://b8oqtsvu488a"]
 
-[ext_resource type="Script" uid="uid://by12perg4x8bb" path="res://dialogue_visuals/dialogue_console_ui.gd" id="1_5m35e"]
+[ext_resource type="Script" path="res://dialogue_visuals/dialogue_console_ui.gd" id="1_5m35e"]
 [ext_resource type="PackedScene" uid="uid://4opwac4ndc2k" path="res://dialogue_visuals/option_window.tscn" id="2_mgd8n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgd8n"]
-bg_color = Color(0.007843138, 0, 0.039215688, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(1, 1, 1, 1)
+bg_color = Color(0.04, 0, 0.024000015, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1d7as"]
 bg_color = Color(1, 1, 1, 1)
@@ -21,10 +16,7 @@ border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2hkj1"]
 bg_color = Color(0.007843138, 0, 0.039215688, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_bottom = 3
 border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kd1mm"]
@@ -68,10 +60,18 @@ theme_override_colors/font_color = Color(0.9490196, 0.6313726, 0.101960786, 1)
 
 [node name="Divider" type="ColorRect" parent="Window/Header"]
 layout_mode = 0
-offset_left = 2.0
+offset_left = -17.0
 offset_top = 27.0
-offset_right = 426.0
+offset_right = 449.0
 offset_bottom = 30.0
+
+[node name="ScrollBarDivider" type="ColorRect" parent="Window/Header"]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 473.0
+offset_right = 918.54504
+offset_bottom = 476.0
+rotation = -1.5707964
 
 [node name="CloseButton" type="Button" parent="Window/Header"]
 layout_mode = 0
@@ -109,7 +109,7 @@ scroll_active = false
 layout_mode = 0
 offset_left = 7.0
 offset_top = 422.0
-offset_right = 420.0
+offset_right = 403.78
 offset_bottom = 453.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/caret_color = Color(1, 1, 1, 1)
