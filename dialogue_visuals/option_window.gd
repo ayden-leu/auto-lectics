@@ -12,9 +12,16 @@ var _drag_offset := Vector2.ZERO
 
 func set_option_data(id_num: int, text: String) -> void:
 	id_label.text = "[%d]" % id_num
+	if text == "->":
+		text = "continue"
+	
+	if id_num != 0:
+		$ColorRect1.visible = false
+		$ColorRect2.visible = false
+		$Label.visible = false
 	option_label.text = text
 
-
+## this doesn't work for me
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		_dragging = event.pressed

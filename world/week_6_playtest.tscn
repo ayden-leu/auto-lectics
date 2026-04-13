@@ -628,7 +628,6 @@ metadata/_edit_group_ = true
 transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
 dialogueBoxAnchor = NodePath("Node/Marker3D")
 initialDialogueID = "dialogue1"
-myName = "gossip"
 
 [node name="Node" type="Node" parent="npcs/looker"]
 

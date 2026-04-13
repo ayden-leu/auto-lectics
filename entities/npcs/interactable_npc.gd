@@ -91,6 +91,7 @@ func spawnDialogueConsole() -> void:
 		return
 	
 	dialogueConsole = _dialogueConsoleScene.instantiate()
+	dialogueConsole.set_npc_id(myName)
 	
 	# This UI should be on-screen, so add it somewhere in the active scene tree
 	get_tree().current_scene.add_child(dialogueConsole)
@@ -103,7 +104,6 @@ func connectDialogueConsoleSignals() -> void:
 
 	dialogueConsole.option_chosen.connect(loadNextDialogue)
 	dialogueConsole.request_back.connect(_on_console_request_back)
-	dialogueConsole.request_close.connect(_on_console_request_close)
 	dialogueConsole.new_option_available.connect(_on_dialogue_box_new_option_spawned)
 	dialogueConsole.all_options_available.connect(_on_dialogue_box_all_options_available)
 	dialogueConsole.all_dialogue_text_visible.connect(_on_dialogue_box_all_dialogue_text_visible)
@@ -115,7 +115,6 @@ func disconnectDialogueConsoleSignals() -> void:
 	
 	dialogueConsole.option_chosen.disconnect(loadNextDialogue)
 	dialogueConsole.request_back.disconnect(_on_console_request_back)
-	dialogueConsole.request_close.disconnect(_on_console_request_close)
 	dialogueConsole.new_option_available.disconnect(_on_dialogue_box_new_option_spawned)
 	dialogueConsole.all_options_available.disconnect(_on_dialogue_box_all_options_available)
 	dialogueConsole.all_dialogue_text_visible.disconnect(_on_dialogue_box_all_dialogue_text_visible)
@@ -161,13 +160,6 @@ func _on_console_request_back() -> void:
 	loadNextDialogue(previous_id, false)
 
 
-func _on_console_request_close() -> void:
-	if currentInteractor and currentInteractor.has_method("set_input_frozen"):
-		currentInteractor.set_input_frozen(false)
-	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-
 ## Ends the dialogue interaction.
 func endDialogue() -> void:
 	disconnectDialogueConsoleSignals()
@@ -177,6 +169,7 @@ func endDialogue() -> void:
 	
 	if currentInteractor and currentInteractor.has_method("set_input_frozen"):
 		currentInteractor.set_input_frozen(false)
+	Globals.inputHandler.unlock_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	isTalking = false
@@ -229,6 +222,7 @@ func _on_interaction(interactor: Node3D = null) -> void:
 	
 	if currentInteractor and currentInteractor.has_method("set_input_frozen"):
 		currentInteractor.set_input_frozen(true)
+		Globals.inputHandler.lock_mouse_to_cursor()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	spawnDialogueConsole()

@@ -111,10 +111,11 @@ autoplay = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("2_5oweu")
-volume_db = 17.0
+volume_db = -30.588
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("3_x8ppq")
+volume_db = -41.076
 
 [node name="Models" type="Node3D" parent="Environment"]
 

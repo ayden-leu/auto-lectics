@@ -3,7 +3,6 @@ class_name DialogueConsoleUI
 
 signal option_chosen(next_id: String)
 signal request_back
-signal request_close
 signal all_dialogue_text_visible
 signal new_option_available
 signal all_options_available
@@ -11,11 +10,14 @@ signal all_options_available
 @export var option_window_scene: PackedScene
 
 @onready var main_window: Panel = $Window
-@onready var dialogue_label: Label = $Window/Label
 @onready var input_line: LineEdit = $Window/InputLine
 @onready var option_layer: Control = $Options
+@onready var scroll_container: ScrollContainer = $Window/ScrollContainer
+@onready var dialogue_log: RichTextLabel = $Window/ScrollContainer/DialogueLog
+@onready var npc_name: Label = $Window/Header/NPCName
 
 var realOwner: Node = null
+var ownerName: String = ""
 var currentDialogueID: String = ""
 var mode: String = "normal"
 var hecticFailureDialogueID: String = ""
@@ -28,16 +30,18 @@ var _visible_options: Array = []
 var _spawned_option_windows: Array = []
 var _is_typing: bool = false
 
-
 func _ready() -> void:
 	_center_main_window()
 	input_line.text_submitted.connect(_on_input_submitted)
 	input_line.grab_focus()
 
+func set_npc_id(id: String) -> void:
+	ownerName = id
+	print (ownerName)
+	$Window/Header/NPCName.text = ownerName
 
 func prepare() -> void:
 	_clear_option_windows()
-	dialogue_label.text = ""
 	input_line.text = ""
 
 
@@ -94,19 +98,36 @@ func show_dialogue_data(dialogue_data: Dictionary) -> void:
 
 func _type_dialogue_text(full_text: String) -> void:
 	_is_typing = true
-	dialogue_label.text = ""
-	
-	var cps : float = max(textWriteSpeed, 1.0)
-	var delay := 1.0 / cps
-	
+
+	var cps: float = max(textWriteSpeed, 1.0)
+	var delay: float = 1.0 / cps
+
+	dialogue_log.append_text("[indent][indent][indent][indent][indent][indent][indent][indent][color=#f2a11a]")
+
 	for i in range(full_text.length()):
-		dialogue_label.text += full_text[i]
+		dialogue_log.append_text(full_text[i])
+		_scroll_to_bottom()
 		await get_tree().create_timer(delay).timeout
-	
+
+	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
+	_scroll_to_bottom()
+
 	_is_typing = false
+
+## prints the player text if they picked an option with text associated
+func add_player_text(full_text: String) -> void:
+	dialogue_log.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
+	_scroll_to_bottom()
+	
+
+## scrolls the dialogue log down
+func _scroll_to_bottom() -> void:
+	#await get_tree().process_frame
+	scroll_container.scroll_vertical = int(scroll_container.get_v_scroll_bar().max_value)
 
 
 func _spawn_option_windows() -> void:
+	_refocus_input()
 	if _visible_options.is_empty():
 		all_options_available.emit()
 		return
@@ -123,10 +144,11 @@ func _spawn_option_windows() -> void:
 		win.set_option_data(i, str(opt.get("text", "")))
 		win.option_selected.connect(_on_option_window_selected.bind(opt))
 		
-		if mode == "hectic":
-			win.position = _random_popup_position(win.size)
-		else:
-			win.position = Vector2(40, 120 + i * 90)
+		#if mode == "hectic":
+			#win.position = _random_popup_position(win.size)
+		#else:
+			
+		win.position = Vector2(40, 120 + i * 90)
 		
 		_spawned_option_windows.push_back(win)
 		new_option_available.emit()
@@ -139,16 +161,13 @@ func _on_option_window_selected(option_data: Dictionary) -> void:
 
 
 func _on_input_submitted(raw_text: String) -> void:
+	if _is_typing:
+		return
 	var text := raw_text.strip_edges()
 	input_line.text = ""
 	
 	if text.to_lower() == "back":
 		request_back.emit()
-		return
-	
-	if _visible_options.is_empty():
-		if text == "" or text.to_lower() == "continue":
-			option_chosen.emit("")
 		return
 	
 	if text == "":
@@ -165,8 +184,17 @@ func _on_input_submitted(raw_text: String) -> void:
 			_choose_option(opt)
 			return
 
+## This is supposed to make the input line selected again when a option is selected; it doesn't work for me
+func _refocus_input() -> void:
+	await get_tree().process_frame
+	input_line.grab_focus()
+
 
 func _choose_option(option_data: Dictionary) -> void:
+	var option_text: String = str(option_data.get("text", "")).strip_edges()
+	if option_text != "->":
+		add_player_text(option_text)
+		
 	var set_flags_dict := _convert_flag_array_to_dict(option_data.get("setFlag", []))
 	if not set_flags_dict.is_empty():
 		StoryFlags.apply_set_flags(set_flags_dict)
@@ -177,7 +205,6 @@ func _choose_option(option_data: Dictionary) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		request_close.emit()
 		get_viewport().set_input_as_handled()
 		return
 	
@@ -188,6 +215,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func kill() -> void:
 	queue_free()
+
 
 
 func _clear_option_windows() -> void:

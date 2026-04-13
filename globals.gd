@@ -14,6 +14,9 @@ const SCENES = {
 	"DialogueWarningTile": "uid://wm6t0orfpjfl"
 }
 
+## Holds InputHandler reference
+var inputHandler: InputHandler = null
+
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {
 	"DIALOGUE": "res://dialogue_objects/",
