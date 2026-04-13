@@ -15,6 +15,8 @@ signal all_options_available
 @onready var scroll_container: ScrollContainer = $Window/ScrollContainer
 @onready var dialogue_log: RichTextLabel = $Window/ScrollContainer/DialogueLog
 @onready var npc_name: Label = $Window/Header/NPCName
+@onready var hectic_bar: ProgressBar = $Window/HecticBar
+@onready var hectic_timer: Timer = $HecticTimer
 
 var realOwner: Node = null
 var ownerName: String = ""
@@ -30,10 +32,21 @@ var _visible_options: Array = []
 var _spawned_option_windows: Array = []
 var _is_typing: bool = false
 
+var hectic_duration: float = 5.0
+var _hectic_time_left: float = 0.0
+var _hectic_active: bool = false
+
 func _ready() -> void:
 	_center_main_window()
 	input_line.text_submitted.connect(_on_input_submitted)
 	input_line.grab_focus()
+	
+	hectic_timer.one_shot = true
+
+	hectic_bar.visible = false
+	hectic_bar.min_value = 0.0
+	hectic_bar.max_value = 100.0
+	hectic_bar.value = 100.0
 
 func set_npc_id(id: String) -> void:
 	ownerName = id
@@ -43,6 +56,7 @@ func set_npc_id(id: String) -> void:
 func prepare() -> void:
 	_clear_option_windows()
 	input_line.text = ""
+	_stop_hectic_mode()
 
 
 func start() -> void:
@@ -52,7 +66,19 @@ func start() -> void:
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
 	_spawn_option_windows()
 	all_options_available.emit()
+	_refocus_input()
+	
+	if mode == "hectic":
+		_start_hectic_mode()
 
+
+func _process(delta: float) -> void:
+	if _hectic_active:
+		_hectic_time_left = max(_hectic_time_left - delta, 0.0)
+		if hectic_duration > 0.0:
+			hectic_bar.value = (_hectic_time_left / hectic_duration) * 100.0
+		else:
+			hectic_bar.value = 0.0
 
 ## helper function to convert a flag array to the intended dictionary input
 func _convert_flag_array_to_dict(flag_array: Variant) -> Dictionary:
@@ -194,7 +220,8 @@ func _choose_option(option_data: Dictionary) -> void:
 	var option_text: String = str(option_data.get("text", "")).strip_edges()
 	if option_text != "->":
 		add_player_text(option_text)
-		
+	_stop_hectic_mode()
+	
 	var set_flags_dict := _convert_flag_array_to_dict(option_data.get("setFlag", []))
 	if not set_flags_dict.is_empty():
 		StoryFlags.apply_set_flags(set_flags_dict)
@@ -214,8 +241,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func kill() -> void:
+	_stop_hectic_mode()
 	queue_free()
-
 
 
 func _clear_option_windows() -> void:
@@ -236,3 +263,28 @@ func _random_popup_position(window_size: Vector2) -> Vector2:
 		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
 		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
 	)
+
+func _start_hectic_mode() -> void:
+	_hectic_active = true
+	_hectic_time_left = hectic_duration
+	hectic_bar.visible = true
+	hectic_bar.value = 100.0
+	hectic_timer.start(hectic_duration)
+
+func _stop_hectic_mode() -> void:
+	_hectic_active = false
+	_hectic_time_left = 0.0
+	if hectic_timer:
+		hectic_timer.stop()
+	if hectic_bar:
+		hectic_bar.visible = false
+		hectic_bar.value = 100.0
+
+func _on_hectic_timeout() -> void:
+	if not _hectic_active:
+		return
+
+	_stop_hectic_mode()
+	_clear_option_windows()
+
+	option_chosen.emit(hecticFailureDialogueID)
