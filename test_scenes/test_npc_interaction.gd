@@ -20,6 +20,7 @@ extends Node3D
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+@onready var loopManager:LoopManager = %LoopManager
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -36,6 +37,8 @@ extends Node3D
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_1"):
 		%Player.position = %RespawnPosition.position
+	elif event.is_action_pressed("debug_2"):
+		loopManager.performReset()
 
 # ------------------------------------------------
 # functions referenced outside of this script
