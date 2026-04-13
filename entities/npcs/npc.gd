@@ -36,7 +36,10 @@ enum PathFollowMethod {
 		notify_property_list_changed()
 @export_category("Patrolling")
 ## The path this [NPC] follows while patrolling.
-@export var patrolPath: Path3D
+@export var patrolPath: Path3D:
+	set(value):
+		patrolPath = value
+		notify_property_list_changed()
 ## How fast this [NPC] should move along the [member patrolPath]. 
 @export var patrolSpeed: float = 2.0
 ## How this [NPC] should patrol on its [member patrolPath].
@@ -47,7 +50,7 @@ enum PathFollowMethod {
 ## If [member pathFollowMode] is set to [constant PING_PONG] and this [NPC] reaches the end of the path, it will wait this long in seconds before traversing the path backwards.
 @export var waitAtEndDuration: float = 0.0
 ## Unused and doesn't do anything.
-@export var faceMoveDirection: bool = true
+#@export var faceMoveDirection: bool = true
 
 # ------------------------------------------------
 # onready variables
@@ -184,6 +187,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 	
 	if myName == "":
 		warnings.push_back("This NPC doesn't have a name yet.")
+	
+	if patrolEnabled:
+		if not patrolPath and self != get_tree().edited_scene_root:
+			warnings.push_back("This NPC can patrol but doesn't have a path set.")
 	
 	return warnings
 
