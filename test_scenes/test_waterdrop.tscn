@@ -39,7 +39,7 @@ size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="Skin" id="Skin_uvnsu"]
 
-[node name="Test_PlayerMovement" type="Node3D"]
+[node name="Test_WaterDrop" type="Node3D"]
 
 [node name="Environment" type="Node" parent="."]
 

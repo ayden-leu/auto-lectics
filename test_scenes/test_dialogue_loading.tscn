@@ -19,7 +19,7 @@ size = Vector2(222, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrtad"]
 size = Vector2(378, 40)
 
-[node name="Test_Dialogue" type="Control"]
+[node name="Test_DialogueLoading" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
