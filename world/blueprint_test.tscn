@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_lwmcw"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="25_7ivc8"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="26_nc4fg"]
-[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="27_rxte4"]
+[ext_resource type="PackedScene" uid="uid://dmow3jg55v8u0" path="res://ui/blueprint_menue.tscn" id="27_rlkrr"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="28_al4up"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="29_gdscw"]
 
@@ -545,19 +545,12 @@ metadata/_edit_group_ = true
 [node name="Player" parent="." instance=ExtResource("26_nc4fg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 1.7612977, 1.3495631)
 acceleration = 18.0
-deceleration = 28.0
-
-[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("27_rxte4")]
-transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
-mainCamera = NodePath("../PlayerCamera/Camera3D")
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("28_al4up")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 2.2003224, 1.3495631)
 focus = NodePath("../Player")
 
-[node name="Camera3D" parent="PlayerCamera" index="0"]
-current = true
-
 [node name="InputHandler" parent="." instance=ExtResource("29_gdscw")]
 
-[editable path="PlayerCamera"]
+[node name="BlueprintMenu" parent="." node_paths=PackedStringArray("player") instance=ExtResource("27_rlkrr")]
+player = NodePath("../Player")

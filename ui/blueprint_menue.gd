@@ -31,6 +31,9 @@ var npc_data := {
 
 @onready var close_button = $MainPanel/CloseButton
 
+## TEMPORARY.  Needed for freezing the player when the mmenu is brought up.
+@export var player:Player
+
 var is_loading_notes := false
 
 func _ready() -> void:
@@ -161,12 +164,27 @@ func _on_notes_changed() -> void:
 
 func open_menu() -> void:
 	show()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	print("showing blueprint menu")
+	Globals.inputHandler.lock_mouse_to_cursor()
+	player.set_input_frozen(true)
 
 func close_menu() -> void:
 	hide()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	print("hiding blueprint menu")
+	Globals.inputHandler.unlock_mouse_mode()
+	Globals.inputHandler.lock_mouse_to_camera()
+	player.set_input_frozen(false)
 	
 func _on_close_pressed() -> void:
 	print("Close button pressed")
 	close_menu()
+
+
+# TEMPORARY    Dev-ing stuff
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+	
+	if not player:
+		warnings.push_back("The player field isn't set yet.")
+	
+	return warnings
