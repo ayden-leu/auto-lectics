@@ -32,14 +32,18 @@ enum ATTACH_METHOD {
 ## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
 @export var lookAtInteractorWhileTalking:bool = false
 
-const _dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)
+const _dialogueBoxScene:Resource = preload(Globals.SCENES.DialogueBox)#
+const _dialogueConsoleScene: Resource = preload(Globals.SCENES.DialogueConsoleUI)
+
 
 ## The hitbox's collision shape.  Gets set when the node is ready.
 var hitboxShapes:Array[CollisionShape3D]
 ## Holds a reference to this Interactable NPC's dialogue box scene.
 var dialogueBox:DialogueBox = null
+var dialogueConsole: DialogueConsoleUI = null
 ## Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
 var connectedDialogueBoxSignals:bool = false
+var connectedDialogueConsoleSignals: bool = false
 ## Is true when their dialogue box is visible.
 var isTalking: bool = false
 ## Keeps track of which dialogue object to reference at the moment.
@@ -50,6 +54,8 @@ var wasTalkedTo: bool = false
 var currentInteractor:Node3D
 ## Tracks whether the NPC should be patrolling
 var shouldPatrol:bool
+## Array that stores previous dialogue history
+var dialogueHistory: Array[String] = []
 
 func _ready() -> void:
 	# Makes sure the code after this is only ran in-game
@@ -79,77 +85,98 @@ func getHitboxShapes() -> Array[CollisionShape3D]:
 			shapes.push_back(child)
 	return shapes
 		
-## Creates the dialogue box scene. Only one can exist at a time.
-func spawnDialogueBox() -> void:
-	if dialogueBox != null:
+## Creates the dialogue console scene. Only one can exist at a time.
+func spawnDialogueConsole() -> void:
+	if dialogueConsole != null:
 		return
 	
-	dialogueBox = _dialogueBoxScene.instantiate()
-	if(dialogueBoxAttachMethod == ATTACH_METHOD.FOLLOW):
-		dialogueBoxAnchor.add_child(dialogueBox)
-		
-		# undo the scaling being inherited from this InteractableNPC
-		#dialogueBox.scale += Vector3.ONE - scale 
-	elif(dialogueBoxAttachMethod == ATTACH_METHOD.STAY):
-		get_parent().add_child(dialogueBox)
-		dialogueBox.global_position = dialogueBoxAnchor.global_position
-		dialogueBox.global_rotation = dialogueBoxAnchor.global_rotation
+	dialogueConsole = _dialogueConsoleScene.instantiate()
+	dialogueConsole.set_npc_id(myName)
+	
+	# This UI should be on-screen, so add it somewhere in the active scene tree
+	get_tree().current_scene.add_child(dialogueConsole)
 
 ## Connects the dialogue box's signals to functions. Only needs to be ran once.
-func connectDialogueBoxSignals() -> void:
-	if connectedDialogueBoxSignals:
+func connectDialogueConsoleSignals() -> void:
+	if connectedDialogueConsoleSignals:
 		return
-	connectedDialogueBoxSignals = true
+	connectedDialogueConsoleSignals = true
+
+	dialogueConsole.option_chosen.connect(loadNextDialogue)
+	dialogueConsole.open_gate.connect(openGate)
+	dialogueConsole.request_back.connect(_on_console_request_back)
+	dialogueConsole.new_option_available.connect(_on_dialogue_box_new_option_spawned)
+	dialogueConsole.all_options_available.connect(_on_dialogue_box_all_options_available)
+	dialogueConsole.all_dialogue_text_visible.connect(_on_dialogue_box_all_dialogue_text_visible)
+
+func disconnectDialogueConsoleSignals() -> void:
+	if not connectedDialogueConsoleSignals:
+		return
+	connectedDialogueConsoleSignals = false
 	
-	dialogueBox.update_me.connect(loadNextDialogue)
-	dialogueBox.new_option_available.connect(_on_dialogue_box_new_option_spawned)
-	dialogueBox.all_options_available.connect(_on_dialogue_box_all_options_available)
-	dialogueBox.all_dialogue_text_visible.connect(_on_dialogue_box_all_dialogue_text_visible)
-
-func disconnectDialogueBoxSignals() -> void:
-	if not connectedDialogueBoxSignals:
-		return
-	connectedDialogueBoxSignals = false
-
-	dialogueBox.update_me.disconnect(loadNextDialogue)
-	dialogueBox.new_option_available.disconnect(_on_dialogue_box_new_option_spawned)
-	dialogueBox.all_options_available.disconnect(_on_dialogue_box_all_options_available)
-	dialogueBox.all_dialogue_text_visible.disconnect(_on_dialogue_box_all_dialogue_text_visible)
+	dialogueConsole.option_chosen.disconnect(loadNextDialogue)
+	dialogueConsole.open_gate.disconnect(openGate)
+	dialogueConsole.request_back.disconnect(_on_console_request_back)
+	dialogueConsole.new_option_available.disconnect(_on_dialogue_box_new_option_spawned)
+	dialogueConsole.all_options_available.disconnect(_on_dialogue_box_all_options_available)
+	dialogueConsole.all_dialogue_text_visible.disconnect(_on_dialogue_box_all_dialogue_text_visible)
 
 ## Loads the data of a dialogue object into the dialogue box. Make sure currentDialogueID is set to the dialogue you want to load before running.
-func loadDialogueData(dialogueEntry:Dictionary) -> void:
-	dialogueBox.realOwner = self
-	dialogueBox.currentDialogueID = currentDialogueID
-	dialogueBox.mode = dialogueEntry.mode
-	if dialogueEntry.mode == "hectic":	
-		dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
-		dialogueBox.delayBtwnWriteDialogueAndOptions = 0.25  # arbitrary
-	dialogueBox.text = dialogueEntry.text
-	dialogueBox.textWriteSpeed = dialogueEntry.writeSpeedCustom
-	dialogueBox.sfxEventsToLoad = dialogueEntry.sfx
-	dialogueBox.loadOptionData(dialogueEntry.options)
-	dialogueBox.prepare()
+func loadDialogueData(dialogueEntry: Dictionary) -> void:
+	dialogueConsole.realOwner = self
+	dialogueConsole.currentDialogueID = currentDialogueID
+	dialogueConsole.mode = dialogueEntry.mode
+	
+	if dialogueEntry.mode == "hectic":
+		dialogueConsole.hecticFailureDialogueID = dialogueEntry.get("nextOnHecticFailureID", "")
+		dialogueConsole.delayBtwnWriteDialogueAndOptions = 0.25
+	
+	dialogueConsole.textWriteSpeed = dialogueEntry.writeSpeedCustom
+	dialogueConsole.sfxEventsToLoad = dialogueEntry.sfx
+	dialogueConsole.show_dialogue_data(dialogueEntry)
+	dialogueConsole.loadOptionData(dialogueEntry.options)
+	dialogueConsole.prepare()
 
 ## Loads the next dialogue to display.
-func loadNextDialogue(nextDialogueID: String) -> void:
-	#print("\nloading dialogue: [", nextDialogueID, "]")
+func loadNextDialogue(nextDialogueID: String, addToHistory: bool = true) -> void:
 	if nextDialogueID == "" and isTalking:
 		endDialogue()
 		return
+	
 	currentDialogueID = nextDialogueID
 	
-	var dialogue:Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
-	#print("dialogue data: ", dialogue)
+	if addToHistory:
+		dialogueHistory.push_back(currentDialogueID)
+	
+	var dialogue: Dictionary = Globals.getDialogueNode(myName, currentDialogueID)
 	loadDialogueData(dialogue)
-	dialogueBox.start()
+	dialogueConsole.start()
+
+
+func _on_console_request_back() -> void:
+	if dialogueHistory.size() <= 1:
+		dialogueConsole.add_player_text("[no recorded history in log]")
+		return
+	
+	dialogueHistory.pop_back()
+	dialogueConsole.add_player_text("back")
+	var previous_id: String = dialogueHistory.back()
+	loadNextDialogue(previous_id, false)
+	return
+
 
 ## Ends the dialogue interaction.
 func endDialogue() -> void:
-	disconnectDialogueBoxSignals()
-	if dialogueBox != null:
-		dialogueBox.kill()
-		dialogueBox = null
+	disconnectDialogueConsoleSignals()
+	if dialogueConsole != null:
+		dialogueConsole.kill()
+		dialogueConsole = null
 	
+	if currentInteractor and currentInteractor.has_method("set_input_frozen"):
+		currentInteractor.set_input_frozen(false)
+	Globals.inputHandler.unlock_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 	isTalking = false
 	currentInteractor = null
 	if shouldPatrol:
@@ -184,31 +211,36 @@ func _on_interaction(interactor: Node3D = null) -> void:
 	if wasTalkedTo or isTalking:
 		return
 	
-	# rotate to face player immediately to properly spawn dialogue box
-	var currentRotation:Vector3 = rotation
-	if lookAtInteractorWhileTalking:
+	var currentRotation: Vector3 = rotation
+	if lookAtInteractorWhileTalking and interactor:
 		look_at(Vector3(
 			interactor.global_position.x,
 			global_position.y,
 			interactor.global_position.z
 		))
 		lookAtPosition = interactor.global_position
-		
+	
 	isTalking = true
 	patrolEnabled = false
 	currentInteractor = interactor
+	dialogueHistory.clear()
 	
+	if currentInteractor and currentInteractor.has_method("set_input_frozen"):
+		currentInteractor.set_input_frozen(true)
+		Globals.inputHandler.lock_mouse_to_cursor()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
-	spawnDialogueBox()
-	connectDialogueBoxSignals()
+	spawnDialogueConsole()
+	connectDialogueConsoleSignals()
 	loadNextDialogue(initialDialogueID)
 	
 	rotation = currentRotation
-	
+
 
 ## Emits the "option_available" signal.
 func _on_dialogue_box_new_option_spawned() -> void:
 	option_available.emit()
+
 
 ## Emits the "all_options_available" signal.
 func _on_dialogue_box_all_options_available() -> void:
@@ -227,7 +259,10 @@ func _on_hud_overlay_faded_in() -> void:
 func _on_hud_overlay_faded_out() -> void:
 	enable()
 
-
+func openGate():
+	print("open gate!")
+	if $gateNode:
+		$gateNode.open_gate()
 
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:

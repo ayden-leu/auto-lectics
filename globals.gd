@@ -10,8 +10,12 @@ const SCENES = {
 	"NPC_test": "uid://bq04u0nihuu52",
 	"DialogueBox": "uid://dwqide2q2tp3i",
 	"DialogueOption": "uid://pdwngeenin11",
+	"DialogueConsoleUI": "uid://b8oqtsvu488a",
 	"DialogueWarningTile": "uid://wm6t0orfpjfl"
 }
+
+## Holds InputHandler reference
+var inputHandler: InputHandler = null
 
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {

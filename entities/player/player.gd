@@ -62,6 +62,9 @@ var _timeSinceApex: float = 0.0
 var _apexHangActive: bool = false
 ## Save last location where character is grounded.
 var _last_position_stood: Vector3
+## Track if player's movement is frozen
+var input_frozen: bool = false
+
 
 func _ready() -> void:
 	_recompute_jump_params()
@@ -70,9 +73,13 @@ func _process(_delta: float) -> void:
 	# Dev-ing stuff
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
+	
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
+		return
+	if input_frozen:
+		velocity = Vector3.ZERO
 		return
 	_apply_vertical_physics(delta)
 	move_and_slide()
@@ -160,6 +167,10 @@ func handleDirectionInput(direction: Vector3) -> void:
 	velocity.x = current_h.x
 	velocity.z = current_h.z
 
+## Freeze player upon interacting with NPC
+func set_input_frozen(value: bool) -> void:
+	input_frozen = value
+
 ## Respawn player upon contact with death plane
 func respawn():
 	velocity = Vector3.ZERO
@@ -170,7 +181,8 @@ func respawn():
 func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
-	
+	if input_frozen:
+		return
 	# horizontal rotation
 	rotation_degrees.y += -distanceMoved.x * mouse_sensitivity
 	
@@ -186,7 +198,8 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 func _on_interact_pressed() -> void:
 	#print(name + ": interact pressed")
 	if interactionRaycast.is_colliding():
-		interactionRaycast.get_collider().owner._on_interaction(self)
+		if interactionRaycast.get_collider().owner.has_method("_on_interaction"):
+			interactionRaycast.get_collider().owner._on_interaction(self)
 
 func _on_jump_pressed() -> void:
 	if is_on_floor():

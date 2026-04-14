@@ -111,10 +111,11 @@ autoplay = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("2_5oweu")
-volume_db = 17.0
+volume_db = -30.588
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("3_x8ppq")
+volume_db = -41.076
 
 [node name="Models" type="Node3D" parent="Environment"]
 
@@ -619,14 +620,14 @@ transform = Transform3D(-0.41753963, 0.41224906, -0.2337281, 0.35972434, 0.47850
 [node name="miniboss" parent="npcs" instance=ExtResource("26_whg7e")]
 transform = Transform3D(-1.4099991, 0, -0.8140635, 0, 1.6281269, 0, 0.8140635, 0, -1.4099991, -9.08695, -12.778088, -89.92949)
 
-[node name="Node3D" type="Node3D" parent="npcs/miniboss"]
+[node name="gateNode" type="Node3D" parent="npcs/miniboss"]
 transform = Transform3D(-4.1741114, 0, 2.4099245, 0, 4.8198476, 0, -2.4099245, 0, -4.1741114, -5.9355335, 6.4124784, -0.88181305)
 script = ExtResource("27_ooa8t")
 
-[node name="gate" parent="npcs/miniboss/Node3D" instance=ExtResource("28_k6p8l")]
+[node name="gate" parent="npcs/miniboss/gateNode" instance=ExtResource("28_k6p8l")]
 transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, -0.058712035, -1.8896812, 0.24167566)
 
-[node name="gate2" parent="npcs/miniboss/Node3D" instance=ExtResource("28_k6p8l")]
+[node name="gate2" parent="npcs/miniboss/gateNode" instance=ExtResource("28_k6p8l")]
 transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.5307432, -1.8941944, 0.24167566)
 
 [node name="Player" parent="." instance=ExtResource("14_whg7e")]
