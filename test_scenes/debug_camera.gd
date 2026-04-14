@@ -14,6 +14,9 @@ func _ready() -> void:
 	mainCamera.current = true
 
 func _process(_delta: float) -> void:
+	# this is going to be deleted later i just dont want to deal with the
+	# knock-on affects of doing that right now
+	return
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
 		return
