@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://6ampr08wbamb"]
+[gd_scene load_steps=11 format=3 uid="uid://6ampr08wbamb"]
 
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="1_eawqy"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_nt7id"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_kkbud"]
+[ext_resource type="PackedScene" uid="uid://dmow3jg55v8u0" path="res://ui/blueprint_menue.tscn" id="5_kkbud"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="5_nt7id"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4x50"]
@@ -63,5 +64,7 @@ current = true
 
 [node name="Area3D" parent="." instance=ExtResource("5_nt7id")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.295865, 0)
+
+[node name="BlueprintMenu" parent="." instance=ExtResource("5_kkbud")]
 
 [editable path="PlayerCamera"]

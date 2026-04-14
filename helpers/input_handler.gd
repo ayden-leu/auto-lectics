@@ -25,6 +25,8 @@ func _ready() -> void:
 		return
 	Globals.inputHandler = self
 	print("InputHandler ready: ", name, " | ", get_path(), " | id=", get_instance_id())
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _process(_delta: float) -> void:
@@ -69,10 +71,10 @@ func _input(event: InputEvent) -> void:
 		if mouse_mode_locked:
 			return
 		
-		if event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		elif event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		#if event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
+			#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		#elif event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 ## lock mouse to cursor mode while dialogue is open
 func lock_mouse_to_cursor() -> void:
