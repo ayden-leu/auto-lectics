@@ -1,0 +1,25 @@
+{
+	"text": "*play neutral.wav*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dbNeutral"
+	},
+	"options": [
+		{
+			"text": "Sorry for interrupting. ",
+			"type": "neutral",
+			"nextID": "DB2"
+		},
+		{
+			"text": "What are you listening to?",
+			"type": "neutral",
+			"nextID": "DB2"
+		},
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "DB2"
+		}
+	]
+}
