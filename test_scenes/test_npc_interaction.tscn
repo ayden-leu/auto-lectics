@@ -119,12 +119,6 @@ initialDialogueID = "GB3"
 talkOnlyOnce = false
 myName = "gossip"
 
-[node name="NPC_Test3" parent="npcs" instance=ExtResource("16_ejbbu")]
-transform = Transform3D(-0.20124891, 0, -0.9795401, 0, 1, 0, 0.9795401, 0, -0.20124891, 4.453091, 0.09387207, -6.449946)
-initialDialogueID = "start"
-talkOnlyOnce = false
-myName = "miniboss"
-
 [node name="Player" parent="." instance=ExtResource("3_aue1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
 

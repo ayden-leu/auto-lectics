@@ -10,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_k0l7g")
 
 [node name="BackgroundDim" type="ColorRect" parent="."]
@@ -26,6 +27,7 @@ color = Color(0, 0, 0, 0.45000002)
 layout_mode = 0
 offset_right = 1150.0
 offset_bottom = 618.0
+mouse_filter = 2
 
 [node name="TitleLabel" type="Label" parent="MainPanel"]
 layout_mode = 0
@@ -37,20 +39,19 @@ text = "Blueprint Menu"
 horizontal_alignment = 1
 
 [node name="CloseButton" type="Button" parent="MainPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.016
-anchor_right = 0.016
-offset_left = 1102.6
-offset_top = -1.0
-offset_right = 1134.6
-offset_bottom = 34.0
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 0
+offset_left = 1029.0
+offset_top = -2.0
+offset_right = 1149.0
+offset_bottom = 118.0
 text = "X"
 
 [node name="NPCListPanel" type="Panel" parent="MainPanel"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="NPCNodeContainer" type="HFlowContainer" parent="MainPanel/NPCListPanel"]
 layout_mode = 0
@@ -59,23 +60,26 @@ offset_top = 80.0
 offset_right = 1147.0
 offset_bottom = 574.0
 
-[node name="NPC_Test_Entry" parent="MainPanel/NPCListPanel/NPCNodeContainer" instance=ExtResource("2_puj0o")]
-custom_minimum_size = Vector2(200, 200)
+[node name="npc_test_1" parent="MainPanel/NPCListPanel/NPCNodeContainer" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-script = null
+accessibility_name = "npc_test_1"
+npc_id = "npc_test_1"
 
-[node name="BlueprintNPCEntry" parent="MainPanel/NPCListPanel/NPCNodeContainer" instance=ExtResource("2_puj0o")]
+[node name="npc_test_2" parent="MainPanel/NPCListPanel/NPCNodeContainer" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-script = null
+accessibility_name = "npc_test_2"
+npc_id = "npc_test_2"
 
-[node name="BlueprintNPCEntry2" parent="MainPanel/NPCListPanel/NPCNodeContainer" instance=ExtResource("2_puj0o")]
+[node name="npc_test_3" parent="MainPanel/NPCListPanel/NPCNodeContainer" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-script = null
+accessibility_name = "npc_test_3"
+npc_id = "npc_test_3"
 
 [node name="DetailPanel" type="Panel" parent="MainPanel"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="NameInputPanel" type="Panel" parent="MainPanel/DetailPanel"]
 layout_mode = 0
@@ -83,6 +87,7 @@ offset_left = 459.0
 offset_top = 370.0
 offset_right = 653.0
 offset_bottom = 497.0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="MainPanel/DetailPanel/NameInputPanel"]
 layout_mode = 0
@@ -115,6 +120,7 @@ offset_left = 610.0
 offset_top = 77.0
 offset_right = 940.0
 offset_bottom = 289.0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="MainPanel/DetailPanel/NotesPanel"]
 layout_mode = 0

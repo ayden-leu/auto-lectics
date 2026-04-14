@@ -71,8 +71,8 @@ func _input(event: InputEvent) -> void:
 		
 		if event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		elif event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		#elif event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 ## lock mouse to cursor mode while dialogue is open
 func lock_mouse_to_cursor() -> void:

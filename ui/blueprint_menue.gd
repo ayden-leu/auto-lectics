@@ -34,11 +34,31 @@ var npc_data := {
 var is_loading_notes := false
 
 func _ready() -> void:
+	print("Menu ready start")
+
 	add_to_group("blueprint_menu")
 
 	hide()
 	name_input_panel.hide()
 	notes_panel.hide()
+
+	print("npc_container =", npc_container)
+	print("submit_button =", submit_button)
+	print("notes_text_edit =", notes_text_edit)
+	print("close_button =", close_button)
+
+	if npc_container == null:
+		push_error("npc_container is null")
+		return
+	if submit_button == null:
+		push_error("submit_button is null")
+		return
+	if notes_text_edit == null:
+		push_error("notes_text_edit is null")
+		return
+	if close_button == null:
+		push_error("close_button is null")
+		return
 
 	_connect_npc_entries()
 	_refresh_all_entries()
@@ -46,6 +66,21 @@ func _ready() -> void:
 	submit_button.pressed.connect(_on_submit_name_pressed)
 	notes_text_edit.text_changed.connect(_on_notes_changed)
 	close_button.pressed.connect(_on_close_pressed)
+
+	print("Menu ready done")
+#func _ready() -> void:
+	#add_to_group("blueprint_menu")
+#
+	#hide()
+	#name_input_panel.hide()
+	#notes_panel.hide()
+#
+	#_connect_npc_entries()
+	#_refresh_all_entries()
+#
+	#submit_button.pressed.connect(_on_submit_name_pressed)
+	#notes_text_edit.text_changed.connect(_on_notes_changed)
+	#close_button.pressed.connect(_on_close_pressed)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("open_blueprint"):
@@ -56,7 +91,9 @@ func _process(_delta: float) -> void:
 
 func _connect_npc_entries() -> void:
 	for child in npc_container.get_children():
+		print("Found child:", child.name)
 		if child.has_signal("selected"):
+			print("Connecting selected for:", child.name, " id=", child.npc_id)
 			if not child.selected.is_connected(_on_npc_selected):
 				child.selected.connect(_on_npc_selected)
 
@@ -75,25 +112,26 @@ func _refresh_all_entries() -> void:
 			child.set_locked()
 
 func _on_npc_selected(npc_id: String) -> void:
+	print("Selected NPC from menu:", npc_id)
 	current_npc_id = npc_id
 
 	if not npc_data.has(npc_id):
 		push_warning("No npc data found for id: " + npc_id)
 		return
 
-	# notes 永远显示
 	notes_panel.show()
 
 	is_loading_notes = true
 	notes_text_edit.text = npc_data[npc_id]["notes"]
 	is_loading_notes = false
 
-	# 名字没解锁才显示输入框
 	if npc_data[npc_id]["name_unlocked"]:
 		name_input_panel.hide()
 	else:
 		name_input_panel.show()
 		name_line_edit.text = ""
+
+
 
 func _on_submit_name_pressed() -> void:
 	if current_npc_id == "":
@@ -128,7 +166,7 @@ func open_menu() -> void:
 func close_menu() -> void:
 	hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-func _on_close_pressed() -> void:
-	close_menu()
 	
+func _on_close_pressed() -> void:
+	print("Close button pressed")
+	close_menu()
