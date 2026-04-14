@@ -1,0 +1,14 @@
+{
+	"text": "*play neutral.wav*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dbNeutral"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"text": "*begin transmission*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dbPurpose"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}
