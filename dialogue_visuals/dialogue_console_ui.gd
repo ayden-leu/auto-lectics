@@ -41,10 +41,10 @@ var _hectic_time_left: float = 0.0
 var _hectic_active: bool = false
 
 ## Show this message when "help" is inputted
-var help_text: String = "Here are the commands:\n" + \
-		"0, 1, 2...  = choose an option by ID\n" + \
-		"back        = go back one dialogue\n" + \
-		"exit         = close the console"
+var help_text: String = "Here are the commands:\n\n" + \
+		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
+		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
+		"exit         =  close the console"
 
 
 func _ready() -> void:
@@ -224,7 +224,7 @@ func _on_input_submitted(raw_text: String) -> void:
 		exit_window()
 		return
 	
-	if text.to_lower() == "open_gate" && ownerName == "miniboss":
+	if text.to_lower() == "open_gate" && ownerName == "mini-BOSS":
 		add_player_text("open_gate")
 		open_gate.emit()
 		return

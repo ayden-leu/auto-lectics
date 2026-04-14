@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c6c0v3erw78oj"
-path="res://.godot/imported/Soup Bot v0.wav-6840cb1c76d9ed704d8c0d78d1f1bf78.sample"
+path="res://.godot/imported/Soup Bot v0.wav-b715c34e43ac1c383461fcf89695ace7.sample"
 
 [deps]
 
-source_file="res://sounds/sfx/normalSound/Soup Bot v0.wav"
-dest_files=["res://.godot/imported/Soup Bot v0.wav-6840cb1c76d9ed704d8c0d78d1f1bf78.sample"]
+source_file="res://sounds/sfx/default/Soup Bot v0.wav"
+dest_files=["res://.godot/imported/Soup Bot v0.wav-b715c34e43ac1c383461fcf89695ace7.sample"]
 
 [params]
 

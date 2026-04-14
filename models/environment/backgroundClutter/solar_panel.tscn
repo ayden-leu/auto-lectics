@@ -1,5 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://hf7vnxh0uha5"]
+[gd_scene load_steps=3 format=3 uid="uid://hf7vnxh0uha5"]
 
 [ext_resource type="PackedScene" uid="uid://dabf8v83mqc0l" path="res://models/BlendFiles/solarPanel.blend" id="1_qgd3y"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qgd3y"]
+size = Vector3(15.151978, 1, 14.235107)
+
 [node name="solarPanel" instance=ExtResource("1_qgd3y")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_186" index="0"]
+transform = Transform3D(2.3321986, 1.1640662, 1.7165111, -0.014977561, 0.034438312, -0.0030048296, -2.2994936, -0.6868298, 3.5900671, 3.8563392, 0.9937442, 8.030814)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_186/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13311768, 0, -2.2996826)
+shape = SubResource("BoxShape3D_qgd3y")

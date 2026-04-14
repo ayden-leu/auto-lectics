@@ -205,6 +205,13 @@ func _on_jump_pressed() -> void:
 	if is_on_floor():
 		jump()
 
+
+	
+
 func _on_updated_input_direction(newDirection:Vector2) -> void:
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
 	handleDirectionInput(direction)
+
+#temporary code for Spring Playtest week 3
+func _on_input_handler_respawn() -> void:
+	position = Vector3(0,0,1)

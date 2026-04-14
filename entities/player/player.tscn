@@ -49,4 +49,5 @@ debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
 [connection signal="jump_pressed" from="InputHandler" to="." method="_on_jump_pressed"]
 [connection signal="mouse_moved" from="InputHandler" to="." method="_on_mouse_moved"]
+[connection signal="respawn" from="InputHandler" to="." method="_on_input_handler_respawn"]
 [connection signal="update_input_direction" from="InputHandler" to="." method="_on_updated_input_direction"]

@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmow3jg55v8u0"]
+[gd_scene load_steps=3 format=3 uid="uid://bult80lkyvnls"]
 
-[ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://ui/blueprint_menue.gd" id="1_k0l7g"]
-[ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://ui/blueprint_npc_entry.tscn" id="2_puj0o"]
+[ext_resource type="Script" path="res://ui/blueprint_menue.gd" id="1_k0l7g"]
+[ext_resource type="PackedScene" path="res://ui/blueprint_npc_entry.tscn" id="2_puj0o"]
 
 [node name="BlueprintMenu" type="Control"]
 layout_mode = 3
@@ -21,12 +21,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0.45000002)
+color = Color(0.039215688, 0, 0.023529412, 1)
 
 [node name="MainPanel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 1150.0
-offset_bottom = 618.0
+offset_right = 1456.0
+offset_bottom = 819.0
 mouse_filter = 2
 
 [node name="TitleLabel" type="Label" parent="MainPanel"]

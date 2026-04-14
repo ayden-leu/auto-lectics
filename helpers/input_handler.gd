@@ -13,11 +13,16 @@ signal jump_pressed
 ## Emitted constantly to update the player's current input direction.
 signal update_input_direction(newDirection:Vector2)
 
+#temporary code for Spring Playtest week 3, respawns the palyer at world origin
+signal respawn
+
 ## Mouse movement sensitivity.
 var mouseSentitivity:float = 0.15
 ## Lock mouse as cursor while in dialogue window
 var mouse_mode_locked: bool = false
 var locked_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
+
+
 
 ## load inputhandler into globals
 func _ready() -> void:
@@ -60,6 +65,10 @@ func _input(event: InputEvent) -> void:
 	
 	elif event.is_action_pressed("close_game"):
 		get_tree().quit()
+	
+	
+	elif event.is_action_pressed("respawn"):
+		respawn.emit()
 	
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:

@@ -16,7 +16,7 @@ dialogueBoxAttachMethod = 1
 initialDialogueID = "start"
 talkOnlyOnce = false
 model = NodePath("miniboss")
-myName = "miniboss"
+myName = "mini-BOSS"
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 6.396848, -0.15410192)

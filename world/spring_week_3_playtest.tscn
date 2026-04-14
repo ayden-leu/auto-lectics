@@ -1,10 +1,11 @@
-[gd_scene load_steps=46 format=3 uid="uid://bkh5ir3lgoy0d"]
+[gd_scene load_steps=48 format=3 uid="uid://bkh5ir3lgoy0d"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_p7yb8"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_swegm"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_tcrbb"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_phryc"]
 [ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="5_dlwql"]
+[ext_resource type="PackedScene" uid="uid://bult80lkyvnls" path="res://ui/blueprint_menue.tscn" id="5_rtyrd"]
 [ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="6_rtyrd"]
 [ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="7_c8mtx"]
 [ext_resource type="PackedScene" uid="uid://bullwudoypwel" path="res://models/environment/backgroundClutter/round_tank.tscn" id="8_ucjwr"]
@@ -40,6 +41,7 @@
 [ext_resource type="PackedScene" uid="uid://c0gkoa5s8geir" path="res://models/environment/backgroundClutter/big_wires.tscn" id="35_qhru6"]
 [ext_resource type="PackedScene" uid="uid://cgadj03f0km58" path="res://models/environment/backgroundClutter/big_greeble.tscn" id="36_fqk10"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="36_p7yb8"]
+[ext_resource type="Script" uid="uid://cwtbpvdwgynmd" path="res://world/forceRepsawn.gd" id="37_c8mtx"]
 
 [sub_resource type="GDScript" id="GDScript_doxto"]
 script/source = "extends Node3D
@@ -57,15 +59,15 @@ func _ready() -> void:
 		
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dlwql"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_c8mtx"]
 panorama = ExtResource("1_p7yb8")
 
-[sub_resource type="Sky" id="Sky_rtyrd"]
-sky_material = SubResource("PanoramaSkyMaterial_dlwql")
+[sub_resource type="Sky" id="Sky_ucjwr"]
+sky_material = SubResource("PanoramaSkyMaterial_c8mtx")
 
-[sub_resource type="Environment" id="Environment_c8mtx"]
+[sub_resource type="Environment" id="Environment_gc617"]
 background_mode = 2
-sky = SubResource("Sky_rtyrd")
+sky = SubResource("Sky_ucjwr")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -96,14 +98,14 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_c8mtx")
+environment = SubResource("Environment_gc617")
 script = ExtResource("2_swegm")
 anisotropy = 1.0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
 stream = ExtResource("3_tcrbb")
-volume_db = 22.018
+volume_db = 1.824
 unit_size = 4.55
 autoplay = true
 
@@ -121,6 +123,9 @@ volume_db = 17.0
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("3_tcrbb")
+
+[node name="BlueprintMenu" parent="Environment" node_paths=PackedStringArray("player") instance=ExtResource("5_rtyrd")]
+player = NodePath("../../Player")
 
 [node name="Models" type="Node3D" parent="Environment"]
 
@@ -566,11 +571,11 @@ transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, -0
 transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.5307432, -1.8941944, 0.24167566)
 
 [node name="dishNPC" parent="npcs" instance=ExtResource("29_tcrbb")]
-transform = Transform3D(0.69666547, 0.11605037, -0.017209271, -0.11731943, 0.68912953, -0.102191985, 0, 0.10363089, 0.69883275, -29.930515, -26.21541, -29.455906)
+transform = Transform3D(0.70561457, -0.03030838, -0.017209271, 0.027510546, 0.6985031, -0.102191985, 0.021399211, 0.10139742, 0.69883275, -32.16951, -26.21541, -30.949095)
 initialDialogueID = "DB1"
 
 [node name="brokenUpPipe" parent="npcs" instance=ExtResource("30_phryc")]
-transform = Transform3D(1.1375123, 0.19404647, 2.9100256, -7.450581e-09, 2.269805, -0.3311454, -1.976917, 0.11165376, 1.6744201, -31.121805, -24.265497, -29.954672)
+transform = Transform3D(1.1375123, 0.19404647, 2.9100256, -7.450581e-09, 2.269805, -0.3311454, -1.976917, 0.11165376, 1.6744201, -33.360798, -24.265497, -31.44786)
 
 [node name="brokenUpPipe3" parent="npcs" instance=ExtResource("30_phryc")]
 transform = Transform3D(2.7341738, -4.7518034, -5.3802125e-07, 1.4326831e-07, -2.3963787e-07, 15.226174, -4.751804, -2.7341738, 0, 89.22279, 19.80887, -195.76366)
@@ -595,6 +600,10 @@ focus = NodePath("../Player")
 
 [node name="DeathPlane" parent="." instance=ExtResource("33_a36i0")]
 transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 48.671253, -72.754974, -109.03)
+
+[node name="Node3D" type="Node3D" parent="DeathPlane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.739603, 73.80671, 120.61255)
+script = ExtResource("37_c8mtx")
 
 [node name="FadeToBlackHitbox" parent="." instance=ExtResource("34_oktx8")]
 transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30690813, -10.712891, -11.071636, -99.01719)

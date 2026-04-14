@@ -12,7 +12,7 @@ hitbox = NodePath("Hitbox")
 dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 initialDialogueID = "1"
 model = NodePath("dropPod")
-myName = "dropPod"
+myName = "The Office"
 
 [node name="dropPod" parent="." instance=ExtResource("2_fax51")]
 

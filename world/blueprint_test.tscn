@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dnlw4bkcn23mi"]
+[gd_scene load_steps=37 format=3 uid="uid://1xpsaw4xurhs"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_b0kla"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_3tfj0"]
@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_lwmcw"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="25_7ivc8"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="26_nc4fg"]
-[ext_resource type="PackedScene" uid="uid://dmow3jg55v8u0" path="res://ui/blueprint_menue.tscn" id="27_rlkrr"]
+[ext_resource type="PackedScene" uid="uid://bult80lkyvnls" path="res://ui/blueprint_menue.tscn" id="27_rlkrr"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="28_al4up"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="29_gdscw"]
 
@@ -42,18 +42,17 @@ glow_enabled = true
 fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0.95, 0.6, 0.3, 1)
-fog_density = 0.035
-fog_aerial_perspective = 0.3
-fog_sky_affect = 0.15
+fog_light_energy = 1.34
+fog_density = 0.006
 fog_height_density = 0.05
-fog_depth_curve = 1.5
+fog_depth_curve = 0.85
 fog_depth_begin = 80.0
 fog_depth_end = 700.0
-volumetric_fog_density = 0.02
+volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(0.95, 0.62, 0.32, 1)
 volumetric_fog_emission = Color(0.19, 0.124000005, 0.064, 0.2)
 volumetric_fog_emission_energy = 0.5
-volumetric_fog_anisotropy = 0.4
+volumetric_fog_anisotropy = -0.45
 volumetric_fog_length = 200.0
 
 [sub_resource type="PlaceholderMesh" id="PlaceholderMesh_rfx78"]
@@ -80,11 +79,12 @@ radius = 28.77295
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_b0kla")
 script = ExtResource("2_3tfj0")
-smog_density = 0.035
+smog_density = 0.006
 fog_start = 80.0
 fog_end = 700.0
-fog_curve = 1.5
-volumetric_density = 0.02
+fog_curve = 0.85
+volumetric_density = 0.0
+anisotropy = -0.44999999999999996
 
 [node name="Models" type="Node3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.744242, -1.2900829, -4.108347)
