@@ -10,7 +10,7 @@ border_color = Color(1, 1, 1, 1)
 [node name="Panel" type="Panel"]
 offset_left = 240.0
 offset_top = 195.0
-offset_right = 463.0
+offset_right = 501.0
 offset_bottom = 358.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_rh22u")
 script = ExtResource("1_rh22u")
@@ -28,7 +28,7 @@ autowrap_mode = 3
 layout_mode = 0
 offset_left = 30.0
 offset_top = 41.0
-offset_right = 217.0
+offset_right = 258.0
 offset_bottom = 74.0
 text = "breakfast please"
 autowrap_mode = 3
@@ -46,7 +46,7 @@ rotation = 1.5707964
 layout_mode = 0
 offset_left = -21.000002
 offset_top = 34.0
-offset_right = 199.0
+offset_right = 215.90439
 offset_bottom = 38.0
 scale = Vector2(1.3423139, 0.8023643)
 

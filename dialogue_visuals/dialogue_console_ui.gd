@@ -39,6 +39,11 @@ var hectic_duration: float = 5.0
 var _hectic_time_left: float = 0.0
 var _hectic_active: bool = false
 
+## Show this message when "help" is inputted
+var help_text: String = "Here are the commands:\n" + \
+		"0, 1, 2...  = choose an option by ID\n" + \
+		"back        = go back one dialogue\n" + \
+		"exit         = close the console"
 
 
 func _ready() -> void:
@@ -77,6 +82,16 @@ func start() -> void:
 	
 	if mode == "hectic":
 		_start_hectic_mode()
+
+
+## exit window on "exit" or pressing X button
+func exit_window() -> void:
+	## If you don't want player to exit from certain NPCs, put exceptions here
+	if ownerName == "dropPod":
+		add_player_text("exit")
+		_type_dialogue_text("Wait, you must listen first.")
+		return
+	option_chosen.emit("")
 
 
 func _process(delta: float) -> void:
@@ -135,7 +150,7 @@ func _type_dialogue_text(full_text: String) -> void:
 	var cps: float = max(textWriteSpeed, 1.0)
 	var delay: float = 1.0 / cps
 
-	dialogue_log.append_text("[indent][indent][indent][indent][indent][indent][indent][indent][color=#f2a11a]")
+	dialogue_log.append_text("[indent][indent][indent][indent][indent][indent][color=#f2a11a]")
 
 	for i in range(full_text.length()):
 		dialogue_log.append_text(full_text[i])
@@ -143,7 +158,7 @@ func _type_dialogue_text(full_text: String) -> void:
 		sfxPlayer.text.play()
 		await get_tree().create_timer(delay).timeout
 
-	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
+	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
 	_scroll_to_bottom()
 
 	_is_typing = false
@@ -156,7 +171,7 @@ func add_player_text(full_text: String) -> void:
 
 ## scrolls the dialogue log down
 func _scroll_to_bottom() -> void:
-	#await get_tree().process_frame
+	await get_tree().process_frame
 	scroll_container.scroll_vertical = int(scroll_container.get_v_scroll_bar().max_value)
 
 
@@ -177,12 +192,7 @@ func _spawn_option_windows() -> void:
 		
 		win.set_option_data(i, str(opt.get("text", "")))
 		win.option_selected.connect(_on_option_window_selected.bind(opt))
-		
-		#if mode == "hectic":
-			#win.position = _random_popup_position(win.size)
-		#else:
-			
-		win.position = Vector2(40, 120 + i * 90)
+		win.position = Vector2(40, 120 + i * 120)
 		
 		_spawned_option_windows.push_back(win)
 		new_option_available.emit()
@@ -200,10 +210,19 @@ func _on_input_submitted(raw_text: String) -> void:
 	var text := raw_text.strip_edges()
 	input_line.text = ""
 	
+	if text.to_lower() == "help":
+		add_player_text("help")
+		await _type_dialogue_text(help_text)
+		return
+	
 	if text.to_lower() == "back":
 		request_back.emit()
 		return
 	
+	if text.to_lower() == "exit":
+		exit_window()
+		return
+		
 	if text == "":
 		return
 	
@@ -237,16 +256,6 @@ func _choose_option(option_data: Dictionary) -> void:
 	option_chosen.emit(str(option_data.get("nextID", "")))
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
-		return
-	
-	if event is InputEventKey and event.pressed and event.ctrl_pressed and event.keycode == KEY_Z:
-		request_back.emit()
-		get_viewport().set_input_as_handled()
-
-
 func kill() -> void:
 	_stop_hectic_mode()
 	queue_free()
@@ -264,6 +273,7 @@ func _center_main_window() -> void:
 	main_window.position = (get_viewport_rect().size - main_window.size) * 0.5
 
 
+## Currently unused, since it leads to overlap between options and main window
 func _random_popup_position(window_size: Vector2) -> Vector2:
 	var viewport_size := get_viewport_rect().size
 	return Vector2(
@@ -299,7 +309,7 @@ func _on_hectic_timeout() -> void:
 # =======================================
 
 func _on_close_button_pressed() -> void:
-	option_chosen.emit("")
+	exit_window()
 
 ## Holds the AudioStreamPlayer3Ds for each event.
 @onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {

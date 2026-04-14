@@ -153,11 +153,14 @@ func loadNextDialogue(nextDialogueID: String, addToHistory: bool = true) -> void
 
 func _on_console_request_back() -> void:
 	if dialogueHistory.size() <= 1:
+		dialogueConsole.add_player_text("[no recorded history in log]")
 		return
 	
 	dialogueHistory.pop_back()
+	dialogueConsole.add_player_text("back")
 	var previous_id: String = dialogueHistory.back()
 	loadNextDialogue(previous_id, false)
+	return
 
 
 ## Ends the dialogue interaction.
