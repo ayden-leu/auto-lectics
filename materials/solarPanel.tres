@@ -1,0 +1,7 @@
+[gd_resource type="ORMMaterial3D" load_steps=2 format=3 uid="uid://q7ho72phbnj7"]
+
+[ext_resource type="Texture2D" uid="uid://dykr43jl3is51" path="res://materials/solarPanel_albedo.png" id="1"]
+
+[resource]
+albedo_color = Color(0.71484375, 0.9866333, 1, 1)
+albedo_texture = ExtResource("1")

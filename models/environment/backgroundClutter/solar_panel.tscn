@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://hf7vnxh0uha5"]
+
+[ext_resource type="PackedScene" uid="uid://dabf8v83mqc0l" path="res://models/BlendFiles/solarPanel.blend" id="1_qgd3y"]
+
+[node name="solarPanel" instance=ExtResource("1_qgd3y")]

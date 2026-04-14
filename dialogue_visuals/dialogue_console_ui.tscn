@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://jyd2xwhs30s5" path="res://dialogue_visuals/dialogue_console_main_window.gd" id="3_1d7as"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgd8n"]
-bg_color = Color(0.04, 0, 0.024000015, 1)
+bg_color = Color(0.039215688, 0, 0.023529412, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1d7as"]
 bg_color = Color(1, 1, 1, 1)

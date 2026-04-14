@@ -13,7 +13,7 @@ func _input(event: InputEvent) -> void:
 		amIOnTheTitleScreen = false
 		$CanvasLayer/Label2.visible = false
 		$CanvasLayer/ColorRect.visible = false
-		get_tree().change_scene_to_file("res://world/week_10_playtest.tscn")
+		get_tree().change_scene_to_file("res://world/spring_week_3_playtest.tscn")
 							
 	elif event.is_action_pressed("close_game_from_title_screen"):
 		if amIOnTheTitleScreen == true and $CanvasLayer/Label2.visible == true: 

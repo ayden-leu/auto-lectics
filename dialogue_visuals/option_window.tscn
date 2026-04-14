@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://dialogue_visuals/option_window.gd" id="1_rh22u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rh22u"]
-bg_color = Color(0.007843138, 0, 0.039215688, 1)
+bg_color = Color(0.039215688, 0, 0.023529412, 1)
 border_width_left = 4
 border_color = Color(1, 1, 1, 1)
 
