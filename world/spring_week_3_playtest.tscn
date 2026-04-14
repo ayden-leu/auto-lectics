@@ -15,11 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://dmkoidkma4qj3" path="res://models/BlendFiles/cable.blend" id="13_s5dvn"]
 [ext_resource type="PackedScene" uid="uid://ckjpbarwajofg" path="res://models/environment/environmentscenes/battery_block.tscn" id="14_3k5c6"]
 [ext_resource type="PackedScene" uid="uid://ia3m4r8gqxaa" path="res://models/environment/environmentscenes/battery_block2.tscn" id="15_ibkrx"]
-[ext_resource type="PackedScene" uid="uid://ciygohqncwr2e" path="res://models/environment/power_tower.tscn" id="16_yfgfx"]
+[ext_resource type="PackedScene" uid="uid://b1jj0jdhw2be5" path="res://models/BlendFiles/generatorTube.blend" id="16_p7yb8"]
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="17_kksbg"]
 [ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="18_i2csx"]
-[ext_resource type="PackedScene" uid="uid://cgsl375svaj1x" path="res://models/BlendFiles/dropPod.blend" id="19_at4b3"]
-[ext_resource type="PackedScene" uid="uid://5tf7frxomx2y" path="res://models/environment/bridge.tscn" id="20_eqhoe"]
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="21_eye4h"]
 [ext_resource type="PackedScene" uid="uid://dytucwmjofvdw" path="res://models/environment/backgroundClutter/tube_clutter_1.tscn" id="22_n6atl"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="23_8jdfp"]
@@ -34,8 +32,10 @@
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="32_bfgm7"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="33_a36i0"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="34_oktx8"]
-[ext_resource type="PackedScene" uid="uid://c0gkoa5s8geir" path="res://models/environment/backgroundClutter/big_wires.tscn" id="35_qhru6"]
-[ext_resource type="PackedScene" uid="uid://cgadj03f0km58" path="res://models/environment/backgroundClutter/big_greeble.tscn" id="36_fqk10"]
+[ext_resource type="PackedScene" uid="uid://cohj3ym45tr8w" path="res://models/environment/scaffold_tower.tscn" id="35_knruc"]
+[ext_resource type="PackedScene" path="res://models/environment/backgroundClutter/big_wires.tscn" id="35_qhru6"]
+[ext_resource type="PackedScene" path="res://models/environment/backgroundClutter/big_greeble.tscn" id="36_fqk10"]
+[ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="36_p7yb8"]
 
 [sub_resource type="GDScript" id="GDScript_doxto"]
 script/source = "extends Node3D
@@ -53,15 +53,15 @@ func _ready() -> void:
 		
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4m6mo"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_p7yb8"]
 panorama = ExtResource("1_p7yb8")
 
-[sub_resource type="Sky" id="Sky_ewyf3"]
-sky_material = SubResource("PanoramaSkyMaterial_4m6mo")
+[sub_resource type="Sky" id="Sky_swegm"]
+sky_material = SubResource("PanoramaSkyMaterial_p7yb8")
 
-[sub_resource type="Environment" id="Environment_ty42w"]
+[sub_resource type="Environment" id="Environment_tcrbb"]
 background_mode = 2
-sky = SubResource("Sky_ewyf3")
+sky = SubResource("Sky_swegm")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -90,7 +90,7 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_ty42w")
+environment = SubResource("Environment_tcrbb")
 script = ExtResource("2_swegm")
 anisotropy = 1.0
 
@@ -195,63 +195,6 @@ transform = Transform3D(-0.091523126, -2.5833926, -0.31694162, -2.602737, 0.0922
 [node name="MetalBigFlat6" parent="Environment/Models/Interactable/TrussCorner2" instance=ExtResource("6_rtyrd")]
 transform = Transform3D(2.5850003, 0.3169418, 0.008076006, 0.008136475, -2.7059555e-10, -2.6043572, -0.31693983, 2.585013, -0.0009901435, 30.700356, -3.3723297, -5.009445)
 
-[node name="TrussCorner3" type="Node3D" parent="Environment/Models/Interactable"]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, -26.618532, -73.42644, -11.907452)
-
-[node name="bigtrussing" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("5_dlwql")]
-transform = Transform3D(-5.198933e-09, -2.3059416, -0.3098085, -2.3266602, 1.1104644e-16, 5.960465e-08, -6.0254756e-08, 0.30980855, -2.305941, 7.936775, 38.31451, -30.755081)
-
-[node name="bigtrussing8" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("5_dlwql")]
-transform = Transform3D(-6.025474e-08, 0.3098086, -2.305941, -2.3266597, -1.765399e-15, 5.9604627e-08, 5.198947e-09, 2.305941, 0.3098086, 13.644417, 38.31451, -9.855438)
-
-[node name="MetalBigFlat3" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(1.066457e-07, -2.5850134, -0.31694162, -2.6043696, -1.1359714e-07, -3.2400916e-08, 4.0447254e-09, 0.31694132, -2.5850134, 6.3462524, 49.61524, -23.140854)
-
-[node name="MetalBigFlat4" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(4.0447183e-09, 0.31694156, -2.585013, -2.6043696, -1.1359714e-07, -3.2400905e-08, -1.0664571e-07, 2.5850127, 0.31694174, 21.677578, 49.61524, -8.923836)
-
-[node name="bigtrussing3" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("5_dlwql")]
-transform = Transform3D(-5.198933e-09, -2.3059416, -0.3098085, -2.3266602, 1.1104644e-16, 5.960465e-08, -6.0254756e-08, 0.30980855, -2.305941, 7.936775, 11.8578205, -30.755081)
-
-[node name="bigtrussing10" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("5_dlwql")]
-transform = Transform3D(-6.025474e-08, 0.3098086, -2.305941, -2.3266597, -1.765399e-15, 5.9604627e-08, 5.198947e-09, 2.305941, 0.3098086, 13.644417, 11.8578205, -9.855438)
-
-[node name="MetalBigFlat7" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(0.22116359, -2.575535, -0.3169415, -2.5948205, -0.22281979, -4.8528623e-08, -0.027116254, 0.3157792, -2.5850136, 6.3462524, 23.15855, -23.140854)
-
-[node name="MetalBigFlat8" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(4.044729e-09, 0.4845717, -2.5588934, -2.6043696, -1.1226724e-07, -3.9224584e-08, -1.066457e-07, 2.5588934, 0.48457187, 21.677578, 23.15855, -8.5317)
-
-[node name="bigtrussing2" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("5_dlwql")]
-transform = Transform3D(-5.198933e-09, -2.3059416, -0.3098085, -2.3266602, 1.1104644e-16, 5.960465e-08, -6.0254756e-08, 0.30980855, -2.305941, 7.936775, -14.673061, -30.755081)
-
-[node name="bigtrussing9" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("5_dlwql")]
-transform = Transform3D(-6.025474e-08, 0.3098086, -2.305941, -2.3266597, -1.765399e-15, 5.9604627e-08, 5.198947e-09, 2.305941, 0.3098086, 13.644417, -14.673061, -9.855438)
-
-[node name="MetalBigFlat5" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(-0.091523126, -2.5833926, -0.31694162, -2.602737, 0.092208505, -2.7949769e-08, 0.011221416, 0.31674266, -2.5850134, 6.3462524, -3.3723297, -23.140854)
-
-[node name="MetalBigFlat6" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(2.5850003, 0.3169418, 0.008076006, 0.008136475, -2.7059555e-10, -2.6043572, -0.31693983, 2.585013, -0.0009901435, 21.677578, -3.3723297, -8.923836)
-
-[node name="MetalBigFlat9" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(0.26881838, 0, -2.403767, 0, 2.4187517, 0, 2.403767, 0, 0.26881838, 18.277266, 63.700024, -20.957848)
-
-[node name="MetalBigFlat10" parent="Environment/Models/Interactable/TrussCorner3" instance=ExtResource("6_rtyrd")]
-transform = Transform3D(0.26881838, 0, -2.403767, 0, 2.4187517, 0, 2.403767, 0, 0.26881838, 18.277266, 49.80193, -20.957848)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Environment/Models/Interactable/TrussCorner3"]
-transform = Transform3D(1.3577222, 0.23615746, 0.10916454, -0.111289114, 0.0028709085, 1.3779345, 0.23516372, -1.362101, 0.021830969, 20.86886, 62.17253, -14.107114)
-light_color = Color(0.9204394, 0.79801035, 0.6182901, 1)
-light_energy = 16.0
-spot_range = 14.514431
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="Environment/Models/Interactable/TrussCorner3"]
-transform = Transform3D(0.98213136, 0.17082852, 0.078966096, -0.080502875, 0.0020767185, 0.99675226, 0.17010963, -0.98529863, 0.015791794, 20.25784, 62.17253, -28.765448)
-light_color = Color(0.9204394, 0.79801035, 0.6182901, 1)
-light_energy = 16.0
-spot_range = 14.514431
-
 [node name="MetalBigFlat" parent="Environment/Models/Interactable" instance=ExtResource("6_rtyrd")]
 transform = Transform3D(0.7726136, -0.05927012, 0.01343867, 0.060414948, 0.76764446, -0.087732494, -0.0066015567, 0.088509925, 0.769901, 10.059, -0.075, 1.528)
 visible = false
@@ -270,7 +213,7 @@ shadow_enabled = true
 omni_range = 42.860355
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="Environment/Models/Interactable"]
-transform = Transform3D(0.94075656, 0.33908275, 1.4821777e-08, 0, -4.371139e-08, 1, 0.33908275, -0.94075656, -4.1121773e-08, -13.652939, 19.134249, -66.44838)
+transform = Transform3D(0.94075656, 0.33908275, 1.4821777e-08, 0, -4.371139e-08, 1, 0.33908275, -0.94075656, -4.1121773e-08, -70.3002, 19.134256, 90.714676)
 shadow_enabled = true
 omni_range = 77.75424
 
@@ -371,41 +314,26 @@ transform = Transform3D(-2.599556e-08, -1.5108095, 0.8722662, 1.7445326, -6.1760
 [node name="bigFloorArc4" parent="Environment/Models/Interactable" instance=ExtResource("10_t15lr")]
 transform = Transform3D(-0.028872339, 0.0021623073, -0.15514424, 0.011786655, 0.15738201, 0, 0.15471098, -0.011586615, -0.028953195, -49.147774, -10.051016, -53.11095)
 
-[node name="bigFloorArc5" parent="Environment/Models/Interactable" instance=ExtResource("10_t15lr")]
-transform = Transform3D(-0.12955737, 0.002162307, -0.09010126, 0.008386481, 0.15738203, -0.008282039, 0.08973616, -0.011586615, -0.12931046, -46.316402, -11.206877, -68.282715)
+[node name="generatorTube" parent="Environment/Models/Interactable" instance=ExtResource("16_p7yb8")]
+transform = Transform3D(-0.47869933, 0.116349876, -1.9850633, 0.047936477, 2.041857, 0.10811877, 1.9878922, -0.021219892, -0.4806252, -76.29804, -7.5164146, -80.27985)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Environment/Models/Interactable/generatorTube"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -9.313226e-09, 5.8758025, -2.0421979e-07)
+light_color = Color(0.97877544, 0.8161245, 0.562721, 1)
+light_energy = 21.17
+spot_range = 29.068048
 
 [node name="MetalBigFlat" parent="Environment/Models" instance=ExtResource("6_rtyrd")]
 transform = Transform3D(0.9162299, 0, -0.4006529, 0, 1, 0, 0.4006529, 0, 0.9162299, -39.851532, -11.833922, -70.944084)
+
+[node name="MetalBigFlat4" parent="Environment/Models" instance=ExtResource("6_rtyrd")]
+transform = Transform3D(4.237625, 0, -0.10087431, 0, 1, 0, 1.2787689, 0, 0.33428052, -47.345104, -11.833922, -73.20538)
 
 [node name="MetalBigFlat3" parent="Environment/Models" instance=ExtResource("6_rtyrd")]
 transform = Transform3D(0.9162299, -0.2026715, -0.8843825, 0, 0.8626196, -1.2944251, 0.40065292, 0.46347776, 2.0224435, -45.89087, -18.259449, -57.133083)
 
 [node name="MetalBigFlat2" parent="Environment/Models" instance=ExtResource("6_rtyrd")]
 transform = Transform3D(0.9162299, 0, -0.4006529, 0, 1, 0, 0.4006529, 0, 0.9162299, -48.847393, -23.774403, -49.41808)
-
-[node name="powerTower" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(0.21405327, 0, 0.46813726, 0, 0.5147536, 0, -0.46813726, 0, 0.21405327, -41.050274, -20.767157, -37.234676)
-
-[node name="powerTower4" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(0.21405327, 0, 0.46813726, 0, 0.5147536, 0, -0.46813726, 0, 0.21405327, -51.593636, -20.767157, -42.055573)
-
-[node name="powerTower3" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(0.21405327, 0, 0.46813726, 0, 0.5147536, 0, -0.46813726, 0, 0.21405327, -47.926247, -20.767157, -40.37868)
-
-[node name="powerTower2" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(0.21405327, 0, 0.46813726, 0, 0.5147536, 0, -0.46813726, 0, 0.21405327, -44.40164, -20.767157, -38.76707)
-
-[node name="powerTower5" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(-0.21405335, 0, -0.4681373, 0, 0.5147536, 0, 0.4681373, 0, -0.21405335, -33.26791, -20.767157, -45.311295)
-
-[node name="powerTower6" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(-0.21405335, 0, -0.4681373, 0, 0.5147536, 0, 0.4681373, 0, -0.21405335, -22.724548, -20.767157, -40.4904)
-
-[node name="powerTower7" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(-0.21405335, 0, -0.4681373, 0, 0.5147536, 0, 0.4681373, 0, -0.21405335, -26.391937, -20.767157, -42.16729)
-
-[node name="powerTower8" parent="Environment/Models" instance=ExtResource("16_yfgfx")]
-transform = Transform3D(-0.21405335, 0, -0.4681373, 0, 0.5147536, 0, 0.4681373, 0, -0.21405335, -29.916542, -20.767157, -43.7789)
 
 [node name="Background" type="Node3D" parent="Environment/Models"]
 
@@ -454,24 +382,11 @@ transform = Transform3D(4.0035124, -1.4430109, 6.3076016e-08, 0, -1.8601953e-07,
 [node name="largePipe5" parent="Environment/Models/Background" instance=ExtResource("7_c8mtx")]
 transform = Transform3D(4.0035124, -1.4430109, 6.3076016e-08, 0, -1.8601953e-07, -4.2556305, 1.4430109, 4.0035124, -1.749991e-07, 94.8902, 127.80271, -87.58706)
 
-[node name="startingTower" parent="Environment/Models/Background" instance=ExtResource("7_c8mtx")]
-transform = Transform3D(2.3044357, -3.5777037, 6.307601e-08, -1.129657e-07, -1.477904e-07, -4.25563, 3.5777037, 2.3044357, -1.7499909e-07, 0.45715126, -28.11258, 0.20459025)
-
-[node name="dropPod" parent="Environment/Models/Background/startingTower" instance=ExtResource("19_at4b3")]
-transform = Transform3D(0.08784862, -3.4934224e-09, 0.14293005, -0.14293005, -6.2476704e-09, 0.08784862, 3.4934229e-09, -0.1677688, -6.247671e-09, 7.450581e-09, 0.14736018, -7.175058)
-visible = false
-
-[node name="bridge" parent="Environment/Models/Background/startingTower" instance=ExtResource("20_eqhoe")]
-transform = Transform3D(3.0211914, 0, 0, 0, -1.1090364, 2.8102732, 0, -2.8102732, -1.1090364, -0.0054078153, -3.4952207, -1.7915721)
-
-[node name="bridge2" parent="Environment/Models/Background/startingTower" instance=ExtResource("20_eqhoe")]
-transform = Transform3D(-0.020195246, -1.4210855e-14, -5.157637, 3.021124, -1.3206046e-07, -0.034477353, -1.3205752e-07, -3.0211914, 1.5070469e-09, -6.7330313, -8.291034, -0.42982006)
-
 [node name="largePipe3" parent="Environment/Models/Background" instance=ExtResource("7_c8mtx")]
 transform = Transform3D(8.414646, -3.0329442, 7.843277e-09, 0, -3.909788e-07, -0.52917254, 3.0329432, 8.414648, -2.1760513e-08, -1.7274666, 151.18466, -178.97258)
 
 [node name="largePipe2" parent="Environment/Models/Background" instance=ExtResource("7_c8mtx")]
-transform = Transform3D(1.7374777, -0.6262499, 6.3076e-08, 0, -8.07303e-08, -4.255631, 0.6262499, 1.7374777, -1.749991e-07, 66.3738, 95.669876, -87.96333)
+transform = Transform3D(1.7374777, -0.6262499, 6.3076e-08, 0, -8.07303e-08, -4.255631, 0.6262499, 1.7374777, -1.749991e-07, 69.19261, -61.356705, -80.343506)
 
 [node name="bigWedgeTemp" parent="Environment/Models/Background" instance=ExtResource("21_eye4h")]
 transform = Transform3D(-5.1114407, 0, -5.4104924, 0, 7.4431343, 0, 5.4104924, 0, -5.1114407, -2.7286167, 37.416027, -130.0228)
@@ -506,9 +421,6 @@ transform = Transform3D(-7.416802, 0, 0.62554324, 0, 7.4431343, 0, -0.62554324, 
 [node name="bigWedgeTemp2" parent="Environment/Models/Background" instance=ExtResource("21_eye4h")]
 transform = Transform3D(7.064496, 0, -2.343747, 0, 7.443134, 0, 2.343747, 0, 7.064496, 59.691612, 12.737337, -183.76434)
 
-[node name="largePipe4" parent="Environment/Models/Background" instance=ExtResource("7_c8mtx")]
-transform = Transform3D(2.7155867, -0.97879577, 8.5418364e-08, 0, -1.2617721e-07, -5.76303, 0.97879577, 2.7155867, -2.3698607e-07, 30.068659, -48.288395, -20.537445)
-
 [node name="roundTank" parent="Environment/Models/Background" instance=ExtResource("8_ucjwr")]
 transform = Transform3D(-4.1121776e-08, 0.6108639, -0.79173553, -1, -3.685474e-08, 2.3503484e-08, -1.4821778e-08, 0.79173553, 0.6108639, 60.086052, 51.52246, -202.79562)
 
@@ -531,7 +443,7 @@ transform = Transform3D(0.33315155, 0, -0.12007989, 0, 0.35413152, 0, 0.12007989
 transform = Transform3D(0.56106496, 0.100739256, 8.448963e-09, 1.2458557e-08, -2.1578854e-08, -0.57003707, -0.100739256, 0.56106496, -2.3440938e-08, 38.53161, 50.734844, -78.2422)
 
 [node name="roundTank5" parent="Environment/Models/Background" instance=ExtResource("8_ucjwr")]
-transform = Transform3D(0.23805879, -0.08700408, 3.7567203e-09, -4.930775e-11, -1.1078957e-08, -0.2534595, 0.08700408, 0.23805879, -1.0422704e-08, 34.69404, 24.704483, -81.63429)
+transform = Transform3D(0.23805879, -0.08700408, 3.7567203e-09, -4.930775e-11, -1.1078957e-08, -0.2534595, 0.08700408, 0.23805879, -1.0422704e-08, 34.69404, 41.598495, -81.63429)
 
 [node name="TubeClutter4" parent="Environment/Models/Background" instance=ExtResource("22_n6atl")]
 transform = Transform3D(0.09647116, 0, -0.9953358, 0, 1, 0, 0.9953358, 0, 0.09647116, -92.629135, 8.102455, -100.60873)
@@ -608,7 +520,7 @@ transform = Transform3D(2.7337987, 0, -0.40845925, 0, 1, 0, 0.2830894, 0, 3.9444
 transform = Transform3D(0.71465504, 0.01516811, 0.016220232, -0.014972712, 0.7147898, -0.008735156, -0.016400773, 0.008391276, 0.71476257, -1.9010806, 2.302, 0.571)
 
 [node name="generator" parent="npcs" instance=ExtResource("24_v7qad")]
-transform = Transform3D(-0.8853406, 0.18902494, 0.42478418, 0.20879936, 0.9779585, 0, -0.4154213, 0.08869466, -0.90529466, -33.360706, -25.501127, -39.169537)
+transform = Transform3D(0.99657154, -0.031238884, 0.07661189, 0.0331891, 0.9991532, -0.024315666, -0.07578759, 0.026774975, 0.99676436, -75.39178, -13.456622, -80.62183)
 
 [node name="preacher" parent="npcs" instance=ExtResource("25_5x3pt")]
 transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
@@ -653,8 +565,35 @@ transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30
 [node name="bigWires" parent="." instance=ExtResource("35_qhru6")]
 transform = Transform3D(1.606502, 0, 0.4198999, 0, 1.6604713, 0, -0.4198999, 0, 1.606502, 21.121283, -24.541618, -78.346466)
 
+[node name="bigWires2" parent="." instance=ExtResource("35_qhru6")]
+transform = Transform3D(1.1668949, 0, -1.1813217, 0, 1.6604713, 0, 1.1813217, 0, 1.1668949, 65.50186, -71.11526, -113.42053)
+
 [node name="bigGreeble" parent="." instance=ExtResource("36_fqk10")]
 transform = Transform3D(1.4168284, 0, 0.522836, 0, 1.5102186, 0, -0.522836, 0, 1.4168284, -17.142101, -34.353245, -93.50023)
 
+[node name="bigGreeble3" parent="." instance=ExtResource("36_fqk10")]
+transform = Transform3D(-1.1846805, -2.809425e-07, 0.43716913, 1.10394744e-07, -3.4254322, 0, 0.43716913, 1.03673e-07, 1.1846805, -80.730576, -109.688644, -80.62496)
+
 [node name="bigGreeble2" parent="." instance=ExtResource("36_fqk10")]
 transform = Transform3D(2.494096, 0, 0.35780516, 0, 2.5196307, 0, -0.35780516, 0, 2.494096, -6.459072, -83.7396, -113.26003)
+
+[node name="scaffoldTower" parent="." instance=ExtResource("35_knruc")]
+transform = Transform3D(1.3948712, 0, 0, 0, 1.3948712, 0, 0, 0, 1.3948712, -0.25878143, -5.2281256, 1.5395622)
+
+[node name="scaffoldTower2" parent="." instance=ExtResource("35_knruc")]
+transform = Transform3D(1.2307514, 0, 0.6564425, 0, 1.3948712, 0, -0.6564425, 0, 1.2307514, 19.371492, -9.453515, -24.779158)
+
+[node name="scaffoldTower3" parent="." instance=ExtResource("35_knruc")]
+transform = Transform3D(1.2307514, 0, 0.6564425, 0, 1.3948712, 0, -0.6564425, 0, 1.2307514, -74.86844, -15.278346, -80.417305)
+
+[node name="singleWire" parent="." instance=ExtResource("36_p7yb8")]
+transform = Transform3D(0.67128646, 0.036649767, 0.7402913, -0.17735025, 0.97770643, 0.112415336, -0.71966755, -0.20675373, 0.6628209, 8.941953, -7.7975764, -11.837792)
+
+[node name="singleWire" parent="singleWire" instance=ExtResource("36_p7yb8")]
+transform = Transform3D(0.20767988, -0.088105045, 0.959255, -0.07714089, 0.98791707, 0.118643485, -0.74121505, -0.12750226, 0.25642455, 19.788214, 0.6483304, -16.036682)
+
+[node name="singleWire3" parent="singleWire" instance=ExtResource("36_p7yb8")]
+transform = Transform3D(1.1977357, -0.023820156, 0.06984973, -0.045469165, 0.267094, 0.015304062, -1.1799523, -0.0344716, 0.07031272, 3.6904302, 2.1378477, -19.022694)
+
+[node name="singleWire2" parent="singleWire" instance=ExtResource("36_p7yb8")]
+transform = Transform3D(0.19463094, -0.12858558, 0.959255, 0.04205496, 0.9914474, 0.11864349, -0.7475503, 0.022297323, 0.2564245, 24.060339, -0.23608437, -31.609026)
