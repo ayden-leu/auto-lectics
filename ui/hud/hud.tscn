@@ -8,6 +8,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1440.0
 offset_bottom = 810.0
+mouse_filter = 2
 script = ExtResource("1_xmswo")
 
 [node name="ShaderOverlay" type="SubViewportContainer" parent="."]
@@ -17,6 +18,7 @@ offset_right = 1440.0
 offset_bottom = 810.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="ShaderOverlay"]
@@ -29,9 +31,11 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
 offset_right = 1440.0
 offset_bottom = 810.0
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="CrosshairSprite" type="Sprite2D" parent="CenterContainer/MarginContainer"]
 unique_name_in_owner = true
@@ -52,3 +56,4 @@ visible = false
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_right = 1439.0
 offset_bottom = 936.0
+mouse_filter = 2

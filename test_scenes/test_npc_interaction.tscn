@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dbtcrr1c8clsr"]
+[gd_scene load_steps=24 format=3 uid="uid://dbtcrr1c8clsr"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_qkp2w"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
@@ -54,8 +54,6 @@ fog_depth_begin = 140.0
 fog_depth_end = 1000.0
 volumetric_fog_density = 0.005
 volumetric_fog_anisotropy = 1.0
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_lahna"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wd7ni"]
 size = Vector3(2.772461, 1, 2.220459)
@@ -564,6 +562,7 @@ text = "> compile complete
 z_index = -1
 offset_right = 4000.0
 offset_bottom = 4000.0
+mouse_filter = 2
 color = Color(0.04, 0, 0.024000015, 1)
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]

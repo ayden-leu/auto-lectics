@@ -138,8 +138,8 @@ libraries = {
 z_index = -1
 offset_right = 2180.0
 offset_bottom = 936.0
+mouse_filter = 2
 color = Color(0.04, 0, 0.025333328, 0)
-metadata/_edit_use_anchors_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/FadeRect"]
 libraries = {
