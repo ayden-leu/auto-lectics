@@ -6,6 +6,7 @@ signal request_back
 signal all_dialogue_text_visible
 signal new_option_available
 signal all_options_available
+signal open_gate
 
 @export var option_window_scene: PackedScene
 
@@ -128,11 +129,11 @@ func _convert_flag_array_to_dict(flag_array: Variant) -> Dictionary:
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
 	_visible_options.clear()
-
+	
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
 			continue
-
+	
 		var check_flags_dict := _convert_flag_array_to_dict(option.get("checkFlag", []))
 		if StoryFlags.passes_check_flags(check_flags_dict):
 			_visible_options.push_back(option)
@@ -146,21 +147,21 @@ func show_dialogue_data(dialogue_data: Dictionary) -> void:
 
 func _type_dialogue_text(full_text: String) -> void:
 	_is_typing = true
-
+	
 	var cps: float = max(textWriteSpeed, 1.0)
 	var delay: float = 1.0 / cps
-
+	
 	dialogue_log.append_text("[indent][indent][indent][indent][indent][indent][color=#f2a11a]")
-
+	
 	for i in range(full_text.length()):
 		dialogue_log.append_text(full_text[i])
 		_scroll_to_bottom()
 		sfxPlayer.text.play()
 		await get_tree().create_timer(delay).timeout
-
+	
 	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
 	_scroll_to_bottom()
-
+	
 	_is_typing = false
 
 ## prints the player text if they picked an option with text associated
@@ -222,8 +223,10 @@ func _on_input_submitted(raw_text: String) -> void:
 	if text.to_lower() == "exit":
 		exit_window()
 		return
-		
-	if text == "":
+	
+	if text.to_lower() == "open_gate" && ownerName == "miniboss":
+		add_player_text("open_gate")
+		open_gate.emit()
 		return
 	
 	if text.is_valid_int():

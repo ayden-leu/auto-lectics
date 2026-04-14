@@ -103,6 +103,7 @@ func connectDialogueConsoleSignals() -> void:
 	connectedDialogueConsoleSignals = true
 
 	dialogueConsole.option_chosen.connect(loadNextDialogue)
+	dialogueConsole.open_gate.connect(openGate)
 	dialogueConsole.request_back.connect(_on_console_request_back)
 	dialogueConsole.new_option_available.connect(_on_dialogue_box_new_option_spawned)
 	dialogueConsole.all_options_available.connect(_on_dialogue_box_all_options_available)
@@ -114,6 +115,7 @@ func disconnectDialogueConsoleSignals() -> void:
 	connectedDialogueConsoleSignals = false
 	
 	dialogueConsole.option_chosen.disconnect(loadNextDialogue)
+	dialogueConsole.open_gate.disconnect(openGate)
 	dialogueConsole.request_back.disconnect(_on_console_request_back)
 	dialogueConsole.new_option_available.disconnect(_on_dialogue_box_new_option_spawned)
 	dialogueConsole.all_options_available.disconnect(_on_dialogue_box_all_options_available)
@@ -257,7 +259,10 @@ func _on_hud_overlay_faded_in() -> void:
 func _on_hud_overlay_faded_out() -> void:
 	enable()
 
-
+func openGate():
+	print("open gate!")
+	if $gateNode:
+		$gateNode.open_gate()
 
 # Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:
