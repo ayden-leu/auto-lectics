@@ -25,7 +25,10 @@ var mode: String = "normal"
 var hecticFailureDialogueID: String = ""
 var delayBtwnWriteDialogueAndOptions: float = 0.25
 var textWriteSpeed: float = 20.0
-var sfxEventsToLoad: Dictionary = {}
+var sfxEventsToLoad: Dictionary = {}:
+	set(value):
+		sfxEventsToLoad = value
+		loadSfx()
 
 var _dialogue_data: Dictionary = {}
 var _visible_options: Array = []
@@ -35,6 +38,8 @@ var _is_typing: bool = false
 var hectic_duration: float = 5.0
 var _hectic_time_left: float = 0.0
 var _hectic_active: bool = false
+
+
 
 func _ready() -> void:
 	_center_main_window()
@@ -60,6 +65,8 @@ func prepare() -> void:
 
 
 func start() -> void:
+	sfxPlayer.spawn.play()
+	
 	await _type_dialogue_text(str(_dialogue_data.get("text", "")))
 	all_dialogue_text_visible.emit()
 	
@@ -133,6 +140,7 @@ func _type_dialogue_text(full_text: String) -> void:
 	for i in range(full_text.length()):
 		dialogue_log.append_text(full_text[i])
 		_scroll_to_bottom()
+		sfxPlayer.text.play()
 		await get_tree().create_timer(delay).timeout
 
 	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
@@ -212,8 +220,7 @@ func _on_input_submitted(raw_text: String) -> void:
 
 ## This is supposed to make the input line selected again when a option is selected; it doesn't work for me
 func _refocus_input() -> void:
-	await get_tree().process_frame
-	input_line.grab_focus()
+	$Window/InputLine.edit()
 
 
 func _choose_option(option_data: Dictionary) -> void:
@@ -288,3 +295,19 @@ func _on_hectic_timeout() -> void:
 	_clear_option_windows()
 
 	option_chosen.emit(hecticFailureDialogueID)
+
+# =======================================
+
+func _on_close_button_pressed() -> void:
+	option_chosen.emit("")
+
+## Holds the AudioStreamPlayer3Ds for each event.
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": %SFX/spawn,
+	"text": %SFX/text
+}
+
+func loadSfx() -> void:
+	for eventID in sfxPlayer.keys():
+		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
+		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)

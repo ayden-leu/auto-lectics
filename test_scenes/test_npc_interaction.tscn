@@ -128,13 +128,6 @@ myName = "miniboss"
 [node name="Player" parent="." instance=ExtResource("3_aue1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
 
-[node name="StartDialogueAreaTemp" parent="Player" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_qo27r")]
-interactableNpcToInitiate = NodePath("../../npcs/NPC_Test")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/StartDialogueAreaTemp"]
-transform = Transform3D(4.91608, 0, 0, 0, 4.91608, 0, 0, 0, 4.91608, 0, 0, 0)
-shape = SubResource("BoxShape3D_lahna")
-
 [node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("3_s4y84")]
 transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
 mainCamera = NodePath("../PlayerCamera/Camera3D")

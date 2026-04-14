@@ -22,6 +22,7 @@ func set_option_data(id_num: int, text: String) -> void:
 	option_label.text = text
 
 ## this doesn't work for me
+## does for me though (ayden).
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		_dragging = event.pressed
