@@ -1,49 +1,47 @@
-[gd_scene load_steps=39 format=3 uid="uid://dnlw4bkcn23mi"]
+[gd_scene load_steps=37 format=3 uid="uid://dnlw4bkcn23mi"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_b0kla"]
-[ext_resource type="Script" path="res://world/fog.gd" id="2_3tfj0"]
-[ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/environment/bridge.fbx" id="3_wjbvj"]
-[ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/environment/MainTube/bridgeExport.fbx" id="4_7umgq"]
-[ext_resource type="PackedScene" uid="uid://cd7b08a2mc271" path="res://models/environment/MainTube/tubeTower.fbx" id="5_dqfkv"]
-[ext_resource type="PackedScene" uid="uid://dufay0uj34o2h" path="res://models/environment/embellishments/longPipe.fbx" id="6_ui64x"]
-[ext_resource type="PackedScene" uid="uid://clhh6q34r8jlj" path="res://models/environment/tubes/fishhook.fbx" id="7_rkcbb"]
-[ext_resource type="PackedScene" uid="uid://b51xh2721j882" path="res://models/environment/embellishments/halfArch.fbx" id="8_clpgh"]
-[ext_resource type="PackedScene" uid="uid://coeq57ci2drv1" path="res://models/environment/MainTube/flooring.fbx" id="9_tv7ju"]
-[ext_resource type="PackedScene" uid="uid://3eigb8r05ox4" path="res://models/environment/embellishments/tubeTower.fbx" id="10_mamuv"]
-[ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/environment/embellishments/scaffoldRound.fbx" id="11_10kd7"]
-[ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/environment/embellishments/bigFence.fbx" id="12_fd61f"]
-[ext_resource type="PackedScene" uid="uid://cjm7e1rpufunn" path="res://models/environment/MainTube/box.fbx" id="13_6xfev"]
-[ext_resource type="PackedScene" uid="uid://dloital66b4nj" path="res://models/environment/MainTube/catwalk_with_collision.tscn" id="14_hilnn"]
-[ext_resource type="PackedScene" uid="uid://cx0ylib0hd1fb" path="res://models/environment/MainTube/catwalkSupport.fbx" id="15_eqgsy"]
-[ext_resource type="PackedScene" uid="uid://c4tgf65dl5wfu" path="res://models/environment/MainTube/plank.fbx" id="16_kvjxp"]
-[ext_resource type="PackedScene" uid="uid://c3hd7y2hgpe7p" path="res://models/environment/MainTube/plank.tscn" id="17_onm7m"]
-[ext_resource type="PackedScene" uid="uid://coq7r7deuegla" path="res://models/environment/tubes/classicBend.fbx" id="18_80fmo"]
-[ext_resource type="PackedScene" uid="uid://c3qpb5m75xhx0" path="res://models/environment/embellishments/flyingButrresses.fbx" id="19_xxsi6"]
-[ext_resource type="PackedScene" uid="uid://coaheuyscy527" path="res://models/environment/MainTube/littleHut.fbx" id="20_nces4"]
-[ext_resource type="PackedScene" uid="uid://p4xhfr40wogj" path="res://models/environment/embellishments/grid.fbx" id="21_y2ma7"]
+[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_3tfj0"]
+[ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/week6playtestStuff/environment/bridge.fbx" id="3_wjbvj"]
+[ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/week6playtestStuff/environment/MainTube/bridgeExport.fbx" id="4_7umgq"]
+[ext_resource type="PackedScene" uid="uid://cd7b08a2mc271" path="res://models/week6playtestStuff/environment/MainTube/tubeTower.fbx" id="5_dqfkv"]
+[ext_resource type="PackedScene" uid="uid://dufay0uj34o2h" path="res://models/week6playtestStuff/environment/embellishments/longPipe.fbx" id="6_ui64x"]
+[ext_resource type="PackedScene" uid="uid://clhh6q34r8jlj" path="res://models/week6playtestStuff/environment/tubes/fishhook.fbx" id="7_rkcbb"]
+[ext_resource type="PackedScene" uid="uid://b51xh2721j882" path="res://models/week6playtestStuff/environment/embellishments/halfArch.fbx" id="8_clpgh"]
+[ext_resource type="PackedScene" uid="uid://coeq57ci2drv1" path="res://models/week6playtestStuff/environment/MainTube/flooring.fbx" id="9_tv7ju"]
+[ext_resource type="PackedScene" uid="uid://3eigb8r05ox4" path="res://models/week6playtestStuff/environment/embellishments/tubeTower.fbx" id="10_mamuv"]
+[ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/week6playtestStuff/environment/embellishments/scaffoldRound.fbx" id="11_10kd7"]
+[ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/week6playtestStuff/environment/embellishments/bigFence.fbx" id="12_fd61f"]
+[ext_resource type="PackedScene" uid="uid://cjm7e1rpufunn" path="res://models/week6playtestStuff/environment/MainTube/box.fbx" id="13_6xfev"]
+[ext_resource type="PackedScene" uid="uid://c4tgf65dl5wfu" path="res://models/week6playtestStuff/environment/MainTube/plank.fbx" id="16_kvjxp"]
+[ext_resource type="PackedScene" uid="uid://c3hd7y2hgpe7p" path="res://models/week6playtestStuff/environment/MainTube/plank.tscn" id="17_onm7m"]
+[ext_resource type="PackedScene" uid="uid://coq7r7deuegla" path="res://models/week6playtestStuff/environment/tubes/classicBend.fbx" id="18_80fmo"]
+[ext_resource type="PackedScene" uid="uid://c3qpb5m75xhx0" path="res://models/week6playtestStuff/environment/embellishments/flyingButrresses.fbx" id="19_xxsi6"]
+[ext_resource type="PackedScene" uid="uid://coaheuyscy527" path="res://models/week6playtestStuff/environment/MainTube/littleHut.fbx" id="20_nces4"]
+[ext_resource type="PackedScene" uid="uid://p4xhfr40wogj" path="res://models/week6playtestStuff/environment/embellishments/grid.fbx" id="21_y2ma7"]
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="22_hmvg1"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="23_fju4x"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_lwmcw"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="25_7ivc8"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="26_nc4fg"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="26_nc4fg"]
 [ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="27_rxte4"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="28_al4up"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="29_gdscw"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1cb3g"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rlkrr"]
 panorama = ExtResource("1_b0kla")
 energy_multiplier = 2.2
 
-[sub_resource type="Sky" id="Sky_d312g"]
-sky_material = SubResource("PanoramaSkyMaterial_1cb3g")
+[sub_resource type="Sky" id="Sky_t5nw7"]
+sky_material = SubResource("PanoramaSkyMaterial_rlkrr")
 
-[sub_resource type="Environment" id="Environment_eo0mw"]
+[sub_resource type="Environment" id="Environment_b0kla"]
 background_mode = 2
-sky = SubResource("Sky_d312g")
+sky = SubResource("Sky_t5nw7")
 glow_enabled = true
 fog_enabled = true
 fog_mode = 1
-fog_light_color = Color(0.95, 0.62, 0.32, 1)
+fog_light_color = Color(0.95, 0.6, 0.3, 1)
 fog_density = 0.035
 fog_aerial_perspective = 0.3
 fog_sky_affect = 0.15
@@ -51,7 +49,6 @@ fog_height_density = 0.05
 fog_depth_curve = 1.5
 fog_depth_begin = 80.0
 fog_depth_end = 700.0
-volumetric_fog_enabled = true
 volumetric_fog_density = 0.02
 volumetric_fog_albedo = Color(0.95, 0.62, 0.32, 1)
 volumetric_fog_emission = Color(0.19, 0.124000005, 0.064, 0.2)
@@ -81,7 +78,7 @@ radius = 28.77295
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_eo0mw")
+environment = SubResource("Environment_b0kla")
 script = ExtResource("2_3tfj0")
 smog_density = 0.035
 fog_start = 80.0
@@ -429,19 +426,6 @@ shape = SubResource("CylinderShape3D_rfx78")
 [node name="flooring" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("9_tv7ju")]
 transform = Transform3D(0.3612845, 0, 0, 0, 0.03371544, 0, 0, 0, 0.3612845, 0.041815437, 1.0112926, -0.007515796)
 
-[node name="catwalk_with_collision" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("14_hilnn")]
-transform = Transform3D(0.0600285, 0, 0, 0, 0.0016192042, 0, 0, 0, 0.0600285, 0.018481346, 1.4581476, -0.014156662)
-
-[node name="catwalk_with_collision3" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("14_hilnn")]
-transform = Transform3D(0.0600285, 0, 0, 0, 0.0016192042, 0, 0, 0, 0.0600285, 0.018481346, 1.829531, -0.014156662)
-
-[node name="catwalk_with_collision2" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("14_hilnn")]
-transform = Transform3D(0.056572743, 0.00037438446, 0.014501931, -0.016419206, 0.0015359935, 0.009552555, -0.011547986, -0.00034983153, 0.05746185, 0.24652198, 1.2594978, 0.0009975638)
-visible = false
-
-[node name="catwalkSupport" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("15_eqgsy")]
-transform = Transform3D(0.055927217, 0, -0.020352522, 0, 0.03371544, 0, 0.020352522, 0, 0.055927217, 0.018481346, 0.98951674, -0.014156662)
-
 [node name="plank" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("16_kvjxp")]
 transform = Transform3D(0.07223833, 0, 0, 0, 0.066591404, 0.02799929, 0, -0.02799929, 0.066591404, 0.1661584, 1.3192453, 0.36771134)
 
@@ -574,9 +558,6 @@ focus = NodePath("../Player")
 [node name="Camera3D" parent="PlayerCamera" index="0"]
 current = true
 
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("29_gdscw")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
+[node name="InputHandler" parent="." instance=ExtResource("29_gdscw")]
 
 [editable path="PlayerCamera"]

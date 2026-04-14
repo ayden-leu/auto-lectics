@@ -161,7 +161,7 @@ func _on_notes_changed() -> void:
 
 func open_menu() -> void:
 	show()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func close_menu() -> void:
 	hide()
