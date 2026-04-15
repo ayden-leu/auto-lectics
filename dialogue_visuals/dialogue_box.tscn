@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://dwqide2q2tp3i"]
+[gd_scene load_steps=14 format=3 uid="uid://dwqide2q2tp3i"]
 
 [ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
-[ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_c2e7b"]
+[ext_resource type="BoxMesh" uid="uid://dppf2hc6saa6y" path="res://dialogue_visuals/dialogue_box_background.tres" id="2_ane15"]
 [ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="3_0kl3i"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
 [ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/type_writer_label.gd" id="3_ane15"]
@@ -214,12 +214,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2821603, 0)
 [node name="SFX" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="text" type="AudioStreamPlayer" parent="SFX"]
-unique_name_in_owner = true
+[node name="text" type="AudioStreamPlayer3D" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_hx4ud")
 
-[node name="spawn" type="AudioStreamPlayer" parent="SFX"]
-unique_name_in_owner = true
+[node name="spawn" type="AudioStreamPlayer3D" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_ane15")
 
 [node name="tempTimeer" type="Timer" parent="."]

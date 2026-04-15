@@ -21,10 +21,10 @@ signal all_options_available()
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Used for referencing which corner of the dialogue box to start spawning options from.
 enum _OptionAnchor {
-	TOP_LEFT,
-	TOP_RIGHT,
-	BOTTOM_LEFT,
-	BOTTOM_RIGHT
+	TOP_LEFT,    ## Options are right-aligned and appear on the top-left corner.
+	TOP_RIGHT,   ## Options are left-aligned and appear on the top-right corner.
+	BOTTOM_LEFT, ## Options are right-aligned and appear on the bottom-left corner.
+	BOTTOM_RIGHT ## Options are left-aligned and appear on the bottom-right corner.
 }
 
 # ------------------------------------------------
