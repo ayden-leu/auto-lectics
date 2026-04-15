@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_kn3ys"]
 [ext_resource type="PackedScene" uid="uid://roy354pxsfxt" path="res://models/npcs/generator_npc.tscn" id="2_si75v"]
-[ext_resource type="AudioStream" uid="uid://cm7xbp4ft3f10" path="res://test_scenes/space-station-generator.mp3" id="3_si75v"]
+[ext_resource type="AudioStream" uid="uid://cm7xbp4ft3f10" path="res://sounds/ambient/space-station-generator.mp3" id="3_si75v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
 size = Vector3(3.671997, 10.670654, 9.139801)

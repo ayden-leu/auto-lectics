@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://c5l0jyvat6c51"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_hbcv5"]
-[ext_resource type="PackedScene" uid="uid://co1nc22ck82l0" path="res://entities/player/player.tscn" id="2_axtib"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_axtib"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_v3yie"]
-[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_7dg45"]
+[ext_resource type="PackedScene" path="res://test_scenes/debug_camera.tscn" id="3_7dg45"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_q8v2a"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_hbcv5"]
-[ext_resource type="PackedScene" uid="uid://pvjkit80e1ea" path="res://test_scenes/startingScene.tscn" id="6_4m3ue"]
+[ext_resource type="PackedScene" uid="uid://pvjkit80e1ea" path="res://world/startingScene.tscn" id="6_4m3ue"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_v3yie"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7dg45"]

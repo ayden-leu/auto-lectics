@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=11 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_y8ghn"]
-[ext_resource type="PackedScene" uid="uid://c81e8pibiemgh" path="res://test_scenes/debug_camera.tscn" id="3_sbnkj"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_r7opt"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_vekyi"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_hmrtd"]
@@ -51,9 +50,8 @@ shape = SubResource("ConcavePolygonShape3D_wd7ni")
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("1_k4mrd")]
+[node name="preacher" parent="npcs" instance=ExtResource("1_k4mrd")]
 transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -5.009552, 0.70307016, -0.41599846)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
 initialDialogueID = "DB1"
 myName = "dish"
 
@@ -66,12 +64,10 @@ metadata/_edit_group_ = true
 [node name="Player" parent="." instance=ExtResource("2_y8ghn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
 
-[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("3_sbnkj")]
-transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
-mainCamera = NodePath("../PlayerCamera/Camera3D")
-
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_r7opt")]
 focus = NodePath("../Player")
+_actAsFocus = true
+_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="InputHandler" parent="." instance=ExtResource("5_vekyi")]
 
