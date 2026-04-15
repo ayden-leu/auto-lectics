@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://wm6t0orfpjfl"]
 
 [ext_resource type="Material" uid="uid://duyc5if8mjpep" path="res://materials/red_flat.tres" id="1_7kvgx"]
-[ext_resource type="Script" uid="uid://byqervdshs8w3" path="res://dialogue_visuals/warning_tile.gd" id="2_jti8w"]
+[ext_resource type="Script" uid="uid://byqervdshs8w3" path="res://dialogue_visuals/warning_tile_3d.gd" id="2_jti8w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jti8w"]
 size = Vector3(1.26, 1.26, 1.8120117)
@@ -13,7 +13,7 @@ radial_steps = 6
 sections = 2
 section_length = 0.01
 
-[node name="WarningTile" type="Node3D"]
+[node name="WarningTile3D" type="Node3D"]
 script = ExtResource("2_jti8w")
 
 [node name="VisualArea" type="Area3D" parent="."]
@@ -27,7 +27,7 @@ shape = SubResource("BoxShape3D_jti8w")
 
 [node name="Background" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 0.006581513, 0.0025024358, 0)
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 0.009386873, -0.026447183, 0)
 mesh = SubResource("TubeTrailMesh_ted7g")
 
 [node name="TextLabel" type="Label3D" parent="Background"]

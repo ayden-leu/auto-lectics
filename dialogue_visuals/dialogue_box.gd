@@ -342,18 +342,18 @@ func _configureDialogueBoxOption(option:DialogueBoxOption, data:Dictionary) -> v
 ## [b]Internal-use only.[/b]  Creates "amount" warning tiles.
 func _createWarningTiles(amount:int) -> void:
 	for _i in range(amount):
-		var warningTile:WarningTile = _spawnWarningTile()
+		var warningTile:WarningTile3D = _spawnWarningTile()
 		_configureWarningTile(warningTile)
 
 ## [b]Internal-use only.[/b]  Creates a warning tile scene and saves a reference to it in "_spawnedWarningTiles"
-func _spawnWarningTile() -> WarningTile:
-	var warningTile:WarningTile = _WARNING_TILE_SCENE.instantiate()
+func _spawnWarningTile() -> WarningTile3D:
+	var warningTile:WarningTile3D = _WARNING_TILE_SCENE.instantiate()
 	_warningsContainer.add_child(warningTile)
 	_spawnedWarningTiles.push_back(warningTile)
 	return warningTile
 
 ## [b]Internal-use only.[/b]  Configures a warning tile.
-func _configureWarningTile(warningTile:WarningTile) -> void:
+func _configureWarningTile(warningTile:WarningTile3D) -> void:
 	warningTile.position = _getWarningTilePosition()
 	warningTile.lookAtCamera()
 	warningTile.connect("blocking_visual", _on_warning_tile_overlap)
@@ -381,11 +381,11 @@ func _killAllOptions() -> void:
 			toKill.kill()
 	_optionSpawnPositions.hectic.root.usedPositions.clear()
 
-## [b]Internal-use only.[/b]  Deletes all spawned [WarningTile]s
+## [b]Internal-use only.[/b]  Deletes all spawned [WarningTile3D]s
 ## in [member _spawnedWarningTiles]
 func _deleteAllWarningTiles() -> void:
 	for _i in range(_spawnedWarningTiles.size()):
-		var toKill:WarningTile = _spawnedWarningTiles.pop_front()
+		var toKill:WarningTile3D = _spawnedWarningTiles.pop_front()
 		toKill.kill()
 
 # ------------------------------------------------
@@ -415,7 +415,7 @@ func _on_timer_bar_timeout() -> void:
 	_on_option_picked(null, hecticFailureDialogueID)
 
 ## [b]Internal-use only.[/b]  Runs when a warning tile is blocking an important subject.
-func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
+func _on_warning_tile_overlap(warningTile:WarningTile3D) -> void:
 	if warningTile.numTimesRepositioned > 3:
 		return
 	

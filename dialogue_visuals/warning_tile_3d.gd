@@ -1,6 +1,6 @@
 @tool
 extends Node3D
-class_name WarningTile
+class_name WarningTile3D
 ## @deprecated
 ## The warning pop-ups that appear around a [DialogueBox] during a hectic dialogue interaction.
 
@@ -8,7 +8,7 @@ class_name WarningTile
 # signals
 # ------------------------------------------------
 ## Emitted when the warning tile detects it is blocking something important.
-signal blocking_visual(tile:WarningTile)
+signal blocking_visual(tile:WarningTile3D)
 
 # ------------------------------------------------
 # enums
