@@ -16,15 +16,15 @@ signal option_picked(option:DialogueBoxOption, nextID:String)
 # ------------------------------------------------
 ## Used for referencing how the dialogue option should grow horizontally.
 enum HorizAlignment{ # not named HorizontalAlignment due to it already existing
-	LEFT,
-	CENTER,
-	RIGHT
+	LEFT,   ## The "origin" will be on the right side horizontally.
+	CENTER, ## The "origin" will be in the center horizontally.
+	RIGHT   ## The "origin" will be on the left side horizontally.
 }
 ## Used for referencing how the dialogue option should grow vertically.
-enum VertiAlignment{ # not named HorizontalAlignment due to it already existing
-	TOP,
-	CENTER,
-	BOTTOM
+enum VertiAlignment{ # not named VerticalAlignment due to it already existing
+	TOP,    ## The "origin" will be on the bottom vertically.
+	CENTER, ## The "origin" will be in the center vertically.
+	BOTTOM  ## The "origin" will be on the top vertically.
 }
 
 # ------------------------------------------------
