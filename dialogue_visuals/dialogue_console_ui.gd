@@ -139,7 +139,7 @@ func loadOptionData(options: Array) -> void:
 			continue
 	
 		var check_flags_dict := _convert_flag_array_to_dict(option.get("checkFlag", []))
-		if StoryFlags.passes_check_flags(check_flags_dict):
+		if StoryFlags.flagsMatch(check_flags_dict):
 			_visible_options.push_back(option)
 
 	_visible_options.sort_custom(func(a, b): return a.get("spawnDelay", 0.0) < b.get("spawnDelay", 0.0))
@@ -257,7 +257,7 @@ func _choose_option(option_data: Dictionary) -> void:
 	
 	var set_flags_dict := _convert_flag_array_to_dict(option_data.get("setFlag", []))
 	if not set_flags_dict.is_empty():
-		StoryFlags.apply_set_flags(set_flags_dict)
+		StoryFlags.updateFlags(set_flags_dict)
 	
 	_clear_option_windows()
 	option_chosen.emit(str(option_data.get("nextID", "")))
@@ -326,5 +326,5 @@ func _on_close_button_pressed() -> void:
 
 func loadSfx() -> void:
 	for eventID in sfxPlayer.keys():
-		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
-		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
+		AudioLoader.clearAudioRandomizer(sfxPlayer[eventID].stream)
+		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
