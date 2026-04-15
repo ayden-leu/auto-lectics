@@ -1,16 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://pdwngeenin11"]
+[gd_scene load_steps=8 format=3 uid="uid://pdwngeenin11"]
 
 [ext_resource type="Script" uid="uid://cl13xh13e428b" path="res://dialogue_visuals/dialogue_option.gd" id="1_vbb0e"]
 [ext_resource type="Material" uid="uid://b7qfo8dpujmqm" path="res://materials/black_flat.tres" id="2_hgihb"]
+[ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="3_wakav"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2d7vg"]
 resource_local_to_scene = true
 material = ExtResource("2_hgihb")
-size = Vector3(0.08, 0.24000001, 0.32)
+size = Vector3(0.08, 0.2615, 2.532)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgihb"]
 resource_local_to_scene = true
-size = Vector3(0.13, 0.29000002, 0.37)
+size = Vector3(0.13, 0.3115, 2.582)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hgihb"]
 resource_local_to_scene = true
@@ -24,18 +25,20 @@ playback_mode = 1
 script = ExtResource("1_vbb0e")
 
 [node name="Background" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.377387, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.120000005, 0.16)
+transform = Transform3D(0.377387, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13075, 1.266)
 mesh = SubResource("BoxMesh_2d7vg")
 
 [node name="TextLabel" type="Label3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.059, -0.05, 0.05)
-text = "eggs"
-font_size = 20
+pixel_size = 0.0019
+text = "hmm i wonder what's for [DINNER]"
+font = ExtResource("3_wakav")
+font_size = 80
 outline_size = 0
 horizontal_alignment = 2
 vertical_alignment = 0
 autowrap_mode = 3
-width = 550.0
+width = 1400.0
 
 [node name="InteractionHitbox" type="Area3D" parent="."]
 collision_layer = 12
@@ -43,7 +46,7 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.120000005, 0.16)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13075, 1.266)
 shape = SubResource("BoxShape3D_hgihb")
 disabled = true
 
