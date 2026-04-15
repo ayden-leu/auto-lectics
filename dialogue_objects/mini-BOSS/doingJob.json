@@ -2,6 +2,9 @@
 	"text": "Just doin, my job.",
 	"type": "neutral",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
 	"options": [
 		{
 			"text": "->",

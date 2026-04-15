@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://vklv12onwi1k"]
+[gd_scene load_steps=41 format=3 uid="uid://vklv12onwi1k"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_uxxn7"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_5oweu"]
@@ -35,7 +35,6 @@
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 [ext_resource type="PackedScene" uid="uid://c0gkoa5s8geir" path="res://models/environment/backgroundClutter/big_wires.tscn" id="35_hsv1o"]
-[ext_resource type="PackedScene" uid="uid://cgadj03f0km58" path="res://models/environment/backgroundClutter/big_greeble.tscn" id="36_4m6mo"]
 
 [sub_resource type="GDScript" id="GDScript_doxto"]
 script/source = "extends Node3D
@@ -53,15 +52,15 @@ func _ready() -> void:
 		
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4m6mo"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_hsv1o"]
 panorama = ExtResource("1_uxxn7")
 
-[sub_resource type="Sky" id="Sky_ewyf3"]
-sky_material = SubResource("PanoramaSkyMaterial_4m6mo")
+[sub_resource type="Sky" id="Sky_4m6mo"]
+sky_material = SubResource("PanoramaSkyMaterial_hsv1o")
 
-[sub_resource type="Environment" id="Environment_ty42w"]
+[sub_resource type="Environment" id="Environment_ewyf3"]
 background_mode = 2
-sky = SubResource("Sky_ewyf3")
+sky = SubResource("Sky_4m6mo")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -90,7 +89,7 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_ty42w")
+environment = SubResource("Environment_ewyf3")
 script = ExtResource("2_gitkm")
 anisotropy = 1.0
 
@@ -653,9 +652,3 @@ transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30
 
 [node name="bigWires" parent="." instance=ExtResource("35_hsv1o")]
 transform = Transform3D(1.606502, 0, 0.4198999, 0, 1.6604713, 0, -0.4198999, 0, 1.606502, 21.121283, -24.541618, -78.346466)
-
-[node name="bigGreeble" parent="." instance=ExtResource("36_4m6mo")]
-transform = Transform3D(1.4168284, 0, 0.522836, 0, 1.5102186, 0, -0.522836, 0, 1.4168284, -17.142101, -34.353245, -93.50023)
-
-[node name="bigGreeble2" parent="." instance=ExtResource("36_4m6mo")]
-transform = Transform3D(2.494096, 0, 0.35780516, 0, 2.5196307, 0, -0.35780516, 0, 2.494096, -6.459072, -83.7396, -113.26003)
