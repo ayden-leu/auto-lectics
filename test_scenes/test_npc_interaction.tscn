@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgah43yaddw5g"]
+[gd_scene load_steps=13 format=3 uid="uid://bgah43yaddw5g"]
 
 [ext_resource type="Script" uid="uid://cfut6xv2uo7og" path="res://test_scenes/test_npc_interaction.gd" id="1_wd7ni"]
 [ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_aue1p"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://ui/hud/crosshair.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="7_qo27r"]
+[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area.tscn" id="8_lahna"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://entities/npcs/_testing/npc_test_interactable.tscn" id="16_ejbbu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ivx4p"]
@@ -21,6 +22,9 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
 }
 point_count = 6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pex7q"]
+size = Vector3(1.3710938, 0.532959, 1.8173828)
 
 [node name="Test_NpcInteraction" type="Node3D"]
 script = ExtResource("1_wd7ni")
@@ -77,46 +81,49 @@ _distanceFromOrigin = Vector3(0, 5, 10)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7322807, 1.1872101, -27.164686)
 
-[node name="test_basic_one" parent="." instance=ExtResource("16_ejbbu")]
+[node name="NPCs" type="Node3D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="test_basic_one" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.048841, 0.24217129, -28.610844)
 lookAtInteractorWhileTalking = true
 myName = "_test_basic_one"
 metadata/_edit_group_ = true
 
-[node name="Label3D" type="Label3D" parent="test_basic_one"]
+[node name="Label3D" type="Label3D" parent="NPCs/test_basic_one"]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_one"
 
-[node name="test_basic_three" parent="." instance=ExtResource("16_ejbbu")]
+[node name="test_basic_three" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -24.302195)
 lookAtInteractorWhileTalking = true
 _dialogueBoxAttachMethod = 1
 myName = "_test_basic_three"
 metadata/_edit_group_ = true
 
-[node name="Label3D" type="Label3D" parent="test_basic_three"]
+[node name="Label3D" type="Label3D" parent="NPCs/test_basic_three"]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_three"
 
-[node name="test_basic_long" parent="." instance=ExtResource("16_ejbbu")]
+[node name="test_basic_long" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -19.823872)
 myName = "_test_basic_long"
 metadata/_edit_group_ = true
 
-[node name="Label3D" type="Label3D" parent="test_basic_long"]
+[node name="Label3D" type="Label3D" parent="NPCs/test_basic_long"]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_long"
 
-[node name="test_basic_one_patrolling" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("16_ejbbu")]
+[node name="test_basic_one_patrolling" parent="NPCs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("16_ejbbu")]
 transform = Transform3D(0.9386556, 0, 0.34485584, 0, 1, 0, -0.34485584, 0, 0.9386556, -3.7907572, 0.24217081, -24.159853)
 lookAtInteractorWhileTalking = true
 _dialogueBoxAttachMethod = 1
 myName = "_test_basic_one"
 patrolEnabled = true
-patrolPath = NodePath("../Path3D")
+patrolPath = NodePath("../../Path3D")
 metadata/_edit_group_ = true
 
-[node name="Label3D" type="Label3D" parent="test_basic_one_patrolling"]
+[node name="Label3D" type="Label3D" parent="NPCs/test_basic_one_patrolling"]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_one"
 
@@ -131,3 +138,11 @@ manual = true
 
 [node name="Crosshair" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_wd7ni")]
 player = NodePath("../Player")
+
+[node name="StartDialogueArea" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("8_lahna")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0403737, 0.90832114, -28.423306)
+interactableNpcToInitiate = NodePath("../NPCs/test_basic_one")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartDialogueArea"]
+shape = SubResource("BoxShape3D_pex7q")
