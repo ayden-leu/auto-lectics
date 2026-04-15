@@ -40,6 +40,10 @@ var hectic_duration: float = 5.0
 var _hectic_time_left: float = 0.0
 var _hectic_active: bool = false
 
+var _npcsThatPreventClosing:Array[String] = [
+	"dropPod", "The Office"
+]
+
 ## Show this message when "help" is inputted
 var help_text: String = "Here are the commands:\n\n" + \
 		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
@@ -88,7 +92,7 @@ func start() -> void:
 ## exit window on "exit" or pressing X button
 func exit_window() -> void:
 	## If you don't want player to exit from certain NPCs, put exceptions here
-	if ownerName == "dropPod":
+	if ownerName in _npcsThatPreventClosing:
 		add_player_text("exit")
 		_type_dialogue_text("Wait, you must listen first.")
 		return
