@@ -239,8 +239,8 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	
 	_dialogueHistory.clear()
 	_currentInteractor.set_input_frozen(true)
-	Globals.inputHandler.lock_mouse_to_cursor()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	InputHandler.showCursor()
+	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 	_spawnDialogueConsole()
 	_connectDialogueConsoleSignals()
@@ -260,8 +260,7 @@ func _endDialogueConsole() -> void:
 	
 	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):
 		_currentInteractor.set_input_frozen(false)
-	Globals.inputHandler.unlock_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	InputHandler.hideCursor()
 
 	isTalking = false
 	_currentInteractor = null
@@ -276,6 +275,8 @@ func _endDialogueConsole() -> void:
 # functions that run when a signal is emitted
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles flow of what to do when this [InteractableNPC] is interacted with.
+## Can also be used to simulate an interaction if need be.  The first paramter
+## is the thing that interacted with this [InteractableNPC].
 func _on_interaction(interactor:Node3D) -> void:
 	if wasTalkedTo or isTalking:
 		return

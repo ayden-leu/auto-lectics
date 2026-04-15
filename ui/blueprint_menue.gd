@@ -165,14 +165,13 @@ func _on_notes_changed() -> void:
 func open_menu() -> void:
 	show()
 	print("showing blueprint menu")
-	Globals.inputHandler.lock_mouse_to_cursor()
+	InputHandler.hideCursor()
 	player.set_input_frozen(true)
 
 func close_menu() -> void:
 	hide()
 	print("hiding blueprint menu")
-	Globals.inputHandler.unlock_mouse_mode()
-	Globals.inputHandler.lock_mouse_to_camera()
+	InputHandler.showCursor()
 	player.set_input_frozen(false)
 	
 func _on_close_pressed() -> void:
