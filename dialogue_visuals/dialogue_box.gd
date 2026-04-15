@@ -33,7 +33,7 @@ enum _OptionAnchor {
 ## [b]Internal-use only.[/b]  Holds a reference to the dialogue option resource.
 const _OPTION_SCENE:Resource = preload(Globals.SCENES.DialogueBoxOption)
 ## [b]Internal-use only.[/b]  Holds a reference to the warning tile resource.
-const _WARNING_TILE_SCENE:Resource = preload(Globals.SCENES.DialogueWarningTile)
+const _WARNING_TILE_SCENE:Resource = preload(Globals.SCENES.DialogueWarningTile3D)
 ## [b]Internal-use only.[/b]  The number of warning tiles to spawn during hectic mode.
 const _NUM_WARNINGS:int = 6
 
