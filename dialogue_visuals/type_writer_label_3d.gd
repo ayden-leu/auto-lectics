@@ -87,6 +87,7 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  Updates the characters visible based on the value of [member visibleCharacters].
 func _updateText() -> void:
 	var amount:int = fullText.length() if (visibleCharacters == -1) else visibleCharacters
 	text = fullText.substr(0, amount)
