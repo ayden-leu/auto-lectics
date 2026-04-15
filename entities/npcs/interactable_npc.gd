@@ -25,8 +25,8 @@ signal finished_dialogue()
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  A reference to the [DialogueConsoleUI] scene.
-const _DIALOGUE_CONSOLE_SCENE:Resource = preload(Globals.SCENES.DialogueConsoleUI)
+## [b]Internal-use only.[/b]  A reference to the [DialogueConsole] scene.
+const _DIALOGUE_CONSOLE_SCENE:Resource = preload(Globals.SCENES.DialogueConsole)
 
 # ------------------------------------------------
 # export variables
@@ -68,7 +68,7 @@ var _shouldPatrol:bool
 ## [b]Internal-use only.[/b]  Stores previous dialogue history.
 var _dialogueHistory:Array[String] = []
 ## [b]Internal-use only.[/b]  Holds a reference to this [InteractableNPC]'s dialogue console scene.
-var _dialogueConsole:DialogueConsoleUI = null
+var _dialogueConsole:DialogueConsole = null
 ## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue console's signals have been connected to functions yet.
 var _connectedDialogueConsoleSignals: bool = false
 

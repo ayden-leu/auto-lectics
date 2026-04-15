@@ -28,7 +28,7 @@ const SCENES = {
 	"Player": "uid://co1nc22ck82l0",
 	"DialogueBox": "uid://dwqide2q2tp3i",
 	"DialogueBoxOption": "uid://pdwngeenin11",
-	"DialogueConsoleUI": "uid://b8oqtsvu488a",
+	"DialogueConsole": "uid://b8oqtsvu488a",
 	"DialogueWarningTile3D": "uid://wm6t0orfpjfl"
 }
 

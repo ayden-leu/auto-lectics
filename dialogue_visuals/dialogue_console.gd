@@ -1,5 +1,10 @@
 extends Control
-class_name DialogueConsoleUI
+class_name DialogueConsole
+
+# TODO
+# 	make options just spawn in the scene and not as children as its not needed
+#		(had to do it for DialogueBox due to it existing in 3D space)
+#	combine this script with dialgoue_console_main_window.gd
 
 signal option_chosen(next_id: String)
 signal request_back
@@ -187,7 +192,7 @@ func _spawn_option_windows() -> void:
 		return
 	
 	if option_window_scene == null:
-		push_error("DialogueConsoleUI: option_window_scene is not assigned.")
+		push_error("DialogueConsole: option_window_scene is not assigned.")
 		return
 	
 	for i in range(_visible_options.size()):
