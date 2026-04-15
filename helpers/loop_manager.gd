@@ -130,9 +130,9 @@ func _fadeOverlay(fadingIn:bool) -> void:
 ## [b]Internal-use only.[/b]  Connects all signals to all nodes who need to know about them.
 func _connectSignals() -> void:
 	var npcs:Array = get_tree().get_nodes_in_group("NPCs")
-	for npc in npcs as Array[InteractableNPC]:
-		faded_in.connect(npc._on_hud_overlay_faded_in)
-		faded_out.connect(npc._on_hud_overlay_faded_out)
+	for npc in npcs as Array[NPC]:
+		faded_in.connect(npc._on_loop_manager_overlay_faded_in)
+		faded_out.connect(npc._on_loop_manager_overlay_faded_out)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

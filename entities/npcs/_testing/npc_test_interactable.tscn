@@ -13,12 +13,11 @@ size = Vector3(1.1191406, 1.1877441, 1.2324219)
 [node name="NPC_TestInteractable" type="Node3D" node_paths=PackedStringArray("_hitbox", "_dialogueBoxAnchor", "model") groups=["NPCs"]]
 script = ExtResource("1_vefio")
 _hitbox = NodePath("Hitbox")
-_dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 _talkOnlyOnce = false
 initialDialogueID = "1"
+_dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
 myName = "ReplaceMe"
-faceMoveDirection = true
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

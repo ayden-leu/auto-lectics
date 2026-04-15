@@ -13,7 +13,7 @@ class_name NPC
 # ------------------------------------------------
 ## The ways an [NPC] can follow a [member patrolPath].
 enum PathFollowMethod {
-	LOOP,  ## When this [NPC] reaches the last point on the [member patrolPath], it will go to the starting point on the [member patrolPath] directly.
+	LOOP,      ## When this [NPC] reaches the last point on the [member patrolPath], it will go to the starting point on the [member patrolPath] directly.
 	PING_PONG  ## When this [NPC] reaches the last point on the [member patrolPath], it will turn around and follow the [member patrolPath] in reverse.
 }
 
@@ -97,6 +97,17 @@ func _process(delta: float) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Enables this [NPC].  Currently does nothing.
+func enable() -> void:
+	pass
+	
+## Disables this [NPC].  Currently does nothing.
+func disable() -> void:
+	pass
+
+## Resets this [NPC] to their default state.  Currently does nothing.
+func reset() -> void:
+	pass
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -174,11 +185,18 @@ func _waitForAMoment() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## Handles logic for when the HUD overlay fades in.  Currently, it disables and resets the Interactable NPC.
+func _on_loop_manager_overlay_faded_in() -> void:
+	self.disable()
+	self.reset()
+
+## Handles logic for when the HUD overlay fades in.  Currently, it enables the Interactable NPC.
+func _on_loop_manager_overlay_faded_out() -> void:
+	self.enable()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
-# Dev-ing stuff
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 	

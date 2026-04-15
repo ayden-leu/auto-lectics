@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cfut6xv2uo7og" path="res://test_scenes/test_npc_interaction.gd" id="1_wd7ni"]
 [ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_aue1p"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="2_s4y84"]
-[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_vl577"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://ui/hud/crosshair.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="7_qo27r"]
@@ -66,6 +65,8 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("3_aue1p")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3044707, 2.883009, -26.385525)
+maxSpeed = 12.6
+acceleration = 15.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")
@@ -88,8 +89,8 @@ text = "test_basic_one"
 
 [node name="test_basic_three" parent="." instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -24.302195)
-_dialogueBoxAttachMethod = 1
 lookAtInteractorWhileTalking = true
+_dialogueBoxAttachMethod = 1
 myName = "_test_basic_three"
 metadata/_edit_group_ = true
 
@@ -108,8 +109,8 @@ text = "test_basic_long"
 
 [node name="test_basic_one_patrolling" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("16_ejbbu")]
 transform = Transform3D(0.9386556, 0, 0.34485584, 0, 1, 0, -0.34485584, 0, 0.9386556, -3.7907572, 0.24217081, -24.159853)
-_dialogueBoxAttachMethod = 1
 lookAtInteractorWhileTalking = true
+_dialogueBoxAttachMethod = 1
 myName = "_test_basic_one"
 patrolEnabled = true
 patrolPath = NodePath("../Path3D")
