@@ -60,7 +60,7 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[b]  Runs when a write speed preset is chosen.
+## [b]Internal-use only.[/b]  Runs when a write speed preset is chosen.
 func _on_item_selected(_index: int) -> void:
 	option = option
 

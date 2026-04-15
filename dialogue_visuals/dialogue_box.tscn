@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://dialogue_visuals/static/Inconsolata-Medium.ttf" id="3_0kl3i"]
 [ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://materials/blue_translucent.tres" id="3_21gmv"]
 [ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://dialogue_visuals/type_writer_label.gd" id="3_ane15"]
-[ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer.tscn" id="4_44dxv"]
+[ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://dialogue_visuals/timer_bar.tscn" id="4_44dxv"]
 [ext_resource type="Script" uid="uid://bix7b5bmj6lso" path="res://dialogue_visuals/hectic_positions.gd" id="4_hx4ud"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_21gmv"]

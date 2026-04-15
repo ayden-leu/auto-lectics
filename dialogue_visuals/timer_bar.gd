@@ -51,7 +51,7 @@ var timeElapsed:float = 0.0:
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## The original size of the timer bar. Currently hardcoded.
+## [b]Internal-use only.[/b]  The original size of the timer bar. Currently hardcoded.
 var _originalBarSize:Vector3
 
 # ------------------------------------------------
@@ -103,7 +103,7 @@ func stop() -> void:
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
-## Ran when the the time elapsed is beyond the duration.
+## [b]Internal-use only.[/b]  Ran when the the time elapsed is beyond the duration.
 func _timeout() -> void:
 	if not shouldCountdown:
 		return
@@ -111,7 +111,7 @@ func _timeout() -> void:
 	stop()
 	timeout.emit()
 
-## Updates the size of the bar based on the timer's progress.
+## [b]Internal-use only.[/b]  Updates the size of the bar based on the timer's progress.
 func _updateBar() -> void:
 	bar.mesh.size.z = _originalBarSize.z * progress
 	bar.position.z = _originalBarSize.z/2 * (1-progress)
