@@ -7,10 +7,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.1191406, 1.1877441, 1.2324219)
 
-[node name="dropPod" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model") groups=["NPCs"]]
+[node name="dropPod" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_63y6g")
-hitbox = NodePath("Hitbox")
-dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
+_hitbox = NodePath("Hitbox")
 initialDialogueID = "Dialogue1a"
 model = NodePath("model")
 myName = "NPC_Test"

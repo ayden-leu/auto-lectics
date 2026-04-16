@@ -7,12 +7,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
 size = Vector3(3.671997, 10.670654, 9.139801)
 
-[node name="generator" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
+[node name="generator" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_kn3ys")
-hitbox = NodePath("Area3D")
-dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
+_hitbox = NodePath("Area3D")
+_talkOnlyOnce = false
 initialDialogueID = "a"
-talkOnlyOnce = false
 model = NodePath("GeneratorNPC")
 myName = "generator"
 metadata/_custom_type_script = "uid://um13i8jipsfx"

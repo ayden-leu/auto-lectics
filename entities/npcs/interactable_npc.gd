@@ -247,12 +247,7 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	_loadNextDialogueConsole(initialDialogueID)
 
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
-func _endDialogueConsole() -> void:
-	_disconnectDialogueBoxSignals()
-	if _dialogueBox != null:
-		_dialogueBox.kill()
-		_dialogueBox = null
-	
+func _endDialogueConsole() -> void:	
 	_disconnectDialogueConsoleSignals()
 	if _dialogueConsole != null:
 		_dialogueConsole.kill()

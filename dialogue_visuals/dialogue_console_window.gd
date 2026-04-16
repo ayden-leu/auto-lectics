@@ -349,6 +349,7 @@ func _choose_option(option_data: Dictionary) -> void:
 
 func kill() -> void:
 	_stop_hectic_mode()
+	_clear_option_windows()
 	queue_free()
 
 

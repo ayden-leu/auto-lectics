@@ -6,11 +6,10 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_1g2y5"]
 size = Vector3(3.7146912, 3.3453865, 3.8427734)
 
-[node name="dishNPC" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
+[node name="dishNPC" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("3_ac2w6")
-hitbox = NodePath("Hitbox")
-dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
-dialogueBoxAttachMethod = 1
+_hitbox = NodePath("Hitbox")
+_talkOnlyOnce = false
 initialDialogueID = "dialogue1"
 model = NodePath("dishmodel")
 myName = "dish"

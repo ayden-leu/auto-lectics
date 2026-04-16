@@ -6,13 +6,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.0087891, 1.8596134, 0.97631836)
 
-[node name="preacher" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
+[node name="preacher" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_hswvp")
-hitbox = NodePath("Hitbox")
-dialogueBoxAnchor = NodePath("Marker3D")
-dialogueBoxAttachMethod = 1
+_hitbox = NodePath("Hitbox")
+_talkOnlyOnce = false
 initialDialogueID = "PB1"
-talkOnlyOnce = false
 model = NodePath("preacherModel")
 myName = "preacher"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
