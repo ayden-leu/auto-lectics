@@ -2,20 +2,60 @@ extends Area3D
 class_name DeathPlane
 ## Runs a colliding body's [code]respawn()[/code] function upon collision.
 
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
+
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
+
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
+
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
+
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables only referenced in script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
 ## [b]Internal-use only.[/b]  Does the thing this class is meant to do upon collision.
 func _on_body_entered(body: Node) -> void:
 	if body.has_method("respawn"):
-		## plays anmiation
-		$CanvasLayer/FadeRect/AnimationPlayer.play("cut_to_black")
-		$death.play()
-		## waits a second before respawning
-		await get_tree().create_timer(2.0).timeout
-		
 		body.respawn()
-		$respawn.play()
 	else:
-		push_warning("DeathPlane: Body missing respawn()")
-	
+		push_warning("DeathPlane: Body [", body.name, "] missing respawn() function.")
+
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------

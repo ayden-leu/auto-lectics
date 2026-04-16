@@ -22,6 +22,9 @@ signal no_longer_looking_at_interactable()
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+## How long to wait before actually respawning.
+@export var respawnDelay:float = 2.0
+
 @export_group("Movement - Ground")
 ## The player's maximum speed.
 @export_range(0.0, 30.0, 0.1) var maxSpeed: float = 20.0
@@ -72,10 +75,17 @@ signal no_longer_looking_at_interactable()
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-## The anchor for the player camera to attach itself to.
+## [b]Internal-use only.[/b]  The anchor for the player camera to attach itself to.
 @onready var cameraAnchor:Marker3D = %CameraAnchor
-## The raycast that lets you interact with things in the world.
-@onready var interactionRaycast:RayCast3D = %InteractionRaycast
+## [b]Internal-use only.[/b]  The raycast that lets you interact with things in the world.
+@onready var _interactionRaycast:RayCast3D = %InteractionRaycast
+## [b]Internal-use only.[/b]  The fade overlay.
+@onready var _overlay = %FadeToBlackOverlay
+## [b]Internal-use only.[/b]  The [AudioStreamPlayer]s that play sound events.
+@onready var _sfxPlayer:Dictionary = {
+	"respawn": %SFX/respawn,
+	"death": %SFX/death
+}
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -114,17 +124,19 @@ var _wasOnFloor: bool = false
 var _timeSinceApex: float = 0.0
 ## [b]Internal-use only.[/b]  If the player should be able to hang around at the aapex of their jump.
 var _apexHangActive: bool = false
-## Track if player's movement is frozen
-var input_frozen: bool = false
-
 ## [b]Internal-use only.[/b]  Save last location where character is grounded.
 var _lastValidPosition: Vector3
+## Track if player's movement is frozen
+var input_frozen: bool = false
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
 	_recomputeJumpParameters()
+	
+	AudioLoader.loadSfxFromId("respawn", _sfxPlayer.respawn.stream)
+	AudioLoader.loadSfxFromId("death", _sfxPlayer.death.stream)
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -139,9 +151,9 @@ func _physics_process(delta: float) -> void:
 	_applyVerticalPhysics(delta)
 	move_and_slide()
 	
-	#print(interactionRaycast.get_collider())
-	if interactionRaycast.get_collider() != null:
-		var hit = interactionRaycast.get_collider().owner
+	#print(_interactionRaycast.get_collider())
+	if _interactionRaycast.get_collider() != null:
+		var hit = _interactionRaycast.get_collider().owner
 		if _determineIfValidInteractable(hit):
 			interactableThing = hit
 	else:
@@ -159,11 +171,25 @@ func jump() -> void:
 	_apexHangActive = false
 	_timeSinceApex = 0.0
 
-## Puts player at [member _lastValidPosition].
-func respawn():
+## Puts player at [member _lastValidPosition] immediately.
+func respawnForce():
 	velocity = Vector3.ZERO
 	global_position = _lastValidPosition
 	global_position.y += 0.1
+
+## Puts player at [member _lastValidPosition], but only after the fade in.
+func respawn() -> void:
+	set_input_frozen(true)
+	_sfxPlayer.death.play()
+	_overlay.startFadeIn()
+	await _overlay.fade_in_complete
+	
+	await get_tree().create_timer(respawnDelay).timeout
+	
+	respawnForce()
+	_overlay.startFadeOut()
+	_sfxPlayer.respawn.play()
+	set_input_frozen(false)
 
 # ------------------------------------------------
 # functions only referenced inside this script
