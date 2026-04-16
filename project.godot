@@ -40,6 +40,7 @@ folder_colors={
 "res://_framework/test_scenes/": "gray",
 "res://_framework/ui/": "green",
 "res://dialogue_objects/": "blue",
+"res://entities/": "purple",
 "res://materials/": "pink",
 "res://models/": "pink",
 "res://shaders/": "teal",

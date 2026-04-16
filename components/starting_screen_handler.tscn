@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://11dkiqp8ejdd"]
+[gd_scene load_steps=5 format=3 uid="uid://11dkiqp8ejdd"]
 
 [ext_resource type="Script" uid="uid://d2y4vanofmml3" path="res://components/starting_screen_handler.gd" id="1_bde2v"]
+[ext_resource type="FontFile" uid="uid://ccc7ko3303k1c" path="res://fonts/inconsolata/Inconsolata-Medium.ttf" id="2_6wwxu"]
 [ext_resource type="AudioStream" uid="uid://dyhex8tcqj5gr" path="res://sounds/sfx/dstartUp.wav" id="2_akd77"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pmluo"]
+font = ExtResource("2_6wwxu")
 
 [node name="StartingScreenHandler" type="Node"]
 script = ExtResource("1_bde2v")
