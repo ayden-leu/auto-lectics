@@ -1,0 +1,14 @@
+{
+	"text": "I DON'T SPY, I MERELY OBSERVE!",
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

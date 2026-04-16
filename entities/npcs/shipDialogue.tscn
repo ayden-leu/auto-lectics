@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://g21ua47x4g7g"]
+
+[ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://_framework/entities/npcs/interactable_npc.gd" id="1_6ak60"]
+[ext_resource type="PackedScene" path="res://models/npcs/drop_pod.tscn" id="2_fax51"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ak60"]
+size = Vector3(5.7617188, 4.720703, 0.20898438)
+
+[node name="ship" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
+script = ExtResource("1_6ak60")
+_hitbox = NodePath("Hitbox")
+initialDialogueID = "1"
+model = NodePath("dropPod")
+myName = "The Office"
+
+[node name="dropPod" parent="." instance=ExtResource("2_fax51")]
+
+[node name="Hitbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45.403595, 0)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7936833, -4.1192694)
+shape = SubResource("BoxShape3D_6ak60")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(-0.04073181, -0.14345445, -1.3648776, -1.8626451e-09, 1.3654786, -0.14351761, 1.3723958, -0.0042576324, -0.04050868, 0.15089741, -1.115136, -0.45080566)
+metadata/_edit_group_ = true

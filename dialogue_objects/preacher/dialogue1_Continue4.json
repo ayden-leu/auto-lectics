@@ -1,0 +1,15 @@
+{
+	"text": "\"I can't see...\"",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "positive",
+			"nextID": "dialogue1_Continue3"
+		}
+	]
+}

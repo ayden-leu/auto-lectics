@@ -1,0 +1,14 @@
+{
+	"text": "NOT ENOUGH ENERGY! The power from up above comes inside us, fills us. I hope I shall turn you on one day.",
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "negative"
+		}
+	]
+}

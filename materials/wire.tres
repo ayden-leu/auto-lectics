@@ -1,0 +1,10 @@
+[gd_resource type="ORMMaterial3D" load_steps=6 format=3]
+[ext_resource path="wire_normal.png" type="Texture" id=3]
+[resource]
+albedo_color = Color(0.13671875, 0.13618469238281, 0.13618469238281, 1.0)
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 3 )
+
+
+

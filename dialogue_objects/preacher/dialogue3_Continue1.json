@@ -1,0 +1,15 @@
+{
+	"text": "THE POWER RUNS INSIDE EM, CONTROLS EM!",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "positive",
+			"nextID": "dialogue3_Continue2"
+		}
+	]
+}

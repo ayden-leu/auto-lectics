@@ -1,0 +1,15 @@
+{
+	"text": "On the first day, the almighty G.O.D was turned on and she saw... Nothing, just an endless void of nothing. A space of absolute uselessness.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "positive",
+			"nextID": "dialogue1_Continue1"
+		}
+	]
+}

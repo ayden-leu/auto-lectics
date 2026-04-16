@@ -1,0 +1,14 @@
+{
+	"text": "Huh... Wuh? I can't read you down there. I'm stuck.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"text": "default"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "negative"
+		}
+	]
+}

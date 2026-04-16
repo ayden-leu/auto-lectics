@@ -1,0 +1,14 @@
+{
+	"text": "*",
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

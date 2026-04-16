@@ -1,0 +1,14 @@
+{
+	"text": "They are everywhere and see everything. Such magnificent machines of my own design, but I've said enough. Away with you.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

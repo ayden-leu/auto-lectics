@@ -1,0 +1,20 @@
+{
+	"text": "I am PR3-CHR, and I will serve as your guide to getting turned on. If you have any questions, I would be happy to answer.\n",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "What's going on here?",
+			"type": "neutral",
+			"nextID": "TOO"
+		},
+		{
+			"text": "What are you *actually* supposed to do?",
+			"type": "neutral",
+			"nextID": "TOI"
+		}
+	]
+}

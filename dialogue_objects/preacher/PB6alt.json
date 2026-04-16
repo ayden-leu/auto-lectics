@@ -1,0 +1,15 @@
+{
+	"text": "But the Almighty has turned away from us. She has stayed up in the core since before our oldest memories.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB7Alt"
+		}
+	]
+}

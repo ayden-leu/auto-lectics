@@ -1,0 +1,12 @@
+{
+	"text": "I don't really care.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "SludgeBot"
+		}
+	]
+}

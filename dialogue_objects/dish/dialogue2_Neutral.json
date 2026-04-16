@@ -1,0 +1,14 @@
+{
+	"text": "*",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "upbeat"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

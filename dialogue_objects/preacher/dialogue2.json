@@ -1,0 +1,27 @@
+{
+	"text": "YOU! ARE YOU TURNED ON?!?!",
+	"type": "angry",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "dialogue2_Fail",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "I don't want to be turned on.",
+			"type": "negative",
+			"nextID": "dialogue2_Fail"
+		},
+		{
+			"text": "Yes, I think so.",
+			"type": "neutral",
+			"nextID": "dialogue2_Neutral"
+		},
+		{
+			"text": "What?",
+			"type": "positive",
+			"nextID": "dialogue3"
+		}
+	]
+}

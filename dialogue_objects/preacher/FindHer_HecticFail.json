@@ -1,0 +1,15 @@
+{
+	"text": "Now is not the time to remain silent.",
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Preacher Conversation Fail"
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"text": "I will not\nAnything could happen, begone",
+	"font": "",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "generatorSound"
+	},
+	"options": [
+		{
+			"text": "[EXIT]"
+		}
+	]
+}

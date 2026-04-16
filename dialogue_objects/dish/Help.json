@@ -1,0 +1,20 @@
+{
+	"text": "*play happy.wav*\n*play happy.wav*\n*play happy.wav*",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dbHelp"
+	},
+	"options": [
+		{
+			"text": "What's going on here?",
+			"type": "neutral",
+			"nextID": "GoingOn"
+		},
+		{
+			"text": "What's your designated purpose?",
+			"type": "neutral",
+			"nextID": "Purpose"
+		}
+	]
+}

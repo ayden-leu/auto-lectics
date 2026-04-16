@@ -1,0 +1,14 @@
+{
+	"text": "You can try, but I never could understand what they said.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

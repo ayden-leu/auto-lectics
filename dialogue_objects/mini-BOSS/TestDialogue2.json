@@ -1,0 +1,30 @@
+{
+	"text": "That may be true... but why is the boss so important. ",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "miniboss"
+	},
+	"options": [
+		{
+			"text": "Because they made all of us and we are indebted to their service. ",
+			"type": "neutral",
+			"nextID": "Test2DialogueSuccess"
+		},
+		{
+			"text": "Because we need them to complete the project.",
+			"type": "neutral",
+			"nextID": "Test2DialogueFail2"
+		},
+		{
+			"text": "Because they pay us money.",
+			"type": "neutral",
+			"nextID": "Test2DialogueFail1"
+		},
+		{
+			"text": "Because they made us, so they can fix us.",
+			"type": "neutral",
+			"nextID": "Test2DialogueFail3"
+		}
+	]
+}

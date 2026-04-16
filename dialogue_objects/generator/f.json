@@ -1,0 +1,14 @@
+{
+	"text": "Don't follow\nYou do not follow the pattern",
+	"font": "",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "generatorSound"
+	},
+	"options": [
+		{
+			"text": "[EXIT]"
+		}
+	]
+}

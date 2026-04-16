@@ -1,0 +1,15 @@
+{
+	"text": "A problem\nChange will bring ruin, not safe",
+	"font": "",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "generatorSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "a"
+		}
+	]
+}

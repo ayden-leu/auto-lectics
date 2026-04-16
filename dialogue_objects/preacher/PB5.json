@@ -1,0 +1,16 @@
+{
+	"text": "The Almighty built and turned on the dumb machines, and the dumb machines created us, the wise machines.",
+	"type": "happy",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB6alt"
+		}
+	]
+}

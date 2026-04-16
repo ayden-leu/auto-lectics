@@ -1,0 +1,14 @@
+{
+	"text": "Guh. What's the point in talking to you if you're just gonna be boring.",
+	"type": "angry",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

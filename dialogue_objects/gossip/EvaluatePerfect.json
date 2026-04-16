@@ -1,0 +1,30 @@
+{
+	"text": "You wouldn't know what perfection looks like.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "Then tell me.",
+			"type": "neutral",
+			"nextID": "TellEm"
+		},
+		{
+			"text": "What is perfection?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "You don't seem perfect.",
+			"type": "neutral",
+			"nextID": "Perfection"
+		},
+		{
+			"text": "Are you perfect?",
+			"type": "neutral",
+			"nextID": "Conversation End Bad"
+		}
+	]
+}

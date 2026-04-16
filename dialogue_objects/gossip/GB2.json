@@ -1,0 +1,15 @@
+{
+	"text": "Ohhhhh woah woah woah, I don't know you...",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "GB3"
+		}
+	]
+}

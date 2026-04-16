@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq3oe7fa42f38"]
+
+[ext_resource type="PackedScene" uid="uid://b14kyj776kh6y" path="res://models/week6playtestStuff/npcs/dish.fbx" id="2_tmrmk"]
+[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="3_ac2w6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1g2y5"]
+size = Vector3(3.7146912, 3.3453865, 3.8427734)
+
+[node name="dishNPC" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+script = ExtResource("3_ac2w6")
+_hitbox = NodePath("Hitbox")
+_talkOnlyOnce = false
+initialDialogueID = "dialogue1"
+model = NodePath("dishmodel")
+myName = "dish"
+
+[node name="dishmodel" parent="." instance=ExtResource("2_tmrmk")]
+transform = Transform3D(0.3630648, 0, 0.9317639, 0, 1, 0, -0.9317639, 0, 0.3630648, 0, -0.10553214, 0)
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26234436, 1.659708, 0.1303711)
+shape = SubResource("BoxShape3D_1g2y5")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(-0.30925646, 0, 0.6112163, 0, 0.68500006, 0, -0.6112163, 0, -0.30925646, -6.1824217, 1.538078, 1.0376358)
+metadata/_edit_group_ = true

@@ -1,0 +1,25 @@
+{
+	"text": "Well if your job is to check things out, tell me- what do you think? ",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "This place is a mess.",
+			"type": "neutral",
+			"nextID": "Mess"
+		},
+		{
+			"text": "It seems to have been kept up to some kind of standard.",
+			"type": "neutral",
+			"nextID": "Mess"
+		},
+		{
+			"text": "This place is perfect.",
+			"type": "neutral",
+			"nextID": "EvaluatePerfect"
+		}
+	]
+}

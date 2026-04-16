@@ -1,0 +1,8 @@
+{
+	"text": "In due time you will.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	}
+}

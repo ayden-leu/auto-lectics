@@ -1,0 +1,20 @@
+{
+	"text": "I've been stuck here for a couple hundred years...\nHow are they doing up there?",
+	"type": "confused",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "normalSound"
+	},
+	"options": [
+		{
+			"text": "Alright.",
+			"type": "positive",
+			"nextID": "dialogue4"
+		},
+		{
+			"text": "Not great.",
+			"type": "positive",
+			"nextID": "dialogue4"
+		}
+	]
+}

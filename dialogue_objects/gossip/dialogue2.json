@@ -1,0 +1,15 @@
+{
+	"text": "NEW!?!?! ",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "positive",
+			"nextID": "dialogue2_Continue1"
+		}
+	]
+}

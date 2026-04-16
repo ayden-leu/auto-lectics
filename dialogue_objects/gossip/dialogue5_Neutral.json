@@ -1,0 +1,14 @@
+{
+	"text": "Birds? *A piece of the bot falls off*",
+	"type": "confused",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral"
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"text": "It's not spying if it was my intended purpose, but I've said enough. Away with you.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
+}

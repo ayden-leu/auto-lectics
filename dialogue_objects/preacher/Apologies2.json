@@ -1,0 +1,15 @@
+{
+	"text": "Oh, my apologies.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "static"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "TOI"
+		}
+	]
+}

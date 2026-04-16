@@ -1,0 +1,32 @@
+{
+	"text": "Who are you? Where'd you come from? How'd you get here?",
+	"type": "neutral",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "GB3_HecticFail",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
+		},
+		{
+			"text": "Are you okay?",
+			"type": "neutral",
+			"nextID": "GB3_FailGuard"
+		},
+		{
+			"text": "I'm new.",
+			"type": "neutral",
+			"nextID": "New"
+		},
+		{
+			"text": "That's not important.",
+			"type": "neutral",
+			"nextID": "QuestionImportance"
+		}
+	]
+}

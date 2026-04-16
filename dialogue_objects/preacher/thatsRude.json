@@ -1,0 +1,15 @@
+{
+	"text": "Well that's rude! I've got an important question for someone like you.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "PB8"
+		}
+	]
+}

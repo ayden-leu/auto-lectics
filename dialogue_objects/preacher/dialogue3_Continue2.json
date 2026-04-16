@@ -1,0 +1,18 @@
+{
+	"text": "You came to the right place. I am PR3-CHR, and I'll be your guide to truly understanding what it means to be turned on.",
+	"type": "happy",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "dialogueFailSound"
+	},
+	"options": [
+		{
+			"text": "I'm ready to be turned on.",
+			"type": "positive"
+		},
+		{
+			"text": "I don't want to be turned on.",
+			"type": "negative"
+		}
+	]
+}

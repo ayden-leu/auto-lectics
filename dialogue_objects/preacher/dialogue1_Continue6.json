@@ -1,0 +1,15 @@
+{
+	"text": "On that third day, the almighty and merciful G.O.D created life.",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "preacherSound"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "positive",
+			"nextID": "dialogue1_Continue5"
+		}
+	]
+}

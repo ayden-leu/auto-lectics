@@ -1,0 +1,15 @@
+{
+	"text": "Ohhhhh woah woah woah, I don't know you...",
+	"type": "confused",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "positive",
+			"nextID": "dialogue1_Continue2"
+		}
+	]
+}

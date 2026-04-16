@@ -1,0 +1,15 @@
+{
+	"text": "Okay, what do you have for me?",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "GB2"
+		}
+	]
+}

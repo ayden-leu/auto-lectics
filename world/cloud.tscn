@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://bmoc20dib400"]
+
+[ext_resource type="Texture2D" path="res://world/8698.jpg" id="1_4rphk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3oxr"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1.122377, 1.0065855, 0.8696852, 1)
+albedo_texture = ExtResource("1_4rphk")
+uv1_scale = Vector3(8, 8, 8)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qaedo"]
+size = Vector2(1200, 1200)
+center_offset = Vector3(0, -20, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcyt7"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1.0822712, 0.94817626, 0.81102836, 1)
+albedo_texture = ExtResource("1_4rphk")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sytix"]
+size = Vector2(1400, 1400)
+center_offset = Vector3(0, -32, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmn2t"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1.0498953, 0.8973107, 0.77273625, 1)
+albedo_texture = ExtResource("1_4rphk")
+uv1_scale = Vector3(6, 6, 6)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rq1uo"]
+size = Vector2(1700, 1700)
+center_offset = Vector3(0, -48, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qy4vw"]
+size = Vector2(12, 12)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Plane" type="Node3D" parent="."]
+
+[node name="CloudPlaneNear" type="MeshInstance3D" parent="Plane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10450381, -0.8679707, -0.19129634)
+material_override = SubResource("StandardMaterial3D_b3oxr")
+mesh = SubResource("PlaneMesh_qaedo")
+
+[node name="CloudPlaneMid" type="MeshInstance3D" parent="Plane"]
+material_override = SubResource("StandardMaterial3D_fcyt7")
+mesh = SubResource("PlaneMesh_sytix")
+skeleton = NodePath("../CloudPlanelow")
+
+[node name="CloudPlanelow" type="MeshInstance3D" parent="Plane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0500005, 0)
+material_override = SubResource("StandardMaterial3D_rmn2t")
+mesh = SubResource("PlaneMesh_rq1uo")
+skeleton = NodePath("../CloudPlaneNear")
+
+[node name="TOPfog" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14, 0)
+amount = 500
+lifetime = 10.0
+randomness = 0.5
+draw_pass_1 = SubResource("QuadMesh_qy4vw")

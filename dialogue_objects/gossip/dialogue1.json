@@ -1,0 +1,15 @@
+{
+	"text": "Okay, what do you have for me?",
+	"type": "neutral",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "gossipSound"
+	},
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "positive",
+			"nextID": "dialogue1_Continue1"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "Well obviously! Now...",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"type": "neutral",
+			"nextID": "QuestionPurpose"
+		}
+	]
+}
