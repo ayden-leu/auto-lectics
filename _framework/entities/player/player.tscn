@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=7 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
+[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="3_w0ygf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
 
@@ -44,6 +45,9 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 shape = SubResource("CapsuleShape3D_abrql")
 debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
+
+[node name="Crosshair" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_w0ygf")]
+player = NodePath("..")
 
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
 [connection signal="jump_pressed" from="InputHandler" to="." method="_on_jump_pressed"]

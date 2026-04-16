@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bt36r3dqntrwu"]
+[gd_scene load_steps=8 format=3 uid="uid://bt36r3dqntrwu"]
 
 [ext_resource type="Script" uid="uid://b04t3tqdhiihd" path="res://_framework/test_scenes/test_npc_patrol.gd" id="1_us853"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_fa21v"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_peiq8"]
-[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="5_gbff4"]
 [ext_resource type="PackedScene" uid="uid://hkpx0aww72h8" path="res://_framework/entities/npcs/npc_test.tscn" id="6_453m6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_us853"]
@@ -63,9 +62,6 @@ _distanceFromOrigin = Vector3(0, 5, 10)
 [node name="RespawnPosition" type="Marker3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.925569, 0)
-
-[node name="Crosshair" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_gbff4")]
-player = NodePath("../Player")
 
 [node name="NPC_Test" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7292366, 1.6022091, 0)
