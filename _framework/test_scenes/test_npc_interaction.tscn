@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgah43yaddw5g"]
+[gd_scene load_steps=11 format=3 uid="uid://bgah43yaddw5g"]
 
 [ext_resource type="Script" uid="uid://cfut6xv2uo7og" path="res://_framework/test_scenes/test_npc_interaction.gd" id="1_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="2_s4y84"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_aue1p"]
-[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="6_wd7ni"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="7_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://_framework/helpers/start_dialogue_area.tscn" id="8_lahna"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://_framework/entities/npcs/npc_test_interactable.tscn" id="16_ejbbu"]
@@ -72,8 +71,6 @@ acceleration = 15.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")
-_actAsFocus = true
-_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="RespawnPosition" type="Marker3D" parent="."]
 unique_name_in_owner = true
@@ -133,9 +130,6 @@ debug_custom_color = Color(1, 1, 1, 1)
 [node name="LoopManager" parent="." instance=ExtResource("7_qo27r")]
 unique_name_in_owner = true
 manual = true
-
-[node name="Crosshair" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_wd7ni")]
-player = NodePath("../Player")
 
 [node name="StartDialogueArea" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("8_lahna")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0403737, 0.90832114, -28.423306)
