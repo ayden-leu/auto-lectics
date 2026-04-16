@@ -248,7 +248,8 @@ func _type_dialogue_text(full_text: String) -> void:
 	for i in range(full_text.length()):
 		dialogue_log.append_text(full_text[i])
 		_scroll_to_bottom()
-		sfxPlayer.text.play()
+		if not sfxPlayer.text.playing:
+			sfxPlayer.text.play()
 		await get_tree().create_timer(delay).timeout
 	
 	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
