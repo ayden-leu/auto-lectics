@@ -1,31 +1,112 @@
-extends Control
+extends Panel
 class_name DialogueConsole
+## [b]Internal-use only.[/b]  The main console-like window for interacting with
+## a dialogue event.
+
 
 # TODO
 # 	make options just spawn in the scene and not as children as its not needed
 #		(had to do it for DialogueBox due to it existing in 3D space)
+#		nevermind I forgot that positioning is dependant on console position
 #	combine this script with dialgoue_console_main_window.gd
+#	make a window manager?
 
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
+## Emitted when an option is chosen.
 signal option_chosen(next_id: String)
-signal request_back
+## Emitted when all dialogue for a dialogue tree node is visible.
 signal all_dialogue_text_visible
+## Emitted when a new dialogue option is visible.
 signal new_option_available
+## Emitted when all dialogue options is visible.
 signal all_options_available
+
+## Emitted when the back command is entered.
+signal request_back
+## Emitted when the open_gate command is entered.
 signal open_gate
 
-@export var option_window_scene: PackedScene
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Used for referencing which corner of the
+## [DialogueConsoleWindow] to start spawning options from.
+enum _OptionAnchor {
+	TOP_LEFT,    ## Options are right-aligned and appear on the top-left corner.
+	TOP_RIGHT,   ## Options are left-aligned and appear on the top-right corner.
+	BOTTOM_LEFT, ## Options are right-aligned and appear on the bottom-left corner.
+	BOTTOM_RIGHT ## Options are left-aligned and appear on the bottom-right corner.
+}
 
-@onready var main_window: Panel = $Window
-@onready var input_line: LineEdit = $Window/InputLine
-@onready var option_layer: Control = $Options
-@onready var scroll_container: ScrollContainer = $Window/ScrollContainer
-@onready var dialogue_log: RichTextLabel = $Window/ScrollContainer/DialogueLog
-@onready var npc_name: Label = $Window/Header/NPCName
-@onready var hectic_bar: ProgressBar = $Window/HecticBar
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
+const _OPTION_WINDOW_SCENE:Resource = preload(Globals.SCENES.DialogueConsoleOptionWindow)
+
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
+
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+@onready var _textInput: LineEdit = $InputLine
+@onready var scroll_container: ScrollContainer = $ScrollContainer
+@onready var dialogue_log: RichTextLabel = $ScrollContainer/DialogueLog
+@onready var npc_name: Label = $Header/NPCName
+@onready var hectic_bar: ProgressBar = $HecticBar
 @onready var hectic_timer: Timer = $HecticTimer
 
+## [b]Internal-use only.[/b]  Holds the root positions for spawning option windows
+## in normal mode.
+@onready var _optionSpawnPositions = [
+	%OptionAnchors/TopLeft, %OptionAnchors/TopRight,
+	%OptionAnchors/BottomLeft, %OptionAnchors/BottomRight
+]
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+var ownerName:String = ""
+
+# ------------------------------------------------
+# normal variables only referenced in script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 var realOwner: Node = null
-var ownerName: String = ""
+
 var currentDialogueID: String = ""
 var mode: String = "normal"
 var hecticFailureDialogueID: String = ""
@@ -58,8 +139,8 @@ var help_text: String = "Here are the commands:\n\n" + \
 
 func _ready() -> void:
 	_center_main_window()
-	input_line.text_submitted.connect(_on_input_submitted)
-	input_line.grab_focus()
+	_textInput.text_submitted.connect(_on_input_submitted)
+	_textInput.grab_focus()
 	
 	hectic_timer.one_shot = true
 
@@ -71,12 +152,14 @@ func _ready() -> void:
 func set_npc_id(id: String) -> void:
 	ownerName = id
 	print (ownerName)
-	$Window/Header/NPCName.text = ownerName
+	npc_name.text = ownerName
 
 func prepare() -> void:
 	_clear_option_windows()
-	input_line.text = ""
+	_textInput.text = ""
 	_stop_hectic_mode()
+	
+	npc_name.text = ownerName
 
 
 func start() -> void:
@@ -191,14 +274,10 @@ func _spawn_option_windows() -> void:
 		all_options_available.emit()
 		return
 	
-	if option_window_scene == null:
-		push_error("DialogueConsole: option_window_scene is not assigned.")
-		return
-	
 	for i in range(_visible_options.size()):
 		var opt: Dictionary = _visible_options[i]
-		var win = option_window_scene.instantiate()
-		option_layer.add_child(win)
+		var win = _OPTION_WINDOW_SCENE.instantiate()
+		get_parent().add_child(win)
 		
 		win.set_option_data(i, str(opt.get("text", "")))
 		win.option_selected.connect(_on_option_window_selected.bind(opt))
@@ -218,7 +297,7 @@ func _on_input_submitted(raw_text: String) -> void:
 	if _is_typing:
 		return
 	var text := raw_text.strip_edges()
-	input_line.text = ""
+	_textInput.text = ""
 	
 	if text.to_lower() == "help":
 		add_player_text("help")
@@ -251,7 +330,7 @@ func _on_input_submitted(raw_text: String) -> void:
 
 ## This is supposed to make the input line selected again when a option is selected; it doesn't work for me
 func _refocus_input() -> void:
-	$Window/InputLine.edit()
+	_textInput.edit()
 
 
 func _choose_option(option_data: Dictionary) -> void:
@@ -282,7 +361,8 @@ func _clear_option_windows() -> void:
 
 func _center_main_window() -> void:
 	await get_tree().process_frame
-	main_window.position = (get_viewport_rect().size - main_window.size) * 0.5
+	#position = (get_viewport_rect().size - size) * 0.5
+	position = (get_viewport_rect().size - size) / 2
 
 
 ## Currently unused, since it leads to overlap between options and main window
@@ -333,3 +413,15 @@ func loadSfx() -> void:
 	for eventID in sfxPlayer.keys():
 		AudioLoader.clearAudioRandomizer(sfxPlayer[eventID].stream)
 		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
+
+var _dragging := false
+var _drag_offset := Vector2.ZERO
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		_dragging = event.pressed
+		if _dragging:
+			_drag_offset = get_global_mouse_position() - global_position
+	
+	if event is InputEventMouseMotion and _dragging:
+		global_position = get_global_mouse_position() - _drag_offset

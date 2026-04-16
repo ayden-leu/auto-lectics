@@ -26,7 +26,7 @@ signal finished_dialogue()
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  A reference to the [DialogueConsole] scene.
-const _DIALOGUE_CONSOLE_SCENE:Resource = preload(Globals.SCENES.DialogueConsole)
+const _DIALOGUE_CONSOLE_SCENE:Resource = preload(Globals.SCENES.DialogueConsoleWindow)
 
 # ------------------------------------------------
 # export variables
@@ -140,7 +140,6 @@ func _spawnDialogueConsole() -> void:
 		return
 	
 	_dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
-	_dialogueConsole.set_npc_id(myName)
 	
 	get_parent().add_child(_dialogueConsole)
 
@@ -175,6 +174,7 @@ func _disconnectDialogueConsoleSignals() -> void:
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
 func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	_dialogueConsole.realOwner = self
+	_dialogueConsole.ownerName = myName
 	_dialogueConsole.currentDialogueID = _currentDialogueID
 	_dialogueConsole.mode = dialogueEntry.mode
 	

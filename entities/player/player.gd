@@ -139,13 +139,6 @@ func _physics_process(delta: float) -> void:
 	_applyVerticalPhysics(delta)
 	move_and_slide()
 	
-	#if interactionRaycast.get_collider() != null:
-		#var hit = interactionRaycast.get_collider().owner
-		#if _determineIfValidInteractable(hit):
-			#interactableThing = hit
-	#elif interactableThing != null:
-		#interactableThing = null
-	
 	#print(interactionRaycast.get_collider())
 	if interactionRaycast.get_collider() != null:
 		var hit = interactionRaycast.get_collider().owner

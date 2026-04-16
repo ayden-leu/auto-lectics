@@ -1,8 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8oqtsvu488a"]
+[gd_scene load_steps=9 format=3 uid="uid://b8oqtsvu488a"]
 
-[ext_resource type="Script" uid="uid://by12perg4x8bb" path="res://dialogue_visuals/dialogue_console.gd" id="1_y8ul7"]
-[ext_resource type="PackedScene" uid="uid://4opwac4ndc2k" path="res://dialogue_visuals/dialogue_console_option.tscn" id="2_s762g"]
-[ext_resource type="Script" uid="uid://jyd2xwhs30s5" path="res://dialogue_visuals/dialogue_console_main_window.gd" id="3_rk0o3"]
+[ext_resource type="Script" uid="uid://by12perg4x8bb" path="res://dialogue_visuals/dialogue_console_window.gd" id="1_qw6ov"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgd8n"]
 bg_color = Color(0.039215688, 0, 0.023529412, 1)
@@ -34,34 +32,19 @@ playback_mode = 1
 resource_local_to_scene = true
 playback_mode = 1
 
-[node name="DialogueConsole" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 201.0
-offset_top = 10.0
-offset_right = -688.0
-offset_bottom = -162.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_y8ul7")
-option_window_scene = ExtResource("2_s762g")
-
-[node name="Window" type="Panel" parent="."]
-layout_mode = 0
+[node name="DialogueConsoleWindow" type="Panel"]
 offset_right = 429.0
 offset_bottom = 462.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mgd8n")
-script = ExtResource("3_rk0o3")
+script = ExtResource("1_qw6ov")
 
-[node name="Header" type="Control" parent="Window"]
+[node name="Header" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 1
 
-[node name="NPCName" type="Label" parent="Window/Header"]
+[node name="NPCName" type="Label" parent="Header"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 3.0
@@ -70,7 +53,7 @@ offset_bottom = 44.0
 mouse_filter = 1
 theme_override_colors/font_color = Color(0.9490196, 0.6313726, 0.101960786, 1)
 
-[node name="Divider" type="ColorRect" parent="Window/Header"]
+[node name="Divider" type="ColorRect" parent="Header"]
 layout_mode = 0
 offset_left = -17.0
 offset_top = 27.0
@@ -78,7 +61,7 @@ offset_right = 449.0
 offset_bottom = 30.0
 mouse_filter = 1
 
-[node name="ScrollBarDivider" type="ColorRect" parent="Window/Header"]
+[node name="ScrollBarDivider" type="ColorRect" parent="Header"]
 layout_mode = 0
 offset_left = 412.0
 offset_top = 473.0
@@ -87,7 +70,7 @@ offset_bottom = 476.0
 rotation = -1.5707964
 mouse_filter = 1
 
-[node name="CloseButton" type="Button" parent="Window/Header"]
+[node name="CloseButton" type="Button" parent="Header"]
 layout_mode = 0
 offset_left = 413.0
 offset_top = 2.9999998
@@ -99,7 +82,7 @@ theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0.4)
 theme_override_styles/normal = SubResource("StyleBoxFlat_1d7as")
 text = "X"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Window"]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 z_index = 1
 layout_mode = 0
 offset_left = 6.0
@@ -108,7 +91,7 @@ offset_right = 423.0
 offset_bottom = 410.0
 mouse_default_cursor_shape = 2
 
-[node name="DialogueLog" type="RichTextLabel" parent="Window/ScrollContainer"]
+[node name="DialogueLog" type="RichTextLabel" parent="ScrollContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(410, 370)
 layout_mode = 2
@@ -118,7 +101,7 @@ bbcode_enabled = true
 fit_content = true
 scroll_active = false
 
-[node name="InputLine" type="LineEdit" parent="Window"]
+[node name="InputLine" type="LineEdit" parent="."]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 422.0
@@ -129,7 +112,7 @@ theme_override_colors/caret_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_2hkj1")
 keep_editing_on_text_submit = true
 
-[node name="HecticBar" type="ProgressBar" parent="Window"]
+[node name="HecticBar" type="ProgressBar" parent="."]
 visible = false
 layout_mode = 0
 offset_top = -28.0
@@ -141,10 +124,24 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_pbkfi")
 value = 100.0
 fill_mode = 1
 
-[node name="Options" type="Control" parent="."]
+[node name="OptionAnchors" type="Control" parent="."]
+unique_name_in_owner = true
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -1.0
+offset_right = -1.0
+metadata/_edit_lock_ = true
+
+[node name="TopLeft" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(-40, 0)
+
+[node name="TopRight" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(470, 0)
+
+[node name="BottomLeft" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(-40, 462)
+
+[node name="BottomRight" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(470, 462)
 
 [node name="HecticTimer" type="Timer" parent="."]
 
@@ -157,5 +154,4 @@ stream = SubResource("AudioStreamRandomizer_1d7as")
 [node name="spawn" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_2hkj1")
 
-[connection signal="pressed" from="Window/Header/CloseButton" to="." method="_on_close_button_pressed"]
-[connection signal="timeout" from="HecticTimer" to="." method="_on_hectic_timeout"]
+[connection signal="pressed" from="Header/CloseButton" to="." method="_on_close_button_pressed"]
