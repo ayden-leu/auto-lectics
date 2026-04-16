@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4elv63htgufa"]
+[gd_scene load_steps=9 format=3 uid="uid://c4elv63htgufa"]
 
-[ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_4x84g"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_d2s42"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_d2s42"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="4_4x84g"]
 [ext_resource type="Script" uid="uid://ngayr0wn30tw" path="res://_framework/helpers/death_plane.gd" id="4_60sf8"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_jgjv2"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_jgjv2"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v822v"]
 size = Vector3(5, 0.5, 5)
@@ -23,7 +22,6 @@ size = Vector3(1, 4.1533203, 4.439209)
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = ExtResource("2_4x84g")
 
 [node name="Floor1" type="MeshInstance3D" parent="Environment"]
 mesh = SubResource("BoxMesh_v822v")

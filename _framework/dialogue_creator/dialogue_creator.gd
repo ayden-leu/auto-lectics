@@ -16,8 +16,8 @@ signal _set_node_visibility(visible:bool)
 @onready var _graphArea:GraphEdit = $GraphEdit
 
 #const initialObjectPosition:Vector2 = Vector2(100, 100)
-const _SAVE_PATH:String = Globals.STORAGE_PATH.DIALOGUE
-const _FILE_EXTENSION:String = Globals.DIALOGUE_FILE_TYPE
+const _SAVE_PATH:String = FR_Globals.STORAGE_PATH.DIALOGUE
+const _FILE_EXTENSION:String = FR_Globals.DIALOGUE_FILE_TYPE
 
 var _dialogueNodes:Array[DC_DialogueNode] = []
 var _optionNodes:Array[DC_OptionNode] = []

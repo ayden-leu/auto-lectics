@@ -64,7 +64,7 @@ var _sfxIDs:Array[String] = ["none", "inherit"]
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	_sfxIDs.append_array(DirAccess.get_directories_at(Globals.STORAGE_PATH.SFX))
+	_sfxIDs.append_array(DirAccess.get_directories_at(FR_Globals.STORAGE_PATH.SFX))
 	fillValueToOptionIndex(_sfxIDs, false)
 
 # ------------------------------------------------

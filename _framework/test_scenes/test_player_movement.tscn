@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dn0mr4qp6g421"]
+[gd_scene load_steps=14 format=3 uid="uid://dn0mr4qp6g421"]
 
 [ext_resource type="Script" uid="uid://dk75c367gkhsn" path="res://_framework/test_scenes/test_player_movement.gd" id="1_hyee6"]
-[ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_eawqy"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_nt7id"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="3_kkbud"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_nt7id"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_kkbud"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ivx4p"]
 size = Vector3(20, 0.5, 20)
@@ -41,7 +40,6 @@ script = ExtResource("1_hyee6")
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = ExtResource("2_eawqy")
 
 [node name="Floor" type="MeshInstance3D" parent="Environment"]
 mesh = SubResource("BoxMesh_ivx4p")

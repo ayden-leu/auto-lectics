@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0gkoa5s8geir"]
-
-[ext_resource type="PackedScene" uid="uid://de77jn4edh6eq" path="res://models/BlendFiles/bigWires.blend" id="1_d3nj0"]
-
-[node name="bigWires" instance=ExtResource("1_d3nj0")]

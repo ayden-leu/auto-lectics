@@ -61,7 +61,7 @@ var _optionData:Array[Dictionary] = []
 func _ready() -> void:
 	_loadOptionButtonOptions(
 		fieldNPC,
-		_getFoldersInPath(Globals.STORAGE_PATH.DIALOGUE)
+		_getFoldersInPath(FR_Globals.STORAGE_PATH.DIALOGUE)
 	)
 	_on_npc_field_item_selected(fieldNPC.selected)
 
@@ -119,7 +119,7 @@ func _clearOptionButtonOptions(button:OptionButton) -> void:
 		button.remove_item(0)
 
 func _loadDialogueFile() -> void:
-	var path:String = Globals.STORAGE_PATH.DIALOGUE + "/" + \
+	var path:String = FR_Globals.STORAGE_PATH.DIALOGUE + "/" + \
 			fieldNPC.get_item_text(fieldNPC.selected) + "/" + \
 			fieldFile.get_item_text(fieldFile.selected)
 	
@@ -180,7 +180,7 @@ func _on_npc_field_item_selected(index: int) -> void:
 	_loadOptionButtonOptions(
 		fieldFile,
 		_getFilesInPath(
-			Globals.STORAGE_PATH.DIALOGUE + "/" + selectedFolder,
+			FR_Globals.STORAGE_PATH.DIALOGUE + "/" + selectedFolder,
 			FILE_EXTENSION
 		)
 	)

@@ -43,7 +43,7 @@ enum _OptionAnchor {
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-const _OPTION_WINDOW_SCENE:Resource = preload(Globals.SCENES.DialogueConsoleOptionWindow)
+const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
 
 # ------------------------------------------------
 # export variables

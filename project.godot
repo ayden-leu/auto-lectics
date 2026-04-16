@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://globals.gd"
+FR_Globals="*res://_framework/fr_globals.gd"
 
 [display]
 
@@ -33,19 +33,17 @@ folder_colors={
 "res://_documentation/": "gray",
 "res://_framework/": "gray",
 "res://_framework/_visual_assets/": "orange",
-"res://_framework/dialogue_visuals/": "green",
+"res://_framework/dialogue_visuals/": "yellow",
+"res://_framework/entities/": "purple",
 "res://_framework/helpers/": "red",
-"res://_framework/test_scenes/": "purple",
+"res://_framework/test_scenes/": "pink",
+"res://_framework/ui/": "green",
 "res://dialogue_objects/": "blue",
-"res://entities/": "purple",
-"res://entities/npcs/": "purple",
-"res://entities/player/": "orange",
 "res://materials/": "pink",
 "res://models/": "pink",
 "res://shaders/": "teal",
 "res://sounds/": "orange",
 "res://textures/": "pink",
-"res://ui/": "green",
 "res://world/": "blue"
 }
 

@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4qdi730tv5hl"]
+
+[ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://_framework/ui/hud/crosshair.gd" id="1_07bos"]
+[ext_resource type="Texture2D" uid="uid://dnfswnomwkg02" path="res://_framework/_visual_assets/crosshair/crosshair_normal.png" id="2_8hujb"]
+
+[node name="Crosshair" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_07bos")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CrosshairSprite" type="Sprite2D" parent="CenterContainer/MarginContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+texture = ExtResource("2_8hujb")

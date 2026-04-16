@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bt36r3dqntrwu"]
+[gd_scene load_steps=9 format=3 uid="uid://bt36r3dqntrwu"]
 
 [ext_resource type="Script" uid="uid://b04t3tqdhiihd" path="res://_framework/test_scenes/test_npc_patrol.gd" id="1_us853"]
-[ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_8cavx"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_fa21v"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_peiq8"]
-[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://ui/hud/crosshair.tscn" id="5_gbff4"]
-[ext_resource type="PackedScene" uid="uid://hkpx0aww72h8" path="res://entities/npcs/_testing/npc_test.tscn" id="6_453m6"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_fa21v"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_peiq8"]
+[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="5_gbff4"]
+[ext_resource type="PackedScene" uid="uid://hkpx0aww72h8" path="res://_framework/entities/npcs/npc_test.tscn" id="6_453m6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_us853"]
 size = Vector3(30, 0.5, 30)
@@ -35,7 +34,6 @@ outline_size = 127
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = ExtResource("2_8cavx")
 
 [node name="Floor" type="MeshInstance3D" parent="Environment"]
 mesh = SubResource("BoxMesh_us853")

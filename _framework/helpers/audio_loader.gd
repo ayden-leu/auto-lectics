@@ -11,12 +11,12 @@ static func loadSfxFromId(id:String, audioStream:AudioStreamRandomizer) -> int:
 	if id == "none":
 		return 0
 		
-	var tempDirAccess:DirAccess = DirAccess.open(Globals.STORAGE_PATH.SFX)
+	var tempDirAccess:DirAccess = DirAccess.open(FR_Globals.STORAGE_PATH.SFX)
 	if not tempDirAccess.dir_exists(id):
 		printerr("AudioLoader: Could not find the SFX ID folder: ", id)
 		return -2
 	
-	var soundIDPath:String = Globals.STORAGE_PATH.SFX + id
+	var soundIDPath:String = FR_Globals.STORAGE_PATH.SFX + id
 	var audioFileNames:PackedStringArray = ResourceLoader.list_directory(soundIDPath)
 	if audioFileNames.is_empty():
 		printerr("AudioLoader: Could not find any SFX in SFX ID folder: ", id)
