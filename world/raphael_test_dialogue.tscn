@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_y8ghn"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_r7opt"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_vekyi"]
-[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_hmrtd"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="5_vekyi"]
+[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="6_hmrtd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

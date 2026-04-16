@@ -12,8 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/week6playtestStuff/environment/embellishments/scaffoldRound.fbx" id="10_lvwjc"]
 [ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/week6playtestStuff/environment/embellishments/bigFence.fbx" id="11_5gp77"]
 [ext_resource type="PackedScene" uid="uid://cjm7e1rpufunn" path="res://models/week6playtestStuff/environment/MainTube/box.fbx" id="12_7v333"]
-[ext_resource type="PackedScene" uid="uid://dloital66b4nj" path="res://models/week6playtestStuff/environment/MainTube/catwalk_with_collision.tscn" id="13_rlsos"]
-[ext_resource type="PackedScene" uid="uid://cx0ylib0hd1fb" path="res://models/week6playtestStuff/environment/MainTube/catwalkSupport.fbx" id="14_q7pnq"]
+[ext_resource type="PackedScene" path="res://models/week6playtestStuff/environment/MainTube/catwalk_with_collision.tscn" id="13_rlsos"]
+[ext_resource type="PackedScene" path="res://models/week6playtestStuff/environment/MainTube/catwalkSupport.fbx" id="14_q7pnq"]
 [ext_resource type="PackedScene" uid="uid://c4tgf65dl5wfu" path="res://models/week6playtestStuff/environment/MainTube/plank.fbx" id="15_wfbps"]
 [ext_resource type="PackedScene" uid="uid://c3hd7y2hgpe7p" path="res://models/week6playtestStuff/environment/MainTube/plank.tscn" id="16_5kofa"]
 [ext_resource type="PackedScene" uid="uid://coq7r7deuegla" path="res://models/week6playtestStuff/environment/tubes/classicBend.fbx" id="17_1ic4n"]
@@ -36,7 +36,7 @@
 [ext_resource type="Script" uid="uid://p0cln631abqt" path="res://entities/npcs/birdNPC.gd" id="30_ha65o"]
 [ext_resource type="PackedScene" uid="uid://cacib06ypgbbs" path="res://entities/npcs/sideNPCS/container.tscn" id="31_ha65o"]
 [ext_resource type="PackedScene" uid="uid://cdn26x78pvors" path="res://models/week6playtestStuff/Week6PlaytestWorldAssets/MainTube/tankTubeUpsiderDow.fbx" id="33_pcetu"]
-[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="38_gpeg5"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="38_gpeg5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qo27r"]
 panorama = ExtResource("1_cjsxm")

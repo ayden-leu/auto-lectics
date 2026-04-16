@@ -5,9 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_v3yie"]
 [ext_resource type="PackedScene" path="res://test_scenes/debug_camera.tscn" id="3_7dg45"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_q8v2a"]
-[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_hbcv5"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="5_hbcv5"]
 [ext_resource type="PackedScene" uid="uid://pvjkit80e1ea" path="res://world/startingScene.tscn" id="6_4m3ue"]
-[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_v3yie"]
+[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="6_v3yie"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7dg45"]
 panorama = ExtResource("1_hbcv5")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://48fc1541wob2"]
+
+[ext_resource type="Script" uid="uid://1sp5xckpfscd" path="res://_framework/dialogue_visuals/timer_bar.gd" id="1_1bjvj"]
+[ext_resource type="BoxMesh" uid="uid://cghqo3gaxkj7a" path="res://_framework/_visual_assets/timer_bar_mesh.tres" id="2_pavj5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7l3sg"]
+size = Vector3(0.17871094, 0.16308594, 2.1113281)
+
+[node name="Timer" type="Node3D" node_paths=PackedStringArray("bar")]
+script = ExtResource("1_1bjvj")
+bar = NodePath("Bar")
+
+[node name="Bar" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_pavj5")
+
+[node name="VisualArea" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisualArea"]
+shape = SubResource("BoxShape3D_7l3sg")

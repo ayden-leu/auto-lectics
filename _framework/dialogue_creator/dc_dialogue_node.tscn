@@ -1,0 +1,344 @@
+[gd_scene load_steps=12 format=3 uid="uid://c5o5n3jy08obe"]
+
+[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
+[ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_framework/dialogue_creator/dc_dialogue_node.gd" id="1_g3bfk"]
+[ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_framework/dialogue_creator/visual_assets/save.svg" id="3_u2mdd"]
+[ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_framework/dialogue_creator/helpers/field_option_type.gd" id="4_i0lsd"]
+[ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_framework/dialogue_creator/visual_assets/plus.svg" id="4_mug1a"]
+[ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_framework/dialogue_creator/visual_assets/minus.svg" id="5_i0lsd"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/button_toggle_area.gd" id="6_je0p8"]
+[ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_framework/dialogue_creator/helpers/field_option_mode.gd" id="7_rapsn"]
+[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_framework/dialogue_creator/helpers/aspects_write_speed.gd" id="8_u2mdd"]
+[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/aspects_sfx.gd" id="9_mug1a"]
+[ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_framework/dialogue_creator/helpers/field_option_write_speed_preset.gd" id="10_1plpy"]
+
+[node name="DC_DialogueNode" type="GraphNode"]
+texture_filter = 2
+offset_right = 405.0
+offset_bottom = 637.0
+theme = ExtResource("1_1f1bm")
+theme_type_variation = &"DialogueObject"
+resizable = true
+title = "New Dialogue Object"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
+slot/6/left_enabled = false
+slot/6/left_type = 0
+slot/6/left_color = Color(1, 1, 1, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
+script = ExtResource("1_g3bfk")
+
+[node name="DialogueID" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DialogueID"]
+layout_mode = 2
+theme_type_variation = &"LabelDialogueID"
+text = "Dialogue ID"
+
+[node name="DialogueIDField" type="LineEdit" parent="DialogueID"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "e.g  Dialogue1"
+
+[node name="Save" type="Button" parent="DialogueID"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 0
+icon = ExtResource("3_u2mdd")
+
+[node name="Text" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Text"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Text"
+vertical_alignment = 1
+
+[node name="TextField" type="TextEdit" parent="Text"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+wrap_mode = 1
+tab_input_mode = false
+scroll_fit_content_height = true
+
+[node name="Row1" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TypeField" type="HBoxContainer" parent="Row1" node_paths=PackedStringArray("chooser")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("4_i0lsd")
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="Row1/TypeField"]
+layout_mode = 2
+text = "Type"
+
+[node name="OptionButton" type="OptionButton" parent="Row1/TypeField"]
+layout_mode = 2
+
+[node name="Options" type="HBoxContainer" parent="Row1"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Label" type="Label" parent="Row1/Options"]
+layout_mode = 2
+theme_type_variation = &"LabelOption"
+text = "Options"
+horizontal_alignment = 2
+
+[node name="AddOption" type="Button" parent="Row1/Options"]
+layout_mode = 2
+icon = ExtResource("4_mug1a")
+icon_alignment = 1
+
+[node name="RemoveOption" type="Button" parent="Row1/Options"]
+layout_mode = 2
+icon = ExtResource("5_i0lsd")
+icon_alignment = 1
+
+[node name="Row2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Advanced" type="CheckBox" parent="Row2" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"CheckBoxFold"
+text = "Advanced"
+script = ExtResource("6_je0p8")
+fields = [NodePath("../../AdvancedOptions")]
+
+[node name="Label" type="Label" parent="Row2"]
+layout_mode = 2
+theme_type_variation = &"LabelDialogueID"
+text = "Next On Hectic Fail"
+
+[node name="AdvancedOptions" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Row1" type="HBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="Font" type="HBoxContainer" parent="AdvancedOptions/Row1"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/Font"]
+layout_mode = 2
+theme_type_variation = &"LabelDisabled"
+text = "Font"
+
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/Font"]
+layout_mode = 2
+theme_type_variation = &"OptionButtonDisabled"
+disabled = true
+
+[node name="VSeparator" type="VSeparator" parent="AdvancedOptions/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModeField" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("hecticPortLabel", "chooser")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("7_rapsn")
+hecticPortLabel = NodePath("../../../Row2/Label")
+chooser = NodePath("OptionButton")
+
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/ModeField"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/ModeField"]
+layout_mode = 2
+text = "Mode"
+
+[node name="VSeparator" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("8_u2mdd")
+presetHandler = NodePath("WriteSpeedPreset")
+valueSetter = NodePath("WriteSpeedValue/SpinBox")
+
+[node name="WriteSpeedPreset" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects" node_paths=PackedStringArray("chooser")]
+layout_mode = 2
+script = ExtResource("10_1plpy")
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
+layout_mode = 2
+text = "Write Speed Preset"
+
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/WriteSpeedAspects"]
+layout_mode = 2
+
+[node name="WriteSpeedValue" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Write Speed Value"
+
+[node name="VSeparator" type="VSeparator" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SpinBox" type="SpinBox" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+max_value = 120.0
+value = 1.0
+allow_greater = true
+
+[node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BackgroundTheme" type="HBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/BackgroundTheme"]
+layout_mode = 2
+theme_type_variation = &"LabelDisabled"
+text = "Background Theme"
+
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/BackgroundTheme"]
+layout_mode = 2
+theme_type_variation = &"OptionButtonDisabled"
+disabled = true
+
+[node name="VSeparator3" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("9_mug1a")
+eventHolder = NodePath("Events")
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "SFX Events"
+script = ExtResource("6_je0p8")
+fields = [NodePath("../Events")]
+
+[node name="Events" type="VBoxContainer" parent="AdvancedOptions/SfxAspects"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VSeparator4" type="VSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ParticleAspects" type="VBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/ParticleAspects"]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+disabled = true
+text = "Particles"
+script = ExtResource("6_je0p8")
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/ParticleAspects"]
+layout_mode = 2
+
+[node name="Particles" type="VBoxContainer" parent="AdvancedOptions/ParticleAspects"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Debug" type="Button" parent="."]
+layout_mode = 2
+text = "Debug"
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+
+[connection signal="text_changed" from="DialogueID/DialogueIDField" to="." method="_on_dialogue_id_updated"]
+[connection signal="pressed" from="DialogueID/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Row1/Options/AddOption" to="." method="_on_add_option_pressed"]
+[connection signal="pressed" from="Row1/Options/RemoveOption" to="." method="_on_remove_option_pressed"]
+[connection signal="resize" from="Row2/Advanced" to="." method="_on_resize_height"]
+[connection signal="toggled" from="Row2/Advanced" to="Row2/Advanced" method="_on_toggled"]
+[connection signal="set_hectic_port" from="AdvancedOptions/Row1/ModeField" to="." method="_on_set_hectic_port"]
+[connection signal="item_selected" from="AdvancedOptions/Row1/ModeField/OptionButton" to="AdvancedOptions/Row1/ModeField" method="_on_chooser_updated"]
+[connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
+[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
+[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_changed"]
+[connection signal="toggled" from="AdvancedOptions/SfxAspects/CheckBox" to="AdvancedOptions/SfxAspects/CheckBox" method="_on_toggled"]
+[connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://durbaepi13cj1"]
+
+[resource]
+shading_mode = 0
+albedo_color = Color(0.14999998, 0.7591667, 1, 1)
+stencil_flags = 2

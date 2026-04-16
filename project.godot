@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AUTO-Lectics"
-run/main_scene="uid://diyxywem2nqfb"
+run/main_scene="uid://11dkiqp8ejdd"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -30,18 +30,20 @@ window/stretch/aspect="expand"
 [file_customization]
 
 folder_colors={
+"res://_documentation/": "gray",
+"res://_framework/": "gray",
+"res://_framework/_visual_assets/": "orange",
+"res://_framework/dialogue_visuals/": "green",
+"res://_framework/helpers/": "red",
+"res://_framework/test_scenes/": "purple",
 "res://dialogue_objects/": "blue",
-"res://dialogue_visuals/": "teal",
-"res://editor_files/": "gray",
 "res://entities/": "purple",
 "res://entities/npcs/": "purple",
 "res://entities/player/": "orange",
-"res://helpers/": "red",
 "res://materials/": "pink",
 "res://models/": "pink",
 "res://shaders/": "teal",
 "res://sounds/": "orange",
-"res://test_scenes/": "gray",
 "res://textures/": "pink",
 "res://ui/": "green",
 "res://world/": "blue"

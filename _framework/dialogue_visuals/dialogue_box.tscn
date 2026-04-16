@@ -1,0 +1,224 @@
+[gd_scene load_steps=13 format=3 uid="uid://dwqide2q2tp3i"]
+
+[ext_resource type="Script" uid="uid://beclvb6w261ps" path="res://_framework/dialogue_visuals/dialogue_box.gd" id="1_xrnu6"]
+[ext_resource type="BoxMesh" uid="uid://dppf2hc6saa6y" path="res://_framework/_visual_assets/dialogue_box_background.tres" id="2_ane15"]
+[ext_resource type="Material" uid="uid://c0xdf8h6b727j" path="res://_framework/_visual_assets/dont_change/blue_translucent.tres" id="3_21gmv"]
+[ext_resource type="Script" uid="uid://c6ws1e2akda0x" path="res://_framework/dialogue_visuals/type_writer_label_3d.gd" id="3_ane15"]
+[ext_resource type="PackedScene" uid="uid://48fc1541wob2" path="res://_framework/dialogue_visuals/timer_bar.tscn" id="4_44dxv"]
+[ext_resource type="Script" uid="uid://bix7b5bmj6lso" path="res://_framework/dialogue_visuals/hectic_positions.gd" id="4_hx4ud"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_21gmv"]
+size = Vector3(0.18579102, 2.4591217, 2.102539)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c2e7b"]
+material = ExtResource("3_21gmv")
+size = Vector3(0.195, 1.035, 4.485)
+
+[sub_resource type="BoxMesh" id="BoxMesh_21gmv"]
+material = ExtResource("3_21gmv")
+size = Vector3(0.195, 1.585, 1.32)
+
+[sub_resource type="BoxMesh" id="BoxMesh_44dxv"]
+material = ExtResource("3_21gmv")
+size = Vector3(0.195, 1.585, 1.32)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hx4ud"]
+resource_local_to_scene = true
+playback_mode = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ane15"]
+resource_local_to_scene = true
+playback_mode = 1
+
+[node name="DialogueBox" type="Node3D" node_paths=PackedStringArray("_myLabel")]
+script = ExtResource("1_xrnu6")
+_myLabel = NodePath("DialogueLabel")
+
+[node name="Background" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_ane15")
+
+[node name="DialogueLabel" type="Label3D" parent="."]
+transform = Transform3D(-3.291402e-08, 0, 0.752985, 0, 0.752985, 0, -0.752985, 0, -3.291402e-08, 0.09841019, 1.1696776, 0.99419135)
+pixel_size = 0.0025
+text = "test message"
+font_size = 80
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 2
+width = 1100.0
+script = ExtResource("3_ane15")
+fullText = "test message"
+
+[node name="VisualArea" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisualArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0034103394, 0)
+shape = SubResource("BoxShape3D_21gmv")
+
+[node name="WarningPositionAreas" type="Node3D" parent="."]
+
+[node name="Top" type="MeshInstance3D" parent="WarningPositionAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4854203, 1.9828007, 0)
+mesh = SubResource("BoxMesh_c2e7b")
+
+[node name="Left" type="MeshInstance3D" parent="WarningPositionAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49749702, 0.2908477, 1.8043454)
+mesh = SubResource("BoxMesh_21gmv")
+
+[node name="Right" type="MeshInstance3D" parent="WarningPositionAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49749702, 0.2908477, -1.8219291)
+mesh = SubResource("BoxMesh_44dxv")
+
+[node name="OptionPositions" type="Node3D" parent="."]
+
+[node name="Normal" type="Node3D" parent="OptionPositions"]
+visible = false
+
+[node name="TopLeft" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0, 1.21, 1.163)
+metadata/_edit_group_ = true
+
+[node name="TopRight" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0, 1.21, -1.163)
+metadata/_edit_group_ = true
+
+[node name="BottomLeft" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0, -1.205454, 1.163)
+metadata/_edit_group_ = true
+
+[node name="BottomRight" type="Marker3D" parent="OptionPositions/Normal"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0, -1.205454, -1.163)
+metadata/_edit_group_ = true
+
+[node name="Hectic" type="Node3D" parent="OptionPositions"]
+script = ExtResource("4_hx4ud")
+
+[node name="Left" type="Node3D" parent="OptionPositions/Hectic"]
+
+[node name="1" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.16001439, 2.2279859, 1.0611581)
+metadata/_edit_group_ = true
+
+[node name="2" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.33623385, 1.8619915, 0.89093983)
+metadata/_edit_group_ = true
+
+[node name="3" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.28653097, 1.7716229, 1.3970057)
+metadata/_edit_group_ = true
+
+[node name="4" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.5305272, 1.2610382, 1.4376715)
+metadata/_edit_group_ = true
+
+[node name="5" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.40852904, 0.8995627, 1.8624057)
+metadata/_edit_group_ = true
+
+[node name="6" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.32267833, 0.6194192, 1.433153)
+metadata/_edit_group_ = true
+
+[node name="7" type="Marker3D" parent="OptionPositions/Hectic/Left"]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 0.46726882, 0.22631419, 1.939219)
+metadata/_edit_group_ = true
+
+[node name="Right" type="Node3D" parent="OptionPositions/Hectic"]
+
+[node name="1" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.12813246, 2.211395, -0.89777774)
+metadata/_edit_group_ = true
+
+[node name="2" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.18223286, 1.8619139, -0.7302319)
+metadata/_edit_group_ = true
+
+[node name="3" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.29328108, 1.6401912, -0.9664224)
+metadata/_edit_group_ = true
+
+[node name="4" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.16799593, 1.4305401, -1.2465218)
+metadata/_edit_group_ = true
+
+[node name="5" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.36731306, 1.1343564, -1.4964441)
+metadata/_edit_group_ = true
+
+[node name="6" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.27050188, 0.800475, -1.6729823)
+metadata/_edit_group_ = true
+
+[node name="7" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.34738126, 0.52712584, -1.3622543)
+metadata/_edit_group_ = true
+
+[node name="8" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.22209635, 0.32353246, -1.554392)
+metadata/_edit_group_ = true
+
+[node name="9" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.3473812, 0.029448688, -1.2822405)
+metadata/_edit_group_ = true
+
+[node name="10" type="Marker3D" parent="OptionPositions/Hectic/Right"]
+transform = Transform3D(0.9378889, 0, -0.34693566, 0, 1, 0, 0.34693566, 0, 0.9378889, 0.2534176, -0.27583742, -1.4506439)
+metadata/_edit_group_ = true
+
+[node name="Top" type="Node3D" parent="OptionPositions/Hectic"]
+
+[node name="1" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.06551936, 1.5519055, 0.35953772)
+metadata/_edit_group_ = true
+
+[node name="2" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.17676836, 1.826174, -0.23174068)
+metadata/_edit_group_ = true
+
+[node name="3" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.06551936, 2.0079834, 0.24010843)
+metadata/_edit_group_ = true
+
+[node name="4" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.22521538, 2.3691308, -0.2042324)
+metadata/_edit_group_ = true
+
+[node name="5" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.38269562, 2.6050103, 0.4384464)
+metadata/_edit_group_ = true
+
+[node name="6" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.6304612, 2.8923411, -0.31423265)
+metadata/_edit_group_ = true
+
+[node name="7" type="Marker3D" parent="OptionPositions/Hectic/Top"]
+transform = Transform3D(0.94599473, 0.3241816, 0, -0.3241816, 0.94599485, 0, 0, 0, 0.9999999, 0.6304612, 3.0054848, 0.22590068)
+metadata/_edit_group_ = true
+
+[node name="WarningsContainer" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="OptionsContainer" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Timer" parent="." instance=ExtResource("4_44dxv")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2821603, 0)
+
+[node name="SFX" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="text" type="AudioStreamPlayer3D" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_hx4ud")
+
+[node name="spawn" type="AudioStreamPlayer3D" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_ane15")
+
+[node name="tempTimeer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_bar_timeout"]
