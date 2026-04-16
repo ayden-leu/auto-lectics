@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm2wlegvafwbr"]
+
+[ext_resource type="Script" uid="uid://dbbi5gir2sqok" path="res://_framework/entities/player/player_camera.gd" id="1_ckl5i"]
+[ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="3_kwuc6"]
+
+[node name="PlayerCamera" type="Node3D"]
+script = ExtResource("1_ckl5i")
+_actAsFocus = null
+_distanceFromOrigin = null
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("3_kwuc6")
+metadata/_custom_type_script = "uid://bvgsjve6ghkfg"
+
+[connection signal="mouse_moved" from="InputHandler" to="." method="_on_mouse_moved"]

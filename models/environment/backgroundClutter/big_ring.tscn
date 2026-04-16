@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b24erx4bp037i"]
-
-[ext_resource type="PackedScene" uid="uid://bxyidxqmrtxn5" path="res://models/BlendFiles/bigRing.blend" id="1_rhffw"]
-
-[node name="bigRing" instance=ExtResource("1_rhffw")]
