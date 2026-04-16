@@ -6,10 +6,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ak60"]
 size = Vector3(5.7617188, 4.720703, 0.20898438)
 
-[node name="ship" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model") groups=["NPCs"]]
+[node name="ship" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_6ak60")
-hitbox = NodePath("Hitbox")
-dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
+_hitbox = NodePath("Hitbox")
 initialDialogueID = "1"
 model = NodePath("dropPod")
 myName = "The Office"

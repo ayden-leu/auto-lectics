@@ -1,44 +1,56 @@
 extends Node3D
 class_name DialogueBox
+## @deprecated
+## [b]Internal-use only.[/b]  The dialogue box that spawns when a dialogue event is happening.
+## Forward is in the positive X direction.
 
-# TODO:  adjust size of dialogue box dynamically
-# TODO:  verify/add signal emitions for all signals
-# TODO:  make optionsAnchor configurable in dialogue .json file
-
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
 ## Emitted when the dialogue box wants to be updated.
 signal update_me(nextID:String)
 ## Emitted when all of the dialogue text is visible.
-signal all_dialogue_text_visible    # TODO
+signal all_dialogue_text_visible()
 ## Emitted when an option spawns.
-signal new_option_available
+signal new_option_available()
 ## Emitted when all options are spawned.
-signal all_options_available
+signal all_options_available()
 
-## Used for referencing which corner of the dialogue box to start spawning options from.
-enum OPTIONS_ANCHOR {
-	topLeft,
-	topRight,
-	bottomLeft,
-	bottomRight
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Used for referencing which corner of the dialogue box to start spawning options from.
+enum _OptionAnchor {
+	TOP_LEFT,    ## Options are right-aligned and appear on the top-left corner.
+	TOP_RIGHT,   ## Options are left-aligned and appear on the top-right corner.
+	BOTTOM_LEFT, ## Options are right-aligned and appear on the bottom-left corner.
+	BOTTOM_RIGHT ## Options are left-aligned and appear on the bottom-right corner.
 }
 
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Holds a reference to the dialogue option resource.
+const _OPTION_SCENE:Resource = preload(Globals.SCENES.DialogueBoxOption)
+## [b]Internal-use only.[/b]  Holds a reference to the warning tile resource.
+const _WARNING_TILE_SCENE:Resource = preload(Globals.SCENES.DialogueWarningTile3D)
+## [b]Internal-use only.[/b]  The number of warning tiles to spawn during hectic mode.
+const _NUM_WARNINGS:int = 6
+
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
 ## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly. 
-@export var optionsAnchor:OPTIONS_ANCHOR = OPTIONS_ANCHOR.topLeft
-## Holds a reference to the text label that displays the current dialogue.
-@export var myLabel:TypeWriterLabel
-## Holds the text that displays the current dialogue.  Mainly just used as an easier way to get/set the label text.
-var text:String = "":
-	set(value):
-		text = value
-		myLabel.fullText = value
+@export var _optionsAnchor:_OptionAnchor = _OptionAnchor.TOP_LEFT
+## The label that displays the current dialogue.
+@export var _myLabel:TypeWriterLabel3D
 
-## Holds a reference to the dialogue option resource.
-const optionScene:Resource = preload(Globals.SCENES.DialogueOption)
-## Holds a reference to the warning tile resource.
-const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
-
-## Holds the available spawn positions for dialogue options for both modes.
-@onready var optionSpawnPositions = {
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Holds the available spawn positions for dialogue options for both modes.
+## Not constant as the hectic sub-fields get modified.
+@onready var _optionSpawnPositions = {
 	"normal": $OptionPositions/Normal.get_children(),
 	"hectic": {
 		"root": $OptionPositions/Hectic,
@@ -47,55 +59,65 @@ const warningTileScene:Resource = preload(Globals.SCENES.DialogueWarningTile)
 		"top": $OptionPositions/Hectic/Top.get_children(),
 	}
 }
-## Holds all spawned options.
-@onready var optionContainer = $OptionsContainer
-## Holds the available spawn positions for warning tiles.
-@onready var warningAreas:Array = $WarningPositionAreas.get_children()
-## Holds all spawned warning tiles.
-@onready var warningsContainer:Node3D = $WarningsContainer
-## The timer bar that appears when a hectic dialogue object is loaded.
-@onready var timer:TimerBar = $Timer
-## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
-	"spawn": %spawn,
-	"text": %text
+## [b]Internal-use only.[/b]   Holds all spawned options.
+@onready var _optionContainer = %OptionsContainer
+## [b]Internal-use only.[/b]   Holds all spawned warning tiles.
+@onready var _warningsContainer:Node3D = %WarningsContainer
+## [b]Internal-use only.[/b]   Holds the available spawn positions for warning tiles.
+@onready var _warningAreas:Array = $WarningPositionAreas.get_children()
+## [b]Internal-use only.[/b]   The timer bar that appears when a hectic dialogue object is loaded.
+@onready var _timer:TimerBar = %Timer
+## [b]Internal-use only.[/b]   Holds the AudioStreamPlayer3Ds for each event.
+@onready var _sfxPlayers:Dictionary[String, AudioStreamPlayer3D] = {
+	"spawn": %SFX/spawn,
+	"text": %SFX/text
 }
 
-## The owner of this dialogue box.
-var realOwner
-## A random number generator.
-var rng:RandomNumberGenerator = RandomNumberGenerator.new()
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+## Holds the text that displays the current dialogue.  Mainly just used as an easier way to get/set the label text.
+var text:String = "":
+	set(value):
+		text = value
+		_myLabel.fullText = value
+## The owner of this dialogue box.  Can't use [method get_parent()] due to the immediate parent not always being the thing that spawned this. 
+var realOwner:Node3D
 ## The ID of the current dialogue.
 var currentDialogueID:String
 ## The ID of dialogue object to go to when the player fails a hectic dialogue interaction.
 var hecticFailureDialogueID:String
-## Holds the data for the options to spawn.
-var optionData:Array = []
-## Holds references to all spawned options.
-var spawnedOptions:Array = []
 ## The dialogue mode.
 var mode:String = "normal"
-## The number of warning tiles to spawn during hectic mode.
-var numWarnings:int = 6
-## Holds references to all spawned warning tiles.
-var spawnedWarningTiles:Array = []
-## The SFX sound events to load sound files into.
-var sfxEventsToLoad:Dictionary:
-	set(value):
-		sfxEventsToLoad = value
-		loadSfx()
 ## How fast the text should be written in Characters per Second.
 var textWriteSpeed:float
-## Whether to start writing the text or not.
-var increaseVisibleTextAmount:bool = false:
-	set(value):
-		increaseVisibleTextAmount = value
-		timePassedSinceTextWriting = 0.0
-## The amount of time passed since starting to write text.
-var timePassedSinceTextWriting:float = 0.0
 ## A hardcoded delay between when the dialogue text finishes writing and when the options start being created.
 var delayBtwnWriteDialogueAndOptions:float = 1.0
+## A hardcoded delay between when the dialogue text finishes writing and when the options start being created.
+var delayBtwnWriteDialogueAndOptionsHectic:float = 0.25
 
+# ------------------------------------------------
+# normal variables only referenced in script
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  A random number generator.
+var _rng:RandomNumberGenerator = RandomNumberGenerator.new()
+## [b]Internal-use only.[/b]  Holds the data for the options to spawn.
+var _optionData:Array = []
+## [b]Internal-use only.[/b]  Holds references to all spawned options.
+var _spawnedOptions:Array = []
+## [b]Internal-use only.[/b]  Holds references to all spawned warning tiles.
+var _spawnedWarningTiles:Array = []
+## [b]Internal-use only.[/b]  Whether to start writing the text or not.
+var _increaseVisibleTextAmount:bool = false:
+	set(value):
+		_increaseVisibleTextAmount = value
+		_timePassedSinceTextWriting = 0.0
+## [b]Internal-use only.[/b]  The amount of time passed since starting to write text.
+var _timePassedSinceTextWriting:float = 0.0
+
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		$WarningPositionAreas.visible = true
@@ -103,13 +125,33 @@ func _ready() -> void:
 		$WarningPositionAreas.visible = false
 	
 func _process(delta: float) -> void:
-	if increaseVisibleTextAmount:
-		timePassedSinceTextWriting += delta
-		writeText()
+	if _increaseVisibleTextAmount:
+		_timePassedSinceTextWriting += delta
+		_writeText()
+
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+## Runs any configurations that need to be run before continuing onward.
+func prepare() -> void:
+	if mode == "hectic":
+		_optionSpawnPositions.hectic.left = $OptionPositions/Hectic/Left.get_children()
+		_optionSpawnPositions.hectic.right = $OptionPositions/Hectic/Right.get_children()
+		_optionSpawnPositions.hectic.top = $OptionPositions/Hectic/Top.get_children()
+		
+		_createWarningTiles(_NUM_WARNINGS)
+		_timer.duration = 5.0  # TODO:  make this customizable
+		_timer.start()
+
+## Make the dialogue box start doing things.
+func start() -> void:
+	_sfxPlayers.spawn.play()
+	_myLabel.visibleCharacters = 0
+	_increaseVisibleTextAmount = true
 
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
-	optionData.clear()
+	_optionData.clear()
 	
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
@@ -117,62 +159,58 @@ func loadOptionData(options: Array) -> void:
 		
 		#Don't show any options that don't pass check_flag
 		var check_flags: Dictionary = option.checkFlags
-		if StoryFlags.passes_check_flags(check_flags):
-			optionData.push_back(option)
+		if StoryFlags.flagsMatch(check_flags):
+			_optionData.push_back(option)
 	
-	optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
+	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
 
-## Runs any configurations that need to be run before continuing onward.
-func prepare() -> void:
-	if mode == "hectic":
-		optionSpawnPositions.hectic.left = $OptionPositions/Hectic/Left.get_children()
-		optionSpawnPositions.hectic.right = $OptionPositions/Hectic/Right.get_children()
-		optionSpawnPositions.hectic.top = $OptionPositions/Hectic/Top.get_children()
-		
-		createWarningTiles(numWarnings)
-		timer.duration = 5.0  # TODO:  make this customizable
-		timer.start()
+## Loads the SFX from the files.
+func loadSfx(sfxEventsToLoad:Dictionary) -> void:
+	for eventID in _sfxPlayers.keys():
+		AudioLoader.clearAudioRandomizer(_sfxPlayers[eventID].stream)
+		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayers[eventID].stream)
 
-## Make the dialogue box start doing things.
-func start() -> void:
-	print("starting new dialogue")
-	sfxPlayer.spawn.play()
-	myLabel.visibleCharacters = 0
-	increaseVisibleTextAmount = true
+## Removes the dialogue box from the world.
+func kill() -> void:
+	for eventID in _sfxPlayers.keys():
+		AudioLoader.clearAudioRandomizer(_sfxPlayers[eventID].stream)
+	queue_free()
 
-## Makes label text visible based on the elapsed time.
-func writeText() -> void:
-	var newVisibleAmount:int = roundi(timePassedSinceTextWriting * textWriteSpeed)
-	myLabel.visibleCharacters = newVisibleAmount
-	sfxPlayer.text.play()
+# ------------------------------------------------
+# functions only referenced inside this script
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Makes label text visible based on the elapsed time.
+func _writeText() -> void:
+	var newVisibleAmount:int = roundi(_timePassedSinceTextWriting * textWriteSpeed)
+	_myLabel.visibleCharacters = newVisibleAmount
+	_sfxPlayers.text.play()
 	
 	if newVisibleAmount >= text.length():
-		finishWritingText()
+		_finishWritingText()
 
-func finishWritingText() -> void:
-	increaseVisibleTextAmount = false
+## [b]Internal-use only.[/b]  Handles stuff that needs to happen when the text
+## finishes being displayed.
+func _finishWritingText() -> void:
+	_increaseVisibleTextAmount = false
 	all_dialogue_text_visible.emit()
 	
-	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
+	var delay:float = delayBtwnWriteDialogueAndOptions \
+		if hecticFailureDialogueID == "" \
+		else delayBtwnWriteDialogueAndOptionsHectic
+	await get_tree().create_timer(delay).timeout
 	
-	if optionData.size() == 0:
+	if _optionData.size() == 0:
 		update_me.emit("")
 		return
 	
-	createOptions()
+	_createOptions()
 
-## Loads the SFX from the files.
-func loadSfx() -> void:
-	for eventID in sfxPlayer.keys():
-		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
-		AudioLoader.loadAudioFiles(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
-
-## Creates each option that the player can choose from for this dialogue object.
-func createOptions() -> void:
+## [b]Internal-use only.[/b]  Creates each option that the player can choose from for this dialogue object.
+func _createOptions() -> void:
 	var loadingDialogueID:String
 	var prevDelay:float = 0.0
 	
-	for optionObjectData in optionData:
+	for optionObjectData in _optionData:
 		loadingDialogueID = currentDialogueID
 		
 		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0.001)
@@ -181,190 +219,192 @@ func createOptions() -> void:
 			return
 		prevDelay += spawnDelay - 0.001
 		
-		var newOption:DialogueOption = spawnOption()
-		configureDialogueOption(newOption, optionObjectData)
+		var newOption:DialogueBoxOption = _spawnOption()
+		_configureDialogueBoxOption(newOption, optionObjectData)
 		newOption.prepare()
 		new_option_available.emit()
 	
 	all_options_available.emit()
 
-## Creates a dialogue option scene and saves a reference to it in "spawnedOptions"
-func spawnOption() -> DialogueOption:
-	var option:DialogueOption = optionScene.instantiate()
-	optionContainer.add_child(option)
-	spawnedOptions.push_back(option)
+## [b]Internal-use only.[/b]  Creates a dialogue option scene and saves a reference to it in "_spawnedOptions"
+func _spawnOption() -> DialogueBoxOption:
+	var option:DialogueBoxOption = _OPTION_SCENE.instantiate()
+	_optionContainer.add_child(option)
+	_spawnedOptions.push_back(option)
 	return option
 
-## Updates the position of a dialogue option in normal mode.
-func setOptionPositionNormal(option:DialogueOption) -> void:
-	if spawnedOptions.size() == 1:
-		option.position = optionSpawnPositions.normal[optionsAnchor].position
-		option.rotation_degrees = optionSpawnPositions.normal[optionsAnchor].rotation_degrees
+## [b]Internal-use only.[/b]  Updates the position of a dialogue option in normal mode.
+func _setOptionPositionNormal(option:DialogueBoxOption) -> void:
+	if _spawnedOptions.size() == 1:
+		option.position = _optionSpawnPositions.normal[_optionsAnchor].position
+		option.rotation_degrees = _optionSpawnPositions.normal[_optionsAnchor].rotation_degrees
 		return
 	
-	var lastOption:DialogueOption = spawnedOptions[-2]
+	var lastOption:DialogueBoxOption = _spawnedOptions[-2]
 	var offsetMultiplier:float = 1.001
-	if optionsAnchor == OPTIONS_ANCHOR.bottomLeft or optionsAnchor == OPTIONS_ANCHOR.bottomRight:
+	if _optionsAnchor == _OptionAnchor.BOTTOM_LEFT or _optionsAnchor == _OptionAnchor.BOTTOM_RIGHT:
 		offsetMultiplier *= -1
 	
 	option.position = lastOption.position + Vector3(0, -lastOption.labelHeight * offsetMultiplier, 0)
 	option.rotation_degrees = lastOption.rotation_degrees
 
-## Updates the alignment of a dialogue option in normal mode.
-func setOptionAlignmentNormal(option:DialogueOption) -> void:
-	match optionsAnchor:
-		OPTIONS_ANCHOR.topLeft:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.top
-		OPTIONS_ANCHOR.topRight:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.top
-		OPTIONS_ANCHOR.bottomLeft:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
-		OPTIONS_ANCHOR.bottomRight:
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+## [b]Internal-use only.[/b]  Updates the alignment of a dialogue option in normal mode.
+func _setOptionAlignmentNormal(option:DialogueBoxOption) -> void:
+	match _optionsAnchor:
+		_OptionAnchor.TOP_LEFT:
+			option.horizontalAlignment = option.HorizAlignment.RIGHT
+			option.verticalAlignment = option.VertiAlignment.TOP
+		_OptionAnchor.TOP_RIGHT:
+			option.horizontalAlignment = option.HorizAlignment.LEFT
+			option.verticalAlignment = option.VertiAlignment.TOP
+		_OptionAnchor.BOTTOM_LEFT:
+			option.horizontalAlignment = option.HorizAlignment.RIGHT
+			option.verticalAlignment = option.VertiAlignment.BOTTOM
+		_OptionAnchor.BOTTOM_RIGHT:
+			option.horizontalAlignment = option.HorizAlignment.LEFT
+			option.verticalAlignment = option.VertiAlignment.BOTTOM
 
-## Updates the position of a dialogue option in hectic mode.
-func setOptionPositionHectic(option:DialogueOption, section:String) -> void:
-	# TODO:  pick a position like we do with the warning tiles.
-	#			its technically possible to run out of positions
-	var potentialPositions:Array = optionSpawnPositions.hectic[section]
-	for usedPosition in optionSpawnPositions.hectic.root.usedPositions:
+## [b]Internal-use only.[/b]  Updates the position of a dialogue option in hectic mode.
+func _setOptionPositionHectic(option:DialogueBoxOption, section:String) -> void:
+	var potentialPositions:Array = _optionSpawnPositions.hectic[section]
+	for usedPosition in _optionSpawnPositions.hectic.root.usedPositions:
 		potentialPositions.erase(usedPosition)
 	
 	var newPosition:Marker3D = potentialPositions.pick_random()
-	optionSpawnPositions.hectic.root.usedPositions.push_back(newPosition)
+	_optionSpawnPositions.hectic.root.usedPositions.push_back(newPosition)
 	
 	option.position = newPosition.position
 	option.rotation_degrees = newPosition.rotation_degrees
 
-## Updates the alignment of a dialogue option in hectic mode.
-func setOptionAlignmentHectic(option:DialogueOption, section:String) -> void:
+## [b]Internal-use only.[/b]  Updates the alignment of a dialogue option in hectic mode.
+func _setOptionAlignmentHectic(option:DialogueBoxOption, section:String) -> void:
 	match section:
 		"left":
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.right
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
+			option.horizontalAlignment = option.HorizAlignment.RIGHT
+			option.verticalAlignment = option.VertiAlignment.CENTER
 		"right":
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.left
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.center
+			option.horizontalAlignment = option.HorizAlignment.LEFT
+			option.verticalAlignment = option.VertiAlignment.CENTER
 		"top":
-			option.horizontalAlignment = option.HORIZONTAL_ALIGNMENT.center
-			option.verticalAlignment = option.VERTICAL_ALIGNMENT.bottom
+			option.horizontalAlignment = option.HorizAlignment.CENTER
+			option.verticalAlignment = option.VertiAlignment.BOTTOM
 		_:
 			printerr("DialogueBox: Unexpected section value. Got: ", section)
 
-## Gets the appropriate general areas to spawn dialogue options in depending on "optionsAnchor"
-func getValidHecticAreas() -> Array[String]:
+## [b]Internal-use only.[/b]  Gets the appropriate general areas to spawn dialogue options in depending on "_optionsAnchor"
+func _getValidHecticAreas() -> Array[String]:
 	var toReturn:Array[String] = ["left", "right", "top"]
-	if optionSpawnPositions.hectic.left.size() == 0:
+	if _optionSpawnPositions.hectic.left.size() == 0:
 		toReturn.erase("left")
-	if optionSpawnPositions.hectic.right.size() == 0:
+	if _optionSpawnPositions.hectic.right.size() == 0:
 		toReturn.erase("right")
-	if optionSpawnPositions.hectic.top.size() == 0:
+	if _optionSpawnPositions.hectic.top.size() == 0:
 		toReturn.erase("top")
 	
-	match optionsAnchor:
-		OPTIONS_ANCHOR.topLeft:
+	match _optionsAnchor:
+		_OptionAnchor.TOP_LEFT:
 			toReturn.erase("right")
-		OPTIONS_ANCHOR.topRight:
+		_OptionAnchor.TOP_RIGHT:
 			toReturn.erase("left")
-		OPTIONS_ANCHOR.bottomLeft:
+		_OptionAnchor.BOTTOM_LEFT:
 			toReturn.erase("right")
 			toReturn.erase("top")
-		OPTIONS_ANCHOR.bottomRight:
+		_OptionAnchor.BOTTOM_RIGHT:
 			toReturn.erase("left")
 			toReturn.erase("top")
 		_:
-			printerr("DialogueBox: optionsAnchor value not accounted for")
+			printerr("DialogueBox: _optionsAnchor value not accounted for")
 			return ["???"]
 	
 	return toReturn
 
-## Configures aspects of a dialogue option.
-func configureDialogueOption(instance:DialogueOption, data:Dictionary) -> void:
-	instance.sfxEventsToLoad = data.sfx
+## [b]Internal-use only.[/b]  Configures aspects of a dialogue option.
+func _configureDialogueBoxOption(option:DialogueBoxOption, data:Dictionary) -> void:
+	option.sfxEventsToLoad = data.sfx
 	
 	if mode == "normal":
-		setOptionPositionNormal(instance)
-		setOptionAlignmentNormal(instance)
+		_setOptionPositionNormal(option)
+		_setOptionAlignmentNormal(option)
 	elif mode == "hectic":
-		var chosenSection:String = getValidHecticAreas().pick_random()
-		setOptionPositionHectic(instance, chosenSection)
-		setOptionAlignmentHectic(instance, chosenSection)
+		var chosenSection:String = _getValidHecticAreas().pick_random()
+		_setOptionPositionHectic(option, chosenSection)
+		_setOptionAlignmentHectic(option, chosenSection)
 	else:
 		printerr("DialogueBox: Mode is not set to 'normal' or 'hectic.' Got: ", mode)
 	
 	#instance.name = data.text
-	instance.text = data.text
-	instance.nextDialogueID = data.nextID
-	instance.lifetime = data.lifetime
-	instance.setFlags = data.setFlags
-	#instance.connect("option_picked", _on_option_picked.bind(instance))
-	instance.option_picked.connect(_on_option_picked)
+	option.text = data.text
+	option.nextDialogueID = data.nextID
+	option.lifetime = data.lifetime
+	option.setFlags = data.setFlags
+	option.option_picked.connect(_on_option_picked)
 
-## Creates "amount" warning tiles.
-func createWarningTiles(amount:int) -> void:
+## [b]Internal-use only.[/b]  Creates "amount" warning tiles.
+func _createWarningTiles(amount:int) -> void:
 	for _i in range(amount):
-		var warningTile:WarningTile = spawnWarningTile()
-		configureWarningTile(warningTile)
+		var warningTile:WarningTile3D = _spawnWarningTile()
+		_configureWarningTile(warningTile)
 
-## Creates a warning tile scene and saves a reference to it in "spawnedWarningTiles"
-func spawnWarningTile() -> WarningTile:
-	var warningTile:WarningTile = warningTileScene.instantiate()
-	warningsContainer.add_child(warningTile)
-	spawnedWarningTiles.push_back(warningTile)
+## [b]Internal-use only.[/b]  Creates a warning tile scene and saves a reference to it in "_spawnedWarningTiles"
+func _spawnWarningTile() -> WarningTile3D:
+	var warningTile:WarningTile3D = _WARNING_TILE_SCENE.instantiate()
+	_warningsContainer.add_child(warningTile)
+	_spawnedWarningTiles.push_back(warningTile)
 	return warningTile
 
-## Configures a warning tile.
-func configureWarningTile(warningTile:WarningTile) -> void:
-	warningTile.position = getWarningTilePosition()
+## [b]Internal-use only.[/b]  Configures a warning tile.
+func _configureWarningTile(warningTile:WarningTile3D) -> void:
+	warningTile.position = _getWarningTilePosition()
 	warningTile.lookAtCamera()
 	warningTile.connect("blocking_visual", _on_warning_tile_overlap)
 
-## Gets a valid position to move a warning tile to based on the pre-configured WarningPositionAreas.
-func getWarningTilePosition() -> Vector3:
+## [b]Internal-use only.[/b]  Gets a valid position to move a warning tile to based on the pre-configured WarningPositionAreas.
+func _getWarningTilePosition() -> Vector3:
 	# TODO:  maybe make sure each area is picked at least once before picking again?
-	var chosenArea:MeshInstance3D = warningAreas.pick_random()
+	var chosenArea:MeshInstance3D = _warningAreas.pick_random()
 	var maxOffset:Vector3 = chosenArea.mesh.get_aabb().size
 	
-	rng.randomize()
+	_rng.randomize()
 	var offset:Vector3 = Vector3(
-		rng.randf_range(-maxOffset.x, maxOffset.x),
-		rng.randf_range(-maxOffset.y, maxOffset.y),
-		rng.randf_range(-maxOffset.z, maxOffset.z)
+		_rng.randf_range(-maxOffset.x, maxOffset.x),
+		_rng.randf_range(-maxOffset.y, maxOffset.y),
+		_rng.randf_range(-maxOffset.z, maxOffset.z)
 	)
 	return chosenArea.position + offset
 
-## Removes the dialogue box from the world.
-func kill() -> void:
-	for eventID in sfxPlayer.keys():
-		AudioLoader.clearAudioFiles(sfxPlayer[eventID].stream)
-	queue_free()
-
-
-## Handles logic for when a dialogue option is picked.
-func _on_option_picked(pickedOption:DialogueOption, nextDialogueID:String) -> void:
-	if pickedOption:
-		StoryFlags.apply_set_flags(pickedOption.setFlags)
-
-	for _i in range(spawnedOptions.size()):
-		var toKill = spawnedOptions.pop_front()
+## [b]Internal-use only.[/b]  Kills all spawned [DialogueBoxOption]s
+## in [member _spawnedOptions].
+func _killAllOptions() -> void:
+	for _i in range(_spawnedOptions.size()):
+		var toKill = _spawnedOptions.pop_front()
 		if toKill:
 			toKill.kill()
-	optionSpawnPositions.hectic.root.usedPositions.clear()
-	
-	for _i in range(spawnedWarningTiles.size()):
-		var toKill:WarningTile = spawnedWarningTiles.pop_front()
+	_optionSpawnPositions.hectic.root.usedPositions.clear()
+
+## [b]Internal-use only.[/b]  Deletes all spawned [WarningTile3D]s
+## in [member _spawnedWarningTiles]
+func _deleteAllWarningTiles() -> void:
+	for _i in range(_spawnedWarningTiles.size()):
+		var toKill:WarningTile3D = _spawnedWarningTiles.pop_front()
 		toKill.kill()
+
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Runs when a dialogue option is picked.
+func _on_option_picked(pickedOption:DialogueBoxOption, nextDialogueID:String) -> void:
+	if pickedOption:
+		StoryFlags.updateFlags(pickedOption.setFlags)
 	
-	timer.stop()
+	_killAllOptions()
+	_deleteAllWarningTiles()
+	
+	_timer.stop()
 	#print("\nnext dialogue: ", nextDialogueID)
-	sfxPlayer.spawn.stop()
+	_sfxPlayers.spawn.stop()
 	update_me.emit(nextDialogueID)
 
-## Handles logic for when an option isn't picked in time during hectic mode.
+## [b]Internal-use only.[/b]  Runs when an option isn't picked in time during hectic mode.
 func _on_timer_bar_timeout() -> void:
 	if hecticFailureDialogueID == "":
 		if realOwner != null:
@@ -374,23 +414,23 @@ func _on_timer_bar_timeout() -> void:
 			printerr("DialogueBox: Also, realOwner variable not set.")
 	_on_option_picked(null, hecticFailureDialogueID)
 
-
-
-
-## Handles logic for when a warning tile is blocking an important subject.
-func _on_warning_tile_overlap(warningTile:WarningTile) -> void:
+## [b]Internal-use only.[/b]  Runs when a warning tile is blocking an important subject.
+func _on_warning_tile_overlap(warningTile:WarningTile3D) -> void:
 	if warningTile.numTimesRepositioned > 3:
 		return
 	
-	rng.randomize()
-	var delay:float = rng.randf_range(0.0, 1.0)
+	_rng.randomize()
+	var delay:float = _rng.randf_range(0.0, 1.0)
 	await get_tree().create_timer(delay).timeout
 	
 	# it's possible for the dialogue box to kill() in between the delay starting and stopping.
 	if not warningTile:
 		return
 	
-	# TODO:  maybe move warning tile up and left/right instead of random position in area
-	warningTile.position = getWarningTilePosition()
+	warningTile.position = _getWarningTilePosition()
 	warningTile.lookAtCamera()
 	warningTile.numTimesRepositioned += 1
+
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------

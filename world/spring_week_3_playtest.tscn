@@ -32,7 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="29_wheae"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="30_f150j"]
 [ext_resource type="PackedScene" uid="uid://bibjg72q6l77c" path="res://models/environment/broken_up_pipe.tscn" id="30_phryc"]
-[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="31_tujtg"]
+[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area.tscn" id="31_tujtg"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="32_bfgm7"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://helpers/death_plane.tscn" id="33_a36i0"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="34_oktx8"]

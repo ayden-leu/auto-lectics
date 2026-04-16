@@ -3,13 +3,25 @@ extends CharacterBody3D
 class_name Player
 ## The main node that gets controlled by the player.
 
-## The anchor for the player camera to attach itself to.
-@onready var cameraAnchor:Marker3D = %CameraAnchor
-## The raycast that lets you interact with things in the world.
-@onready var interactionRaycast:RayCast3D = %InteractionRaycast
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
+## Emitted when looking at an interactable thing.
+signal looking_at_interactable()
+## Emitted when no longer looking at an interactable thing.
+signal no_longer_looking_at_interactable()
 
-# TODO:  determine better values for min, max, and step once we figure out the real player size.
-# =======================
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
+
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
+
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
 @export_group("Movement - Ground")
 ## The player's maximum speed.
 @export_range(0.0, 30.0, 0.1) var maxSpeed: float = 20.0
@@ -34,46 +46,89 @@ class_name Player
 
 @export_group("Jump")
 ## The player's jump height.
-@export_range(0.1, 10.0, 0.05) var jumpHeight: float = 1.2
+@export_range(0.1, 10.0, 0.05) var jumpHeight: float = 1.2:
+	set(value):
+		jumpHeight = value
+		_recomputeJumpParameters()
 ## The amount of time it takes to reach the peak of the jump.
-@export_range(0.05, 2.0, 0.01) var timeToApex: float = 0.4
+@export_range(0.05, 2.0, 0.01) var timeToApex: float = 0.4:
+	set(value):
+		timeToApex = value
+		_recomputeJumpParameters()
 ## The amount of time the player stays at the peak of the jump.
 @export_range(0.0, 0.35, 0.01) var apexHangTime: float = 0.04
 ## The higher the value, the faster the player falls.
-@export_range(1.0, 4.0, 0.05) var fallGravityMultiplier: float = 2.0
+@export_range(1.0, 4.0, 0.05) var fallGravityMultiplier: float = 2.0:
+	set(value):
+		fallGravityMultiplier = value
+		_recomputeJumpParameters()
 
 @export_group("Camera")
 ## A multiplier that gets applied to the distance the mouse moves.
-@export var mouse_sensitivity := 1
+@export var mouseSentitivity := 1
 ## Max angle which the camera can turn to; prevents flipping at top
-@export var max_pitch_degrees := 89.0
+@export var maxPitchDegrees := 89.0
 
-## Calculated in _recompute_jump_params()
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+## The anchor for the player camera to attach itself to.
+@onready var cameraAnchor:Marker3D = %CameraAnchor
+## The raycast that lets you interact with things in the world.
+@onready var interactionRaycast:RayCast3D = %InteractionRaycast
+
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+## The interactable thing the player is looking at during this moment.
+var interactableThing:Node3D = null:
+	set(thing):
+		if thing == interactableThing:
+			return
+		interactableThing = thing
+		
+		if thing == _loadBearingDummy:
+			no_longer_looking_at_interactable.emit()
+		else:
+			looking_at_interactable.emit()
+
+# ------------------------------------------------
+# normal variables only referenced in script
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Purely to fix a bug where when looking at a thing
+## and that thing becomes [code]null[/code] (e.g via [method queue_free()],
+## the "looking_at_interactable" signals don't emit due to
+## the old value of [member interactableThing] becoming [code]null[/code] on
+## the same frame as the new value being [code]null[/code].
+var _loadBearingDummy:Node3D = Node3D.new()
+## [b]Internal-use only.[/b]  The vertical velocity applied when jumping.
+## Calculated in [method _recomputeJumpParameters]
 var _jumpVelocity: float = 0.0
-## Calculated in _recompute_jump_params()
+## [b]Internal-use only.[/b]  Calculated in [method _recomputeJumpParameters]
 var _gravityUp: float = 0.0
-## Calculated in _recompute_jump_params()
+## [b]Internal-use only.[/b]  Calculated in [method _recomputeJumpParameters]
 var _gravityDown: float = 0.0
-## The previous on floor state of the player.
+## [b]Internal-use only.[/b]  The previous on floor state of the player.
 var _wasOnFloor: bool = false
-## Keeps track of how long the player has been at the apex of their jump.
+## [b]Internal-use only.[/b]  Keeps track of how long the player has been at the apex of their jump.
 var _timeSinceApex: float = 0.0
-## If the player should be able to hang around at the aapex of their jump.
+## [b]Internal-use only.[/b]  If the player should be able to hang around at the aapex of their jump.
 var _apexHangActive: bool = false
-## Save last location where character is grounded.
-var _last_position_stood: Vector3
 ## Track if player's movement is frozen
 var input_frozen: bool = false
 
+## [b]Internal-use only.[/b]  Save last location where character is grounded.
+var _lastValidPosition: Vector3
 
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
-	_recompute_jump_params()
+	_recomputeJumpParameters()
 
 func _process(_delta: float) -> void:
-	# Dev-ing stuff
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
-	
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -81,11 +136,42 @@ func _physics_process(delta: float) -> void:
 	if input_frozen:
 		velocity = Vector3.ZERO
 		return
-	_apply_vertical_physics(delta)
+	_applyVerticalPhysics(delta)
 	move_and_slide()
+	
+	#print(interactionRaycast.get_collider())
+	if interactionRaycast.get_collider() != null:
+		var hit = interactionRaycast.get_collider().owner
+		if _determineIfValidInteractable(hit):
+			interactableThing = hit
+	else:
+		interactableThing = _loadBearingDummy
+	
 
-## Calculates jumping parameters based on the export variable values.
-func _recompute_jump_params() -> void:
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+## Makes the player jump.
+func jump() -> void:
+	# jump enable need to set
+	_recomputeJumpParameters()
+	velocity.y = _jumpVelocity
+	_apexHangActive = false
+	_timeSinceApex = 0.0
+
+## Puts player at [member _lastValidPosition].
+func respawn():
+	velocity = Vector3.ZERO
+	global_position = _lastValidPosition
+	global_position.y += 0.1
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Calculates jumping parameters based on the export variable values.
+func _recomputeJumpParameters() -> void:
+	if Engine.is_editor_hint():
+		return
 	# avioding 0 set make system bug
 
 	# finding g from the given h and t for reaching max hight
@@ -94,9 +180,9 @@ func _recompute_jump_params() -> void:
 
 	# able to fall down faster
 	_gravityDown = _gravityUp * fallGravityMultiplier
-	
-## Applies gravity.
-func _apply_vertical_physics(delta: float) -> void:
+
+## [b]Internal-use only.[/b]  Applies gravity.
+func _applyVerticalPhysics(delta: float) -> void:
 	if not is_on_floor():
 		# if jumping, enable the hang
 		if velocity.y > 0.0:
@@ -122,20 +208,12 @@ func _apply_vertical_physics(delta: float) -> void:
 	else: # logic for when on floor
 		_apexHangActive = false
 		_timeSinceApex = 0.0
-		_last_position_stood = global_position
+		_lastValidPosition = global_position
 
 	_wasOnFloor = is_on_floor()
 
-## Makes the player jump.
-func jump() -> void:
-	# jump enable need to set
-	_recompute_jump_params()
-	velocity.y = _jumpVelocity
-	_apexHangActive = false
-	_timeSinceApex = 0.0
-
-## Handles movement input from the player.
-func handleDirectionInput(direction: Vector3) -> void:
+## [b]Internal-use only.[/b]  Handles movement input from the player.
+func _handleDirectionInput(direction: Vector3) -> void:
 	var target := Vector3.ZERO
 	if direction != Vector3.ZERO:
 		target = direction.normalized() * maxSpeed
@@ -171,47 +249,54 @@ func handleDirectionInput(direction: Vector3) -> void:
 func set_input_frozen(value: bool) -> void:
 	input_frozen = value
 
-## Respawn player upon contact with death plane
-func respawn():
-	velocity = Vector3.ZERO
-	global_position = _last_position_stood
-	global_position.y += 0.1
+## [b]Internal-use only.[/b]  Determines if a passed in node is a valid interactable.
+func _determineIfValidInteractable(interactable:Node3D) -> bool:
+	if interactable.has_method("_on_interaction"):
+		return true
+	
+	return false
 
-## Rotates the player when the mouse moves horizontally.
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Rotates the player when the mouse moves horizontally.
 func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
 	if input_frozen:
 		return
 	# horizontal rotation
-	rotation_degrees.y += -distanceMoved.x * mouse_sensitivity
+	rotation_degrees.y += -distanceMoved.x * mouseSentitivity
 	
 	# pitch (on anchor)
-	cameraAnchor.rotation_degrees.x += -distanceMoved.y * mouse_sensitivity
+	cameraAnchor.rotation_degrees.x += -distanceMoved.y * mouseSentitivity
 	# Prevent camera from flipping at top of rotation
 	cameraAnchor.rotation_degrees.x = clamp(
-		cameraAnchor.rotation_degrees.x, -max_pitch_degrees, max_pitch_degrees
+		cameraAnchor.rotation_degrees.x, -maxPitchDegrees, maxPitchDegrees
 	)
 
-
-	
+## [b]Internal-use only.[/b]  Handles logic for when the player wants to interact
+## with something.
 func _on_interact_pressed() -> void:
 	#print(name + ": interact pressed")
-	if interactionRaycast.is_colliding():
-		if interactionRaycast.get_collider().owner.has_method("_on_interaction"):
-			interactionRaycast.get_collider().owner._on_interaction(self)
+	if interactableThing and interactableThing != _loadBearingDummy:
+		interactableThing._on_interaction(self)
 
+## [b]Internal-use only.[/b]  Handles logic for when the player tries to jump.
 func _on_jump_pressed() -> void:
 	if is_on_floor():
 		jump()
 
-
-	
-
+## [b]Internal-use only.[/b]  Handles logic for when the player inputs a new
+## move direction.
 func _on_updated_input_direction(newDirection:Vector2) -> void:
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
-	handleDirectionInput(direction)
+	_handleDirectionInput(direction)
 
 #temporary code for Spring Playtest week 3
 func _on_input_handler_respawn() -> void:
 	position = Vector3(0,0,1)
+
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------

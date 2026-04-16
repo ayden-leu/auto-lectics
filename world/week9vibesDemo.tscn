@@ -1,0 +1,53 @@
+[gd_scene load_steps=12 format=3 uid="uid://c5l0jyvat6c51"]
+
+[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_hbcv5"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_axtib"]
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_v3yie"]
+[ext_resource type="PackedScene" path="res://test_scenes/debug_camera.tscn" id="3_7dg45"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_q8v2a"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://helpers/input_handler.tscn" id="5_hbcv5"]
+[ext_resource type="PackedScene" uid="uid://pvjkit80e1ea" path="res://world/startingScene.tscn" id="6_4m3ue"]
+[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://helpers/loop_manager.tscn" id="6_v3yie"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7dg45"]
+panorama = ExtResource("1_hbcv5")
+
+[sub_resource type="Sky" id="Sky_aue1p"]
+sky_material = SubResource("PanoramaSkyMaterial_7dg45")
+
+[sub_resource type="Environment" id="Environment_q8v2a"]
+background_mode = 2
+sky = SubResource("Sky_aue1p")
+ambient_light_sky_contribution = 0.0
+glow_intensity = 0.0
+
+[node name="Test_NPCInteraction" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("2_axtib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.324327, -5.119196, -9.150532)
+
+[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("3_7dg45")]
+transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
+mainCamera = NodePath("../PlayerCamera/Camera3D")
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_q8v2a")]
+focus = NodePath("../Player")
+
+[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("5_hbcv5")]
+player = NodePath("../Player")
+wantsToKnowMouseMoved = [NodePath("../Player")]
+wantsToKnowWhenInteract = [NodePath("../Player")]
+
+[node name="LoopManager" parent="." instance=ExtResource("6_v3yie")]
+manual = false
+loopDuration = 3.0
+
+[node name="Test_NPCInteraction" parent="." instance=ExtResource("6_4m3ue")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q8v2a")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_v3yie")
+volume_db = 7.174
+autoplay = true

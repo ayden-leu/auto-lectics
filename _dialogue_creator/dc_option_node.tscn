@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://c0jj7mbxe1pi" path="res://_dialogue_creator/helpers/aspects_set_flags.gd" id="8_pgdkv"]
 [ext_resource type="Script" uid="uid://dp0wpt264bnof" path="res://_dialogue_creator/helpers/aspects_check_flags.gd" id="10_bc53s"]
 
-[node name="DC_OptionNode" type="GraphNode" node_paths=PackedStringArray("textField", "typeField", "writeSpeedAspectsHandler", "sfxEventAspectsHandler", "spawnDelayField", "lifetimeField", "setFlagsAspectsHandler", "checkFlagsAspectsHandler")]
+[node name="DC_OptionNode" type="GraphNode"]
 texture_filter = 2
 offset_right = 428.0
 offset_bottom = 774.0
@@ -65,14 +65,6 @@ slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
 script = ExtResource("1_sx0xf")
-textField = NodePath("Text/TextEdit")
-typeField = NodePath("Row1/TypeField")
-writeSpeedAspectsHandler = NodePath("AdvancedOptions/WriteSpeedAspects")
-sfxEventAspectsHandler = NodePath("AdvancedOptions/SfxAspects")
-spawnDelayField = NodePath("AdvancedOptions/SpawnDelayField/SpinBox")
-lifetimeField = NodePath("AdvancedOptions/LifetimeField/SpinBox")
-setFlagsAspectsHandler = NodePath("AdvancedOptions/StoryFlags/HBoxContainer/SetFlags")
-checkFlagsAspectsHandler = NodePath("AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags")
 
 [node name="Text" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -82,7 +74,8 @@ layout_mode = 2
 size_flags_vertical = 0
 text = "Text"
 
-[node name="TextEdit" type="TextEdit" parent="Text"]
+[node name="TextField" type="TextEdit" parent="Text"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 emoji_menu_enabled = false
@@ -96,6 +89,7 @@ scroll_fit_content_height = true
 layout_mode = 2
 
 [node name="TypeField" type="HBoxContainer" parent="Row1" node_paths=PackedStringArray("chooser")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 script = ExtResource("3_3u2q4")
@@ -126,15 +120,16 @@ fields = [NodePath("../AdvancedOptions")]
 [node name="AdvancedOptions" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="SpawnDelayField" type="HBoxContainer" parent="AdvancedOptions"]
+[node name="SpawnDelay" type="HBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="AdvancedOptions/SpawnDelayField"]
+[node name="Label" type="Label" parent="AdvancedOptions/SpawnDelay"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Spawn Delay"
 
-[node name="SpinBox" type="SpinBox" parent="AdvancedOptions/SpawnDelayField"]
+[node name="SpawnDelayField" type="SpinBox" parent="AdvancedOptions/SpawnDelay"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 max_value = 10.0
@@ -146,15 +141,16 @@ allow_greater = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LifetimeField" type="HBoxContainer" parent="AdvancedOptions"]
+[node name="Lifetime" type="HBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="AdvancedOptions/LifetimeField"]
+[node name="Label" type="Label" parent="AdvancedOptions/Lifetime"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Lifetime"
 
-[node name="SpinBox" type="SpinBox" parent="AdvancedOptions/LifetimeField"]
+[node name="LifetimeField" type="SpinBox" parent="AdvancedOptions/Lifetime"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 min_value = -1.0
@@ -188,6 +184,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("6_kcxjf")
 presetHandler = NodePath("WriteSpeedPreset")
@@ -250,6 +247,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
+unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("8_jt2el")
 eventHolder = NodePath("Events")
@@ -305,6 +303,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="SetFlags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer" node_paths=PackedStringArray("flagHolder")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -333,6 +332,7 @@ metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 layout_mode = 2
 
 [node name="CheckFlags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer" node_paths=PackedStringArray("flagHolder")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -364,13 +364,13 @@ layout_mode = 2
 layout_mode = 2
 text = "Debug"
 
-[connection signal="text_changed" from="Text/TextEdit" to="." method="_on_attribute_modified"]
+[connection signal="text_changed" from="Text/TextField" to="." method="_on_attribute_modified"]
 [connection signal="option_changed" from="Row1/TypeField" to="." method="_on_attribute_modified"]
 [connection signal="item_selected" from="Row1/TypeField/OptionButton" to="Row1/TypeField" method="_on_chooser_updated"]
 [connection signal="resize" from="Advanced" to="." method="_on_resize_height"]
 [connection signal="toggled" from="Advanced" to="Advanced" method="_on_toggled"]
-[connection signal="value_changed" from="AdvancedOptions/SpawnDelayField/SpinBox" to="." method="_on_attribute_modified_parameter"]
-[connection signal="value_changed" from="AdvancedOptions/LifetimeField/SpinBox" to="." method="_on_attribute_modified_parameter"]
+[connection signal="value_changed" from="AdvancedOptions/SpawnDelay/SpawnDelayField" to="." method="_on_attribute_modified_parameter"]
+[connection signal="value_changed" from="AdvancedOptions/Lifetime/LifetimeField" to="." method="_on_attribute_modified_parameter"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects" to="." method="_on_attribute_modified"]
 [connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
 [connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]

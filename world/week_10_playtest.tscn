@@ -32,7 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="26_whg7e"]
 [ext_resource type="Script" uid="uid://bocggstjplylv" path="res://world/gate.gd" id="27_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="28_k6p8l"]
-[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area_temp.tscn" id="31_gitkm"]
+[ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://helpers/start_dialogue_area.tscn" id="31_gitkm"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://ui/hud/fade_to_black_hitbox.tscn" id="32_k6p8l"]
 [ext_resource type="PackedScene" uid="uid://c0gkoa5s8geir" path="res://models/environment/backgroundClutter/big_wires.tscn" id="35_hsv1o"]
 

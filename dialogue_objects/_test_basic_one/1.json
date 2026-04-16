@@ -1,0 +1,12 @@
+{
+	"text": "hello!",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "hi",
+			"type": "neutral",
+			"nextID": "2"
+		}
+	]
+}
