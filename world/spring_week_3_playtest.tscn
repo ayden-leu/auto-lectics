@@ -30,10 +30,10 @@
 [ext_resource type="PackedScene" uid="uid://hf7vnxh0uha5" path="res://models/environment/backgroundClutter/solar_panel.tscn" id="28_swegm"]
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="29_tcrbb"]
 [ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="29_wheae"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="30_f150j"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="30_f150j"]
 [ext_resource type="PackedScene" uid="uid://bibjg72q6l77c" path="res://models/environment/broken_up_pipe.tscn" id="30_phryc"]
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://_framework/helpers/start_dialogue_area.tscn" id="31_tujtg"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="32_bfgm7"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="32_bfgm7"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="33_a36i0"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="34_oktx8"]
 [ext_resource type="PackedScene" uid="uid://cohj3ym45tr8w" path="res://models/environment/scaffold_tower.tscn" id="35_knruc"]
@@ -593,8 +593,6 @@ shape = SubResource("BoxShape3D_hsv1o")
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("32_bfgm7")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)
 focus = NodePath("../Player")
-_actAsFocus = true
-_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="DeathPlane" parent="." instance=ExtResource("33_a36i0")]
 transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 48.671253, -72.754974, -109.03)
