@@ -9,31 +9,29 @@ signal selected(npc_id: String)
 @onready var name_label = $NameLabel
 
 func _ready() -> void:
-	print("Entry ready start:", name, " id=", npc_id)
-	print("icon_button =", icon_button)
-	print("name_label =", name_label)
-
-	if icon_button == null:
-		push_error("icon_button is null in " + name)
-		return
-	if name_label == null:
-		push_error("name_label is null in " + name)
-		return
+	#print("Entry ready start:", name, " id=", npc_id)
+	#print("icon_button =", icon_button)
+	#print("name_label =", name_label)
 
 	icon_button.pressed.connect(_on_pressed)
-	set_locked()
-
-	print("Entry ready done:", name, " label=", name_label.text)
+	set_unknown()
+	
 
 func _on_pressed() -> void:
-	print("Pressed entry:", npc_id)
 	selected.emit(npc_id)
 
-func set_locked() -> void:
+
+func set_unknown() -> void:
 	name_label.text = locked_display_text
 
-func set_unlocked_name(display_name: String) -> void:
+
+func set_revealed_name(display_name: String) -> void:
 	name_label.text = display_name
+
+
+func set_confirmed_locked_name(display_name: String) -> void:
+	name_label.text = "✓ " + display_name
+
 
 func set_icon(texture: Texture2D) -> void:
 	icon_button.texture_normal = texture
