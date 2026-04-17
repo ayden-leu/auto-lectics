@@ -133,6 +133,9 @@ var input_frozen: bool = false
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	_recomputeJumpParameters()
 	
 	AudioLoader.loadSfxFromId("respawn", _sfxPlayer.respawn.stream)
