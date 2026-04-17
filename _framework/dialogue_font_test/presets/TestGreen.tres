@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://hrwegsva2vqk"]
+
+[ext_resource type="FontFile" uid="uid://5b77qtjdx6cn" path="res://addons/dialogue_font_test/presets/Oi-Regular.ttf" id="1_b002t"]
+
+[resource]
+line_spacing = 4.94
+font = ExtResource("1_b002t")
+font_color = Color(0.22232157, 0.99999994, 0.94761866, 1)
