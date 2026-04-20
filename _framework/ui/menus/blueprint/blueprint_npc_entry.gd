@@ -5,7 +5,7 @@ signal selected(npc_id: String)
 @export var npc_id: String = "npc_test"
 @export var locked_display_text: String = "???"
 
-@onready var icon_button = $TextureButton
+@onready var icon_button = $Button
 @onready var name_label = $NameLabel
 
 func _ready() -> void:
