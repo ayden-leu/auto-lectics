@@ -210,28 +210,17 @@ func _on_notes_changed() -> void:
 	npc_data[current_npc_id]["notes"] = notes_text_edit.text
 
 
-#func open_menu() -> void:
-	#show()
-	#print("showing blueprint menu")
-	#InputHandler.hideCursor()
-##	player.set_input_frozen(true)
-#
-#
-#func close_menu() -> void:
-	#hide()
-	#print("hiding blueprint menu")
-	#InputHandler.showCursor()
-##	player.set_input_frozen(false)
+func open_menu() -> void:
+	show()
+	print("showing blueprint menu")
+	InputHandler.showCursor()
+	player.set_input_frozen(true)
 
-func open_menu() -> void: 
-	show() 
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
-	
-func close_menu() -> void: 
-	hide() 
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-	#
+func close_menu() -> void:
+	hide()
+	print("hiding blueprint menu")
+	InputHandler.hideCursor()
+	player.set_input_frozen(false)
 	
 func _on_close_pressed() -> void:
 	print("Close button pressed")
