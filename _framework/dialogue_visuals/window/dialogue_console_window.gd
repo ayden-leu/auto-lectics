@@ -1,8 +1,8 @@
-extends Panel
+@tool
+extends DialogueWindow
 class_name DialogueConsole
 ## [b]Internal-use only.[/b]  The main console-like window for interacting with
 ## a dialogue event.
-
 
 # TODO
 # 	make options just spawn in the scene and not as children as its not needed
@@ -52,10 +52,10 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var _textInput: LineEdit = $InputLine
-@onready var scroll_container: ScrollContainer = $ScrollContainer
-@onready var dialogue_log: RichTextLabel = $ScrollContainer/DialogueLog
-@onready var npc_name: Label = $Header/NPCName
+@onready var _textInput: LineEdit = %ConsoleInput
+@onready var scroll_container: ScrollContainer = %ConsoleContentsContainer
+@onready var dialogue_log: RichTextLabel = %DialogueLog
+@onready var npc_name: Label = %HeaderLabel
 @onready var hectic_bar: ProgressBar = $HecticBar
 @onready var hectic_timer: Timer = $HecticTimer
 
@@ -65,6 +65,7 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 	%OptionAnchors/TopLeft, %OptionAnchors/TopRight,
 	%OptionAnchors/BottomLeft, %OptionAnchors/BottomRight
 ]
+
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
@@ -78,6 +79,24 @@ var ownerName:String = ""
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	super()
+	
+	_center_main_window()
+	
+	
+	hectic_timer.one_shot = true
+
+	hectic_bar.visible = false
+	hectic_bar.min_value = 0.0
+	hectic_bar.max_value = 100.0
+	hectic_bar.value = 100.0
+
+func _gui_input(event: InputEvent) -> void:
+	super(event)
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -95,7 +114,11 @@ var ownerName:String = ""
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+func _get_configuration_warnings() -> PackedStringArray:
+	return super()
 
+func _validate_property(property: Dictionary) -> void:
+	super(property)
 
 
 
@@ -136,30 +159,18 @@ var help_text: String = "Here are the commands:\n\n" + \
 		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
 		"exit         =  close the console"
 
-
-func _ready() -> void:
-	_center_main_window()
-	_textInput.text_submitted.connect(_on_input_submitted)
-	_textInput.grab_focus()
-	
-	hectic_timer.one_shot = true
-
-	hectic_bar.visible = false
-	hectic_bar.min_value = 0.0
-	hectic_bar.max_value = 100.0
-	hectic_bar.value = 100.0
-
 func set_npc_id(id: String) -> void:
 	ownerName = id
 	print (ownerName)
-	npc_name.text = ownerName
+	headerText = ownerName
 
 func prepare() -> void:
 	_clear_option_windows()
 	_textInput.text = ""
 	_stop_hectic_mode()
 	
-	npc_name.text = ownerName
+	headerText = ownerName
+	_textInput.grab_focus()
 
 
 func start() -> void:
@@ -280,7 +291,8 @@ func _spawn_option_windows() -> void:
 		var win = _OPTION_WINDOW_SCENE.instantiate()
 		get_parent().add_child(win)
 		
-		win.set_option_data(i, str(opt.get("text", "")))
+		win.id = i
+		win.text = opt.get("text", "")
 		win.option_selected.connect(_on_option_window_selected.bind(opt))
 		win.position = Vector2(40, 120 + i * 120)
 		
@@ -415,15 +427,3 @@ func loadSfx() -> void:
 	for eventID in sfxPlayer.keys():
 		AudioLoader.clearAudioRandomizer(sfxPlayer[eventID].stream)
 		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
-
-var _dragging := false
-var _drag_offset := Vector2.ZERO
-
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		_dragging = event.pressed
-		if _dragging:
-			_drag_offset = get_global_mouse_position() - global_position
-	
-	if event is InputEventMouseMotion and _dragging:
-		global_position = get_global_mouse_position() - _drag_offset

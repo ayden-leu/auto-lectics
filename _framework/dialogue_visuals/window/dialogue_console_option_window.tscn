@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://4opwac4ndc2k"]
+
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_3lyu7"]
+[ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://_framework/dialogue_visuals/window/dialogue_console_option_window.gd" id="1_rh22u"]
+
+[node name="DialogueOptionWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 174.0
+theme = ExtResource("1_3lyu7")
+script = ExtResource("1_rh22u")
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 38.0
+theme_type_variation = &"PanelHeader"
+metadata/_edit_lock_ = true
+
+[node name="HeaderLabel" type="Label" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 260.0
+offset_bottom = 29.0
+size_flags_horizontal = 0
+text = "[RESPONSE]"
+
+[node name="Contents" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 38.0
+offset_right = 300.0
+offset_bottom = 174.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Contents"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 294.0
+offset_bottom = 130.0
+
+[node name="ID" type="Label" parent="Contents/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "[0]"
+
+[node name="Text" type="Label" parent="Contents/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "breakfast please"
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_type_variation = &"ButtonOverlay"
+
+[connection signal="pressed" from="Button" to="." method="_on_pressed"]

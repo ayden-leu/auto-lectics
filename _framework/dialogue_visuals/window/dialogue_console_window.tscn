@@ -1,0 +1,147 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8oqtsvu488a"]
+
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_0et2d"]
+[ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/dialogue_console_window.gd" id="1_qw6ov"]
+[ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_f2hpt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kd1mm"]
+bg_color = Color(0.025166476, 0.0025565878, 0.002608634, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbkfi"]
+bg_color = Color(0.82, 0, 0, 1)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1d7as"]
+resource_local_to_scene = true
+playback_mode = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2hkj1"]
+resource_local_to_scene = true
+playback_mode = 1
+
+[node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_0et2d")
+script = ExtResource("1_qw6ov")
+headerPanel = NodePath("Header")
+headerLabel = NodePath("Header/HeaderLabel")
+canBeClosed = true
+closeButton = NodePath("Header/CloseButton")
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 429.0
+offset_bottom = 30.0
+mouse_filter = 1
+theme_type_variation = &"PanelHeader"
+
+[node name="HeaderLabel" type="Label" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 259.0
+offset_bottom = 26.0
+size_flags_horizontal = 0
+mouse_filter = 1
+theme_type_variation = &"LabelHeaderConsole"
+text = "Eggs Benedict"
+
+[node name="CloseButton" parent="Header" instance=ExtResource("3_f2hpt")]
+layout_mode = 0
+offset_left = 405.0
+offset_right = 429.0
+offset_bottom = 27.0
+
+[node name="Contents" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 428.0
+offset_bottom = 468.0
+mouse_filter = 1
+
+[node name="Main" type="Panel" parent="Contents"]
+layout_mode = 0
+offset_right = 429.0
+offset_bottom = 392.0
+mouse_filter = 1
+theme_type_variation = &"PanelConsoleContents"
+
+[node name="ConsoleContentsContainer" type="ScrollContainer" parent="Contents/Main"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 4
+
+[node name="DialogueLog" type="RichTextLabel" parent="Contents/Main/ConsoleContentsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(402, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 1
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+metadata/_edit_lock_ = true
+
+[node name="ConsoleInput" type="LineEdit" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 6.0
+offset_top = 401.0
+offset_right = 422.0
+offset_bottom = 432.0
+keep_editing_on_text_submit = true
+
+[node name="OptionAnchors" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -1.0
+offset_right = -1.0
+mouse_filter = 1
+metadata/_edit_lock_ = true
+
+[node name="TopLeft" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(-40, 0)
+
+[node name="TopRight" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(470, 0)
+
+[node name="BottomLeft" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(-40, 462)
+
+[node name="BottomRight" type="Marker2D" parent="OptionAnchors"]
+position = Vector2(470, 462)
+
+[node name="HecticBar" type="ProgressBar" parent="."]
+visible = false
+layout_mode = 0
+offset_top = -28.0
+offset_right = 429.0
+offset_bottom = -1.0
+mouse_filter = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_kd1mm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pbkfi")
+value = 100.0
+fill_mode = 1
+
+[node name="HecticTimer" type="Timer" parent="."]
+
+[node name="SFX" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="text" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_1d7as")
+
+[node name="spawn" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_2hkj1")
+
+[connection signal="text_submitted" from="Contents/ConsoleInput" to="." method="_on_input_submitted"]
