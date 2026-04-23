@@ -8,7 +8,7 @@ class_name DialogueConsoleOptionWindow
 # signals
 # ------------------------------------------------
 ## Emitted when this option is chosen.
-signal option_selected()
+signal option_selected(myself:DialogueConsoleOptionWindow)
 
 # ------------------------------------------------
 # enums
@@ -33,7 +33,6 @@ signal option_selected()
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-
 ## The option ID this option window corresponds to.
 ## [br][br]
 ## Comes with a getter and setter so you can treat it like a normal variable
@@ -57,6 +56,9 @@ var text:String:
 		optionTextLabel.text = newText
 	get():
 		return optionTextLabel.text
+
+## The data related to this option.
+var data:Dictionary
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -87,7 +89,7 @@ func _gui_input(event: InputEvent) -> void:
 func _on_pressed() -> void:
 	if not _dragging:
 		#print("option selected via button")
-		option_selected.emit()
+		option_selected.emit(self)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

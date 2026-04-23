@@ -72,14 +72,14 @@ grow_horizontal = 2
 grow_vertical = 2
 vertical_scroll_mode = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Contents/Main/ContentsScroller"]
+[node name="DialogueLogStorage" type="VBoxContainer" parent="Contents/Main/ContentsScroller"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="DialogueLog" type="RichTextLabel" parent="Contents/Main/ContentsScroller/VBoxContainer"]
+[node name="DialogueLog" type="RichTextLabel" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(402, 0)
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 1
 bbcode_enabled = true

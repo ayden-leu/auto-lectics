@@ -106,6 +106,15 @@ func _center() -> void:
 	await get_tree().process_frame
 	position = (get_viewport_rect().size - size) / 2
 
+## Gets a random position on screen.
+## Unused as it doesn't account for overlap.
+func _getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
+	var viewport_size := get_viewport_rect().size
+	return Vector2(
+		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
+		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
+	)
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------

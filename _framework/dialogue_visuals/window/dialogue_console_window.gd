@@ -58,10 +58,10 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 ## [b]Internal-use only.[/b]  The thing that allows you to scroll through the console's contents.
 @onready var _contentsScroller: ScrollContainer = %ContentsScroller
 ## [b]Internal-use only.[/b]  The contents of the console.
-@onready var _contents: RichTextLabel = %DialogueLog
+@onready var _contents:RichTextLabel = %DialogueLog
 ## [b]Internal-use only.[/b]  The progress bar that displays how much time is left
 ## until a hectic dialogue event ends.
-@onready var _hecticBar: ProgressBar = $HecticBar
+@onready var _hecticBar:ProgressBar = $HecticBar
 ## [b]Internal-use only.[/b]  The hectic dialogue event timer.
 @onready var _hecticTimer: Timer = $HecticTimer
 ## [b]Internal-use only.[/b]  Holds the root positions for spawning option windows
@@ -157,39 +157,62 @@ func _gui_input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-
+## Prepares the [DialogueConsole] by setting up initial defaults.
 func prepare() -> void:
-	_clear_option_windows()
-	_textInput.text = ""
-	_stop_hectic_mode()
+	headerText = nameOfNpcTalkingTo
 	
+	_closeAllOptionWindows()
+	_stopHecticMode()
+	
+	_textInput.text = ""
+	_textInput.grab_focus()
+
+## Starts displaying the the loaded text in [member textToAdd],
+## records [member currentDialogueID] into [_dialogueHistory],
+## and spawns options once complete.
+func start() -> void:
+	_sfxPlayer.spawn.play()
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
 	
-	headerText = nameOfNpcTalkingTo
-	_textInput.grab_focus()
-
-func start() -> void:
-	_sfxPlayer.spawn.play()
-	
-	await _type_dialogue_text(textToAdd)
+	await _typeText(textToAdd)
 	all_dialogue_text_visible.emit()
 	
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
-	_spawn_option_windows()
+	_spawnOptionWindows()
 	all_options_available.emit()
-	_refocus_input()
+	_forceTextInput()
 	
 	if mode == "hectic":
-		_start_hectic_mode()
+		_startHecticMode()
 
-## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
-func loadOptionData(options: Array) -> void:
-	_optionData.clear()
+## Closes this window, unless the [InteractableNPC] the player is talking to
+## is in [member _npcsThatPreventClosing].
+func close() -> void:
+	if nameOfNpcTalkingTo in _npcsThatPreventClosing:
+		_addPlayerText("exit")
+		_typeText("Wait, you must listen first.")
+		return
+	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
 	
+	super()
+
+## Removes this from the scene.
+func kill() -> void:
+	_stopHecticMode()
+	_closeAllOptionWindows()
+	_dialogueHistory.clear()
+	queue_free()
+
+## Loads the data of all posible options for this dialogue object.
+## Also sorts the options from shortest to longest spawn delay.
+func loadOptionData(options:Array) -> void:
+	_optionData.clear()
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
+			printerr("DialogueConsole: Data for this entry is not a Dictionary.")
+			print("Entry data: ", option)
 			continue
 		
 		if StoryFlags.flagsMatch(option.checkFlags):
@@ -197,38 +220,20 @@ func loadOptionData(options: Array) -> void:
 
 	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
 
+## Loads the SFX event players with an audio ID, if given.
 func loadSfx(sfxEventsToLoad:Dictionary) -> void:
 	for eventID in _sfxPlayer.keys():
 		_sfxPlayer[eventID].stop()
 		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
 		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
 
-## prints the player text if they picked an option with text associated
-func add_player_text(full_text: String) -> void:
-	_contents.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
-	_scroll_to_bottom()
-
-func kill() -> void:
-	_stop_hectic_mode()
-	_clear_option_windows()
-	_dialogueHistory.clear()
-	queue_free()
-
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## exit window on "exit" or pressing X button
-func close() -> void:
-	if nameOfNpcTalkingTo in _npcsThatPreventClosing:
-		add_player_text("exit")
-		_type_dialogue_text("Wait, you must listen first.")
-		return
-	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
-	
-	super()
-
-func _type_dialogue_text(full_text: String) -> void:
+# TODO:  rework this to add RichTextLabel nodes and modify visible character count
+# TODO:  add parameter for horizontal alignment
+func _typeText(textToWrite: String) -> void:
 	_isWritingText = true
 	
 	var cps: float = max(textWriteSpeed, 1.0)
@@ -236,99 +241,96 @@ func _type_dialogue_text(full_text: String) -> void:
 	
 	_contents.append_text("[indent][indent][indent][indent][indent][indent][color=#f2a11a]")
 	
-	for i in range(full_text.length()):
-		_contents.append_text(full_text[i])
-		_scroll_to_bottom()
+	for i in range(textToWrite.length()):
+		_contents.append_text(textToWrite[i])
+		_scrollToBottom()
 		if not _sfxPlayer.text.playing:
 			_sfxPlayer.text.play()
 		await get_tree().create_timer(delay).timeout
 	
 	_contents.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
-	_scroll_to_bottom()
+	_scrollToBottom()
 	
 	_isWritingText = false
 
-## scrolls the dialogue log down
-func _scroll_to_bottom() -> void:
+# TODO:  remove this
+## @deprecated
+func _addPlayerText(full_text: String) -> void:
+	_contents.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
+	_scrollToBottom()
+
+## [b]Internal-use only.[/b]  Spawns the option windows.
+func _spawnOptionWindows() -> void:
+	_forceTextInput()
+	
+	var tempCounter:int = 0
+	var verticalOffset:float = 0
+	for optionData in _optionData:
+		var optionWindow = _OPTION_WINDOW_SCENE.instantiate()
+		get_parent().add_child(optionWindow)
+		
+		optionWindow.id = tempCounter
+		optionWindow.text = optionData.text
+		optionWindow.data = optionData
+		optionWindow.position = Vector2(40, 120 + verticalOffset)  # TODO:  make initial position based on anchor point
+		optionWindow.option_selected.connect(_on_option_window_selected)
+		
+		_optionWindows.push_back(optionWindow)
+		new_option_available.emit()
+		tempCounter += 1
+		verticalOffset += optionWindow.size.y
+	
+	all_options_available.emit()
+
+## [b]Internal-use only.[/b]  Handles logic for choosing an option.
+func _chooseOption(optionData:Dictionary) -> void:
+	_addPlayerText(optionData.text)  # TODO:  determine how to handle no writing to console
+	_stopHecticMode()
+	
+	StoryFlags.updateFlags(optionData.setFlags)
+	
+	_closeAllOptionWindows()
+	option_chosen.emit(optionData.nextID)
+
+## [b]Internal-use only.[/b]  Forcebilly closes all spawned option windows.
+func _closeAllOptionWindows() -> void:
+	for optionWindow in _optionWindows:
+		optionWindow.close()
+	_optionWindows.clear()
+	
+## [b]Internal-use only.[/b]  Forces the scroll bar to be moved to the bottom.
+func _scrollToBottom() -> void:
 	await get_tree().process_frame
 	_contentsScroller.scroll_vertical = int(
 		_contentsScroller.get_v_scroll_bar().max_value
 	)
 
-## Forces current selection to be on the input area.
-func _refocus_input() -> void:
+## [b]Internal-use only.[/b]  Forces current selection to be on the input area.
+func _forceTextInput() -> void:
 	_textInput.edit()
 
-func _spawn_option_windows() -> void:
-	_refocus_input()
-	
-	for i in range(_optionData.size()):
-		var opt: Dictionary = _optionData[i]
-		var win = _OPTION_WINDOW_SCENE.instantiate()
-		get_parent().add_child(win)
-		
-		win.id = i
-		win.text = opt.get("text", "")
-		win.option_selected.connect(_on_option_window_selected.bind(opt))
-		win.position = Vector2(40, 120 + i * 120)
-		
-		_optionWindows.push_back(win)
-		new_option_available.emit()
-	
-	all_options_available.emit()
-
-func _choose_option(option_data: Dictionary) -> void:
-	var option_text: String = str(option_data.get("text", "")).strip_edges()
-	if option_text != "->":
-		add_player_text(option_text)
-	_stop_hectic_mode()
-	
-	if option_data:
-		StoryFlags.updateFlags(option_data.setFlags)
-	else:
-		printerr("No option data?  Might be intentional.")
-	
-	_clear_option_windows()
-	option_chosen.emit(str(option_data.get("nextID", "")))
-
-func _clear_option_windows() -> void:
-	for w in _optionWindows:
-		if is_instance_valid(w):
-			w.queue_free()
-	_optionWindows.clear()
-
-
-
-## Currently unused, since it leads to overlap between options and main window
-func _random_popup_position(window_size: Vector2) -> Vector2:
-	var viewport_size := get_viewport_rect().size
-	return Vector2(
-		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
-		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
-	)
-
-func _start_hectic_mode() -> void:
+## [b]Internal-use only.[/b]  Starts hectic mode.
+func _startHecticMode() -> void:
 	_hecticCountdownActive = true
 	_hecticBar.visible = true
 	_hecticBar.value = INF
 	_hecticTimer.start(hecticDuration)
 
-func _stop_hectic_mode() -> void:
+## [b]Internal-use only.[/b]  Stops hectic mode.
+func _stopHecticMode() -> void:
 	_hecticCountdownActive = false
-	if _hecticTimer:
-		_hecticTimer.stop()
-	if _hecticBar:
-		_hecticBar.visible = false
-		_hecticBar.value = INF
+	_hecticTimer.stop()
+	_hecticBar.visible = false
+	_hecticBar.value = INF
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  Handles logic for when an option window is selected.
+func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
+	_chooseOption(chosenOptionWindow.data)
 
-func _on_option_window_selected(option_data: Dictionary) -> void:
-	_choose_option(option_data)
-
-
+## [b]Internal-use only.[/b]  Handles logic for when text is entered into the [_textInput].
 func _on_input_submitted(raw_text: String) -> void:
 	if _isWritingText:
 		return
@@ -336,8 +338,8 @@ func _on_input_submitted(raw_text: String) -> void:
 	_textInput.text = ""
 	
 	if text.to_lower() == "help":
-		add_player_text("help")
-		await _type_dialogue_text(_helpText)
+		_addPlayerText("help")
+		await _typeText(_helpText)
 		return
 	
 	if text.to_lower() == "back":
@@ -349,40 +351,41 @@ func _on_input_submitted(raw_text: String) -> void:
 		return
 	
 	if text.to_lower() == "open_gate" && nameOfNpcTalkingTo == "mini-BOSS":
-		add_player_text("open_gate")
+		_addPlayerText("open_gate")
 		open_gate.emit()
 		return
 	
 	if text.is_valid_int():
 		var idx := int(text)
 		if idx >= 0 and idx < _optionData.size():
-			_choose_option(_optionData[idx])
+			_chooseOption(_optionData[idx])
 			return
 	
 	for opt in _optionData:
 		if text.to_lower() == str(opt.get("text", "")).to_lower():
-			_choose_option(opt)
+			_chooseOption(opt)
 			return
 
+## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
 func _on_console_request_back() -> void:
 	print("back: ", _dialogueHistory)
 	if _dialogueHistory.size() <= 1:
-		add_player_text("[no recorded history in log]")
+		_addPlayerText("[no recorded history in log]")
 		return
 	
 	_dialogueHistory.pop_back()
-	add_player_text("back")
+	_addPlayerText("back")
 	_recordHistory = false
-	var previous_id: String = _dialogueHistory.back()
-	option_chosen.emit(previous_id)
+	option_chosen.emit(_dialogueHistory.back())
 	return
 
+## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:
 	if not _hecticCountdownActive:
 		return
 
-	_stop_hectic_mode()
-	_clear_option_windows()
+	_stopHecticMode()
+	_closeAllOptionWindows()
 	
 	if hecticFailureDialogueID == "":
 		printerr("DialogueConsole:  nextOnHecticFailureID not set for ", currentDialogueID)
