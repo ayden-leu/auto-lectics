@@ -25,8 +25,6 @@ signal new_option_available
 ## Emitted when all dialogue options is visible.
 signal all_options_available
 
-## Emitted when the back command is entered.
-signal request_back
 ## Emitted when the open_gate command is entered.
 signal open_gate
 
@@ -100,6 +98,13 @@ var hecticDuration: float = 5.0  # TODO  make this customizable
 var _visible_options: Array = []
 var _spawned_option_windows: Array = []
 var _is_typing: bool = false
+## [b]Internal-use only.[/b]  Stores previously loaded dialogue IDs.
+## The ID at the end of the array is the currently loaded dialogue.
+var _dialogueHistory:Array[String] = []
+## [b]Internal-use only.[/b]  Whether the dialogue IDs loaded get recorded
+## into [member _dialogueHistory].  Gets set to true whenever the console
+## is prepared.
+var _recordHistory:bool = true
 var _hectic_time_left: float = 0.0
 var _hectic_active: bool = false
 var _npcsThatPreventClosing:Array[String] = [  # TODO:  make this a boolean varaible that is set by InteractableNPC
@@ -131,12 +136,18 @@ func _ready() -> void:
 	hectic_bar.value = 100.0
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+		
 	if _hectic_active:
 		_hectic_time_left = max(_hectic_time_left - delta, 0.0)
 		if hecticDuration > 0.0:
 			hectic_bar.value = (_hectic_time_left / hecticDuration) * 100.0
 		else:
 			hectic_bar.value = 0.0
+	
+	if Input.is_action_just_pressed("debug_2"):
+		print(_dialogueHistory)
 
 func _gui_input(event: InputEvent) -> void:
 	super(event)
@@ -149,6 +160,10 @@ func prepare() -> void:
 	_clear_option_windows()
 	_textInput.text = ""
 	_stop_hectic_mode()
+	
+	if _recordHistory:
+		_dialogueHistory.push_back(currentDialogueID)
+	_recordHistory = true
 	
 	headerText = ownerName
 	_textInput.grab_focus()
@@ -194,6 +209,7 @@ func add_player_text(full_text: String) -> void:
 func kill() -> void:
 	_stop_hectic_mode()
 	_clear_option_windows()
+	_dialogueHistory.clear()
 	queue_free()
 
 # ------------------------------------------------
@@ -327,7 +343,7 @@ func _on_input_submitted(raw_text: String) -> void:
 		return
 	
 	if text.to_lower() == "back":
-		request_back.emit()
+		_on_console_request_back()
 		return
 	
 	if text.to_lower() == "exit":
@@ -349,6 +365,19 @@ func _on_input_submitted(raw_text: String) -> void:
 		if text.to_lower() == str(opt.get("text", "")).to_lower():
 			_choose_option(opt)
 			return
+
+func _on_console_request_back() -> void:
+	print("back: ", _dialogueHistory)
+	if _dialogueHistory.size() <= 1:
+		add_player_text("[no recorded history in log]")
+		return
+	
+	_dialogueHistory.pop_back()
+	add_player_text("back")
+	_recordHistory = false
+	var previous_id: String = _dialogueHistory.back()
+	option_chosen.emit(previous_id)
+	return
 
 func _on_close_button_pressed() -> void:
 	closeWindow()

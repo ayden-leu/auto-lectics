@@ -65,8 +65,6 @@ var _currentInteractor:Node3D
 ## [b]Internal-use only.[/b]  Tracks whether the NPC should be patrolling.
 ## Mainly used to restore patrol state after finishing a dialogue interaction.
 var _shouldPatrol:bool
-## [b]Internal-use only.[/b]  Stores previous dialogue history.
-var _dialogueHistory:Array[String] = []
 ## [b]Internal-use only.[/b]  Holds a reference to this [InteractableNPC]'s dialogue console scene.
 var _dialogueConsole:DialogueConsole = null
 ## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue console's signals have been connected to functions yet.
@@ -155,7 +153,6 @@ func _connectDialogueConsoleSignals() -> void:
 	_dialogueConsole.all_options_available.connect(_on_dialogue_all_options_available)
 	_dialogueConsole.all_dialogue_text_visible.connect(_on_dialogue_all_dialogue_text_visible)
 	_dialogueConsole.open_gate.connect(openGate)
-	_dialogueConsole.request_back.connect(_on_console_request_back)
 
 ## [b]Internal-use only.[/b]  Disconencts the [member _dialogueConsole] signals to functions.
 func _disconnectDialogueConsoleSignals() -> void:
@@ -168,7 +165,6 @@ func _disconnectDialogueConsoleSignals() -> void:
 	_dialogueConsole.all_options_available.disconnect(_on_dialogue_all_options_available)
 	_dialogueConsole.all_dialogue_text_visible.disconnect(_on_dialogue_all_dialogue_text_visible)
 	_dialogueConsole.open_gate.disconnect(openGate)
-	_dialogueConsole.request_back.disconnect(_on_console_request_back)
 
 ## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueConsole].
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
@@ -191,15 +187,12 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	_dialogueConsole.prepare()
 
 ## [b]Internal-use only.[/b]  Loads the next dialogue to display.
-func _loadNextDialogueConsole(nextDialogueID: String, addToHistory: bool = true) -> void:
+func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	if nextDialogueID == "" and isTalking:
 		_endDialogueConsole()
 		return
 	
 	_currentDialogueID = nextDialogueID
-	
-	if addToHistory:
-		_dialogueHistory.push_back(_currentDialogueID)
 	
 	var dialogue:Dictionary = FR_Globals.getDialogueNode(myName, _currentDialogueID)
 	_loadDialogueConsoleData(dialogue)
@@ -236,8 +229,6 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	isTalking = true
 	patrolEnabled = false
 	_currentInteractor = interactor
-	
-	_dialogueHistory.clear()
 	_currentInteractor.set_input_frozen(true)
 	InputHandler.showCursor()
 	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -291,19 +282,6 @@ func _on_dialogue_all_options_available() -> void:
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
 func _on_dialogue_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
-
-# TODO:  move history storage into console
-func _on_console_request_back() -> void:
-	if _dialogueHistory.size() <= 1:
-		_dialogueConsole.add_player_text("[no recorded history in log]")
-		return
-	
-	_dialogueHistory.pop_back()
-	_dialogueConsole.add_player_text("back")
-	# TODO: determine if this is needed. i dont think it is?
-	#var previous_id: String = _dialogueHistory.back()
-	#_loadNextDialogueConsole(previous_id, false)
-	return
 
 # TODO:  redo this logic
 func openGate():
