@@ -182,7 +182,6 @@ func respawnForce():
 
 ## Puts player at [member _lastValidPosition], but only after the fade in.
 func respawn() -> void:
-	set_input_frozen(true)
 	_sfxPlayer.death.play()
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
@@ -192,7 +191,6 @@ func respawn() -> void:
 	respawnForce()
 	_overlay.startFadeOut()
 	_sfxPlayer.respawn.play()
-	set_input_frozen(false)
 
 # ------------------------------------------------
 # functions only referenced inside this script
