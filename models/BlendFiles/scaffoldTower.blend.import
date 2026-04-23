@@ -38,16 +38,36 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={
-"materials": {
-"FillMaterial": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://materials/PlateMaterial.tres",
-"use_external/path": "uid://dxpybx6f7q15b"
+"nodes": {
+"PATH:Cylinder_001": {
+"generate/occluder": 1
 },
-"YellowRust.001": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://materials/YellowRust.tres",
-"use_external/path": "uid://3gptlwtllu4x"
+"PATH:Cylinder_013": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_174": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_175": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_177": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_178": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_180": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_181": {
+"generate/occluder": 1
+},
+"PATH:Cylinder_183": {
+"generate/occluder": 1
+},
+"PATH:TrussBasic_022": {
+"generate/occluder": 1
 }
 }
 }

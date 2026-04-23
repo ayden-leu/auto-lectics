@@ -61,10 +61,12 @@ shape = SubResource("BoxShape3D_7gsoq")
 [node name="CreditsLabel" type="Label" parent="CanvasLayer"]
 z_index = 1
 offset_left = 28.0
-offset_top = 691.0
-offset_right = 585.0
-offset_bottom = 844.0
-text = "AUTO-Lectics 
+offset_top = 565.0
+offset_right = 767.0
+offset_bottom = 796.0
+text = "To be continued....
+
+AUTO-Lectics 
 Part 1
 
 By Marcelle Weaver,  Li Zijian, Raphael Fonseca, Ayden Leu, Tang Yixiang, Alex Ling, Kynan Lewis
@@ -72,6 +74,7 @@ By Marcelle Weaver,  Li Zijian, Raphael Fonseca, Ayden Leu, Tang Yixiang, Alex L
 
 "
 label_settings = SubResource("LabelSettings_7gsoq")
+metadata/_edit_use_anchors_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/CreditsLabel"]
 libraries = {

@@ -58,15 +58,15 @@ func _ready() -> void:
 		
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rtyrd"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ucjwr"]
 panorama = ExtResource("1_p7yb8")
 
-[sub_resource type="Sky" id="Sky_c8mtx"]
-sky_material = SubResource("PanoramaSkyMaterial_rtyrd")
+[sub_resource type="Sky" id="Sky_gc617"]
+sky_material = SubResource("PanoramaSkyMaterial_ucjwr")
 
-[sub_resource type="Environment" id="Environment_ucjwr"]
+[sub_resource type="Environment" id="Environment_t15lr"]
 background_mode = 2
-sky = SubResource("Sky_c8mtx")
+sky = SubResource("Sky_gc617")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -97,7 +97,7 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_ucjwr")
+environment = SubResource("Environment_t15lr")
 script = ExtResource("2_swegm")
 anisotropy = 1.0
 
