@@ -43,8 +43,8 @@ var id:int:
 		id = newID
 		idLabel.text = "[%d]" % newID
 		
-		if newID != 0:
-			print("readd this?")
+		#if newID != 0:
+			#print("readd this?")
 			#$ColorRect2.visible = false
 			#$Label.visible = false
 

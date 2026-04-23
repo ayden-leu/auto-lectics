@@ -8,8 +8,10 @@ class_name DialogueConsole
 # 	make options just spawn in the scene and not as children as its not needed
 #		(had to do it for DialogueBox due to it existing in 3D space)
 #		nevermind I forgot that positioning is dependant on console position
-#	combine this script with dialgoue_console_main_window.gd
+#		nevermind nevermind???  i dont know anymore
 #	make a window manager?
+#	make each entry of dialogue a separate RichTextLabel
+#		solves hardcoded text aligning
 
 # ------------------------------------------------
 # signals
@@ -43,6 +45,7 @@ enum _OptionAnchor {
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  A reference to the [DialogueConsoleOptionWindow] scene.
 const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
 
 # ------------------------------------------------
@@ -66,15 +69,47 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 	%OptionAnchors/BottomLeft, %OptionAnchors/BottomRight
 ]
 
+## Holds the AudioStreamPlayer3Ds for each event.
+@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": %SFX/spawn,
+	"text": %SFX/text
+}
+
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-var ownerName:String = ""
+var ownerName:String = ""          # TODO  determine if needed
+var realOwner:Node = null          # TODO  determine if needed
+var dialogueData: Dictionary = {}   # TODO:  remove this and separate each aspect into variables.
+var currentDialogueID:String = ""  # TODO  determine if needed
+## The dialogue mode this console is currently in.
+## Refer to [member DialogueDefaults.DIALOGUE_MODES] for valid modes.
+var mode:String = "normal"
+## The dialogue ID to load when a hectic dialogue event is failed.
+var hecticFailureDialogueID: String = ""
+## The delay between the dialogue finishing being displayed and spawning the options, in seconds.
+var delayBtwnWriteDialogueAndOptions: float = 0.5
+## How fast dialogue characters are "written," in characters per second.
+var textWriteSpeed:float = DialogueDefaults.WRITE_SPEED_PRESETS.medium
+var hecticDuration: float = 5.0  # TODO  make this customizable
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+var _visible_options: Array = []
+var _spawned_option_windows: Array = []
+var _is_typing: bool = false
+var _hectic_time_left: float = 0.0
+var _hectic_active: bool = false
+var _npcsThatPreventClosing:Array[String] = [  # TODO:  make this a boolean varaible that is set by InteractableNPC
+	"dropPod", "The Office"
+]
+## Show this message when "help" is inputted
+var help_text: String = "Here are the commands:\n\n" + \
+		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
+		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
+		"exit         =  close the console"
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -95,74 +130,20 @@ func _ready() -> void:
 	hectic_bar.max_value = 100.0
 	hectic_bar.value = 100.0
 
+func _process(delta: float) -> void:
+	if _hectic_active:
+		_hectic_time_left = max(_hectic_time_left - delta, 0.0)
+		if hecticDuration > 0.0:
+			hectic_bar.value = (_hectic_time_left / hecticDuration) * 100.0
+		else:
+			hectic_bar.value = 0.0
+
 func _gui_input(event: InputEvent) -> void:
 	super(event)
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-
-# ------------------------------------------------
-# functions only referenced inside this script
-# [b]Internal-use only.[/b]
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions that run when a signal is emitted
-# ------------------------------------------------
-
-# ------------------------------------------------
-# editor dev-ing functions like "_get_configuration_warnings()"
-# ------------------------------------------------
-func _get_configuration_warnings() -> PackedStringArray:
-	return super()
-
-func _validate_property(property: Dictionary) -> void:
-	super(property)
-
-
-
-
-
-
-
-
-
-var realOwner: Node = null
-
-var currentDialogueID: String = ""
-var mode: String = "normal"
-var hecticFailureDialogueID: String = ""
-var delayBtwnWriteDialogueAndOptions: float = 0.25
-var textWriteSpeed: float = 20.0
-var sfxEventsToLoad: Dictionary = {}:
-	set(value):
-		sfxEventsToLoad = value
-		loadSfx()
-
-var _dialogue_data: Dictionary = {}
-var _visible_options: Array = []
-var _spawned_option_windows: Array = []
-var _is_typing: bool = false
-
-var hectic_duration: float = 5.0
-var _hectic_time_left: float = 0.0
-var _hectic_active: bool = false
-
-var _npcsThatPreventClosing:Array[String] = [
-	"dropPod", "The Office"
-]
-
-## Show this message when "help" is inputted
-var help_text: String = "Here are the commands:\n\n" + \
-		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
-		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
-		"exit         =  close the console"
-
-func set_npc_id(id: String) -> void:
-	ownerName = id
-	print (ownerName)
-	headerText = ownerName
 
 func prepare() -> void:
 	_clear_option_windows()
@@ -172,11 +153,10 @@ func prepare() -> void:
 	headerText = ownerName
 	_textInput.grab_focus()
 
-
 func start() -> void:
 	sfxPlayer.spawn.play()
 	
-	await _type_dialogue_text(str(_dialogue_data.get("text", "")))
+	await _type_dialogue_text(str(dialogueData.get("text", "")))
 	all_dialogue_text_visible.emit()
 	
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
@@ -187,48 +167,6 @@ func start() -> void:
 	if mode == "hectic":
 		_start_hectic_mode()
 
-
-## exit window on "exit" or pressing X button
-func exit_window() -> void:
-	## If you don't want player to exit from certain NPCs, put exceptions here
-	if ownerName in _npcsThatPreventClosing:
-		add_player_text("exit")
-		_type_dialogue_text("Wait, you must listen first.")
-		return
-	option_chosen.emit("")
-
-
-func _process(delta: float) -> void:
-	if _hectic_active:
-		_hectic_time_left = max(_hectic_time_left - delta, 0.0)
-		if hectic_duration > 0.0:
-			hectic_bar.value = (_hectic_time_left / hectic_duration) * 100.0
-		else:
-			hectic_bar.value = 0.0
-
-## helper function to convert a flag array to the intended dictionary input
-func _convert_flag_array_to_dict(flag_array: Variant) -> Dictionary:
-	var out: Dictionary = {}
-	
-	if typeof(flag_array) == TYPE_DICTIONARY:
-		return flag_array
-	
-	if typeof(flag_array) != TYPE_ARRAY:
-		return out
-	
-	for entry in flag_array:
-		if typeof(entry) != TYPE_DICTIONARY:
-			continue
-		
-		var flag_name: String = str(entry.get("flagName", ""))
-		if flag_name == "":
-			continue
-		
-		out[flag_name] = entry.get("value")
-	
-	return out
-
-
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
 	_visible_options.clear()
@@ -236,17 +174,39 @@ func loadOptionData(options: Array) -> void:
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
 			continue
-	
-		var check_flags_dict := _convert_flag_array_to_dict(option.get("checkFlag", []))
-		if StoryFlags.flagsMatch(check_flags_dict):
+		
+		if StoryFlags.flagsMatch(option.checkFlags):
 			_visible_options.push_back(option)
 
 	_visible_options.sort_custom(func(a, b): return a.get("spawnDelay", 0.0) < b.get("spawnDelay", 0.0))
 
+func loadSfx(sfxEventsToLoad:Dictionary) -> void:
+	for eventID in sfxPlayer.keys():
+		sfxPlayer[eventID].stop()
+		AudioLoader.clearAudioRandomizer(sfxPlayer[eventID].stream)
+		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
 
-func show_dialogue_data(dialogue_data: Dictionary) -> void:
-	_dialogue_data = dialogue_data
+## prints the player text if they picked an option with text associated
+func add_player_text(full_text: String) -> void:
+	dialogue_log.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
+	_scroll_to_bottom()
 
+func kill() -> void:
+	_stop_hectic_mode()
+	_clear_option_windows()
+	queue_free()
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+## exit window on "exit" or pressing X button
+func closeWindow() -> void:
+	if ownerName in _npcsThatPreventClosing:
+		add_player_text("exit")
+		_type_dialogue_text("Wait, you must listen first.")
+		return
+	option_chosen.emit("")
 
 func _type_dialogue_text(full_text: String) -> void:
 	_is_typing = true
@@ -268,17 +228,14 @@ func _type_dialogue_text(full_text: String) -> void:
 	
 	_is_typing = false
 
-## prints the player text if they picked an option with text associated
-func add_player_text(full_text: String) -> void:
-	dialogue_log.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
-	_scroll_to_bottom()
-	
-
 ## scrolls the dialogue log down
 func _scroll_to_bottom() -> void:
 	await get_tree().process_frame
 	scroll_container.scroll_vertical = int(scroll_container.get_v_scroll_bar().max_value)
 
+## Forces current selection to be on the input area.
+func _refocus_input() -> void:
+	_textInput.edit()
 
 func _spawn_option_windows() -> void:
 	_refocus_input()
@@ -301,6 +258,58 @@ func _spawn_option_windows() -> void:
 	
 	all_options_available.emit()
 
+func _choose_option(option_data: Dictionary) -> void:
+	var option_text: String = str(option_data.get("text", "")).strip_edges()
+	if option_text != "->":
+		add_player_text(option_text)
+	_stop_hectic_mode()
+	
+	if option_data:
+		StoryFlags.updateFlags(option_data.setFlags)
+	else:
+		printerr("No option data?  Might be intentional.")
+	
+	_clear_option_windows()
+	option_chosen.emit(str(option_data.get("nextID", "")))
+
+func _clear_option_windows() -> void:
+	for w in _spawned_option_windows:
+		if is_instance_valid(w):
+			w.queue_free()
+	_spawned_option_windows.clear()
+
+func _center_main_window() -> void:
+	await get_tree().process_frame
+	#position = (get_viewport_rect().size - size) * 0.5
+	position = (get_viewport_rect().size - size) / 2
+
+## Currently unused, since it leads to overlap between options and main window
+func _random_popup_position(window_size: Vector2) -> Vector2:
+	var viewport_size := get_viewport_rect().size
+	return Vector2(
+		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
+		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
+	)
+
+func _start_hectic_mode() -> void:
+	_hectic_active = true
+	_hectic_time_left = hecticDuration
+	hectic_bar.visible = true
+	hectic_bar.value = 100.0
+	hectic_timer.start(hecticDuration)
+
+func _stop_hectic_mode() -> void:
+	_hectic_active = false
+	_hectic_time_left = 0.0
+	if hectic_timer:
+		hectic_timer.stop()
+	if hectic_bar:
+		hectic_bar.visible = false
+		hectic_bar.value = 100.0
+
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
 
 func _on_option_window_selected(option_data: Dictionary) -> void:
 	_choose_option(option_data)
@@ -322,7 +331,7 @@ func _on_input_submitted(raw_text: String) -> void:
 		return
 	
 	if text.to_lower() == "exit":
-		exit_window()
+		closeWindow()
 		return
 	
 	if text.to_lower() == "open_gate" && ownerName == "mini-BOSS":
@@ -341,67 +350,8 @@ func _on_input_submitted(raw_text: String) -> void:
 			_choose_option(opt)
 			return
 
-## This is supposed to make the input line selected again when a option is selected; it doesn't work for me
-func _refocus_input() -> void:
-	_textInput.edit()
-
-
-func _choose_option(option_data: Dictionary) -> void:
-	var option_text: String = str(option_data.get("text", "")).strip_edges()
-	if option_text != "->":
-		add_player_text(option_text)
-	_stop_hectic_mode()
-	
-	var set_flags_dict := _convert_flag_array_to_dict(option_data.get("setFlag", []))
-	if not set_flags_dict.is_empty():
-		StoryFlags.updateFlags(set_flags_dict)
-	
-	_clear_option_windows()
-	option_chosen.emit(str(option_data.get("nextID", "")))
-
-
-func kill() -> void:
-	_stop_hectic_mode()
-	_clear_option_windows()
-	queue_free()
-
-
-func _clear_option_windows() -> void:
-	for w in _spawned_option_windows:
-		if is_instance_valid(w):
-			w.queue_free()
-	_spawned_option_windows.clear()
-
-
-func _center_main_window() -> void:
-	await get_tree().process_frame
-	#position = (get_viewport_rect().size - size) * 0.5
-	position = (get_viewport_rect().size - size) / 2
-
-
-## Currently unused, since it leads to overlap between options and main window
-func _random_popup_position(window_size: Vector2) -> Vector2:
-	var viewport_size := get_viewport_rect().size
-	return Vector2(
-		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
-		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
-	)
-
-func _start_hectic_mode() -> void:
-	_hectic_active = true
-	_hectic_time_left = hectic_duration
-	hectic_bar.visible = true
-	hectic_bar.value = 100.0
-	hectic_timer.start(hectic_duration)
-
-func _stop_hectic_mode() -> void:
-	_hectic_active = false
-	_hectic_time_left = 0.0
-	if hectic_timer:
-		hectic_timer.stop()
-	if hectic_bar:
-		hectic_bar.visible = false
-		hectic_bar.value = 100.0
+func _on_close_button_pressed() -> void:
+	closeWindow()
 
 func _on_hectic_timeout() -> void:
 	if not _hectic_active:
@@ -412,18 +362,11 @@ func _on_hectic_timeout() -> void:
 
 	option_chosen.emit(hecticFailureDialogueID)
 
-# =======================================
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------
+func _get_configuration_warnings() -> PackedStringArray:
+	return super()
 
-func _on_close_button_pressed() -> void:
-	exit_window()
-
-## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
-	"spawn": %SFX/spawn,
-	"text": %SFX/text
-}
-
-func loadSfx() -> void:
-	for eventID in sfxPlayer.keys():
-		AudioLoader.clearAudioRandomizer(sfxPlayer[eventID].stream)
-		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
+func _validate_property(property: Dictionary) -> void:
+	super(property)

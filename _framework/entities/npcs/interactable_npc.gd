@@ -185,8 +185,8 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 		_dialogueConsole.hecticFailureDialogueID = ""
 	
 	_dialogueConsole.textWriteSpeed = dialogueEntry.writeSpeedCustom
-	_dialogueConsole.sfxEventsToLoad = dialogueEntry.sfx
-	_dialogueConsole.show_dialogue_data(dialogueEntry)
+	_dialogueConsole.loadSfx(dialogueEntry.sfx)
+	_dialogueConsole.dialogueData = dialogueEntry
 	_dialogueConsole.loadOptionData(dialogueEntry.options)
 	_dialogueConsole.prepare()
 
@@ -300,8 +300,9 @@ func _on_console_request_back() -> void:
 	
 	_dialogueHistory.pop_back()
 	_dialogueConsole.add_player_text("back")
-	var previous_id: String = _dialogueHistory.back()
-	_loadNextDialogueConsole(previous_id, false)
+	# TODO: determine if this is needed. i dont think it is?
+	#var previous_id: String = _dialogueHistory.back()
+	#_loadNextDialogueConsole(previous_id, false)
 	return
 
 # TODO:  redo this logic
