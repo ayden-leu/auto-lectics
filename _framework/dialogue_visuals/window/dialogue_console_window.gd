@@ -53,22 +53,25 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  The area where the player can enter text.
 @onready var _textInput: LineEdit = %ConsoleInput
-@onready var scroll_container: ScrollContainer = %ConsoleContentsContainer
-@onready var dialogue_log: RichTextLabel = %DialogueLog
-@onready var npc_name: Label = %HeaderLabel
-@onready var hectic_bar: ProgressBar = $HecticBar
-@onready var hectic_timer: Timer = $HecticTimer
-
+## [b]Internal-use only.[/b]  The thing that allows you to scroll through the console's contents.
+@onready var _contentsScroller: ScrollContainer = %ContentsScroller
+## [b]Internal-use only.[/b]  The contents of the console.
+@onready var _contents: RichTextLabel = %DialogueLog
+## [b]Internal-use only.[/b]  The progress bar that displays how much time is left
+## until a hectic dialogue event ends.
+@onready var _hecticBar: ProgressBar = $HecticBar
+## [b]Internal-use only.[/b]  The hectic dialogue event timer.
+@onready var _hecticTimer: Timer = $HecticTimer
 ## [b]Internal-use only.[/b]  Holds the root positions for spawning option windows
 ## in normal mode.
 @onready var _optionSpawnPositions = [
 	%OptionAnchors/TopLeft, %OptionAnchors/TopRight,
 	%OptionAnchors/BottomLeft, %OptionAnchors/BottomRight
 ]
-
-## Holds the AudioStreamPlayer3Ds for each event.
-@onready var sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
+## Holds the AudioStreamPlayers for each event.
+@onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %SFX/spawn,
 	"text": %SFX/text
 }
@@ -76,28 +79,34 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-var ownerName:String = ""          # TODO  determine if needed
-var realOwner:Node = null          # TODO  determine if needed
-var dialogueData: Dictionary = {}   # TODO:  remove this and separate each aspect into variables.
-var currentDialogueID:String = ""  # TODO  determine if needed
+## The name of the [InteractableNPC] that was interacted with.
+var nameOfNpcTalkingTo:String = ""
+## The text to add to the [member _contents].
+var textToAdd:String = ""
+## How fast dialogue characters are "written," in characters per second.
+var textWriteSpeed:float = DialogueDefaults.WRITE_SPEED_PRESETS.medium
+## The ID of the current dialogue file that is loaded.
+var currentDialogueID:String = ""
+## The delay between the dialogue finishing being displayed and spawning the options, in seconds.
+var delayBtwnWriteDialogueAndOptions: float = 0.5
 ## The dialogue mode this console is currently in.
 ## Refer to [member DialogueDefaults.DIALOGUE_MODES] for valid modes.
 var mode:String = "normal"
 ## The dialogue ID to load when a hectic dialogue event is failed.
-var hecticFailureDialogueID: String = ""
-## The delay between the dialogue finishing being displayed and spawning the options, in seconds.
-var delayBtwnWriteDialogueAndOptions: float = 0.5
-## How fast dialogue characters are "written," in characters per second.
-var textWriteSpeed:float = DialogueDefaults.WRITE_SPEED_PRESETS.medium
-var hecticDuration: float = 5.0  # TODO  make this customizable
+var hecticFailureDialogueID:String = ""
+## How long a hectic dialogue event lasts.
+var hecticDuration:float = 5.0  # TODO  make this customizable
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-var _visible_options: Array = []
-var _spawned_option_windows: Array = []
-var _is_typing: bool = false
+## [b]Internal-use only.[/b]  The data of each option the player can pick from.
+var _optionData:Array = []
+## [b]Internal-use only.[/b]  The windows that represent each option a player can pick from.
+var _optionWindows:Array = []
+## [b]Internal-use only.[/b]  IS true when the dialogue text is still being typed.
+var _isWritingText:bool = false
 ## [b]Internal-use only.[/b]  Stores previously loaded dialogue IDs.
 ## The ID at the end of the array is the currently loaded dialogue.
 var _dialogueHistory:Array[String] = []
@@ -105,16 +114,20 @@ var _dialogueHistory:Array[String] = []
 ## into [member _dialogueHistory].  Gets set to true whenever the console
 ## is prepared.
 var _recordHistory:bool = true
-var _hectic_time_left: float = 0.0
-var _hectic_active: bool = false
+## [b]Internal-use only.[/b]  True when the hectic dialgoue event timer is running.
+var _hecticCountdownActive: bool = false
+## @deprecated
+## [b]Internal-use only.[/b]  A list of [InteractableNPC]s that make it so
+## you cannot close this window.
 var _npcsThatPreventClosing:Array[String] = [  # TODO:  make this a boolean varaible that is set by InteractableNPC
 	"dropPod", "The Office"
 ]
 ## Show this message when "help" is inputted
-var help_text: String = "Here are the commands:\n\n" + \
+var _helpText: String = \
+		"Here are the commands:\n\n" + \
 		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
 		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
-		"exit         =  close the console"
+		"exit        =  close the console"
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -122,29 +135,24 @@ var help_text: String = "Here are the commands:\n\n" + \
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
 	super()
 	
 	_center_main_window()
 	
 	
-	hectic_timer.one_shot = true
+	_hecticTimer.one_shot = true
 
-	hectic_bar.visible = false
-	hectic_bar.min_value = 0.0
-	hectic_bar.max_value = 100.0
-	hectic_bar.value = 100.0
+	_hecticBar.visible = false
+	_hecticBar.min_value = 0.0
+	_hecticBar.max_value = 100.0
+	_hecticBar.value = 100.0
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 		
-	if _hectic_active:
-		_hectic_time_left = max(_hectic_time_left - delta, 0.0)
-		if hecticDuration > 0.0:
-			hectic_bar.value = (_hectic_time_left / hecticDuration) * 100.0
-		else:
-			hectic_bar.value = 0.0
+	if _hecticCountdownActive:
+		_hecticBar.value = (_hecticTimer.time_left / hecticDuration) * 100.0
 	
 	if Input.is_action_just_pressed("debug_2"):
 		print(_dialogueHistory)
@@ -165,13 +173,13 @@ func prepare() -> void:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
 	
-	headerText = ownerName
+	headerText = nameOfNpcTalkingTo
 	_textInput.grab_focus()
 
 func start() -> void:
-	sfxPlayer.spawn.play()
+	_sfxPlayer.spawn.play()
 	
-	await _type_dialogue_text(str(dialogueData.get("text", "")))
+	await _type_dialogue_text(textToAdd)
 	all_dialogue_text_visible.emit()
 	
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
@@ -184,26 +192,26 @@ func start() -> void:
 
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
-	_visible_options.clear()
+	_optionData.clear()
 	
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
 			continue
 		
 		if StoryFlags.flagsMatch(option.checkFlags):
-			_visible_options.push_back(option)
+			_optionData.push_back(option)
 
-	_visible_options.sort_custom(func(a, b): return a.get("spawnDelay", 0.0) < b.get("spawnDelay", 0.0))
+	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
 
 func loadSfx(sfxEventsToLoad:Dictionary) -> void:
-	for eventID in sfxPlayer.keys():
-		sfxPlayer[eventID].stop()
-		AudioLoader.clearAudioRandomizer(sfxPlayer[eventID].stream)
-		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], sfxPlayer[eventID].stream)
+	for eventID in _sfxPlayer.keys():
+		_sfxPlayer[eventID].stop()
+		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
+		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
 
 ## prints the player text if they picked an option with text associated
 func add_player_text(full_text: String) -> void:
-	dialogue_log.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
+	_contents.append_text("[color=#ffffff]%s[/color]\n\n" % full_text)
 	_scroll_to_bottom()
 
 func kill() -> void:
@@ -217,37 +225,39 @@ func kill() -> void:
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 ## exit window on "exit" or pressing X button
-func closeWindow() -> void:
-	if ownerName in _npcsThatPreventClosing:
+func close() -> void:
+	if nameOfNpcTalkingTo in _npcsThatPreventClosing:
 		add_player_text("exit")
 		_type_dialogue_text("Wait, you must listen first.")
 		return
-	option_chosen.emit("")
+	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
+	
+	super()
 
 func _type_dialogue_text(full_text: String) -> void:
-	_is_typing = true
+	_isWritingText = true
 	
 	var cps: float = max(textWriteSpeed, 1.0)
 	var delay: float = 1.0 / cps
 	
-	dialogue_log.append_text("[indent][indent][indent][indent][indent][indent][color=#f2a11a]")
+	_contents.append_text("[indent][indent][indent][indent][indent][indent][color=#f2a11a]")
 	
 	for i in range(full_text.length()):
-		dialogue_log.append_text(full_text[i])
+		_contents.append_text(full_text[i])
 		_scroll_to_bottom()
-		if not sfxPlayer.text.playing:
-			sfxPlayer.text.play()
+		if not _sfxPlayer.text.playing:
+			_sfxPlayer.text.play()
 		await get_tree().create_timer(delay).timeout
 	
-	dialogue_log.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
+	_contents.append_text("[/color][/indent][/indent][/indent][/indent][/indent][/indent]\n\n")
 	_scroll_to_bottom()
 	
-	_is_typing = false
+	_isWritingText = false
 
 ## scrolls the dialogue log down
 func _scroll_to_bottom() -> void:
 	await get_tree().process_frame
-	scroll_container.scroll_vertical = int(scroll_container.get_v_scroll_bar().max_value)
+	_contentsScroller.scroll_vertical = _contentsScroller.get_v_scroll_bar().max_value
 
 ## Forces current selection to be on the input area.
 func _refocus_input() -> void:
@@ -255,12 +265,9 @@ func _refocus_input() -> void:
 
 func _spawn_option_windows() -> void:
 	_refocus_input()
-	if _visible_options.is_empty():
-		all_options_available.emit()
-		return
 	
-	for i in range(_visible_options.size()):
-		var opt: Dictionary = _visible_options[i]
+	for i in range(_optionData.size()):
+		var opt: Dictionary = _optionData[i]
 		var win = _OPTION_WINDOW_SCENE.instantiate()
 		get_parent().add_child(win)
 		
@@ -269,7 +276,7 @@ func _spawn_option_windows() -> void:
 		win.option_selected.connect(_on_option_window_selected.bind(opt))
 		win.position = Vector2(40, 120 + i * 120)
 		
-		_spawned_option_windows.push_back(win)
+		_optionWindows.push_back(win)
 		new_option_available.emit()
 	
 	all_options_available.emit()
@@ -289,10 +296,10 @@ func _choose_option(option_data: Dictionary) -> void:
 	option_chosen.emit(str(option_data.get("nextID", "")))
 
 func _clear_option_windows() -> void:
-	for w in _spawned_option_windows:
+	for w in _optionWindows:
 		if is_instance_valid(w):
 			w.queue_free()
-	_spawned_option_windows.clear()
+	_optionWindows.clear()
 
 func _center_main_window() -> void:
 	await get_tree().process_frame
@@ -308,20 +315,18 @@ func _random_popup_position(window_size: Vector2) -> Vector2:
 	)
 
 func _start_hectic_mode() -> void:
-	_hectic_active = true
-	_hectic_time_left = hecticDuration
-	hectic_bar.visible = true
-	hectic_bar.value = 100.0
-	hectic_timer.start(hecticDuration)
+	_hecticCountdownActive = true
+	_hecticBar.visible = true
+	_hecticBar.value = 100.0
+	_hecticTimer.start(hecticDuration)
 
 func _stop_hectic_mode() -> void:
-	_hectic_active = false
-	_hectic_time_left = 0.0
-	if hectic_timer:
-		hectic_timer.stop()
-	if hectic_bar:
-		hectic_bar.visible = false
-		hectic_bar.value = 100.0
+	_hecticCountdownActive = false
+	if _hecticTimer:
+		_hecticTimer.stop()
+	if _hecticBar:
+		_hecticBar.visible = false
+		_hecticBar.value = 100.0
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -332,14 +337,14 @@ func _on_option_window_selected(option_data: Dictionary) -> void:
 
 
 func _on_input_submitted(raw_text: String) -> void:
-	if _is_typing:
+	if _isWritingText:
 		return
 	var text := raw_text.strip_edges()
 	_textInput.text = ""
 	
 	if text.to_lower() == "help":
 		add_player_text("help")
-		await _type_dialogue_text(help_text)
+		await _type_dialogue_text(_helpText)
 		return
 	
 	if text.to_lower() == "back":
@@ -347,21 +352,21 @@ func _on_input_submitted(raw_text: String) -> void:
 		return
 	
 	if text.to_lower() == "exit":
-		closeWindow()
+		close()
 		return
 	
-	if text.to_lower() == "open_gate" && ownerName == "mini-BOSS":
+	if text.to_lower() == "open_gate" && nameOfNpcTalkingTo == "mini-BOSS":
 		add_player_text("open_gate")
 		open_gate.emit()
 		return
 	
 	if text.is_valid_int():
 		var idx := int(text)
-		if idx >= 0 and idx < _visible_options.size():
-			_choose_option(_visible_options[idx])
+		if idx >= 0 and idx < _optionData.size():
+			_choose_option(_optionData[idx])
 			return
 	
-	for opt in _visible_options:
+	for opt in _optionData:
 		if text.to_lower() == str(opt.get("text", "")).to_lower():
 			_choose_option(opt)
 			return
@@ -379,15 +384,15 @@ func _on_console_request_back() -> void:
 	option_chosen.emit(previous_id)
 	return
 
-func _on_close_button_pressed() -> void:
-	closeWindow()
-
 func _on_hectic_timeout() -> void:
-	if not _hectic_active:
+	if not _hecticCountdownActive:
 		return
 
 	_stop_hectic_mode()
 	_clear_option_windows()
+	
+	if hecticFailureDialogueID == "":
+		printerr("DialogueConsole:  nextOnHecticFailureID not set for ", currentDialogueID)
 
 	option_chosen.emit(hecticFailureDialogueID)
 

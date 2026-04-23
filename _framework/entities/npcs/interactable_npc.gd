@@ -169,8 +169,7 @@ func _disconnectDialogueConsoleSignals() -> void:
 ## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueConsole].
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
 func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
-	_dialogueConsole.realOwner = self
-	_dialogueConsole.ownerName = myName
+	_dialogueConsole.nameOfNpcTalkingTo = myName
 	_dialogueConsole.currentDialogueID = _currentDialogueID
 	_dialogueConsole.mode = dialogueEntry.mode
 	
@@ -182,7 +181,8 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	
 	_dialogueConsole.textWriteSpeed = dialogueEntry.writeSpeedCustom
 	_dialogueConsole.loadSfx(dialogueEntry.sfx)
-	_dialogueConsole.dialogueData = dialogueEntry
+	#_dialogueConsole.dialogueData = dialogueEntry
+	_dialogueConsole.textToAdd = dialogueEntry.text
 	_dialogueConsole.loadOptionData(dialogueEntry.options)
 	_dialogueConsole.prepare()
 
