@@ -95,7 +95,10 @@ var mode:String = "normal"
 ## The dialogue ID to load when a hectic dialogue event is failed.
 var hecticFailureDialogueID:String = ""
 ## How long a hectic dialogue event lasts.
-var hecticDuration:float = 5.0  # TODO  make this customizable
+var hecticDuration:float = 5.0:  # TODO  make this customizable
+	set(newDuration):
+		hecticDuration = newDuration
+		_hecticBar.max_value = newDuration
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -137,25 +140,16 @@ func _ready() -> void:
 		return
 	super()
 	
-	_center_main_window()
-	
-	
-	_hecticTimer.one_shot = true
-
+	_center()
 	_hecticBar.visible = false
-	_hecticBar.min_value = 0.0
-	_hecticBar.max_value = 100.0
-	_hecticBar.value = 100.0
+	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 		
 	if _hecticCountdownActive:
-		_hecticBar.value = (_hecticTimer.time_left / hecticDuration) * 100.0
-	
-	if Input.is_action_just_pressed("debug_2"):
-		print(_dialogueHistory)
+		_hecticBar.value = _hecticTimer.time_left
 
 func _gui_input(event: InputEvent) -> void:
 	super(event)
@@ -257,7 +251,9 @@ func _type_dialogue_text(full_text: String) -> void:
 ## scrolls the dialogue log down
 func _scroll_to_bottom() -> void:
 	await get_tree().process_frame
-	_contentsScroller.scroll_vertical = _contentsScroller.get_v_scroll_bar().max_value
+	_contentsScroller.scroll_vertical = int(
+		_contentsScroller.get_v_scroll_bar().max_value
+	)
 
 ## Forces current selection to be on the input area.
 func _refocus_input() -> void:
@@ -301,10 +297,7 @@ func _clear_option_windows() -> void:
 			w.queue_free()
 	_optionWindows.clear()
 
-func _center_main_window() -> void:
-	await get_tree().process_frame
-	#position = (get_viewport_rect().size - size) * 0.5
-	position = (get_viewport_rect().size - size) / 2
+
 
 ## Currently unused, since it leads to overlap between options and main window
 func _random_popup_position(window_size: Vector2) -> Vector2:
@@ -317,7 +310,7 @@ func _random_popup_position(window_size: Vector2) -> Vector2:
 func _start_hectic_mode() -> void:
 	_hecticCountdownActive = true
 	_hecticBar.visible = true
-	_hecticBar.value = 100.0
+	_hecticBar.value = INF
 	_hecticTimer.start(hecticDuration)
 
 func _stop_hectic_mode() -> void:
@@ -326,7 +319,7 @@ func _stop_hectic_mode() -> void:
 		_hecticTimer.stop()
 	if _hecticBar:
 		_hecticBar.visible = false
-		_hecticBar.value = 100.0
+		_hecticBar.value = INF
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -384,7 +377,7 @@ func _on_console_request_back() -> void:
 	option_chosen.emit(previous_id)
 	return
 
-func _on_hectic_timeout() -> void:
+func _on_hectic_timer_timeout() -> void:
 	if not _hecticCountdownActive:
 		return
 

@@ -101,6 +101,10 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+## Moves this window to the center of the screen immediately.
+func _center() -> void:
+	await get_tree().process_frame
+	position = (get_viewport_rect().size - size) / 2
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

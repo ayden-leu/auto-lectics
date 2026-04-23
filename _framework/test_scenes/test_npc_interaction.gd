@@ -37,8 +37,8 @@ extends Node3D
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_1"):
 		%Player.position = %RespawnPosition.position
-	#elif event.is_action_pressed("debug_2"):
-		#loopManager.performReset()
+	elif event.is_action_pressed("debug_2"):
+		loopManager.performReset()
 
 # ------------------------------------------------
 # functions referenced outside of this script

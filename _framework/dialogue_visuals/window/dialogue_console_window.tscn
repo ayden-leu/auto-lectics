@@ -1,14 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8oqtsvu488a"]
+[gd_scene load_steps=6 format=3 uid="uid://b8oqtsvu488a"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_0et2d"]
 [ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/dialogue_console_window.gd" id="1_qw6ov"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_f2hpt"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kd1mm"]
-bg_color = Color(0.025166476, 0.0025565878, 0.002608634, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbkfi"]
-bg_color = Color(0.82, 0, 0, 1)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1d7as"]
 resource_local_to_scene = true
@@ -19,8 +13,8 @@ playback_mode = 1
 [node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 428.0
+offset_bottom = 468.0
 theme = ExtResource("1_0et2d")
 script = ExtResource("1_qw6ov")
 headerPanel = NodePath("Header")
@@ -123,18 +117,16 @@ position = Vector2(-40, 462)
 position = Vector2(470, 462)
 
 [node name="HecticBar" type="ProgressBar" parent="."]
-visible = false
 layout_mode = 0
 offset_top = -28.0
 offset_right = 429.0
 offset_bottom = -1.0
 mouse_filter = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_kd1mm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_pbkfi")
 value = 100.0
-fill_mode = 1
+show_percentage = false
 
 [node name="HecticTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="SFX" type="Node" parent="."]
 unique_name_in_owner = true
@@ -146,3 +138,4 @@ stream = SubResource("AudioStreamRandomizer_1d7as")
 stream = SubResource("AudioStreamRandomizer_f2hpt")
 
 [connection signal="text_submitted" from="Contents/ConsoleInput" to="." method="_on_input_submitted"]
+[connection signal="timeout" from="HecticTimer" to="." method="_on_hectic_timer_timeout"]

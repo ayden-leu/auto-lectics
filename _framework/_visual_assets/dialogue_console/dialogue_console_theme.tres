@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=20 format=3 uid="uid://bvocyor065ht5"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bvocyor065ht5"]
 
 [ext_resource type="StyleBox" uid="uid://gh7vrriyyneh" path="res://_framework/_visual_assets/dialogue_console/close_button_normal.tres" id="1_f3gol"]
 [ext_resource type="StyleBox" uid="uid://x2ch6ugc6psn" path="res://_framework/_visual_assets/dialogue_console/close_button_hover.tres" id="1_ibxls"]
@@ -7,7 +7,9 @@
 [ext_resource type="StyleBox" uid="uid://srb773t8q5rm" path="res://_framework/_visual_assets/dialogue_console/line_edit_normal.tres" id="3_ybx5l"]
 [ext_resource type="StyleBox" uid="uid://mhqiqcr76hbc" path="res://_framework/_visual_assets/dialogue_console/panel_console_contents.tres" id="5_qyjuh"]
 [ext_resource type="StyleBox" uid="uid://dl6vk2u5j558s" path="res://_framework/_visual_assets/dialogue_console/scroll_bar.tres" id="6_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://cs6h0r3p3fvqh" path="res://_framework/_visual_assets/dialogue_console/progress_bar_background.tres" id="7_aug18"]
 [ext_resource type="StyleBox" uid="uid://3atvdavvk3i2" path="res://_framework/_visual_assets/dialogue_console/scroll_bar_background.tres" id="7_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://cik3rwvp1n6d2" path="res://_framework/_visual_assets/dialogue_console/progress_bar_fill.tres" id="8_aab04"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cl5rt"]
 
@@ -63,6 +65,8 @@ PanelConsoleContents/base_type = &"Panel"
 PanelConsoleContents/styles/panel = ExtResource("5_qyjuh")
 PanelHeader/base_type = &"Panel"
 PanelHeader/styles/panel = ExtResource("1_p17lh")
+ProgressBar/styles/background = ExtResource("7_aug18")
+ProgressBar/styles/fill = ExtResource("8_aab04")
 VScrollBar/styles/grabber = ExtResource("6_ybx5l")
 VScrollBar/styles/grabber_highlight = ExtResource("6_ybx5l")
 VScrollBar/styles/scroll = ExtResource("7_ybx5l")
