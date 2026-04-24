@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b38hwl8plmrky"]
+[gd_scene load_steps=13 format=3 uid="uid://b38hwl8plmrky"]
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_framework/dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_vav2e"]
@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_framework/dialogue_creator/visual_assets/plus.svg" id="4_acglc"]
 [ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_framework/dialogue_creator/visual_assets/save.svg" id="5_acglc"]
 [ext_resource type="Texture2D" uid="uid://c1ramlq6b7v5a" path="res://_framework/dialogue_creator/visual_assets/load.svg" id="6_acglc"]
+[ext_resource type="Script" path="res://_framework/dialogue_creator/side_panel.gd" id="7_28w4y"]
+[ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_framework/dialogue_creator/helpers/field_option_type.gd" id="8_01334"]
+[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_framework/dialogue_creator/helpers/aspects_write_speed.gd" id="9_5j8q3"]
+[ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_framework/dialogue_creator/helpers/field_option_write_speed_preset.gd" id="10_pdxf7"]
+[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/aspects_sfx.gd" id="11_wipx8"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/button_toggle_area.gd" id="12_p0r8u"]
 
 [node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_background")]
 layout_mode = 3
@@ -16,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
-_npcNameField = NodePath("MenuButtons/VBoxContainer/HBoxContainer/NPCName")
+_npcNameField = NodePath("MenuButtons/VBoxContainer/InputArea/NPCName")
 _background = NodePath("Background")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -28,6 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 1
@@ -65,14 +72,14 @@ layout_mode = 2
 size_flags_horizontal = 10
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
+[node name="InputArea" type="HBoxContainer" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MenuButtons/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="MenuButtons/VBoxContainer/InputArea"]
 layout_mode = 2
 text = "NPC Name"
 
-[node name="NPCName" type="LineEdit" parent="MenuButtons/VBoxContainer/HBoxContainer"]
+[node name="NPCName" type="LineEdit" parent="MenuButtons/VBoxContainer/InputArea"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "put name here"
@@ -95,7 +102,7 @@ theme_type_variation = &"ButtonCreateOption"
 text = "Option"
 icon = ExtResource("4_acglc")
 
-[node name="SaveDialogue" type="Button" parent="MenuButtons/VBoxContainer/Buttons"]
+[node name="SaveAllDialogue" type="Button" parent="MenuButtons/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Save All"
 icon = ExtResource("5_acglc")
@@ -105,10 +112,258 @@ layout_mode = 2
 text = "Load Tree"
 icon = ExtResource("6_acglc")
 
+[node name="SidePanel" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 60.0
+offset_right = 40.0
+offset_bottom = 100.0
+script = ExtResource("7_28w4y")
+metadata/_edit_group_ = true
+
+[node name="ToggleSidePanel" type="Button" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 48.0
+offset_bottom = 38.0
+theme_type_variation = &"ButtonMenu"
+
+[node name="Panel" type="Panel" parent="SidePanel"]
+layout_mode = 0
+offset_left = -387.0
+offset_bottom = 541.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel/Panel"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 387.0
+offset_bottom = 374.0
+
+[node name="Header" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="SidePanel/Panel/VBoxContainer/Header"]
+layout_mode = 2
+icon = ExtResource("5_acglc")
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Defaults"
+
+[node name="HSeparator" type="HSeparator" parent="SidePanel/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="SidePanel/Panel/VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Dialogue Node" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node"]
+layout_mode = 2
+theme_type_variation = &"LabelDialogueID"
+text = "Dialogue Node"
+
+[node name="NodeTypeField" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node" node_paths=PackedStringArray("chooser")]
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("8_01334")
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeTypeField"]
+layout_mode = 2
+text = "Type"
+
+[node name="OptionButton" type="OptionButton" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeTypeField"]
+layout_mode = 2
+
+[node name="NodeWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+layout_mode = 2
+script = ExtResource("9_5j8q3")
+presetHandler = NodePath("WriteSpeedPreset")
+valueSetter = NodePath("WriteSpeedValue/SpinBox")
+
+[node name="WriteSpeedPreset" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects" node_paths=PackedStringArray("chooser")]
+layout_mode = 2
+script = ExtResource("10_pdxf7")
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset"]
+layout_mode = 2
+text = "Write Speed Preset"
+
+[node name="OptionButton" type="OptionButton" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects"]
+layout_mode = 2
+
+[node name="WriteSpeedValue" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Write Speed Value"
+
+[node name="VSeparator" type="VSeparator" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SpinBox" type="SpinBox" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+max_value = 120.0
+value = 1.0
+allow_greater = true
+
+[node name="NodeSfxAspects" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node" node_paths=PackedStringArray("eventHolder")]
+layout_mode = 2
+script = ExtResource("11_wipx8")
+eventHolder = NodePath("Events")
+
+[node name="CheckBox" type="CheckBox" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeSfxAspects" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "SFX Events"
+script = ExtResource("12_p0r8u")
+fields = [NodePath("../Events")]
+
+[node name="Events" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeSfxAspects"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Dialogue Option" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option"]
+layout_mode = 2
+theme_type_variation = &"LabelOption"
+text = "Dialogue Option"
+
+[node name="OptionTypeField" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option" node_paths=PackedStringArray("chooser")]
+layout_mode = 2
+size_flags_horizontal = 2
+script = ExtResource("8_01334")
+type = 1
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionTypeField"]
+layout_mode = 2
+text = "Type"
+
+[node name="OptionButton" type="OptionButton" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionTypeField"]
+layout_mode = 2
+
+[node name="OptionSpawnDelayField" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionSpawnDelayField"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Spawn Delay"
+
+[node name="SpinBox" type="SpinBox" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionSpawnDelayField"]
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 10.0
+step = 0.1
+value = 1.0
+allow_greater = true
+
+[node name="OptionLifetimeField" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionLifetimeField"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Lifetime"
+
+[node name="SpinBox" type="SpinBox" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionLifetimeField"]
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = -1.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+allow_greater = true
+
+[node name="OptionWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+layout_mode = 2
+script = ExtResource("9_5j8q3")
+presetHandler = NodePath("WriteSpeedPreset")
+valueSetter = NodePath("WriteSpeedValue/SpinBox")
+
+[node name="WriteSpeedPreset" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects" node_paths=PackedStringArray("chooser")]
+layout_mode = 2
+script = ExtResource("10_pdxf7")
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset"]
+layout_mode = 2
+text = "Write Speed Preset"
+
+[node name="OptionButton" type="OptionButton" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects"]
+layout_mode = 2
+
+[node name="WriteSpeedValue" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Write Speed Value"
+
+[node name="VSeparator" type="VSeparator" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SpinBox" type="SpinBox" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue"]
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+max_value = 120.0
+value = 1.0
+allow_greater = true
+
+[node name="OptionSfxAspects" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option" node_paths=PackedStringArray("eventHolder")]
+layout_mode = 2
+script = ExtResource("11_wipx8")
+eventHolder = NodePath("Events")
+
+[node name="CheckBox" type="CheckBox" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionSfxAspects" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "SFX Events"
+script = ExtResource("12_p0r8u")
+fields = [NodePath("../Events")]
+
+[node name="Events" type="VBoxContainer" parent="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionSfxAspects"]
+layout_mode = 2
+size_flags_horizontal = 0
+
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
 [connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/CreateDialogueNode" to="." method="_on_create_dialogue_pressed"]
 [connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/CreateOptionNode" to="." method="_on_create_option_pressed"]
-[connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/SaveDialogue" to="." method="_on_save_all_dialogue_pressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/SaveAllDialogue" to="." method="_on_save_all_dialogue_pressed"]
 [connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/LoadDialogueTree" to="." method="_on_load_dialogue_tree_pressed"]
+[connection signal="pressed" from="SidePanel/ToggleSidePanel" to="SidePanel" method="_on_toggler_pressed"]
+[connection signal="option_changed" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects" method="_on_preset_changed"]
+[connection signal="item_selected" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset/OptionButton" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
+[connection signal="value_changed" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue/SpinBox" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeWriteSpeedAspects" method="_on_value_changed"]
+[connection signal="toggled" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeSfxAspects/CheckBox" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Node/NodeSfxAspects/CheckBox" method="_on_toggled"]
+[connection signal="item_selected" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionTypeField/OptionButton" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionTypeField" method="_on_chooser_updated"]
+[connection signal="option_changed" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects" method="_on_preset_changed"]
+[connection signal="item_selected" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset/OptionButton" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
+[connection signal="value_changed" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue/SpinBox" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionWriteSpeedAspects" method="_on_value_changed"]
+[connection signal="toggled" from="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionSfxAspects/CheckBox" to="SidePanel/Panel/VBoxContainer/TabContainer/Dialogue Option/OptionSfxAspects/CheckBox" method="_on_toggled"]
