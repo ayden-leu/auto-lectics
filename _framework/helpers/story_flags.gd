@@ -39,7 +39,7 @@ static func flagsMatch(flagsToCheck: Dictionary) -> bool:
 		var currentValue: Variant = currentFlags[flagID]
 		
 		if currentValue != flagsToCheck[flagID]:
-			print(flagID, " fails check.")
+			print(flagID, " fails check. (is ", currentValue, ", check is ", flagsToCheck[flagID], ")")
 			return false
 	return true
 

@@ -1,0 +1,12 @@
+{
+	"text": "are you sure?",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "continue",
+			"type": "neutral",
+			"nextID": "start"
+		}
+	]
+}

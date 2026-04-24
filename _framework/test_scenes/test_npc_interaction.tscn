@@ -124,6 +124,36 @@ metadata/_edit_group_ = true
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_one"
 
+[node name="test_basic_sfx" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -15.1764965)
+initialDialogueID = "start"
+myName = "_test_basic_sfx"
+metadata/_edit_group_ = true
+
+[node name="Label3D" type="Label3D" parent="NPCs/test_basic_sfx"]
+transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
+text = "test_basic_sfx"
+
+[node name="test_with_flags" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -11.36389)
+initialDialogueID = "start"
+myName = "_test_with_flags"
+metadata/_edit_group_ = true
+
+[node name="Label3D" type="Label3D" parent="NPCs/test_with_flags"]
+transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
+text = "test_with_flags"
+
+[node name="test_hectic" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -7.2722826)
+initialDialogueID = "start"
+myName = "_test_hectic"
+metadata/_edit_group_ = true
+
+[node name="Label3D" type="Label3D" parent="NPCs/test_hectic"]
+transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
+text = "test_hectic"
+
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8527756, 0.470119, -27.61793)
 curve = SubResource("Curve3D_wd7ni")
