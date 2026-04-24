@@ -63,8 +63,6 @@ var _currentInteractor:Node3D
 ## [b]Internal-use only.[/b]  Tracks whether the NPC should be patrolling.
 ## Mainly used to restore patrol state after finishing a dialogue interaction.
 var _shouldPatrol:bool
-## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue console's signals have been connected to functions yet.
-var _connectedDialogueConsoleSignals: bool = false
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process

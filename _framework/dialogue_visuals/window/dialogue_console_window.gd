@@ -36,6 +36,8 @@ enum _OptionAnchor {
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## How far each spawned option should be from each other, vertically.
+const _OPTION_SPAWN_OFFSET:int = 3
 ## [b]Internal-use only.[/b]  A reference to a pre-set [RichTextLabel] scene.
 const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Control] scene.
@@ -62,15 +64,11 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 @onready var _contentsStorage:VBoxContainer = %DialogueLogStorage
 ## [b]Internal-use only.[/b]  The progress bar that displays how much time is left
 ## until a hectic dialogue event ends.
-@onready var _hecticBar:ProgressBar = $HecticBar
+@onready var _hecticBar:ProgressBar = %HecticBar
 ## [b]Internal-use only.[/b]  The hectic dialogue event timer.
-@onready var _hecticTimer: Timer = $HecticTimer
-## [b]Internal-use only.[/b]  Holds the root positions for spawning option windows
-## in normal mode.
-@onready var _optionSpawnPositions = [
-	%OptionAnchors/TopLeft, %OptionAnchors/TopRight,
-	%OptionAnchors/BottomLeft, %OptionAnchors/BottomRight
-]
+@onready var _hecticTimer: Timer = %HecticTimer
+## [b]Internal-use only.[/b]  The position where options are initially spawned from.
+@onready var _optionSpawnPosition:Marker2D = %OptionSpawnPosition
 ## Holds the AudioStreamPlayers for each event.
 @onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %SFX/spawn,
@@ -233,21 +231,21 @@ func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 	var entry:RichTextLabel = _LOG_ENTRY.instantiate()
 	entry.text = ""
 	
-	# just test alignment
-	entry.horizontal_alignment = alignment
-	_contentsStorage.add_child(entry)
+	# just text alignment
+	#entry.horizontal_alignment = alignment
+	#_contentsStorage.add_child(entry)
 	
 	# node setup alignment
-	#var holder:HBoxContainer = HBoxContainer.new()
-	#var spacer:Control = _LOG_ENTRY_SPACER.instantiate()
-	#_contentsStorage.add_child(holder)
-	#
-	#if alignment == HORIZONTAL_ALIGNMENT_LEFT:
-		#holder.add_child(entry)
-		#holder.add_child(spacer)
-	#elif alignment == HORIZONTAL_ALIGNMENT_RIGHT:
-		#holder.add_child(spacer)
-		#holder.add_child(entry)
+	var holder:HBoxContainer = HBoxContainer.new()
+	var spacer:Control = _LOG_ENTRY_SPACER.instantiate()
+	_contentsStorage.add_child(holder)
+	
+	if alignment == HORIZONTAL_ALIGNMENT_LEFT:
+		holder.add_child(entry)
+		holder.add_child(spacer)
+	elif alignment == HORIZONTAL_ALIGNMENT_RIGHT:
+		holder.add_child(spacer)
+		holder.add_child(entry)
 	
 	return entry
 
@@ -305,13 +303,13 @@ func _spawnOptionWindows() -> void:
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.data = optionData
-		optionWindow.position = Vector2(40, 120 + verticalOffset)  # TODO:  make initial position based on anchor point
+		optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()
 		tempCounter += 1
-		verticalOffset += optionWindow.size.y
+		verticalOffset += optionWindow.size.y + _OPTION_SPAWN_OFFSET
 	
 	all_options_available.emit()
 

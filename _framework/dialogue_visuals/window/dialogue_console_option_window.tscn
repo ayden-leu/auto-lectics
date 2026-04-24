@@ -7,7 +7,7 @@
 layout_mode = 3
 anchors_preset = 0
 offset_right = 300.0
-offset_bottom = 174.0
+offset_bottom = 117.0
 theme = ExtResource("1_3lyu7")
 script = ExtResource("1_rh22u")
 headerPanel = NodePath("Header")
@@ -34,13 +34,13 @@ text = "[RESPONSE]"
 layout_mode = 0
 offset_top = 38.0
 offset_right = 300.0
-offset_bottom = 174.0
+offset_bottom = 117.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Contents"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 294.0
-offset_bottom = 130.0
+offset_bottom = 73.0
 
 [node name="ID" type="Label" parent="Contents/HBoxContainer"]
 unique_name_in_owner = true
@@ -54,7 +54,7 @@ custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-text = "breakfast please"
+text = "breakfast please "
 autowrap_mode = 3
 
 [node name="Button" type="Button" parent="."]

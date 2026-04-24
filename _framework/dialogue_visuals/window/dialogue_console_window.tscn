@@ -131,27 +131,13 @@ offset_right = 422.0
 offset_bottom = 432.0
 keep_editing_on_text_submit = true
 
-[node name="OptionAnchors" type="Control" parent="."]
+[node name="OptionSpawnPosition" type="Marker2D" parent="."]
 unique_name_in_owner = true
-anchors_preset = 0
-offset_left = -1.0
-offset_right = -1.0
-mouse_filter = 1
-metadata/_edit_lock_ = true
-
-[node name="TopLeft" type="Marker2D" parent="OptionAnchors"]
-position = Vector2(-40, 0)
-
-[node name="TopRight" type="Marker2D" parent="OptionAnchors"]
-position = Vector2(470, 0)
-
-[node name="BottomLeft" type="Marker2D" parent="OptionAnchors"]
-position = Vector2(-40, 462)
-
-[node name="BottomRight" type="Marker2D" parent="OptionAnchors"]
-position = Vector2(470, 462)
+position = Vector2(-327, -9)
+metadata/_edit_group_ = true
 
 [node name="HecticBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_top = -28.0
 offset_right = 429.0
@@ -159,8 +145,10 @@ offset_bottom = -1.0
 mouse_filter = 1
 value = 100.0
 show_percentage = false
+metadata/_edit_lock_ = true
 
 [node name="HecticTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 one_shot = true
 
 [node name="SFX" type="Node" parent="."]
