@@ -265,7 +265,7 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVariation
 		_scrollToBottom()
 		if not _sfxPlayer.text.playing:
 			_sfxPlayer.text.play()
-		await get_tree().create_timer(delay).timeout
+		await get_tree().create_timer(delay, false, true).timeout
 	_scrollToBottom()
 	
 	_isWritingText = false
