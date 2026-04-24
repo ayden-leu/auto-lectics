@@ -96,6 +96,10 @@ func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
 ## func _on_console_all_options_available() -> void:
 ## 	# Associated signal:  all_options_available
 ## 	# Will run whenever all options the DialogueConsole wants to spawn, are spawned.
+##
+## func _on_console_command_entered(command:String) -> void:
+## 	# Associated signal:  command_entered
+## 	# Will run whenever the player enters a command into the console.
 ## [/codeblock] 
 func subscribeToConsole(subscriber) -> void:
 	_dialogueConsoleSubscribers.push_back(subscriber)
@@ -135,11 +139,8 @@ func _connectSignalsToSubscriber(subscriber) -> void:
 		dialogueConsole.new_option_available.connect(subscriber._on_console_new_option_available)
 	if subscriber.has_method("_on_console_all_options_available"):
 		dialogueConsole.all_options_available.connect(subscriber._on_console_all_options_available)
-	
-	# TODO:  remove this when the better command system is in place
-	if subscriber.has_method("_on_console_open_gate"):
-		dialogueConsole.open_gate.connect(subscriber._on_console_open_gate)
-	
+	if subscriber.has_method("_on_console_command_entered"):
+		dialogueConsole.command_entered.connect(subscriber._on_console_command_entered)
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
@@ -155,6 +156,8 @@ func _disconnectSignalsToSubscriber(subscriber) -> void:
 		dialogueConsole.new_option_available.disconnect(subscriber._on_console_new_option_available)
 	if subscriber.has_method("_on_console_all_options_available"):
 		dialogueConsole.all_options_available.disconnect(subscriber._on_console_all_options_available)
+	if subscriber.has_method("_on_console_command_entered"):
+		dialogueConsole.command_entered.disconnect(subscriber._on_console_command_entered)
 
 ## [b]Internal-use only.[/b]  Removes all [code]null[/code] entries
 ## in [member _dialogueConsoleSubscribers].
