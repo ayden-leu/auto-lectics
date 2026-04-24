@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8oqtsvu488a"]
+[gd_scene load_steps=8 format=3 uid="uid://b8oqtsvu488a"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_0et2d"]
 [ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/dialogue_console_window.gd" id="1_qw6ov"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_f2hpt"]
+[ext_resource type="PackedScene" uid="uid://1n8yvdu14dcd" path="res://_framework/dialogue_visuals/window/dialogue_console_log_entry.tscn" id="4_pedep"]
+[ext_resource type="PackedScene" uid="uid://2pbfftop6j5e" path="res://_framework/dialogue_visuals/window/dialogue_console_log_entry_spacer.tscn" id="5_nsbvi"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1d7as"]
 resource_local_to_scene = true
@@ -74,18 +76,51 @@ vertical_scroll_mode = 4
 
 [node name="DialogueLogStorage" type="VBoxContainer" parent="Contents/Main/ContentsScroller"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(393, 0)
 layout_mode = 2
 
-[node name="DialogueLog" type="RichTextLabel" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(402, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
-size_flags_vertical = 0
-mouse_filter = 1
-bbcode_enabled = true
-fit_content = true
-scroll_active = false
-metadata/_edit_lock_ = true
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("4_pedep")]
+layout_mode = 2
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("4_pedep")]
+layout_mode = 2
+theme_type_variation = &"RichTextLabelBot"
+text = "The office has sent you to this planet to find what lies at the center of this factory. Blueprints show it might be a big glowing white sphere, so keep an eye out."
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("4_pedep")]
+layout_mode = 2
+text = "help"
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("4_pedep")]
+layout_mode = 2
+theme_type_variation = &"RichTextLabelBot"
+text = "me when i log my entry
+but with
+multiple lines"
 
 [node name="ConsoleInput" type="LineEdit" parent="Contents"]
 unique_name_in_owner = true

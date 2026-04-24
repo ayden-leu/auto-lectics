@@ -25,8 +25,6 @@ signal finished_dialogue()
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  A reference to the [DialogueConsole] scene.
-const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleWindow)
 
 # ------------------------------------------------
 # export variables
@@ -65,8 +63,6 @@ var _currentInteractor:Node3D
 ## [b]Internal-use only.[/b]  Tracks whether the NPC should be patrolling.
 ## Mainly used to restore patrol state after finishing a dialogue interaction.
 var _shouldPatrol:bool
-## [b]Internal-use only.[/b]  Holds a reference to this [InteractableNPC]'s dialogue console scene.
-var _dialogueConsole:DialogueConsole = null
 ## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue console's signals have been connected to functions yet.
 var _connectedDialogueConsoleSignals: bool = false
 
@@ -132,71 +128,38 @@ func _getHitboxShapes() -> Array[CollisionShape3D]:
 			shapes.push_back(child)
 	return shapes
 
-## [b]Internal-use only.[/b]  Creates the dialogue console scene. Only one can exist at a time.
-func _spawnDialogueConsole() -> void:
-	if _dialogueConsole != null:
-		return
-	
-	_dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
-	
-	get_parent().add_child(_dialogueConsole)
-
-## [b]Internal-use only.[/b]  Connects the [member _dialogueConsole] signals to functions.
-## Only needs to be ran once.
-func _connectDialogueConsoleSignals() -> void:
-	if _connectedDialogueConsoleSignals:
-		return
-	_connectedDialogueConsoleSignals = true
-
-	_dialogueConsole.option_chosen.connect(_loadNextDialogueConsole)
-	_dialogueConsole.new_option_available.connect(_on_dialogue_new_option_spawned)
-	_dialogueConsole.all_options_available.connect(_on_dialogue_all_options_available)
-	_dialogueConsole.all_dialogue_text_visible.connect(_on_dialogue_all_dialogue_text_visible)
-	_dialogueConsole.open_gate.connect(openGate)
-
-## [b]Internal-use only.[/b]  Disconencts the [member _dialogueConsole] signals to functions.
-func _disconnectDialogueConsoleSignals() -> void:
-	if not _connectedDialogueConsoleSignals:
-		return
-	_connectedDialogueConsoleSignals = false
-	
-	_dialogueConsole.option_chosen.disconnect(_loadNextDialogueConsole)
-	_dialogueConsole.new_option_available.disconnect(_on_dialogue_new_option_spawned)
-	_dialogueConsole.all_options_available.disconnect(_on_dialogue_all_options_available)
-	_dialogueConsole.all_dialogue_text_visible.disconnect(_on_dialogue_all_dialogue_text_visible)
-	_dialogueConsole.open_gate.disconnect(openGate)
-
 ## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueConsole].
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
 func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
-	_dialogueConsole.nameOfNpcTalkingTo = myName
-	_dialogueConsole.currentDialogueID = _currentDialogueID
-	_dialogueConsole.mode = dialogueEntry.mode
+	var console:DialogueConsole = FR_WindowManager.dialogueConsole
+	
+	console.nameOfNpcTalkingTo = myName
+	console.currentDialogueID = _currentDialogueID
+	console.mode = dialogueEntry.mode
 	
 	if dialogueEntry.mode == "hectic":
-		_dialogueConsole.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
-		_dialogueConsole.delayBtwnWriteDialogueAndOptions = 0.25
+		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		console.delayBtwnWriteDialogueAndOptions = 0.25
 	else:
-		_dialogueConsole.hecticFailureDialogueID = ""
+		console.hecticFailureDialogueID = ""
 	
-	_dialogueConsole.textWriteSpeed = dialogueEntry.writeSpeedCustom
-	_dialogueConsole.loadSfx(dialogueEntry.sfx)
+	console.textWriteSpeed = dialogueEntry.writeSpeedCustom
+	console.loadSfx(dialogueEntry.sfx)
 	#_dialogueConsole.dialogueData = dialogueEntry
-	_dialogueConsole.textToAdd = dialogueEntry.text
-	_dialogueConsole.loadOptionData(dialogueEntry.options)
-	_dialogueConsole.prepare()
+	console.textToAdd = dialogueEntry.text
+	console.loadOptionData(dialogueEntry.options)
+	console.prepare()
 
 ## [b]Internal-use only.[/b]  Loads the next dialogue to display.
 func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	if nextDialogueID == "" and isTalking:
 		_endDialogueConsole()
 		return
-	
 	_currentDialogueID = nextDialogueID
 	
 	var dialogue:Dictionary = FR_Globals.getDialogueNode(myName, _currentDialogueID)
 	_loadDialogueConsoleData(dialogue)
-	_dialogueConsole.start()
+	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
 
 ## @deprecated
@@ -233,16 +196,14 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	InputHandler.showCursor()
 	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-	_spawnDialogueConsole()
-	_connectDialogueConsoleSignals()
+	FR_WindowManager.createDialogueConsole()
+	FR_WindowManager.subscribeToConsole(self)
 	_loadNextDialogueConsole(initialDialogueID)
 
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
-func _endDialogueConsole() -> void:	
-	_disconnectDialogueConsoleSignals()
-	if _dialogueConsole != null:
-		_dialogueConsole.kill()
-		_dialogueConsole = null
+func _endDialogueConsole() -> void:
+	FR_WindowManager.killDialogueConsole()
+	FR_WindowManager.unsubscribeToConsole(self)
 	
 	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):
 		_currentInteractor.set_input_frozen(false)
@@ -271,20 +232,24 @@ func _on_interaction(interactor:Node3D) -> void:
 	if interactor is Player:
 		_beginDialogueEventConsole(interactor)
 
+## [b]Internal-use only.[/b]  Handles logic for when a dialogue option is chosen.
+func _on_console_option_chosen(nextID:String) -> void:
+	_loadNextDialogueConsole(nextID)
+
 ## [b]Internal-use only.[/b]  Emits [signal option_available].
-func _on_dialogue_new_option_spawned() -> void:
+func _on_console_new_option_available() -> void:
 	option_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [all_options_available].
-func _on_dialogue_all_options_available() -> void:
+func _on_console_all_options_available() -> void:
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
-func _on_dialogue_all_dialogue_text_visible() -> void:
+func _on_console_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
 
 # TODO:  redo this logic
-func openGate():
+func _on_console_open_gate():
 	print("open gate!")
 	if $gateNode:
 		$gateNode.open_gate()
@@ -415,9 +380,9 @@ func _connectDialogueBoxSignals() -> void:
 	_connectedDialogueBoxSignals = true
 	
 	_dialogueBox.update_me.connect(_loadNextDialogueBox)
-	_dialogueBox.new_option_available.connect(_on_dialogue_new_option_spawned)
-	_dialogueBox.all_options_available.connect(_on_dialogue_all_options_available)
-	_dialogueBox.all_dialogue_text_visible.connect(_on_dialogue_all_dialogue_text_visible)
+	_dialogueBox.new_option_available.connect(_on_console_option_chosen)
+	_dialogueBox.all_options_available.connect(_on_console_all_options_available)
+	_dialogueBox.all_dialogue_text_visible.connect(_on_console_all_dialogue_text_visible)
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Disconnects the [member _dialogueBox] signals to functions.
@@ -427,9 +392,9 @@ func _disconnectDialogueBoxSignals() -> void:
 	_connectedDialogueBoxSignals = false
 
 	_dialogueBox.update_me.disconnect(_loadNextDialogueBox)
-	_dialogueBox.new_option_available.disconnect(_on_dialogue_new_option_spawned)
-	_dialogueBox.all_options_available.disconnect(_on_dialogue_all_options_available)
-	_dialogueBox.all_dialogue_text_visible.disconnect(_on_dialogue_all_dialogue_text_visible)
+	_dialogueBox.new_option_available.disconnect(_on_console_option_chosen)
+	_dialogueBox.all_options_available.disconnect(_on_console_all_options_available)
+	_dialogueBox.all_dialogue_text_visible.disconnect(_on_console_all_dialogue_text_visible)
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueBox].

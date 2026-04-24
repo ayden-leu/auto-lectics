@@ -8,7 +8,7 @@ class_name DialogueWindow
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
-## Emitted when this option is chosen.
+## Emitted when this window is being closed.
 signal window_closed()
 
 # ------------------------------------------------
