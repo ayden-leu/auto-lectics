@@ -368,21 +368,23 @@ func _on_input_submitted(raw_text: String) -> void:
 	var text := raw_text.strip_edges()
 	_textInput.text = ""
 	
-	_addPlayerText(text)
-	
 	if text.to_lower() == "help":
+		_addPlayerText(text)
 		await _addBotText(_helpText)
 		return
 	
 	if text.to_lower() == "back":
+		_addPlayerText(text)
 		_on_console_request_back()
 		return
 	
 	if text.to_lower() == "exit":
+		_addPlayerText(text)
 		close()
 		return
 	
 	if text.to_lower() == "open_gate" && nameOfNpcTalkingTo == "mini-BOSS":
+		_addPlayerText(text)
 		open_gate.emit()
 		return
 	

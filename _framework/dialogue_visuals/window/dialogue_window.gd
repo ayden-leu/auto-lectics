@@ -9,7 +9,7 @@ class_name DialogueWindow
 # signals
 # ------------------------------------------------
 ## Emitted when this window is being closed.
-signal window_closed()
+signal window_closed(me:DialogueWindow)
 
 # ------------------------------------------------
 # enums
@@ -94,8 +94,7 @@ func _gui_input(event: InputEvent) -> void:
 # ------------------------------------------------
 ## Closes this window.
 func close() -> void:
-	window_closed.emit()
-	queue_free()
+	window_closed.emit(self)
 
 # ------------------------------------------------
 # functions only referenced inside this script
