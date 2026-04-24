@@ -371,6 +371,7 @@ func _handleCommand(command:String) -> void:
 	# else assume its an actual command
 	_addPlayerText(command)
 	command_entered.emit(command)
+	_scrollToBottom()
 	
 	# TODO:  move help text definition to [InteractableNPC]
 	if command == "help":
