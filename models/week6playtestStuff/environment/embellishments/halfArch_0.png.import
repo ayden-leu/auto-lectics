@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c05ft6bm5xnjt"
 path.s3tc="res://.godot/imported/halfArch_0.png-b5ce0d84773ac9e24b5e4a78bc0f2250.s3tc.ctex"
+path.etc2="res://.godot/imported/halfArch_0.png-b5ce0d84773ac9e24b5e4a78bc0f2250.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/week6playtestStuff/environment/embellishments/halfArch_0.png"
-dest_files=["res://.godot/imported/halfArch_0.png-b5ce0d84773ac9e24b5e4a78bc0f2250.s3tc.ctex"]
+dest_files=["res://.godot/imported/halfArch_0.png-b5ce0d84773ac9e24b5e4a78bc0f2250.s3tc.ctex", "res://.godot/imported/halfArch_0.png-b5ce0d84773ac9e24b5e4a78bc0f2250.etc2.ctex"]
 
 [params]
 

@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://c1m0ge3n7utw6" path="res://materials/RedRust.tres" id="3_b1f8j"]
 [ext_resource type="Material" uid="uid://mn2rkvit24uh" path="res://materials/FillMaterial.tres" id="4_bsyvy"]
 [ext_resource type="Material" path="res://materials/darkmetal1.tres" id="5_478ke"]
-[ext_resource type="Material" uid="uid://dxpybx6f7q15b" path="res://materials/PlateMaterial.tres" id="6_jb82h"]
+[ext_resource type="Material" uid="uid://ladf8f7cniqt" path="res://materials/PlateMaterial.tres" id="6_jb82h"]
 [ext_resource type="Material" uid="uid://3gptlwtllu4x" path="res://materials/YellowRust.tres" id="7_kbnrw"]
 [ext_resource type="PackedScene" uid="uid://dehqvqchcjogq" path="res://models/BlendFiles/trussingX.blend" id="8_w3ar4"]
 

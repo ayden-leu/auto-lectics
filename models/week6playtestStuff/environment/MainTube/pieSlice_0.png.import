@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cymtqip1pw5xy"
 path.s3tc="res://.godot/imported/pieSlice_0.png-3d0a59b81cc48c1ed16c1d51553c9d33.s3tc.ctex"
+path.etc2="res://.godot/imported/pieSlice_0.png-3d0a59b81cc48c1ed16c1d51553c9d33.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/week6playtestStuff/environment/MainTube/pieSlice_0.png"
-dest_files=["res://.godot/imported/pieSlice_0.png-3d0a59b81cc48c1ed16c1d51553c9d33.s3tc.ctex"]
+dest_files=["res://.godot/imported/pieSlice_0.png-3d0a59b81cc48c1ed16c1d51553c9d33.s3tc.ctex", "res://.godot/imported/pieSlice_0.png-3d0a59b81cc48c1ed16c1d51553c9d33.etc2.ctex"]
 
 [params]
 

@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmipuxrs3yblh"
 path.s3tc="res://.godot/imported/looker_0.png-73c88925334ae04b26c18e717dadd0f0.s3tc.ctex"
+path.etc2="res://.godot/imported/looker_0.png-73c88925334ae04b26c18e717dadd0f0.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/week6playtestStuff/npcs/looker_0.png"
-dest_files=["res://.godot/imported/looker_0.png-73c88925334ae04b26c18e717dadd0f0.s3tc.ctex"]
+dest_files=["res://.godot/imported/looker_0.png-73c88925334ae04b26c18e717dadd0f0.s3tc.ctex", "res://.godot/imported/looker_0.png-73c88925334ae04b26c18e717dadd0f0.etc2.ctex"]
 
 [params]
 

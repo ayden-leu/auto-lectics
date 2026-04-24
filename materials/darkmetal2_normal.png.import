@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bm8en2c1svewk"
 path.s3tc="res://.godot/imported/darkmetal2_normal.png-380d8f8a750b97cfe4bedd3d248b06ab.s3tc.ctex"
+path.etc2="res://.godot/imported/darkmetal2_normal.png-380d8f8a750b97cfe4bedd3d248b06ab.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://materials/darkmetal2_normal.png"
-dest_files=["res://.godot/imported/darkmetal2_normal.png-380d8f8a750b97cfe4bedd3d248b06ab.s3tc.ctex"]
+dest_files=["res://.godot/imported/darkmetal2_normal.png-380d8f8a750b97cfe4bedd3d248b06ab.s3tc.ctex", "res://.godot/imported/darkmetal2_normal.png-380d8f8a750b97cfe4bedd3d248b06ab.etc2.ctex"]
 
 [params]
 

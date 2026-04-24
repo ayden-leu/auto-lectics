@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bpmj72thxrrd7"
 path.s3tc="res://.godot/imported/box_0.png-2f0b39cfc3b55d291ca17c245621590d.s3tc.ctex"
+path.etc2="res://.godot/imported/box_0.png-2f0b39cfc3b55d291ca17c245621590d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/week6playtestStuff/environment/MainTube/box_0.png"
-dest_files=["res://.godot/imported/box_0.png-2f0b39cfc3b55d291ca17c245621590d.s3tc.ctex"]
+dest_files=["res://.godot/imported/box_0.png-2f0b39cfc3b55d291ca17c245621590d.s3tc.ctex", "res://.godot/imported/box_0.png-2f0b39cfc3b55d291ca17c245621590d.etc2.ctex"]
 
 [params]
 

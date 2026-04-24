@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbskjgrftn1at"
 path.s3tc="res://.godot/imported/darkmetal2_albedo.png-2b15f0269b738643d9dae29e3c8b2978.s3tc.ctex"
+path.etc2="res://.godot/imported/darkmetal2_albedo.png-2b15f0269b738643d9dae29e3c8b2978.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://materials/darkmetal2_albedo.png"
-dest_files=["res://.godot/imported/darkmetal2_albedo.png-2b15f0269b738643d9dae29e3c8b2978.s3tc.ctex"]
+dest_files=["res://.godot/imported/darkmetal2_albedo.png-2b15f0269b738643d9dae29e3c8b2978.s3tc.ctex", "res://.godot/imported/darkmetal2_albedo.png-2b15f0269b738643d9dae29e3c8b2978.etc2.ctex"]
 
 [params]
 
