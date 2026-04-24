@@ -46,27 +46,36 @@
 script/source = "extends Node3D
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
 #		get_tree().reload_current_scene()
 		
+
+
+
+# ---------------------------------------------------------------
+# uncomment the below code if you want the `open_gate` command
+# to work regardless of who opened the DialogueConsole
+# ---------------------------------------------------------------
+
+#func _ready() -> void:
+	#FR_WindowManager.subscribeToConsole(self)
+#
+#func _on_console_command_entered(command:String) -> void:
+	#if command == \"open_gate\":
+		#$npcs/miniboss2/gateNode.open_gate()
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ucjwr"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rtyrd"]
 panorama = ExtResource("1_p7yb8")
 
-[sub_resource type="Sky" id="Sky_gc617"]
-sky_material = SubResource("PanoramaSkyMaterial_ucjwr")
+[sub_resource type="Sky" id="Sky_c8mtx"]
+sky_material = SubResource("PanoramaSkyMaterial_rtyrd")
 
-[sub_resource type="Environment" id="Environment_t15lr"]
+[sub_resource type="Environment" id="Environment_ucjwr"]
 background_mode = 2
-sky = SubResource("Sky_gc617")
+sky = SubResource("Sky_c8mtx")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -97,7 +106,7 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_t15lr")
+environment = SubResource("Environment_ucjwr")
 script = ExtResource("2_swegm")
 anisotropy = 1.0
 
