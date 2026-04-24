@@ -1,0 +1,12 @@
+{
+	"text": "OK BOTS IT'S TIME FOR THE MYSTERY BOX!",
+	"type": "happy",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "continue",
+			"type": "neutral",
+			"nextID": "first_clue"
+		}
+	]
+}
