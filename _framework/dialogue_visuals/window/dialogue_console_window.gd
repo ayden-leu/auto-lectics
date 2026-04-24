@@ -15,11 +15,10 @@ signal all_dialogue_text_visible()
 signal new_option_available()
 ## Emitted when all dialogue options is visible.
 signal all_options_available()
+## Emitted when the player submits text.
+signal command_entered(command:String)
 ## [b]Internal-use only.[/b]  Used to continue logic when writing text.
 signal _all_text_visible()
-
-## Emitted when the open_gate command is entered.
-signal open_gate
 
 # ------------------------------------------------
 # enums
@@ -98,6 +97,9 @@ var hecticDuration:float = 5.0:  # TODO  make this customizable
 	set(newDuration):
 		hecticDuration = newDuration
 		_hecticBar.max_value = newDuration
+## The message that gets displayed if the player tries to close the console
+## when they aren't able to.  Can be overwritten to be whatever you want via code.
+var exitRejectMessage:String = "[Console Closure Denied]"
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -187,7 +189,7 @@ func start() -> void:
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
 	if nameOfNpcTalkingTo in _NPCS_PREVENT_CLOSING:
-		await _addBotText("[Console Closure Denied].")
+		await _addBotText(exitRejectMessage)
 		return
 	
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
@@ -352,6 +354,48 @@ func _stopHecticMode() -> void:
 	_hecticBar.value = INF
 	_hecticTimer.stop()
 
+func _handleCommand(command:String) -> void:
+	# command is an option ID
+	if command.is_valid_int():
+		var id:int = int(command)
+		if id >= 0 and id < _optionData.size():
+			_chooseOption(_optionData[id])
+			return
+	
+	# command is an option text
+	for option in _optionData:
+		if command == option.text.to_lower():
+			_chooseOption(option)
+			return
+	
+	# else assume its an actual command
+	_addPlayerText(command)
+	command_entered.emit(command)
+	
+	# TODO:  move help text definition to [InteractableNPC]
+	if command == "help":
+		await _addBotText(_helpText)
+		return
+	
+	if command == "back":
+		_goBackOneDialogue()
+		return
+	
+	if command == "exit":
+		close()
+		return
+
+## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
+func _goBackOneDialogue() -> void:
+	if _dialogueHistory.size() <= 1:
+		await _addPlayerTextTyping("[No saved history]")
+		return
+	
+	_dialogueHistory.pop_back()
+	_recordHistory = false
+	option_chosen.emit(_dialogueHistory.back())
+	return
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
@@ -360,53 +404,13 @@ func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) 
 	_chooseOption(chosenOptionWindow.data)
 
 ## [b]Internal-use only.[/b]  Handles logic for when text is entered into the [_textInput].
-func _on_input_submitted(raw_text: String) -> void:
+func _on_input_submitted(input: String) -> void:
 	if _isWritingText:
 		return
-	var text := raw_text.strip_edges()
+	
 	_textInput.text = ""
-	
-	if text.to_lower() == "help":
-		_addPlayerText(text)
-		await _addBotText(_helpText)
-		return
-	
-	if text.to_lower() == "back":
-		_addPlayerText(text)
-		_on_console_request_back()
-		return
-	
-	if text.to_lower() == "exit":
-		_addPlayerText(text)
-		close()
-		return
-	
-	if text.to_lower() == "open_gate" && nameOfNpcTalkingTo == "mini-BOSS":
-		_addPlayerText(text)
-		open_gate.emit()
-		return
-	
-	if text.is_valid_int():
-		var idx := int(text)
-		if idx >= 0 and idx < _optionData.size():
-			_chooseOption(_optionData[idx])
-			return
-	
-	for opt in _optionData:
-		if text.to_lower() == str(opt.get("text", "")).to_lower():
-			_chooseOption(opt)
-			return
-
-## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
-func _on_console_request_back() -> void:
-	if _dialogueHistory.size() <= 1:
-		await _addPlayerTextTyping("[no recorded history in log]")
-		return
-	
-	_dialogueHistory.pop_back()
-	_recordHistory = false
-	option_chosen.emit(_dialogueHistory.back())
-	return
+	var text := input.strip_edges()
+	_handleCommand(text.to_lower())
 
 ## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:
