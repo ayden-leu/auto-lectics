@@ -1,10 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=18 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="2_y8ghn"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_r7opt"]
+[ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="2_r7opt"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_y8ghn"]
+[ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="3_vekyi"]
+[ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="4_hmrtd"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_r7opt"]
+[ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="5_hmrtd"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="5_vekyi"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="6_hmrtd"]
+[ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="6_xq8qk"]
+[ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="7_12tdw"]
+[ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="8_12tdw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -37,7 +44,7 @@ shadow_enabled = true
 environment = SubResource("Environment_ucik1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+transform = Transform3D(5.7303452, 0, 0, 0, 1, 0, 0, 0, 2.1494262, 0, 0, 0)
 mesh = SubResource("PlaneMesh_aue1p")
 skeleton = NodePath("../..")
 
@@ -50,26 +57,41 @@ shape = SubResource("ConcavePolygonShape3D_wd7ni")
 
 [node name="npcs" type="Node" parent="."]
 
+[node name="looker" parent="npcs" instance=ExtResource("2_r7opt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.19771, 0.8558941, -9.97775)
+
+[node name="generator" parent="npcs" instance=ExtResource("3_vekyi")]
+transform = Transform3D(-0.37573904, 0, 0.9267255, 0, 1, 0, -0.9267255, 0, -0.37573904, 15.905488, 0.12296009, 9.410873)
+
 [node name="preacher" parent="npcs" instance=ExtResource("1_k4mrd")]
-transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, -5.009552, 0.70307016, -0.41599846)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.497595, 0.09056449, -12.203161)
+
+[node name="dishNPC" parent="npcs" instance=ExtResource("4_hmrtd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.97189605, -0.07807258, -11.054205)
 initialDialogueID = "DB1"
-myName = "dish"
 
-[node name="Node" type="Node" parent="npcs/preacher"]
+[node name="miniboss" parent="npcs" instance=ExtResource("5_hmrtd")]
+transform = Transform3D(0.99940413, 0, 0.034515753, 0, 1, 0, -0.034515753, 0, 0.99940413, -7.0590224, 4.1478424, 12.177582)
 
-[node name="Marker3D" type="Marker3D" parent="npcs/preacher/Node"]
-transform = Transform3D(1.1005625, 0, 0, 0, 1.1005625, 0, 0, 0, 1.1005625, -4.893957, 1.7124732, 1.416)
-metadata/_edit_group_ = true
+[node name="egg" parent="npcs" instance=ExtResource("6_xq8qk")]
+transform = Transform3D(0.9937133, 0, -0.11195457, 0, 1, 0, 0.11195457, 0, 0.9937133, 20.022064, 0.19866833, -12.177035)
+myName = "NPC_Test"
+
+[node name="ship" parent="npcs" instance=ExtResource("7_12tdw")]
+transform = Transform3D(-0.008601501, 0.102432035, -0.9947028, -0.083234586, 0.9912144, 0.10279253, 0.99649286, 0.08367786, -4.347984e-08, -27.44818, 3.4873781, 5.750145)
+lookAtInteractorWhileTalking = true
+
+[node name="sludge" parent="npcs" instance=ExtResource("8_12tdw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.15765, -1.9073486e-06, -9.286918)
+initialDialogueID = "SB1"
+myName = "sludge"
 
 [node name="Player" parent="." instance=ExtResource("2_y8ghn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4864144, 2.1799173, -0.49850035)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.266493, 2.1799173, 5.2969317)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_r7opt")]
 focus = NodePath("../Player")
-_actAsFocus = true
-_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="InputHandler" parent="." instance=ExtResource("5_vekyi")]
 
 [node name="LoopManager" parent="." instance=ExtResource("6_hmrtd")]
-manual = true
