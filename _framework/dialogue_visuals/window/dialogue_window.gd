@@ -95,6 +95,7 @@ func _gui_input(event: InputEvent) -> void:
 ## Closes this window.
 func close() -> void:
 	window_closed.emit(self)
+	queue_free()
 
 # ------------------------------------------------
 # functions only referenced inside this script
