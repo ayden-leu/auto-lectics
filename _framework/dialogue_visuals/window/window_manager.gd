@@ -182,7 +182,6 @@ func _resubscribeSubscribers() -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when a window is closed.
 func _on_window_closed(closedWindow:DialogueWindow) -> void:
 	#print("before: ", _spawnedWindows)
-	closedWindow.queue_free()
 	_spawnedWindows.erase(closedWindow)
 	#print("after: ", _spawnedWindows)
 

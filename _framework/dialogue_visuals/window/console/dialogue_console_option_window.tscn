@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://4opwac4ndc2k"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_3lyu7"]
-[ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://_framework/dialogue_visuals/window/dialogue_console_option_window.gd" id="1_rh22u"]
+[ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://_framework/dialogue_visuals/window/console/dialogue_console_option_window.gd" id="1_rh22u"]
 
 [node name="DialogueOptionWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel")]
 layout_mode = 3
