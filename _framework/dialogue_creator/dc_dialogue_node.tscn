@@ -184,15 +184,15 @@ layout_mode = 2
 [node name="Row1" type="HBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="Font" type="HBoxContainer" parent="AdvancedOptions/Row1"]
+[node name="TextTheme" type="HBoxContainer" parent="AdvancedOptions/Row1"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="AdvancedOptions/Row1/Font"]
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/TextTheme"]
 layout_mode = 2
 theme_type_variation = &"LabelDisabled"
-text = "Font"
+text = "Text Theme"
 
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/Font"]
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/TextTheme"]
 layout_mode = 2
 theme_type_variation = &"OptionButtonDisabled"
 disabled = true

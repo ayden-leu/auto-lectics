@@ -57,7 +57,7 @@ const DEFAULT_DIALOGUE:Dictionary = {
 	# === Optional ===
 	"mode": "normal",
 	"nextOnHecticFailureID": "",
-	"font": "_default",
+	"textThemePreset": "",
 	"type": "neutral",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 0.0,
@@ -83,7 +83,7 @@ const DEFAULT_OPTION:Dictionary = {
 	"nextID": "",
 
 	# === Optional ===
-	"font": "inherit",
+	"textThemePreset": "inherit",
 	"type": "neutral",
 	"writeSpeed": "inherit",
 	"writeSpeedCustom": -1.0,

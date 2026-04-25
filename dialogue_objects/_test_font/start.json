@@ -1,12 +1,12 @@
 {
-	"text": "default font",
+	"text": "no configuration",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "continue",
+			"text": "same with the option",
 			"type": "neutral",
-			"nextID": "end"
+			"nextID": "one"
 		}
 	]
 }

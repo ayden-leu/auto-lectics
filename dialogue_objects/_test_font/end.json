@@ -1,12 +1,22 @@
 {
-	"text": "main dialogue can be different from option too",
+	"text": "option can be different from the dialogue",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "neat",
-			"type": "neutral",
-			"font": "_test"
+			"textThemePreset": "_test_one",
+			"type": "neutral"
+		},
+		{
+			"text": "ok",
+			"textThemePreset": "_test_two",
+			"type": "neutral"
+		},
+		{
+			"text": "whatever",
+			"textThemePreset": "_test_three",
+			"type": "neutral"
 		}
 	]
 }

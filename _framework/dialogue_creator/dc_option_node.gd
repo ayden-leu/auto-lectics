@@ -284,7 +284,7 @@ func _getFields() -> Dictionary:
 		"text": textField.text
 	}
 	
-	# font (unused atm)
+	# text theme (unused atm)
 	
 	currentValues.type = type
 	

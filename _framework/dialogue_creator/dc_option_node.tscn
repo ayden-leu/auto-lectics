@@ -166,15 +166,15 @@ size_flags_horizontal = 3
 [node name="Row2" type="HBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="Font" type="HBoxContainer" parent="AdvancedOptions/Row2"]
+[node name="TextTheme" type="HBoxContainer" parent="AdvancedOptions/Row2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="AdvancedOptions/Row2/Font"]
+[node name="Label" type="Label" parent="AdvancedOptions/Row2/TextTheme"]
 layout_mode = 2
 theme_type_variation = &"LabelDisabled"
-text = "Font"
+text = "TextTheme"
 
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row2/Font"]
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row2/TextTheme"]
 layout_mode = 2
 theme_type_variation = &"OptionButtonDisabled"
 disabled = true

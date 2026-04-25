@@ -97,6 +97,13 @@ var hecticDuration:float = 5.0:  # TODO  make this customizable
 	set(newDuration):
 		hecticDuration = newDuration
 		_hecticBar.max_value = newDuration
+## The theme variation for text that displays in the console.
+## The left and right aligned text have their own entries
+## via [code].left[/code] and [code].right[/code]
+var themeVariation:Dictionary = {
+	"left": "_defaultConsolePlayer",
+	"right": "_defaultConsoleBot"
+}
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
@@ -173,7 +180,7 @@ func start() -> void:
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
-	await _addBotText(textToAdd)
+	await _addRightText(textToAdd)
 
 	all_dialogue_text_visible.emit()	
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
@@ -189,7 +196,7 @@ func start() -> void:
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
 	if nameOfNpcTalkingTo in _NPCS_PREVENT_CLOSING:
-		await _addBotText(exitRejectMessage)
+		await _addRightText(exitRejectMessage)
 		return
 	
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
@@ -253,11 +260,11 @@ func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 
 ## [b]Internal-use only.[/b]  Adds a text entry and displays it
 ## at [member textWriteSpeed] characters per second.
-func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVariation:String) -> void:
+func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:String) -> void:
 	_isWritingText = true
 	
 	var entry:RichTextLabel = _createLogEntry(alignment)
-	entry.theme_type_variation = themeVariation
+	entry.theme_type_variation = themeVar
 	entry.visible_characters = 0
 	entry.text = textToWrite
 	
@@ -274,23 +281,23 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVariation
 	_all_text_visible.emit()
 
 ## [b]Internal-use only.[/b]  Adds a text entry.
-func _addText(text:String, alignment:HorizontalAlignment, themeVariation:String) -> void:
+func _addText(text:String, alignment:HorizontalAlignment, themeVar:String) -> void:
 	var entry:RichTextLabel = _createLogEntry(alignment)
-	entry.theme_type_variation = themeVariation
+	entry.theme_type_variation = themeVar
 	entry.text = text
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]  Helper function to add text from the player to the console.
-func _addPlayerText(text:String) -> void:	
-	_addText(text, HORIZONTAL_ALIGNMENT_LEFT, "RichTextLabelPlayer")
+func _addLeftText(text:String) -> void:	
+	_addText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
 
-func _addPlayerTextTyping(text:String) -> void:
-	_typeText(text, HORIZONTAL_ALIGNMENT_LEFT, "RichTextLabelPlayer")
+func _addLeftTextTyping(text:String) -> void:
+	_typeText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
 	await _all_text_visible
 
 ## [b]Internal-use only.[/b]  Helper function to add text from a bot to the console.
-func _addBotText(text:String) -> void:
-	_typeText(text, HORIZONTAL_ALIGNMENT_RIGHT, "RichTextLabelBot")
+func _addRightText(text:String) -> void:
+	_typeText(text, HORIZONTAL_ALIGNMENT_RIGHT, themeVariation.right)
 	await _all_text_visible
 
 ## [b]Internal-use only.[/b]  Spawns the option windows.
@@ -304,6 +311,7 @@ func _spawnOptionWindows() -> void:
 		
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
+		optionWindow.themeVariation = optionData.textThemePreset
 		optionWindow.data = optionData
 		optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
@@ -317,7 +325,8 @@ func _spawnOptionWindows() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for choosing an option.
 func _chooseOption(optionData:Dictionary) -> void:
-	_addPlayerText(optionData.text)  # TODO:  determine how to handle no writing to console
+	themeVariation.left = optionData.textThemePreset
+	_addLeftText(optionData.text)  # TODO:  determine how to handle no writing to console
 	_stopHecticMode()
 	_closeAllOptionWindows()
 	StoryFlags.updateFlags(optionData.setFlags)
@@ -369,13 +378,13 @@ func _handleCommand(command:String) -> void:
 			return
 	
 	# else assume its an actual command
-	_addPlayerText(command)
+	_addLeftText(command)
 	command_entered.emit(command)
 	_scrollToBottom()
 	
 	# TODO:  move help text definition to [InteractableNPC]
 	if command == "help":
-		await _addBotText(_helpText)
+		await _addRightText(_helpText)
 		return
 	
 	if command == "back":
@@ -389,7 +398,7 @@ func _handleCommand(command:String) -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
 func _goBackOneDialogue() -> void:
 	if _dialogueHistory.size() <= 1:
-		await _addPlayerTextTyping("[No saved history]")
+		await _addLeftTextTyping("[No saved history]")
 		return
 	
 	_dialogueHistory.pop_back()
