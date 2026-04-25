@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://1n8yvdu14dcd"]
+
+[node name="DialogueLogEntry" type="RichTextLabel"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 7.0
+mouse_filter = 1
+bbcode_enabled = true
+text = "me when i log my entry a a a a a a a a a a a a a a ahehehehehhehehe"
+fit_content = true
+scroll_active = false

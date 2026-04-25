@@ -6,7 +6,7 @@ class_name DialogueDefaults
 const DIALOGUE_TYPES:Array[String] = [
 	"neutral", "happy", "angry", "confused", "sad"
 ]
-## The modes a dialogue object can be in.
+## The modes a dialogue object can be in, in string form.
 const DIALOGUE_MODES:Array[String] = [
 	"normal", "hectic"
 ]
