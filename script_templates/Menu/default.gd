@@ -1,5 +1,9 @@
-extends Menu
+# meta-default: true
+# meta-description: Base template for Menu with default Godot cycle methods
 
+extends _BASE_
+
+# feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
@@ -35,7 +39,7 @@ extends Menu
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	super()  # runs the inherited class' _ready() function.
+_TS_super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -49,15 +53,9 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-func _on_resume_pressed() -> void:
-	close()
 
-func _on_options_pressed() -> void:
-	FR_MenuManager.openMenu("options")
-
-func _on_quit_pressed() -> void:
-	get_tree().paused = false
-	get_tree().quit()
+#func _on_open_submenu_pressed() -> void:
+#_TS_open.emit(subMenu)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

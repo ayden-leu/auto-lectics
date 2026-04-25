@@ -1,63 +1,92 @@
-extends PanelContainer
+extends Menu
 
-signal closed
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
 
-@onready var window_mode_button = $VBoxContainer/WindowModeButton
-@onready var keybinds_button = $VBoxContainer/KeybindsButton
-@onready var back_button = $VBoxContainer/BackButton
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
 
-const KeybindsMenuScene = preload("res://_framework/ui/menus/menu_pause/KeybindsMenu.tscn")
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
 
-var keybinds_menu_instance: Node = null
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
 
-# Cycles through: Windowed -> Fullscreen -> Borderless -> Windowed
-var window_modes = [
-	{"label": "Windowed",          "mode": DisplayServer.WINDOW_MODE_WINDOWED,    "flag": 0},
-	{"label": "Fullscreen",        "mode": DisplayServer.WINDOW_MODE_FULLSCREEN,   "flag": 0},
-	{"label": "Borderless Windowed","mode": DisplayServer.WINDOW_MODE_WINDOWED,    "flag": DisplayServer.WINDOW_FLAG_BORDERLESS},
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Holds thee window size modes that can be set.
+@onready var _windowModeOptions:OptionButton = %WindowModeOptions
+
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables only referenced in script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+var _windowPresets = [
+	{"name": "Windowed",             "mode": DisplayServer.WINDOW_MODE_WINDOWED,   "flag": 0},
+	{"name": "Fullscreen",           "mode": DisplayServer.WINDOW_MODE_FULLSCREEN, "flag": 0},
+	{"name": "Exclusive Fullscreen", "mode": DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN, "flag": 0}
 ]
-var current_mode_index: int = 0
 
-
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
-	window_mode_button.pressed.connect(_on_window_mode_pressed)
-	keybinds_button.pressed.connect(_on_keybinds_pressed)
-	back_button.pressed.connect(_on_back_pressed)
-	_update_window_mode_label()
+	super()  # runs the inherited class' _ready() function.
+	
+	var i:int = 0
+	for preset in _windowPresets:
+		_windowModeOptions.add_item(preset.name)
+		if preset.mode == DisplayServer.window_get_mode():
+			_windowModeOptions.select(i)
+		i += 1
 
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
 
-func _update_window_mode_label() -> void:
-	window_mode_button.text = "Window Mode: " + window_modes[current_mode_index]["label"]
+# ------------------------------------------------
+# functions only referenced inside this script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Updates the window size mode.
+func _updateWindowMode(newMode:String) -> void:	
+	for preset in _windowPresets:
+		if preset.name != newMode:
+			continue
+		
+		DisplayServer.window_set_mode(preset.mode)
+		if preset.flag != 0:
+			DisplayServer.window_set_flag(preset.flag, true)
 
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
 
-func _on_window_mode_pressed() -> void:
-	current_mode_index = (current_mode_index + 1) % window_modes.size()
-	var mode_data = window_modes[current_mode_index]
+#func _on_open_submenu_pressed() -> void:
+#_TS_open.emit(subMenu)
 
-	# Clear borderless flag first, then apply new mode
-	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-	DisplayServer.window_set_mode(mode_data["mode"])
-
-	if mode_data["flag"] != 0:
-		DisplayServer.window_set_flag(mode_data["flag"], true)
-
-	_update_window_mode_label()
-
-
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------
+## [b]Internal-use only.[/b]  Handles logic for when the keybinds button is pressed.
 func _on_keybinds_pressed() -> void:
-	if keybinds_menu_instance == null:
-		keybinds_menu_instance = KeybindsMenuScene.instantiate()
-		get_parent().add_child(keybinds_menu_instance)
-		keybinds_menu_instance.closed.connect(_on_keybinds_menu_closed)
+	FR_MenuManager.openMenu("keybinds")
 
-	hide()
-	keybinds_menu_instance.show()
-
-
-func _on_keybinds_menu_closed() -> void:
-	show()
-
-
+## [b]Internal-use only.[/b]  Handles logic for when the back button is pressed.
 func _on_back_pressed() -> void:
-	hide()
-	closed.emit()
+	close()
+
+## [b]Internal-use only.[/b]  Handles logic for when the apply settings button is pressed. 
+func _on_apply_settings_pressed() -> void:
+	var selectedMode:String = _windowModeOptions.get_item_text(_windowModeOptions.selected)
+	_updateWindowMode(selectedMode)

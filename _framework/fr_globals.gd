@@ -45,6 +45,8 @@ const STORAGE_PATH = {
 const DIALOGUE_FILE_TYPE = ".json"
 ## Determines the file type of label presets.
 const LABEL_PRESET_FILE_TYPE = ".tres"
+## The z index of [Menu]s.
+const MENU_Z_INDEX:int = 10
 
 # ------------------------------------------------
 # export variables
