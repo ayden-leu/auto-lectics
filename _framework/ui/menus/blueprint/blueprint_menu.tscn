@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
+metadata/_edit_lock_ = true
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
@@ -49,19 +50,19 @@ offset_bottom = 574.0
 
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-accessibility_name = "npc_test_1"
-npc_id = "npc_test_1"
+id = "npc_test_1"
+lockedText = "???"
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-accessibility_name = "npc_test_2"
-npc_id = "npc_test_2"
+id = "npc_test_2"
+lockedText = "???"
 entryTexture = ExtResource("3_nde6x")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-accessibility_name = "npc_test_3"
-npc_id = "npc_test_3"
+id = "npc_test_3"
+lockedText = "???"
 
 [node name="Details" type="Control" parent="."]
 anchors_preset = 0

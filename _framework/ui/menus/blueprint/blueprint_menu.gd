@@ -72,7 +72,7 @@ func _ready() -> void:
 	id = "blueprint"
 	pausesGame = false
 	super()
-
+	
 	_connect_npc_entries()
 	_refresh_all_entries()
 	
@@ -90,7 +90,7 @@ func _connect_npc_entries() -> void:
 	for child in _npcEntryHolder.get_children():
 		print("Found child:", child.name)
 		if child.has_signal("selected"):
-			print("Connecting selected for:", child.name, " id=", child.npc_id)
+			print("Connecting selected for:", child.name, " id=", child.id)
 			if not child.selected.is_connected(_on_npc_selected):
 				child.selected.connect(_on_npc_selected)
 

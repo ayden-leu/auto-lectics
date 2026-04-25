@@ -27,13 +27,14 @@ signal selected(id: String)
 @export var entryTexture:Texture2D:
 	set(newTexture):
 		entryTexture = newTexture
+		await self.ready
 		_icon.texture = newTexture
 
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  The label node for this entry.
-@onready var _label = $NameLabel
+@onready var _label = %Label
 ## [b]Internal-use only.[/b]  The icon node for this entry.
 @onready var _icon = %Icon
 
