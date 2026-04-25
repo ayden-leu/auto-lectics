@@ -2,7 +2,7 @@ extends Control
 
 @onready var label: Label = $DialogueLabel
 
+var preset:String = "_test"
+
 func _ready() -> void:
-	var data:Dictionary = FR_Globals.getDialogueNode("_test_font", "continue")
-	label.text = data.text
-	label.label_settings = LabelPresetLoader.loadPreset(data.font)
+	label.label_settings = LabelPresetLoader.loadPreset(preset)

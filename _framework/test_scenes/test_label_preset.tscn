@@ -17,3 +17,4 @@ anchors_preset = -1
 anchor_bottom = 0.018000001
 offset_right = 40.0
 offset_bottom = 11.3359995
+text = "here is some text that will change"
