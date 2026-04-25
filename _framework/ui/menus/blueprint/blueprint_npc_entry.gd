@@ -6,7 +6,7 @@ class_name BlueprintMenuNpcEntry
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
-signal selected(id: String)
+signal selected(me:BlueprintMenuNpcEntry)
 
 # ------------------------------------------------
 # enums
@@ -19,16 +19,16 @@ signal selected(id: String)
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The ID of this NPC entry.
-@export var id: String = "npc_test"
+## The ID of the NPC in this NPC entry.
+@export var id:String = "npc_test"
+## The name of the NPC in this entry/
+@export var myName:String = "NPC Test"
 ## The text that is displayed when this entry is locked.
 @export var lockedText: String = "???"
-## The icon for this entry.  Setting this will update the icon node.
-@export var entryTexture:Texture2D:
-	set(newTexture):
-		entryTexture = newTexture
-		await self.ready
-		_icon.texture = newTexture
+## The icon for this entry when it is unlocked.  Setting this will update the button node.
+@export var entryTextureUnlocked:Texture2D
+## The icon for this entry when it is unlocked.  Setting this will update the button node.
+@export var entryTextureLocked:Texture2D
 
 # ------------------------------------------------
 # onready variables
@@ -36,11 +36,23 @@ signal selected(id: String)
 ## [b]Internal-use only.[/b]  The label node for this entry.
 @onready var _label = %Label
 ## [b]Internal-use only.[/b]  The icon node for this entry.
-@onready var _icon = %Icon
+@onready var _button = %TextureButton
 
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
+## The name displayed for this NPC entry.
+var displayedName:String:
+	set(newName):
+		_label.text = newName
+	get():
+		return _label.text
+## The notes the player has written for this NPC entry.
+var notes:String
+## Whether the player has guessed the name of the NPC in this entry correctly or not.
+var nameGuessedCorrectly:bool = false
+## Whether this NPC entry is unlocked or not.
+var unlocked:bool = false
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -61,15 +73,19 @@ func _ready() -> void:
 # ------------------------------------------------
 ## Locks this NPC entry.
 func lock() -> void:
-	_label.text = lockedText
+	displayedName = lockedText
+	_button.texture_normal = entryTextureLocked
+	unlocked = false
 
 ## Updates thiss NPC entry label with whatever you put into in the function.
 func updateLabel(newText: String) -> void:
-	_label.text = newText
+	displayedName = newText
 
 ## Unlocks this NPC entry.
-func unlock(newText: String) -> void:
-	updateLabel("✓ " + newText)
+func unlock() -> void:
+	displayedName = "✓ " + myName
+	_button.texture_normal = entryTextureUnlocked
+	unlocked = true
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -81,7 +97,7 @@ func unlock(newText: String) -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for when this NPC entry is clicked.
 func _on_pressed() -> void:
-	selected.emit(id)
+	selected.emit(self)
 	
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

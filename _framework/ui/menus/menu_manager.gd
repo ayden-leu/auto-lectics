@@ -49,6 +49,8 @@ var menuIsOpen:bool = false:
 	set(state):
 		menuIsOpen = state
 		_overlay.visible = state
+## A reference to the [BlueprintMenu]
+var blueprintMenu:BlueprintMenu = null
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -70,6 +72,10 @@ var _currentMenu:Menu:
 			return null
 		return _menuStack.back()
 
+## [b]Internal-use only.[/b]  Holds all nodes that want to listen
+## to [DialogueConsole]'s signals.
+var _blueprintMenuSubscribers:Array
+
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
@@ -80,6 +86,7 @@ func _ready() -> void:
 	_createMenu(_OPTIONS_MENU)
 	_createMenu(_KEYBINDS_MENU)
 	_createMenu(_BLUEPRINT_MENU)
+	blueprintMenu = _menus.back()
 
 func _process(_delta:float) -> void:
 	if not enabled:
@@ -130,6 +137,36 @@ func openMenu(menuID:String) -> void:
 	InputHandler.showCursorTemp()
 	InputHandler.disableMovementInputGlobal()
 
+## Connects signals from the [BlueprintMenu] to specific functions the subscriber
+## can define.  Also adds the subscriber to a list for internal tracking.
+## [br][br]
+## Here is a list functions that you must define in order to run code
+## whenever the associated signal is emitted.
+## [codeblock]
+## func _on_blueprint_npc_name_guessed_correctly(npcID:String) -> void:
+## 	# Associated signal: npc_name_guessed_correctly
+## 	# Will run whenever the player guesses the name of an NPC entry correctly.
+## 	# npcID is the ID of the NPC entry.
+##
+## func _on_blueprint_unlock_condition_met(conditionID:String) -> void:
+## 	# Associated signal:  unlock_condition_met
+## 	# Will run whenever an unlock condition is met.
+## 	# conditionID is the ID of the unlock condition.
+## [/codeblock] 
+func subscribeToBlueprintMenu(subscriber) -> void:
+	_blueprintMenuSubscribers.push_back(subscriber)
+	_connectSignalsToSubscriber(subscriber)
+
+## Unsubscribes a node from the [DialogueConsole], meaning it won't run any
+## functions when the [DialogueConsole] emits signals.
+func unsubscribeToBlueprintMenu(subscriber) -> void:
+	if not subscriber in _blueprintMenuSubscribers:
+		return
+	
+	var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
+	_blueprintMenuSubscribers[subscriberIndex] = null
+	_disconnectSignalsToSubscriber(subscriber)
+
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
@@ -149,11 +186,28 @@ func _createMenu(menu:Resource) -> void:
 func _getMenu(menuIO:String) -> Menu:
 	return _menus[_idToIndex[menuIO]]
 
+## [b]Internal-use only.[/b]  Resumes the game.
 func _resume() -> void:
 	get_tree().paused = false
 	menuIsOpen = false
 	InputHandler.restoreCursorMode()
 	InputHandler.enableMovementInputGlobal()
+
+## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
+## functions defined by the subscriber.
+func _connectSignalsToSubscriber(subscriber) -> void:
+	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
+		blueprintMenu.npc_name_guessed_correctly.connect(subscriber._on_blueprint_npc_name_guessed_correctly)
+	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
+		blueprintMenu.unlock_condition_met.connect(subscriber._on_blueprint_unlock_condition_met)
+
+## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
+## functions defined by the subscriber.
+func _disconnectSignalsToSubscriber(subscriber) -> void:
+	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
+		blueprintMenu.npc_name_guessed_correctly.disconnect(subscriber._on_blueprint_npc_name_guessed_correctly)
+	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
+		blueprintMenu.unlock_condition_met.disconnect(subscriber._on_blueprint_unlock_condition_met)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

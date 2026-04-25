@@ -1,10 +1,11 @@
 extends Menu
+class_name BlueprintMenu
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
-signal npc_name_correct(npc_id: String)
-signal unlock_condition_met(target_id: String)
+signal npc_name_guessed_correctly(npcID:String)
+signal unlock_condition_met(conditionID:String)
 
 # ------------------------------------------------
 # enums
@@ -17,16 +18,19 @@ signal unlock_condition_met(target_id: String)
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-@export var _numNeededBeforeConfirmation: int = 3
+## [b]Internal-use only.[/b]  The number of correct name guesses needed
+## before "unlocking" correctly guesssed NPC entries.
+@export var _numNeededBeforeUnlocking: int = 3
 @export var _npcEntriesPerPage: int = 2
 
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
 @onready var _npcEntryHolder = %NpcEntryHolder
+@onready var _details = %Details
 @onready var _guessNpcNamePanel = %GuessNpcNamePanel
 @onready var _guessNpcNameField = %GuessNpcNameField
-@onready var _notesPanel = %NotesPanel
+#@onready var _notesPanel = %NotesPanels
 @onready var _notesField = %NotesField
 
 # ------------------------------------------------
@@ -37,31 +41,13 @@ signal unlock_condition_met(target_id: String)
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-var _npc_data := {
-	"npc_test_1": {
-		"correct_name": "Aster",
-		"display_name": "???",
-		"name_confirmed": false,
-		"name_locked": false,
-		"notes": ""
-	},
-	"npc_test_2": {
-		"correct_name": "Mira",
-		"display_name": "???",
-		"name_confirmed": false,
-		"name_locked": false,
-		"notes": ""
-	},
-	"npc_test_3": {
-		"correct_name": "Orin",
-		"display_name": "???",
-		"name_confirmed": false,
-		"name_locked": false,
-		"notes": ""
-	}
-}
 
-var _currentNpcID := ""
+var _npcEntries:Array[BlueprintMenuNpcEntry] = []
+var _idToIndex:Dictionary[String, int] = {}
+var _selectedEntry:BlueprintMenuNpcEntry = null:
+	set(newEntry):
+		_selectedEntry = newEntry
+		_details.visible = (newEntry != null)
 var _currentPage:int = 0
 var _loadingNotes := false
 
@@ -73,10 +59,9 @@ func _ready() -> void:
 	pausesGame = false
 	super()
 	
-	_connect_npc_entries()
-	_refresh_all_entries()
-	
-	_update_page_visibility()
+	_loadEntries()
+	_hideDetails()
+	_updateEntryVisibility()
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -86,71 +71,71 @@ func _ready() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-func _connect_npc_entries() -> void:
-	for child in _npcEntryHolder.get_children():
-		print("Found child:", child.name)
-		if child.has_signal("selected"):
-			print("Connecting selected for:", child.name, " id=", child.id)
-			if not child.selected.is_connected(_on_npc_selected):
-				child.selected.connect(_on_npc_selected)
-
-func _refresh_all_entries() -> void:
-	for child in _npcEntryHolder.get_children():
-		if not child.has_method("set_revealed_name"):
-			continue
-
-		var id_npc = child.npc_id
-		if not _npc_data.has(id_npc):
-			continue
-
-		var display_name = String(_npc_data[id_npc]["display_name"])
-
-		if _npc_data[id_npc]["name_locked"]:
-			child.set_confirmed_locked_name(display_name)
-		else:
-			child.set_revealed_name(display_name)
-
-func _refresh_current_detail_panel() -> void:
-	if _currentNpcID == "":
-		_guessNpcNamePanel.hide()
-		_notesPanel.hide()
+## [b]Internal-use only.[/b]  Stores the [BlueprintMenuNpcEntry]s in [member _npcEntryHolder] to [member _npcEntries].
+## Can purppsly only be ran once.
+func _loadEntries() -> void:
+	if not _npcEntries.is_empty():
 		return
+	
+	var index:int = 0
+	for entry:BlueprintMenuNpcEntry in _npcEntryHolder.get_children():
+		entry.selected.connect(_on_npc_entry_selected)
+		_npcEntries.push_back(entry)
+		_idToIndex[entry.id] = index
+		index += 1
 
-	if not _npc_data.has(_currentNpcID):
-		_guessNpcNamePanel.hide()
-		_notesPanel.hide()
-		return
+## [b]Internal-use only.[/b]  Gets the [membere _npcEntries] index of a [BlueprintMenuNpcEntry].
+func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
+	return _npcEntries[_idToIndex[entryID]]
 
-	_notesPanel.show()
+## [b]Internal-use only.[/b]  Shows the NPC entry details.
+func _showDetails() -> void:
+	_loadNotes()
+	_guessNpcNamePanel.visible = not _selectedEntry.unlocked
+	_details.visible = true
 
+## [b]Internal-use only.[/b]  Hides the NPC entry details.
+func _hideDetails() -> void:
+	_details.visible = false
+
+## [b]Internal-use only.[/b]  Loads notes for an NPC entry.
+func _loadNotes() -> void:
 	_loadingNotes = true
-	_notesField.text = _npc_data[_currentNpcID]["notes"]
+	_notesField.text = _selectedEntry.notes
 	_loadingNotes = false
 
-	if _npc_data[_currentNpcID]["name_locked"]:
-		_guessNpcNamePanel.hide()
+## [b]Internal-use only.[/b]  Determines if a given guess matches the name of the selected NPC entry.
+func _determineIfGuessMatchesSelectedEntry(guess:String) -> void:
+	var correctName:String = _selectedEntry.myName
+	if guess.to_lower() == correctName.to_lower():
+		print("Correct name correctGuesses for ", _selectedEntry.id)
+		_selectedEntry.nameGuessedCorrectly = true
+		npc_name_guessed_correctly.emit(_selectedEntry.id)
 	else:
-		_guessNpcNamePanel.show()
+		print("Incorrect name for ", _selectedEntry.id)
+		_selectedEntry.nameGuessedCorrectly = false
 
-# Confirmend if correct number reach the number assigned
-func _confirmEntries() -> void:
-	var confirmed_ids: Array[String] = []
+## [b]Internal-use only.[/b]  "Unlocks" all NPC entries whose names were
+## guessed correctly.
+func _unlockCorrectGuesses() -> void:
+	var correctGuesses:Array[BlueprintMenuNpcEntry] = []
+	for entry:BlueprintMenuNpcEntry in _npcEntries:
+		if entry.nameGuessedCorrectly:
+			correctGuesses.append(entry)
 
-	for id_npc in _npc_data.keys():
-		if _npc_data[id_npc]["name_confirmed"]:
-			confirmed_ids.append(id)
-
-	if confirmed_ids.size() >= _numNeededBeforeConfirmation:
-		for id_npc in confirmed_ids:
-			_npc_data[id_npc]["name_locked"] = true
+	if correctGuesses.size() >= _numNeededBeforeUnlocking:
+		for entry in correctGuesses:
+			entry.unlock()
 
 # Sending signal after engouh name correct
 func _check_unlock_conditions() -> void:
-	if _npc_data["npc_test_1"]["name_confirmed"] and _npc_data["npc_test_3"]["name_confirmed"]:
+	if _getEntry("npc_test_1").nameGuessedCorrectly and _getEntry("npc_test_3").nameGuessedCorrectly:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
 
-func _update_page_visibility() -> void:
+## Updates the visibility of each NPC entry based on if they fit the page or not.
+## Might be updated in the future.
+func _updateEntryVisibility() -> void:
 	var start_index = _currentPage * _npcEntriesPerPage
 	var end_index = start_index + _npcEntriesPerPage
 
@@ -161,62 +146,53 @@ func _update_page_visibility() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-func _on_npc_selected(npc_id: String) -> void:
-	print("Selected NPC from menu:", npc_id)
-	_currentNpcID = npc_id
-	_refresh_current_detail_panel()
+## [b]Internal-use only.[/b]  Handles logic for when an NPC entry is selected.
+func _on_npc_entry_selected(entry:BlueprintMenuNpcEntry) -> void:
+	print("Selected NPC from menu: ", entry.id)
+	_selectedEntry = entry
+	_showDetails()
 
-func _on_submit_npc_name_button_pressed() -> void:
-	if _currentNpcID == "":
+## [b]Internal-use only.[/b]  Handles logic for when an NPC entry name is submitted.
+func _on_npc_entry_name_submission() -> void:
+	if _selectedEntry == null:
 		return
-	if not _npc_data.has(_currentNpcID):
-		return
-	if _npc_data[_currentNpcID]["name_locked"]:
-		return
-
-	var entered_name = _guessNpcNameField.text.strip_edges()
-	if entered_name == "":
+	if _selectedEntry.unlocked:
 		return
 
-	var correct_name = String(_npc_data[_currentNpcID]["correct_name"])
+	var submittedName:String = _guessNpcNameField.text.strip_edges()
+	_guessNpcNameField.text = ""
+	if submittedName == "":
+		return
+	_selectedEntry.displayedName = submittedName
 
-	_npc_data[_currentNpcID]["display_name"] = entered_name
-
-	if entered_name.to_lower() == correct_name.to_lower():
-		_npc_data[_currentNpcID]["name_confirmed"] = true
-		print("Correct name confirmed for ", _currentNpcID)
-		npc_name_correct.emit(_currentNpcID)
-	else:
-		_npc_data[_currentNpcID]["name_confirmed"] = false
-		print("Incorrect name for ", _currentNpcID)
-
-	_confirmEntries()
+	_determineIfGuessMatchesSelectedEntry(submittedName)
+	_unlockCorrectGuesses()
 	_check_unlock_conditions()
-	_refresh_all_entries()
-	_refresh_current_detail_panel()
+	_showDetails()
 
-
+## [b]Internal-use only.[/b]  Handles logic for when notes are entered for an NPC entry.
 func _on_notes_field_text_changed() -> void:
 	if _loadingNotes:
 		return
-	if _currentNpcID == "":
+	if _selectedEntry == null:
 		return
-	if not _npc_data.has(_currentNpcID):
-		return
+	
+	_selectedEntry.notes = _notesField.text
 
-	_npc_data[_currentNpcID]["notes"] = _notesField.text
-
+## [b]Internal-use only.[/b]  Handles logic for when the previous page button is pressed.
 func _on_prev_page_button_pressed() -> void:
 	if _currentPage > 0:
 		_currentPage -= 1
-		_update_page_visibility()
+		_updateEntryVisibility()
 
+## [b]Internal-use only.[/b]  Handles logic for whene the next page button is pressed.
 func _on_next_page_button_pressed() -> void:
-	var max_page = int(ceil(float(_npcEntryHolder.get_child_count()) / _npcEntriesPerPage)) - 1
+	var max_page = int(ceil(float(_npcEntries.size()) / _npcEntriesPerPage)) - 1
 	if _currentPage < max_page:
 		_currentPage += 1
-		_update_page_visibility()
+		_updateEntryVisibility()
 
+## [b]Internal-use only.[/b]  Mainly here to see what signals are connected.
 func _on_close_button_pressed() -> void:
 	super()
 
