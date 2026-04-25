@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b08l8xg1t3ct6"]
 
-[ext_resource type="Script" uid="uid://cxjwaai3jxssf" path="res://_framework/ui/menus/menu_pause/keybinds_menu.gd" id="1_4t1i8"]
+[ext_resource type="Script" uid="uid://cxjwaai3jxssf" path="res://_framework/ui/menus/pause/keybinds_menu.gd" id="1_4t1i8"]
 
 [node name="KeybindsMenu" type="Control"]
 layout_mode = 3
