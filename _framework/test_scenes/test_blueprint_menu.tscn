@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://brnbgu5l5qy2h"]
 
-[ext_resource type="PackedScene" uid="uid://bult80lkyvnls" path="res://_framework/ui/menus/blueprint/blueprint_menue.tscn" id="1_eug57"]
+[ext_resource type="PackedScene" uid="uid://bult80lkyvnls" path="res://_framework/ui/menus/blueprint/blueprint_menu.tscn" id="1_eug57"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_xmbxq"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_f2a6q"]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dk75c367gkhsn" path="res://_framework/test_scenes/test_player_movement.gd" id="1_hyee6"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_nt7id"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_kkbud"]
-[ext_resource type="PackedScene" uid="uid://bult80lkyvnls" path="res://_framework/ui/menus/blueprint/blueprint_menue.tscn" id="4_p6yrj"]
+[ext_resource type="PackedScene" uid="uid://bult80lkyvnls" path="res://_framework/ui/menus/blueprint/blueprint_menu.tscn" id="4_p6yrj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ivx4p"]
 size = Vector3(20, 0.5, 20)

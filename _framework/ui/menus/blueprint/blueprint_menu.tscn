@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bult80lkyvnls"]
 
-[ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menue.gd" id="1_k0l7g"]
+[ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
 
 [node name="BlueprintMenu" type="Control"]
