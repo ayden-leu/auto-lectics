@@ -12,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
+_numNeededBeforeUnlocking = 1
 metadata/_edit_lock_ = true
 
 [node name="TitleLabel" type="Label" parent="."]

@@ -20,6 +20,8 @@ extends Node
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+@onready var _bpCorrectGuess: Label = %BP_CorrectGuess
+@onready var _bpUnlockMet: Label = %BP_UnlockMet
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -35,6 +37,7 @@ extends Node
 # ------------------------------------------------
 func _ready() -> void:
 	FR_MenuManager.enable()
+	FR_MenuManager.subscribeToBlueprintMenu(self)
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -48,6 +51,11 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+func _on_blueprint_npc_name_guessed_correctly(npcID:String) -> void:
+	_bpCorrectGuess.text = npcID
+
+func _on_blueprint_unlock_condition_met(conditionID:String) -> void:
+	_bpUnlockMet.text = conditionID
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
