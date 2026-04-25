@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://drh1uormkjsbh"]
+[gd_scene load_steps=12 format=3 uid="uid://drh1uormkjsbh"]
 
 [ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_framework/dialogue_creator/dc_option_node.gd" id="1_sx0xf"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
 [ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_framework/dialogue_creator/helpers/field_option_type.gd" id="3_3u2q4"]
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/button_toggle_area.gd" id="4_l41k6"]
+[ext_resource type="Script" uid="uid://buogf2xidqpac" path="res://_framework/dialogue_creator/helpers/field_option_text_theme.gd" id="5_s1oka"]
 [ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_framework/dialogue_creator/helpers/aspects_write_speed.gd" id="6_kcxjf"]
 [ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_framework/dialogue_creator/helpers/field_option_write_speed_preset.gd" id="7_vpr3c"]
 [ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_framework/dialogue_creator/visual_assets/plus.svg" id="8_hpmiq"]
@@ -166,18 +167,18 @@ size_flags_horizontal = 3
 [node name="Row2" type="HBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="TextTheme" type="HBoxContainer" parent="AdvancedOptions/Row2"]
+[node name="TextTheme" type="HBoxContainer" parent="AdvancedOptions/Row2" node_paths=PackedStringArray("chooser")]
+unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("5_s1oka")
+chooser = NodePath("OptionButton")
 
 [node name="Label" type="Label" parent="AdvancedOptions/Row2/TextTheme"]
 layout_mode = 2
-theme_type_variation = &"LabelDisabled"
-text = "TextTheme"
+text = "Text Theme"
 
 [node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row2/TextTheme"]
 layout_mode = 2
-theme_type_variation = &"OptionButtonDisabled"
-disabled = true
 
 [node name="VSeparator3" type="VSeparator" parent="AdvancedOptions"]
 layout_mode = 2
@@ -371,6 +372,7 @@ text = "Debug"
 [connection signal="toggled" from="Advanced" to="Advanced" method="_on_toggled"]
 [connection signal="value_changed" from="AdvancedOptions/SpawnDelay/SpawnDelayField" to="." method="_on_attribute_modified_parameter"]
 [connection signal="value_changed" from="AdvancedOptions/Lifetime/LifetimeField" to="." method="_on_attribute_modified_parameter"]
+[connection signal="item_selected" from="AdvancedOptions/Row2/TextTheme/OptionButton" to="AdvancedOptions/Row2/TextTheme" method="_on_chooser_updated"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects" to="." method="_on_attribute_modified"]
 [connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
 [connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]

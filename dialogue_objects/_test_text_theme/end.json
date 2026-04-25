@@ -5,18 +5,18 @@
 	"options": [
 		{
 			"text": "neat",
-			"textThemePreset": "_test_one",
-			"type": "neutral"
+			"type": "neutral",
+			"textThemePreset": "_test_one"
 		},
 		{
 			"text": "ok",
-			"textThemePreset": "_test_two",
-			"type": "neutral"
+			"type": "neutral",
+			"textThemePreset": "_test_two"
 		},
 		{
 			"text": "whatever",
-			"textThemePreset": "_test_three",
-			"type": "neutral"
+			"type": "neutral",
+			"textThemePreset": "_test_three"
 		}
 	]
 }
