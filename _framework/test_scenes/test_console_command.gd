@@ -1,7 +1,6 @@
-extends Area3D
-class_name DeathPlane
-## Runs a colliding body's [code]respawn()[/code] function upon collision.
+extends Node3D
 
+# feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
@@ -21,6 +20,8 @@ class_name DeathPlane
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+@onready var barAnimPlayer:AnimationPlayer = $Bar/AnimationPlayer
+@onready var player:Player = $Player
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -35,7 +36,7 @@ class_name DeathPlane
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
+	FR_WindowManager.subscribeToConsole(self)
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -49,12 +50,18 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Does the thing this class is meant to do upon collision.
-func _on_body_entered(body: Node) -> void:
-	if body.has_method("respawn"):
-		body.respawn()
-	else:
-		push_warning("DeathPlane: Body [", body.name, "] missing respawn() function.")
+
+func _on_console_command_entered(command:String) -> void:
+	if command == "spin_start":
+		barAnimPlayer.play("spin")
+	elif command == "spin_stop":
+		barAnimPlayer.pause()
+	elif command == "spin_reset":
+		barAnimPlayer.play("RESET")
+	elif command == "unfreeze":
+		player.set_input_frozen(false)
+	elif command == "jump":
+		player.jump()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
