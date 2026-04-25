@@ -3,6 +3,8 @@ extends Menu
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
+signal npc_name_correct(npc_id: String)
+signal unlock_condition_met(target_id: String)
 
 # ------------------------------------------------
 # enums
@@ -11,53 +13,7 @@ extends Menu
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-
-# ------------------------------------------------
-# export variables
-# ------------------------------------------------
-
-# ------------------------------------------------
-# onready variables
-# ------------------------------------------------
-
-# ------------------------------------------------
-# normal variables referenced outside of script
-# ------------------------------------------------
-
-# ------------------------------------------------
-# normal variables only referenced in script
-# [b]Internal-use only.[/b]
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions like _ready, _process, and _physics_process
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions referenced outside of this script
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions only referenced inside this script
-# [b]Internal-use only.[/b]
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions that run when a signal is emitted
-# ------------------------------------------------
-
-# ------------------------------------------------
-# editor dev-ing functions like "_get_configuration_warnings()"
-# ------------------------------------------------
-
-
-signal npc_name_correct(npc_id: String)
-signal unlock_condition_met(target_id: String)
-
-var current_npc_id := ""
-var current_page: int = 0
-
-var npc_data := {
+const _NPC_DATA := {
 	"npc_test_1": {
 		"correct_name": "Aster",
 		"display_name": "???",
@@ -81,27 +37,36 @@ var npc_data := {
 	}
 }
 
-@export var confirmation_threshold: int = 3
-@export var entries_per_page: int = 2
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
+@export var _numNeededBeforeConfirmation: int = 3
+@export var _npcEntriesPerPage: int = 2
 
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+@onready var _npcEntryHolder = %NpcEntryHolder
+@onready var _guessNpcNamePanel = %GuessNpcNamePanel
+@onready var _guessNpcNameField = %GuessNpcNameField
+@onready var _notesPanel = %NotesPanel
+@onready var _notesField = %NotesField
 
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
 
-@onready var prev_page_button = %PrevPageButton
-@onready var next_page_button = %NextPageButton
+# ------------------------------------------------
+# normal variables only referenced in script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+var _currentNpcID := ""
+var _currentPage:int = 0
+var _loadingNotes := false
 
-@onready var npc_container = %NPCEntryContainer
-@onready var name_input_panel = %NameInputPanel
-@onready var notes_panel = %NotesPanel
-
-@onready var name_line_edit = %NpcNameField
-@onready var submit_button = %SubmitNpcNameButton
-@onready var notes_text_edit = %NotesField
-
-@onready var close_button = %CloseButton
-
-var is_loading_notes := false
-
-
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
 func _ready() -> void:
 	id = "blueprint"
 	pausesGame = false
@@ -112,9 +77,16 @@ func _ready() -> void:
 	
 	_update_page_visibility()
 
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
 
+# ------------------------------------------------
+# functions only referenced inside this script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
 func _connect_npc_entries() -> void:
-	for child in npc_container.get_children():
+	for child in _npcEntryHolder.get_children():
 		print("Found child:", child.name)
 		if child.has_signal("selected"):
 			print("Connecting selected for:", child.name, " id=", child.npc_id)
@@ -123,131 +95,131 @@ func _connect_npc_entries() -> void:
 
 
 func _refresh_all_entries() -> void:
-	for child in npc_container.get_children():
+	for child in _npcEntryHolder.get_children():
 		if not child.has_method("set_revealed_name"):
 			continue
 
 		var id_npc = child.npc_id
-		if not npc_data.has(id_npc):
+		if not _NPC_DATA.has(id_npc):
 			continue
 
-		var display_name = String(npc_data[id_npc]["display_name"])
+		var display_name = String(_NPC_DATA[id_npc]["display_name"])
 
-		if npc_data[id_npc]["name_locked"]:
+		if _NPC_DATA[id_npc]["name_locked"]:
 			child.set_confirmed_locked_name(display_name)
 		else:
 			child.set_revealed_name(display_name)
 
-
-func _on_npc_selected(npc_id: String) -> void:
-	print("Selected NPC from menu:", npc_id)
-	current_npc_id = npc_id
-	_refresh_current_detail_panel()
-
-
 func _refresh_current_detail_panel() -> void:
-	if current_npc_id == "":
-		name_input_panel.hide()
-		notes_panel.hide()
+	if _currentNpcID == "":
+		_guessNpcNamePanel.hide()
+		_notesPanel.hide()
 		return
 
-	if not npc_data.has(current_npc_id):
-		name_input_panel.hide()
-		notes_panel.hide()
+	if not _NPC_DATA.has(_currentNpcID):
+		_guessNpcNamePanel.hide()
+		_notesPanel.hide()
 		return
 
-	notes_panel.show()
+	_notesPanel.show()
 
-	is_loading_notes = true
-	notes_text_edit.text = npc_data[current_npc_id]["notes"]
-	is_loading_notes = false
+	_loadingNotes = true
+	_notesField.text = _NPC_DATA[_currentNpcID]["notes"]
+	_loadingNotes = false
 
-	if npc_data[current_npc_id]["name_locked"]:
-		name_input_panel.hide()
+	if _NPC_DATA[_currentNpcID]["name_locked"]:
+		_guessNpcNamePanel.hide()
 	else:
-		name_input_panel.show()
-
+		_guessNpcNamePanel.show()
 
 # Confirmend if correct number reach the number assigned
-func _apply_confirmation_threshold() -> void:
+func _confirmEntries() -> void:
 	var confirmed_ids: Array[String] = []
 
-	for id_npc in npc_data.keys():
-		if npc_data[id_npc]["name_confirmed"]:
+	for id_npc in _NPC_DATA.keys():
+		if _NPC_DATA[id_npc]["name_confirmed"]:
 			confirmed_ids.append(id)
 
-	if confirmed_ids.size() >= confirmation_threshold:
+	if confirmed_ids.size() >= _numNeededBeforeConfirmation:
 		for id_npc in confirmed_ids:
-			npc_data[id_npc]["name_locked"] = true
-
+			_NPC_DATA[id_npc]["name_locked"] = true
 
 # Sending signal after engouh name correct
 func _check_unlock_conditions() -> void:
-	if npc_data["npc_test_1"]["name_confirmed"] and npc_data["npc_test_3"]["name_confirmed"]:
+	if _NPC_DATA["npc_test_1"]["name_confirmed"] and _NPC_DATA["npc_test_3"]["name_confirmed"]:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
 
-func _on_close_button_pressed() -> void:
-	super()
-
-#_________________________________________________________________________________
 func _update_page_visibility() -> void:
-	var start_index = current_page * entries_per_page
-	var end_index = start_index + entries_per_page
+	var start_index = _currentPage * _npcEntriesPerPage
+	var end_index = start_index + _npcEntriesPerPage
 
-	for i in range(npc_container.get_child_count()):
-		var child = npc_container.get_child(i)
+	for i in range(_npcEntryHolder.get_child_count()):
+		var child = _npcEntryHolder.get_child(i)
 		child.visible = i >= start_index and i < end_index
-#____________________________________________________________________________________________
 
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+func _on_npc_selected(npc_id: String) -> void:
+	print("Selected NPC from menu:", npc_id)
+	_currentNpcID = npc_id
+	_refresh_current_detail_panel()
 
 func _on_submit_npc_name_button_pressed() -> void:
-	if current_npc_id == "":
+	if _currentNpcID == "":
 		return
-	if not npc_data.has(current_npc_id):
+	if not _NPC_DATA.has(_currentNpcID):
 		return
-	if npc_data[current_npc_id]["name_locked"]:
+	if _NPC_DATA[_currentNpcID]["name_locked"]:
 		return
 
-	var entered_name = name_line_edit.text.strip_edges()
+	var entered_name = _guessNpcNameField.text.strip_edges()
 	if entered_name == "":
 		return
 
-	var correct_name = String(npc_data[current_npc_id]["correct_name"])
+	var correct_name = String(_NPC_DATA[_currentNpcID]["correct_name"])
 
-	npc_data[current_npc_id]["display_name"] = entered_name
+	_NPC_DATA[_currentNpcID]["display_name"] = entered_name
 
 	if entered_name.to_lower() == correct_name.to_lower():
-		npc_data[current_npc_id]["name_confirmed"] = true
-		print("Correct name confirmed for ", current_npc_id)
-		npc_name_correct.emit(current_npc_id)
+		_NPC_DATA[_currentNpcID]["name_confirmed"] = true
+		print("Correct name confirmed for ", _currentNpcID)
+		npc_name_correct.emit(_currentNpcID)
 	else:
-		npc_data[current_npc_id]["name_confirmed"] = false
-		print("Incorrect name for ", current_npc_id)
+		_NPC_DATA[_currentNpcID]["name_confirmed"] = false
+		print("Incorrect name for ", _currentNpcID)
 
-	_apply_confirmation_threshold()
+	_confirmEntries()
 	_check_unlock_conditions()
 	_refresh_all_entries()
 	_refresh_current_detail_panel()
 
 
 func _on_notes_field_text_changed() -> void:
-	if is_loading_notes:
+	if _loadingNotes:
 		return
-	if current_npc_id == "":
+	if _currentNpcID == "":
 		return
-	if not npc_data.has(current_npc_id):
+	if not _NPC_DATA.has(_currentNpcID):
 		return
 
-	npc_data[current_npc_id]["notes"] = notes_text_edit.text
+	_NPC_DATA[_currentNpcID]["notes"] = _notesField.text
 
 func _on_prev_page_button_pressed() -> void:
-	if current_page > 0:
-		current_page -= 1
+	if _currentPage > 0:
+		_currentPage -= 1
 		_update_page_visibility()
 
 func _on_next_page_button_pressed() -> void:
-	var max_page = int(ceil(float(npc_container.get_child_count()) / entries_per_page)) - 1
-	if current_page < max_page:
-		current_page += 1
+	var max_page = int(ceil(float(_npcEntryHolder.get_child_count()) / _npcEntriesPerPage)) - 1
+	if _currentPage < max_page:
+		_currentPage += 1
 		_update_page_visibility()
+
+func _on_close_button_pressed() -> void:
+	super()
+
+# ------------------------------------------------
+# editor dev-ing functions like "_get_configuration_warnings()"
+# ------------------------------------------------

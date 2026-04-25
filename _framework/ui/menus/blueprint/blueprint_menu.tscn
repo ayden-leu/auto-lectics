@@ -38,7 +38,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="NPCEntryContainer" type="HFlowContainer" parent="NPCList"]
+[node name="NpcEntryHolder" type="HFlowContainer" parent="NPCList"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 7.0
@@ -46,17 +46,17 @@ offset_top = 80.0
 offset_right = 1147.0
 offset_bottom = 574.0
 
-[node name="npc_test_1" parent="NPCList/NPCEntryContainer" instance=ExtResource("2_puj0o")]
+[node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 accessibility_name = "npc_test_1"
 npc_id = "npc_test_1"
 
-[node name="npc_test_2" parent="NPCList/NPCEntryContainer" instance=ExtResource("2_puj0o")]
+[node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 accessibility_name = "npc_test_2"
 npc_id = "npc_test_2"
 
-[node name="npc_test_3" parent="NPCList/NPCEntryContainer" instance=ExtResource("2_puj0o")]
+[node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 accessibility_name = "npc_test_3"
 npc_id = "npc_test_3"
@@ -67,7 +67,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_lock_ = true
 
-[node name="NameInputPanel" type="Panel" parent="Details"]
+[node name="GuessNpcNamePanel" type="Panel" parent="Details"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 459.0
@@ -76,7 +76,7 @@ offset_right = 653.0
 offset_bottom = 497.0
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Details/NameInputPanel"]
+[node name="Label" type="Label" parent="Details/GuessNpcNamePanel"]
 layout_mode = 0
 offset_left = 49.0
 offset_top = 23.0
@@ -84,7 +84,7 @@ offset_right = 137.0
 offset_bottom = 46.0
 text = "Nameinput"
 
-[node name="NpcNameField" type="LineEdit" parent="Details/NameInputPanel"]
+[node name="GuessNpcNameField" type="LineEdit" parent="Details/GuessNpcNamePanel"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 56.0
@@ -93,7 +93,7 @@ offset_right = 124.5625
 offset_bottom = 83.0
 text = "lineedit"
 
-[node name="SubmitNpcNameButton" type="Button" parent="Details/NameInputPanel"]
+[node name="SubmitNpcNameButton" type="Button" parent="Details/GuessNpcNamePanel"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 56.0
@@ -146,7 +146,7 @@ offset_right = 1363.0
 offset_bottom = 452.0
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
-[connection signal="pressed" from="Details/NameInputPanel/SubmitNpcNameButton" to="." method="_on_submit_npc_name_button_pressed"]
+[connection signal="pressed" from="Details/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_submit_npc_name_button_pressed"]
 [connection signal="text_changed" from="Details/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
 [connection signal="pressed" from="PrevPageButton" to="." method="_on_prev_page_button_pressed"]
 [connection signal="pressed" from="NextPageButton" to="." method="_on_next_page_button_pressed"]
