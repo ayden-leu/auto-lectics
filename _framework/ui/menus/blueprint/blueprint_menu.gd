@@ -13,29 +13,6 @@ signal unlock_condition_met(target_id: String)
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-const _NPC_DATA := {
-	"npc_test_1": {
-		"correct_name": "Aster",
-		"display_name": "???",
-		"name_confirmed": false,
-		"name_locked": false,
-		"notes": ""
-	},
-	"npc_test_2": {
-		"correct_name": "Mira",
-		"display_name": "???",
-		"name_confirmed": false,
-		"name_locked": false,
-		"notes": ""
-	},
-	"npc_test_3": {
-		"correct_name": "Orin",
-		"display_name": "???",
-		"name_confirmed": false,
-		"name_locked": false,
-		"notes": ""
-	}
-}
 
 # ------------------------------------------------
 # export variables
@@ -60,6 +37,30 @@ const _NPC_DATA := {
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+var _npc_data := {
+	"npc_test_1": {
+		"correct_name": "Aster",
+		"display_name": "???",
+		"name_confirmed": false,
+		"name_locked": false,
+		"notes": ""
+	},
+	"npc_test_2": {
+		"correct_name": "Mira",
+		"display_name": "???",
+		"name_confirmed": false,
+		"name_locked": false,
+		"notes": ""
+	},
+	"npc_test_3": {
+		"correct_name": "Orin",
+		"display_name": "???",
+		"name_confirmed": false,
+		"name_locked": false,
+		"notes": ""
+	}
+}
+
 var _currentNpcID := ""
 var _currentPage:int = 0
 var _loadingNotes := false
@@ -93,19 +94,18 @@ func _connect_npc_entries() -> void:
 			if not child.selected.is_connected(_on_npc_selected):
 				child.selected.connect(_on_npc_selected)
 
-
 func _refresh_all_entries() -> void:
 	for child in _npcEntryHolder.get_children():
 		if not child.has_method("set_revealed_name"):
 			continue
 
 		var id_npc = child.npc_id
-		if not _NPC_DATA.has(id_npc):
+		if not _npc_data.has(id_npc):
 			continue
 
-		var display_name = String(_NPC_DATA[id_npc]["display_name"])
+		var display_name = String(_npc_data[id_npc]["display_name"])
 
-		if _NPC_DATA[id_npc]["name_locked"]:
+		if _npc_data[id_npc]["name_locked"]:
 			child.set_confirmed_locked_name(display_name)
 		else:
 			child.set_revealed_name(display_name)
@@ -116,7 +116,7 @@ func _refresh_current_detail_panel() -> void:
 		_notesPanel.hide()
 		return
 
-	if not _NPC_DATA.has(_currentNpcID):
+	if not _npc_data.has(_currentNpcID):
 		_guessNpcNamePanel.hide()
 		_notesPanel.hide()
 		return
@@ -124,10 +124,10 @@ func _refresh_current_detail_panel() -> void:
 	_notesPanel.show()
 
 	_loadingNotes = true
-	_notesField.text = _NPC_DATA[_currentNpcID]["notes"]
+	_notesField.text = _npc_data[_currentNpcID]["notes"]
 	_loadingNotes = false
 
-	if _NPC_DATA[_currentNpcID]["name_locked"]:
+	if _npc_data[_currentNpcID]["name_locked"]:
 		_guessNpcNamePanel.hide()
 	else:
 		_guessNpcNamePanel.show()
@@ -136,17 +136,17 @@ func _refresh_current_detail_panel() -> void:
 func _confirmEntries() -> void:
 	var confirmed_ids: Array[String] = []
 
-	for id_npc in _NPC_DATA.keys():
-		if _NPC_DATA[id_npc]["name_confirmed"]:
+	for id_npc in _npc_data.keys():
+		if _npc_data[id_npc]["name_confirmed"]:
 			confirmed_ids.append(id)
 
 	if confirmed_ids.size() >= _numNeededBeforeConfirmation:
 		for id_npc in confirmed_ids:
-			_NPC_DATA[id_npc]["name_locked"] = true
+			_npc_data[id_npc]["name_locked"] = true
 
 # Sending signal after engouh name correct
 func _check_unlock_conditions() -> void:
-	if _NPC_DATA["npc_test_1"]["name_confirmed"] and _NPC_DATA["npc_test_3"]["name_confirmed"]:
+	if _npc_data["npc_test_1"]["name_confirmed"] and _npc_data["npc_test_3"]["name_confirmed"]:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
 
@@ -169,25 +169,25 @@ func _on_npc_selected(npc_id: String) -> void:
 func _on_submit_npc_name_button_pressed() -> void:
 	if _currentNpcID == "":
 		return
-	if not _NPC_DATA.has(_currentNpcID):
+	if not _npc_data.has(_currentNpcID):
 		return
-	if _NPC_DATA[_currentNpcID]["name_locked"]:
+	if _npc_data[_currentNpcID]["name_locked"]:
 		return
 
 	var entered_name = _guessNpcNameField.text.strip_edges()
 	if entered_name == "":
 		return
 
-	var correct_name = String(_NPC_DATA[_currentNpcID]["correct_name"])
+	var correct_name = String(_npc_data[_currentNpcID]["correct_name"])
 
-	_NPC_DATA[_currentNpcID]["display_name"] = entered_name
+	_npc_data[_currentNpcID]["display_name"] = entered_name
 
 	if entered_name.to_lower() == correct_name.to_lower():
-		_NPC_DATA[_currentNpcID]["name_confirmed"] = true
+		_npc_data[_currentNpcID]["name_confirmed"] = true
 		print("Correct name confirmed for ", _currentNpcID)
 		npc_name_correct.emit(_currentNpcID)
 	else:
-		_NPC_DATA[_currentNpcID]["name_confirmed"] = false
+		_npc_data[_currentNpcID]["name_confirmed"] = false
 		print("Incorrect name for ", _currentNpcID)
 
 	_confirmEntries()
@@ -201,10 +201,10 @@ func _on_notes_field_text_changed() -> void:
 		return
 	if _currentNpcID == "":
 		return
-	if not _NPC_DATA.has(_currentNpcID):
+	if not _npc_data.has(_currentNpcID):
 		return
 
-	_NPC_DATA[_currentNpcID]["notes"] = _notesField.text
+	_npc_data[_currentNpcID]["notes"] = _notesField.text
 
 func _on_prev_page_button_pressed() -> void:
 	if _currentPage > 0:
