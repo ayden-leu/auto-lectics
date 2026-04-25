@@ -1,0 +1,12 @@
+{
+	"text": "default font",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "continue",
+			"type": "neutral",
+			"nextID": "end"
+		}
+	]
+}

@@ -1,15 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxpkysvg4levs"]
 
-[ext_resource type="Script" uid="uid://c0oamtxhc2q3l" path="res://addons/dialogue_font_test/scenes/dialogue_font_test.gd" id="1_0bym3"]
+[ext_resource type="Script" uid="uid://c0oamtxhc2q3l" path="res://_framework/test_scenes/test_label_preset.gd" id="1_vdm3e"]
 
-[node name="DialogueFontTest" type="Control"]
+[node name="Test_LabelPreset" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_0bym3")
+script = ExtResource("1_vdm3e")
 
 [node name="DialogueLabel" type="Label" parent="."]
 layout_mode = 1

@@ -57,7 +57,7 @@ const DEFAULT_DIALOGUE:Dictionary = {
 	# === Optional ===
 	"mode": "normal",
 	"nextOnHecticFailureID": "",
-	"font": "default",
+	"font": "_default",
 	"type": "neutral",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 0.0,

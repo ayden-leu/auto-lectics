@@ -1,0 +1,12 @@
+{
+	"text": "main dialogue can be different from option too",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "neat",
+			"type": "neutral",
+			"font": "_test"
+		}
+	]
+}
