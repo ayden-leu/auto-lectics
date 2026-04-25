@@ -1,18 +1,16 @@
-extends DC_FieldOption
-class_name DC_TypeFieldOption
+extends Control
+class_name Menu
 
+# feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
+## Emitted when this menu wants to be closed.
+signal close_me()
 
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
-## The two types of types a [DC_BaseNode] can be.
-enum VALID_TYPES {
-	DIALOGUE,  ## Refer to [member DialogueDefaults.DIALOGUE_TYPES].
-	OPTION     ## Refer to [member DialogueDefaults.OPTION_TYPES].
-}
 
 # ------------------------------------------------
 # constants
@@ -21,8 +19,6 @@ enum VALID_TYPES {
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The type of this [DC_BaseNode].
-@export var type:VALID_TYPES
 
 # ------------------------------------------------
 # onready variables
@@ -31,44 +27,54 @@ enum VALID_TYPES {
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## The chosen type.
-var option:String:
-	set(newOption):
-		chooser.selected = valueToOptionIndex[newOption]
-	get():
-		if type == VALID_TYPES.DIALOGUE:
-			return DialogueDefaults.DIALOGUE_TYPES[chooser.selected]
-		elif type == VALID_TYPES.OPTION:
-			return DialogueDefaults.OPTION_TYPES[chooser.selected]
-		printerr("field_option_type: Unhandled option type: ", type)
-		return "error"
 
 # ------------------------------------------------
 # normal variables only referenced in script
+# [b]Internal-use only.[/b]
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  The default process mode for a menu.
+## Currently, it's set to only process when [member SceneTree.paused] is true.
+var _defaultProcessMode:ProcessMode = Node.PROCESS_MODE_ALWAYS
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	if type == VALID_TYPES.DIALOGUE:
-		fillValueToOptionIndex(DialogueDefaults.DIALOGUE_TYPES)
-	elif type == VALID_TYPES.OPTION:
-		fillValueToOptionIndex(DialogueDefaults.OPTION_TYPES)
-	
-	option = DialogueDefaults.DEFAULT_DIALOGUE.type
+	process_mode = _defaultProcessMode
+	z_index = FR_Globals.MENU_Z_INDEX
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Enables this menu's processing and makes it visible.
+func enable() -> void:
+	visible = true
+	process_mode = _defaultProcessMode
+
+## Disables this menu's processing and makes it not visible
+func disable() -> void:
+	visible = false
+	process_mode = PROCESS_MODE_DISABLED
+
+## Primes this menu to be closed.
+func close() -> void:
+	close_me.emit()
+
+## Force-kills this menu.  Should only be ran by the [MenuManager].
+func delete() -> void:
+	queue_free()
 
 # ------------------------------------------------
 # functions only referenced inside this script
+# [b]Internal-use only.[/b]
 # ------------------------------------------------
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## [b]Internal-use only.[/b]  Runs logic for when the close button is pressed.
+func _on_close_button_pressed() -> void:
+	close()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

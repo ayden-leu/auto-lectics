@@ -39,7 +39,7 @@ static func _fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dict
 		printerr("DialogueLoader: Options field of this dialogue node file isn't an array.")
 	
 	# Optional fields
-	dialogue.font = configuredAttributes.get("font", dialogue.font)
+	dialogue.textThemePreset = configuredAttributes.get("textThemePreset", dialogue.textThemePreset)
 	dialogue.type = _verifyInList(
 		configuredAttributes.get("type", dialogue.type).to_lower(),
 		DialogueDefaults.DIALOGUE_TYPES,
@@ -92,7 +92,7 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 		DialogueDefaults.OPTION_TYPES,
 		option.type
 	)
-	option.font = configuredAttributes.get("font", option.font)
+	option.textThemePreset = configuredAttributes.get("textThemePreset", option.textThemePreset)
 	
 	option.checkFlags = configuredAttributes.get("checkFlags", option.checkFlags)
 	option.setFlags = configuredAttributes.get("setFlags", option.setFlags)
@@ -128,8 +128,8 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 
 ## [b]Internal-use only.[/b]  Replaces any instance of "inherit" in an option object configuration with the dialogue's corresponding value.
 static func _resolveOptionInheritance(option: Dictionary, optionOwner: Dictionary) -> void:
-	if option.font == "inherit":
-		option.font = optionOwner.font
+	if option.textThemePreset == "inherit":
+		option.textThemePreset = optionOwner.textThemePreset
 
 	if option.writeSpeed == "inherit":
 		option.writeSpeed = optionOwner.writeSpeed

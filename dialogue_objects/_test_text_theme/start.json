@@ -1,0 +1,12 @@
+{
+	"text": "no configuration",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "same with the option",
+			"type": "neutral",
+			"nextID": "one"
+		}
+	]
+}

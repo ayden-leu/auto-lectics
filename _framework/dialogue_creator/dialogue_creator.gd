@@ -116,6 +116,9 @@ func _createNodesFromFile(filename:String) -> void:
 	if data.has("nextOnHecticFailureID"):
 		newDialogueNode.nextOnHecticFailId = data.nextOnHecticFailureID
 	
+	if data.has("textThemePreset"):
+		newDialogueNode.textThemePreset = data.textThemePreset
+	
 	if data.has("writeSpeed"):
 		newDialogueNode.writeSpeedPreset = data.writeSpeed
 	
@@ -139,6 +142,9 @@ func _createNodesFromFile(filename:String) -> void:
 		
 		if option.has("type"):
 			newOptionNode.type = option.type
+		
+		if option.has("textThemePreset"):
+			newOptionNode.textThemePreset = option.textThemePreset
 		
 		if option.has("writeSpeed"):
 			newOptionNode.writeSpeedPreset = option.writeSpeed
