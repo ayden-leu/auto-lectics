@@ -10,11 +10,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vdm3e")
+metadata/_edit_lock_ = true
 
-[node name="DialogueLabel" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 57.0
+offset_right = 136.0
+offset_bottom = 97.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Preset:"
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_bottom = 0.018000001
-offset_right = 40.0
-offset_bottom = 11.3359995
+offset_left = 46.0
+offset_top = 108.0
+offset_right = 478.0
+offset_bottom = 135.0
 text = "here is some text that will change"
+
+[connection signal="item_selected" from="HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
