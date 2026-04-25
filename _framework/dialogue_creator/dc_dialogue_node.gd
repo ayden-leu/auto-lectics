@@ -45,6 +45,8 @@ const DIALOGUE_ID_PORT:int = 0
 @onready var textField:TextEdit = %TextField
 ## The node that handles the type you can choose.
 @onready var typeField:DC_TypeFieldOption = %TypeField
+## The node that handles the text themes you can choose.
+@onready var textThemeField:DC_TextTheme = %TextTheme
 ## The node that handles the mode you can choose.
 @onready var modeField:DC_ModeFieldOption = %ModeField
 ## The node that handles the write speed aspects you can modify.
@@ -122,6 +124,26 @@ var type:String:
 		typeField.option = newType
 	get():
 		return typeField.option
+
+## Used to get and set the mode for this [DC_DialogueNode].
+## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
+## Valid modes can be found in [member DialogueDefaults.DIALOGUE_MODES].
+## [br][br]
+## Usage:
+## [codeblock]
+## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
+##
+## # Get the current mode
+## print(dialogueNode.textThemePreset)  # output: "_test_one"
+## 
+## # Set the mode
+## dialogueNode.textThemePreset = _test_two"
+## [/codeblock]
+var textThemePreset:String:
+	set(newTheme):
+		textThemeField.textTheme = newTheme
+	get():
+		return textThemeField.textTheme
 
 ## Used to get and set the mode for this [DC_DialogueNode].
 ## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
@@ -238,6 +260,7 @@ func _ready() -> void:
 	set_slot_type_left(DIALOGUE_ID_PORT, PortType.DIALOGUE)
 	
 	sfxEventAspects = DialogueDefaults.DEFAULT_DIALOGUE.sfx
+	textThemeField.textTheme = "_defaultConsoleBot"
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -273,7 +296,7 @@ func getFields() -> Dictionary:
 		"text": textField.text,
 	}
 	
-	# font (unused atm)
+	# text theme (unused atm)
 	
 	currentValues.type = type
 	currentValues.mode = mode
@@ -284,6 +307,9 @@ func getFields() -> Dictionary:
 	else:
 		if nextOnHecticFailId:
 			currentValues.nextOnHecticFailureID = nextOnHecticFailId
+	
+	if textThemePreset != DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset:
+		currentValues.textThemePreset = textThemePreset
 	
 	if writeSpeedPreset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		currentValues.writeSpeed = writeSpeedPreset
@@ -429,6 +455,9 @@ func _on_debug_pressed() -> void:
 	print("numOptions: ", numOptions)
 	print("Type: ", typeField.option)
 	print("Mode: ", modeField.option)
+	
+	if textThemeField.textTheme != DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset:
+		print("Text Theme: ", textThemeField.textTheme)
 	
 	if modeField.option == "hectic":
 		print("Next On Hectic Fail: ", nextOnHecticFailId)

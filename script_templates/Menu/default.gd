@@ -1,6 +1,9 @@
-extends DC_FieldOption
-class_name DC_TypeFieldOption
+# meta-default: true
+# meta-description: Base template for Menu with default Godot cycle methods
 
+extends _BASE_
+
+# feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
@@ -8,11 +11,6 @@ class_name DC_TypeFieldOption
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
-## The two types of types a [DC_BaseNode] can be.
-enum VALID_TYPES {
-	DIALOGUE,  ## Refer to [member DialogueDefaults.DIALOGUE_TYPES].
-	OPTION     ## Refer to [member DialogueDefaults.OPTION_TYPES].
-}
 
 # ------------------------------------------------
 # constants
@@ -21,8 +19,6 @@ enum VALID_TYPES {
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The type of this [DC_BaseNode].
-@export var type:VALID_TYPES
 
 # ------------------------------------------------
 # onready variables
@@ -31,32 +27,19 @@ enum VALID_TYPES {
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## The chosen type.
-var option:String:
-	set(newOption):
-		chooser.selected = valueToOptionIndex[newOption]
-	get():
-		if type == VALID_TYPES.DIALOGUE:
-			return DialogueDefaults.DIALOGUE_TYPES[chooser.selected]
-		elif type == VALID_TYPES.OPTION:
-			return DialogueDefaults.OPTION_TYPES[chooser.selected]
-		printerr("field_option_type: Unhandled option type: ", type)
-		return "error"
 
 # ------------------------------------------------
 # normal variables only referenced in script
+# [b]Internal-use only.[/b]
 # ------------------------------------------------
+
+#var subMenu:Menu = preload("uid of menu scene")
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	if type == VALID_TYPES.DIALOGUE:
-		fillValueToOptionIndex(DialogueDefaults.DIALOGUE_TYPES)
-	elif type == VALID_TYPES.OPTION:
-		fillValueToOptionIndex(DialogueDefaults.OPTION_TYPES)
-	
-	option = DialogueDefaults.DEFAULT_DIALOGUE.type
+_TS_super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -64,11 +47,15 @@ func _ready() -> void:
 
 # ------------------------------------------------
 # functions only referenced inside this script
+# [b]Internal-use only.[/b]
 # ------------------------------------------------
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+
+#func _on_open_submenu_pressed() -> void:
+#_TS_open.emit(subMenu)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

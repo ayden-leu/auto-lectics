@@ -133,7 +133,7 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	
 	console.nameOfNpcTalkingTo = myName
 	console.currentDialogueID = _currentDialogueID
-	console.mode = dialogueEntry.mode
+	console.mode = dialogueEntry.mode 
 	
 	if dialogueEntry.mode == "hectic":
 		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
@@ -141,9 +141,11 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	else:
 		console.hecticFailureDialogueID = ""
 	
+	if dialogueEntry.textThemePreset != "":
+		console.themeVariation.right = dialogueEntry.textThemePreset
+	
 	console.textWriteSpeed = dialogueEntry.writeSpeedCustom
 	console.loadSfx(dialogueEntry.sfx)
-	#_dialogueConsole.dialogueData = dialogueEntry
 	console.textToAdd = dialogueEntry.text
 	console.loadOptionData(dialogueEntry.options)
 	console.prepare()

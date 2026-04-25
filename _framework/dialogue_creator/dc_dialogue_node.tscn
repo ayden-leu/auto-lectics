@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5o5n3jy08obe"]
+[gd_scene load_steps=13 format=3 uid="uid://c5o5n3jy08obe"]
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_framework/dialogue_creator/dc_dialogue_node.gd" id="1_g3bfk"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_framework/dialogue_creator/visual_assets/minus.svg" id="5_i0lsd"]
 [ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/button_toggle_area.gd" id="6_je0p8"]
 [ext_resource type="Script" uid="uid://dxdap4e46r13w" path="res://_framework/dialogue_creator/helpers/field_option_mode.gd" id="7_rapsn"]
+[ext_resource type="Script" uid="uid://buogf2xidqpac" path="res://_framework/dialogue_creator/helpers/field_option_text_theme.gd" id="8_mrndd"]
 [ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_framework/dialogue_creator/helpers/aspects_write_speed.gd" id="8_u2mdd"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/aspects_sfx.gd" id="9_mug1a"]
 [ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_framework/dialogue_creator/helpers/field_option_write_speed_preset.gd" id="10_1plpy"]
@@ -184,18 +185,18 @@ layout_mode = 2
 [node name="Row1" type="HBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="Font" type="HBoxContainer" parent="AdvancedOptions/Row1"]
+[node name="TextTheme" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("chooser")]
+unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("8_mrndd")
+chooser = NodePath("OptionButton")
 
-[node name="Label" type="Label" parent="AdvancedOptions/Row1/Font"]
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/TextTheme"]
 layout_mode = 2
-theme_type_variation = &"LabelDisabled"
-text = "Font"
+text = "Text Theme"
 
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/Font"]
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/TextTheme"]
 layout_mode = 2
-theme_type_variation = &"OptionButtonDisabled"
-disabled = true
 
 [node name="VSeparator" type="VSeparator" parent="AdvancedOptions/Row1"]
 layout_mode = 2
@@ -331,10 +332,12 @@ layout_mode = 2
 
 [connection signal="text_changed" from="DialogueID/DialogueIDField" to="." method="_on_dialogue_id_updated"]
 [connection signal="pressed" from="DialogueID/Save" to="." method="_on_save_pressed"]
+[connection signal="item_selected" from="Row1/TypeField/OptionButton" to="Row1/TypeField" method="_on_chooser_updated"]
 [connection signal="pressed" from="Row1/Options/AddOption" to="." method="_on_add_option_pressed"]
 [connection signal="pressed" from="Row1/Options/RemoveOption" to="." method="_on_remove_option_pressed"]
 [connection signal="resize" from="Row2/Advanced" to="." method="_on_resize_height"]
 [connection signal="toggled" from="Row2/Advanced" to="Row2/Advanced" method="_on_toggled"]
+[connection signal="item_selected" from="AdvancedOptions/Row1/TextTheme/OptionButton" to="AdvancedOptions/Row1/TextTheme" method="_on_chooser_updated"]
 [connection signal="set_hectic_port" from="AdvancedOptions/Row1/ModeField" to="." method="_on_set_hectic_port"]
 [connection signal="item_selected" from="AdvancedOptions/Row1/ModeField/OptionButton" to="AdvancedOptions/Row1/ModeField" method="_on_chooser_updated"]
 [connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]

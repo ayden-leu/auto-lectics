@@ -29,6 +29,8 @@ const NEXT_ID_PORT:int = 0
 @onready var textField:TextEdit = %TextField
 ## The node that handles the type you can choose.
 @onready var typeField:DC_TypeFieldOption = %TypeField
+## The node that handles the text themes you can choose.
+@onready var textThemeField:DC_TextTheme = %TextTheme
 ## The node that handles the write speed aspects you can modify.
 @onready var writeSpeedAspectsHandler:DC_AspectsWriteSpeed = %WriteSpeedAspects
 ## The node that handles the SFX event SFX IDs you can choose.
@@ -120,6 +122,26 @@ var sfxEventAspects:Dictionary:
 		_on_attribute_modified()
 	get():
 		return sfxEventAspectsHandler.aspects
+
+## Used to get and set the mode for this [DC_OptionNode].
+## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
+## Valid modes can be found in [member DialogueDefaults.DIALOGUE_MODES].
+## [br][br]
+## Usage:
+## [codeblock]
+## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
+##
+## # Get the current mode
+## print(dialogueNode.textThemePreset)  # output: "_test_one"
+## 
+## # Set the mode
+## dialogueNode.textThemePreset = _test_two"
+## [/codeblock]
+var textThemePreset:String:
+	set(newTheme):
+		textThemeField.textTheme = newTheme
+	get():
+		return textThemeField.textTheme
 
 ## Used to get and set the write speed preset for this [DC_OptionNode].
 ## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
@@ -259,6 +281,7 @@ func _ready() -> void:
 	set_slot_type_right(1, PortType.DIALOGUE)
 	
 	sfxEventAspects = DialogueDefaults.DEFAULT_OPTION.sfx
+	textThemeField.textTheme = "_defaultConsolePlayer"
 	spawnDelay = DialogueDefaults.DEFAULT_OPTION.spawnDelay
 	lifetime = DialogueDefaults.DEFAULT_OPTION.lifetime
 
@@ -284,9 +307,10 @@ func _getFields() -> Dictionary:
 		"text": textField.text
 	}
 	
-	# font (unused atm)
-	
 	currentValues.type = type
+	
+	if textThemePreset != DialogueDefaults.DEFAULT_OPTION.textThemePreset:
+		currentValues.textThemePreset = textThemePreset
 	
 	if writeSpeedPreset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		currentValues.writeSpeed = writeSpeedPreset
@@ -355,6 +379,9 @@ func _on_debug_pressed() -> void:
 	print("Port: ", port)
 	print("Text: ", text)
 	print("Type: ", typeField.option)
+	
+	if textThemeField.textTheme != DialogueDefaults.DEFAULT_OPTION.textThemePreset:
+		print("Text Theme: ", textThemeField.textTheme)
 	
 	if writeSpeedAspectsHandler.preset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
 		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
