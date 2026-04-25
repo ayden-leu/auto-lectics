@@ -55,7 +55,7 @@ var _loadingNotes := false
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	id = "blueprint"
+	menuID = "blueprint"
 	pausesGame = false
 	super()
 	
@@ -81,7 +81,7 @@ func _loadEntries() -> void:
 	for entry:BlueprintMenuNpcEntry in _npcEntryHolder.get_children():
 		entry.selected.connect(_on_npc_entry_selected)
 		_npcEntries.push_back(entry)
-		_idToIndex[entry.id] = index
+		_idToIndex[entry.npcID] = index
 		index += 1
 
 ## [b]Internal-use only.[/b]  Gets the [membere _npcEntries] index of a [BlueprintMenuNpcEntry].
@@ -108,11 +108,11 @@ func _loadNotes() -> void:
 func _determineIfGuessMatchesSelectedEntry(guess:String) -> void:
 	var correctName:String = _selectedEntry.myName
 	if guess.to_lower() == correctName.to_lower():
-		print("Correct name correctGuesses for ", _selectedEntry.id)
+		print("Correct name correctGuesses for ", _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = true
-		npc_name_guessed_correctly.emit(_selectedEntry.id)
+		npc_name_guessed_correctly.emit(_selectedEntry.npcID)
 	else:
-		print("Incorrect name for ", _selectedEntry.id)
+		print("Incorrect name for ", _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = false
 
 ## [b]Internal-use only.[/b]  "Unlocks" all NPC entries whose names were
@@ -148,7 +148,7 @@ func _updateEntryVisibility() -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for when an NPC entry is selected.
 func _on_npc_entry_selected(entry:BlueprintMenuNpcEntry) -> void:
-	print("Selected NPC from menu: ", entry.id)
+	print("Selected NPC from menu: ", entry.npcID)
 	_selectedEntry = entry
 	_showDetails()
 

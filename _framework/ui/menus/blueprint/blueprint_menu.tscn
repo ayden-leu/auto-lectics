@@ -50,19 +50,19 @@ offset_bottom = 574.0
 
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-id = "npc_test_1"
+npcID = "npc_test_1"
 myName = "Aster"
 lockedText = "???"
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-id = "npc_test_2"
+npcID = "npc_test_2"
 myName = "Mira"
 lockedText = "???"
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-id = "npc_test_3"
+npcID = "npc_test_3"
 myName = "Orin"
 lockedText = "???"
 

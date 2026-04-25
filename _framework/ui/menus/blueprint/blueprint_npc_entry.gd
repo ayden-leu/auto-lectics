@@ -20,7 +20,7 @@ signal selected(me:BlueprintMenuNpcEntry)
 # export variables
 # ------------------------------------------------
 ## The ID of the NPC in this NPC entry.
-@export var id:String = "npc_test"
+@export var npcID:String = "npc_test"
 ## The name of the NPC in this entry/
 @export var myName:String = "NPC Test"
 ## The text that is displayed when this entry is locked.

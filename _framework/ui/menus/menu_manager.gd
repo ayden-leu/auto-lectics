@@ -176,7 +176,7 @@ func _createMenu(menu:Resource) -> void:
 	var temp:Menu = menu.instantiate()
 	add_child(temp)
 	
-	_idToIndex[temp.id] = _menus.size()
+	_idToIndex[temp.menuID] = _menus.size()
 	_menus.push_back(temp)
 	
 	temp.close_me.connect(_on_menu_close)

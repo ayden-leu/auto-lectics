@@ -28,7 +28,7 @@ signal close_me()
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## The ID of this menu.
-var id:String
+var menuID:String
 ## Whether this menu pauses the game or not.
 var pausesGame:bool = true
 

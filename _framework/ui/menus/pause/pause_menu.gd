@@ -35,7 +35,7 @@ extends Menu
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	id = "pause"
+	menuID = "pause"
 	super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------
