@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=17 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="2_r7opt"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="5_hmrtd"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="5_vekyi"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="6_hmrtd"]
-[ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/egg.tscn" id="6_xq8qk"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="7_12tdw"]
 [ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="8_12tdw"]
 
@@ -73,16 +72,13 @@ initialDialogueID = "DB1"
 [node name="miniboss" parent="npcs" instance=ExtResource("5_hmrtd")]
 transform = Transform3D(0.99940413, 0, 0.034515753, 0, 1, 0, -0.034515753, 0, 0.99940413, -7.0590224, 4.1478424, 12.177582)
 
-[node name="egg" parent="npcs" instance=ExtResource("6_xq8qk")]
-transform = Transform3D(0.9937133, 0, -0.11195457, 0, 1, 0, 0.11195457, 0, 0.9937133, 20.022064, 0.19866833, -12.177035)
-myName = "NPC_Test"
-
 [node name="ship" parent="npcs" instance=ExtResource("7_12tdw")]
 transform = Transform3D(-0.008601501, 0.102432035, -0.9947028, -0.083234586, 0.9912144, 0.10279253, 0.99649286, 0.08367786, -4.347984e-08, -27.44818, 3.4873781, 5.750145)
 lookAtInteractorWhileTalking = true
 
 [node name="sludge" parent="npcs" instance=ExtResource("8_12tdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.15765, -1.9073486e-06, -9.286918)
+_talkOnlyOnce = false
 initialDialogueID = "SB1"
 myName = "sludge"
 
