@@ -1,3 +1,4 @@
+@icon("uid://dfdwbkf245m7l")
 extends Node
 class_name MenuManager
 ## Manages any menus opened by the player.

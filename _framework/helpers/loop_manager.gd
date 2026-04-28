@@ -1,7 +1,8 @@
 @tool
+@icon("uid://kqsaeirnco0d")
 extends Node
 class_name LoopManager
-## Establishes a loop system that "resets" all 
+## "Resets" "everything" after a configurable time period.
 
 # TODO:  create a proper test scene to test functionality.
 # TODO:  add export variable for fade overlay

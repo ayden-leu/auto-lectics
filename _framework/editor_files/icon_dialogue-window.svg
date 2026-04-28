@@ -4,7 +4,7 @@
    height="16"
    version="1.1"
    id="svg1"
-   sodipodi:docname="icon_input-handler.svg"
+   sodipodi:docname="icon_dialogue-window.svg"
    inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -97,24 +97,26 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="42.161242"
-     inkscape:cx="7.7915162"
-     inkscape:cy="9.7008527"
+     inkscape:zoom="29.8125"
+     inkscape:cx="7.0607966"
+     inkscape:cy="0.33542977"
      inkscape:window-width="2048"
      inkscape:window-height="1198"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer1"
-     inkscape:label="body"
-     style="display:inline">
-    <path
-       style="fill:#e0e0e0;fill-opacity:1;stroke-width:0.0125217;stroke-opacity:0.39484"
-       d="M 1.6154262,13.052401 C 0.97443126,12.878641 0.50075199,12.378584 0.36861376,11.73616 0.3230117,11.514453 0.32785265,11.245527 0.39633852,10.195986 0.65736063,6.1958332 1.54039,4.0795373 3.1750989,3.5363263 3.698677,3.3623422 3.429623,3.3716322 7.9449094,3.3716322 c 3.8346296,0 4.0845746,0.00265 4.3294276,0.045901 1.138246,0.2010592 1.905571,0.9235079 2.443204,2.3003147 0.474823,1.2159595 0.793935,3.2162336 0.856251,5.3671801 0.01273,0.439363 0.0084,0.554765 -0.02606,0.701219 -0.13422,0.569841 -0.578886,1.052645 -1.141598,1.239513 -0.233281,0.07747 -0.611514,0.09469 -0.860967,0.03918 -0.546541,-0.121591 -0.983228,-0.491242 -1.215203,-1.028657 -0.119337,-0.27647 -0.22219,-0.417039 -0.383043,-0.523508 -0.265021,-0.175421 -0.03828,-0.166529 -4.055177,-0.159026 l -3.6167862,0.0068 -0.1665449,0.082 C 3.8902095,11.549977 3.7170989,11.737951 3.6261087,11.966264 3.4205445,12.482067 3.0532164,12.845285 2.5673361,13.01319 2.2972052,13.10654 1.8786435,13.1238 1.6154252,13.05245 Z"
-       id="path1"
-       inkscape:label="controller" />
-  </g>
+     inkscape:current-layer="svg1" />
+  <rect
+     style="display:inline;fill:none;stroke:#8eef97;stroke-width:1.5;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1"
+     width="12.485658"
+     height="12.485658"
+     x="1.7571731"
+     y="1.7571731"
+     ry="0"
+     inkscape:label="content" />
+  <path
+     style="fill:none;stroke:#8eef97;stroke-width:1.5;stroke-dasharray:none;stroke-opacity:1"
+     d="M 1.3689727,5.75 H 14.752621 Z"
+     id="path2" />
 </svg>

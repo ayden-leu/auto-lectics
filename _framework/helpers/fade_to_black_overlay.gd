@@ -1,3 +1,4 @@
+@icon("uid://cb6ajbh4fp7fh")
 extends Control
 class_name FadeToBlackOverlay
 ## A simple helper scene that creates a "fade-to-black" effect.
