@@ -33,12 +33,12 @@ extends _BASE_
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 
-#var subMenu:Menu = preload("uid of menu scene")
-
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+_TS_id = ""
+_TS_#pauseGame = true
 _TS_super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------
@@ -53,9 +53,6 @@ _TS_super()  # runs the inherited class' _ready() function.
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-
-#func _on_open_submenu_pressed() -> void:
-#_TS_open.emit(subMenu)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

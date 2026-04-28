@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://jwmfdjuj4wcr"]
 
-[ext_resource type="Script" uid="uid://b3h2vxtyf01uc" path="res://test_menu_manager.gd" id="1_r2hi6"]
+[ext_resource type="Script" uid="uid://b3h2vxtyf01uc" path="res://_framework/test_scenes/test_menu_manager.gd" id="1_r2hi6"]
 
 [node name="Test_MenuManager" type="Node"]
 script = ExtResource("1_r2hi6")
@@ -17,4 +17,39 @@ offset_right = 141.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Press \"Esc\" to open the pause menu."
+text = "Press \"Esc\" to open the pause menu.
+Or press \"B\" to open the BlueprintMenu"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 27.0
+offset_top = 22.0
+offset_right = 287.0
+offset_bottom = 99.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "BlueprintMenu:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "NPC Entry just guessed correctly:"
+
+[node name="BP_CorrectGuess" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Unlock condition met:"
+
+[node name="BP_UnlockMet" type="Label" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2

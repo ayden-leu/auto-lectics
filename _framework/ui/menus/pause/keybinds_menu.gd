@@ -37,6 +37,7 @@ extends Menu
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	menuID = "keybinds"
 	super()  # runs the inherited class' _ready() function.
 	
 	_generateKeybindEntries()
