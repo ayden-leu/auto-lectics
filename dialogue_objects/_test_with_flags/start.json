@@ -1,0 +1,23 @@
+{
+	"text": "there should be two options",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "there's only one",
+			"type": "neutral",
+			"nextID": "continue",
+			"setFlags": {
+				"testFlag": true
+			}
+		},
+		{
+			"text": "there are two",
+			"type": "neutral",
+			"nextID": "end",
+			"checkFlags": {
+				"testFlag": true
+			}
+		}
+	]
+}

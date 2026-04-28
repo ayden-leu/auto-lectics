@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4elv63htgufa"]
+
+[ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="1_jxvag"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_d2s42"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="4_4x84g"]
+[ext_resource type="Script" uid="uid://ngayr0wn30tw" path="res://_framework/helpers/death_plane.gd" id="4_60sf8"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_jgjv2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_v822v"]
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_60sf8"]
+data = PackedVector3Array(-2.5, 0.25, 2.5, 2.5, 0.25, 2.5, -2.5, -0.25, 2.5, 2.5, 0.25, 2.5, 2.5, -0.25, 2.5, -2.5, -0.25, 2.5, 2.5, 0.25, -2.5, -2.5, 0.25, -2.5, 2.5, -0.25, -2.5, -2.5, 0.25, -2.5, -2.5, -0.25, -2.5, 2.5, -0.25, -2.5, 2.5, 0.25, 2.5, 2.5, 0.25, -2.5, 2.5, -0.25, 2.5, 2.5, 0.25, -2.5, 2.5, -0.25, -2.5, 2.5, -0.25, 2.5, -2.5, 0.25, -2.5, -2.5, 0.25, 2.5, -2.5, -0.25, -2.5, -2.5, 0.25, 2.5, -2.5, -0.25, 2.5, -2.5, -0.25, -2.5, 2.5, 0.25, 2.5, -2.5, 0.25, 2.5, 2.5, 0.25, -2.5, -2.5, 0.25, 2.5, -2.5, 0.25, -2.5, 2.5, 0.25, -2.5, -2.5, -0.25, 2.5, 2.5, -0.25, 2.5, -2.5, -0.25, -2.5, 2.5, -0.25, 2.5, 2.5, -0.25, -2.5, -2.5, -0.25, -2.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4x84g"]
+data = PackedVector3Array(-2.5, 0.25, 2.5, 2.5, 0.25, 2.5, -2.5, -0.25, 2.5, 2.5, 0.25, 2.5, 2.5, -0.25, 2.5, -2.5, -0.25, 2.5, 2.5, 0.25, -2.5, -2.5, 0.25, -2.5, 2.5, -0.25, -2.5, -2.5, 0.25, -2.5, -2.5, -0.25, -2.5, 2.5, -0.25, -2.5, 2.5, 0.25, 2.5, 2.5, 0.25, -2.5, 2.5, -0.25, 2.5, 2.5, 0.25, -2.5, 2.5, -0.25, -2.5, 2.5, -0.25, 2.5, -2.5, 0.25, -2.5, -2.5, 0.25, 2.5, -2.5, -0.25, -2.5, -2.5, 0.25, 2.5, -2.5, -0.25, 2.5, -2.5, -0.25, -2.5, 2.5, 0.25, 2.5, -2.5, 0.25, 2.5, 2.5, 0.25, -2.5, -2.5, 0.25, 2.5, -2.5, 0.25, -2.5, 2.5, 0.25, -2.5, -2.5, -0.25, 2.5, 2.5, -0.25, 2.5, -2.5, -0.25, -2.5, 2.5, -0.25, 2.5, 2.5, -0.25, -2.5, -2.5, -0.25, -2.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4x84g"]
+size = Vector3(1, 4.1533203, 4.439209)
+
+[node name="Test_DeathPlane" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("1_jxvag")
+
+[node name="Floor1" type="MeshInstance3D" parent="Environment"]
+mesh = SubResource("BoxMesh_v822v")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor1"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor1/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_60sf8")
+
+[node name="Floor2" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1419907, 0, 0)
+mesh = SubResource("BoxMesh_v822v")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4x84g")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -0.0508544, 0.9987062, 0, -0.9987062, -0.0508544, 0, 9.166182, 0)
+light_energy = 0.28
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("3_d2s42")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7875229, 2.883008, -1.2635736)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_jgjv2")]
+focus = NodePath("../Player")
+
+[node name="DeathPlane" parent="." instance=ExtResource("4_4x84g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7017784, -1.7234268, 0)
+
+[node name="DeathPlaneCustomShape" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.243298, 2.4578354, 0)
+script = ExtResource("4_60sf8")
+metadata/_custom_type_script = "uid://ngayr0wn30tw"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeathPlaneCustomShape"]
+shape = SubResource("BoxShape3D_4x84g")
+debug_color = Color(0.7603503, 0.44401464, 0.14134872, 1)
+
+[node name="Notes" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9562486, -0.29255527, 0, 0.29255527, 0.9562486, 3.7287288, 6.986101, -10.115967)
+text = "This is for testing the functionality
+of the DeathPlane."
+font_size = 256
+outline_size = 127
+metadata/_edit_group_ = true
+
+[node name="Notes2" type="Label3D" parent="Notes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.37, 0)
+text = "The pre-built scene comes with a WorldBoundaryShape (red)
+but it also works with other CollisionShapes.
+Turn on Visible Collision Shapes under the Debug tab."
+font_size = 128
+outline_size = 63

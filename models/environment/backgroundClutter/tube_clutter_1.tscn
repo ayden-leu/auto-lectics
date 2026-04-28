@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dytucwmjofvdw"]
-
-[ext_resource type="PackedScene" uid="uid://b5h1i0hu6oaqn" path="res://models/BlendFiles/TubeClutter1.blend" id="1_ugj85"]
-
-[node name="TubeClutter1" instance=ExtResource("1_ugj85")]
-
-[node name="Cylinder_030" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -2.2824516, 5.401599, -0.035873413)

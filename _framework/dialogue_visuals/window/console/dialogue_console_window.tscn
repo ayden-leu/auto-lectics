@@ -1,0 +1,164 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8oqtsvu488a"]
+
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_0et2d"]
+[ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/console/dialogue_console_window.gd" id="1_qw6ov"]
+[ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_f2hpt"]
+[ext_resource type="PackedScene" uid="uid://1n8yvdu14dcd" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry.tscn" id="4_pedep"]
+[ext_resource type="PackedScene" uid="uid://2pbfftop6j5e" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry_spacer.tscn" id="5_nsbvi"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1d7as"]
+resource_local_to_scene = true
+playback_mode = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f2hpt"]
+
+[node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 428.0
+offset_bottom = 468.0
+theme = ExtResource("1_0et2d")
+script = ExtResource("1_qw6ov")
+headerPanel = NodePath("Header")
+headerLabel = NodePath("Header/HeaderLabel")
+canBeClosed = true
+closeButton = NodePath("Header/CloseButton")
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 429.0
+offset_bottom = 30.0
+mouse_filter = 1
+theme_type_variation = &"PanelHeader"
+
+[node name="HeaderLabel" type="Label" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 259.0
+offset_bottom = 26.0
+size_flags_horizontal = 0
+mouse_filter = 1
+theme_type_variation = &"LabelHeaderConsole"
+text = "Eggs Benedict"
+
+[node name="CloseButton" parent="Header" instance=ExtResource("3_f2hpt")]
+layout_mode = 0
+offset_left = 405.0
+offset_right = 429.0
+offset_bottom = 27.0
+
+[node name="Contents" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 428.0
+offset_bottom = 468.0
+mouse_filter = 1
+
+[node name="Main" type="Panel" parent="Contents"]
+layout_mode = 0
+offset_right = 429.0
+offset_bottom = 392.0
+mouse_filter = 1
+theme_type_variation = &"PanelConsoleContents"
+
+[node name="ContentsScroller" type="ScrollContainer" parent="Contents/Main"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 4
+
+[node name="DialogueLogStorage" type="VBoxContainer" parent="Contents/Main/ContentsScroller"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(393, 0)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("4_pedep")]
+layout_mode = 2
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("4_pedep")]
+layout_mode = 2
+theme_type_variation = &"RichTextLabelBot"
+text = "The office has sent you to this planet to find what lies at the center of this factory. Blueprints show it might be a big glowing white sphere, so keep an eye out."
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("4_pedep")]
+layout_mode = 2
+text = "help"
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+layout_mode = 2
+
+[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("5_nsbvi")]
+layout_mode = 2
+
+[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("4_pedep")]
+layout_mode = 2
+theme_type_variation = &"RichTextLabelBot"
+text = "me when i log my entry
+but with
+multiple lines"
+
+[node name="ConsoleInput" type="LineEdit" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 6.0
+offset_top = 401.0
+offset_right = 422.0
+offset_bottom = 432.0
+keep_editing_on_text_submit = true
+
+[node name="OptionSpawnPosition" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-327, -9)
+metadata/_edit_group_ = true
+
+[node name="HecticBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = -28.0
+offset_right = 429.0
+offset_bottom = -1.0
+mouse_filter = 1
+value = 100.0
+show_percentage = false
+metadata/_edit_lock_ = true
+
+[node name="HecticTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SFX" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="text" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_1d7as")
+
+[node name="spawn" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_f2hpt")
+
+[connection signal="text_submitted" from="Contents/ConsoleInput" to="." method="_on_input_submitted"]
+[connection signal="timeout" from="HecticTimer" to="." method="_on_hectic_timer_timeout"]

@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://bt36r3dqntrwu"]
+
+[ext_resource type="Script" uid="uid://b04t3tqdhiihd" path="res://_framework/test_scenes/test_npc_patrol.gd" id="1_us853"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_fa21v"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_peiq8"]
+[ext_resource type="PackedScene" uid="uid://hkpx0aww72h8" path="res://_framework/entities/npcs/npc_test.tscn" id="6_453m6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_us853"]
+size = Vector3(30, 0.5, 30)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_w3mbd"]
+data = PackedVector3Array(-15, 0.25, 15, 15, 0.25, 15, -15, -0.25, 15, 15, 0.25, 15, 15, -0.25, 15, -15, -0.25, 15, 15, 0.25, -15, -15, 0.25, -15, 15, -0.25, -15, -15, 0.25, -15, -15, -0.25, -15, 15, -0.25, -15, 15, 0.25, 15, 15, 0.25, -15, 15, -0.25, 15, 15, 0.25, -15, 15, -0.25, -15, 15, -0.25, 15, -15, 0.25, -15, -15, 0.25, 15, -15, -0.25, -15, -15, 0.25, 15, -15, -0.25, 15, -15, -0.25, -15, 15, 0.25, 15, -15, 0.25, 15, 15, 0.25, -15, -15, 0.25, 15, -15, 0.25, -15, 15, 0.25, -15, -15, -0.25, 15, 15, -0.25, 15, -15, -0.25, -15, 15, -0.25, 15, 15, -0.25, -15, -15, -0.25, -15)
+
+[sub_resource type="Curve3D" id="Curve3D_w3mbd"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -6.2105236, 0, -8.4182005, 0, 0, 0, 0, 0, 0, -3.1123998, 0, -9.955955, -1.1425257, 2.670288e-05, -0.8080683, 1.1425257, -2.670288e-05, 0.8080683, 0.5628998, -2.670288e-05, -7.6779737, 0, 0, 0, 0, 0, 0, 3.1743119, -2.670288e-05, -5.805143, 0.22978878, -2.670288e-05, -0.9755113, -0.22978878, 2.670288e-05, 0.9755113, 3.8337605, -2.670288e-05, -3.3783765, 0, 0, 0, 0, 0, 0, 1.2294962, 0, -2.425479, 0, 0, 0, 0, 0, 0, -0.88788486, -2.670288e-05, -2.8771963, 2.5553856, 0, 0.2487545, -2.5553856, 0, -0.2487545, -4.5370846, 0, -4.2798305, 0, 0, 0, 0, 0, 0, -7.6933823, -2.670288e-05, -2.3760161, -0.33920956, 0, -0.83671916, 0.33920956, 0, 0.83671916, -8.110102, 0, -0.32237336, 0, 0, 0, 0, 0, 0, -4.5370846, 0, 1.3962938, -1.628212, 0, -0.42966676, 1.628212, 0, 0.42966676, -0.10473037, 0, 1.034469, 0, 0, 0, 0, 0, 0, 2.9481623, 0, 3.4993987, 1.2890015, 0, 0.90456295, -1.2890015, 0, -0.90456295, 0.5510771, 0, 5.5120487, 0, 0, 0, 0, 0, 0, -1.8007848, 0, 6.5975227, 0, 0, 0, 0, 0, 0, -4.211499, -2.670288e-05, 7.5420732, 0, 0, 0, 0, 0, 0, -7.007557, -2.670288e-05, 7.2255387, 0, 0, 0, 0, 0, 0, -10.278416, -2.670288e-05, 4.060191, 0, 0, 0, 0, 0, 0, -10.858729, -2.670288e-05, -0.42405164, 0, 0, 0, 0, 0, 0, -9.909126, -2.670288e-05, -4.5126257, -1.1679802, 0, 0.684906, 1.1679802, 0, -0.684906, -9, 0, -7),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 21
+
+[node name="Test_NpcPatrol" type="Node3D"]
+script = ExtResource("1_us853")
+
+[node name="Notes" type="Label3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 25.748299, 4.702942, 0.75749445)
+text = "This test is for testing the patrol functionality of NPCs.
+NPCs in general don't have gravity at the moment.
+The NPC used here is npc_test under the _testing folder."
+font_size = 256
+outline_size = 127
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+
+[node name="Floor" type="MeshInstance3D" parent="Environment"]
+mesh = SubResource("BoxMesh_us853")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_w3mbd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.54621893, 0.042597797, -0.8365587, 0.8376424, -0.027777633, 0.5455122, -4.440892e-16, -0.99870616, -0.05085439, 0, 9.166182, 0)
+light_energy = 0.28
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("3_fa21v")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.925569, 0)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_peiq8")]
+focus = NodePath("../Player")
+_actAsFocus = true
+_distanceFromOrigin = Vector3(0, 5, 10)
+
+[node name="RespawnPosition" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.925569, 0)
+
+[node name="NPC_Test" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7292366, 1.6022091, 0)
+patrolPath = NodePath("../Path3D")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+curve = SubResource("Curve3D_w3mbd")
+debug_custom_color = Color(0.038397167, 0.038397167, 0.03839716, 1)

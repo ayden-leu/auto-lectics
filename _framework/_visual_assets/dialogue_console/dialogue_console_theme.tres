@@ -1,0 +1,72 @@
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bvocyor065ht5"]
+
+[ext_resource type="StyleBox" uid="uid://gh7vrriyyneh" path="res://_framework/_visual_assets/dialogue_console/close_button_normal.tres" id="1_f3gol"]
+[ext_resource type="StyleBox" uid="uid://x2ch6ugc6psn" path="res://_framework/_visual_assets/dialogue_console/close_button_hover.tres" id="1_ibxls"]
+[ext_resource type="StyleBox" uid="uid://cg04vp7p3ndl0" path="res://_framework/_visual_assets/dialogue_console/window_header.tres" id="1_p17lh"]
+[ext_resource type="StyleBox" uid="uid://dlmtitsgtsegb" path="res://_framework/_visual_assets/dialogue_console/window.tres" id="1_t2v17"]
+[ext_resource type="StyleBox" uid="uid://srb773t8q5rm" path="res://_framework/_visual_assets/dialogue_console/line_edit_normal.tres" id="3_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://mhqiqcr76hbc" path="res://_framework/_visual_assets/dialogue_console/panel_console_contents.tres" id="5_qyjuh"]
+[ext_resource type="StyleBox" uid="uid://dl6vk2u5j558s" path="res://_framework/_visual_assets/dialogue_console/scroll_bar.tres" id="6_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://cs6h0r3p3fvqh" path="res://_framework/_visual_assets/dialogue_console/progress_bar_background.tres" id="7_aug18"]
+[ext_resource type="StyleBox" uid="uid://3atvdavvk3i2" path="res://_framework/_visual_assets/dialogue_console/scroll_bar_background.tres" id="7_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://cik3rwvp1n6d2" path="res://_framework/_visual_assets/dialogue_console/progress_bar_fill.tres" id="8_aab04"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cl5rt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p17lh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aug18"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t2v17"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f3gol"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ibxls"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jtk14"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ikntp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ybx5l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qyjuh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ipegu"]
+
+[resource]
+ButtonClose/base_type = &"Button"
+ButtonClose/colors/font_color = Color(0, 0, 0, 1)
+ButtonClose/colors/font_focus_color = Color(0, 0, 0, 1)
+ButtonClose/colors/font_hover_color = Color(1, 1, 1, 1)
+ButtonClose/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+ButtonClose/colors/font_pressed_color = Color(1, 1, 1, 1)
+ButtonClose/styles/hover = ExtResource("1_ibxls")
+ButtonClose/styles/normal = ExtResource("1_f3gol")
+ButtonClose/styles/pressed = ExtResource("1_ibxls")
+ButtonOverlay/base_type = &"Button"
+ButtonOverlay/styles/disabled = SubResource("StyleBoxEmpty_cl5rt")
+ButtonOverlay/styles/disabled_mirrored = SubResource("StyleBoxEmpty_p17lh")
+ButtonOverlay/styles/focus = SubResource("StyleBoxEmpty_aug18")
+ButtonOverlay/styles/hover = SubResource("StyleBoxEmpty_t2v17")
+ButtonOverlay/styles/hover_mirrored = SubResource("StyleBoxEmpty_f3gol")
+ButtonOverlay/styles/hover_pressed = SubResource("StyleBoxEmpty_ibxls")
+ButtonOverlay/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_jtk14")
+ButtonOverlay/styles/normal = SubResource("StyleBoxEmpty_ikntp")
+ButtonOverlay/styles/normal_mirrored = SubResource("StyleBoxEmpty_ybx5l")
+ButtonOverlay/styles/pressed = SubResource("StyleBoxEmpty_qyjuh")
+ButtonOverlay/styles/pressed_mirrored = SubResource("StyleBoxEmpty_ipegu")
+LabelHeaderConsole/base_type = &"Label"
+LabelHeaderConsole/colors/font_color = Color(0.9490196, 0.6313726, 0.101960786, 1)
+LineEdit/colors/caret_color = Color(1, 1, 1, 1)
+LineEdit/colors/font_color = Color(1, 1, 1, 1)
+LineEdit/styles/normal = ExtResource("3_ybx5l")
+Panel/styles/panel = ExtResource("1_t2v17")
+PanelConsoleContents/base_type = &"Panel"
+PanelConsoleContents/styles/panel = ExtResource("5_qyjuh")
+PanelHeader/base_type = &"Panel"
+PanelHeader/styles/panel = ExtResource("1_p17lh")
+ProgressBar/styles/background = ExtResource("7_aug18")
+ProgressBar/styles/fill = ExtResource("8_aab04")
+VScrollBar/styles/grabber = ExtResource("6_ybx5l")
+VScrollBar/styles/grabber_highlight = ExtResource("6_ybx5l")
+VScrollBar/styles/scroll = ExtResource("7_ybx5l")

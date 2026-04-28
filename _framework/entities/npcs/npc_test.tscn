@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://hkpx0aww72h8"]
+
+[ext_resource type="Script" uid="uid://bm5xi2a17vf24" path="res://_framework/entities/npcs/npc.gd" id="1_0qjbd"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tfxq7"]
+
+[node name="NPC_Test" type="Node3D" node_paths=PackedStringArray("model")]
+script = ExtResource("1_0qjbd")
+model = NodePath("MeshInstance3D")
+myName = "NPC_Test"
+patrolEnabled = true
+metadata/_custom_type_script = "uid://bm5xi2a17vf24"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5036772, 0)
+mesh = SubResource("BoxMesh_tfxq7")

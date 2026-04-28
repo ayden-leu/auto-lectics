@@ -1,6 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bllsvvj7p2cco"]
-
-[ext_resource type="Texture2D" uid="uid://d1xl8hujofwa" path="res://materials/warningsign_albedo.png" id="1"]
-
-[resource]
-albedo_texture = ExtResource("1")

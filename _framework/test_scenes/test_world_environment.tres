@@ -1,0 +1,9 @@
+[gd_resource type="Environment" format=3 uid="uid://c37reu7hkifo6"]
+
+[resource]
+background_mode = 1
+background_color = Color(0.022799999, 0.06492, 0.12, 1)
+sdfgi_read_sky_light = false
+adjustment_enabled = true
+adjustment_brightness = 1.85
+adjustment_contrast = 1.2

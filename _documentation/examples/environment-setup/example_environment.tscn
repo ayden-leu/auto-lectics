@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dyb6161rm5tv6"]
 
-[ext_resource type="Environment" uid="uid://uuy3an3cgdau" path="res://default_environment.tres" id="2_g8mc5"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="3_vccl5"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="4_t45ii"]
+[ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="2_88n1u"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_vccl5"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_t45ii"]
 [ext_resource type="PackedScene" uid="uid://dm4vr2r2xcuv0" path="res://_documentation/examples/environment-setup/test_environment.tscn" id="4_vccl5"]
 
 [node name="Node3D" type="Node3D"]
@@ -10,7 +10,7 @@
 [node name="test-environment" parent="." instance=ExtResource("4_vccl5")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("2_g8mc5")
+environment = ExtResource("2_88n1u")
 
 [node name="Player" parent="." instance=ExtResource("3_vccl5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55744696, 6.8642716, 0)
