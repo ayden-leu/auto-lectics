@@ -72,6 +72,7 @@ stream = SubResource("AudioStreamRandomizer_483v1")
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true
 
+[connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
 [connection signal="jump_pressed" from="InputHandler" to="." method="_on_jump_pressed"]
 [connection signal="mouse_moved" from="InputHandler" to="." method="_on_mouse_moved"]

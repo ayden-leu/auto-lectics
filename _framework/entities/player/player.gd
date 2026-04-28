@@ -72,6 +72,13 @@ signal no_longer_looking_at_interactable()
 ## Max angle which the camera can turn to; prevents flipping at top
 @export var maxPitchDegrees := 89.0
 
+@export var grapple_enabled: bool = true
+@export var grapple_max_length: float = 30.0
+@export var grapple_initial_impulse: float = 8.0
+@export var grapple_swing_input_force: float = 20.0
+@export_flags_3d_physics var grapple_collision_mask: int
+
+
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
@@ -129,6 +136,12 @@ var _lastValidPosition: Vector3
 ## Track if player's movement is frozen
 var input_frozen: bool = false
 
+var is_grappling: bool = false
+var grapple_point: Vector3
+var grapple_length: float = 0.0
+
+var input_direction: Vector2
+
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
@@ -152,6 +165,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		return
 	_applyVerticalPhysics(delta)
+	apply_grapple_physics(delta, input_direction)
 	move_and_slide()
 	
 	#print(_interactionRaycast.get_collider())
@@ -283,6 +297,80 @@ func _determineIfValidInteractable(interactable:Node3D) -> bool:
 	
 	return false
 
+
+func throw_grapple() -> void:
+	if not grapple_enabled:
+		return
+	
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		print("no camera")
+		return
+	
+	var from := camera.global_position
+	var to := from + -camera.global_transform.basis.z * grapple_max_length
+	
+	var query := PhysicsRayQueryParameters3D.create(from, to)
+	#query.collision_mask = grapple_collision_mask
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+	
+	if result.is_empty():
+		return
+	
+	grapple_point = result.position
+	grapple_length = global_position.distance_to(grapple_point)
+	is_grappling = true
+	
+	# slight impulse toward hook
+	var dir := (grapple_point - global_position).normalized()
+	velocity += dir * grapple_initial_impulse
+
+
+func release_grapple() -> void:
+	is_grappling = false
+
+
+func apply_grapple_physics(delta: float, input_dir: Vector2) -> void:
+	if not is_grappling:
+		return
+
+	var to_hook := grapple_point - global_position
+	var distance := to_hook.length()
+
+	if distance <= 0.01:
+		return
+
+	var rope_dir := to_hook.normalized()
+
+	# Let player input influence swing trajectory
+	var camera := get_viewport().get_camera_3d()
+	if camera:
+		var cam_basis := camera.global_transform.basis
+		var forward := -cam_basis.z
+		var right := cam_basis.x
+
+		forward.y = 0.0
+		right.y = 0.0
+		forward = forward.normalized()
+		right = right.normalized()
+
+		var swing_dir := (right * input_dir.x + forward * -input_dir.y).normalized()
+		if swing_dir.length() > 0.01:
+			velocity += swing_dir * grapple_swing_input_force * delta
+
+	# If rope is stretched, constrain player to rope length
+	if distance > grapple_length:
+		var away_velocity := velocity.dot(-rope_dir)
+
+		# remove velocity moving farther away from hook
+		if away_velocity > 0.0:
+			velocity -= (-rope_dir) * away_velocity
+
+		# correct position back onto rope sphere
+		global_position = grapple_point - rope_dir * grapple_length
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
@@ -311,12 +399,21 @@ func _on_interact_pressed() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when the player tries to jump.
 func _on_jump_pressed() -> void:
+	if is_grappling:
+		release_grapple()
 	if is_on_floor():
 		jump()
+		
+func _on_grapple_pressed() -> void:
+	if is_grappling:
+		release_grapple()
+	else:
+		throw_grapple()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the player inputs a new
 ## move direction.
 func _on_updated_input_direction(newDirection:Vector2) -> void:
+	input_direction = newDirection
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
 	_handleDirectionInput(direction)
 
