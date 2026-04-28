@@ -96,7 +96,7 @@ layout_mode = 2
 
 [node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("4_pedep")]
 layout_mode = 2
-theme_type_variation = &"RichTextLabelBot"
+theme_type_variation = &"_defaultConsoleBot"
 text = "The office has sent you to this planet to find what lies at the center of this factory. Blueprints show it might be a big glowing white sphere, so keep an eye out."
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
@@ -117,7 +117,7 @@ layout_mode = 2
 
 [node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("4_pedep")]
 layout_mode = 2
-theme_type_variation = &"RichTextLabelBot"
+theme_type_variation = &"_defaultConsoleBot"
 text = "me when i log my entry
 but with
 multiple lines"
