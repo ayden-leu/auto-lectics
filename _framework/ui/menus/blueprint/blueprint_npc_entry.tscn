@@ -1,9 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://y186te5d3kpy"]
+[gd_scene load_steps=2 format=3 uid="uid://y186te5d3kpy"]
 
 [ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="1_5e3ld"]
-[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_wg1im"]
-[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="2_7lniy"]
-[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="4_v8nm0"]
 
 [node name="BlueprintNPCEntry" type="Control"]
 custom_minimum_size = Vector2(200, 120)
@@ -13,26 +10,20 @@ offset_left = 2.0
 offset_right = 202.0
 offset_bottom = 120.0
 mouse_filter = 2
-theme = ExtResource("1_wg1im")
 script = ExtResource("1_5e3ld")
-id = null
-lockedText = null
-entryTextureUnlocked = ExtResource("2_7lniy")
-entryTextureLocked = ExtResource("4_v8nm0")
 
-[node name="TextureButton" type="TextureButton" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 26.0
-offset_top = -50.0
-offset_right = 175.0
+[node name="TextureButton" type="Button" parent="."]
+custom_minimum_size = Vector2(120, 90)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5
+offset_right = 74.5
 offset_bottom = 99.0
-texture_normal = ExtResource("2_7lniy")
-ignore_texture_size = true
-stretch_mode = 5
+grow_horizontal = 2
 
-[node name="Label" type="Label" parent="."]
-unique_name_in_owner = true
+[node name="NameLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -46,5 +37,3 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "This is npc name"
 horizontal_alignment = 1
-
-[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]
