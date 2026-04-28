@@ -41,6 +41,7 @@ var _windowPresets = [
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	menuID = "options"
 	super()  # runs the inherited class' _ready() function.
 	
 	var i:int = 0
