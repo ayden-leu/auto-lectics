@@ -38,16 +38,10 @@ const MOUSE_SENSITIVITY:float = 0.15
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## Whether movement inputs should be processed.  Only affects this [InputHandler].
-var movementInputEnabled:bool = true
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## Whether movement inputs should be processed.  Affects all [InputHandler]s.
-static var _movementInputEnabledGlobal:bool = true
-## The mouse mode before [method showCursorTemp] or [method hideCursorTemp] was ran.
-static var _savedMouseMode:Input.MouseMode = Input.MOUSE_MODE_CAPTURED
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -57,10 +51,8 @@ func _ready() -> void:
 		#return
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _physics_process(_delta: float) -> void:
-	var input_dir:Vector2 = Vector2.ZERO
-	if _movementInputEnabledGlobal and movementInputEnabled:
-		input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+func _physics_process(_delta: float) -> void:	
+	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	update_input_direction.emit(input_dir)
 
 func _input(event: InputEvent) -> void:
@@ -88,35 +80,10 @@ static func showCursor() -> void:
 	print("show cursor")
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-## Like [method showCursor], but saves the current mouse mode to [member _savedMouseMode].
-static func showCursorTemp() -> void:
-	print("show cursor temp")
-	_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 ## Hides the cursor.  Helpful if you want the player to move the camera around.
 static func hideCursor() -> void:
 	print("hide cursor")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-## Like [method hideCursor], but saves the current mouse mode to [member _savedMouseMode].
-static func hideCursorTemp() -> void:
-	print("hide cursor temp")
-	_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-## Sets the current mouse mode to [member _savedMouseMode].
-static func restoreCursorMode() -> void:
-	print("restore cursor")
-	Input.set_mouse_mode(_savedMouseMode)
-
-## Lets movement inputs be processed.
-static func enableMovementInputGlobal() -> void:
-	_movementInputEnabledGlobal = true
-
-## Prevents movement inputs from being processed.
-static func disableMovementInputGlobal() -> void:
-	_movementInputEnabledGlobal = false
 
 # ------------------------------------------------
 # functions only referenced inside this script
