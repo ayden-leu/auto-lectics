@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=13 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
@@ -21,12 +21,21 @@ stream_3/stream = ExtResource("4_rh8r5")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_483v1"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_rh8r5"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_qclge"]
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 5
 collision_mask = 2
 script = ExtResource("1_q8vf3")
 maxSpeed = 28.4
 acceleration = 37.0
+grapple_initial_impulse = 8.0
+grapple_swing_input_force = 20.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_hyl87")
@@ -45,6 +54,9 @@ target_position = Vector3(0, 50, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="GrappleStartMarker" type="Marker3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23946804, 0)
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("2_abrql")
@@ -71,6 +83,18 @@ stream = SubResource("AudioStreamRandomizer_483v1")
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true
+
+[node name="GrappleVisuals" type="Node3D" parent="."]
+
+[node name="GrappleLine" type="MeshInstance3D" parent="GrappleVisuals"]
+visible = false
+mesh = SubResource("CylinderMesh_rh8r5")
+skeleton = NodePath("../..")
+
+[node name="GrappleHookVisual" type="MeshInstance3D" parent="GrappleVisuals"]
+visible = false
+mesh = SubResource("BoxMesh_qclge")
+skeleton = NodePath("../..")
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]

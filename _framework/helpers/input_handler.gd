@@ -16,7 +16,7 @@ signal jump_pressed()
 signal update_input_direction(newDirection:Vector2)
 ## Emitted when the "Respawn" key is pressed.
 signal respawn()
-
+## Emitted when grapple hook buttons are pressed
 signal grapple_pressed()
 
 # ------------------------------------------------
