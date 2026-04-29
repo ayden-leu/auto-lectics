@@ -115,8 +115,10 @@ var interactableThing:Node3D = null:
 		
 		if thing == _loadBearingDummy:
 			no_longer_looking_at_interactable.emit()
+			can_grapple = true
 		else:
 			looking_at_interactable.emit()
+			can_grapple = false
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -150,6 +152,8 @@ var is_grappling: bool = false
 var grapple_point: Vector3
 ## Track how long the grappling hook currently is (length from target)
 var grapple_length: float = 0.0
+## Track if interactable NPC is being looked at or not, so grapple should be off
+var can_grapple: bool = true
 ## Track current input direction
 var input_direction: Vector2
 
@@ -321,7 +325,7 @@ func _determineIfValidInteractable(interactable:Node3D) -> bool:
 
 ## When grappling hook is thrown
 func throw_grapple() -> void:
-	if not grapple_enabled:
+	if not grapple_enabled or input_frozen or !can_grapple:
 		return
 	
 	var camera := get_viewport().get_camera_3d()
