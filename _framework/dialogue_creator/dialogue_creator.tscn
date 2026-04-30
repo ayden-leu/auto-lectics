@@ -118,7 +118,6 @@ offset_top = 60.0
 offset_right = 40.0
 offset_bottom = 100.0
 script = ExtResource("7_28w4y")
-metadata/_edit_group_ = true
 
 [node name="ToggleSidePanel" type="Button" parent="SidePanel"]
 layout_mode = 0
@@ -141,14 +140,15 @@ offset_bottom = 374.0
 [node name="Header" type="HBoxContainer" parent="SidePanel/Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="Save" type="Button" parent="SidePanel/Panel/VBoxContainer/Header"]
-layout_mode = 2
-icon = ExtResource("5_acglc")
-
 [node name="Label" type="Label" parent="SidePanel/Panel/VBoxContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Defaults"
+
+[node name="Save" type="Button" parent="SidePanel/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("5_acglc")
 
 [node name="HSeparator" type="HSeparator" parent="SidePanel/Panel/VBoxContainer"]
 layout_mode = 2

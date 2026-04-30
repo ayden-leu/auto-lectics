@@ -15,7 +15,7 @@
 [node name="DC_OptionNode" type="GraphNode"]
 texture_filter = 2
 offset_right = 428.0
-offset_bottom = 774.0
+offset_bottom = 664.0
 theme = ExtResource("1_ynasb")
 theme_type_variation = &"DialogueOption"
 resizable = true
@@ -230,23 +230,6 @@ allow_greater = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BackgroundTheme" type="HBoxContainer" parent="AdvancedOptions"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="AdvancedOptions/BackgroundTheme"]
-layout_mode = 2
-theme_type_variation = &"LabelDisabled"
-text = "Background Theme"
-
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/BackgroundTheme"]
-layout_mode = 2
-theme_type_variation = &"OptionButtonDisabled"
-disabled = true
-
-[node name="VSeparator5" type="VSeparator" parent="AdvancedOptions"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -261,28 +244,6 @@ script = ExtResource("4_l41k6")
 fields = [NodePath("../Events")]
 
 [node name="Events" type="VBoxContainer" parent="AdvancedOptions/SfxAspects"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="VSeparator6" type="VSeparator" parent="AdvancedOptions"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ParticleAspects" type="VBoxContainer" parent="AdvancedOptions"]
-layout_mode = 2
-
-[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/ParticleAspects"]
-layout_mode = 2
-theme_type_variation = &"CheckBoxFold"
-disabled = true
-text = "Particles"
-script = ExtResource("4_l41k6")
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
-
-[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/ParticleAspects"]
-layout_mode = 2
-
-[node name="Particles" type="VBoxContainer" parent="AdvancedOptions/ParticleAspects"]
 layout_mode = 2
 size_flags_horizontal = 0
 

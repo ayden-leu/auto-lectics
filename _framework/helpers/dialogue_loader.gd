@@ -66,15 +66,6 @@ static func _fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dict
 
 	if configuredAttributes.has("sfx"):
 		dialogue.sfx = _mergeSfxAttributes(dialogue.sfx, configuredAttributes.sfx)
-	
-	dialogue.backgroundTheme = _verifyInList(
-		configuredAttributes.get("backgroundTheme", dialogue.backgroundTheme).to_lower(),
-		DialogueDefaults.BACKGROUND_THEME.keys(),
-		dialogue.backgroundTheme
-	)
-
-	if configuredAttributes.has("particles"):
-		dialogue.particles = _mergeParticleAttributes(dialogue.particles, configuredAttributes.particles)
 
 	return dialogue
 
@@ -109,15 +100,6 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 	
 	if configuredAttributes.has("sfx"):
 		option.sfx = _mergeSfxAttributes(option.sfx, configuredAttributes.sfx)
-		
-	option.backgroundTheme = _verifyInList(
-		configuredAttributes.get("backgroundTheme", option.backgroundTheme).to_lower(),
-		DialogueDefaults.BACKGROUND_THEME.keys(),
-		option.backgroundTheme
-	)
-	
-	if configuredAttributes.has("particles"):
-		option.particles = _mergeParticleAttributes(option.particles, configuredAttributes.particles)
 
 	option.spawnDelay = configuredAttributes.get("spawnDelay", option.spawnDelay)
 	option.lifetime = configuredAttributes.get("lifetime", option.lifetime)
@@ -141,16 +123,6 @@ static func _resolveOptionInheritance(option: Dictionary, optionOwner: Dictionar
 		if option.sfx[event] == "inherit":
 			option.sfx[event] = optionOwner.sfx[event]
 
-	if option.backgroundTheme == "inherit":
-		option.backgroundTheme = optionOwner.backgroundTheme
-
-	# Particles textures
-	for event in DialogueDefaults.PARTICLE_EVENTS:
-		for attribute in DialogueDefaults.PARTICLE_EVENT_ATTRIBUTES:
-			var _attr:String = option.particles[event].get(attribute, "inherit")
-			if _attr == "inherit":
-				option.particles[event][attribute] = optionOwner.particles[event].get(attribute, "none")
-
 ## [b]Internal-use only.[/b]  Helper function to merge the SFX attributes.
 static func _mergeSfxAttributes(default: Dictionary, configuredEvents:Dictionary) -> Dictionary:
 	if configuredEvents.is_empty():
@@ -161,24 +133,6 @@ static func _mergeSfxAttributes(default: Dictionary, configuredEvents:Dictionary
 		if configuredEvents.has(event):
 			merged[event] = configuredEvents[event]
 	
-	return merged
-
-## [b]Internal-use only.[/b]  Helper function to merge the particle attributes.
-static func _mergeParticleAttributes(default: Dictionary, configuredParticles:Dictionary) -> Dictionary:
-	if configuredParticles.is_empty():
-		return default
-	
-	var merged := default.duplicate(true)
-	for event in DialogueDefaults.PARTICLE_EVENTS:
-		if configuredParticles.has(event) and typeof(configuredParticles[event]) == TYPE_DICTIONARY:
-			if configuredParticles[event].is_empty():
-				continue
-			
-			for attribute in DialogueDefaults.PARTICLE_EVENT_ATTRIBUTES:
-				if configuredParticles[event].has(attribute):
-					merged[event][attribute] = configuredParticles[event][attribute]
-		else:
-			printerr("DialogueLoader: Particle event [%s]'s value isn't a dictionary. Value type ID: " % event, typeof(configuredParticles[event]))
 	return merged
 
 ## [b]Internal-use only.[/b]  Verifies if value is in list. If not, return fallback.
