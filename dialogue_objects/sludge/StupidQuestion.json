@@ -1,10 +1,10 @@
 {
-	"text": "Out of all the things you could've asked, you chose the dumbest one.",
+	"text": "That's such an Old Frog thing to say.",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "Old Frog?",
 			"type": "neutral",
 			"nextID": "Apologize2"
 		}

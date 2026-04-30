@@ -1,0 +1,11 @@
+{
+	"text": "I don't know what exactly what's in there. I just do as I'm told.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What were you told to do?",
+			"type": "neutral"
+		}
+	]
+}

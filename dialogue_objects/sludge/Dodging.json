@@ -1,0 +1,12 @@
+{
+	"text": "Well, the funny thing is...",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Dodging2"
+		}
+	]
+}

@@ -1,12 +1,22 @@
 {
-	"text": "Uhhhh, I don't really know. ",
+	"text": "Uhhhh, why do you wanna know? ",
 	"type": "neutral",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "So, what do you do?",
+			"text": "I'm curious.",
 			"type": "neutral",
-			"nextID": "Purpose"
+			"nextID": "Curious"
+		},
+		{
+			"text": "It's my job to know.",
+			"type": "neutral",
+			"nextID": "DodgingAlt"
+		},
+		{
+			"text": "Don't dodge the question.",
+			"type": "neutral",
+			"nextID": "Dodging"
 		}
 	]
 }
