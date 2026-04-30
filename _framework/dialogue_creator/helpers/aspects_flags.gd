@@ -9,6 +9,8 @@ class_name DC_AspectsFlags
 signal value_changed()
 ## Emitted when a [member StoryFlags.DEFAULT_FLAGS] flag is being used by a [DC_StoryFlagFieldOption].
 signal update_available_flags()
+## Emitted when the node this field belongs to should resize itself.
+signal resize()
 
 # ------------------------------------------------
 # enums
@@ -124,6 +126,7 @@ func _createStoryFlagSection() -> void:
 	newFlag.separator = separator
 	newFlag.removing.connect(_on_flag_field_removed)
 	newFlag.option_changed_history.connect(_on_flag_field_updated)
+	newFlag.option_changed.connect(_on_flag_field_state_updated)
 
 ## [b]Internal-use only.[/b]  Updates the possible choices for every currently
 ## created [DC_StoryFlagFieldOption] field.
@@ -153,12 +156,19 @@ func _on_flag_field_removed(field:DC_StoryFlagFieldOption) -> void:
 	_currentFlagFields.erase(field)
 	_usedFlags.erase(field.flagID)
 	_updateUnusedFlags()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	resize.emit()
 
 ## [b]Internal-use only.[/b]  Runs when a [DC_StoryFlagFieldOption]'s chosen flag gets updated.
 func _on_flag_field_updated(oldFlagID:String, newFlagID:String) -> void:
 	_usedFlags.erase(oldFlagID)
 	_usedFlags.push_back(newFlagID)
 	_updateUnusedFlags()
+	value_changed.emit()
+
+## [b]Internal-use only.[/b]  Runs when a [DC_StoryFlagFieldOption]'s flag state gets updated.
+func _on_flag_field_state_updated() -> void:
 	value_changed.emit()
 
 # ------------------------------------------------

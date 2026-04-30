@@ -413,6 +413,9 @@ func _on_add_option_pressed() -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when the remove option button is pressed.
 func _on_remove_option_pressed() -> void:
 	_removeOptionPort()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_shrinkNodeHeight()
 
 ## [b]Internal-use only.[/b]  Handles logic for when a connected
 ## [DC_OptionNode]'s attributes get updated.
@@ -471,6 +474,18 @@ func _on_debug_pressed() -> void:
 		print("SFX Aspects:")
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
+
+## [b]Internal-use only.[/b]  Only here to see if something is connected.
+func _on_close_button_pressed() -> void:
+	super()
+
+## [b]Internal-use only.[/b]  Only here to see if something is connected.
+func _on_resize_height() -> void:
+	super()
+
+## [b]Internal-use only.[/b]  Only here to see if something is connected.
+func _on_toggle_visibility(isVisible:bool) -> void:
+	super(isVisible)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

@@ -48,9 +48,6 @@ const PortColor:Dictionary[StringName, Color] = {
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## Makes this node's height the smallest it can be.
-func shrinkNodeHeight() -> void:
-	size.y = get_minimum_size().y
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -61,19 +58,25 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## _deletes this node.
-func _delete() -> void:
-	deleting.emit(self)
-	queue_free()
+
 
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
+## Makes this node's height the smallest it can be.
+func _shrinkNodeHeight() -> void:
+	size.y = get_minimum_size().y
+
 ## [b]Internal-use only.[/b]  Creates and adds a close button in the header.
 func _createCloseButton() -> void:
 	var close:Button = _CLOSE_BUTTON_SCENE.instantiate()
 	get_titlebar_hbox().add_child(close)
 	close.pressed.connect(_on_close_button_pressed)
+
+## Deletes this node.
+func _delete() -> void:
+	deleting.emit(self)
+	queue_free()
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -82,11 +85,11 @@ func _createCloseButton() -> void:
 ## Can also be used to "simulate" the button being pressed with code.
 func _on_close_button_pressed() -> void:
 	disconnect_all.emit(self)
-	self._delete()
+	_delete()
 
 ## [b]Internal-use only.[/b]  Typically runs whenever fields are hidden.
 func _on_resize_height() -> void:
-	shrinkNodeHeight()
+	_shrinkNodeHeight()
 
 ## [b]Internal-use only.[/b]  Runs when this node should be hidden.
 func _on_toggle_visibility(isVisible:bool) -> void:

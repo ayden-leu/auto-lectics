@@ -343,5 +343,6 @@ layout_mode = 2
 [connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
 [connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_changed"]
+[connection signal="resize" from="AdvancedOptions/SfxAspects/CheckBox" to="." method="_on_resize_height"]
 [connection signal="toggled" from="AdvancedOptions/SfxAspects/CheckBox" to="AdvancedOptions/SfxAspects/CheckBox" method="_on_toggled"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]
