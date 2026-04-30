@@ -1,0 +1,12 @@
+{
+	"text": "Well, you can stay curious.",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Just tell me what's in there.",
+			"type": "neutral",
+			"nextID": "Dodging"
+		}
+	]
+}
