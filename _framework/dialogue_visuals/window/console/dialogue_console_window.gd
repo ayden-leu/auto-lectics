@@ -312,9 +312,11 @@ func _spawnOptionWindows() -> void:
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.themeVariation = optionData.textThemePreset
+		optionWindow.loadSfx(optionData.sfx)
 		optionWindow.data = optionData
 		optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
+		optionWindow.start()
 		
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()

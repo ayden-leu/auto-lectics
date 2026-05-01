@@ -77,6 +77,18 @@ func getDialogueFields() -> Dictionary:
 	
 	return result
 
+func loadDialogueFields(data:Dictionary) -> void:
+	if data.has("type"):
+		%NodeTypeChooser.chosen = data.type
+	if data.has("textThemePreset"):
+		%NodeTextThemeChooser.chosen = data.textThemePreset
+	if data.has("writeSpeed"):
+		%NodeWriteSpeedPresetChooser.chosen = data.writeSpeed
+	if data.has("writeSpeedCustom"):
+		%NodeWriteSpeedValueField.value = data.writeSpeedCustom
+	if data.has("sfx"):
+		%NodeSfxAspects.configuredEvents = data.sfx
+
 func getOptionFields() -> Dictionary:
 	var result:Dictionary = {}
 	
@@ -97,6 +109,22 @@ func getOptionFields() -> Dictionary:
 		result.lifetime = %OptionLifetimeField.value
 	
 	return result
+
+func loadOptionFields(data:Dictionary) -> void:
+	if data.has("type"):
+		%OptionTypeChooser.chosen = data.type
+	if data.has("textThemePreset"):
+		%OptionTextThemeChooser.chosen = data.textThemePreset
+	if data.has("writeSpeed"):
+		%OptionWriteSpeedPresetChooser.chosen = data.writeSpeed
+	if data.has("writeSpeedCustom"):
+		%OptionWriteSpeedValueField.value = data.writeSpeedCustom
+	if data.has("sfx"):
+		%OptionSfxAspects.configuredEvents = data.sfx
+	if data.has("spawnDelay"):
+		%OptionSpawnDelayField.value = data.spawnDelay
+	if data.has("lifetime"):
+		%OptionLifetimeField.value = data.lifetime
 
 # ------------------------------------------------
 # functions only referenced inside this script

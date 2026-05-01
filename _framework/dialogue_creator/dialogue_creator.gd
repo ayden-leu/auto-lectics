@@ -16,7 +16,7 @@ signal _set_node_visibility(visible:bool)
 
 #const initialObjectPosition:Vector2 = Vector2(100, 100)
 const _SAVE_PATH:String = FR_Globals.STORAGE_PATH.DIALOGUE
-const _FILE_EXTENSION:String = FR_Globals.DIALOGUE_FILE_TYPE
+const _FILE_EXTENSION:String = DialogueLoader.DIALOGUE_FILE_TYPE
 
 var _dialogueNodes:Array[DC_DialogueNode] = []
 var _optionNodes:Array[DC_OptionNode] = []
@@ -202,7 +202,11 @@ func _loadDialogueTree() -> void:
 	loadingDialogueFiles = true
 	
 	for filename in dialogueFileNames:
-		if not filename.ends_with(".json"):
+		if not filename.ends_with(DialogueLoader.DIALOGUE_FILE_TYPE):
+			continue
+		if filename.begins_with(DialogueLoader.DEFAULT_DIALOGUE_ID):
+			continue
+		if filename.begins_with(DialogueLoader.DEFAULT_OPTION_ID):
 			continue
 		_createNodesFromFile(filename)
 	
@@ -234,6 +238,52 @@ func _loadDialogueTree() -> void:
 	_graphArea.arrange_nodes()
 	loadingDialogueFiles = false
 	#_set_node_visibility.emit(true)
+
+func _loadNpcDefaults() -> void:
+	# TODO:  move field check to own function
+	if _npcNameField.text == "":
+		printerr("DialogueCreator/_loadNpcDefaults(): NPC Name is empty.")
+		return
+	
+	# TODO:  move foldeer check to own function
+	var tempDirAccess:DirAccess = DirAccess.open(_SAVE_PATH)
+	if not tempDirAccess.dir_exists(_npcNameField.text):
+		printerr("DialogueCreator: Could not find the NPC folder: ", _npcNameField.text)
+		return
+	
+	# TODO:   move file opening to own function
+	var filePath:String = _SAVE_PATH + _npcNameField.text + "/" + DialogueLoader.DEFAULT_DIALOGUE_ID + DialogueLoader.DIALOGUE_FILE_TYPE
+	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
+	if file == null:
+		printerr("DialogueCreator: Error opening file: ", filePath)
+		return
+	
+	# TODO:  move json parsing to own function
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data == null:
+		printerr("DialogueCreator: Failed to parse file [", filePath, "] as JSON.")
+		return
+	data = data as Dictionary
+	
+	_sidePanel.loadDialogueFields(data)
+	
+	# -------------
+	
+	filePath = _SAVE_PATH + _npcNameField.text + "/" + DialogueLoader.DEFAULT_OPTION_ID + DialogueLoader.DIALOGUE_FILE_TYPE
+	file = FileAccess.open(filePath, FileAccess.READ)
+	if file == null:
+		printerr("DialogueCreator: Error opening file: ", filePath)
+		return
+	
+	data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data == null:
+		printerr("DialogueCreator: Failed to parse file [", filePath, "] as JSON.")
+		return
+	data = data as Dictionary
+	
+	_sidePanel.loadOptionFields(data)
 
 # --------------
 
@@ -295,10 +345,13 @@ func _on_dialogue_node_save_me(data:Dictionary) -> void:
 	_saveFile(data)
 
 func _on_save_all_dialogue_pressed() -> void:
+	_on_save_defaults_pressed()
+	
 	for dialogueNode in _dialogueNodes:
 		dialogueNode.saveToFile()
 
 func _on_load_dialogue_tree_pressed() -> void:
+	_loadNpcDefaults()
 	_loadDialogueTree()
 
 func _on_option_node_removed(nodeName:String, port:int) -> void:
@@ -434,9 +487,9 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 
 func _on_save_defaults_pressed() -> void:
 	var dialogue:Dictionary = _sidePanel.getDialogueFields()
-	dialogue.id = "_default_dialogue"
+	dialogue.id = DialogueLoader.DEFAULT_DIALOGUE_ID
 	_saveFile(dialogue)
 	
 	var option:Dictionary = _sidePanel.getOptionFields()
-	option.id = "_default_option"
+	option.id = DialogueLoader.DEFAULT_OPTION_ID
 	_saveFile(option)
