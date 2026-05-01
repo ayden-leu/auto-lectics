@@ -26,21 +26,19 @@ signal option_selected(myself:DialogueConsoleOptionWindow)
 # onready variables
 # ------------------------------------------------
 ## The label that denotes which "index" is associated with this option.
-@onready var idLabel:Label = %ID
-## The label that holds the text associated with this option.
-@onready var optionTextLabel:Label = %Text
+@onready var contentsLabel:RichTextLabel = %ContentsLabel
 
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## The option ID this option window corresponds to.
 ## [br][br]
-## Comes with a getter and setter so you can treat it like a normal variable
+## Comes with a setter so you can treat it like a normal variable
 ## while updating the relevant stuff.
 var id:int:
 	set(newID):
 		id = newID
-		idLabel.text = "[%d]" % newID
+		_updateLabel()
 		
 		#if newID != 0:
 			#print("readd this?")
@@ -49,13 +47,20 @@ var id:int:
 
 ## The option text of the option this option window corresponds to.
 ## [br][br]
-## Comes with a getter and setter so you can treat it like a normal variable
+## Comes with a setter so you can treat it like a normal variable
 ## while updating the relevant stuff.
 var text:String:
 	set(newText):
-		optionTextLabel.text = newText
-	get():
-		return optionTextLabel.text
+		text = newText
+		_updateLabel()
+
+## The text theme variation for this option.
+## [br][br]
+## Comes with a setter that automatically updates the theme variation on the labels.
+var themeVariation:String:
+	set(value):
+		themeVariation = value
+		contentsLabel.theme_type_variation = value
 
 ## The data related to this option.
 var data:Dictionary
@@ -82,6 +87,9 @@ func _gui_input(event: InputEvent) -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+
+func _updateLabel() -> void:
+	contentsLabel.text = "[" + str(id) + "] " + text
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

@@ -1,0 +1,22 @@
+{
+	"text": "option can be different from the dialogue",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "neat",
+			"type": "neutral",
+			"textThemePreset": "_test_one"
+		},
+		{
+			"text": "ok",
+			"type": "neutral",
+			"textThemePreset": "_test_two"
+		},
+		{
+			"text": "whatever",
+			"type": "neutral",
+			"textThemePreset": "_test_three"
+		}
+	]
+}

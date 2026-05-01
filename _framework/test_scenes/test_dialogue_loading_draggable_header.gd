@@ -55,8 +55,6 @@ func _process(_delta: float) -> void:
 	
 	if _mouseDragging and _beingDragged == self:
 		contents.global_position = get_global_mouse_position() - _offsetFromMouse
-	
-	print(_offsetFromMouse)
 
 #func _physics_process(delta: float) -> void:
 	#super(delta)  # needed if inheriting a custom class with its own _physics_process().  Will run the inherited class' _physics_process() function.

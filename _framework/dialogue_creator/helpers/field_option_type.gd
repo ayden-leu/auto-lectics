@@ -1,6 +1,5 @@
 extends DC_FieldOption
 class_name DC_TypeFieldOption
-## TODO
 
 # ------------------------------------------------
 # signals

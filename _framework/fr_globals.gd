@@ -38,10 +38,15 @@ const SCENES = {
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {
 	"DIALOGUE": "res://dialogue_objects/",
-	"SFX": "res://sounds/sfx/"
+	"SFX": "res://sounds/sfx/",
+	"LABEL_PRESETS": "res://fonts/_label_presets/"
 }
 ## Determines the file type of the dialogue objects.
 const DIALOGUE_FILE_TYPE = ".json"
+## Determines the file type of label presets.
+const LABEL_PRESET_FILE_TYPE = ".tres"
+## The z index of [Menu]s.
+const MENU_Z_INDEX:int = 10
 
 # ------------------------------------------------
 # export variables

@@ -1,4 +1,5 @@
 @tool
+@icon("uid://bbxaj8rh6jfm6")
 extends Control
 class_name DialogueWindow
 ## [b]Internal-use only.[/b]  A window that appears on the player's screen.
