@@ -61,24 +61,42 @@ func _ready() -> void:
 # functions referenced outside of this script
 # ------------------------------------------------
 func getDialogueFields() -> Dictionary:
-	return {
-		"type": %NodeTypeChooser.chosen,
-		"textThemePreset": %NodeTextThemeChooser.chosen,
-		"writeSpeed": %NodeWriteSpeedPresetChooser.chosen,
-		"writeSpeedCustom": %NodeWriteSpeedValueField.value,
-		"sfx": %NodeSfxAspects.configuredEvents
-	}
+	var result:Dictionary = {}
+	
+	if %NodeTypeChooser.chosen != DialogueDefaults.DEFAULT_DIALOGUE.type:
+		result.type = %NodeTypeChooser.chosen
+	if %NodeTextThemeChooser.chosen != DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset:
+		result.textThemePreset = %NodeTextThemeChooser.chosen
+	if %NodeWriteSpeedPresetChooser.chosen != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
+		result.writeSpeed = %NodeWriteSpeedPresetChooser.chosen
+		if %NodeWriteSpeedPresetChooser.chosen == "custom" and \
+			%NodeWriteSpeedValueField.value != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeedCustom:
+			result.writeSpeedCustom = %NodeWriteSpeedValueField.value
+	if %NodeSfxAspects.configuredEvents != DialogueDefaults.DEFAULT_DIALOGUE.sfx:
+		result.sfx = %NodeSfxAspects.configuredEvents
+	
+	return result
 
 func getOptionFields() -> Dictionary:
-	return{
-		"type": %OptionTypeChooser.chosen,
-		"textThemePreset": %OptionTextThemeChooser.chosen,
-		"writeSpeed": %OptionWriteSpeedPresetChooser.chosen,
-		"writeSpeedCustom": %OptionWriteSpeedValueField.value,
-		"sfx": %OptionSfxAspects.configuredEvents,
-		"spawnDelay": %OptionSpawnDelayField.value,
-		"lifetime": %OptionLifetimeField.value
-	}
+	var result:Dictionary = {}
+	
+	if %OptionTypeChooser.chosen != DialogueDefaults.DEFAULT_OPTION.type:
+		result.type = %OptionTypeChooser.chosen
+	if %OptionTextThemeChooser.chosen != DialogueDefaults.DEFAULT_OPTION.textThemePreset:
+		result.textThemePreset = %OptionTextThemeChooser.chosen
+	if %OptionWriteSpeedPresetChooser.chosen != DialogueDefaults.DEFAULT_OPTION.writeSpeed:
+		result.writeSpeed = %OptionWriteSpeedPresetChooser.chosen
+		if %OptionWriteSpeedPresetChooser.chosen == "custom" and \
+			%OptionWriteSpeedValueField.value != DialogueDefaults.DEFAULT_OPTION.writeSpeedCustom:
+			result.writeSpeedCustom = %OptionWriteSpeedValueField.value
+	if %OptionSfxAspects.configuredEvents != DialogueDefaults.DEFAULT_OPTION.sfx:
+		result.sfx = %OptionSfxAspects.configuredEvents
+	if %OptionSpawnDelayField.value != DialogueDefaults.DEFAULT_OPTION.spawnDelay:
+		result.spawnDelay = %OptionSpawnDelayField.value
+	if %OptionLifetimeField.value != DialogueDefaults.DEFAULT_OPTION.lifetime:
+		result.lifetime = %OptionLifetimeField.value
+	
+	return result
 
 # ------------------------------------------------
 # functions only referenced inside this script

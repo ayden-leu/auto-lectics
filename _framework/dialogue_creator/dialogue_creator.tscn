@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="15_pwsq1"]
 [ext_resource type="Script" uid="uid://bqrkamioy7nsv" path="res://_framework/dialogue_creator/helpers/dc_on_lifetime.gd" id="16_flnpa"]
 
-[node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_background", "_menuButtons", "_sidePanel")]
+[node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_sidePanel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,8 +27,6 @@ grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
 _npcNameField = NodePath("MenuButtons/VBoxContainer/InputArea/NPCName")
-_background = NodePath("Background")
-_menuButtons = NodePath("MenuButtons")
 _sidePanel = NodePath("SidePanel")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -158,10 +156,11 @@ layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="SidePanel/Contents/Defaults"]
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 use_hidden_tabs_for_min_size = true
 
 [node name="Dialogue Node" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -259,7 +258,8 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("11_wipx8")
 eventHolder = NodePath("Events")
-removeFirstEntry = true
+removeNpcDefaultEntry = true
+removeInherit = true
 
 [node name="SfxAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2
@@ -274,7 +274,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="Dialogue Option" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -334,7 +333,9 @@ text = "Lifetime"
 
 [node name="InputField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetimeField"]
 layout_mode = 2
+min_value = -0.1
 step = 0.1
+value = -0.1
 allow_greater = true
 
 [node name="HSeparator3" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
@@ -414,7 +415,6 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("11_wipx8")
 eventHolder = NodePath("Events")
-removeFirstEntry = true
 
 [node name="SfxAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2

@@ -20,8 +20,11 @@ const _SFX_EVENT_SCENE:Resource = preload("uid://citmsrjh10i13")
 ## Holds all [DC_SfxEventFieldOption] fields that are created.
 @export var eventHolder:Control
 ## Whether to remove the first option entry of each spawned SFX ID entry.
-## Is a work-around to removee "npcDefault" from each entry.
-@export var removeFirstEntry:bool
+## Is a work-around to remove "npcDefault" from each entry.
+@export var removeNpcDefaultEntry:bool
+## Whether to remove the "inherit" option from the chooser pool.
+## Is a work around similar to [member removeNpcDefaultEntry].
+@export var removeInherit:bool
 
 # ------------------------------------------------
 # onready variables
@@ -78,8 +81,10 @@ func _createEventSection(eventName:String) -> void:
 	var newEvent:DC_NodeSfxEventField = _SFX_EVENT_SCENE.instantiate()
 	newEvent.eventID = eventName
 	
-	if removeFirstEntry:
-		newEvent.removeFirstEntry()
+	if removeNpcDefaultEntry:
+		newEvent.removeNpcDefaultEntry()
+	if removeInherit:
+		newEvent.removeInherit()
 	newEvent.setup()
 	
 	eventHolder.add_child(VSeparator.new())

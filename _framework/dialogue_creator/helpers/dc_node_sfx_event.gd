@@ -36,6 +36,8 @@ var eventID:String = "":
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
+## A list of valid entries to add that won't be in [member FR_Globals.STORAGE_PATH.SFX]
+var _entriesToAdd:Array[String] = ["none", "inherit"]
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -46,15 +48,17 @@ var eventID:String = "":
 # ------------------------------------------------
 ## Removes the first option entry of each spawned SFX ID entry.
 ## Is a work-around to remove "npcDefault" for each entry.
-func removeFirstEntry() -> void:
+func removeNpcDefaultEntry() -> void:
 	chooser.remove_item(0)
+
+func removeInherit() -> void:
+	_entriesToAdd.erase("inherit")
 
 ## Setups the option entries.
 ## Part of the work around mentioned in [method removeFirstEntry].
 func setup() -> void:
-	var temp:Array[String] = ["none", "inherit"]
-	temp.append_array(DirAccess.get_directories_at(FR_Globals.STORAGE_PATH.SFX))
-	_fillValueToOptionIndex(temp)
+	_entriesToAdd.append_array(DirAccess.get_directories_at(FR_Globals.STORAGE_PATH.SFX))
+	_fillValueToOptionIndex(_entriesToAdd)
 
 # ------------------------------------------------
 # functions only referenced inside this script

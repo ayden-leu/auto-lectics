@@ -8,8 +8,6 @@ signal _set_node_visibility(visible:bool)
 # 	https://www.youtube.com/watch?v=ZD9X3uvyWmg
 
 @export var _npcNameField:LineEdit
-@export var _background:ColorRect
-@export var _menuButtons:Control
 @export var _sidePanel:Control
 
 @onready var _dialogueNodeScene:PackedScene = preload("uid://c5o5n3jy08obe")
@@ -436,5 +434,9 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 
 func _on_save_defaults_pressed() -> void:
 	var dialogue:Dictionary = _sidePanel.getDialogueFields()
-	var option:Dictionary = _sidePanel.getOptionFields()
+	dialogue.id = "_default_dialogue"
+	_saveFile(dialogue)
 	
+	var option:Dictionary = _sidePanel.getOptionFields()
+	option.id = "_default_option"
+	_saveFile(option)
