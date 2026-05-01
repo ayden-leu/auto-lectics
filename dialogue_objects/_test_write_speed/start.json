@@ -1,0 +1,37 @@
+{
+	"text": "default speed",
+	"type": "npcDefault",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "inherit inherit inherit inherit inherit ",
+			"type": "neutral",
+			"writeSpeed": "inherit",
+			"nextID": "inherit"
+		},
+		{
+			"text": "slow slow slow slow slow ",
+			"type": "neutral",
+			"writeSpeed": "slow",
+			"nextID": "slow"
+		},
+		{
+			"text": "medium medium medium medium medium ",
+			"type": "neutral",
+			"nextID": "medium"
+		},
+		{
+			"text": "fast fast fast fast fast ",
+			"type": "neutral",
+			"writeSpeed": "fast",
+			"nextID": "fast"
+		},
+		{
+			"text": "custom custom custom custom custom ",
+			"type": "neutral",
+			"writeSpeed": "custom",
+			"writeSpeedCustom": 200.0,
+			"nextID": "custom"
+		}
+	]
+}
