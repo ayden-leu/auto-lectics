@@ -156,11 +156,10 @@ layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="SidePanel/Contents/Defaults"]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 use_hidden_tabs_for_min_size = true
 
 [node name="Dialogue Node" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -274,6 +273,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="Dialogue Option" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 

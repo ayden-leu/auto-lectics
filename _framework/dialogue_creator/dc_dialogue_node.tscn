@@ -292,7 +292,6 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("9_mug1a")
 eventHolder = NodePath("Events")
-removeNpcDefaultEntry = true
 removeInherit = true
 
 [node name="SfxAspectsToggler" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]

@@ -67,6 +67,10 @@ func setup() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
+## Handles logic for when an option is picked by the user.
+func _on_chooser_item_selected(_index:int) -> void:
+	super(_index)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
