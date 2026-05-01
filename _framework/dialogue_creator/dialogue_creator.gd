@@ -10,6 +10,7 @@ signal _set_node_visibility(visible:bool)
 @export var _npcNameField:LineEdit
 @export var _background:ColorRect
 @export var _menuButtons:Control
+@export var _sidePanel:Control
 
 @onready var _dialogueNodeScene:PackedScene = preload("uid://c5o5n3jy08obe")
 @onready var _optionNodeScene:PackedScene = preload("uid://drh1uormkjsbh")
@@ -23,6 +24,8 @@ var _dialogueNodes:Array[DC_DialogueNode] = []
 var _optionNodes:Array[DC_OptionNode] = []
 ## If the creator is currently in the process of creating dialogue and option nodes from a dialogue tree.
 var loadingDialogueFiles:bool = false
+
+var npcDefaults:Dictionary = {}
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -429,3 +432,9 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
 	for nodeName in nodes:
 		var node:DC_BaseNode = getNode(nodeName)
 		node._on_close_button_pressed()
+
+
+func _on_save_defaults_pressed() -> void:
+	var dialogue:Dictionary = _sidePanel.getDialogueFields()
+	var option:Dictionary = _sidePanel.getOptionFields()
+	

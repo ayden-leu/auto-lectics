@@ -260,7 +260,7 @@ func _ready() -> void:
 	set_slot_type_left(DIALOGUE_ID_PORT, PortType.DIALOGUE)
 	
 	sfxEventAspects = DialogueDefaults.DEFAULT_DIALOGUE.sfx
-	textThemeField.textTheme = "_defaultConsoleBot"
+	textThemeField.textTheme = DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -295,8 +295,6 @@ func getFields() -> Dictionary:
 		"id": dialogueIDField.text,
 		"text": textField.text,
 	}
-	
-	# text theme (unused atm)
 	
 	currentValues.type = type
 	currentValues.mode = mode

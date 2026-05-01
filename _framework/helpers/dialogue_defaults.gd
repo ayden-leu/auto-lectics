@@ -34,7 +34,7 @@ const DEFAULT_DIALOGUE:Dictionary = {
 	"options": [],
 
 	# === Optional ===
-	"type": "neutral",
+	"type": "neutral",  # see DIALOGUE_TYPES
 	"mode": "normal",
 	"nextOnHecticFailureID": "",
 	"textThemePreset": "_defaultConsoleBot",
@@ -54,7 +54,7 @@ const DEFAULT_OPTION:Dictionary = {
 	"nextID": "",
 
 	# === Optional ===
-	"type": "neutral",
+	"type": "neutral",  # see OPTION_TYPES
 	"textThemePreset": "_defaultConsolePlayer",
 	"writeSpeed": "inherit",
 	"writeSpeedCustom": -1.0,

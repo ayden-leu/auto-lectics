@@ -15,6 +15,7 @@ extends Control
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+@export var contents:TabContainer
 
 # ------------------------------------------------
 # onready variables
@@ -27,8 +28,6 @@ extends Control
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## [b]Internal-use only.[b]  The initial position of the side panel.
-var _defaultPosition:Vector2
 ## [b]Internal-use only.[b]  If the side panel is expanded or not.
 var expanded:bool = false:
 	set(state):
@@ -42,20 +41,48 @@ var expanded:bool = false:
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	_defaultPosition = global_position
+	expanded = false
+	
+	%NodeTypeField.type = DialogueDefaults.DEFAULT_DIALOGUE.type
+	%NodeTextThemeField.textTheme = DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset
+	%NodeSfxAspects.aspects = DialogueDefaults.DEFAULT_DIALOGUE.sfx
+	
+	%OptionTypeField.type = DialogueDefaults.DEFAULT_OPTION.type
+	%OptionTextThemeField.textTheme = DialogueDefaults.DEFAULT_OPTION.textThemePreset
+	%OptionSfxAspects.aspects = DialogueDefaults.DEFAULT_OPTION.sfx
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+func getDialogueFields() -> Dictionary:
+	return {
+		"type": %NodeTypeField.option,
+		"textThemePreset": %NodeTextThemeField.textTheme,
+		"writeSpeed": %NodeWriteSpeedAspects.preset,
+		"writeSpeedCustom": %NodeWriteSpeedAspects.value,
+		"sfx": %NodeSfxAspects.aspects
+	}
+
+func getOptionFields() -> Dictionary:
+	return{
+		# === Optional ===
+		"type": %OptionTypeField.option,
+		"textThemePreset": %OptionTextThemeField.textTheme,
+		"writeSpeed": %OptionWriteSpeedAspects.preset,
+		"writeSpeedCustom": %OptionWriteSpeedAspects.value,
+		"sfx": %OptionSfxAspects.aspects,
+		"spawnDelay": %OptionSpawnDelayField.value,
+		"lifetime": %OptionLifetimeField.value
+	}
 
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
 func _expand() -> void:
-	global_position = _defaultPosition + Vector2(397, 0)
+	contents.visible = true
 
 func _contract() -> void:
-	global_position = _defaultPosition
+	contents.visible = false
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -64,7 +91,6 @@ func _contract() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
-
 
 func _on_toggler_pressed() -> void:
 	expanded = !expanded

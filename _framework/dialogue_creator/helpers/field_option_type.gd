@@ -36,6 +36,9 @@ var option:String:
 	set(newOption):
 		chooser.selected = valueToOptionIndex[newOption]
 	get():
+		if chooser.get_item_text(chooser.selected) == "Use NPC Default":
+			return "NpcDefault"
+		
 		if type == VALID_TYPES.DIALOGUE:
 			return DialogueDefaults.DIALOGUE_TYPES[chooser.selected]
 		elif type == VALID_TYPES.OPTION:
@@ -53,10 +56,10 @@ var option:String:
 func _ready() -> void:
 	if type == VALID_TYPES.DIALOGUE:
 		fillValueToOptionIndex(DialogueDefaults.DIALOGUE_TYPES)
+		option = DialogueDefaults.DEFAULT_DIALOGUE.type
 	elif type == VALID_TYPES.OPTION:
 		fillValueToOptionIndex(DialogueDefaults.OPTION_TYPES)
-	
-	option = DialogueDefaults.DEFAULT_DIALOGUE.type
+		option = DialogueDefaults.DEFAULT_OPTION.type
 
 # ------------------------------------------------
 # functions referenced outside of this script

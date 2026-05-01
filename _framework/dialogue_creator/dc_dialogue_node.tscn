@@ -221,11 +221,12 @@ text = "Mode"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetHandler", "valueSection", "valueSetter")]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("8_u2mdd")
 presetHandler = NodePath("WriteSpeedPreset")
+valueSection = NodePath("WriteSpeedValue")
 valueSetter = NodePath("WriteSpeedValue/SpinBox")
 
 [node name="WriteSpeedPreset" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects" node_paths=PackedStringArray("chooser")]
@@ -258,9 +259,7 @@ size_flags_horizontal = 4
 [node name="SpinBox" type="SpinBox" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
 layout_mode = 2
 size_flags_horizontal = 0
-min_value = 1.0
 max_value = 120.0
-value = 1.0
 allow_greater = true
 
 [node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
