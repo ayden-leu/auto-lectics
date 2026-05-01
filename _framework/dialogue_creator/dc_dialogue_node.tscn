@@ -17,7 +17,7 @@
 
 [node name="DC_DialogueNode" type="GraphNode"]
 texture_filter = 2
-offset_right = 485.0
+offset_right = 679.0
 offset_bottom = 513.0
 theme = ExtResource("1_1f1bm")
 theme_type_variation = &"DialogueObject"
@@ -103,6 +103,7 @@ text = "Dialouge ID"
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "e.g  start"
+middle_mouse_paste_enabled = false
 
 [node name="Save" type="Button" parent="IdField"]
 texture_filter = 1
@@ -118,15 +119,16 @@ valueHolder = NodePath("InputField")
 
 [node name="Label" type="Label" parent="TextField"]
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_vertical = 0
 text = "Text"
 vertical_alignment = 1
 
 [node name="InputField" type="TextEdit" parent="TextField"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "awgawegaw oifu hawiudhwau ihdi i  awh iudh auiwhdi hawuid  hawd "
+middle_mouse_paste_enabled = false
 wrap_mode = 1
+scroll_fit_content_height = true
 
 [node name="Row1" type="HBoxContainer" parent="."]
 layout_mode = 2

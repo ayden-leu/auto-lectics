@@ -78,13 +78,16 @@ valueHolder = NodePath("InputField")
 
 [node name="Label" type="Label" parent="TextField"]
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_vertical = 0
 text = "Text"
 vertical_alignment = 1
 
 [node name="InputField" type="TextEdit" parent="TextField"]
 layout_mode = 2
 size_flags_horizontal = 3
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+scroll_fit_content_height = true
 
 [node name="TypeChooser" type="HBoxContainer" parent="." node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
@@ -240,19 +243,19 @@ text = "Value"
 [node name="HSeparator5" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 
+[node name="SfxAspectsToggler" type="CheckBox" parent="AdvancedOptions" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "SFX Events"
+script = ExtResource("4_l41k6")
+fields = [NodePath("../SfxAspects/Events")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
 [node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("8_jt2el")
 eventHolder = NodePath("Events")
-
-[node name="SfxAspectsToggler" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
-layout_mode = 2
-theme_type_variation = &"CheckBoxFold"
-text = "SFX Events"
-script = ExtResource("4_l41k6")
-fields = [NodePath("..")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="AdvancedOptions/SfxAspects"]
 layout_mode = 2
@@ -355,8 +358,8 @@ text = "Debug"
 [connection signal="field_updated" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField" to="." method="_on_field_updated"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField/InputField" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser" method="_on_value_input_field_updated"]
 [connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField/InputField" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField" method="_on_input_field_value_changed"]
+[connection signal="resize" from="AdvancedOptions/SfxAspectsToggler" to="." method="_on_resize_height"]
 [connection signal="field_updated" from="AdvancedOptions/SfxAspects" to="." method="_on_field_updated"]
-[connection signal="resize" from="AdvancedOptions/SfxAspects/SfxAspectsToggler" to="." method="_on_resize_height"]
 [connection signal="resize" from="AdvancedOptions/StoryFlagsToggler" to="." method="_on_resize_height"]
 [connection signal="resize" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" to="." method="_on_resize_height"]
 [connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" to="." method="_on_field_updated"]

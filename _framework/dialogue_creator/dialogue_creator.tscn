@@ -415,13 +415,14 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("11_wipx8")
 eventHolder = NodePath("Events")
+removeNpcDefaultEntry = true
 
 [node name="SfxAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2
 theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
-fields = [NodePath("..")]
+fields = [NodePath("../Events")]
 metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects"]
