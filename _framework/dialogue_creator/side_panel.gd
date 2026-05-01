@@ -43,34 +43,39 @@ var expanded:bool = false:
 func _ready() -> void:
 	expanded = false
 	
-	%NodeTypeField.type = DialogueDefaults.DEFAULT_DIALOGUE.type
-	%NodeTextThemeField.textTheme = DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset
-	%NodeSfxAspects.aspects = DialogueDefaults.DEFAULT_DIALOGUE.sfx
+	%NodeTypeChooser.chosen = DialogueDefaults.DEFAULT_DIALOGUE.type
+	%NodeTextThemeChooser.chosen = DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset
+	%NodeWriteSpeedPresetChooser.chosen = DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed
+	%NodeWriteSpeedValueField.value = DialogueDefaults.DEFAULT_DIALOGUE.writeSpeedCustom
+	%NodeSfxAspects.configuredEvents = DialogueDefaults.DEFAULT_DIALOGUE.sfx
 	
-	%OptionTypeField.type = DialogueDefaults.DEFAULT_OPTION.type
-	%OptionTextThemeField.textTheme = DialogueDefaults.DEFAULT_OPTION.textThemePreset
-	%OptionSfxAspects.aspects = DialogueDefaults.DEFAULT_OPTION.sfx
+	%OptionTypeChooser.chosen = DialogueDefaults.DEFAULT_OPTION.type
+	%OptionSpawnDelayField.value = DialogueDefaults.DEFAULT_OPTION.spawnDelay
+	%OptionLifetimeField.value = DialogueDefaults.DEFAULT_OPTION.lifetime
+	%OptionWriteSpeedPresetChooser.chosen = DialogueDefaults.DEFAULT_OPTION.writeSpeed
+	%OptionWriteSpeedValueField.value = DialogueDefaults.DEFAULT_OPTION.writeSpeedCustom	
+	%OptionTextThemeChooser.chosen = DialogueDefaults.DEFAULT_OPTION.textThemePreset
+	%OptionSfxAspects.configuredEvents = DialogueDefaults.DEFAULT_OPTION.sfx
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
 func getDialogueFields() -> Dictionary:
 	return {
-		"type": %NodeTypeField.option,
-		"textThemePreset": %NodeTextThemeField.textTheme,
-		"writeSpeed": %NodeWriteSpeedAspects.preset,
-		"writeSpeedCustom": %NodeWriteSpeedAspects.value,
-		"sfx": %NodeSfxAspects.aspects
+		"type": %NodeTypeChooser.chosen,
+		"textThemePreset": %NodeTextThemeChooser.chosen,
+		"writeSpeed": %NodeWriteSpeedPresetChooser.chosen,
+		"writeSpeedCustom": %NodeWriteSpeedValueField.value,
+		"sfx": %NodeSfxAspects.configuredEvents
 	}
 
 func getOptionFields() -> Dictionary:
 	return{
-		# === Optional ===
-		"type": %OptionTypeField.option,
-		"textThemePreset": %OptionTextThemeField.textTheme,
-		"writeSpeed": %OptionWriteSpeedAspects.preset,
-		"writeSpeedCustom": %OptionWriteSpeedAspects.value,
-		"sfx": %OptionSfxAspects.aspects,
+		"type": %OptionTypeChooser.chosen,
+		"textThemePreset": %OptionTextThemeChooser.chosen,
+		"writeSpeed": %OptionWriteSpeedPresetChooser.chosen,
+		"writeSpeedCustom": %OptionWriteSpeedValueField.value,
+		"sfx": %OptionSfxAspects.configuredEvents,
 		"spawnDelay": %OptionSpawnDelayField.value,
 		"lifetime": %OptionLifetimeField.value
 	}

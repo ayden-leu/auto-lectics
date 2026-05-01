@@ -140,7 +140,7 @@ func _createNodesFromFile(filename:String) -> void:
 		_on_create_option_pressed()
 		var newOptionNode:DC_OptionNode = _optionNodes.back()
 		_set_node_visibility.connect(newOptionNode._on_toggle_visibility)
-		newOptionNode.textUpdateFromField = false
+		#newOptionNode.textUpdateFromField = false
 		newOptionNode.text = option.text
 		
 		if option.has("type"):
@@ -379,7 +379,7 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 		
 		_connectDialogueOptionPortToOption(fromNode, toNode)
 		toNode.port = from_port
-		toNode._on_attribute_modified()
+		toNode._on_field_updated()
 	
 	# dialogue option next id port to dialogue object
 	elif fromNode is DC_OptionNode and toNode is DC_DialogueNode: 

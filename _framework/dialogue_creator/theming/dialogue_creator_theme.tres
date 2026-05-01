@@ -108,6 +108,7 @@ LabelOption/styles/normal = ExtResource("14_nn4ja")
 LineEdit/font_sizes/font_size = 24
 LineEdit/styles/focus = ExtResource("1_8vgy3")
 LineEdit/styles/normal = ExtResource("9_8vgy3")
+LineEdit/styles/read_only = ExtResource("9_8vgy3")
 OptionButton/font_sizes/font_size = 24
 OptionButton/icons/arrow = ExtResource("11_k4yq8")
 OptionButton/styles/pressed = ExtResource("25_g4rfl")

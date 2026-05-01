@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b38hwl8plmrky"]
+[gd_scene load_steps=17 format=3 uid="uid://b38hwl8plmrky"]
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_framework/dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_vav2e"]
@@ -7,12 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_framework/dialogue_creator/visual_assets/save.svg" id="5_acglc"]
 [ext_resource type="Texture2D" uid="uid://c1ramlq6b7v5a" path="res://_framework/dialogue_creator/visual_assets/load.svg" id="6_acglc"]
 [ext_resource type="Script" uid="uid://j16kg7nvfbl3" path="res://_framework/dialogue_creator/side_panel.gd" id="7_28w4y"]
-[ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_framework/dialogue_creator/helpers/field_option_type.gd" id="8_01334"]
-[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_framework/dialogue_creator/helpers/aspects_write_speed.gd" id="9_5j8q3"]
-[ext_resource type="Script" uid="uid://buogf2xidqpac" path="res://_framework/dialogue_creator/helpers/field_option_text_theme.gd" id="9_obj6m"]
-[ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_framework/dialogue_creator/helpers/field_option_write_speed_preset.gd" id="10_pdxf7"]
-[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/aspects_sfx.gd" id="11_wipx8"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/button_toggle_area.gd" id="12_p0r8u"]
+[ext_resource type="Script" uid="uid://cvbtel5rsv0md" path="res://_framework/dialogue_creator/helpers/dc_dn_type_chooser.gd" id="8_pwsq1"]
+[ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="9_flnpa"]
+[ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="11_3oc8m"]
+[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="11_wipx8"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_button_toggle_area.gd" id="12_p0r8u"]
+[ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="12_qo5h7"]
+[ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="14_u8beo"]
+[ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="15_pwsq1"]
+[ext_resource type="Script" uid="uid://bqrkamioy7nsv" path="res://_framework/dialogue_creator/helpers/dc_on_lifetime.gd" id="16_flnpa"]
 
 [node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_background", "_menuButtons", "_sidePanel")]
 layout_mode = 3
@@ -121,6 +124,7 @@ offset_left = 8.0
 offset_top = 60.0
 offset_right = 413.0
 offset_bottom = 436.0
+mouse_filter = 2
 script = ExtResource("7_28w4y")
 contents = NodePath("Contents")
 
@@ -166,84 +170,104 @@ layout_mode = 2
 theme_type_variation = &"LabelDialogueID"
 text = "Dialogue Node"
 
-[node name="NodeTypeField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("chooser")]
+[node name="HSeparator" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
+layout_mode = 2
+
+[node name="NodeTypeChooser" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("8_01334")
-chooser = NodePath("OptionButton")
+script = ExtResource("8_pwsq1")
+chooser = NodePath("Chooser")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTypeField"]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTypeChooser"]
 layout_mode = 2
 text = "Type"
 
-[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTypeField"]
+[node name="Chooser" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTypeChooser"]
 layout_mode = 2
 
-[node name="NodeTextThemeField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("chooser")]
+[node name="HSeparator2" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
+layout_mode = 2
+
+[node name="NodeTextThemeChooser" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("9_obj6m")
-chooser = NodePath("OptionButton")
+script = ExtResource("9_flnpa")
+chooser = NodePath("Chooser")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeField"]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeChooser"]
 layout_mode = 2
 text = "Text Theme"
 
-[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeField"]
+[node name="Chooser" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeChooser"]
 layout_mode = 2
 
-[node name="NodeWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+[node name="HSeparator3" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
+layout_mode = 2
+
+[node name="WriteSpeedAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "Write Speed Aspects"
+script = ExtResource("12_p0r8u")
+fields = [NodePath("../WriteSpeedAspects")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="HSeparator5" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
+layout_mode = 2
+
+[node name="WriteSpeedAspects" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
+layout_mode = 2
+
+[node name="NodeWriteSpeedPresetChooser" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("9_5j8q3")
-presetHandler = NodePath("WriteSpeedPreset")
-valueSetter = NodePath("WriteSpeedValue/SpinBox")
-
-[node name="WriteSpeedPreset" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects" node_paths=PackedStringArray("chooser")]
-layout_mode = 2
-script = ExtResource("10_pdxf7")
+script = ExtResource("11_3oc8m")
 chooser = NodePath("OptionButton")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset"]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedPresetChooser"]
 layout_mode = 2
-text = "Write Speed Preset"
+text = "Preset"
 
-[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset"]
-layout_mode = 2
-
-[node name="WriteSpeedValue" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects"]
+[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedPresetChooser"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue"]
+[node name="NodeWriteSpeedValueField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
-text = "Write Speed Value"
+script = ExtResource("12_qo5h7")
+valueHolder = NodePath("InputField")
 
-[node name="VSeparator" type="VSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue"]
+[node name="InputField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedValueField"]
 layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="SpinBox" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue"]
-layout_mode = 2
-size_flags_horizontal = 0
-min_value = 1.0
-max_value = 120.0
-value = 1.0
+min_value = -1.0
 allow_greater = true
+alignment = 2
+editable = false
+update_on_text_changed = true
+
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedValueField"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Value"
+
+[node name="HSeparator4" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
+layout_mode = 2
 
 [node name="NodeSfxAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node" node_paths=PackedStringArray("eventHolder")]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("11_wipx8")
 eventHolder = NodePath("Events")
+removeFirstEntry = true
 
-[node name="CheckBox" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects" node_paths=PackedStringArray("fields")]
+[node name="SfxAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2
 theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../Events")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects"]
 layout_mode = 2
@@ -259,127 +283,149 @@ layout_mode = 2
 theme_type_variation = &"LabelOption"
 text = "Dialogue Option"
 
-[node name="OptionTypeField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("chooser")]
+[node name="HSeparator6" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="OptionTypeChooser" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 2
-script = ExtResource("8_01334")
-type = 1
-chooser = NodePath("OptionButton")
+script = ExtResource("14_u8beo")
+chooser = NodePath("Chooser")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeField"]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeChooser"]
 layout_mode = 2
 text = "Type"
 
-[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeField"]
+[node name="Chooser" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeChooser"]
 layout_mode = 2
 
-[node name="OptionTextThemeField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("chooser")]
+[node name="HSeparator" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="OptionSpawnDelayField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("valueHolder")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("9_obj6m")
-chooser = NodePath("OptionButton")
+script = ExtResource("15_pwsq1")
+valueHolder = NodePath("InputField")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeField"]
-layout_mode = 2
-text = "Text Theme"
-
-[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeField"]
-layout_mode = 2
-
-[node name="OptionSpawnDelay" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSpawnDelay"]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSpawnDelayField"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Spawn Delay"
 
-[node name="OptionSpawnDelayField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSpawnDelay"]
-unique_name_in_owner = true
+[node name="InputField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSpawnDelayField"]
 layout_mode = 2
-size_flags_horizontal = 0
-max_value = 10.0
 step = 0.1
-value = 1.0
 allow_greater = true
 
-[node name="OptionLifetime" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+[node name="HSeparator2" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetime"]
+[node name="OptionLifetimeField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("16_flnpa")
+valueHolder = NodePath("InputField")
+
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetimeField"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Lifetime"
 
-[node name="OptionLifetimeField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetime"]
-unique_name_in_owner = true
+[node name="InputField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetimeField"]
 layout_mode = 2
-size_flags_horizontal = 0
-min_value = -1.0
-max_value = 10.0
 step = 0.1
-value = 1.0
 allow_greater = true
 
-[node name="OptionWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("presetHandler", "valueSetter")]
+[node name="HSeparator3" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="OptionTextThemeChooser" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("9_5j8q3")
-presetHandler = NodePath("WriteSpeedPreset")
-valueSetter = NodePath("WriteSpeedValue/SpinBox")
+script = ExtResource("9_flnpa")
+chooser = NodePath("Chooser")
 
-[node name="WriteSpeedPreset" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects" node_paths=PackedStringArray("chooser")]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeChooser"]
 layout_mode = 2
-script = ExtResource("10_pdxf7")
+text = "Text Theme"
+
+[node name="Chooser" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeChooser"]
+layout_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="OptionWriteSpeedAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("fields")]
+layout_mode = 2
+theme_type_variation = &"CheckBoxFold"
+text = "Write Speed Aspects"
+script = ExtResource("12_p0r8u")
+fields = [NodePath("../OptionWriteSpeedAspects")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="OptionWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+layout_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects"]
+layout_mode = 2
+
+[node name="OptionWriteSpeedPresetChooser" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer" node_paths=PackedStringArray("chooser")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("11_3oc8m")
+addInherit = true
 chooser = NodePath("OptionButton")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset"]
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser"]
 layout_mode = 2
-text = "Write Speed Preset"
+text = "Preset"
 
-[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects"]
+[node name="OptionButton" type="OptionButton" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser"]
 layout_mode = 2
 
-[node name="WriteSpeedValue" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects"]
+[node name="OptionWriteSpeedValueField" type="HBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("12_qo5h7")
+valueHolder = NodePath("InputField")
 
-[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue"]
+[node name="InputField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField"]
 layout_mode = 2
-size_flags_horizontal = 4
-text = "Write Speed Value"
-
-[node name="VSeparator" type="VSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="SpinBox" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue"]
-layout_mode = 2
-size_flags_horizontal = 0
-min_value = 1.0
-max_value = 120.0
-value = 1.0
+min_value = -1.0
 allow_greater = true
+alignment = 2
+editable = false
+update_on_text_changed = true
+
+[node name="Label" type="Label" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Value"
+
+[node name="HSeparator5" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
+layout_mode = 2
 
 [node name="OptionSfxAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option" node_paths=PackedStringArray("eventHolder")]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("11_wipx8")
 eventHolder = NodePath("Events")
+removeFirstEntry = true
 
-[node name="CheckBox" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects" node_paths=PackedStringArray("fields")]
+[node name="SfxAspectsToggler" type="CheckBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2
 theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
-fields = [NodePath("../Events")]
+fields = [NodePath("..")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects"]
 layout_mode = 2
-size_flags_horizontal = 0
 
 [node name="ToggleSidePanel" type="Button" parent="SidePanel"]
 unique_name_in_owner = true
@@ -399,15 +445,19 @@ theme_type_variation = &"ButtonMenu"
 [connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/SaveAllDialogue" to="." method="_on_save_all_dialogue_pressed"]
 [connection signal="pressed" from="MenuButtons/VBoxContainer/Buttons/LoadDialogueTree" to="." method="_on_load_dialogue_tree_pressed"]
 [connection signal="pressed" from="SidePanel/Contents/Defaults/Header/SaveDefaults" to="." method="_on_save_defaults_pressed"]
-[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeField/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeField" method="_on_chooser_updated"]
-[connection signal="option_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects" method="_on_preset_changed"]
-[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
-[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects/WriteSpeedValue/SpinBox" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeWriteSpeedAspects" method="_on_value_changed"]
-[connection signal="toggled" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects/CheckBox" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects/CheckBox" method="_on_toggled"]
-[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeField/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeField" method="_on_chooser_updated"]
-[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeField/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeField" method="_on_chooser_updated"]
-[connection signal="option_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects" method="_on_preset_changed"]
-[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
-[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/WriteSpeedValue/SpinBox" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects" method="_on_value_changed"]
-[connection signal="toggled" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects/CheckBox" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects/CheckBox" method="_on_toggled"]
+[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTypeChooser/Chooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTypeChooser" method="_on_chooser_item_selected"]
+[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeChooser/Chooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeTextThemeChooser" method="_on_chooser_item_selected"]
+[connection signal="preset_updated" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedPresetChooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedValueField" method="_on_preset_chooser_updated"]
+[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedPresetChooser/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedPresetChooser" method="_on_chooser_item_selected"]
+[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedValueField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedPresetChooser" method="_on_value_input_field_updated"]
+[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedValueField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/WriteSpeedAspects/NodeWriteSpeedValueField" method="_on_input_field_value_changed"]
+[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeChooser/Chooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTypeChooser" method="_on_chooser_item_selected"]
+[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSpawnDelayField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSpawnDelayField" method="_on_input_field_value_changed"]
+[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetimeField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetimeField" method="_on_input_field_value_changed"]
+[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeChooser/Chooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionTextThemeChooser" method="_on_chooser_item_selected"]
+[connection signal="chooser_updated_via_code" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField" method="_on_preset_chooser_updated_via_code"]
+[connection signal="preset_updated" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField" method="_on_preset_chooser_updated"]
+[connection signal="item_selected" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser/OptionButton" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser" method="_on_chooser_item_selected"]
+[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser" method="_on_value_input_field_updated"]
+[connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField" method="_on_input_field_value_changed"]
 [connection signal="pressed" from="SidePanel/ToggleSidePanel" to="SidePanel" method="_on_toggler_pressed"]

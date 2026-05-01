@@ -26,23 +26,25 @@ const NEXT_ID_PORT:int = 0
 # export variables
 # ------------------------------------------------
 ## The text field you can edit.
-@onready var textField:TextEdit = %TextField
+@onready var textField:DC_BaseNodeField = %TextField
 ## The node that handles the type you can choose.
-@onready var typeField:DC_TypeFieldOption = %TypeField
-## The node that handles the text themes you can choose.
-@onready var textThemeField:DC_TextTheme = %TextTheme
-## The node that handles the write speed aspects you can modify.
-@onready var writeSpeedAspectsHandler:DC_AspectsWriteSpeed = %WriteSpeedAspects
-## The node that handles the SFX event SFX IDs you can choose.
-@onready var sfxEventAspectsHandler:DC_AspectsSfx = %SfxAspects
+@onready var typeField:DC_BaseNodeField = %TypeChooser
 ## The spawn delay field you can set.
-@onready var spawnDelayField:SpinBox = %SpawnDelayField
+@onready var spawnDelayField:DC_BaseNodeNumber = %SpawnDelayField
 ## The lifetime field you can set.
-@onready var lifetimeField:SpinBox = %LifetimeField
+@onready var lifetimeField:DC_BaseNodeNumber = %LifetimeField
+## The node that handles the text themes you can choose.
+@onready var textThemeField:DC_BaseNodeChooser = %TextThemeChooser
+## The node that handdles the text writee speed preset you can choose.
+@onready var writeSpeedPresetField:DC_BaseNodeChooser = %WriteSpeedPresetChooser
+## The node that handdles the text writee speed value you can set.
+@onready var writeSpeedValueField:DC_BaseNodeField = %WriteSpeedValueField
+## The node that handles the SFX event SFX IDs you can choose.
+@onready var sfxEventAspectsHandler:DC_BaseNodeField = %SfxAspects
 ## The node that handles all [StoryFlags] to set when this option is picked.
-@onready var setFlagsAspectsHandler:DC_AspectsSetFlags = %SetFlags
+@onready var setFlagsAspectsHandler:DC_SetFlagAspects = %SetFlags
 ## The node that handles all [StoryFlags] to check wheen loading this option.
-@onready var checkFlagsAspectsHandler:DC_AspectsCheckFlags = %CheckFlags
+@onready var checkFlagsAspectsHandler:DC_CheckFlagAspects = %CheckFlags
 
 # ------------------------------------------------
 # onready variables
@@ -51,191 +53,88 @@ const NEXT_ID_PORT:int = 0
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## The option port of the [DC_DiaalogueNode] this is connected to.
+## The option port of the [DC_DialogueNode] this is connected to.
 var port:int = -1
 
-## Used to get and set the text for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the current text
-## print(optionNode.text)  # output: "hi"
-## 
-## # Set the textx
-## optionNode.text = "hi there"
-## [/codeblock]
+## The text for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
 var text:String:
-	set(value):
-		if not textUpdateFromField:
-			textField.text = value
-			textUpdateFromField = true
-		_on_attribute_modified()
 	get():
-		return textField.text
+		return textField.value
+	set(value):
+		#if not textUpdateFromField:
+		textField.value = value
+			#textUpdateFromField = true
 ## Whether the update the text in the text field with a new value or not.
-var textUpdateFromField:bool = true
+#var textUpdateFromField:bool = true
 
-## Used to get and set the type for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid types can be found in [member DialogueDefaults.OPTION_TYPES].
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the current type
-## print(optionNode.type)  # output: "neutral"
-## 
-## # Set the type
-## optionNode.type = "positive"
-## [/codeblock]
+## The type for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
 var type:String:
 	set(newType):
-		typeField.option = newType
-		_on_attribute_modified()
+		typeField.chosen = newType
 	get():
-		return typeField.option
+		return typeField.chosen
 
-## Used to get and set the SFX IDs for each SFX event this [DC_OptionNode] has.
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid SFX IDs can be found in "res://sounds/sfx/".  The IDs will be the names of all folders found there.
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the currently set SFX events
-## print(optionNode.sfxEventAspects)  # output: {"eventId1": "sfxId1", "eventId2": "sfxId2"}
-## 
-## # Set the SFX IDs for some SFX events
-## optionNode.sfxEventAspects = {
-## 	"eventId1": "sfxId1",
-## 	"eventId2": "sfxId2"
-## }
-## [/codeblock]
-var sfxEventAspects:Dictionary:
-	set(newSfxEventAspects):
-		sfxEventAspectsHandler.aspects = newSfxEventAspects
-		_on_attribute_modified()
-	get():
-		return sfxEventAspectsHandler.aspects
-
-## Used to get and set the mode for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid modes can be found in [member DialogueDefaults.DIALOGUE_MODES].
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current mode
-## print(dialogueNode.textThemePreset)  # output: "_test_one"
-## 
-## # Set the mode
-## dialogueNode.textThemePreset = _test_two"
-## [/codeblock]
-var textThemePreset:String:
-	set(newTheme):
-		textThemeField.textTheme = newTheme
-	get():
-		return textThemeField.textTheme
-
-## Used to get and set the write speed preset for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid types can be found in [member DialogueDefaults.WRITE_SPEED_PRESETS]'s keys.
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the current write speed preset
-## print(optionNode.writeSpeedPreset)  # output: "medium"
-## 
-## # Set the write speed preset
-## optionNode.writeSpeedPreset = "fast"
-## [/codeblock]
-var writeSpeedPreset:String:
-	set(newPreset):
-		writeSpeedAspectsHandler.preset = newPreset
-		_on_attribute_modified()
-	get():
-		return writeSpeedAspectsHandler.preset
-
-## Used to get and set the write speed value for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the current write speed
-## print(optionNode.writeSpeedValue)  # output: 60
-## 
-## # Set the write speed
-## optionNode.writeSpeedValue = 45
-## [/codeblock]
-var writeSpeedValue:float:
-	set(newSpeed):
-		writeSpeedAspectsHandler.value = newSpeed
-		_on_attribute_modified()
-	get():
-		return writeSpeedAspectsHandler.value
-
-## Used to get and set the spawn delay for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the current spawn delay
-## print(optionNode.spawnDelay)  # output: 3.0
-## 
-## # Set the spawn delay
-## optionNode.spawnDelay = 1.0
-## [/codeblock]
+## The spawn delay for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
 var spawnDelay:float:
 	set(newDelay):
 		spawnDelayField.value = newDelay
-		_on_attribute_modified()
 	get():
 		return spawnDelayField.value
 
-## Used to get and set the lifetime for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the current lifetime
-## print(optionNode.lifetime)  # output: 3.0
-## 
-## # Set the lifetime
-## optionNode.lifetime = 1.0
-## [/codeblock]
+## The lifetime for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
 var lifetime:float:
 	set(newLife):
 		lifetimeField.value = newLife
-		_on_attribute_modified()
 	get():
 		return lifetimeField.value
 
-## Used to get and set the [StoryFlags] to set for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
+## The text theme preset for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
+var textThemePreset:String:
+	set(newTheme):
+		textThemeField.chosen = newTheme
+	get():
+		return textThemeField.chosen
+
+## The teext write speed preset for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
+var writeSpeedPreset:String:
+	set(newPreset):
+		writeSpeedPresetField.chosen = newPreset
+		_on_field_updated()
+	get():
+		return writeSpeedPresetField.chosen
+
+## The teext write speed value for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
+var writeSpeedValue:float:
+	set(newSpeed):
+		writeSpeedValueField.value = newSpeed
+		_on_field_updated()
+	get():
+		return writeSpeedValueField.value
+
+## The configured SFX events for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
+var sfxEventAspects:Dictionary:
+	set(newSfxEventAspects):
+		sfxEventAspectsHandler.configuredEvents = newSfxEventAspects
+		_on_field_updated()
+	get():
+		return sfxEventAspectsHandler.configuredEvents
+
+## The StoryFlags that are set when this [DC_OptionNode] is chosen.
+## Setting this will update other nodes appropriately.
 ## [br][br]
-## Usage:
+## Dictionary format is the following:
 ## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the flags that will be set and their new value when this option is picked
-## print(optionNode.setFlags)  # {"testFlag": false}
-## 
-## # Set the flags that will be set and their new value when this option is picked
-## optionNode.setFlags = {"testFlag": true}
+## var dict:Dictionary = {
+## 	"flagName": true  # or false
+## }
 ## [/codeblock]
 var setFlags:Dictionary:
 	set(newFlags):
@@ -243,18 +142,14 @@ var setFlags:Dictionary:
 	get():
 		return setFlagsAspectsHandler.currentFlags
 
-## Used to get and set the [StoryFlags] to check the value of for this [DC_OptionNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
+## The StoryFlags that are checked against when trying to spawn this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
 ## [br][br]
-## Usage:
+## Dictionary format is the following:
 ## [codeblock]
-## var optionNode:DC_OptionNode = # a pre-configured node from the scene tree
-##
-## # Get the flags that will be checked and the value to check against when this option is picked
-## print(optionNode.checkFlags)  # {"testFlag": false}
-## 
-## # Set the flags that will checked and the value to check against when this option is picked
-## optionNode.checkFlags = {"testFlag": true}
+## var dict:Dictionary = {
+## 	"flagName": true  # or false
+## }
 ## [/codeblock]
 var checkFlags:Dictionary:
 	set(newFlags):
@@ -279,11 +174,6 @@ func _ready() -> void:
 	
 	set_slot_color_right(1, PortColor.DIALOGUE)
 	set_slot_type_right(1, PortType.DIALOGUE)
-	
-	sfxEventAspects = DialogueDefaults.DEFAULT_OPTION.sfx
-	textThemeField.textTheme = "_defaultConsolePlayer"
-	spawnDelay = DialogueDefaults.DEFAULT_OPTION.spawnDelay
-	lifetime = DialogueDefaults.DEFAULT_OPTION.lifetime
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -304,29 +194,27 @@ func _getFields() -> Dictionary:
 		return {"error": "textField not loaded"}
 	
 	var currentValues:Dictionary = {
-		"text": textField.text
+		"text": textField.value
 	}
 	
-	currentValues.type = type
+	if type != _CHECK_NPC_DEFAULT_VALUE:
+		currentValues.type = type
 	
-	if textThemePreset != DialogueDefaults.DEFAULT_OPTION.textThemePreset:
+	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.textThemePreset = textThemePreset
 	
-	if writeSpeedPreset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
+	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.writeSpeed = writeSpeedPreset
 		if currentValues.writeSpeed == "custom":
-			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.value
+			currentValues.writeSpeedCustom = writeSpeedValue
 	
 	if sfxEventAspects != {}:
 		currentValues.sfx = sfxEventAspects
 	
-	# background theme (unused atm)
-	# particles (unused atm)
-	
-	if spawnDelay != DialogueDefaults.DEFAULT_OPTION.spawnDelay:
+	if spawnDelay >= 0:
 		currentValues.spawnDelay = spawnDelay
 	
-	if lifetime != DialogueDefaults.DEFAULT_OPTION.lifetime:
+	if lifetime >= 0:
 		currentValues.lifetime = lifetime
 	
 	if nextID != "":
@@ -354,38 +242,58 @@ func _on_dialogue_node_disconnected() -> void:
 	dialogueDisconnected()
 
 ## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
-func _on_attribute_modified() -> void:
+func _on_field_updated() -> void:
 	#print("option modified, emitting")
 	values_updated.emit(port, _getFields())
 
 ## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
 func _on_attribute_modified_parameter(_ignore_me) -> void:
-	_on_attribute_modified()
+	_on_field_updated()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the [member textField] gets updated.
 func _on_text_field_updated() -> void:
-	textUpdateFromField = true
-	_on_attribute_modified()
+	#textUpdateFromField = true
+	_on_field_updated()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the next [DC_DialogueNode]'s
 ## ID gets updatedd.
 func _on_next_object_id_modified(newID:String) -> void:
 	nextID = newID
-	_on_attribute_modified()
+	_on_field_updated()
+
+## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
+func _on_close_button_pressed() -> void:
+	super()
+
+## [b]Internal-use only.[/b]
+## Only here to see what signals are connected to the function.
+func _on_resize_height() -> void:
+	super()
+
+## [b]Internal-use only.[/b]
+## Only here to see what signals are connected to the function.
+func _on_toggle_visibility(isVisible:bool) -> void:
+	super(isVisible)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the debug button gets pressed.
 func _on_debug_pressed() -> void:
 	print("------ Dialogue Option ------")
 	print("Port: ", port)
 	print("Text: ", text)
-	print("Type: ", typeField.option)
+	print("Type: ", type)
 	
-	if textThemeField.textTheme != DialogueDefaults.DEFAULT_OPTION.textThemePreset:
-		print("Text Theme: ", textThemeField.textTheme)
+	if spawnDelay >= 0:
+		print("spawnDelay: ", spawnDelay)
 	
-	if writeSpeedAspectsHandler.preset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
-		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
-		print("Write Speed Value: ", writeSpeedAspectsHandler.value)
+	if lifetime >= 0:
+		print("lifetime: ", lifetime)
+	
+	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
+		print("Text Theme: ", textThemePreset)
+	
+	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
+		print("Write Speed Preset: ", writeSpeedPreset)
+		print("Write Speed Value: ", writeSpeedValue)
 	
 	var aspects:Dictionary = sfxEventAspects
 	if aspects != {}:
@@ -393,8 +301,6 @@ func _on_debug_pressed() -> void:
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
 	
-	print("spawnDelay: ", spawnDelay)
-	print("lifetime: ", lifetime)
 
 	var currentSetFlags:Dictionary = setFlags
 	if currentSetFlags != {}:
@@ -409,18 +315,6 @@ func _on_debug_pressed() -> void:
 			print("\t", flagID, ": ", currentCheckFlags[flagID])
 	
 	print("nextID: ", nextID)
-
-## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
-func _on_close_button_pressed() -> void:
-	super()
-
-## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
-func _on_resize_height() -> void:
-	super()
-
-## [b]Internal-use only.[/b]  Only here to see what signals are connected to the function.
-func _on_toggle_visibility(isVisible:bool) -> void:
-	super(isVisible)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

@@ -1,21 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://drh1uormkjsbh"]
+[gd_scene load_steps=15 format=3 uid="uid://drh1uormkjsbh"]
 
 [ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_framework/dialogue_creator/dc_option_node.gd" id="1_sx0xf"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
-[ext_resource type="Script" uid="uid://fujihwl0b8in" path="res://_framework/dialogue_creator/helpers/field_option_type.gd" id="3_3u2q4"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/button_toggle_area.gd" id="4_l41k6"]
-[ext_resource type="Script" uid="uid://buogf2xidqpac" path="res://_framework/dialogue_creator/helpers/field_option_text_theme.gd" id="5_s1oka"]
-[ext_resource type="Script" uid="uid://d230116c75c5i" path="res://_framework/dialogue_creator/helpers/aspects_write_speed.gd" id="6_kcxjf"]
-[ext_resource type="Script" uid="uid://bb6gqj8om0k1w" path="res://_framework/dialogue_creator/helpers/field_option_write_speed_preset.gd" id="7_vpr3c"]
+[ext_resource type="Script" uid="uid://ddr81llov87d4" path="res://_framework/dialogue_creator/helpers/dc_node_text_field.gd" id="3_okpco"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_button_toggle_area.gd" id="4_l41k6"]
+[ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="4_okpco"]
+[ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="6_okpco"]
+[ext_resource type="Script" uid="uid://bqrkamioy7nsv" path="res://_framework/dialogue_creator/helpers/dc_on_lifetime.gd" id="7_60hqa"]
 [ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_framework/dialogue_creator/visual_assets/plus.svg" id="8_hpmiq"]
-[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/aspects_sfx.gd" id="8_jt2el"]
-[ext_resource type="Script" uid="uid://c0jj7mbxe1pi" path="res://_framework/dialogue_creator/helpers/aspects_set_flags.gd" id="8_pgdkv"]
-[ext_resource type="Script" uid="uid://dp0wpt264bnof" path="res://_framework/dialogue_creator/helpers/aspects_check_flags.gd" id="10_bc53s"]
+[ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="8_jt2el"]
+[ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="8_kmobf"]
+[ext_resource type="Script" uid="uid://c0jj7mbxe1pi" path="res://_framework/dialogue_creator/helpers/dc_set_flag_aspects.gd" id="8_pgdkv"]
+[ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="9_fv3kj"]
+[ext_resource type="Script" uid="uid://dp0wpt264bnof" path="res://_framework/dialogue_creator/helpers/dc_check_flag_aspects.gd" id="10_bc53s"]
+[ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="10_dr10o"]
 
 [node name="DC_OptionNode" type="GraphNode"]
 texture_filter = 2
-offset_right = 428.0
-offset_bottom = 664.0
+offset_right = 554.0
+offset_bottom = 642.0
 theme = ExtResource("1_ynasb")
 theme_type_variation = &"DialogueOption"
 resizable = true
@@ -67,169 +70,175 @@ slot/4/right_icon = null
 slot/4/draw_stylebox = true
 script = ExtResource("1_sx0xf")
 
-[node name="Text" type="HBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Text"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Text"
-
-[node name="TextField" type="TextEdit" parent="Text"]
+[node name="TextField" type="HBoxContainer" parent="." node_paths=PackedStringArray("valueHolder")]
 unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("3_okpco")
+valueHolder = NodePath("InputField")
+
+[node name="Label" type="Label" parent="TextField"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Text"
+vertical_alignment = 1
+
+[node name="InputField" type="TextEdit" parent="TextField"]
 layout_mode = 2
 size_flags_horizontal = 3
-emoji_menu_enabled = false
-middle_mouse_paste_enabled = false
-empty_selection_clipboard_enabled = false
-wrap_mode = 1
-tab_input_mode = false
-scroll_fit_content_height = true
 
-[node name="Row1" type="HBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="TypeField" type="HBoxContainer" parent="Row1" node_paths=PackedStringArray("chooser")]
+[node name="TypeChooser" type="HBoxContainer" parent="." node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 2
-script = ExtResource("3_3u2q4")
-type = 1
-chooser = NodePath("OptionButton")
+script = ExtResource("4_okpco")
+chooser = NodePath("Chooser")
 
-[node name="Label" type="Label" parent="Row1/TypeField"]
+[node name="Label" type="Label" parent="TypeChooser"]
 layout_mode = 2
 text = "Type"
 
-[node name="OptionButton" type="OptionButton" parent="Row1/TypeField"]
+[node name="Chooser" type="OptionButton" parent="TypeChooser"]
 layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "npcDefault"
+popup/item_0/id = 0
 
-[node name="NextID" type="Label" parent="Row1"]
+[node name="NextID" type="Label" parent="TypeChooser"]
 layout_mode = 2
+size_flags_horizontal = 10
 theme_type_variation = &"LabelDialogueID"
 text = "Next ID"
 horizontal_alignment = 2
 
-[node name="Advanced" type="CheckBox" parent="." node_paths=PackedStringArray("fields")]
+[node name="AdvancedToggler" type="CheckBox" parent="." node_paths=PackedStringArray("fields")]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_type_variation = &"CheckBoxFold"
 text = "Advanced"
 script = ExtResource("4_l41k6")
 fields = [NodePath("../AdvancedOptions")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="AdvancedOptions" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="SpawnDelay" type="HBoxContainer" parent="AdvancedOptions"]
+[node name="SpawnDelayField" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("6_okpco")
+valueHolder = NodePath("InputField")
 
-[node name="Label" type="Label" parent="AdvancedOptions/SpawnDelay"]
+[node name="Label" type="Label" parent="AdvancedOptions/SpawnDelayField"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Spawn Delay"
 
-[node name="SpawnDelayField" type="SpinBox" parent="AdvancedOptions/SpawnDelay"]
-unique_name_in_owner = true
+[node name="InputField" type="SpinBox" parent="AdvancedOptions/SpawnDelayField"]
 layout_mode = 2
-size_flags_horizontal = 0
-max_value = 10.0
+min_value = -0.1
 step = 0.1
-value = 1.0
+value = -0.1
 allow_greater = true
 
-[node name="VSeparator" type="VSeparator" parent="AdvancedOptions"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Lifetime" type="HBoxContainer" parent="AdvancedOptions"]
+[node name="HSeparator" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="AdvancedOptions/Lifetime"]
+[node name="LifetimeField" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("7_60hqa")
+valueHolder = NodePath("InputField")
+
+[node name="Label" type="Label" parent="AdvancedOptions/LifetimeField"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Lifetime"
 
-[node name="LifetimeField" type="SpinBox" parent="AdvancedOptions/Lifetime"]
-unique_name_in_owner = true
+[node name="InputField" type="SpinBox" parent="AdvancedOptions/LifetimeField"]
 layout_mode = 2
-size_flags_horizontal = 0
-min_value = -1.0
-max_value = 10.0
+min_value = -0.1
 step = 0.1
-value = 1.0
+value = -0.1
 allow_greater = true
 
-[node name="VSeparator2" type="VSeparator" parent="AdvancedOptions"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Row2" type="HBoxContainer" parent="AdvancedOptions"]
+[node name="HSeparator2" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="TextTheme" type="HBoxContainer" parent="AdvancedOptions/Row2" node_paths=PackedStringArray("chooser")]
+[node name="TextThemeChooser" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("5_s1oka")
-chooser = NodePath("OptionButton")
+script = ExtResource("8_kmobf")
+chooser = NodePath("Chooser")
 
-[node name="Label" type="Label" parent="AdvancedOptions/Row2/TextTheme"]
+[node name="Label" type="Label" parent="AdvancedOptions/TextThemeChooser"]
 layout_mode = 2
 text = "Text Theme"
 
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row2/TextTheme"]
+[node name="Chooser" type="OptionButton" parent="AdvancedOptions/TextThemeChooser"]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "npcDefault"
+popup/item_0/id = 0
+
+[node name="HSeparator3" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="VSeparator3" type="VSeparator" parent="AdvancedOptions"]
+[node name="WriteSpeedAspectsToggler" type="CheckBox" parent="AdvancedOptions" node_paths=PackedStringArray("fields")]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_type_variation = &"CheckBoxFold"
+text = "Write Speed Aspects"
+script = ExtResource("4_l41k6")
+fields = [NodePath("../WriteSpeedAspects")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
-[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("presetHandler", "valueSection", "valueSetter")]
+[node name="WriteSpeedAspects" type="VBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="AdvancedOptions/WriteSpeedAspects"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects"]
+layout_mode = 2
+
+[node name="WriteSpeedPresetChooser" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects/HBoxContainer" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("6_kcxjf")
-presetHandler = NodePath("WriteSpeedPreset")
-valueSection = NodePath("WriteSpeedValue")
-valueSetter = NodePath("WriteSpeedValue/SpinBox")
-
-[node name="WriteSpeedPreset" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects" node_paths=PackedStringArray("chooser")]
-layout_mode = 2
-script = ExtResource("7_vpr3c")
+script = ExtResource("9_fv3kj")
+addInherit = true
 chooser = NodePath("OptionButton")
 
-[node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
+[node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser"]
 layout_mode = 2
-text = "Write Speed Preset"
+text = "Preset"
 
-[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset"]
+[node name="OptionButton" type="OptionButton" parent="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser"]
 layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "npcDefault"
+popup/item_0/id = 0
 
-[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/WriteSpeedAspects"]
+[node name="WriteSpeedValueField" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects/HBoxContainer" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("10_dr10o")
+valueHolder = NodePath("InputField")
 
-[node name="WriteSpeedValue" type="HBoxContainer" parent="AdvancedOptions/WriteSpeedAspects"]
+[node name="InputField" type="SpinBox" parent="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Write Speed Value"
-
-[node name="VSeparator" type="VSeparator" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="SpinBox" type="SpinBox" parent="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue"]
-layout_mode = 2
-size_flags_horizontal = 0
-min_value = 1.0
-max_value = 120.0
-value = 1.0
+min_value = -1.0
 allow_greater = true
+alignment = 2
+editable = false
+update_on_text_changed = true
 
-[node name="VSeparator4" type="VSeparator" parent="AdvancedOptions"]
+[node name="Label" type="Label" parent="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+text = "Value"
+
+[node name="HSeparator5" type="HSeparator" parent="AdvancedOptions"]
+layout_mode = 2
 
 [node name="SfxAspects" type="VBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("eventHolder")]
 unique_name_in_owner = true
@@ -237,29 +246,29 @@ layout_mode = 2
 script = ExtResource("8_jt2el")
 eventHolder = NodePath("Events")
 
-[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
+[node name="SfxAspectsToggler" type="CheckBox" parent="AdvancedOptions/SfxAspects" node_paths=PackedStringArray("fields")]
 layout_mode = 2
 theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("4_l41k6")
-fields = [NodePath("../Events")]
+fields = [NodePath("..")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="AdvancedOptions/SfxAspects"]
 layout_mode = 2
-size_flags_horizontal = 0
 
-[node name="StoryFlags" type="VBoxContainer" parent="AdvancedOptions"]
-layout_mode = 2
-
-[node name="CheckBox" type="CheckBox" parent="AdvancedOptions/StoryFlags" node_paths=PackedStringArray("fields")]
+[node name="StoryFlagsToggler" type="CheckBox" parent="AdvancedOptions" node_paths=PackedStringArray("fields")]
 layout_mode = 2
 theme_type_variation = &"CheckBoxFold"
 text = "Story Flags"
 script = ExtResource("4_l41k6")
-fields = [NodePath("../HBoxContainer")]
+fields = [NodePath("../StoryFlags/HBoxContainer")]
 metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
-[node name="HSeparator" type="HSeparator" parent="AdvancedOptions/StoryFlags"]
+[node name="HSeparator6" type="HSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="StoryFlags" type="VBoxContainer" parent="AdvancedOptions"]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="AdvancedOptions/StoryFlags"]
@@ -327,32 +336,34 @@ layout_mode = 2
 layout_mode = 2
 text = "Debug"
 
-[connection signal="text_changed" from="Text/TextField" to="." method="_on_attribute_modified"]
-[connection signal="option_changed" from="Row1/TypeField" to="." method="_on_attribute_modified"]
-[connection signal="item_selected" from="Row1/TypeField/OptionButton" to="Row1/TypeField" method="_on_chooser_updated"]
-[connection signal="resize" from="Advanced" to="." method="_on_resize_height"]
-[connection signal="toggled" from="Advanced" to="Advanced" method="_on_toggled"]
-[connection signal="value_changed" from="AdvancedOptions/SpawnDelay/SpawnDelayField" to="." method="_on_attribute_modified_parameter"]
-[connection signal="value_changed" from="AdvancedOptions/Lifetime/LifetimeField" to="." method="_on_attribute_modified_parameter"]
-[connection signal="option_changed" from="AdvancedOptions/Row2/TextTheme" to="." method="_on_attribute_modified"]
-[connection signal="item_selected" from="AdvancedOptions/Row2/TextTheme/OptionButton" to="AdvancedOptions/Row2/TextTheme" method="_on_chooser_updated"]
-[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects" to="." method="_on_attribute_modified"]
-[connection signal="option_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" to="AdvancedOptions/WriteSpeedAspects" method="_on_preset_changed"]
-[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset/OptionButton" to="AdvancedOptions/WriteSpeedAspects/WriteSpeedPreset" method="_on_item_selected"]
-[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/WriteSpeedValue/SpinBox" to="AdvancedOptions/WriteSpeedAspects" method="_on_value_changed"]
-[connection signal="value_changed" from="AdvancedOptions/SfxAspects" to="." method="_on_attribute_modified"]
-[connection signal="resize" from="AdvancedOptions/SfxAspects/CheckBox" to="." method="_on_resize_height"]
-[connection signal="toggled" from="AdvancedOptions/SfxAspects/CheckBox" to="AdvancedOptions/SfxAspects/CheckBox" method="_on_toggled"]
-[connection signal="resize" from="AdvancedOptions/StoryFlags/CheckBox" to="." method="_on_resize_height"]
-[connection signal="toggled" from="AdvancedOptions/StoryFlags/CheckBox" to="AdvancedOptions/StoryFlags/CheckBox" method="_on_toggled"]
+[connection signal="field_updated" from="TextField" to="." method="_on_field_updated"]
+[connection signal="text_changed" from="TextField/InputField" to="TextField" method="_on_input_field_text_changed"]
+[connection signal="field_updated" from="TypeChooser" to="." method="_on_field_updated"]
+[connection signal="item_selected" from="TypeChooser/Chooser" to="TypeChooser" method="_on_chooser_item_selected"]
+[connection signal="resize" from="AdvancedToggler" to="." method="_on_resize_height"]
+[connection signal="field_updated" from="AdvancedOptions/SpawnDelayField" to="." method="_on_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/SpawnDelayField/InputField" to="AdvancedOptions/SpawnDelayField" method="_on_input_field_value_changed"]
+[connection signal="field_updated" from="AdvancedOptions/LifetimeField" to="." method="_on_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/LifetimeField/InputField" to="AdvancedOptions/LifetimeField" method="_on_input_field_value_changed"]
+[connection signal="field_updated" from="AdvancedOptions/TextThemeChooser" to="." method="_on_field_updated"]
+[connection signal="item_selected" from="AdvancedOptions/TextThemeChooser/Chooser" to="AdvancedOptions/TextThemeChooser" method="_on_chooser_item_selected"]
+[connection signal="resize" from="AdvancedOptions/WriteSpeedAspectsToggler" to="." method="_on_resize_height"]
+[connection signal="chooser_updated_via_code" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField" method="_on_preset_chooser_updated_via_code"]
+[connection signal="field_updated" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser" to="." method="_on_field_updated"]
+[connection signal="preset_updated" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField" method="_on_preset_chooser_updated"]
+[connection signal="item_selected" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser/OptionButton" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser" method="_on_chooser_item_selected"]
+[connection signal="field_updated" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField" to="." method="_on_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField/InputField" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedPresetChooser" method="_on_value_input_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField/InputField" to="AdvancedOptions/WriteSpeedAspects/HBoxContainer/WriteSpeedValueField" method="_on_input_field_value_changed"]
+[connection signal="field_updated" from="AdvancedOptions/SfxAspects" to="." method="_on_field_updated"]
+[connection signal="resize" from="AdvancedOptions/SfxAspects/SfxAspectsToggler" to="." method="_on_resize_height"]
+[connection signal="resize" from="AdvancedOptions/StoryFlagsToggler" to="." method="_on_resize_height"]
 [connection signal="resize" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" to="." method="_on_resize_height"]
-[connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" to="." method="_on_attribute_modified"]
+[connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" to="." method="_on_field_updated"]
 [connection signal="pressed" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/AddButton" to="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags" method="_on_add_button_pressed"]
 [connection signal="resize" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/CheckBox" to="." method="_on_resize_height"]
-[connection signal="toggled" from="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/CheckBox" to="AdvancedOptions/StoryFlags/HBoxContainer/SetFlags/Buttons/CheckBox" method="_on_toggled"]
 [connection signal="resize" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" to="." method="_on_resize_height"]
-[connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" to="." method="_on_attribute_modified"]
+[connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" to="." method="_on_field_updated"]
 [connection signal="resize" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/CheckBox" to="." method="_on_resize_height"]
-[connection signal="toggled" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/CheckBox" to="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/CheckBox" method="_on_toggled"]
 [connection signal="pressed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/AddButton" to="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" method="_on_add_button_pressed"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]
