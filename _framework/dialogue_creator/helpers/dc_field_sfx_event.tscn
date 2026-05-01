@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://citmsrjh10i13"]
+
+[ext_resource type="Script" uid="uid://cvofpenqxwii5" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_event.gd" id="1_fspbj"]
+
+[node name="SfxEvent" type="HBoxContainer" node_paths=PackedStringArray("label", "chooser")]
+size_flags_horizontal = 0
+script = ExtResource("1_fspbj")
+label = NodePath("Label")
+chooser = NodePath("OptionButton")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Event ID"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "npcDefault"
+popup/item_0/id = 0
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_chooser_item_selected"]

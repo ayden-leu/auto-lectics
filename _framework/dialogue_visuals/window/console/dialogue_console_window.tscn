@@ -6,11 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://1n8yvdu14dcd" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry.tscn" id="4_pedep"]
 [ext_resource type="PackedScene" uid="uid://2pbfftop6j5e" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry_spacer.tscn" id="5_nsbvi"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f2hpt"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1d7as"]
 resource_local_to_scene = true
 playback_mode = 1
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f2hpt"]
 
 [node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
 layout_mode = 3
@@ -154,11 +154,11 @@ one_shot = true
 [node name="SFX" type="Node" parent="."]
 unique_name_in_owner = true
 
-[node name="text" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_1d7as")
-
 [node name="spawn" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_f2hpt")
+
+[node name="text" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_1d7as")
 
 [connection signal="text_submitted" from="Contents/ConsoleInput" to="." method="_on_input_submitted"]
 [connection signal="timeout" from="HecticTimer" to="." method="_on_hectic_timer_timeout"]

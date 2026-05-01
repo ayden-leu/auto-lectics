@@ -1,0 +1,14 @@
+{
+	"text": "starting time",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "none",
+		"text": "none"
+	},
+	"options": [
+		{
+			"text": "continue",
+			"nextID": "next"
+		}
+	]
+}

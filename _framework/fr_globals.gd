@@ -41,8 +41,7 @@ const STORAGE_PATH = {
 	"SFX": "res://sounds/sfx/",
 	"LABEL_PRESETS": "res://fonts/_label_presets/"
 }
-## Determines the file type of the dialogue objects.
-const DIALOGUE_FILE_TYPE = ".json"
+
 ## Determines the file type of label presets.
 const LABEL_PRESET_FILE_TYPE = ".tres"
 ## The z index of [Menu]s.
@@ -72,21 +71,34 @@ const MENU_Z_INDEX:int = 10
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Gets the path to a dialogue object.
-func getDialoguePath(entityName:String, id:String) -> String:
-	return STORAGE_PATH.DIALOGUE + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
 ## Gets the dialogue information within a dialogue object.
 func getDialogueNode(entityName:String, id: String) -> Dictionary:
-	var path:String = getDialoguePath(entityName, id)
-	var dialogue:Dictionary = DialogueLoader.loadDialogueNodeFile(path)
-	
-	if dialogue.is_empty():
-		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, path])
+	var topPath:String = DialogueLoader.assemblePath(entityName, id)
+	var top:Dictionary = DialogueLoader.loadDialogueNodeFile(topPath)
+	if top.is_empty():
+		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, topPath])
 		return DialogueLoader.loadDialogueNodeFile(
-			STORAGE_PATH.DIALOGUE + "fallback" + DIALOGUE_FILE_TYPE
+			STORAGE_PATH.DIALOGUE + "fallback" + DialogueLoader.DIALOGUE_FILE_TYPE
 		)
-	return dialogue
+	
+	var npcDialogueDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_DIALOGUE_ID)
+	var npcDialogueDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcDialogueDefaultsPath, false)
+	if npcDialogueDefaults.is_empty():
+		print("NPC: No default dialogue attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
+	
+	var npcOptionDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_OPTION_ID)
+	var npcOptionDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcOptionDefaultsPath, false)
+	if npcOptionDefaults.is_empty():
+		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
+	
+	var withNpcDefaults:Dictionary = DialogueLoader.fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
+	#print(withNpcDefaults.options)
+	
+	var result:Dictionary = DialogueLoader.fillDialogueMissingFields(withNpcDefaults)
+	#print(result.options)
+	
+	return result
 
 ## Gets the current size of the screen.
 func getScreenSize() -> Vector2:

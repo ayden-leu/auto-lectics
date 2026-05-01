@@ -1,0 +1,14 @@
+{
+	"text": "now to loop!",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "none",
+		"text": "none"
+	},
+	"options": [
+		{
+			"text": "yay",
+			"nextID": "start"
+		}
+	]
+}

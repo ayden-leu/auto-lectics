@@ -248,12 +248,6 @@ func _on_console_all_options_available() -> void:
 func _on_console_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
 
-# TODO:  redo this logic
-func _on_console_open_gate():
-	print("open gate!")
-	if $gateNode:
-		$gateNode.open_gate()
-
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
