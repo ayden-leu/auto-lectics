@@ -1,0 +1,23 @@
+{
+	"text": "AHHHHHHH!!!",
+	"type": "neutral",
+	"mode": "hectic",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "splodeScream"
+	},
+	"options": [
+		{
+			"text": "AHHHHHH!!!",
+			"type": "neutral"
+		},
+		{
+			"text": "WHY ARE YOU SCREAMING?",
+			"type": "neutral"
+		},
+		{
+			"text": "WHAT'S WRONG?",
+			"type": "neutral"
+		}
+	]
+}
