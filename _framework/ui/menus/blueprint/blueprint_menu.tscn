@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
+[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="3_ovhmb"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 
 [node name="BlueprintMenu" type="Control"]
 layout_mode = 3
@@ -50,11 +52,13 @@ offset_bottom = 609.0
 layout_mode = 2
 npcID = "npc_test_1"
 myName = "Aster"
+portraitTexture = ExtResource("3_ovhmb")
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_2"
 myName = "Mira"
+portraitTexture = ExtResource("4_coiy0")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
@@ -140,6 +144,18 @@ offset_top = 108.0
 offset_right = 199.0
 offset_bottom = 171.0
 text = "Text Edit"
+
+[node name="PortraitTextureRect" type="TextureRect" parent="NpcDetailPanel"]
+custom_minimum_size = Vector2(220, 220)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 32.0
+offset_right = 110.0
+offset_bottom = 220.0
+grow_horizontal = 2
 
 [node name="PrevPageButton" type="Button" parent="."]
 unique_name_in_owner = true

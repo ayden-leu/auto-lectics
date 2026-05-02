@@ -32,7 +32,7 @@ signal unlock_condition_met(conditionID:String)
 @onready var _guessNpcNameField = %GuessNpcNameField
 #@onready var _notesPanel = %NpcDetailPanel
 @onready var _notesField = %NotesField
-
+@onready var _portraitTextureRect: TextureRect = $NpcDetailPanel/PortraitTextureRect
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
@@ -93,6 +93,12 @@ func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 func _showDetails() -> void:
 	_loadNotes()
 	_guessNpcNamePanel.visible = not _selectedEntry.unlocked
+	
+	if _selectedEntry.portraitTexture != null:
+		_portraitTextureRect.texture = _selectedEntry.portraitTexture
+	else:
+		_portraitTextureRect.texture = null
+		
 	_details.visible = true
 
 ## [b]Internal-use only.[/b]  Hides the NPC entry details.
