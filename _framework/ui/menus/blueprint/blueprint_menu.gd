@@ -27,10 +27,10 @@ signal unlock_condition_met(conditionID:String)
 # onready variables
 # ------------------------------------------------
 @onready var _npcEntryHolder = %NpcEntryHolder
-@onready var _details = %Details
+@onready var _details = %NpcDetailPanel
 @onready var _guessNpcNamePanel = %GuessNpcNamePanel
 @onready var _guessNpcNameField = %GuessNpcNameField
-#@onready var _notesPanel = %NotesPanels
+#@onready var _notesPanel = %NpcDetailPanel
 @onready var _notesField = %NotesField
 
 # ------------------------------------------------
@@ -62,7 +62,8 @@ func _ready() -> void:
 	_loadEntries()
 	_hideDetails()
 	_updateEntryVisibility()
-
+	
+	disable()
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -194,8 +195,11 @@ func _on_next_page_button_pressed() -> void:
 
 ## [b]Internal-use only.[/b]  Mainly here to see what signals are connected.
 func _on_close_button_pressed() -> void:
-	super()
+	close()
 
+func _on_close_detail_button_pressed() -> void:
+	_selectedEntry = null
+	_hideDetails()
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
