@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
+[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="3_ovhmb"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 
 [node name="BlueprintMenu" type="Control"]
 layout_mode = 3
@@ -12,8 +14,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
-_numNeededBeforeUnlocking = 1
-metadata/_edit_lock_ = true
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
@@ -27,11 +27,13 @@ horizontal_alignment = 1
 [node name="CloseButton" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 120)
-layout_mode = 0
-offset_left = 1029.0
-offset_top = -2.0
-offset_right = 1149.0
-offset_bottom = 118.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_bottom = 120.0
+grow_horizontal = 0
 text = "X"
 
 [node name="NPCList" type="Control" parent="."]
@@ -43,46 +45,56 @@ mouse_filter = 2
 [node name="NpcEntryHolder" type="HFlowContainer" parent="NPCList"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 7.0
-offset_top = 80.0
-offset_right = 1147.0
-offset_bottom = 574.0
+offset_left = 830.0
+offset_top = 115.0
+offset_right = 1238.0
+offset_bottom = 609.0
 
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_1"
 myName = "Aster"
-lockedText = "???"
+portraitTexture = ExtResource("3_ovhmb")
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_2"
 myName = "Mira"
-lockedText = "???"
+portraitTexture = ExtResource("4_coiy0")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_3"
 myName = "Orin"
-lockedText = "???"
 
-[node name="Details" type="Control" parent="."]
+[node name="NpcDetailPanel" type="Panel" parent="."]
 unique_name_in_owner = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_lock_ = true
+custom_minimum_size = Vector2(100, 400)
+layout_mode = 0
+offset_left = 176.0
+offset_top = 44.0
+offset_right = 724.0
+offset_bottom = 770.0
 
-[node name="GuessNpcNamePanel" type="Panel" parent="Details"]
+[node name="CloseDetailButton" type="Button" parent="NpcDetailPanel"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 0
+offset_left = 467.0
+offset_top = 3.0
+offset_right = 547.0
+offset_bottom = 83.0
+text = "x"
+
+[node name="GuessNpcNamePanel" type="Panel" parent="NpcDetailPanel"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 459.0
-offset_top = 370.0
-offset_right = 653.0
-offset_bottom = 497.0
+offset_left = 172.0
+offset_top = 288.0
+offset_right = 359.0
+offset_bottom = 415.0
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Details/GuessNpcNamePanel"]
+[node name="Label" type="Label" parent="NpcDetailPanel/GuessNpcNamePanel"]
 layout_mode = 0
 offset_left = 49.0
 offset_top = 23.0
@@ -90,16 +102,16 @@ offset_right = 137.0
 offset_bottom = 46.0
 text = "Nameinput"
 
-[node name="GuessNpcNameField" type="LineEdit" parent="Details/GuessNpcNamePanel"]
+[node name="GuessNpcNameField" type="LineEdit" parent="NpcDetailPanel/GuessNpcNamePanel"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 56.0
+offset_left = 24.5625
 offset_top = 52.0
-offset_right = 124.5625
+offset_right = 156.0
 offset_bottom = 83.0
-text = "lineedit"
+placeholder_text = "e.g John"
 
-[node name="SubmitNpcNameButton" type="Button" parent="Details/GuessNpcNamePanel"]
+[node name="SubmitNpcNameButton" type="Button" parent="NpcDetailPanel/GuessNpcNamePanel"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 56.0
@@ -109,31 +121,43 @@ offset_bottom = 118.0
 text = "Submit
 "
 
-[node name="NotesPanel" type="Panel" parent="Details"]
+[node name="NotesPanel" type="Panel" parent="NpcDetailPanel"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 610.0
-offset_top = 77.0
-offset_right = 940.0
-offset_bottom = 289.0
+offset_left = 97.0
+offset_top = 442.0
+offset_right = 427.0
+offset_bottom = 654.0
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Details/NotesPanel"]
+[node name="Label" type="Label" parent="NpcDetailPanel/NotesPanel"]
 layout_mode = 0
 offset_left = 89.0
 offset_top = 51.0
 offset_right = 224.0
 offset_bottom = 74.0
-text = "NotesPanel Lable"
+text = "NotesPanel Label"
 
-[node name="NotesField" type="TextEdit" parent="Details/NotesPanel"]
+[node name="NotesField" type="TextEdit" parent="NpcDetailPanel/NotesPanel"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 111.0
-offset_top = 108.0
-offset_right = 199.0
-offset_bottom = 171.0
-text = "Text Edit"
+layout_mode = 1
+offset_left = 27.0
+offset_top = 95.0
+offset_right = 299.0
+offset_bottom = 158.0
+placeholder_text = "put notes here"
+
+[node name="PortraitTextureRect" type="TextureRect" parent="NpcDetailPanel"]
+custom_minimum_size = Vector2(220, 220)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 32.0
+offset_right = 110.0
+offset_bottom = 220.0
+grow_horizontal = 2
 
 [node name="PrevPageButton" type="Button" parent="."]
 unique_name_in_owner = true
@@ -152,7 +176,8 @@ offset_right = 1363.0
 offset_bottom = 452.0
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
-[connection signal="pressed" from="Details/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
-[connection signal="text_changed" from="Details/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
+[connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]
+[connection signal="pressed" from="NpcDetailPanel/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
+[connection signal="text_changed" from="NpcDetailPanel/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
 [connection signal="pressed" from="PrevPageButton" to="." method="_on_prev_page_button_pressed"]
 [connection signal="pressed" from="NextPageButton" to="." method="_on_next_page_button_pressed"]
