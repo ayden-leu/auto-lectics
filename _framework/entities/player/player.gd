@@ -79,11 +79,11 @@ signal no_longer_looking_at_interactable()
 @export var grapple_max_length: float = 20.0
 ## Set how speed at which grapple sends you forward when attaching
 @export var grapple_initial_impulse: float = 10.0
-## Set how fast the swing sends you
+## Set the force at which player input will push the trajectory forward
 @export var grapple_swing_input_force: float = 6.0
 ## Set how fast the hook moves when shot
 @export var grapple_hook_speed: float = 60.0
-## Set the max speed that can be built during grapple
+## Set the max speed that can be built up while swinging
 @export var max_grapple_speed: float = 20.0
 
 
