@@ -62,8 +62,7 @@ func _ready() -> void:
 	_loadEntries()
 	_hideDetails()
 	_updateEntryVisibility()
-	
-	disable()
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -199,13 +198,15 @@ func _on_next_page_button_pressed() -> void:
 		_currentPage += 1
 		_updateEntryVisibility()
 
-## [b]Internal-use only.[/b]  Mainly here to see what signals are connected.
-func _on_close_button_pressed() -> void:
-	close()
-
+## [b]Internal-use only.[/b]  Handles logic for when the NPC entry details panel is closed.
 func _on_close_detail_button_pressed() -> void:
 	_selectedEntry = null
 	_hideDetails()
+
+## [b]Internal-use only.[/b]  Mainly here to see what signals are connected.
+func _on_close_button_pressed() -> void:
+	super()
+
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
