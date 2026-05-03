@@ -83,10 +83,10 @@ func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
 	return optionWindow
 	
 ## Creates a [DialogueWarningTile], while avoiding the main console
-func createDialogueWarningTile(console_size) -> DialogueWarningTile:
+func createDialogueWarningTile() -> DialogueWarningTile:
 	dialogue_warning_tile = _WARNING_LAYER_SCENE.instantiate()
 	_addWindow(dialogue_warning_tile)
-	dialogue_warning_tile.spawn_warnings(console_size)
+	dialogue_warning_tile.spawn_warnings()
 	return dialogue_warning_tile
 
 ## [b]Internal-use only.[/b]  Delete [DialogueWarningTile]
@@ -154,17 +154,26 @@ func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
 
 ## Gets a random position on screen.
 ## Input should be window.size, and self.get_global_rect() for main console
-func getRandomPositionOnScreen(window_size: Vector2, avoid_rect: Rect2) -> Vector2:
+func getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
 	var viewport_size := get_viewport().get_visible_rect().size
 	var margin := 20.0
-	for attempt in range(30):
+	var retryAttempts:int = 30
+	
+	for attempt in range(retryAttempts):
 		var pos := Vector2(
 			randf_range(margin, viewport_size.x - window_size.x - margin),
 			randf_range(margin, viewport_size.y - window_size.y - margin)
 		)
-		# Avoid spawning over the main window
-		if avoid_rect == Rect2() or not avoid_rect.intersects(Rect2(pos, window_size)):
+		
+		var overlapping:bool = false
+		for window in _spawnedWindows:
+			if window.get_global_rect().intersects(Rect2(pos, window_size)):
+				overlapping = true
+				break
+		
+		if not overlapping:
 			return pos
+		
 	# fallback if all attempts fail
 	return Vector2(margin, margin)
 

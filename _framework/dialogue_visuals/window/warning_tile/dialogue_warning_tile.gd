@@ -25,7 +25,7 @@ var _spawned_warnings: Array[WarningTile2D] = []
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-func spawn_warnings(main_window_rect: Rect2 = Rect2()) -> void:
+func spawn_warnings() -> void:
 	for i in range(num_warnings):
 		var tile := warning_tile_scene.instantiate()
 		tile.visible = false
@@ -33,7 +33,7 @@ func spawn_warnings(main_window_rect: Rect2 = Rect2()) -> void:
 		
 		await get_tree().process_frame
 		
-		var pos:Vector2 = FR_WindowManager.getRandomPositionOnScreen(tile.size, main_window_rect)
+		var pos:Vector2 = FR_WindowManager.getRandomPositionOnScreen(tile.size)
 		tile.set_origin(pos)
 		_spawned_warnings.push_back(tile)
 		tile.visible = true

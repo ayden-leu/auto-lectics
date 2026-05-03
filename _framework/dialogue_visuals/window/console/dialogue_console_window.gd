@@ -185,8 +185,7 @@ func start() -> void:
 	_recordHistory = true
 	# Spawn warnings before text is typed
 	if mode == "hectic":
-		print("AAA: ", self.get_global_rect())
-		FR_WindowManager.createDialogueWarningTile(self.get_global_rect())
+		FR_WindowManager.createDialogueWarningTile()
 	await _addRightText(textToAdd)
 
 	all_dialogue_text_visible.emit()	
