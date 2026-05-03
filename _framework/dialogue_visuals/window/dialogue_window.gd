@@ -108,14 +108,20 @@ func _center() -> void:
 	position = (get_viewport_rect().size - size) / 2
 
 ## Gets a random position on screen.
-## Unused as it doesn't account for overlap.
-func _getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
+## Input should be window.size, and self.get_global_rect() for main console
+func _getRandomPositionOnScreen(window_size: Vector2, avoid_rect: Rect2) -> Vector2:
 	var viewport_size := get_viewport_rect().size
-	return Vector2(
-		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
-		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
-	)
-
+	var margin := 20.0
+	for attempt in range(30):
+		var pos := Vector2(
+			randf_range(margin, viewport_size.x - window_size.x - margin),
+			randf_range(margin, viewport_size.y - window_size.y - margin)
+		)
+		# Avoid spawning over the main window
+		if avoid_rect == Rect2() or not avoid_rect.intersects(Rect2(pos, window_size)):
+			return pos
+	# fallback if all attempts fail
+	return Vector2(margin, margin)
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------

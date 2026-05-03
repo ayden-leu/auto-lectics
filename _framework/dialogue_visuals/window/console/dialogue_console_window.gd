@@ -180,6 +180,9 @@ func start() -> void:
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
+	# Spawn warnings before text is typed
+	if mode == "hectic":
+		FR_WindowManager.createDialogueWarningTile(self.get_global_rect())
 	await _addRightText(textToAdd)
 
 	all_dialogue_text_visible.emit()	
@@ -314,7 +317,11 @@ func _spawnOptionWindows() -> void:
 		optionWindow.themeVariation = optionData.textThemePreset
 		optionWindow.loadSfx(optionData.sfx)
 		optionWindow.data = optionData
-		optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
+		# If Dialogue Console is too far left: spawn options on right instead
+		if global_position.x < 360:
+			optionWindow.position = _optionSpawnPosition.global_position + Vector2(800, verticalOffset)
+		else:
+			optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
 		
@@ -364,6 +371,7 @@ func _stopHecticMode() -> void:
 	_hecticBar.visible = false
 	_hecticBar.value = INF
 	_hecticTimer.stop()
+	FR_WindowManager.deleteDialogueWarningTile()
 
 func _handleCommand(command:String) -> void:
 	# command is an option ID

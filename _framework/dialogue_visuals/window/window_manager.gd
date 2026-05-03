@@ -18,6 +18,8 @@ class_name WindowManager
 const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleWindow)
 ## [b]Internal-use only.[/b]  A reference to the [DialogueConsoleOptionWindow] scene.
 const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
+## [b]Internal-use only.[/b] Contains reference to the warning tile scene where warnings will spawn
+const _WARNING_LAYER_SCENE: PackedScene = preload("res://_framework/dialogue_visuals/window/dialogue_warning_tile.tscn")
 
 # ------------------------------------------------
 # export variables
@@ -43,6 +45,8 @@ var _spawnedWindows:Array[DialogueWindow]
 ## [b]Internal-use only.[/b]  Holds all nodes that want to listen
 ## to [DialogueConsole]'s signals.
 var _dialogueConsoleSubscribers:Array
+## Holds WARNING_LAYER_SCENE when one needs to be instantiated
+var dialogue_warning_tile: DialogueWarningTile = null
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -73,6 +77,19 @@ func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
 	var optionWindow:DialogueConsoleOptionWindow = _OPTION_WINDOW_SCENE.instantiate()
 	_addWindow(optionWindow)
 	return optionWindow
+	
+## Creates a [DialogueWarningTile], while avoiding the main console
+func createDialogueWarningTile(console_size) -> DialogueWarningTile:
+	dialogue_warning_tile = _WARNING_LAYER_SCENE.instantiate()
+	_addWindow(dialogue_warning_tile)
+	dialogue_warning_tile.spawn_warnings(console_size)
+	return dialogue_warning_tile
+
+## [b]Internal-use only.[/b]  Delete [DialogueWarningTile]
+func deleteDialogueWarningTile() -> void:
+	if dialogue_warning_tile != null:
+		dialogue_warning_tile.close()
+		dialogue_warning_tile = null
 
 ## Connects signals from the [DialogueConsole] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list so the signals can be reconnected
