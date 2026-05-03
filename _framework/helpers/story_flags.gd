@@ -9,7 +9,8 @@ const DEFAULT_FLAGS: Dictionary = {
 	"testFlag": false,
 	"anotherFlag": true,
 	"aThirdFlag": false,
-	"doorOpen": false
+	"doorOpen": false,
+	"hasExploded": false,
 }
 #---------------------------------------------------
 
