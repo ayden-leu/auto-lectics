@@ -141,25 +141,10 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## Gets a random position on screen.
-## Input should be window.size, and self.get_global_rect() for main console
-func _getRandomPositionOnScreen(window_size: Vector2, avoid_rect: Rect2) -> Vector2:
-	var viewport_size := get_viewport_rect().size
-	var margin := 20.0
-	for attempt in range(30):
-		var pos := Vector2(
-			randf_range(margin, viewport_size.x - window_size.x - margin),
-			randf_range(margin, viewport_size.y - window_size.y - margin)
-		)
-		# Avoid spawning over the main window
-		if avoid_rect == Rect2() or not avoid_rect.intersects(Rect2(pos, window_size)):
-			return pos
-	# fallback if all attempts fail
-	return Vector2(margin, margin)
-
 ## Moves this window to the center of the screen immediately.
 func _center() -> void:
 	position = (get_viewport_rect().size - size) / 2
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------

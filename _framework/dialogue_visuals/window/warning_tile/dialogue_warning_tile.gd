@@ -33,7 +33,7 @@ func spawn_warnings(main_window_rect: Rect2 = Rect2()) -> void:
 		
 		await get_tree().process_frame
 		
-		var pos := _getRandomPositionOnScreen(tile.size, main_window_rect)
+		var pos:Vector2 = FR_WindowManager.getRandomPositionOnScreen(tile.size, main_window_rect)
 		tile.set_origin(pos)
 		_spawned_warnings.push_back(tile)
 		tile.visible = true
