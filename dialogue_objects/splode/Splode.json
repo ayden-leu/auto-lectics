@@ -1,0 +1,15 @@
+{
+	"text": "...",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Hello?",
+			"type": "neutral",
+			"nextID": "splodeScream",
+			"setFlags": {
+				"hasExploded": true
+			}
+		}
+	]
+}
