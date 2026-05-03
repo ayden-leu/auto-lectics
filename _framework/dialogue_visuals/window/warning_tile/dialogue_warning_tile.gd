@@ -7,7 +7,7 @@ class_name DialogueWarningTile
 # onready variables
 # ------------------------------------------------
 ## Holds reference to the warning tile scene
-@onready var warning_tile_scene: PackedScene = preload("res://_framework/dialogue_visuals/window/warning_tile_2d.tscn")
+@onready var warning_tile_scene: PackedScene = preload("uid://c1qmg4lyrgjqc")
 
 # ------------------------------------------------
 # normal variables referenced outside of script

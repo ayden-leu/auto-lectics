@@ -21,7 +21,7 @@ const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConso
 ## A reference to the [DialogueConsoleOptionWindow] scene.
 const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
 ## [b]Internal-use only.[/b] Contains reference to the warning tile scene where warnings will spawn
-const _WARNING_LAYER_SCENE: PackedScene = preload("res://_framework/dialogue_visuals/window/dialogue_warning_tile.tscn")
+const _WARNING_LAYER_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWarningTile)
 
 # ------------------------------------------------
 # export variables

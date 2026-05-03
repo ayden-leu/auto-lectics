@@ -32,7 +32,8 @@ const SCENES = {
 	"DialogueConsoleWindow": "uid://b8oqtsvu488a",
 	"DialogueConsoleOptionWindow": "uid://4opwac4ndc2k",
 	"DialogueConsoleLogEntry": "uid://1n8yvdu14dcd",
-	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e"
+	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e",
+	"DialogueWarningTile": "uid://dpeqr6fpd34gm"
 }
 
 ## Holds information for where certain aspects are stored in the project.
