@@ -162,6 +162,7 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
 
+# TODO:  move this to deprecated zone
 ## @deprecated
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
 func _beginDialogueEventBox(interactor:Node3D) -> void:
@@ -202,7 +203,7 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
 func _endDialogueConsole() -> void:
-	FR_WindowManager.killDialogueConsole()
+	FR_WindowManager.closeDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
 	
 	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):

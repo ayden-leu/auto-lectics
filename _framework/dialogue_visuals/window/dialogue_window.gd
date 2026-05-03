@@ -11,6 +11,8 @@ class_name DialogueWindow
 # ------------------------------------------------
 ## Emitted when this window is being closed.
 signal window_closed(me:DialogueWindow)
+## Emitted when this window is no longer being moved by the user.
+signal window_dropped(me:DialogueWindow)
 
 # ------------------------------------------------
 # enums
@@ -34,7 +36,10 @@ signal window_closed(me:DialogueWindow)
 		notify_property_list_changed()
 ## The button that closes this window.
 @export var closeButton:Button
-@export var off_screen_threshold: float = 0
+## How far this window can be off the screen, in pixels,
+## before it gets snapped back onto the screen.
+@export var offscreenThresold: float = 0
+
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
@@ -84,7 +89,7 @@ func _gui_input(event: InputEvent) -> void:
 		if _holdingSelect:
 			_dragOffset = get_global_mouse_position() - global_position
 		else:
-			_move_back_on_screen()
+			window_dropped.emit(self)
 	
 	if event is InputEventMouseMotion and _holdingSelect:
 		_dragging = true
@@ -95,6 +100,38 @@ func _gui_input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Gets the positions of each corner of this window relative to the
+## top left corner of this window.
+## [br][br]
+## Resulting dictionary has the following keys:
+## [code]"topLeft"[/code], [code]"topRight"[/code],
+## [code]"bottomLeft"[/code], [code]"bottomRight"[/code]
+## [br][br]
+## If you want their positions on the screen, use [method getGlobalCornerPositions].
+func getLocalCornerPositions() -> Dictionary[String, Vector2]:
+	return {
+		"topLeft":     position + Vector2(0     , 0     ),
+		"topRight":    position + Vector2(size.x, 0     ),
+		"bottomLeft":  position + Vector2(0     , size.y),
+		"bottomRight": position + Vector2(size.x, size.y)
+	}
+
+## Gets the positions of each corner of this window relative to the
+## top left corner of this window.
+## [br][br]
+## Resulting dictionary has the following keys:
+## [code]"topLeft"[/code], [code]"topRight"[/code],
+## [code]"bottomLeft"[/code], [code]"bottomRight"[/code]
+## [br][br]
+## If you want their positions relative to this window, use [method getLocalCornerPositions].
+func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
+	return {
+		"topLeft":     global_position + Vector2(0     , 0     ),
+		"topRight":    global_position + Vector2(size.x, 0     ),
+		"bottomLeft":  global_position + Vector2(0     , size.y),
+		"bottomRight": global_position + Vector2(size.x, size.y)
+	}
+
 ## Closes this window.
 func close() -> void:
 	window_closed.emit(self)
@@ -104,36 +141,6 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## Checks if a position is within the screen (with threshold allowance)
-func _is_position_on_screen(pos: Vector2) -> bool:
-	var screen_rect := get_viewport().get_visible_rect()
-
-	var min_x := -off_screen_threshold
-	var min_y := -off_screen_threshold
-	var max_x := screen_rect.size.x + off_screen_threshold
-	var max_y := screen_rect.size.y + off_screen_threshold
-
-	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
-
-
-## Moves the window back onto the screen if it's outside
-func _move_back_on_screen() -> void:
-	var screen_rect := get_viewport().get_visible_rect()
-	var window_size := size
-
-	var min_x := -off_screen_threshold
-	var min_y := -off_screen_threshold
-	var max_x := screen_rect.size.x - window_size.x + off_screen_threshold
-	var max_y := screen_rect.size.y - window_size.y + off_screen_threshold
-
-	global_position.x = clamp(global_position.x, min_x, max_x)
-	global_position.y = clamp(global_position.y, min_y, max_y)
-	
-## Moves this window to the center of the screen immediately.
-func _center() -> void:
-	await get_tree().process_frame
-	position = (get_viewport_rect().size - size) / 2
-
 ## Gets a random position on screen.
 ## Unused as it doesn't account for overlap.
 func _getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
@@ -142,6 +149,10 @@ func _getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
 		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
 		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
 	)
+
+## Moves this window to the center of the screen immediately.
+func _center() -> void:
+	position = (get_viewport_rect().size - size) / 2
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
