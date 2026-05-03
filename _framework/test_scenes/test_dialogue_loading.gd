@@ -25,7 +25,7 @@ const FILE_EXTENSION:String = ".json"
 @onready var labelDialogueText:Label = %DialogueText
 @onready var labelDialogueMode:Label = %DialogueMode
 @onready var labelDialogueHecticFailID:Label = %DialogueHecticFailID
-@onready var labelDialogueFont:Label = %DialogueFont
+@onready var labelDialogueTextTheme:Label = %DialogueTextTheme
 @onready var labelDialogueType:Label = %DialogueType
 @onready var labelDialogueWriteSpeedPreset:Label = %DialogueWriteSpeedPreset
 @onready var labelDialogueWriteSpeedValue:Label = %DialogueWriteSpeedValue
@@ -36,7 +36,7 @@ const FILE_EXTENSION:String = ".json"
 @onready var fieldOption:OptionButton = %OptionField
 @onready var labelOptionText:Label = %OptionText
 @onready var labelOptionNextID:Label = %OptionNextID
-@onready var labelOptionFont:Label = %OptionFont
+@onready var labelOptionTextTheme:Label = %OptionTextTheme
 @onready var labelOptionType:Label = %OptionType
 @onready var labelOptionWriteSpeedPreset:Label = %OptionWriteSpeedPreset
 @onready var labelOptionWriteSpeedValue:Label = %OptionWriteSpeedValue
@@ -127,7 +127,7 @@ func _loadDialogueFile() -> void:
 	labelDialogueText.text = data.text
 	labelDialogueMode.text = data.mode
 	labelDialogueHecticFailID.text = data.nextOnHecticFailureID
-	labelDialogueFont.text = data.font
+	labelDialogueTextTheme.text = data.textThemePreset
 	labelDialogueType.text = data.type
 	labelDialogueWriteSpeedPreset.text = data.writeSpeed
 	labelDialogueWriteSpeedValue.text = str(data.writeSpeedCustom)
@@ -150,7 +150,7 @@ func _loadOption() -> void:
 	
 	labelOptionText.text = data.text
 	labelOptionNextID.text = data.nextID
-	labelOptionFont.text = data.font
+	labelOptionTextTheme.text = data.textThemePreset
 	labelOptionType.text = data.type
 	labelOptionWriteSpeedPreset.text = data.writeSpeed
 	labelOptionWriteSpeedValue.text = str(data.writeSpeedCustom)

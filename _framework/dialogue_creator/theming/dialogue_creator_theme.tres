@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=35 format=3 uid="uid://caibapog63fvf"]
+[gd_resource type="Theme" load_steps=36 format=3 uid="uid://caibapog63fvf"]
 
 [ext_resource type="StyleBox" uid="uid://ct0bjhg2emo4j" path="res://_framework/dialogue_creator/theming/button_normal.tres" id="1_5nxpm"]
 [ext_resource type="StyleBox" uid="uid://dml1nhie6wo7k" path="res://_framework/dialogue_creator/theming/focus.tres" id="1_8vgy3"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bfxiyocsfvkmp" path="res://_framework/dialogue_creator/visual_assets/arrow_down.svg" id="11_k4yq8"]
 [ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_framework/dialogue_creator/visual_assets/arrow_up.svg" id="12_g4rfl"]
 [ext_resource type="Texture2D" uid="uid://tjwyk7kn3cfa" path="res://_framework/dialogue_creator/visual_assets/checked.svg" id="12_y8afi"]
+[ext_resource type="Texture2D" uid="uid://dfwv7o1tlw8vj" path="res://_framework/dialogue_creator/visual_assets/menu.svg" id="12_yaiq3"]
 [ext_resource type="Texture2D" uid="uid://bhbjoqnwsi2pr" path="res://_framework/dialogue_creator/visual_assets/arrow_down_darker.svg" id="13_cix03"]
 [ext_resource type="Texture2D" uid="uid://dsr5bjhrs3hc6" path="res://_framework/dialogue_creator/visual_assets/unchecked.svg" id="13_yaiq3"]
 [ext_resource type="StyleBox" uid="uid://bd08mj68c71dr" path="res://_framework/dialogue_creator/theming/label_dialogue_id.tres" id="14_fcqsy"]
@@ -56,6 +57,8 @@ ButtonCreateOption/constants/outline_size = 5
 ButtonCreateOption/styles/hover = ExtResource("8_7lyv4")
 ButtonCreateOption/styles/normal = ExtResource("9_f1adm")
 ButtonCreateOption/styles/pressed = ExtResource("10_xhrd7")
+ButtonMenu/base_type = &"Button"
+ButtonMenu/icons/icon = ExtResource("12_yaiq3")
 ButtonNoPress/base_type = &"Button"
 ButtonNoPress/styles/pressed = ExtResource("1_5nxpm")
 CheckBox/font_sizes/font_size = 24
@@ -105,6 +108,7 @@ LabelOption/styles/normal = ExtResource("14_nn4ja")
 LineEdit/font_sizes/font_size = 24
 LineEdit/styles/focus = ExtResource("1_8vgy3")
 LineEdit/styles/normal = ExtResource("9_8vgy3")
+LineEdit/styles/read_only = ExtResource("9_8vgy3")
 OptionButton/font_sizes/font_size = 24
 OptionButton/icons/arrow = ExtResource("11_k4yq8")
 OptionButton/styles/pressed = ExtResource("25_g4rfl")

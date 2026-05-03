@@ -1,4 +1,5 @@
 @tool
+@icon("uid://cgvywsq714hf3")
 extends Area3D
 class_name StartDialogueArea
 ## An [Area3D] that triggers a dialogue event between a [Player] and [InteractableNPC].

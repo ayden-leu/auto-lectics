@@ -1,0 +1,14 @@
+{
+	"text": "among us",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "none",
+		"text": "none"
+	},
+	"options": [
+		{
+			"text": "eggs",
+			"nextID": "loops"
+		}
+	]
+}

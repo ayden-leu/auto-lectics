@@ -1,0 +1,7 @@
+{
+	"writeSpeed": "slow",
+	"sfx": {
+		"spawn": "respawn",
+		"text": "_test"
+	}
+}

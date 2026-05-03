@@ -1,4 +1,5 @@
 @tool
+@icon("uid://d3bw2lwsbjpfb")
 extends Control
 class_name Crosshair
 ## The crosshair that appears in the middle of the screen.

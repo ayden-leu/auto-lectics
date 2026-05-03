@@ -40,17 +40,21 @@ const DIALOGUE_ID_PORT:int = 0
 # export variables
 # ------------------------------------------------
 ## The ID field you can edit.
-@onready var dialogueIDField:LineEdit = %DialogueIDField
+@onready var idField:DC_BaseNodeField = %IdField
 ## The text field you can edit.
-@onready var textField:TextEdit = %TextField
+@onready var textField:DC_BaseNodeField = %TextField
 ## The node that handles the type you can choose.
-@onready var typeField:DC_TypeFieldOption = %TypeField
+@onready var typeField:DC_BaseNodeChooser = %TypeChooser
+## The node that handles the text themes you can choose.
+@onready var textThemePresetField:DC_BaseNodeChooser = %TextThemeChooser
 ## The node that handles the mode you can choose.
-@onready var modeField:DC_ModeFieldOption = %ModeField
-## The node that handles the write speed aspects you can modify.
-@onready var writeSpeedAspectsHandler:DC_AspectsWriteSpeed = %WriteSpeedAspects
+@onready var modeField:DC_BaseNodeChooser = %ModeChooser
+## The node that handdles the text writee speed preset you can choose.
+@onready var writeSpeedPresetField:DC_BaseNodeChooser = %WriteSpeedPresetChooser
+## The node that handdles the text writee speed value you can set.
+@onready var writeSpeedValueField:DC_BaseNodeField = %WriteSpeedValueField
 ## The node that handles the SFX event SFX IDs you can choose.
-@onready var sfxEventAspectsHandler:DC_AspectsSfx = %SfxAspects
+@onready var sfxEventAspectsHandler:DC_BaseNodeField = %SfxAspects
 
 # ------------------------------------------------
 # onready variables
@@ -59,112 +63,77 @@ const DIALOGUE_ID_PORT:int = 0
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## Used to get and set the ID for this [DC_DialogueNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current ID
-## print(dialogueNode.id)  # output: "someID"
-## 
-## # Set the ID
-## dialogueNode.id = "someOtherID"
-## [/codeblock]
+## The ID of this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
 var id:String:
+	get():
+		return idField.value
 	set(value):
 		if not idUpdateFromField:
-			dialogueIDField.text = value
+			idField.value = value
 			idUpdateFromField = true
 		title = "Dialogue: " + value
 		id_updated.emit(value)
-	get():
-		return dialogueIDField.text
 ## Whether the update the text in the ID field with a new value or not.
 var idUpdateFromField:bool = true
 
-## Used to get and set the text for this [DC_DialogueNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current text
-## print(dialogueNode.text)  # output: "hello"
-## 
-## # Set the text
-## dialogueNode.text = "hello there"
-## [/codeblock]
+## The text for this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
 var text:String:
+	get():
+		return textField.value
 	set(newText):
-		textField.text = newText
-	get():
-		return textField.text
+		textField.value = newText
 
-## Used to get and set the type for this [DC_DialogueNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid types can be found in [member DialogueDefaults.DIALOGUE_TYPES].
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current type
-## print(dialogueNode.type)  # output: "neutral"
-## 
-## # Set the type
-## dialogueNode.type = "happy"
-## [/codeblock]
+## The type of this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
 var type:String:
-	set(newType):
-		typeField.option = newType
 	get():
-		return typeField.option
+		return typeField.chosen
+	set(newType):
+		typeField.chosen = newType
 
-## Used to get and set the mode for this [DC_DialogueNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid modes can be found in [member DialogueDefaults.DIALOGUE_MODES].
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current mode
-## print(dialogueNode.mode)  # output: "normal"
-## 
-## # Set the mode
-## dialogueNode.mode = "hectic"
-## [/codeblock]
+## The text theme preset for this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
+var textThemePreset:String:
+	set(newTheme):
+		textThemePresetField.chosen = newTheme
+	get():
+		return textThemePresetField.chosen
+
+## The mode of this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
 var mode:String:
 	set(newMode):
-		modeField.option = newMode
+		modeField.chosen = newMode
+		modeField.toggleHecticPort(newMode == "hectic")
 	get():
-		return modeField.option
+		return modeField.chosen
 
-## Used to get and set the SFX IDs for each SFX event this [DC_DialogueNode] has.
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid SFX IDs can be found in "res://sounds/sfx/".  The IDs will be the names of all folders found there.
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the currently set SFX events
-## print(dialogueNode.sfxEventAspects)  # output: {"eventId1": "sfxId1", "eventId2": "sfxId2"}
-## 
-## # Set the SFX IDs for some SFX events
-## dialogueNode.sfxEventAspects = {
-## 	"eventId1": "sfxId1",
-## 	"eventId2": "sfxId2"
-## }
-## [/codeblock]
+## The text write speed preset of this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
+var writeSpeedPreset:String:
+	get():
+		return writeSpeedPresetField.chosen
+	set(newPreset):
+		writeSpeedPresetField.chosen = newPreset
+
+## The text write speed value of this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
+var writeSpeedValue:float:
+	get():
+		return writeSpeedValueField.value
+	set(newSpeed):
+		writeSpeedValueField.value = newSpeed
+
+## The configured SFX events for this [DC_DialogueNode].
+## Setting this will update other nodes appropriately.
 var sfxEventAspects:Dictionary:
 	set(newSfxEventAspects):
-		sfxEventAspectsHandler.aspects = newSfxEventAspects
+		sfxEventAspectsHandler.configuredEvents = newSfxEventAspects
 	get():
-		return sfxEventAspectsHandler.aspects
+		return sfxEventAspectsHandler.configuredEvents
+
 ## The [member id] of the [DC_DialogueNode] to load when a player fails a hectic dialogue interaction.
 var nextOnHecticFailId:String = ""
 var _nextOnHecticPortEnabled:bool = false
@@ -175,45 +144,6 @@ var nextOnHecticPortConnection:Dictionary = {
 	"toNode": "",
 	"toPort": 0
 }
-
-## Used to get and set the write speed preset for this [DC_DialogueNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually click-set them.
-## Valid types can be found in [member DialogueDefaults.WRITE_SPEED_PRESETS]'s keys.
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current write speed preset
-## print(dialogueNode.writeSpeedPreset)  # output: "medium"
-## 
-## # Set the write speed preset
-## dialogueNode.writeSpeedPreset = "fast"
-## [/codeblock]
-var writeSpeedPreset:String:
-	set(newPreset):
-		writeSpeedAspectsHandler.preset = newPreset
-	get():
-		return writeSpeedAspectsHandler.preset
-
-## Used to get and set the write speed value for this [DC_DialogueNode].
-## Has a custom getter and setter so you can just use it like a normal variable while also updating the fields as if you manually set them.
-## [br][br]
-## Usage:
-## [codeblock]
-## var dialogueNode:DC_DialogueNode = # a pre-configured node from the scene tree
-##
-## # Get the current write speed
-## print(dialogueNode.writeSpeedValue)  # output: 60
-## 
-## # Set the write speed
-## dialogueNode.writeSpeedValue = 45
-## [/codeblock]
-var writeSpeedValue:float:
-	set(newSpeed):
-		writeSpeedAspectsHandler.value = newSpeed
-	get():
-		return writeSpeedAspectsHandler.value
 
 ## The number of option ports that currently exist for this [DC_DialogueNode].
 var numOptions:int = 0:
@@ -236,8 +166,6 @@ func _ready() -> void:
 	super()
 	set_slot_color_left(DIALOGUE_ID_PORT, PortColor.DIALOGUE)
 	set_slot_type_left(DIALOGUE_ID_PORT, PortType.DIALOGUE)
-	
-	sfxEventAspects = DialogueDefaults.DEFAULT_DIALOGUE.sfx
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -269,14 +197,13 @@ func createOptionPort() -> void:
 ## it is not included in the return payload.
 func getFields() -> Dictionary:
 	var currentValues:Dictionary = {
-		"id": dialogueIDField.text,
-		"text": textField.text,
+		"id": id,
+		"text": text,
 	}
-	
-	# font (unused atm)
-	
-	currentValues.type = type
 	currentValues.mode = mode
+	
+	if type != _CHECK_NPC_DEFAULT_VALUE:
+		currentValues.type = type
 	
 	if mode == "hectic" and not nextOnHecticFailId:
 		# TODO:  make the warning pop up on screen
@@ -285,16 +212,16 @@ func getFields() -> Dictionary:
 		if nextOnHecticFailId:
 			currentValues.nextOnHecticFailureID = nextOnHecticFailId
 	
-	if writeSpeedPreset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
+	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
+		currentValues.textThemePreset = textThemePreset
+	
+	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.writeSpeed = writeSpeedPreset
-		if currentValues.writeSpeed == "custom":
-			currentValues.writeSpeedCustom = writeSpeedAspectsHandler.value
+		if writeSpeedPreset == "custom":
+			currentValues.writeSpeedCustom = writeSpeedValue
 	
 	if sfxEventAspects != {}:
 		currentValues.sfx = sfxEventAspects
-	
-	# background theme (unused atm)
-	# particles (unused atm)
 	
 	if _options != []:
 		var optionsToAdd:Array[Dictionary] = []
@@ -328,7 +255,8 @@ func nextOnHecticFailIdDisconnected() -> void:
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Removes an option port.
+## [b]Internal-use only.[/b]
+## Removes an option port.
 func _removeOptionPort() -> void:
 	if _optionPorts.is_empty():
 		return
@@ -346,8 +274,8 @@ func _removeOptionPort() -> void:
 	
 	_option_amount_changed.emit()
 
-## [b]Internal-use only.[/b]  Moves the Hectic port up/down when the number
-## of option ports decreases/increases.
+## [b]Internal-use only.[/b]
+## Moves the Hectic port up/down when the number of option ports decreases/increases.
 func _shiftHecticPort(amount:int) -> void:
 	var currentSlot:int = _NUM_NODES_ABOVE_OPTIONS + numOptions
 	
@@ -367,7 +295,8 @@ func _shiftHecticPort(amount:int) -> void:
 	reconnect_hectic_port.emit(nextOnHecticPortConnection)
 	_on_resize_height()
 
-## [b]Internal-use only.[/b]  Disconnects all connections to itself, then prepares for deletion.
+## [b]Internal-use only.[/b]
+## Disconnects all connections to itself, then prepares for deletion.
 func _delete() -> void:
 	disconnect_all_options.emit()
 	disconnect_id.emit()
@@ -376,30 +305,36 @@ func _delete() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for when the save button is pressed.
+## [b]Internal-use only.[/b]
+## Handles logic for when the save button is pressed.
 func _on_save_pressed() -> void:
 	saveToFile()
 
-## [b]Internal-use only.[/b]  Handles logic for when the add option button is pressed.
+## [b]Internal-use only.[/b]
+## Handles logic for when the add option button is pressed.
 func _on_add_option_pressed() -> void:
 	createOptionPort()
 
-## [b]Internal-use only.[/b]  Handles logic for when the remove option button is pressed.
+## [b]Internal-use only.[/b]
+## Handles logic for when the remove option button is pressed.
 func _on_remove_option_pressed() -> void:
 	_removeOptionPort()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_shrinkNodeHeight()
 
-## [b]Internal-use only.[/b]  Handles logic for when a connected
-## [DC_OptionNode]'s attributes get updated.
+## [b]Internal-use only.[/b]
+## Handles logic for when a connected [DC_OptionNode]'s attributes get updated.
 func _on_option_updated(index:int, newValue:Dictionary) -> void:
 	_options[index] = newValue
 
-## [b]Internal-use only.[/b]  Handles logic for when a connected
-## [DC_OptionNode] gets disconnected from an option port.
+## [b]Internal-use only.[/b]
+## Handles logic for when a connected [DC_OptionNode] gets disconnected from an option port.
 func _on_option_disconnected(port:int) -> void:
 	optionDisconnected(port)
 
-## [b]Internal-use only.[/b]  Handles logic for when a [DC_DialogueNode]
-## gets connected to the Hectic port.
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DC_DialogueNode] gets connected to the Hectic port.
 func _on_set_hectic_port(on: bool) -> void:
 	if not on:
 		disconnect_hectic_port.emit(name, numOptions)
@@ -410,38 +345,70 @@ func _on_set_hectic_port(on: bool) -> void:
 	)
 	_nextOnHecticPortEnabled = on
 
-## [b]Internal-use only.[/b]  Handles logic for when the [DC_DialogueNode]'s
-## ID get updated.
+## [b]Internal-use only.[/b]
+## Handles logic for when the [DC_DialogueNode]'s ID get updated.
 func _on_hectic_fail_updated(newID:String) -> void:
 	nextOnHecticFailId = newID
 
-## [b]Internal-use only.[/b]  Handles logic for when a [DC_DialogueNode]
-## connected to the Hectic port gets disconnected.
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DC_DialogueNode] connected to the Hectic port gets disconnected.
 func _on_hectic_fail_disconnected() -> void:
 	nextOnHecticFailIdDisconnected()
 
-## [b]Internal-use only.[/b]  Handles logic for when the debug button gets pressed.
+## [b]Internal-use only.[/b]
+## Only here to see if something is connected.
+func _on_close_button_pressed() -> void:
+	super()
+
+## [b]Internal-use only.[/b]
+## Only here to see if something is connected.
+func _on_resize_height() -> void:
+	super()
+
+## [b]Internal-use only.[/b]
+## Only here to see if something is connected.
+func _on_toggle_visibility(isVisible:bool) -> void:
+	super(isVisible)
+
+## [b]Internal-use only.[/b]
+## Only here to see if somesthing is connected.
+func _on_field_updated() -> void:
+	super()
+
+## [b]Internal-use only.[/b]
+## Only here to see if something is connected.
+func _on_id_field_updated() -> void:
+	_on_field_updated()
+	id_updated.emit(id)
+
+## [b]Internal-use only.[/b]
+## Only here to see if something is connected.
 func _on_debug_pressed() -> void:
 	print("------ ", title, " ------")
+	print("ID: ", id)
 	print("Text: ", text)
-	print("Options: ", _options)
-	print("OptionPorts: ", _optionPorts)
-	print("numOptions: ", numOptions)
-	print("Type: ", typeField.option)
-	print("Mode: ", modeField.option)
+	print("Type: ", type)
+	print("Mode: ", mode)
 	
-	if modeField.option == "hectic":
+	if textThemePresetField.chosen != _CHECK_NPC_DEFAULT_VALUE:
+		print("Text Theme: ", textThemePresetField.chosen)
+	
+	if mode == "hectic":
 		print("Next On Hectic Fail: ", nextOnHecticFailId)
 	
-	if writeSpeedAspectsHandler.preset != DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed:
-		print("Write Speed Preset: ", writeSpeedAspectsHandler.preset)
-		print("Write Speed Value: ", writeSpeedAspectsHandler.value)
+	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
+		print("Write Speed Preset: ", writeSpeedPreset)
+		print("Write Speed Value: ", writeSpeedValue)
 	
-	var aspects:Dictionary = sfxEventAspectsHandler.aspects
+	var aspects:Dictionary = sfxEventAspects
 	if aspects != {}:
 		print("SFX Aspects:")
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
+	
+	print("Options: ", _options)
+	print("OptionPorts: ", _optionPorts)
+	print("numOptions: ", numOptions)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
