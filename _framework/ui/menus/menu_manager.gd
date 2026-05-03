@@ -156,7 +156,7 @@ func openMenu(menuID:String) -> void:
 ## [/codeblock] 
 func subscribeToBlueprintMenu(subscriber) -> void:
 	_blueprintMenuSubscribers.push_back(subscriber)
-	_connectSignalsToSubscriber(subscriber)
+	_connectBlueprintSignalsToSubscriber(subscriber)
 
 ## Unsubscribes a node from the [DialogueConsole], meaning it won't run any
 ## functions when the [DialogueConsole] emits signals.
@@ -166,7 +166,7 @@ func unsubscribeToBlueprintMenu(subscriber) -> void:
 	
 	var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
 	_blueprintMenuSubscribers[subscriberIndex] = null
-	_disconnectSignalsToSubscriber(subscriber)
+	_disconnectBlueprintSignalsToSubscriber(subscriber)
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -196,7 +196,7 @@ func _resume() -> void:
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
-func _connectSignalsToSubscriber(subscriber) -> void:
+func _connectBlueprintSignalsToSubscriber(subscriber) -> void:
 	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
 		blueprintMenu.npc_name_guessed_correctly.connect(subscriber._on_blueprint_npc_name_guessed_correctly)
 	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
@@ -204,7 +204,7 @@ func _connectSignalsToSubscriber(subscriber) -> void:
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
-func _disconnectSignalsToSubscriber(subscriber) -> void:
+func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
 	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
 		blueprintMenu.npc_name_guessed_correctly.disconnect(subscriber._on_blueprint_npc_name_guessed_correctly)
 	if subscriber.has_method("_on_blueprint_unlock_condition_met"):

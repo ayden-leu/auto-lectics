@@ -204,10 +204,6 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 
 ## [b]Internal-use only.[/b]  Replaces any instance of "inherit" in an option object configuration with the dialogue's corresponding value.
 static func _resolveOptionInheritance(option: Dictionary, optionOwner: Dictionary) -> void:
-	print("AAAA")
-	print(option)
-	print()
-	print(optionOwner)
 	if option.textThemePreset == "inherit":
 		option.textThemePreset = optionOwner.textThemePreset
 

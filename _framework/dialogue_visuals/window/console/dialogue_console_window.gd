@@ -206,6 +206,7 @@ func close() -> void:
 	super()
 
 ## Removes this from the scene.
+## If you want to close this window, run [method close] instead.
 func kill() -> void:
 	_stopHecticMode()
 	_closeAllOptionWindows()
