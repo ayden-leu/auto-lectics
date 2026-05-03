@@ -178,9 +178,18 @@ offset_right = 422.0
 offset_bottom = 432.0
 keep_editing_on_text_submit = true
 
-[node name="OptionSpawnPosition" type="Marker2D" parent="."]
+[node name="OptionSpawnPositions" type="Control" parent="."]
 unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Left" type="Marker2D" parent="OptionSpawnPositions"]
 position = Vector2(-327, -9)
+metadata/_edit_group_ = true
+
+[node name="Right" type="Marker2D" parent="OptionSpawnPositions"]
+position = Vector2(456, -9)
 metadata/_edit_group_ = true
 
 [node name="HecticBar" type="ProgressBar" parent="."]

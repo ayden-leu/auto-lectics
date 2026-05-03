@@ -66,8 +66,11 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 @onready var _hecticBar:ProgressBar = %HecticBar
 ## [b]Internal-use only.[/b]  The hectic dialogue event timer.
 @onready var _hecticTimer: Timer = %HecticTimer
-## [b]Internal-use only.[/b]  The position where options are initially spawned from.
-@onready var _optionSpawnPosition:Marker2D = %OptionSpawnPosition
+## [b]Internal-use only.[/b]  The positions where options are initially spawned from.
+@onready var _optionSpawnPositions:Dictionary[String, Marker2D] = {
+	"left": %OptionSpawnPositions/Left,
+	"right": %OptionSpawnPositions/Right
+}
 ## Holds the AudioStreamPlayers for each event.
 @onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %SFX/spawn,
@@ -193,7 +196,7 @@ func start() -> void:
 	_forceTextInput()
 	
 	if mode == "hectic":
-		_startHecticMode()
+		_startHecticCountdown()
 
 ## Closes this window, unless the [InteractableNPC] the player is talking to
 ## is in [member _NPCS_PREVENT_CLOSING].
@@ -318,11 +321,14 @@ func _spawnOptionWindows() -> void:
 		optionWindow.themeVariation = optionData.textThemePreset
 		optionWindow.loadSfx(optionData.sfx)
 		optionWindow.data = optionData
+		
 		# If Dialogue Console is too far left: spawn options on right instead
-		if global_position.x < 360:
-			optionWindow.position = _optionSpawnPosition.global_position + Vector2(800, verticalOffset)
+		optionWindow.position = Vector2(0, verticalOffset)
+		if not FR_WindowManager.positionOnScreen(_optionSpawnPositions.left.global_position):
+			optionWindow.position += _optionSpawnPositions.right.global_position
 		else:
-			optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
+			optionWindow.position += _optionSpawnPositions.left.global_position
+		
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
 		
@@ -360,7 +366,7 @@ func _forceTextInput() -> void:
 	_textInput.edit()
 
 ## [b]Internal-use only.[/b]  Starts hectic mode.
-func _startHecticMode() -> void:
+func _startHecticCountdown() -> void:
 	_hecticCountdownActive = true
 	_hecticBar.visible = true
 	_hecticBar.value = INF

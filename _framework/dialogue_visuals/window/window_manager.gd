@@ -140,6 +140,18 @@ func unsubscribeToConsole(subscriber) -> void:
 	_dialogueConsoleSubscribers[subscriberIndex] = null
 	_disconnectConsoleSignalsToSubscriber(subscriber)
 
+## Checks if a position is within the screen.
+## [code]threshold[/code] is the amount, in pixels, beyond the screen the position can be.
+func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
+	var screen_rect := get_viewport().get_visible_rect()
+
+	var min_x := -threshold
+	var min_y := -threshold
+	var max_x := screen_rect.size.x + threshold
+	var max_y := screen_rect.size.y + threshold
+
+	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
+
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
@@ -207,19 +219,6 @@ func _resubscribeSubscribers() -> void:
 		_connectConsoleSignalsToSubscriber(subscriber)
 
 ## [b]Internal-use only.[/b]
-## Checks if a position is within the screen.
-## [code]threshold[/code] is the amount, in pixels, beyond the screen the position can be.
-func _positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
-	var screen_rect := get_viewport().get_visible_rect()
-
-	var min_x := -threshold
-	var min_y := -threshold
-	var max_x := screen_rect.size.x + threshold
-	var max_y := screen_rect.size.y + threshold
-
-	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
-
-## [b]Internal-use only.[/b]
 ## Moves the window back onto the screen if it's outside
 func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
 	var screen_rect := get_viewport().get_visible_rect()
@@ -249,7 +248,7 @@ func _on_window_closed(closedWindow:DialogueWindow) -> void:
 func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 	var cornerPositions:Dictionary[String, Vector2] = droppedWindow.getGlobalCornerPositions()
 	for cornerPosition:Vector2 in cornerPositions.values():
-		if not _positionOnScreen(cornerPosition, droppedWindow.offscreenThresold):
+		if not positionOnScreen(cornerPosition, droppedWindow.offscreenThresold):
 			_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 			break
 
