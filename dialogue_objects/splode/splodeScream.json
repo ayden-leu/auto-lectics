@@ -1,22 +1,18 @@
 {
 	"text": "AHHHHHHH!!!",
-	"type": "neutral",
-	"mode": "hectic",
+	"type": "confused",
+	"mode": "normal",
 	"writeSpeed": "fast",
 	"sfx": {
 		"spawn": "splodeScream"
 	},
 	"options": [
 		{
-			"text": "AHHHHHH!!!",
+			"text": "WHY ARE YOU YELLING?",
 			"type": "neutral"
 		},
 		{
-			"text": "WHY ARE YOU SCREAMING?",
-			"type": "neutral"
-		},
-		{
-			"text": "WHAT'S WRONG?",
+			"text": "AHHHHH!!!",
 			"type": "neutral"
 		}
 	]
