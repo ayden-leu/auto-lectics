@@ -66,9 +66,10 @@ func createDialogueConsole() -> DialogueConsole:
 	return dialogueConsole
 
 ## Kills the current [DialogueConsole].
-func closeDialogueConsole() -> void:
+func killDialogueConsole() -> void:
 	if dialogueConsole != null:
-		dialogueConsole.close()
+		dialogueConsole.kill()
+		_on_window_closed(dialogueConsole)
 		dialogueConsole = null
 
 ## Creates a [DialogueConsoleOptionWindow].  Not pre-configured.
@@ -133,6 +134,9 @@ func _addWindow(window:DialogueWindow) -> void:
 	_spawnedWindows.push_back(window)
 	window.window_closed.connect(_on_window_closed)
 	window.window_dropped.connect(_on_window_dropped)
+	
+	await get_tree().process_frame
+	_setWindowOnScreen(window, window.offscreenThresold)
 
 ## [b]Internal-use only.[/b]
 ## Connects the [DialogueConsole] signals to functions defined by the subscriber.
@@ -221,19 +225,16 @@ func _centerWindow(window:DialogueWindow) -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for when a window is closed.
 func _on_window_closed(closedWindow:DialogueWindow) -> void:
-	_spawnedWindows.erase(closedWindow)
+	if closedWindow in _spawnedWindows:
+		_spawnedWindows.erase(closedWindow)
 
 ## [b]Internal-use only.[/b]
 func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 	var cornerPositions:Dictionary[String, Vector2] = droppedWindow.getGlobalCornerPositions()
-	var onScreen:bool = true
 	for cornerPosition:Vector2 in cornerPositions.values():
 		if not _positionOnScreen(cornerPosition, droppedWindow.offscreenThresold):
-			onScreen = false
+			_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 			break
-	
-	if not onScreen:
-		_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

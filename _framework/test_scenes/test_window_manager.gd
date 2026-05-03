@@ -53,7 +53,7 @@ func _on_create_console_option_pressed() -> void:
 	FR_WindowManager.createDialogueOptionWindow()
 
 func _on_kill_console_pressed() -> void:
-	FR_WindowManager.closeDialogueConsole()
+	FR_WindowManager.killDialogueConsole()
 
 func _on_subscribe_to_console_pressed() -> void:
 	FR_WindowManager.subscribeToConsole(self)

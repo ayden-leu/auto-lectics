@@ -203,7 +203,7 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
 func _endDialogueConsole() -> void:
-	FR_WindowManager.closeDialogueConsole()
+	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
 	
 	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):
