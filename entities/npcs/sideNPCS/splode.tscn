@@ -1,15 +1,215 @@
-[gd_scene load_steps=4 format=3 uid="uid://h1q7nwfs2wpl"]
+[gd_scene load_steps=25 format=3 uid="uid://h1q7nwfs2wpl"]
 
-[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_560c1"]
+[ext_resource type="Script" uid="uid://cmnptj1cb0rou" path="res://entities/npcs/sideNPCS/splode.gd" id="1_tsffd"]
 [ext_resource type="PackedScene" uid="uid://cs05y8fjcnq14" path="res://models/week6playtestStuff/npcs/side_NPCS/egg.fbx" id="2_560c1"]
+[ext_resource type="Texture2D" uid="uid://dqpdbyg3l3hvk" path="res://textures/Deltrarune Explosion no BG.png" id="3_tsffd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.8026067
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d3p0"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(0, 14, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmn6e"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(72, 14, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11auo"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(144, 14, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q18eu"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(216, 14, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2or5"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(288, 14, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctpwl"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(360, 14, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nathl"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(0, 115, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amx28"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(72, 115, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0cv7"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(144, 115, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07fmw"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(216, 115, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x2s4"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(288, 115, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv5sg"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(360, 115, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5cue"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(0, 216, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6txu3"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(72, 216, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stcfw"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(144, 216, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asamd"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(216, 216, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dj8v"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(288, 216, 69, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1m55o"]
+atlas = ExtResource("3_tsffd")
+region = Rect2(360, 216, 69, 101)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1m55o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5d3p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmn6e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11auo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q18eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2or5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctpwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nathl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amx28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0cv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07fmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6x2s4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv5sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5cue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6txu3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stcfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asamd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5dj8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1m55o")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 20.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_tsffd"]
+script/source = "extends AnimatedSprite3D
+
+
+
+# feel free to remove sections you're not using
+# ------------------------------------------------
+# signals
+# ------------------------------------------------
+
+# ------------------------------------------------
+# enums
+# ------------------------------------------------
+
+# ------------------------------------------------
+# constants
+# ------------------------------------------------
+
+# ------------------------------------------------
+# export variables
+# ------------------------------------------------
+
+# ------------------------------------------------
+# onready variables
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables referenced outside of script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# normal variables only referenced in script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
+#func _ready() -> void:
+	# super()  # needed if inheriting a custom class with its own _ready().  Will run the inherited class' _ready() function.
+
+#func _process(delta: float) -> void:
+	#super(delta)  # needed if inheriting a custom class with its own _process().  Will run the inherited class' _process() function.
+
+#func _physics_process(delta: float) -> void:
+	#super(delta)  # needed if inheriting a custom class with its own _physics_process().  Will run the inherited class' _physics_process() function.
+
+# ------------------------------------------------
+# functions referenced outside of this script
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions only referenced inside this script
+# [b]Internal-use only.[/b]
+# ------------------------------------------------
+
+# ------------------------------------------------
+# functions that run when a signal is emitted
+# ------------------------------------------------
+
+# ------------------------------------------------
+# editor dev-ing functions like \"_get_configuration_warnings()\"
+# ------------------------------------------------
+"
+
 [node name="splode" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
-script = ExtResource("1_560c1")
+script = ExtResource("1_tsffd")
 _hitbox = NodePath("Hitbox")
-initialDialogueID = "splodeScream"
+initialDialogueID = "Splode"
 model = NodePath("egg")
 myName = "splode"
 
@@ -25,3 +225,13 @@ shape = SubResource("SphereShape3D_u8dq6")
 
 [node name="egg" parent="." instance=ExtResource("2_560c1")]
 transform = Transform3D(-3.4138765e-08, 0, -0.7810039, 0, 0.78100383, 0, 0.7810039, 0, -3.4138765e-08, -0.09420586, 0.6893296, -0.33881092)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.076728106, 0.827667, -0.42709434)
+pixel_size = 0.05
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_1m55o")
+animation = &"explosion"
+frame = 17
+frame_progress = 1.0
+script = SubResource("GDScript_tsffd")
