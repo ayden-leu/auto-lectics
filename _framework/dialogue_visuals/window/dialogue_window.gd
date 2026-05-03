@@ -34,7 +34,7 @@ signal window_closed(me:DialogueWindow)
 		notify_property_list_changed()
 ## The button that closes this window.
 @export var closeButton:Button
-
+@export var off_screen_threshold: float = 0
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
@@ -83,6 +83,8 @@ func _gui_input(event: InputEvent) -> void:
 		_holdingSelect = event.pressed
 		if _holdingSelect:
 			_dragOffset = get_global_mouse_position() - global_position
+		else:
+			_move_back_on_screen()
 	
 	if event is InputEventMouseMotion and _holdingSelect:
 		_dragging = true
@@ -102,6 +104,31 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+## Checks if a position is within the screen (with threshold allowance)
+func _is_position_on_screen(pos: Vector2) -> bool:
+	var screen_rect := get_viewport().get_visible_rect()
+
+	var min_x := -off_screen_threshold
+	var min_y := -off_screen_threshold
+	var max_x := screen_rect.size.x + off_screen_threshold
+	var max_y := screen_rect.size.y + off_screen_threshold
+
+	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
+
+
+## Moves the window back onto the screen if it's outside
+func _move_back_on_screen() -> void:
+	var screen_rect := get_viewport().get_visible_rect()
+	var window_size := size
+
+	var min_x := -off_screen_threshold
+	var min_y := -off_screen_threshold
+	var max_x := screen_rect.size.x - window_size.x + off_screen_threshold
+	var max_y := screen_rect.size.y - window_size.y + off_screen_threshold
+
+	global_position.x = clamp(global_position.x, min_x, max_x)
+	global_position.y = clamp(global_position.y, min_y, max_y)
+	
 ## Moves this window to the center of the screen immediately.
 func _center() -> void:
 	await get_tree().process_frame
