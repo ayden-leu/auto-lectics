@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dpeqr6fpd34gm"]
 
-[ext_resource type="Script" uid="uid://dhv4cp1yyfby4" path="res://_framework/dialogue_visuals/window/dialogue_warning_tile.gd" id="1_clwej"]
+[ext_resource type="Script" uid="uid://dhv4cp1yyfby4" path="res://_framework/dialogue_visuals/window/warning_tile/dialogue_warning_tile.gd" id="1_clwej"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="2_3gley"]
 
 [node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
