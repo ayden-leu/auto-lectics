@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bdy6ylqslqkpr"]
 
-[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_console/dialogue_console_theme.tres" id="1_yw8oa"]
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_yw8oa"]
 
 [node name="CloseButton" type="Button"]
 custom_minimum_size = Vector2(24, 24)
