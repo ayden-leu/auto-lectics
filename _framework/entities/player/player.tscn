@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=15 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
@@ -26,7 +26,15 @@ top_radius = 0.03
 bottom_radius = 0.03
 height = 1.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rh8r5"]
+albedo_color = Color(0.06388832, 0.025244543, 0.0008465462, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_qclge"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qclge"]
+albedo_color = Color(0.30106127, 0.7345698, 0.6189342, 1)
+emission_enabled = true
+emission = Color(0.6156564, 0.837284, 0.6358764, 1)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 5
@@ -88,11 +96,14 @@ unique_name_in_owner = true
 visible = false
 mesh = SubResource("CylinderMesh_rh8r5")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_rh8r5")
 
 [node name="GrappleHook" type="MeshInstance3D" parent="GrappleVisuals"]
+transform = Transform3D(0.09416762, 0, 0, 0, 0.09416762, 0, 0, 0, 0.09416762, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_qclge")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_qclge")
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]

@@ -1,0 +1,45 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://6tapf6h7f8h8"]
+
+[ext_resource type="FontFile" uid="uid://ced3oybpj57me" path="res://fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf" id="1_c6jbv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6jbv"]
+bg_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b072o"]
+bg_color = Color(0.27058825, 0.2, 0.14901961, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.27058825, 0.2, 0.14901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p03hp"]
+draw_center = false
+border_width_left = 12
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihvt7"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.27058825, 0.2, 0.14901961, 1)
+
+[resource]
+default_base_scale = 1.45
+default_font = ExtResource("1_c6jbv")
+default_font_size = 0
+/colors/a = Color(0.9843137, 0.6901961, 0.2509804, 1)
+/colors/b = Color(0.27058825, 0.2, 0.14901961, 1)
+Button/colors/font_color = Color(0.08799749, 0.014777825, 0.08023376, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/fonts/font = ExtResource("1_c6jbv")
+Button/styles/normal = SubResource("StyleBoxFlat_c6jbv")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_b072o")
+Panel/styles/panel = SubResource("StyleBoxFlat_p03hp")
+TextEdit/styles/normal = SubResource("StyleBoxFlat_ihvt7")
