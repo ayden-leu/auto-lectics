@@ -13,6 +13,7 @@ resource_local_to_scene = true
 playback_mode = 1
 
 [node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
+z_index = 10
 layout_mode = 3
 anchors_preset = 0
 offset_right = 428.0
