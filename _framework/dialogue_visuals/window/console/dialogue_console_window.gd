@@ -200,7 +200,7 @@ func start() -> void:
 	# Spawn warnings before text is typed
 	if mode == "hectic":
 		_spawnHecticWarningWindows()
-	await _addRightText(textToAdd)
+	await _addRightText(textToAdd, true)
 
 	all_dialogue_text_visible.emit()	
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
@@ -380,7 +380,7 @@ func _addLeftTextTyping(text:String, addID:bool = false) -> void:
 	await _all_text_visible
 
 ## [b]Internal-use only.[/b]  Helper function to add text from a bot to the console.
-func _addRightText(text:String, addID:bool = true) -> void:
+func _addRightText(text:String, addID:bool = false) -> void:
 	_typeText(text, HORIZONTAL_ALIGNMENT_RIGHT, themeVariation.right, addID)
 	await _all_text_visible
 
