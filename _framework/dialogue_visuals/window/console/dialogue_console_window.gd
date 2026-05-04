@@ -209,6 +209,7 @@ func close() -> void:
 		await _addRightText(exitRejectMessage)
 		return
 	
+	_stopHecticMode()
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
 	super()
 
