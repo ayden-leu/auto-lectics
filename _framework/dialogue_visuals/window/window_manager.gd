@@ -147,7 +147,7 @@ func unsubscribeToConsole(subscriber) -> void:
 ## [code]metadata[/code] can have the following fields:
 ## [codeblock]
 ## 	"writeSpeed":  # a float for the number of characters per second to display.
-## 	"instant":  $ if the text should be displayed instantly.
+## 	"instant":  # if the text should be displayed instantly.
 ## 	"theme":  # the text theme to apply to this entry.
 ## [/codeblock]
 func pushMessageToConsole(message:String, metadata:Dictionary = {}) -> void:

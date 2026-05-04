@@ -37,6 +37,9 @@ enum _OptionAnchor {
 # ------------------------------------------------
 ## How far each spawned option should be from each other, vertically.
 const _OPTION_SPAWN_OFFSET:int = 3
+## The prefix to visually add before the user's input.
+## This is just visual, so the input will not have this included.
+const _INPUT_PREFIX:String = ""
 ## [b]Internal-use only.[/b]  A reference to a pre-set [RichTextLabel] scene.
 const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Control] scene.
@@ -153,6 +156,9 @@ func _ready() -> void:
 	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
 	
 	for child in _contentsStorage.get_children():
+		if child == _textInput.get_parent():
+			continue
+		
 		child.queue_free()
 
 func _process(_delta: float) -> void:
@@ -305,6 +311,8 @@ func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 		holder.add_child(spacer)
 		holder.add_child(entry)
 	
+	_textInput.get_parent().move_to_front()
+	
 	return entry
 
 ## [b]Internal-use only.[/b]  Adds a text entry and displays it
@@ -316,6 +324,11 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 	entry.theme_type_variation = themeVar
 	entry.visible_characters = 0
 	entry.text = textToWrite
+	
+	# the below snippit fixes a bug where if the text length is small enough,
+	# the vertical spacing gets all weird.
+	if entry.text.length() < 5:
+		entry.text += "THIELF"
 	
 	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)	
 	for _i in range(textToWrite.length()):
@@ -339,11 +352,18 @@ func _addText(text:String, alignment:HorizontalAlignment, themeVar:String) -> vo
 	var entry:RichTextLabel = _createLogEntry(alignment)
 	entry.theme_type_variation = themeVar
 	entry.text = text
+	
+	# the below snippit fixes a bug where if the text length is small enough,
+	# the vertical spacing gets all weird.
+	if entry.text.length() < (3 + _INPUT_PREFIX.length()):
+		entry.text += "THI"
+		entry.visible_characters = entry.text.length() - 3
+	
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]  Helper function to add text from the player to the console.
 func _addLeftText(text:String) -> void:	
-	_addText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
+	_addText(_INPUT_PREFIX + text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
 
 func _addLeftTextTyping(text:String) -> void:
 	_typeText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
@@ -368,11 +388,7 @@ func _spawnOptionWindows() -> void:
 		optionWindow.themeVariation = optionData.textThemePreset
 		optionWindow.loadSfx(optionData.sfx)
 		optionWindow.data = optionData
-		
-		# If Dialogue Console is too far left: spawn options on right instead
-		print("setting position of option window")
 		_setOptionWindowPosition(optionWindow, verticalOffset)
-		
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
 		
@@ -414,9 +430,9 @@ func _closeAllOptionWindows() -> void:
 ## [b]Internal-use only.[/b]  Forces the scroll bar to be moved to the bottom.
 func _scrollToBottom() -> void:
 	await get_tree().process_frame
-	_contentsScroller.scroll_vertical = int(
+	_contentsScroller.set_deferred("scroll_vertical", (
 		_contentsScroller.get_v_scroll_bar().max_value
-	)
+	))
 
 ## [b]Internal-use only.[/b]  Forces current selection to be on the input area.
 func _forceTextInput() -> void:
@@ -455,12 +471,13 @@ func _handleCommand(command:String) -> void:
 	
 	# command is an option text
 	for option in _optionData:
-		if command == option.text.to_lower():
+		if command.to_lower() == option.text.to_lower():
 			_chooseOption(option)
 			return
 	
 	# else assume its an actual command
 	_addLeftText(command)
+	command = command.to_lower()
 	command_entered.emit(command)
 	_scrollToBottom()
 	
@@ -491,11 +508,18 @@ func _goBackOneDialogue() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for when an option window is selected.
+## [b]Internal-use only.[/b]
+## Handles logic for when an option window is selected.
 func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
 	_chooseOption(chosenOptionWindow.data)
-	
-## [b]Internal-use only.[/b]  Handles logic for when text is entered into the [_textInput].
+
+## [b]Internal-use only.[/b]
+## Handles logic for when the text in the text input area gets updated
+func _on_input_text_changed(_new_text: String) -> void:
+	_scrollToBottom()
+
+## [b]Internal-use only.[/b]
+## Handles logic for when text is entered into the [_textInput].
 func _on_input_submitted(input: String) -> void:
 	if _isWritingText:
 		if input == "":
@@ -506,7 +530,7 @@ func _on_input_submitted(input: String) -> void:
 		return
 	
 	_textInput.text = ""
-	var text := input.strip_edges().to_lower()
+	var text := input.strip_edges()
 	_handleCommand(text)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.

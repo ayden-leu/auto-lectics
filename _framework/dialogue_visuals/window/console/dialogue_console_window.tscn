@@ -56,81 +56,59 @@ offset_right = 428.0
 offset_bottom = 468.0
 mouse_filter = 1
 
-[node name="Main" type="Panel" parent="Contents"]
-layout_mode = 0
-offset_right = 429.0
-offset_bottom = 392.0
-mouse_filter = 1
-theme_type_variation = &"PanelConsoleContents"
-
-[node name="ContentsScroller" type="ScrollContainer" parent="Contents/Main"]
+[node name="ContentsScroller" type="ScrollContainer" parent="Contents"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+follow_focus = true
 vertical_scroll_mode = 2
 
-[node name="DialogueLogStorage" type="VBoxContainer" parent="Contents/Main/ContentsScroller"]
+[node name="DialogueLogStorage" type="VBoxContainer" parent="Contents/ContentsScroller"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(393, 0)
+custom_minimum_size = Vector2(393, 438)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Contents/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
 
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("4_pedep")]
+[node name="DialogueLogEntry" parent="Contents/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("4_pedep")]
 layout_mode = 2
 
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("5_nsbvi")]
+[node name="Spacer" parent="Contents/ContentsScroller/DialogueLogStorage/HBoxContainer" instance=ExtResource("5_nsbvi")]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Contents/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
 
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("5_nsbvi")]
+[node name="Spacer" parent="Contents/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("5_nsbvi")]
 layout_mode = 2
 
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("4_pedep")]
+[node name="DialogueLogEntry" parent="Contents/ContentsScroller/DialogueLogStorage/HBoxContainer2" instance=ExtResource("4_pedep")]
 layout_mode = 2
 theme_type_variation = &"_defaultConsoleBot"
-text = "The office has sent you to this planet to find what lies at the center of this factory. Blueprints show it might be a big glowing white sphere, so keep an eye out."
+text = "me when i log my entry a a a a a a a a a a a a aa a ahehehehehhehehe"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
+[node name="InputArea" type="HBoxContainer" parent="Contents/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
+size_flags_vertical = 10
 
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("5_nsbvi")]
+[node name="Label" type="Label" parent="Contents/ContentsScroller/DialogueLogStorage/InputArea"]
 layout_mode = 2
+text = ">"
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
-layout_mode = 2
-
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("5_nsbvi")]
-layout_mode = 2
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
-layout_mode = 2
-
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer5" instance=ExtResource("5_nsbvi")]
-layout_mode = 2
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
-layout_mode = 2
-
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer6" instance=ExtResource("5_nsbvi")]
-layout_mode = 2
-
-[node name="ConsoleInput" type="LineEdit" parent="Contents"]
+[node name="ConsoleInput" type="LineEdit" parent="Contents/ContentsScroller/DialogueLogStorage/InputArea"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 6.0
-offset_top = 401.0
-offset_right = 422.0
-offset_bottom = 432.0
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 10
 keep_editing_on_text_submit = true
+caret_blink = true
 
 [node name="OptionSpawnPositions" type="Control" parent="."]
 unique_name_in_owner = true
@@ -170,5 +148,6 @@ stream = SubResource("AudioStreamRandomizer_f2hpt")
 [node name="text" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_1d7as")
 
-[connection signal="text_submitted" from="Contents/ConsoleInput" to="." method="_on_input_submitted"]
+[connection signal="text_changed" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_text_changed"]
+[connection signal="text_submitted" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_submitted"]
 [connection signal="timeout" from="HecticTimer" to="." method="_on_hectic_timer_timeout"]

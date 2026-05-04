@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bvocyor065ht5"]
+[gd_resource type="Theme" load_steps=23 format=3 uid="uid://bvocyor065ht5"]
 
 [ext_resource type="StyleBox" uid="uid://gh7vrriyyneh" path="res://_framework/_visual_assets/dialogue_window/close_button_normal.tres" id="1_f3gol"]
 [ext_resource type="StyleBox" uid="uid://x2ch6ugc6psn" path="res://_framework/_visual_assets/dialogue_window/close_button_hover.tres" id="1_ibxls"]
@@ -33,6 +33,8 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ipegu"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_krvry"]
+
 [resource]
 ButtonClose/base_type = &"Button"
 ButtonClose/colors/font_color = Color(0, 0, 0, 1)
@@ -59,6 +61,7 @@ LabelHeaderConsole/base_type = &"Label"
 LabelHeaderConsole/colors/font_color = Color(0.9490196, 0.6313726, 0.101960786, 1)
 LineEdit/colors/caret_color = Color(1, 1, 1, 1)
 LineEdit/colors/font_color = Color(1, 1, 1, 1)
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_krvry")
 LineEdit/styles/normal = ExtResource("3_ybx5l")
 Panel/styles/panel = ExtResource("1_t2v17")
 PanelConsoleContents/base_type = &"Panel"
