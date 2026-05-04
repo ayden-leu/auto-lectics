@@ -110,6 +110,8 @@ var themeVariation:Dictionary = {
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
+## The number of [DialogueWarningTileWindow]s to spawn during a hectic dialogue event.
+var numHecticWarningWindows:int = 6
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -183,9 +185,10 @@ func start() -> void:
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
+	
 	# Spawn warnings before text is typed
 	if mode == "hectic":
-		FR_WindowManager.createDialogueWarningTile()
+		_spawnHecticWarningWindows()
 	await _addRightText(textToAdd)
 
 	all_dialogue_text_visible.emit()	
@@ -365,6 +368,12 @@ func _scrollToBottom() -> void:
 func _forceTextInput() -> void:
 	_textInput.edit()
 
+func _spawnHecticWarningWindows() -> void:
+	for _i in range(numHecticWarningWindows):
+		var newWindow := FR_WindowManager.createDialogueWarningTileWindow()
+		var newPosition:Vector2 = FR_WindowManager.getRandomPositionOnScreen(newWindow.size)
+		newWindow.global_position = newPosition
+
 ## [b]Internal-use only.[/b]  Starts hectic mode.
 func _startHecticCountdown() -> void:
 	_hecticCountdownActive = true
@@ -378,7 +387,7 @@ func _stopHecticMode() -> void:
 	_hecticBar.visible = false
 	_hecticBar.value = INF
 	_hecticTimer.stop()
-	FR_WindowManager.deleteDialogueWarningTile()
+	FR_WindowManager.closeAllWarningTileWindows()
 
 func _handleCommand(command:String) -> void:
 	# command is an option ID

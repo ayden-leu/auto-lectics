@@ -20,8 +20,9 @@ const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConso
 ## [b]Internal-use only.[/b]
 ## A reference to the [DialogueConsoleOptionWindow] scene.
 const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
-## [b]Internal-use only.[/b] Contains reference to the warning tile scene where warnings will spawn
-const _WARNING_LAYER_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWarningTile)
+## [b]Internal-use only.[/b]
+## Contains reference to the warning tile scene where warnings will spawn
+const _WARNING_WINDOW_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWarningTileWindow)
 
 # ------------------------------------------------
 # export variables
@@ -48,8 +49,6 @@ var _spawnedWindows:Array[DialogueWindow]
 ## [b]Internal-use only.[/b]
 ## Holds all nodes that want to listen to [DialogueConsole]'s signals.
 var _dialogueConsoleSubscribers:Array
-## Holds WARNING_LAYER_SCENE when one needs to be instantiated
-var dialogue_warning_tile: DialogueWarningTile = null
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -82,18 +81,21 @@ func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
 	_addWindow(optionWindow)
 	return optionWindow
 	
-## Creates a [DialogueWarningTile], while avoiding the main console
-func createDialogueWarningTile() -> DialogueWarningTile:
-	dialogue_warning_tile = _WARNING_LAYER_SCENE.instantiate()
-	_addWindow(dialogue_warning_tile)
-	dialogue_warning_tile.spawn_warnings()
-	return dialogue_warning_tile
+## Creates a [DialogueWarningTileWindow], while avoiding the main console
+func createDialogueWarningTileWindow() -> DialogueWarningTileWindow:
+	var warningWindow:DialogueWarningTileWindow = _WARNING_WINDOW_SCENE.instantiate()
+	_addWindow(warningWindow)
+	return warningWindow
 
-## [b]Internal-use only.[/b]  Delete [DialogueWarningTile]
-func deleteDialogueWarningTile() -> void:
-	if dialogue_warning_tile != null:
-		dialogue_warning_tile.close()
-		dialogue_warning_tile = null
+## [b]Internal-use only.[/b]  Closes all [DialogueWarningTileWindow] windows.
+func closeAllWarningTileWindows() -> void:
+	var tempStorage:Array[DialogueWarningTileWindow] = []
+	for window in _spawnedWindows:
+		if window is DialogueWarningTileWindow:
+			tempStorage.push_back(window)
+	
+	for windowToDelete in tempStorage:
+		windowToDelete.close()
 
 ## Connects signals from the [DialogueConsole] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list so the signals can be reconnected

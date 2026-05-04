@@ -27,7 +27,7 @@ const _OFFSET_RANGE:Dictionary = {
 	"y": 0.03
 }
 
-# ---------------------------------`---------------
+# ------------------------------------------------
 # export variables
 # ------------------------------------------------
 ## The radius of the warning tile from its center.

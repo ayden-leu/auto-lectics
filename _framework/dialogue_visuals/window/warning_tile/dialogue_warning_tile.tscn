@@ -1,63 +1,55 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpeqr6fpd34gm"]
+[gd_scene load_steps=4 format=3 uid="uid://dpeqr6fpd34gm"]
 
 [ext_resource type="Script" uid="uid://dhv4cp1yyfby4" path="res://_framework/dialogue_visuals/window/warning_tile/dialogue_warning_tile.gd" id="1_clwej"]
-[ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="2_3gley"]
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_fwxy7"]
+[ext_resource type="PackedScene" uid="uid://c1qmg4lyrgjqc" path="res://_framework/dialogue_visuals/window/warning_tile/warning_tile_2d.tscn" id="3_fwxy7"]
 
-[node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
+[node name="DialogueWarningTileWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel")]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 138.0
-offset_bottom = 133.0
+offset_right = 178.0
+offset_bottom = 186.0
+theme = ExtResource("1_fwxy7")
 script = ExtResource("1_clwej")
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
-closeButton = NodePath("Header/HBoxContainer/CloseButton")
 metadata/_custom_type_script = "uid://bqvscaiprfmtl"
 
 [node name="Header" type="Panel" parent="."]
-visible = false
 layout_mode = 0
-offset_right = 355.0
+offset_right = 178.0
 offset_bottom = 30.0
 mouse_filter = 1
+theme_type_variation = &"PanelHeader"
+metadata/_edit_group_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Header"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 6.0
-offset_top = 3.0
-offset_right = 355.0
-offset_bottom = 27.0
+offset_right = -6.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="Header/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 1
-text = "Header Label"
-
-[node name="CloseButton" parent="Header/HBoxContainer" instance=ExtResource("2_3gley")]
-layout_mode = 2
-size_flags_horizontal = 10
+text = "[WARNING]"
 
 [node name="Contents" type="Panel" parent="."]
-visible = false
 layout_mode = 0
 offset_top = 30.0
-offset_right = 355.0
-offset_bottom = 169.0
+offset_right = 178.0
+offset_bottom = 186.0
 mouse_filter = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Contents"]
+[node name="WarningTile2d" parent="Contents" instance=ExtResource("3_fwxy7")]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 349.0
-offset_bottom = 133.0
-
-[node name="Label" type="Label" parent="Contents/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-mouse_filter = 1
-text = "For each Control node (green) that doesn't care about mouse input, set their mouse filter property to \"Pass (Propagate Up)\" (Mouse > Filter).  This allows the window to be dragged by the mouse.
-
-Also, the close button for this window doesn't work due to the WindowManager handling that.  All DialogueWindows need to be created by the WindowManager to close properly."
-autowrap_mode = 3
+offset_left = 9.0
+offset_top = 9.0
+offset_right = 169.0
+offset_bottom = 147.0
