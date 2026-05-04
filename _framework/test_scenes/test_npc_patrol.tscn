@@ -56,15 +56,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.925569, 0)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_peiq8")]
 focus = NodePath("../Player")
-_actAsFocus = true
-_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="RespawnPosition" type="Marker3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.925569, 0)
 
 [node name="NPC_Test" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7292366, 1.6022091, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62437916, 0.34556866, 1.8266912)
 patrolPath = NodePath("../Path3D")
 
 [node name="Path3D" type="Path3D" parent="."]
