@@ -1,0 +1,17 @@
+{
+	"text": "I don't know what you're talking about.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "You made me jump over the edge.",
+			"type": "neutral",
+			"nextID": "MadeMe"
+		},
+		{
+			"text": "You lied to me.",
+			"type": "neutral",
+			"nextID": "LiedtoMe"
+		}
+	]
+}

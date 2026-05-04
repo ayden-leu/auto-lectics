@@ -1,0 +1,18 @@
+{
+	"text": "YOU COULDN'T EVEN IF YOU TRIED!",
+	"mode": "hectic",
+	"type": "neutral",
+	"nextOnHecticFailureID": "KillHectic",
+	"options": [
+		{
+			"text": "Why do you think I'm here to kill you?",
+			"type": "neutral",
+			"nextID": "KillYou"
+		},
+		{
+			"text": "You're delusional.",
+			"type": "neutral",
+			"nextID": "Delusional"
+		}
+	]
+}

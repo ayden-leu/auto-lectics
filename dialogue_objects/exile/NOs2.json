@@ -1,0 +1,12 @@
+{
+	"text": "Underneath this platform lies an ancient repository of information. I believe you NOs call it... a sign.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "How do I reach it?",
+			"type": "neutral",
+			"nextID": "NOs3"
+		}
+	]
+}

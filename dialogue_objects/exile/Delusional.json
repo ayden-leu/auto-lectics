@@ -1,0 +1,11 @@
+{
+	"text": "DELUSIONAL?!?! You think I'd survive this long if I was DELUSIONAL?",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "Yes.",
+			"nextID": "Delusional_Yes"
+		}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"text": "I didn't lie to you. Did you or did you not see a sign over the edge?",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"options": [
+		{
+			"text": "No.",
+			"nextID": "TryAgain"
+		},
+		{
+			"text": "Yes.",
+			"nextID": "SawSign"
+		}
+	]
+}
