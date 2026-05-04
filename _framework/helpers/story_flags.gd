@@ -10,7 +10,15 @@ const DEFAULT_FLAGS: Dictionary = {
 	"anotherFlag": true,
 	"aThirdFlag": false,
 	"doorOpen": false,
+	
+	##preacher flags
+	"heardSermon": false,
+	
+	##splode flags
 	"hasExploded": false,
+	
+	##exile flags
+	"seeSign": false,
 }
 #---------------------------------------------------
 
