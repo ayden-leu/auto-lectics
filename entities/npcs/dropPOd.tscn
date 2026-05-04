@@ -11,6 +11,7 @@ size = Vector3(1.1191406, 1.1877441, 1.2324219)
 script = ExtResource("1_63y6g")
 _hitbox = NodePath("Hitbox")
 initialDialogueID = "Dialogue1a"
+rejectConsoleExit = true
 model = NodePath("model")
 myName = "NPC_Test"
 
