@@ -78,7 +78,7 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## The name of the [InteractableNPC] that was interacted with.
-var nameOfNpcTalkingTo:String = ""
+var instigatingNpc: InteractableNPC
 ## The text to add to the [member _contents].
 var textToAdd:String = ""
 ## How fast dialogue characters are "written," in characters per second.
@@ -107,6 +107,7 @@ var themeVariation:Dictionary = {
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
+var dialogueEnded : bool = false
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -164,7 +165,8 @@ func _gui_input(event: InputEvent) -> void:
 # ------------------------------------------------
 ## Prepares the [DialogueConsole] by setting up initial defaults.
 func prepare() -> void:
-	headerText = nameOfNpcTalkingTo
+	dialogueEnded = false
+	headerText = instigatingNpc.myName
 	
 	_closeAllOptionWindows()
 	_stopHecticMode()
@@ -189,19 +191,23 @@ func start() -> void:
 	all_options_available.emit()
 	_forceTextInput()
 	
+	if _optionData.is_empty():
+		dialogueEnded = true
+		_forceTextInput()
+		return
+	
 	if mode == "hectic":
 		_startHecticMode()
 
 ## Closes this window, unless the [InteractableNPC] the player is talking to
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
-	if nameOfNpcTalkingTo in _NPCS_PREVENT_CLOSING:
+	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
 		await _addRightText(exitRejectMessage)
 		return
 	
-	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
+	option_chosen.emit("")
 	super()
-
 ## Removes this from the scene.
 ## If you want to close this window, run [method close] instead.
 func kill() -> void:
@@ -236,6 +242,49 @@ func loadSfx(sfxEventsToLoad:Dictionary) -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+func _get_shared_prefix(a: String, b: String) -> String:
+	var result := ""
+	var min_length : int = min(a.length(), b.length())
+	
+	for i in range(min_length):
+		if a[i] == b[i]:
+			result += a[i]
+		else:
+			break
+	
+	return result
+	
+func _autocomplete_or_submit_input() -> void:
+	var current_text := _textInput.text.strip_edges().to_lower()
+	
+	if current_text == "":
+		return
+	
+	var possible_inputs: Array[String] = ["exit", "back", "help"]
+	
+	for option in _optionData:
+		possible_inputs.append(option.text.to_lower())
+	
+	var matches: Array[String] = []
+	for possible in possible_inputs:
+		if possible.begins_with(current_text):
+			matches.append(possible)
+	
+	if matches.is_empty():
+		return
+	
+	if matches.size() == 1:
+		_textInput.text = matches[0]
+		_textInput.caret_column = _textInput.text.length()
+		return
+	
+	var shared_prefix := matches[0]
+	for match_text in matches:
+		shared_prefix = _get_shared_prefix(shared_prefix, match_text)
+	
+	_textInput.text = shared_prefix
+	_textInput.caret_column = _textInput.text.length()
+
 ## [b]Internal-use only.[/b]  Creates a text entry and adds it to [member _contentsStorage].
 func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 	var entry:RichTextLabel = _LOG_ENTRY.instantiate()
@@ -416,14 +465,37 @@ func _goBackOneDialogue() -> void:
 func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
 	_chooseOption(chosenOptionWindow.data)
 
+func _is_valid_console_input(text: String) -> bool:
+	if text in ["exit", "back", "help"]:
+		return true
+
+	for option_window in _optionWindows:
+		if option_window != null and is_instance_valid(option_window):
+			if option_window.text.to_lower() == text:
+				return true
+
+	return false
+	
 ## [b]Internal-use only.[/b]  Handles logic for when text is entered into the [_textInput].
 func _on_input_submitted(input: String) -> void:
+	var text : String = input.strip_edges().to_lower()
+	
+	if Input.is_key_pressed(KEY_SPACE):
+		_autocomplete_or_submit_input()
+		return
+		
 	if _isWritingText:
 		return
 	
-	_textInput.text = ""
-	var text := input.strip_edges()
-	_handleCommand(text.to_lower())
+	if text == "":
+		return 
+	
+	if _is_valid_console_input(text):
+		_textInput.text = ""
+		_handleCommand(text)
+		return 
+	
+	_autocomplete_or_submit_input()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:

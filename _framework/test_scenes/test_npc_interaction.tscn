@@ -84,6 +84,7 @@ metadata/_edit_lock_ = true
 [node name="test_basic_one" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.048841, 0.24217129, -28.610844)
 lookAtInteractorWhileTalking = true
+rejectConsoleExit = true
 myName = "_test_basic_one"
 metadata/_edit_group_ = true
 

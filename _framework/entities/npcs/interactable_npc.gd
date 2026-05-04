@@ -38,6 +38,7 @@ signal finished_dialogue()
 @export var initialDialogueID:String = ""
 ## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
 @export var lookAtInteractorWhileTalking:bool = false
+@export var rejectConsoleExit: bool = false
 
 # ------------------------------------------------
 # onready variables
@@ -131,7 +132,7 @@ func _getHitboxShapes() -> Array[CollisionShape3D]:
 func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	var console:DialogueConsole = FR_WindowManager.dialogueConsole
 	
-	console.nameOfNpcTalkingTo = myName
+	console.instigatingNpc = self
 	console.currentDialogueID = _currentDialogueID
 	console.mode = dialogueEntry.mode 
 	
