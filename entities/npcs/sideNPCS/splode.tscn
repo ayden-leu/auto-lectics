@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://h1q7nwfs2wpl"]
 
-[ext_resource type="Script" uid="uid://cmnptj1cb0rou" path="res://entities/npcs/sideNPCS/splode.gd" id="1_tsffd"]
+[ext_resource type="Script" uid="uid://nduyjwlpcojs" path="res://entities/npcs/sideNPCS/splode.gd" id="1_tsffd"]
 [ext_resource type="PackedScene" uid="uid://cs05y8fjcnq14" path="res://models/week6playtestStuff/npcs/side_NPCS/egg.fbx" id="2_560c1"]
 [ext_resource type="Texture2D" uid="uid://dqpdbyg3l3hvk" path="res://textures/Deltrarune Explosion no BG.png" id="3_tsffd"]
 
