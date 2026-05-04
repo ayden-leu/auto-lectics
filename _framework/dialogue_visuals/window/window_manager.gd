@@ -155,8 +155,12 @@ func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
 	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
 
 ## Gets a random position on screen.
-## Input should be window.size, and self.get_global_rect() for main console
-func getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
+## [br][br]
+## [code]window_size[/code] is the size of the window to consider.
+## [br][br]
+## [code]allowOverlap[/code] is a list of window types that this position can overlap.
+## The type of a window is defined by [member DialogueWindow.windowType]
+func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] = []) -> Vector2:
 	var viewport_size := get_viewport().get_visible_rect().size
 	var margin := 20.0
 	var retryAttempts:int = 30
@@ -169,6 +173,9 @@ func getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
 		
 		var overlapping:bool = false
 		for window in _spawnedWindows:
+			if window.windowType in allowOverlap:
+				continue
+			
 			if window.get_global_rect().intersects(Rect2(pos, window_size)):
 				overlapping = true
 				break

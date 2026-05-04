@@ -47,6 +47,9 @@ signal window_dropped(me:DialogueWindow)
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
+## The type of this window.
+var windowType:String
+
 ## The text that's in the header of this option window.
 ## [br][br]
 ## Comes with a getter and setter so you can treat it like a normal variable

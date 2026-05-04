@@ -146,6 +146,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	super()
+	windowType = "console"
 	
 	_center()
 	_hecticBar.visible = false
@@ -317,7 +318,7 @@ func _spawnOptionWindows() -> void:
 	var tempCounter:int = 0
 	var verticalOffset:float = 0
 	for optionData in _optionData:
-		var optionWindow = FR_WindowManager.createDialogueOptionWindow()
+		var optionWindow:DialogueConsoleOptionWindow = FR_WindowManager.createDialogueOptionWindow()
 		
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
@@ -326,11 +327,8 @@ func _spawnOptionWindows() -> void:
 		optionWindow.data = optionData
 		
 		# If Dialogue Console is too far left: spawn options on right instead
-		optionWindow.position = Vector2(0, verticalOffset)
-		if not FR_WindowManager.positionOnScreen(_optionSpawnPositions.left.global_position):
-			optionWindow.position += _optionSpawnPositions.right.global_position
-		else:
-			optionWindow.position += _optionSpawnPositions.left.global_position
+		print("setting position of option window")
+		_setOptionWindowPosition(optionWindow, verticalOffset)
 		
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
@@ -341,6 +339,19 @@ func _spawnOptionWindows() -> void:
 		verticalOffset += optionWindow.size.y + _OPTION_SPAWN_OFFSET
 	
 	all_options_available.emit()
+
+func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset:float) -> void:
+	if mode == "normal":
+		window.position = Vector2(0, verticalOffset)
+		if not FR_WindowManager.positionOnScreen(_optionSpawnPositions.left.global_position):
+			window.position += _optionSpawnPositions.right.global_position
+		else:
+			window.position += _optionSpawnPositions.left.global_position
+	elif mode == "hectic":
+		var canOverlap:Array[String] = ["warning_tile"]
+		window.position = FR_WindowManager.getRandomPositionOnScreen(window.size, canOverlap)
+	else:
+		printerr("DialogueConsole/_setOptionWindowPosition:  Unhandled mode [" + mode + "]")
 
 ## [b]Internal-use only.[/b]  Handles logic for choosing an option.
 func _chooseOption(optionData:Dictionary) -> void:
@@ -368,9 +379,11 @@ func _scrollToBottom() -> void:
 func _forceTextInput() -> void:
 	_textInput.edit()
 
+## [b]Internal-use only.[/b]
+## Spawns [member numHecticWarningWindows] [DialogueWarningTileWindow].
 func _spawnHecticWarningWindows() -> void:
 	for _i in range(numHecticWarningWindows):
-		var newWindow := FR_WindowManager.createDialogueWarningTileWindow()
+		var newWindow:DialogueWarningTileWindow = FR_WindowManager.createDialogueWarningTileWindow()
 		var newPosition:Vector2 = FR_WindowManager.getRandomPositionOnScreen(newWindow.size)
 		newWindow.global_position = newPosition
 

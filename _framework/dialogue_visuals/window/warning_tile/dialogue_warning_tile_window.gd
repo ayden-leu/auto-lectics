@@ -19,6 +19,13 @@ class_name DialogueWarningTileWindow
 # ------------------------------------------------
 
 # ------------------------------------------------
+# functions like _ready, _process, and _physics_process
+# ------------------------------------------------
+func _ready() -> void:
+	super()
+	windowType = "warning_tile"
+
+# ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
 func enableTileShake() -> void:
@@ -32,16 +39,3 @@ func setShakeInterval(newInterval:float) -> void:
 
 func setShakeRange(newRange:Vector2) -> void:
 	tile.shakeRange = newRange
-
-#func spawn_warnings() -> void:
-	#for i in range(num_warnings):
-		#var tile := _warningTileScene.instantiate()
-		#tile.visible = false
-		#add_child(tile)
-		#
-		#await get_tree().process_frame
-		#
-		#var pos:Vector2 = FR_WindowManager.getRandomPositionOnScreen(tile.size)
-		#tile.set_origin(pos)
-		#_spawned_warnings.push_back(tile)
-		#tile.visible = true
