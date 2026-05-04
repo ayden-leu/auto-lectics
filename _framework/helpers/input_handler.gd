@@ -48,8 +48,14 @@ var movementInputEnabled:bool = true
 # ------------------------------------------------
 ## Whether movement inputs should be processed.  Affects all [InputHandler]s.
 static var _movementInputEnabledGlobal:bool = true
+## Whether interaction inputs should be processed.  Affects all [InputHandler]s.
+static var _interactionEnabledGlobal:bool = true
+## Whether the jump input should be processed.  Affects all [InputHandler]s.
+static var _jumpEnabledGlobal:bool = true
+## Whether the respawn input should be processed.  Affects all [InputHandler]s.
+static var _respawnEnabledGlobal:bool = true
 ## The mouse mode before [method showCursorTemp] or [method hideCursorTemp] was ran.
-static var _savedMouseMode:Input.MouseMode = Input.MOUSE_MODE_CAPTURED
+static var _savedMouseMode:Input.MouseMode = Input.MOUSE_MODE_MAX
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -66,16 +72,16 @@ func _physics_process(_delta: float) -> void:
 	update_input_direction.emit(input_dir)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact") and _interactionEnabledGlobal:
 		interact_button_pressed.emit()
 	
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") and _jumpEnabledGlobal:
 		jump_pressed.emit()
 	
 	elif event.is_action_pressed("close_game"):
 		get_tree().quit()
 	
-	elif event.is_action_pressed("respawn"):
+	elif event.is_action_pressed("respawn") and _respawnEnabledGlobal:
 		respawn.emit()
 		
 	if event.is_action_pressed("grapple") and _movementInputEnabledGlobal and movementInputEnabled:
@@ -95,6 +101,9 @@ static func showCursor() -> void:
 
 ## Like [method showCursor], but saves the current mouse mode to [member _savedMouseMode].
 static func showCursorTemp() -> void:
+	if _savedMouseMode != Input.MOUSE_MODE_MAX:
+		return
+	
 	print("show cursor temp")
 	_savedMouseMode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -106,6 +115,9 @@ static func hideCursor() -> void:
 	
 ## Like [method hideCursor], but saves the current mouse mode to [member _savedMouseMode].
 static func hideCursorTemp() -> void:
+	if _savedMouseMode != Input.MOUSE_MODE_MAX:
+		return
+	
 	print("hide cursor temp")
 	_savedMouseMode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -114,6 +126,7 @@ static func hideCursorTemp() -> void:
 static func restoreCursorMode() -> void:
 	print("restore cursor")
 	Input.set_mouse_mode(_savedMouseMode)
+	_savedMouseMode = Input.MOUSE_MODE_MAX
 
 ## Lets movement inputs be processed.
 static func enableMovementInputGlobal() -> void:
@@ -122,6 +135,30 @@ static func enableMovementInputGlobal() -> void:
 ## Prevents movement inputs from being processed.
 static func disableMovementInputGlobal() -> void:
 	_movementInputEnabledGlobal = false
+
+## Lets interaction inputs be processed.
+static func enableInteractionInputGlobal() -> void:
+	_interactionEnabledGlobal = true
+
+## Prevents interaction inputs from being processed.
+static func disableInteractionInputGlobal() -> void:
+	_interactionEnabledGlobal = false
+
+## Lets jump inputs be processed.
+static func enableJumpInputGlobal() -> void:
+	_jumpEnabledGlobal = true
+
+## Prevents jump inputs from being processed.
+static func disableJumpInputGlobal() -> void:
+	_jumpEnabledGlobal = false
+
+## Lets the respawn input be processed.
+static func enableRespawnInputGlobal() -> void:
+	_respawnEnabledGlobal = true
+
+## Prevents the respawn input from being processed.
+static func disableRespawnInputGlobal() -> void:
+	_respawnEnabledGlobal = false
 
 # ------------------------------------------------
 # functions only referenced inside this script

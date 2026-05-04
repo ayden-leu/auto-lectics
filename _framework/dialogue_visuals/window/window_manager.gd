@@ -142,6 +142,20 @@ func unsubscribeToConsole(subscriber) -> void:
 	_dialogueConsoleSubscribers[subscriberIndex] = null
 	_disconnectConsoleSignalsToSubscriber(subscriber)
 
+## Pushes a text entry to the [DialogueConsole].
+## [br][br]
+## [code]metadata[/code] can have the following fields:
+## [codeblock]
+## 	"writeSpeed":  # a float for the number of characters per second to display.
+## 	"instant":  # if the text should be displayed instantly.
+## 	"theme":  # the text theme to apply to this entry.
+## [/codeblock]
+func pushMessageToConsole(message:String, metadata:Dictionary = {}) -> void:
+	if not dialogueConsole:
+		return
+	
+	dialogueConsole.addExternalEntry(message, metadata)
+
 ## Checks if a position is within the screen.
 ## [code]threshold[/code] is the amount, in pixels, beyond the screen the position can be.
 func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:

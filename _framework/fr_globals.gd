@@ -33,6 +33,7 @@ const SCENES = {
 	"DialogueConsoleOptionWindow": "uid://4opwac4ndc2k",
 	"DialogueConsoleLogEntry": "uid://1n8yvdu14dcd",
 	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e",
+	"DialogueConsoleLogEntryIdLabel": "uid://cdt7ouilmdwo0",
 	"DialogueWarningTileWindow": "uid://dpeqr6fpd34gm",
 	"WarningTile2D": "uid://c1qmg4lyrgjqc"
 }
@@ -80,7 +81,7 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 	var top:Dictionary = DialogueLoader.loadDialogueNodeFile(topPath)
 	if top.is_empty():
 		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, topPath])
-		return DialogueLoader.loadDialogueNodeFile(
+		top = DialogueLoader.loadDialogueNodeFile(
 			STORAGE_PATH.DIALOGUE + "fallback" + DialogueLoader.DIALOGUE_FILE_TYPE
 		)
 	
@@ -95,10 +96,8 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
 	
 	var withNpcDefaults:Dictionary = DialogueLoader.fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
-	#print(withNpcDefaults.options)
 	
 	var result:Dictionary = DialogueLoader.fillDialogueMissingFields(withNpcDefaults)
-	#print(result.options)
 	
 	return result
 
