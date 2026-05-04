@@ -253,6 +253,31 @@ func loadSfx(sfxEventsToLoad:Dictionary) -> void:
 		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
 		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
 
+## Adds a right text entry to the console.
+## [br][br]
+## [code]metadata[/code] can have the following fields:
+## [codeblock]
+## 	"writeSpeed":  # a float for the number of characters per second to display.
+## 	"instant":  $ if the text should be displayed instantly.
+## 	"theme":  # the text theme to apply to this entry.
+## [/codeblock]
+func addExternalEntry(message:String, metadata:Dictionary) -> void:
+	var tempSpeed:float = textWriteSpeed
+	var tempTheme:String = themeVariation.right
+	var tempBypass:bool = bypassTextWriting
+	
+	if metadata.has("writeSpeed") and typeof(metadata.writeSpeed) == TYPE_FLOAT:
+		textWriteSpeed = metadata.writeSpeed
+	if metadata.has("theme") and typeof(metadata.theme) == TYPE_STRING:
+		themeVariation.right = metadata.theme
+	if metadata.has("instant") and typeof(metadata.instant) == TYPE_BOOL:
+		bypassTextWriting = metadata.instant
+	
+	_addRightText(message)
+	textWriteSpeed = tempSpeed
+	themeVariation.right = tempTheme
+	bypassTextWriting = tempBypass
+
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]

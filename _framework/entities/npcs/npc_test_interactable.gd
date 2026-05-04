@@ -65,6 +65,10 @@ func _on_console_option_chosen(nextID:String) -> void:
 	else:
 		print(myName + " is talking.")
 
+func _on_console_command_entered(command:String) -> void:
+	if command == "yell":
+		FR_WindowManager.pushMessageToConsole("AAAAAAAAAAAAAAAAAAAAAAA")
+
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
