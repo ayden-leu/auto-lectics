@@ -44,6 +44,8 @@ const _INPUT_PREFIX:String = ""
 const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Control] scene.
 const _LOG_ENTRY_SPACER:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntrySpacer)
+## [b]Internal-use only.[/b]  A reference to a pre-set [Label] scene.
+const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntryIdLabel)
 
 # ------------------------------------------------
 # export variables
@@ -291,7 +293,7 @@ func addExternalEntry(message:String, metadata:Dictionary) -> void:
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Creates a text entry and adds it to [member _contentsStorage].
-func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
+func _createLogEntry(alignment:HorizontalAlignment, addID:bool = false) -> RichTextLabel:
 	var entry:RichTextLabel = _LOG_ENTRY.instantiate()
 	entry.text = ""
 	
@@ -300,16 +302,24 @@ func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 	#_contentsStorage.add_child(entry)
 	
 	# node setup alignment
-	var holder:HBoxContainer = HBoxContainer.new()
+	var holder:VBoxContainer = VBoxContainer.new()
+	var textHolder:HBoxContainer = HBoxContainer.new()
 	var spacer:Control = _LOG_ENTRY_SPACER.instantiate()
+	var idLabel:Label
+	
+	if addID:
+		idLabel = _LOG_ID_LABEL.instantiate()
+		idLabel.text = "[ID: " + currentDialogueID + "]"
+		holder.add_child(idLabel)
+	holder.add_child(textHolder)
 	_contentsStorage.add_child(holder)
 	
 	if alignment == HORIZONTAL_ALIGNMENT_LEFT:
-		holder.add_child(entry)
-		holder.add_child(spacer)
+		textHolder.add_child(entry)
+		textHolder.add_child(spacer)
 	elif alignment == HORIZONTAL_ALIGNMENT_RIGHT:
-		holder.add_child(spacer)
-		holder.add_child(entry)
+		textHolder.add_child(spacer)
+		textHolder.add_child(entry)
 	
 	_textInput.get_parent().move_to_front()
 	
@@ -317,10 +327,10 @@ func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 
 ## [b]Internal-use only.[/b]  Adds a text entry and displays it
 ## at [member textWriteSpeed] characters per second.
-func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:String) -> void:
+func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:String, addID:bool) -> void:
 	_isWritingText = true
 	
-	var entry:RichTextLabel = _createLogEntry(alignment)
+	var entry:RichTextLabel = _createLogEntry(alignment, addID)
 	entry.theme_type_variation = themeVar
 	entry.visible_characters = 0
 	entry.text = textToWrite
@@ -348,8 +358,8 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 	_all_text_visible.emit()
 
 ## [b]Internal-use only.[/b]  Adds a text entry.
-func _addText(text:String, alignment:HorizontalAlignment, themeVar:String) -> void:
-	var entry:RichTextLabel = _createLogEntry(alignment)
+func _addText(text:String, alignment:HorizontalAlignment, themeVar:String, addID:bool) -> void:
+	var entry:RichTextLabel = _createLogEntry(alignment, addID)
 	entry.theme_type_variation = themeVar
 	entry.text = text
 	
@@ -362,16 +372,16 @@ func _addText(text:String, alignment:HorizontalAlignment, themeVar:String) -> vo
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]  Helper function to add text from the player to the console.
-func _addLeftText(text:String) -> void:	
-	_addText(_INPUT_PREFIX + text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
+func _addLeftText(text:String, addID:bool = false) -> void:	
+	_addText(_INPUT_PREFIX + text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left, addID)
 
-func _addLeftTextTyping(text:String) -> void:
-	_typeText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
+func _addLeftTextTyping(text:String, addID:bool = false) -> void:
+	_typeText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left, addID)
 	await _all_text_visible
 
 ## [b]Internal-use only.[/b]  Helper function to add text from a bot to the console.
-func _addRightText(text:String) -> void:
-	_typeText(text, HORIZONTAL_ALIGNMENT_RIGHT, themeVariation.right)
+func _addRightText(text:String, addID:bool = true) -> void:
+	_typeText(text, HORIZONTAL_ALIGNMENT_RIGHT, themeVariation.right, addID)
 	await _all_text_visible
 
 ## [b]Internal-use only.[/b]  Spawns the option windows.

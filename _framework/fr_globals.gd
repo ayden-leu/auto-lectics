@@ -33,6 +33,7 @@ const SCENES = {
 	"DialogueConsoleOptionWindow": "uid://4opwac4ndc2k",
 	"DialogueConsoleLogEntry": "uid://1n8yvdu14dcd",
 	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e",
+	"DialogueConsoleLogEntryIdLabel": "uid://cdt7ouilmdwo0",
 	"DialogueWarningTileWindow": "uid://dpeqr6fpd34gm",
 	"WarningTile2D": "uid://c1qmg4lyrgjqc"
 }
