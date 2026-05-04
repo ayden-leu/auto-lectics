@@ -100,9 +100,6 @@ func _process(_delta:float) -> void:
 			openMenu("blueprint")
 	elif Input.is_action_just_pressed("close_current_menu"):
 		_on_menu_close()
-		
-		if _menuStack.is_empty():
-			_resume()
 
 # ------------------------------------------------
 # functions referenced outside of this script

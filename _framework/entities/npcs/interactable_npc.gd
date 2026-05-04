@@ -221,18 +221,30 @@ func _on_interaction(interactor:Node3D) -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when a dialogue option is chosen.
 func _on_console_option_chosen(nextID:String) -> void:
+	if not isTalking:
+		return
+	
 	_loadNextDialogueConsole(nextID)
 
 ## [b]Internal-use only.[/b]  Emits [signal option_available].
 func _on_console_new_option_available() -> void:
+	if not isTalking:
+		return
+	
 	option_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [all_options_available].
 func _on_console_all_options_available() -> void:
+	if not isTalking:
+		return
+	
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
 func _on_console_all_dialogue_text_visible() -> void:
+	if not isTalking:
+		return
+	
 	dialogue_all_visible.emit()
 
 # ------------------------------------------------
