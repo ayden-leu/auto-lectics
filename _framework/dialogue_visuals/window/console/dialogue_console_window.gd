@@ -66,8 +66,11 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 @onready var _hecticBar:ProgressBar = %HecticBar
 ## [b]Internal-use only.[/b]  The hectic dialogue event timer.
 @onready var _hecticTimer: Timer = %HecticTimer
-## [b]Internal-use only.[/b]  The position where options are initially spawned from.
-@onready var _optionSpawnPosition:Marker2D = %OptionSpawnPosition
+## [b]Internal-use only.[/b]  The positions where options are initially spawned from.
+@onready var _optionSpawnPositions:Dictionary[String, Marker2D] = {
+	"left": %OptionSpawnPositions/Left,
+	"right": %OptionSpawnPositions/Right
+}
 ## Holds the AudioStreamPlayers for each event.
 @onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %SFX/spawn,
@@ -107,6 +110,8 @@ var themeVariation:Dictionary = {
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
+## The number of [DialogueWarningTileWindow]s to spawn during a hectic dialogue event.
+var numHecticWarningWindows:int = 6
 var dialogueEnded : bool = false
 
 # ------------------------------------------------
@@ -142,6 +147,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	super()
+	windowType = "console"
 	
 	_center()
 	_hecticBar.visible = false
@@ -182,6 +188,10 @@ func start() -> void:
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
+	
+	# Spawn warnings before text is typed
+	if mode == "hectic":
+		_spawnHecticWarningWindows()
 	await _addRightText(textToAdd)
 
 	all_dialogue_text_visible.emit()	
@@ -197,7 +207,7 @@ func start() -> void:
 		return
 	
 	if mode == "hectic":
-		_startHecticMode()
+		_startHecticCountdown()
 
 ## Closes this window, unless the [InteractableNPC] the player is talking to
 ## is in [member _NPCS_PREVENT_CLOSING].
@@ -357,14 +367,18 @@ func _spawnOptionWindows() -> void:
 	var tempCounter:int = 0
 	var verticalOffset:float = 0
 	for optionData in _optionData:
-		var optionWindow = FR_WindowManager.createDialogueOptionWindow()
+		var optionWindow:DialogueConsoleOptionWindow = FR_WindowManager.createDialogueOptionWindow()
 		
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.themeVariation = optionData.textThemePreset
 		optionWindow.loadSfx(optionData.sfx)
 		optionWindow.data = optionData
-		optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
+		
+		# If Dialogue Console is too far left: spawn options on right instead
+		print("setting position of option window")
+		_setOptionWindowPosition(optionWindow, verticalOffset)
+		
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
 		
@@ -374,6 +388,19 @@ func _spawnOptionWindows() -> void:
 		verticalOffset += optionWindow.size.y + _OPTION_SPAWN_OFFSET
 	
 	all_options_available.emit()
+
+func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset:float) -> void:
+	if mode == "normal":
+		window.position = Vector2(0, verticalOffset)
+		if not FR_WindowManager.positionOnScreen(_optionSpawnPositions.left.global_position):
+			window.position += _optionSpawnPositions.right.global_position
+		else:
+			window.position += _optionSpawnPositions.left.global_position
+	elif mode == "hectic":
+		var canOverlap:Array[String] = ["warning_tile"]
+		window.position = FR_WindowManager.getRandomPositionOnScreen(window.size, canOverlap)
+	else:
+		printerr("DialogueConsole/_setOptionWindowPosition:  Unhandled mode [" + mode + "]")
 
 ## [b]Internal-use only.[/b]  Handles logic for choosing an option.
 func _chooseOption(optionData:Dictionary) -> void:
@@ -401,8 +428,16 @@ func _scrollToBottom() -> void:
 func _forceTextInput() -> void:
 	_textInput.edit()
 
+## [b]Internal-use only.[/b]
+## Spawns [member numHecticWarningWindows] [DialogueWarningTileWindow].
+func _spawnHecticWarningWindows() -> void:
+	for _i in range(numHecticWarningWindows):
+		var newWindow:DialogueWarningTileWindow = FR_WindowManager.createDialogueWarningTileWindow()
+		var newPosition:Vector2 = FR_WindowManager.getRandomPositionOnScreen(newWindow.size)
+		newWindow.global_position = newPosition
+
 ## [b]Internal-use only.[/b]  Starts hectic mode.
-func _startHecticMode() -> void:
+func _startHecticCountdown() -> void:
 	_hecticCountdownActive = true
 	_hecticBar.visible = true
 	_hecticBar.value = INF
@@ -414,6 +449,7 @@ func _stopHecticMode() -> void:
 	_hecticBar.visible = false
 	_hecticBar.value = INF
 	_hecticTimer.stop()
+	FR_WindowManager.closeAllWarningTileWindows()
 
 func _handleCommand(command:String) -> void:
 	# command is an option ID

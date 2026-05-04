@@ -16,6 +16,8 @@ signal jump_pressed()
 signal update_input_direction(newDirection:Vector2)
 ## Emitted when the "Respawn" key is pressed.
 signal respawn()
+## Emitted when grapple hook buttons are pressed
+signal grapple_pressed()
 
 # ------------------------------------------------
 # enums
@@ -75,6 +77,9 @@ func _input(event: InputEvent) -> void:
 	
 	elif event.is_action_pressed("respawn"):
 		respawn.emit()
+		
+	if event.is_action_pressed("grapple") and _movementInputEnabledGlobal and movementInputEnabled:
+		grapple_pressed.emit()
 	
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
