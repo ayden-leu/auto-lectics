@@ -1,0 +1,196 @@
+[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
+
+[ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
+[ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
+[ext_resource type="Theme" uid="uid://6tapf6h7f8h8" path="res://textTheme.tres" id="3_nde6x"]
+[ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/ui/menus/textures/Asset 1.png" id="4_ovhmb"]
+
+[node name="BlueprintMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_k0l7g")
+_numNeededBeforeUnlocking = 1
+metadata/_edit_lock_ = true
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 305.0
+offset_top = 1.0
+offset_right = 812.0
+offset_bottom = 29.0
+text = "DOCUMENTATION"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 0
+offset_left = 1318.0
+offset_top = -2.0
+offset_right = 1438.0
+offset_bottom = 118.0
+theme = ExtResource("3_nde6x")
+theme_override_font_sizes/font_size = 96
+text = "X"
+
+[node name="NPCList" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="NpcEntryHolder" type="HFlowContainer" parent="NPCList"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 7.0
+offset_top = 80.0
+offset_right = 1088.945
+offset_bottom = 574.0
+
+[node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+layout_mode = 2
+npcID = "npc_test_1"
+myName = "Aster"
+
+[node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+layout_mode = 2
+npcID = "npc_test_2"
+myName = "Mira"
+
+[node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+layout_mode = 2
+npcID = "npc_test_3"
+myName = "Orin"
+
+[node name="Details" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="GuessNpcNamePanel" type="Panel" parent="Details"]
+unique_name_in_owner = true
+z_index = 2
+layout_mode = 0
+offset_left = 35.0
+offset_top = 237.0
+offset_right = 229.0
+offset_bottom = 324.3
+mouse_filter = 2
+theme = ExtResource("3_nde6x")
+
+[node name="Label" type="Label" parent="Details/GuessNpcNamePanel"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 3.0
+offset_right = 113.0
+offset_bottom = 26.0
+theme = ExtResource("3_nde6x")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "INPUT.BOT_ID"
+
+[node name="GuessNpcNameField" type="LineEdit" parent="Details/GuessNpcNamePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 22.0
+offset_right = 86.5625
+offset_bottom = 53.0
+theme = ExtResource("3_nde6x")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "..."
+
+[node name="SubmitNpcNameButton" type="Button" parent="Details/GuessNpcNamePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 116.0
+offset_top = 54.0
+offset_right = 188.0
+offset_bottom = 85.0
+theme = ExtResource("3_nde6x")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "PUSH"
+alignment = 0
+
+[node name="NotesPanel" type="Panel" parent="Details"]
+unique_name_in_owner = true
+z_index = 2
+layout_mode = 0
+offset_left = 38.0
+offset_top = 372.0
+offset_right = 368.0
+offset_bottom = 522.905
+mouse_filter = 2
+theme = ExtResource("3_nde6x")
+
+[node name="Label" type="Label" parent="Details/NotesPanel"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 9.0
+offset_right = 148.0
+offset_bottom = 32.0
+theme = ExtResource("3_nde6x")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "INPUT.NOTES:"
+
+[node name="NotesField" type="TextEdit" parent="Details/NotesPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 30.0
+offset_right = 343.0
+offset_bottom = 165.0
+scale = Vector2(0.79756665, 0.79756665)
+theme = ExtResource("3_nde6x")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "..."
+
+[node name="PrevPageButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 344.0
+offset_right = 139.0
+offset_bottom = 454.0
+
+[node name="NextPageButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 1264.0
+offset_top = 350.0
+offset_right = 1363.0
+offset_bottom = 452.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+z_index = -1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(80.776405, 23.390985)
+color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+z_index = -1
+layout_mode = 0
+offset_left = 392.0
+offset_top = -31.0
+offset_right = 1671.0
+offset_bottom = 985.0
+rotation = 0.0019230221
+texture = ExtResource("4_ovhmb")
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Details/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
+[connection signal="text_changed" from="Details/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
+[connection signal="pressed" from="PrevPageButton" to="." method="_on_prev_page_button_pressed"]
+[connection signal="pressed" from="NextPageButton" to="." method="_on_next_page_button_pressed"]

@@ -133,7 +133,7 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	
 	console.nameOfNpcTalkingTo = myName
 	console.currentDialogueID = _currentDialogueID
-	console.mode = dialogueEntry.mode
+	console.mode = dialogueEntry.mode 
 	
 	if dialogueEntry.mode == "hectic":
 		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
@@ -141,9 +141,11 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	else:
 		console.hecticFailureDialogueID = ""
 	
+	if dialogueEntry.textThemePreset != "":
+		console.themeVariation.right = dialogueEntry.textThemePreset
+	
 	console.textWriteSpeed = dialogueEntry.writeSpeedCustom
 	console.loadSfx(dialogueEntry.sfx)
-	#_dialogueConsole.dialogueData = dialogueEntry
 	console.textToAdd = dialogueEntry.text
 	console.loadOptionData(dialogueEntry.options)
 	console.prepare()
@@ -245,12 +247,6 @@ func _on_console_all_options_available() -> void:
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
 func _on_console_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
-
-# TODO:  redo this logic
-func _on_console_open_gate():
-	print("open gate!")
-	if $gateNode:
-		$gateNode.open_gate()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

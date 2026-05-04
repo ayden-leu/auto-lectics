@@ -1,0 +1,19 @@
+{
+	"text": "AHHHHHHH!!!",
+	"type": "confused",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"sfx": {
+		"spawn": "splodeScream"
+	},
+	"options": [
+		{
+			"text": "WHY ARE YOU YELLING?",
+			"type": "neutral"
+		},
+		{
+			"text": "AHHHHH!!!",
+			"type": "neutral"
+		}
+	]
+}

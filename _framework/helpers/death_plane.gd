@@ -1,3 +1,4 @@
+@icon("uid://cb1q7neti54xl")
 extends Area3D
 class_name DeathPlane
 ## Runs a colliding body's [code]respawn()[/code] function upon collision.

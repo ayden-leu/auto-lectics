@@ -1,3 +1,4 @@
+@icon("uid://bfg0nlmruxfhi")
 extends Node
 class_name WindowManager
 
