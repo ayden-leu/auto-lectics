@@ -32,15 +32,19 @@ text = "Subscribe to Console"
 layout_mode = 2
 text = "Unsubscribe to Console"
 
+[node name="StartConsoleHecticMode" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start Console Hectic Mode"
+
 [node name="KillAllWindows" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Kill All Windows"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 194.0
+offset_left = 216.0
 offset_top = 110.0
-offset_right = 410.0
+offset_right = 432.0
 offset_bottom = 133.0
 metadata/_edit_group_ = true
 
@@ -57,4 +61,5 @@ layout_mode = 2
 [connection signal="pressed" from="VBoxContainer/KillConsole" to="." method="_on_kill_console_pressed"]
 [connection signal="pressed" from="VBoxContainer/SubscribeToConsole" to="." method="_on_subscribe_to_console_pressed"]
 [connection signal="pressed" from="VBoxContainer/UnsubscribeToConsole" to="." method="_on_unsubscribe_to_console_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartConsoleHecticMode" to="." method="_on_start_console_hectic_mode_pressed"]
 [connection signal="pressed" from="VBoxContainer/KillAllWindows" to="." method="_on_kill_all_windows_pressed"]

@@ -47,6 +47,9 @@ signal window_dropped(me:DialogueWindow)
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
+## The type of this window.
+var windowType:String
+
 ## The text that's in the header of this option window.
 ## [br][br]
 ## Comes with a getter and setter so you can treat it like a normal variable
@@ -85,6 +88,7 @@ func _gui_input(event: InputEvent) -> void:
 		return
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		get_parent().move_child(self, -1)
 		_holdingSelect = event.pressed
 		if _holdingSelect:
 			_dragOffset = get_global_mouse_position() - global_position
@@ -141,15 +145,6 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## Gets a random position on screen.
-## Unused as it doesn't account for overlap.
-func _getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
-	var viewport_size := get_viewport_rect().size
-	return Vector2(
-		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
-		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
-	)
-
 ## Moves this window to the center of the screen immediately.
 func _center() -> void:
 	position = (get_viewport_rect().size - size) / 2

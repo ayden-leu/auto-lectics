@@ -35,6 +35,7 @@ extends _BASE_
 # ------------------------------------------------
 func _ready() -> void:
     super()
+    windowType =
 
 func _gui_input(event: InputEvent) -> void:
     super(event)

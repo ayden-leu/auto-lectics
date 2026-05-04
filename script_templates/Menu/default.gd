@@ -37,8 +37,8 @@ extends _BASE_
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-_TS_id = ""
-_TS_#pauseGame = true
+_TS_menuID = ""
+_TS_#pauseGame = true  # is true by default
 _TS_super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------

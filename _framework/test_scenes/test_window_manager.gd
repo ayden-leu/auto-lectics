@@ -68,6 +68,15 @@ func _on_kill_all_windows_pressed() -> void:
 	for _i in range(FR_WindowManager._spawnedWindows.size()):
 		FR_WindowManager._spawnedWindows[0].close()
 
+func _on_start_console_hectic_mode_pressed() -> void:
+	if not FR_WindowManager.dialogueConsole:
+		printerr("Dialogue Console hasn't been created.")
+		return
+	
+	FR_WindowManager.dialogueConsole.mode = "hectic"
+	FR_WindowManager.dialogueConsole.textToAdd = "Starting Hectic Mode"
+	FR_WindowManager.dialogueConsole.start()
+
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
