@@ -30,6 +30,7 @@ signal selected(me:BlueprintMenuNpcEntry)
 ## The icon for this entry when it is unlocked.  Setting this will update the button node.
 @export var entryTextureLocked:Texture2D
 
+@export var portraitTexture: Texture2D
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------

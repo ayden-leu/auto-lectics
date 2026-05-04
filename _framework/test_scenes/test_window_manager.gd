@@ -1,7 +1,4 @@
-# meta-default: true
-# meta-description: Base template for Menu with default Godot cycle methods
-
-extends _BASE_
+extends Control
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -36,10 +33,6 @@ extends _BASE_
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
-_TS_menuID = ""
-_TS_#pauseGame = true  # is true by default
-_TS_super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -53,6 +46,36 @@ _TS_super()  # runs the inherited class' _ready() function.
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+func _on_create_console_pressed() -> void:
+	FR_WindowManager.createDialogueConsole()
+
+func _on_create_console_option_pressed() -> void:
+	FR_WindowManager.createDialogueOptionWindow()
+
+func _on_kill_console_pressed() -> void:
+	FR_WindowManager.killDialogueConsole()
+
+func _on_subscribe_to_console_pressed() -> void:
+	FR_WindowManager.subscribeToConsole(self)
+
+func _on_unsubscribe_to_console_pressed() -> void:
+	FR_WindowManager.unsubscribeToConsole(self)
+
+func _on_console_command_entered(command:String) -> void:
+	%EnteredConsoleCommand.text = command
+
+func _on_kill_all_windows_pressed() -> void:
+	for _i in range(FR_WindowManager._spawnedWindows.size()):
+		FR_WindowManager._spawnedWindows[0].close()
+
+func _on_start_console_hectic_mode_pressed() -> void:
+	if not FR_WindowManager.dialogueConsole:
+		printerr("Dialogue Console hasn't been created.")
+		return
+	
+	FR_WindowManager.dialogueConsole.mode = "hectic"
+	FR_WindowManager.dialogueConsole.textToAdd = "Starting Hectic Mode"
+	FR_WindowManager.dialogueConsole.start()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

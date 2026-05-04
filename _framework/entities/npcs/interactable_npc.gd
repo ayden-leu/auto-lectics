@@ -162,6 +162,7 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
 
+# TODO:  move this to deprecated zone
 ## @deprecated
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
 func _beginDialogueEventBox(interactor:Node3D) -> void:
