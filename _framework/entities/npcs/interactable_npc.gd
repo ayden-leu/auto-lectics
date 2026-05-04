@@ -194,7 +194,11 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	isTalking = true
 	patrolEnabled = false
 	_currentInteractor = interactor
-	_currentInteractor.set_input_frozen(true)
+	if _currentInteractor:
+		if _currentInteractor.has_method("disableInput"):
+			_currentInteractor.disableInput(true)
+		if _currentInteractor.has_method("freeze"):
+			_currentInteractor.freeze(true)
 	InputHandler.showCursor()
 	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -207,8 +211,11 @@ func _endDialogueConsole() -> void:
 	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
 	
-	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):
-		_currentInteractor.set_input_frozen(false)
+	if _currentInteractor:
+		if _currentInteractor.has_method("disableInput"):
+			_currentInteractor.disableInput(false)
+		if _currentInteractor.has_method("freeze"):
+			_currentInteractor.freeze(false)
 	InputHandler.hideCursor()
 
 	isTalking = false

@@ -173,6 +173,7 @@ func _gui_input(event: InputEvent) -> void:
 func prepare() -> void:
 	dialogueEnded = false
 	headerText = instigatingNpc.myName
+	FR_MenuManager.disable()
 	
 	_closeAllOptionWindows()
 	_stopHecticMode()
@@ -216,8 +217,10 @@ func close() -> void:
 		await _addRightText(exitRejectMessage)
 		return
 	
-	option_chosen.emit("")
+	option_chosen.emit("") # TODO:  use the close signal instead to close this.
+	FR_MenuManager.enable()
 	super()
+
 ## Removes this from the scene.
 ## If you want to close this window, run [method close] instead.
 func kill() -> void:
