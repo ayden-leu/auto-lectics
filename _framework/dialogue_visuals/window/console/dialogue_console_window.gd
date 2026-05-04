@@ -484,15 +484,18 @@ func _handleCommand(command:String) -> void:
 	# TODO:  move help text definition to [InteractableNPC]
 	if command == "help":
 		await _addRightText(_helpText)
-		return
 	
-	if command == "back":
+	elif command == "back":
 		_goBackOneDialogue()
-		return
 	
-	if command == "exit":
+	elif command == "exit":
 		close()
-		return
+	
+	elif command.begins_with("load "):
+		var nextID:String = command.replace("load ", "")
+		if nextID in ["_default_dialogue", "_default_option"]:
+			return
+		option_chosen.emit(nextID)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
 func _goBackOneDialogue() -> void:
