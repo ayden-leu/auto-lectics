@@ -37,6 +37,9 @@ extends InteractableNPC
 func _ready() -> void:
 	super()  # runs the inherited class' _ready() function.
 	
+	if Engine.is_editor_hint():
+		return
+	
 	FR_WindowManager.subscribeToConsole(self)
 
 func _process(delta: float) -> void:
@@ -61,6 +64,10 @@ func _on_console_option_chosen(nextID:String) -> void:
 		print(myName + " isn't talking.")
 	else:
 		print(myName + " is talking.")
+
+func _on_console_command_entered(command:String) -> void:
+	if command == "yell":
+		FR_WindowManager.pushMessageToConsole("AAAAAAAAAAAAAAAAAAAAAAA")
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
