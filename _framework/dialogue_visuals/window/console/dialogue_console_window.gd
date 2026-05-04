@@ -141,6 +141,8 @@ var _helpText: String = \
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	%ContentsScroller.get_v_scroll_bar().custom_minimum_size.x = 24.0
+	
 	if Engine.is_editor_hint():
 		return
 	super()

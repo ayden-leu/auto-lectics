@@ -72,7 +72,7 @@ anchor_bottom = 1.0
 offset_left = 6.0
 grow_horizontal = 2
 grow_vertical = 2
-vertical_scroll_mode = 4
+vertical_scroll_mode = 2
 
 [node name="DialogueLogStorage" type="VBoxContainer" parent="Contents/Main/ContentsScroller"]
 unique_name_in_owner = true
@@ -102,10 +102,6 @@ text = "The office has sent you to this planet to find what lies at the center o
 [node name="HBoxContainer3" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
 
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("4_pedep")]
-layout_mode = 2
-text = "help"
-
 [node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer3" instance=ExtResource("5_nsbvi")]
 layout_mode = 2
 
@@ -115,19 +111,8 @@ layout_mode = 2
 [node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("5_nsbvi")]
 layout_mode = 2
 
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer4" instance=ExtResource("4_pedep")]
-layout_mode = 2
-theme_type_variation = &"_defaultConsoleBot"
-text = "me when i log my entry
-but with
-multiple lines"
-
 [node name="HBoxContainer5" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
-
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer5" instance=ExtResource("4_pedep")]
-layout_mode = 2
-text = "help"
 
 [node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer5" instance=ExtResource("5_nsbvi")]
 layout_mode = 2
@@ -137,36 +122,6 @@ layout_mode = 2
 
 [node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer6" instance=ExtResource("5_nsbvi")]
 layout_mode = 2
-
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer6" instance=ExtResource("4_pedep")]
-layout_mode = 2
-theme_type_variation = &"_defaultConsoleBot"
-text = "me when i log my entry
-but with
-multiple lines"
-
-[node name="HBoxContainer7" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
-layout_mode = 2
-
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer7" instance=ExtResource("4_pedep")]
-layout_mode = 2
-text = "help"
-
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer7" instance=ExtResource("5_nsbvi")]
-layout_mode = 2
-
-[node name="HBoxContainer8" type="HBoxContainer" parent="Contents/Main/ContentsScroller/DialogueLogStorage"]
-layout_mode = 2
-
-[node name="Spacer" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer8" instance=ExtResource("5_nsbvi")]
-layout_mode = 2
-
-[node name="DialogueLogEntry" parent="Contents/Main/ContentsScroller/DialogueLogStorage/HBoxContainer8" instance=ExtResource("4_pedep")]
-layout_mode = 2
-theme_type_variation = &"_defaultConsoleBot"
-text = "me when i log my entry
-but with
-multiple lines"
 
 [node name="ConsoleInput" type="LineEdit" parent="Contents"]
 unique_name_in_owner = true
