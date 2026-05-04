@@ -211,6 +211,10 @@ func start() -> void:
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
 	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
+		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
+		return
+	
+	if not canBeClosed:
 		await _addRightText(exitRejectMessage)
 		return
 	

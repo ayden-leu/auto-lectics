@@ -38,7 +38,11 @@ signal finished_dialogue()
 @export var initialDialogueID:String = ""
 ## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
 @export var lookAtInteractorWhileTalking:bool = false
-@export var rejectConsoleExit: bool = false
+## If true, this [InteractableNPC] makes it so you cannot close the console.
+@export var rejectConsoleExit:bool = false
+## When [member rejectConsoleExit] is true, this will be the message
+## that gets added to the console.
+@export var rejectConsoleExitMessage:String = "[Console Closure Blocked]"
 
 # ------------------------------------------------
 # onready variables
@@ -162,32 +166,6 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	_loadDialogueConsoleData(dialogue)
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
-
-# TODO:  move this to deprecated zone
-## @deprecated
-## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
-func _beginDialogueEventBox(interactor:Node3D) -> void:
-	# rotate to face player immediately to properly spawn dialogue box
-	# is a hacky work around to spawn the [DialogueBox] in the correct position.
-	var currentRotation:Vector3 = rotation
-	if lookAtInteractorWhileTalking and interactor:
-		look_at(Vector3(
-			interactor.global_position.x,
-			global_position.y,
-			interactor.global_position.z
-		))
-		lookAtPosition = interactor.global_position
-	
-	isTalking = true
-	patrolEnabled = false
-	_currentInteractor = interactor
-
-	_spawnDialogueBox()
-	_connectDialogueBoxSignals()
-	_loadNextDialogueBox(initialDialogueID)
-	
-	# restore rotation from before hacky work around
-	rotation = currentRotation
 
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the player.
 func _beginDialogueEventConsole(interactor:Player) -> void:	
@@ -431,6 +409,31 @@ func _loadNextDialogueBox(nextDialogueID: String) -> void:
 	_loadDialogueBoxData(dialogue)
 	_dialogueBox.start()
 	dialogue_advanced.emit()
+
+## @deprecated
+## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
+func _beginDialogueEventBox(interactor:Node3D) -> void:
+	# rotate to face player immediately to properly spawn dialogue box
+	# is a hacky work around to spawn the [DialogueBox] in the correct position.
+	var currentRotation:Vector3 = rotation
+	if lookAtInteractorWhileTalking and interactor:
+		look_at(Vector3(
+			interactor.global_position.x,
+			global_position.y,
+			interactor.global_position.z
+		))
+		lookAtPosition = interactor.global_position
+	
+	isTalking = true
+	patrolEnabled = false
+	_currentInteractor = interactor
+
+	_spawnDialogueBox()
+	_connectDialogueBoxSignals()
+	_loadNextDialogueBox(initialDialogueID)
+	
+	# restore rotation from before hacky work around
+	rotation = currentRotation
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
