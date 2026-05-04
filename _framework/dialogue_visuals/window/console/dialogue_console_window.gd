@@ -218,8 +218,9 @@ func close() -> void:
 		await _addRightText(exitRejectMessage)
 		return
 	
-	option_chosen.emit("") # TODO:  use the close signal instead to close this.
 	FR_MenuManager.enable()
+	_stopHecticMode()
+	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
 	super()
 
 ## Removes this from the scene.
