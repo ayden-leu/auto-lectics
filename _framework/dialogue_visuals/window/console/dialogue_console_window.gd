@@ -42,12 +42,6 @@ const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Control] scene.
 const _LOG_ENTRY_SPACER:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntrySpacer)
 
-## @deprecated
-## [b]Internal-use only.[/b]  A list of [InteractableNPC]s that make it so
-## you cannot close this window.
-var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaible that is set by InteractableNPC
-	"dropPod", "The Office"
-]
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
@@ -81,7 +75,7 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## The name of the [InteractableNPC] that was interacted with.
-var nameOfNpcTalkingTo:String = ""
+var instigatingNpc: InteractableNPC
 ## The text to add to the [member _contents].
 var textToAdd:String = ""
 ## How fast dialogue characters are "written," in characters per second.
@@ -112,6 +106,10 @@ var themeVariation:Dictionary = {
 var exitRejectMessage:String = "[Console Closure Denied]"
 ## The number of [DialogueWarningTileWindow]s to spawn during a hectic dialogue event.
 var numHecticWarningWindows:int = 6
+## If the current dialogue event has ended.
+var dialogueEnded:bool = false
+## If the text write on effect should be skipped or not.
+var bypassTextWriting:bool = false
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -170,7 +168,9 @@ func _gui_input(event: InputEvent) -> void:
 # ------------------------------------------------
 ## Prepares the [DialogueConsole] by setting up initial defaults.
 func prepare() -> void:
-	headerText = nameOfNpcTalkingTo
+	dialogueEnded = false
+	headerText = instigatingNpc.myName
+	FR_MenuManager.disable()
 	
 	_closeAllOptionWindows()
 	_stopHecticMode()
@@ -199,16 +199,26 @@ func start() -> void:
 	all_options_available.emit()
 	_forceTextInput()
 	
+	if _optionData.is_empty():
+		dialogueEnded = true
+		_forceTextInput()
+		return
+	
 	if mode == "hectic":
 		_startHecticCountdown()
 
 ## Closes this window, unless the [InteractableNPC] the player is talking to
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
-	if nameOfNpcTalkingTo in _NPCS_PREVENT_CLOSING:
+	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
+		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
+		return
+	
+	if not canBeClosed:
 		await _addRightText(exitRejectMessage)
 		return
 	
+	FR_MenuManager.enable()
 	_stopHecticMode()
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
 	super()
@@ -282,6 +292,11 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 	
 	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)	
 	for _i in range(textToWrite.length()):
+		if bypassTextWriting:
+			entry.visible_characters = -1
+			bypassTextWriting = false
+			break
+		
 		entry.visible_characters += 1
 		_scrollToBottom()
 		if not _sfxPlayer.text.playing:
@@ -452,15 +467,20 @@ func _goBackOneDialogue() -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when an option window is selected.
 func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
 	_chooseOption(chosenOptionWindow.data)
-
+	
 ## [b]Internal-use only.[/b]  Handles logic for when text is entered into the [_textInput].
 func _on_input_submitted(input: String) -> void:
 	if _isWritingText:
+		if input == "":
+			bypassTextWriting = true
+		return
+	
+	if input == "":
 		return
 	
 	_textInput.text = ""
-	var text := input.strip_edges()
-	_handleCommand(text.to_lower())
+	var text := input.strip_edges().to_lower()
+	_handleCommand(text)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:

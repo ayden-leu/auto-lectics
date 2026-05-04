@@ -136,7 +136,7 @@ func openMenu(menuID:String) -> void:
 	menuToOpen.enable()
 	menuIsOpen = true
 	InputHandler.showCursorTemp()
-	InputHandler.disableMovementInputGlobal()
+	Player.disableInput(true)
 
 ## Connects signals from the [BlueprintMenu] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list for internal tracking.
@@ -192,7 +192,7 @@ func _resume() -> void:
 	get_tree().paused = false
 	menuIsOpen = false
 	InputHandler.restoreCursorMode()
-	InputHandler.enableMovementInputGlobal()
+	Player.disableInput(false)
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
