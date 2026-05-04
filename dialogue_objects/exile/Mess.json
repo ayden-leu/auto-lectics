@@ -1,0 +1,10 @@
+{
+	"text": "Hmm, maybe you're not like the other NOs.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "GoingOn"
+		}
+	]
+}

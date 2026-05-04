@@ -1,0 +1,14 @@
+{
+	"text": "Well, I don't know what you mean. As you can see, the factory is in tip-top shape.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "This place is a mess.",
+			"nextID": "Mess"
+		},
+		{
+			"text": "I could see that.",
+			"nextID": "FindNO"
+		}
+	]
+}

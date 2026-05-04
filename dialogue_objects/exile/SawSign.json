@@ -1,0 +1,11 @@
+{
+	"text": "See, I said there was a sign, and you saw the sign. Congratulation. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Who even are you?",
+			"type": "neutral",
+			"nextID": "WhoAreYou"
+		}
+	]
+}

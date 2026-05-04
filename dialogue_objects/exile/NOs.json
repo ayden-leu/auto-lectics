@@ -1,0 +1,12 @@
+{
+	"text": "Wow, a NO who doesn't know they're a NO. Well, you came to the right place.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "NOs2"
+		}
+	]
+}
