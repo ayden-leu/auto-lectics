@@ -32,7 +32,8 @@ signal unlock_condition_met(conditionID:String)
 @onready var _guessNpcNameField = %GuessNpcNameField
 #@onready var _notesPanel = %NpcDetailPanel
 @onready var _notesField = %NotesField
-@onready var _portraitTextureRect: TextureRect = $NpcDetailPanel/PortraitTextureRect
+@onready var _portraitTextureRect:TextureRect = %PortraitTextureRect
+
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------

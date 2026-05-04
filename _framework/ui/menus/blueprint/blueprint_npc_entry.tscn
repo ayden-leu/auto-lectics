@@ -21,6 +21,7 @@ theme = ExtResource("1_wg1im")
 script = ExtResource("1_5e3ld")
 entryTextureUnlocked = ExtResource("2_7lniy")
 entryTextureLocked = ExtResource("4_v8nm0")
+portraitTexture = ExtResource("2_7lniy")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 unique_name_in_owner = true

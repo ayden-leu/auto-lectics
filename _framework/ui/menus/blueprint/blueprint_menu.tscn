@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=6 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
 [ext_resource type="Theme" uid="uid://6tapf6h7f8h8" path="res://textTheme.tres" id="3_nde6x"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 [ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/ui/menus/textures/Asset 1.png" id="4_ovhmb"]
 
 [node name="BlueprintMenu" type="Control"]
@@ -47,10 +48,11 @@ mouse_filter = 2
 [node name="NpcEntryHolder" type="HFlowContainer" parent="NPCList"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 7.0
-offset_top = 80.0
-offset_right = 1088.945
-offset_bottom = 574.0
+offset_left = 700.0
+offset_top = 149.0
+offset_right = 1359.0
+offset_bottom = 643.0
+metadata/_edit_group_ = true
 
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
@@ -71,30 +73,44 @@ myName = "Orin"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 400)
 layout_mode = 0
-offset_left = 176.0
+offset_left = 34.0
 offset_top = 44.0
-offset_right = 724.0
+offset_right = 582.0
 offset_bottom = 770.0
+
+[node name="PortraitTextureRect" type="TextureRect" parent="NpcDetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 15.0
+offset_top = 86.0
+offset_right = 357.0
+offset_bottom = 428.0
+texture = ExtResource("4_coiy0")
 
 [node name="CloseDetailButton" type="Button" parent="NpcDetailPanel"]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 0
-offset_left = 467.0
-offset_top = 3.0
-offset_right = 547.0
-offset_bottom = 83.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme = ExtResource("3_nde6x")
+theme_override_font_sizes/font_size = 48
 text = "x"
 
 [node name="GuessNpcNamePanel" type="Panel" parent="NpcDetailPanel"]
 unique_name_in_owner = true
 z_index = 2
 layout_mode = 0
-offset_left = 35.0
-offset_top = 237.0
-offset_right = 229.0
-offset_bottom = 324.3
+offset_left = 15.0
+offset_top = 449.0
+offset_right = 209.0
+offset_bottom = 536.3
 mouse_filter = 2
 theme = ExtResource("3_nde6x")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="NpcDetailPanel/GuessNpcNamePanel"]
 layout_mode = 0
@@ -115,7 +131,7 @@ offset_right = 86.5625
 offset_bottom = 53.0
 theme = ExtResource("3_nde6x")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
-text = "..."
+placeholder_text = "..."
 
 [node name="SubmitNpcNameButton" type="Button" parent="NpcDetailPanel/GuessNpcNamePanel"]
 unique_name_in_owner = true
@@ -133,12 +149,13 @@ alignment = 0
 unique_name_in_owner = true
 z_index = 2
 layout_mode = 0
-offset_left = 38.0
-offset_top = 372.0
-offset_right = 368.0
-offset_bottom = 522.905
+offset_left = 15.0
+offset_top = 558.0
+offset_right = 345.0
+offset_bottom = 708.905
 mouse_filter = 2
 theme = ExtResource("3_nde6x")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="NpcDetailPanel/NotesPanel"]
 layout_mode = 0
@@ -160,7 +177,7 @@ offset_bottom = 165.0
 scale = Vector2(0.79756665, 0.79756665)
 theme = ExtResource("3_nde6x")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
-text = "..."
+placeholder_text = "..."
 
 [node name="PrevPageButton" type="Button" parent="."]
 unique_name_in_owner = true
