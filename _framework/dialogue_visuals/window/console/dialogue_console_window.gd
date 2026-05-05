@@ -220,6 +220,8 @@ func start() -> void:
 ## Closes this window, unless the [InteractableNPC] the player is talking to
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
+	$SFXtemp/exit.play()
+
 	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
 		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
 		return
@@ -231,6 +233,7 @@ func close() -> void:
 	FR_MenuManager.enable()
 	_stopHecticMode()
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
+	
 	super()
 
 ## Removes this from the scene.
@@ -424,11 +427,15 @@ func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset
 
 ## [b]Internal-use only.[/b]  Handles logic for choosing an option.
 func _chooseOption(optionData:Dictionary) -> void:
+	
 	themeVariation.left = optionData.textThemePreset
 	_addLeftText(optionData.text)  # TODO:  determine how to handle no writing to console
+	
 	_stopHecticMode()
 	_closeAllOptionWindows()
 	StoryFlags.updateFlags(optionData.setFlags)
+	$SFXtemp/send.play()
+	await get_tree().create_timer(1).timeout
 	option_chosen.emit(optionData.nextID)
 
 ## [b]Internal-use only.[/b]  Forcebilly closes all spawned option windows.

@@ -18,5 +18,7 @@ func _process(_delta):
 	
 	if StoryFlags.currentFlags.hasExploded:
 		animation.play("explosion")
+		
 		disable()
-	
+		await get_tree().create_timer(1.0).timeout
+		visible = false

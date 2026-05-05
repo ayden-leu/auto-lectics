@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5qe2d4n561ak"]
+[gd_scene load_steps=5 format=3 uid="uid://b5qe2d4n561ak"]
 
 [ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://_framework/entities/npcs/interactable_npc.gd" id="1_mgact"]
+[ext_resource type="PackedScene" uid="uid://bgsg6fjl2xqmq" path="res://models/npcs/sludge.tscn" id="2_2pqvn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
 
@@ -11,12 +12,14 @@ size = Vector3(1.1191406, 1.1877441, 1.2324219)
 script = ExtResource("1_mgact")
 _hitbox = NodePath("Hitbox")
 initialDialogueID = "Dialogue1a"
+lookAtInteractorWhileTalking = true
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
 myName = "NPC_Test"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
 mesh = SubResource("BoxMesh_4o76d")
 skeleton = NodePath("../..")
 
@@ -26,8 +29,11 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(2.4746583, 0, 0, 0, 2.4746583, 0, 0, 0, 2.4746583, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_vefio")
 
 [node name="DialogueBoxAnchor" type="Marker3D" parent="."]
 transform = Transform3D(0.9573195, 0, 0.28903177, 0, 1, 0, -0.28903177, 0, 0.9573195, 0, 1.214, 1.941)
+
+[node name="sludge" parent="." instance=ExtResource("2_2pqvn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50892663, 0.41731787)

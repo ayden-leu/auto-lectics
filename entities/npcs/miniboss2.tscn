@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://brd5bxtnmcsk3"]
+
+[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_73sm3"]
+[ext_resource type="AudioStream" uid="uid://cm7xbp4ft3f10" path="res://sounds/ambient/space-station-generator.mp3" id="2_cg7hx"]
+[ext_resource type="PackedScene" uid="uid://5ja5grs5iaao" path="res://models/npcs/miniboss2_model.tscn" id="3_73sm3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
+size = Vector3(3.671997, 10.670654, 9.139801)
+
+[node name="exile" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+script = ExtResource("1_73sm3")
+_hitbox = NodePath("Area3D")
+_talkOnlyOnce = false
+initialDialogueID = "EB1"
+model = NodePath("")
+myName = "generator"
+patrolEnabled = true
+metadata/_custom_type_script = "uid://um13i8jipsfx"
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28068542, 0, -0.33616632)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(5.4633765, 0, 0, 0, 5.4633765, 0, 0, 0, 5.4633765, 1.0449829, 24.608175, 0.06175226)
+shape = SubResource("BoxShape3D_25xfv")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1.457915, 0.21957791, 0.10303234, -0.22309445, 1.4603376, 0.04459487, -0.095178925, -0.059542786, 1.4736828, 4.834044, 4.058341, 1.5022821)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_cg7hx")
+volume_db = -29.358
+pitch_scale = 2.21
+autoplay = true
+parameters/looping = true
+
+[node name="miniboss2" parent="." instance=ExtResource("3_73sm3")]
+transform = Transform3D(-7.410669e-07, 0, 16.953634, 0, 16.953634, 0, -16.953634, 0, -7.410669e-07, -17.362368, -13.319733, 0)

@@ -177,10 +177,12 @@ var grapple_current: Vector3
 ## Track whether the hook's target is valid
 var grapple_invalid: bool = false
 
+var unstuck_respawn 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	
 	if Engine.is_editor_hint():
 		return
 		
@@ -190,7 +192,10 @@ func _ready() -> void:
 	
 	AudioLoader.loadSfxFromId("respawn", _sfxPlayer.respawn.stream)
 	AudioLoader.loadSfxFromId("death", _sfxPlayer.death.stream)
-
+	
+	unstuck_respawn = position
+	FR_MenuManager.subscribeToBlueprintMenu(self)
+	
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
@@ -373,7 +378,9 @@ func throw_grapple() -> void:
 	grapple_invalid = false
 	
 	# No target to hit
+	
 	if result.is_empty():
+		$SFXtemp/grappleMiss.play()
 		grapple_target = to
 	
 	# Target is in range of grapple hook
@@ -451,6 +458,7 @@ func _update_rope_between(start: Vector3, end: Vector3) -> void:
 
 ## Attach the grapple hook when it arrives at a valid target
 func _attach_grapple(point: Vector3) -> void:
+	$SFXtemp/grappleHit.play()
 	grapple_point = point
 	grapple_length = global_position.distance_to(grapple_point)
 	grapple_active = false
@@ -521,6 +529,7 @@ func _update_grapple_visuals() -> void:
 
 ## De-attach grapple hook from surface
 func release_grapple() -> void:
+	$SFXtemp/grappleRelease.play()
 	is_grappling = false
 	grapple_invalid = false
 	grapple_active = true
@@ -599,7 +608,13 @@ func _on_input_handler_respawn() -> void:
 	if _inputDisabled:
 		return
 	
-	position = Vector3(0,0,1)
+	position = unstuck_respawn
+	
+func _on_blueprint_npc_name_guessed_correctly(npcID:String) -> void:
+	$SFXtemp/yippee.play()
+	# Associated signal: npc_name_guessed_correctly
+	# Will run whenever the player guesses the name of an NPC entry correctly.
+	# npcID is the ID of the NPC entry.
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

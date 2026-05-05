@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dw5goxjv6rm55"
+path="res://.godot/imported/Console Send.wav-53f5d951e7776aa79d19d3a3c05e204c.sample"
+
+[deps]
+
+source_file="res://sounds/uiSFX/Console Send.wav"
+dest_files=["res://.godot/imported/Console Send.wav-53f5d951e7776aa79d19d3a3c05e204c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=8 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
 [ext_resource type="Theme" uid="uid://6tapf6h7f8h8" path="res://textTheme.tres" id="3_nde6x"]
+[ext_resource type="Texture2D" uid="uid://cmsanw5s1v23x" path="res://textures/NPCS/1x/Asset 1.png" id="4_cg8tx"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 [ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/ui/menus/textures/Asset 1.png" id="4_ovhmb"]
+[ext_resource type="Texture2D" uid="uid://bmipyeeivehjj" path="res://textures/NPCS/1x/Asset 2.png" id="5_gffea"]
 
 [node name="BlueprintMenu" type="Control"]
 layout_mode = 3
@@ -57,29 +59,38 @@ metadata/_edit_group_ = true
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_1"
-myName = "Aster"
+myName = "sludge"
+entryTextureUnlocked = ExtResource("4_cg8tx")
+entryTextureLocked = ExtResource("4_cg8tx")
+portraitTexture = ExtResource("4_cg8tx")
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_2"
-myName = "Mira"
+myName = "CLN-R"
+entryTextureUnlocked = ExtResource("5_gffea")
+entryTextureLocked = ExtResource("5_gffea")
+portraitTexture = ExtResource("5_gffea")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+visible = false
 layout_mode = 2
 npcID = "npc_test_3"
 myName = "Orin"
 
 [node name="NpcDetailPanel" type="Panel" parent="."]
 unique_name_in_owner = true
+z_index = 1
 custom_minimum_size = Vector2(100, 400)
 layout_mode = 0
-offset_left = 34.0
+offset_left = 36.0
 offset_top = 44.0
-offset_right = 582.0
+offset_right = 584.0
 offset_bottom = 770.0
 
 [node name="PortraitTextureRect" type="TextureRect" parent="NpcDetailPanel"]
 unique_name_in_owner = true
+z_index = 1
 layout_mode = 0
 offset_left = 15.0
 offset_top = 86.0
@@ -88,6 +99,7 @@ offset_bottom = 428.0
 texture = ExtResource("4_coiy0")
 
 [node name="CloseDetailButton" type="Button" parent="NpcDetailPanel"]
+z_index = 1
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 1
 anchors_preset = 1
@@ -102,7 +114,7 @@ text = "x"
 
 [node name="GuessNpcNamePanel" type="Panel" parent="NpcDetailPanel"]
 unique_name_in_owner = true
-z_index = 2
+z_index = 1
 layout_mode = 0
 offset_left = 15.0
 offset_top = 449.0
@@ -113,6 +125,7 @@ theme = ExtResource("3_nde6x")
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="NpcDetailPanel/GuessNpcNamePanel"]
+z_index = 1
 layout_mode = 0
 offset_left = 17.0
 offset_top = 3.0
@@ -124,6 +137,7 @@ text = "INPUT.BOT_ID"
 
 [node name="GuessNpcNameField" type="LineEdit" parent="NpcDetailPanel/GuessNpcNamePanel"]
 unique_name_in_owner = true
+z_index = 1
 layout_mode = 0
 offset_left = 18.0
 offset_top = 22.0
@@ -135,6 +149,7 @@ placeholder_text = "..."
 
 [node name="SubmitNpcNameButton" type="Button" parent="NpcDetailPanel/GuessNpcNamePanel"]
 unique_name_in_owner = true
+z_index = 1
 layout_mode = 0
 offset_left = 116.0
 offset_top = 54.0
@@ -147,7 +162,7 @@ alignment = 0
 
 [node name="NotesPanel" type="Panel" parent="NpcDetailPanel"]
 unique_name_in_owner = true
-z_index = 2
+z_index = 1
 layout_mode = 0
 offset_left = 15.0
 offset_top = 558.0
@@ -158,6 +173,7 @@ theme = ExtResource("3_nde6x")
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="NpcDetailPanel/NotesPanel"]
+z_index = 1
 layout_mode = 0
 offset_left = 13.0
 offset_top = 9.0
@@ -169,6 +185,7 @@ text = "INPUT.NOTES:"
 
 [node name="NotesField" type="TextEdit" parent="NpcDetailPanel/NotesPanel"]
 unique_name_in_owner = true
+z_index = 1
 layout_mode = 0
 offset_left = 16.0
 offset_top = 30.0
@@ -178,6 +195,28 @@ scale = Vector2(0.79756665, 0.79756665)
 theme = ExtResource("3_nde6x")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
 placeholder_text = "..."
+
+[node name="TextureRect" type="TextureRect" parent="NpcDetailPanel"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 4.0
+offset_right = 1278.0
+offset_bottom = 1020.0
+rotation = 0.0019230221
+scale = Vector2(0.42081988, 0.42081988)
+texture = ExtResource("4_ovhmb")
+
+[node name="TextureRect2" type="TextureRect" parent="NpcDetailPanel"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 336.99997
+offset_right = 1278.0
+offset_bottom = 1353.0
+rotation = 0.0019230221
+scale = Vector2(0.42081988, 0.42081988)
+texture = ExtResource("4_ovhmb")
 
 [node name="PrevPageButton" type="Button" parent="."]
 unique_name_in_owner = true
@@ -198,12 +237,12 @@ offset_right = 1363.0
 offset_bottom = 452.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 z_index = -1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(80.776405, 23.390985)
+mouse_filter = 2
 color = Color(0.0627451, 0.03529412, 0.05490196, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]

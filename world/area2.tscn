@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://drte8m2osgjcm"]
+[gd_scene load_steps=28 format=3 uid="uid://drte8m2osgjcm"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_50l2a"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_un0cs"]
@@ -11,8 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://b6f6w356dtv02" path="res://models/week6playtestStuff/environment/tank_tube_upsider_dow.tscn" id="6_xy7xj"]
 [ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="10_4hcl0"]
 [ext_resource type="PackedScene" uid="uid://n41wo1q732c2" path="res://models/environment/tub.tscn" id="12_dapek"]
+[ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="12_xy7xj"]
+[ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="13_3sw5i"]
+[ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="14_i75ji"]
 [ext_resource type="PackedScene" uid="uid://bk6snaqvd0spx" path="res://models/environment/gardens.tscn" id="19_dapek"]
-[ext_resource type="PackedScene" uid="uid://c3vn5e4oq45bl" path="res://models/week6playtestStuff/environment/tank/glass.tscn" id="22_sxeh0"]
+[ext_resource type="PackedScene" uid="uid://cdc1ote2y5spv" path="res://models/environment/embyro.tscn" id="22_xy7xj"]
 [ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="23_uf4jm"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="32_eiahs"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="34_asqrq"]
@@ -44,15 +47,15 @@ func _ready() -> void:
 		#$npcs/miniboss2/gateNode.open_gate()
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dapek"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xy7xj"]
 panorama = ExtResource("1_50l2a")
 
-[sub_resource type="Sky" id="Sky_i75ji"]
-sky_material = SubResource("PanoramaSkyMaterial_dapek")
+[sub_resource type="Sky" id="Sky_sxeh0"]
+sky_material = SubResource("PanoramaSkyMaterial_xy7xj")
 
-[sub_resource type="Environment" id="Environment_3sw5i"]
+[sub_resource type="Environment" id="Environment_c8ywk"]
 background_mode = 2
-sky = SubResource("Sky_i75ji")
+sky = SubResource("Sky_sxeh0")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -89,7 +92,7 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_3sw5i")
+environment = SubResource("Environment_c8ywk")
 script = ExtResource("2_un0cs")
 anisotropy = 1.0
 
@@ -129,19 +132,38 @@ transform = Transform3D(-2.6176826e-07, 5.98856, 2.793657, -6.608129, -2.888505e
 transform = Transform3D(-2.617683e-07, -5.98856, -2.7936575, -6.608129, 2.8885057e-07, 1.9632586e-14, 1.2211464e-07, 2.7936575, -5.98856, 119.24078, 77.23549, 27.356308)
 
 [node name="area2tank" parent="Environment/Foreground" instance=ExtResource("6_i75ji")]
-transform = Transform3D(-0.20474309, 0, -0.51000875, 0, 0.54957134, 0, 0.51000875, 0, -0.20474309, -2.4490013, 55.139374, 26.003563)
+transform = Transform3D(-0.20474309, 0, -0.51000875, 0, 0.54957134, 0, 0.51000875, 0, -0.20474309, -2.4490013, 85.70196, 26.003563)
 
 [node name="area2tank2" parent="Environment/Foreground" instance=ExtResource("6_i75ji")]
 transform = Transform3D(-0.10876227, 0, -0.2709235, 0, 0.29193965, 0, 0.2709235, 0, -0.10876227, 42.506523, 84.53224, 43.247902)
 
 [node name="scaffoldTower" parent="Environment/Foreground" instance=ExtResource("6_dapek")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.75506, 12.692324, 161.44781)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.566154, 12.692324, 169.19666)
+
+[node name="Label3D" type="Label3D" parent="Environment/Foreground/scaffoldTower"]
+transform = Transform3D(4.2901077, 0, 5.1107616, 0, 6.6726985, 0, -5.1107616, 0, 4.2901077, 4.304296, -4.7564545, 3.5162811)
+text = "Gotcha"
 
 [node name="tubeWithGoop" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
-transform = Transform3D(-0.08857651, 0.330572, -0.939615, 0.9659258, 0.25881907, 3.8567047e-09, 0.24319029, -0.90759826, -0.34223327, -26.29255, 38.267353, 18.332838)
+transform = Transform3D(0.5686044, -0.077813245, -0.81892264, 0.78377295, 0.3535251, 0.5106073, 0.2497777, -0.93218285, 0.26200396, -33.241516, 44.305275, 18.644215)
 
 [node name="tubeWithGoop2" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
-transform = Transform3D(-0.91008735, -0.33555835, 0.24319026, -0.1481887, -0.28451818, -0.94714814, 0.38701552, -0.89802545, 0.20921049, -26.29255, 94.637146, 18.332838)
+transform = Transform3D(0.3207633, 0.46811226, -0.15279904, 0.53357726, -0.28165755, 0.091584064, -0.0004451722, -0.29855275, -0.32598063, 5.6804967, 22.280983, 26.005621)
+
+[node name="tubeWithGoop5" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(0.24328142, 0.46811226, 0.19724995, -0.17432593, -0.28165758, 0.3145374, 0.54591084, -0.29855275, 0.01253821, 6.4660373, 8.825588, 39.931244)
+
+[node name="tubeWithGoop4" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(-0.39791864, 0.27868345, 0.7117291, 0.5420403, 0.3598733, 0.3389982, -0.16165899, 0.52067965, -0.6152412, 74.15414, 43.86384, 41.65491)
+
+[node name="tubeWithGoop6" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(-0.39791864, -0.0009011626, 0.36344928, 0.5420403, 0.19704631, 0.24522088, -0.16165894, 0.66291213, -0.07239628, 23.11297, 16.490417, 75.508446)
+
+[node name="tubeWithGoop7" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(-0.27460605, -0.38920465, 0.019175954, 0.3740653, -0.25195345, 0.1003165, -0.11156181, 0.113219306, 0.2891595, 4.3769994, 0.31584835, 67.3933)
+
+[node name="tubeWithGoop3" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(-0.4768973, -0.08523581, 0.4677369, 0.4226077, 0.22752139, 0.47234577, -0.21781982, 0.62804663, -0.10763676, -37.260036, 74.9706, 26.572586)
 
 [node name="gardens" parent="Environment/Foreground" instance=ExtResource("19_dapek")]
 transform = Transform3D(0.32937396, 0, 0.5167149, 0, 0.61276555, 0, -0.5167149, 0, 0.32937396, 70.514755, -3.1980743, 89.80681)
@@ -149,11 +171,27 @@ transform = Transform3D(0.32937396, 0, 0.5167149, 0, 0.61276555, 0, -0.5167149, 
 [node name="gardens2" parent="Environment/Foreground" instance=ExtResource("19_dapek")]
 transform = Transform3D(0.32937396, 0, 0.5167149, 0, 0.61276555, 0, -0.5167149, 0, 0.32937396, 230.63309, 98.03021, 158.78404)
 
-[node name="glass" parent="Environment/Foreground" instance=ExtResource("22_sxeh0")]
-transform = Transform3D(-1.6332028e-07, -3.235759, 1.8681661, 3.7363322, -1.414395e-07, 8.166014e-08, 0, 1.8681661, 3.235759, 46.636276, 72.59329, 58.94981)
+[node name="largePipe" parent="Environment/Foreground" instance=ExtResource("12_xy7xj")]
+transform = Transform3D(4.978617, 0, 0, 0, -2.1762227e-07, -4.978617, 0, 4.978617, -2.1762227e-07, 109.87868, 70.2439, 129.82571)
+metadata/_edit_lock_ = true
+
+[node name="largePipe2" parent="Environment/Foreground" instance=ExtResource("12_xy7xj")]
+transform = Transform3D(14.24669, 0, 0, 0, -6.2274256e-07, -14.24669, 0, 14.24669, -6.2274256e-07, 109.87868, 70.24381, 2199.4624)
+
+[node name="largePipe3" parent="Environment/Foreground" instance=ExtResource("12_xy7xj")]
+transform = Transform3D(-0.46630424, 0, -2.5047276, 0, 2.5477636, 0, 2.5047276, 0, -0.46630424, 45.295357, 43.414547, 142.4759)
 
 [node name="MetalBigFlat" parent="Environment" instance=ExtResource("10_4hcl0")]
 transform = Transform3D(9.38944, -1.5080807, -5.220319, -1.1345648, 9.648376, -4.8279552, 5.3140182, 4.724625, 8.19309, 109.80543, 8.869862, -29.655434)
+
+[node name="MetalBigFlat2" parent="Environment" instance=ExtResource("10_4hcl0")]
+transform = Transform3D(6.2827163, 0, -3.627328, 0, 7.254656, 0, 3.627328, 0, 6.2827163, 113.11291, 8.121302, 0.14809227)
+
+[node name="MetalBigFlat3" parent="Environment" instance=ExtResource("10_4hcl0")]
+transform = Transform3D(-2.3841858e-07, -6.2827163, -3.627328, 7.254656, -3.1711107e-07, 0, 0, -3.627328, 6.2827163, 82.395035, -28.107939, -17.586882)
+
+[node name="bigtrussing" parent="Environment" instance=ExtResource("13_3sw5i")]
+transform = Transform3D(2.4459057, -1.6227187, 8.7477154e-08, 9.256976e-09, -1.2679352e-07, -2.9352465, 1.6227186, 2.445906, -8.747716e-08, 100.84629, -26.427013, 21.64174)
 
 [node name="npcs" type="Node" parent="."]
 
@@ -161,23 +199,22 @@ transform = Transform3D(9.38944, -1.5080807, -5.220319, -1.1345648, 9.648376, -4
 transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 85.18743, 16.359184, 161.89082)
 patrolPath = NodePath("../Path3D")
 
-[node name="exile2" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("23_uf4jm")]
-transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 61.56776, 10.718338, -38.05031)
-patrolPath = NodePath("../Path3D")
-
 [node name="Path3D" type="Path3D" parent="npcs"]
 transform = Transform3D(0.64806646, -3.5013168e-09, -3.734738e-09, 7.1193433e-09, 0.6480666, 1.1204213e-08, -3.7347373e-08, -3.7347374e-09, 0.6480666, 84.07865, 16.292515, 155.43292)
 curve = SubResource("Curve3D_sxeh0")
 debug_custom_color = Color(1, 1, 1, 1)
 
+[node name="sludge" parent="npcs" instance=ExtResource("14_i75ji")]
+transform = Transform3D(-0.39791664, 0, 0.91742146, 0, 1, 0, -0.91742146, 0, -0.39791664, 7.075592, 4.146986, 61.006645)
+
 [node name="tub" parent="npcs" instance=ExtResource("12_dapek")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.95378, -7.6185427, 5.1802483)
+transform = Transform3D(1.2850658, -0.267879, 5.9604645e-08, 0.2678791, 1.2850655, -7.824237e-08, 0, 5.9604645e-08, 1.3126888, 3.0332832, -5.562578, 45.428528)
 
 [node name="tub2" parent="npcs" instance=ExtResource("12_dapek")]
-transform = Transform3D(2.3184001, 0, 0, 0, 2.3184001, 0, 0, 0, 2.3184001, 85.69202, -9.897566, 22.49229)
+transform = Transform3D(1.8213544, 1.434449, 0, -1.434449, 1.8213549, -1.15484e-07, -5.9604645e-08, 1.1920929e-07, 2.3183997, -3.2960968, -3.4786959, 62.74057)
 
 [node name="Player" parent="." instance=ExtResource("32_eiahs")]
-transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, 82.74521, 31.374117, 161.79088)
+transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, 112.31044, 31.374117, -31.703049)
 maxSpeed = 5.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_asqrq")]
@@ -193,3 +230,6 @@ script = ExtResource("36_2kogd")
 
 [node name="FadeToBlackHitbox" parent="." instance=ExtResource("37_l02qr")]
 transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30690813, -10.712891, -11.071636, -99.01719)
+
+[node name="embyro" parent="." instance=ExtResource("22_xy7xj")]
+transform = Transform3D(1.9996665, 0, 0, 0, 1.9996665, 0, 0, 0, 1.9996665, 51.29074, 77.83626, 62.72262)

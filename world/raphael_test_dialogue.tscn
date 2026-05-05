@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="7_12tdw"]
 [ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="8_12tdw"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/splode.tscn" id="8_as3gw"]
-[ext_resource type="PackedScene" uid="uid://bmgejwfuqqqm6" path="res://entities/npcs/exile.tscn" id="9_b6tvr"]
+[ext_resource type="PackedScene" uid="uid://c0elmxuvclwkm" path="res://entities/npcs/exileNPC.tscn" id="9_b6tvr"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -79,7 +79,7 @@ transform = Transform3D(-0.008601501, 0.102432035, -0.9947028, -0.083234586, 0.9
 lookAtInteractorWhileTalking = true
 
 [node name="sludge" parent="npcs" instance=ExtResource("8_12tdw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.15765, -1.9073486e-06, -9.286918)
+transform = Transform3D(0.27221432, 0, -0.06250043, 0, 0.27929723, 0, 0.06250043, 0, 0.27221432, 27.15765, 1.2925396, -9.286918)
 _talkOnlyOnce = false
 initialDialogueID = "SB1"
 myName = "sludge"
@@ -88,8 +88,8 @@ myName = "sludge"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.33909, 0.19867021, -10.060766)
 _talkOnlyOnce = false
 
-[node name="exile" parent="npcs" instance=ExtResource("9_b6tvr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.456125, 0, -4.0175357)
+[node name="exile2" parent="npcs" instance=ExtResource("9_b6tvr")]
+transform = Transform3D(-0.24058382, 0, -0.9706284, 0, 1, 0, 0.9706284, 0, -0.24058382, 24.250107, 0.20817474, 3.4852927)
 
 [node name="Player" parent="." instance=ExtResource("2_y8ghn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.266493, 2.1799173, 5.2969317)
