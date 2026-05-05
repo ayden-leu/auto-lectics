@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmgejwfuqqqm6"]
+
+[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_wco8e"]
+[ext_resource type="AudioStream" uid="uid://cm7xbp4ft3f10" path="res://sounds/ambient/space-station-generator.mp3" id="2_vrelp"]
+[ext_resource type="PackedScene" uid="uid://bnkjpdp2fy0dt" path="res://models/npcs/exile_model.tscn" id="3_3m242"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
+size = Vector3(3.671997, 10.670654, 9.139801)
+
+[node name="generator" type="Node3D" node_paths=PackedStringArray("_hitbox", "model", "patrolPath")]
+script = ExtResource("1_wco8e")
+_hitbox = NodePath("Area3D")
+_talkOnlyOnce = false
+initialDialogueID = "a"
+model = NodePath("exile_model")
+myName = "generator"
+patrolPath = NodePath("")
+metadata/_custom_type_script = "uid://um13i8jipsfx"
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28068542, 0, -0.33616632)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0449829, 5.208374, 0.06175226)
+shape = SubResource("BoxShape3D_25xfv")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_vrelp")
+volume_db = -14.679
+autoplay = true
+parameters/looping = true
+
+[node name="exile_model" parent="." instance=ExtResource("3_3m242")]

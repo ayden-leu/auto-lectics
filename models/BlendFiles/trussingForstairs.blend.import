@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bxyidxqmrtxn5"
-path="res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"
+uid="uid://chka61lp34f8r"
+path="res://.godot/imported/trussingForstairs.blend-e8e45fea2f28d6250e34c7efb527a297.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/bigRing.blend"
-dest_files=["res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"]
+source_file="res://models/BlendFiles/trussingForstairs.blend"
+dest_files=["res://.godot/imported/trussingForstairs.blend-e8e45fea2f28d6250e34c7efb527a297.scn"]
 
 [params]
 
@@ -39,7 +39,7 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"RedRust": {
+"red.001": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/PlateMaterial.tres",
 "use_external/path": "uid://ladf8f7cniqt"

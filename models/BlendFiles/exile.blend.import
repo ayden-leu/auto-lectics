@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bxyidxqmrtxn5"
-path="res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"
+uid="uid://bdndbfsqtjqay"
+path="res://.godot/imported/exile.blend-27881f2c1935283ab103c6661b004d6f.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/bigRing.blend"
-dest_files=["res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"]
+source_file="res://models/BlendFiles/exile.blend"
+dest_files=["res://.godot/imported/exile.blend-27881f2c1935283ab103c6661b004d6f.scn"]
 
 [params]
 
@@ -39,10 +39,20 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"RedRust": {
+"b.002": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/darkmetal1.tres",
+"use_external/path": "uid://c5o7mu2jwbqba"
+},
+"red.002": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/PlateMaterial.tres",
 "use_external/path": "uid://ladf8f7cniqt"
+},
+"y.002": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/YellowRust.tres",
+"use_external/path": "uid://3gptlwtllu4x"
 }
 }
 }

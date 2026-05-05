@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk7nrpshkc3ym"]
+
+[ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="1_c5ynd"]
+[ext_resource type="Texture2D" uid="uid://cmsanw5s1v23x" path="res://textures/NPCS/1x/Asset 1.png" id="2_wk7hf"]
+[ext_resource type="Texture2D" uid="uid://bmipyeeivehjj" path="res://textures/NPCS/1x/Asset 2.png" id="3_avwxc"]
+
+[node name="BlueprintMenuNpcEntry" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_c5ynd")
+npcID = "asd"
+myName = "asd"
+entryTextureUnlocked = ExtResource("2_wk7hf")
+entryTextureLocked = ExtResource("3_avwxc")
+metadata/_custom_type_script = "uid://b188eije27v4p"

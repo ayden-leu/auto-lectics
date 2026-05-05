@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc00y8y6h3hh6"]
+
+[ext_resource type="PackedScene" uid="uid://cf40gt7lvdl2j" path="res://models/BlendFiles/tubeWithGoop.blend" id="1_aeexc"]
+
+[node name="tubeWithGoop" instance=ExtResource("1_aeexc")]

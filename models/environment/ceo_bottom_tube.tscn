@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bgy1kooxe1ihx" path="res://models/BlendFiles/CEOBottomTube.blend" id="1_tpfay"]
 
 [node name="CEOBottomTube" instance=ExtResource("1_tpfay")]
+transform = Transform3D(2.9337199, 0, -1.3758786, 0, 3.2403324, 0, 1.3758786, 0, 2.9337199, 0, 4.8914337, -177.84186)
 
 [node name="BézierCircle_007" parent="." index="3"]
 transform = Transform3D(-0.94710493, 0, 1.4300888e-07, 0, 0.9471048, 0, -1.4300888e-07, 0, -0.94710493, 0, 10.199545, 0)

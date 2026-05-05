@@ -1,18 +1,19 @@
-[gd_scene load_steps=23 format=3 uid="uid://drte8m2osgjcm"]
+[gd_scene load_steps=25 format=3 uid="uid://drte8m2osgjcm"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_50l2a"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_un0cs"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_g1iaf"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_jvite"]
-[ext_resource type="PackedScene" uid="uid://bj670r03dm2vw" path="res://models/environment/area2model.tscn" id="5_fxvb8"]
-[ext_resource type="PackedScene" uid="uid://blu8ak3ccbmo7" path="res://models/environment/mainFacility.tscn" id="6_carg2"]
+[ext_resource type="PackedScene" uid="uid://db24nhectuest" path="res://models/environment/environmentscenes/area_2_environment.tscn" id="5_carg2"]
+[ext_resource type="PackedScene" uid="uid://cc00y8y6h3hh6" path="res://models/environment/goopTube.tscn" id="6_c8ywk"]
+[ext_resource type="PackedScene" uid="uid://cohj3ym45tr8w" path="res://models/environment/scaffold_tower.tscn" id="6_dapek"]
+[ext_resource type="PackedScene" uid="uid://xcbdr5rtrpus" path="res://models/BlendFiles/area2tank.blend" id="6_i75ji"]
+[ext_resource type="PackedScene" uid="uid://b6f6w356dtv02" path="res://models/week6playtestStuff/environment/tank_tube_upsider_dow.tscn" id="6_xy7xj"]
+[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="10_4hcl0"]
+[ext_resource type="PackedScene" uid="uid://n41wo1q732c2" path="res://models/environment/tub.tscn" id="12_dapek"]
+[ext_resource type="PackedScene" uid="uid://bk6snaqvd0spx" path="res://models/environment/gardens.tscn" id="19_dapek"]
+[ext_resource type="PackedScene" uid="uid://c3vn5e4oq45bl" path="res://models/week6playtestStuff/environment/tank/glass.tscn" id="22_sxeh0"]
 [ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="23_uf4jm"]
-[ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="24_o2dor"]
-[ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="25_afe6w"]
-[ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="27_jqjsu"]
-[ext_resource type="Script" uid="uid://bocggstjplylv" path="res://world/gate.gd" id="28_a3tjq"]
-[ext_resource type="PackedScene" uid="uid://cpnryao3ftnmt" path="res://models/environment/gate.tscn" id="29_lhsjs"]
-[ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="30_lotm8"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="32_eiahs"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="34_asqrq"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="35_04g15"]
@@ -43,15 +44,15 @@ func _ready() -> void:
 		#$npcs/miniboss2/gateNode.open_gate()
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_carg2"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dapek"]
 panorama = ExtResource("1_50l2a")
 
-[sub_resource type="Sky" id="Sky_dapek"]
-sky_material = SubResource("PanoramaSkyMaterial_carg2")
+[sub_resource type="Sky" id="Sky_i75ji"]
+sky_material = SubResource("PanoramaSkyMaterial_dapek")
 
-[sub_resource type="Environment" id="Environment_i75ji"]
+[sub_resource type="Environment" id="Environment_3sw5i"]
 background_mode = 2
-sky = SubResource("Sky_dapek")
+sky = SubResource("Sky_i75ji")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -64,6 +65,14 @@ fog_depth_begin = 140.0
 fog_depth_end = 1000.0
 volumetric_fog_density = 0.005
 volumetric_fog_anisotropy = 1.0
+
+[sub_resource type="Curve3D" id="Curve3D_sxeh0"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.6250153, 0.007007599, 10.114761, 0, 0, 0, 0, 0, 0, 1.6370943, -1.335144e-05, 10.326698, 1.925556, 0, -0.105508804, -1.925556, 0, 0.105508804, 0.13357711, -1.335144e-05, 12.041235, 0, 0, 0, 0, 0, 0, -1.7919788, -1.335144e-05, 10.379454, 0, 0, 0, 0, 0, 0, -1.639679, 0.007009506, 9.786102, -2.189333, 0, -0.07913208, 2.189333, 0, 0.07913208, 0.09126282, 0.007009506, 8.361877),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
 
 [node name="week_6_playtest" type="Node3D"]
 script = SubResource("GDScript_doxto")
@@ -80,7 +89,7 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_i75ji")
+environment = SubResource("Environment_3sw5i")
 script = ExtResource("2_un0cs")
 anisotropy = 1.0
 
@@ -106,44 +115,69 @@ volume_db = 17.0
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("3_g1iaf")
 
-[node name="models" type="Node3D" parent="Environment"]
+[node name="Background" type="Node3D" parent="Environment"]
 
-[node name="area3" parent="Environment/models" instance=ExtResource("5_fxvb8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35.439396, 28.243843)
+[node name="Area 2 Environment" parent="Environment/Background" instance=ExtResource("5_carg2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.406403, -10.897732, -77.5891)
 
-[node name="Node3D" parent="Environment/models" instance=ExtResource("6_carg2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.777451, 19.514168, 118.70773)
+[node name="Foreground" type="Node3D" parent="Environment"]
+
+[node name="tankTubeUpsiderDow" parent="Environment/Foreground" instance=ExtResource("6_xy7xj")]
+transform = Transform3D(-2.6176826e-07, 5.98856, 2.793657, -6.608129, -2.888505e-07, 0, 1.2211463e-07, -2.793657, 5.98856, -17.650879, 77.2355, 95.54975)
+
+[node name="tankTubeUpsiderDow2" parent="Environment/Foreground" instance=ExtResource("6_xy7xj")]
+transform = Transform3D(-2.617683e-07, -5.98856, -2.7936575, -6.608129, 2.8885057e-07, 1.9632586e-14, 1.2211464e-07, 2.7936575, -5.98856, 119.24078, 77.23549, 27.356308)
+
+[node name="area2tank" parent="Environment/Foreground" instance=ExtResource("6_i75ji")]
+transform = Transform3D(-0.20474309, 0, -0.51000875, 0, 0.54957134, 0, 0.51000875, 0, -0.20474309, -2.4490013, 55.139374, 26.003563)
+
+[node name="area2tank2" parent="Environment/Foreground" instance=ExtResource("6_i75ji")]
+transform = Transform3D(-0.10876227, 0, -0.2709235, 0, 0.29193965, 0, 0.2709235, 0, -0.10876227, 42.506523, 84.53224, 43.247902)
+
+[node name="scaffoldTower" parent="Environment/Foreground" instance=ExtResource("6_dapek")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.75506, 12.692324, 161.44781)
+
+[node name="tubeWithGoop" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(-0.08857651, 0.330572, -0.939615, 0.9659258, 0.25881907, 3.8567047e-09, 0.24319029, -0.90759826, -0.34223327, -26.29255, 38.267353, 18.332838)
+
+[node name="tubeWithGoop2" parent="Environment/Foreground" instance=ExtResource("6_c8ywk")]
+transform = Transform3D(-0.91008735, -0.33555835, 0.24319026, -0.1481887, -0.28451818, -0.94714814, 0.38701552, -0.89802545, 0.20921049, -26.29255, 94.637146, 18.332838)
+
+[node name="gardens" parent="Environment/Foreground" instance=ExtResource("19_dapek")]
+transform = Transform3D(0.32937396, 0, 0.5167149, 0, 0.61276555, 0, -0.5167149, 0, 0.32937396, 70.514755, -3.1980743, 89.80681)
+
+[node name="gardens2" parent="Environment/Foreground" instance=ExtResource("19_dapek")]
+transform = Transform3D(0.32937396, 0, 0.5167149, 0, 0.61276555, 0, -0.5167149, 0, 0.32937396, 230.63309, 98.03021, 158.78404)
+
+[node name="glass" parent="Environment/Foreground" instance=ExtResource("22_sxeh0")]
+transform = Transform3D(-1.6332028e-07, -3.235759, 1.8681661, 3.7363322, -1.414395e-07, 8.166014e-08, 0, 1.8681661, 3.235759, 46.636276, 72.59329, 58.94981)
+
+[node name="MetalBigFlat" parent="Environment" instance=ExtResource("10_4hcl0")]
+transform = Transform3D(9.38944, -1.5080807, -5.220319, -1.1345648, 9.648376, -4.8279552, 5.3140182, 4.724625, 8.19309, 109.80543, 8.869862, -29.655434)
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="generator" parent="npcs" instance=ExtResource("23_uf4jm")]
-transform = Transform3D(0.99657154, -0.031238884, 0.07661189, 0.0331891, 0.9991532, -0.024315666, -0.07578759, 0.026774975, 0.99676436, -75.39178, -13.456622, -80.62183)
+[node name="exile" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("23_uf4jm")]
+transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 85.18743, 16.359184, 161.89082)
+patrolPath = NodePath("../Path3D")
 
-[node name="preacher" parent="npcs" instance=ExtResource("24_o2dor")]
-transform = Transform3D(0.9510798, 0.2518367, -0.17895676, -0.2559688, 0.96668506, -7.450581e-09, 0.17299484, 0.045807354, 0.9838569, -29.437023, -10.986744, -76.861145)
+[node name="exile2" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("23_uf4jm")]
+transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 61.56776, 10.718338, -38.05031)
+patrolPath = NodePath("../Path3D")
 
-[node name="looker" parent="npcs" instance=ExtResource("25_afe6w")]
-transform = Transform3D(0.3500142, 0.41224903, -0.3262793, -0.30154896, 0.47850615, 0.28110057, 0.43066895, 0, 0.4619975, -22.501995, -8.225714, -59.21551)
+[node name="Path3D" type="Path3D" parent="npcs"]
+transform = Transform3D(0.64806646, -3.5013168e-09, -3.734738e-09, 7.1193433e-09, 0.6480666, 1.1204213e-08, -3.7347373e-08, -3.7347374e-09, 0.6480666, 84.07865, 16.292515, 155.43292)
+curve = SubResource("Curve3D_sxeh0")
+debug_custom_color = Color(1, 1, 1, 1)
 
-[node name="miniboss2" parent="npcs" instance=ExtResource("27_jqjsu")]
-transform = Transform3D(-1.4099991, 0, -0.8140635, 0, 1.6281269, 0, 0.8140635, 0, -1.4099991, -9.08695, -12.778088, -89.92949)
+[node name="tub" parent="npcs" instance=ExtResource("12_dapek")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.95378, -7.6185427, 5.1802483)
 
-[node name="gateNode" type="Node3D" parent="npcs/miniboss2"]
-transform = Transform3D(-4.1741114, 0, 2.4099245, 0, 4.8198476, 0, -2.4099245, 0, -4.1741114, -5.9355335, 6.4124784, -0.88181305)
-script = ExtResource("28_a3tjq")
-
-[node name="gate" parent="npcs/miniboss2/gateNode" instance=ExtResource("29_lhsjs")]
-transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, -0.058712035, -1.8896812, 0.24167566)
-
-[node name="gate2" parent="npcs/miniboss2/gateNode" instance=ExtResource("29_lhsjs")]
-transform = Transform3D(0.14950933, 0, 0, 0, 0.27800715, 0, 0, 0, 0.27800715, 1.5307432, -1.8941944, 0.24167566)
-
-[node name="dishNPC" parent="npcs" instance=ExtResource("30_lotm8")]
-transform = Transform3D(0.70561457, -0.03030838, -0.017209271, 0.027510546, 0.6985031, -0.102191985, 0.021399211, 0.10139742, 0.69883275, -32.16951, -26.21541, -30.949095)
-initialDialogueID = "DB1"
+[node name="tub2" parent="npcs" instance=ExtResource("12_dapek")]
+transform = Transform3D(2.3184001, 0, 0, 0, 2.3184001, 0, 0, 0, 2.3184001, 85.69202, -9.897566, 22.49229)
 
 [node name="Player" parent="." instance=ExtResource("32_eiahs")]
-transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
+transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, 82.74521, 31.374117, 161.79088)
 maxSpeed = 5.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_asqrq")]

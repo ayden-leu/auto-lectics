@@ -1,12 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=17 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
 [ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="3_w0ygf"]
 [ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="4_483v1"]
 [ext_resource type="AudioStream" uid="uid://828pvlqe6fbp" path="res://sounds/sfx/respawn/drespawn .wav" id="4_rh8r5"]
+[ext_resource type="AudioStream" uid="uid://dlwuxtl8lt57f" path="res://sounds/song1.mp3" id="6_qclge"]
+[ext_resource type="PackedScene" uid="uid://d2w50t5vyxs76" path="res://models/BlendFiles/playermodel.blend" id="7_hh4bn"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
+[sub_resource type="TextMesh" id="TextMesh_hh4bn"]
+text = "T"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h4x50"]
 
@@ -44,7 +47,8 @@ maxSpeed = 28.4
 acceleration = 37.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_hyl87")
+transform = Transform3D(11.361559, 0, 0, 0, 11.361559, 0, 0, 0, 11.361559, 0, 0, 0)
+mesh = SubResource("TextMesh_hh4bn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_h4x50")
@@ -104,6 +108,17 @@ visible = false
 mesh = SubResource("BoxMesh_qclge")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qclge")
+
+[node name="Music" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("6_qclge")
+volume_db = -1.908
+autoplay = true
+
+[node name="playermodel" parent="." instance=ExtResource("7_hh4bn")]
+transform = Transform3D(-1.45480135e-08, 0, 0.33281976, 0, 0.33281976, 0, -0.33281976, 0, -1.45480135e-08, 0, -0.57455516, 0.4168883)
+visible = false
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bxyidxqmrtxn5"
-path="res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"
+uid="uid://cf40gt7lvdl2j"
+path="res://.godot/imported/tubeWithGoop.blend-db91f038ff60a67a2d774db3d339d7e0.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/bigRing.blend"
-dest_files=["res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"]
+source_file="res://models/BlendFiles/tubeWithGoop.blend"
+dest_files=["res://.godot/imported/tubeWithGoop.blend-db91f038ff60a67a2d774db3d339d7e0.scn"]
 
 [params]
 
@@ -39,10 +39,27 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"RedRust": {
+"@MATERIAL:1": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://materials/PlateMaterial.tres",
-"use_external/path": "uid://ladf8f7cniqt"
+"use_external/path": "uid://3gptlwtllu4x"
+},
+"@MATERIAL:2": {
+"use_external/enabled": true,
+"use_external/path": "uid://3gptlwtllu4x"
+},
+"@MATERIAL:3": {
+"use_external/enabled": true,
+"use_external/path": "uid://3gptlwtllu4x"
+},
+"goop": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/goop.tres",
+"use_external/path": "res://materials/goop.tres"
+},
+"y": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/YellowRust.tres",
+"use_external/path": "uid://3gptlwtllu4x"
 }
 }
 }

@@ -59,21 +59,29 @@ data = PackedVector3Array(0.0019999999, 0.0098, 0.01, 0, 0.01, 0.01, 0, 0.01, -0
 [node name="tankTubeUpsiderDow" instance=ExtResource("1_t4tbl")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="BézierCurve_004" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BézierCurve_004/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_t4tbl")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_087" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_087/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_t76hy")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_088" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_088/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_j6oy1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_089" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_089/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_wep77")
@@ -82,71 +90,99 @@ shape = SubResource("ConcavePolygonShape3D_wep77")
 visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_044" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_044/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_s3nky")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_174" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_174/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_mopmw")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_178" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_178/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_amiqb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_179" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_179/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_d81j5")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_180" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_180/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_atk4y")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_182" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_182/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_aqbo7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_184" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_184/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_pfxxd")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_186" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_186/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_arfml")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_187" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_187/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_6ljga")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_188" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_188/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_780lq")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_189" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_189/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_qdnnh")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_190" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_190/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_lfds0")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_191" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_191/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_4rdc7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cylinder_193" index="0"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder_193/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_vulii")

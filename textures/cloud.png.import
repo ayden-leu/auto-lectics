@@ -2,21 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8l2y86ru7jdk"
-path.s3tc="res://.godot/imported/bigRing_redRust.png-2bb3aaa143bafb48b2ab17aa5152a41c.s3tc.ctex"
-path.etc2="res://.godot/imported/bigRing_redRust.png-2bb3aaa143bafb48b2ab17aa5152a41c.etc2.ctex"
+uid="uid://x72qdau6iqg8"
+path.s3tc="res://.godot/imported/cloud.png-48614ba3e14a9474f2d8dc01374a7225.s3tc.ctex"
+path.etc2="res://.godot/imported/cloud.png-48614ba3e14a9474f2d8dc01374a7225.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "e09430e6821124cee186b0a3b2053bc3"
-}
 
 [deps]
 
-source_file="res://models/BlendFiles/bigRing_redRust.png"
-dest_files=["res://.godot/imported/bigRing_redRust.png-2bb3aaa143bafb48b2ab17aa5152a41c.s3tc.ctex", "res://.godot/imported/bigRing_redRust.png-2bb3aaa143bafb48b2ab17aa5152a41c.etc2.ctex"]
+source_file="res://textures/cloud.png"
+dest_files=["res://.godot/imported/cloud.png-48614ba3e14a9474f2d8dc01374a7225.s3tc.ctex", "res://.godot/imported/cloud.png-48614ba3e14a9474f2d8dc01374a7225.etc2.ctex"]
 
 [params]
 

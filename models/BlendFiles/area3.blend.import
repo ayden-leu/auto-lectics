@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bxyidxqmrtxn5"
-path="res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"
+uid="uid://bkgcbrafdh6hd"
+path="res://.godot/imported/area3.blend-319737906dc9163ad8c153f41eea45b5.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/bigRing.blend"
-dest_files=["res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"]
+source_file="res://models/BlendFiles/area3.blend"
+dest_files=["res://.godot/imported/area3.blend-319737906dc9163ad8c153f41eea45b5.scn"]
 
 [params]
 
@@ -37,15 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"materials": {
-"RedRust": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://materials/PlateMaterial.tres",
-"use_external/path": "uid://ladf8f7cniqt"
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

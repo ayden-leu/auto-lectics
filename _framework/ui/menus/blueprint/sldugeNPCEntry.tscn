@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4r5gurlkms8a"]
+
+[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_os32c"]
+[ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="2_vcpt6"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="3_05r8j"]
+[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="4_u1sk8"]
+[ext_resource type="FontFile" uid="uid://ced3oybpj57me" path="res://fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf" id="5_csuqw"]
+[ext_resource type="Texture2D" uid="uid://cmsanw5s1v23x" path="res://textures/NPCS/1x/Asset 1.png" id="5_vcpt6"]
+
+[sub_resource type="Theme" id="Theme_nrhjc"]
+default_font = ExtResource("5_csuqw")
+
+[node name="BlueprintNPCEntry" type="Control"]
+custom_minimum_size = Vector2(200, 120)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2.0
+offset_right = 202.0
+offset_bottom = 120.0
+mouse_filter = 2
+theme = ExtResource("1_os32c")
+script = ExtResource("2_vcpt6")
+entryTextureUnlocked = ExtResource("3_05r8j")
+entryTextureLocked = ExtResource("4_u1sk8")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 26.0
+offset_top = -50.0
+offset_right = 175.0
+offset_bottom = 99.0
+texture_normal = ExtResource("5_vcpt6")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -20.0
+offset_right = 56.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_nrhjc")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "UNKNOWN"
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

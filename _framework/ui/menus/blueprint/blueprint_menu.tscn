@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=8 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
-[ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
+[ext_resource type="PackedScene" uid="uid://c4r5gurlkms8a" path="res://_framework/ui/menus/blueprint/sldugeNPCEntry.tscn" id="3_coiy0"]
 [ext_resource type="Theme" uid="uid://6tapf6h7f8h8" path="res://textTheme.tres" id="3_nde6x"]
+[ext_resource type="PackedScene" uid="uid://cf05ww5bswxb" path="res://_framework/ui/menus/blueprint/exileNPCEntry.tscn" id="4_cg8tx"]
+[ext_resource type="Texture2D" uid="uid://bmipyeeivehjj" path="res://textures/NPCS/1x/Asset 2.png" id="4_coiy0"]
 [ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/ui/menus/textures/Asset 1.png" id="4_ovhmb"]
+[ext_resource type="Texture2D" uid="uid://cmsanw5s1v23x" path="res://textures/NPCS/1x/Asset 1.png" id="5_cg8tx"]
 
 [node name="BlueprintMenu" type="Control"]
 layout_mode = 3
@@ -46,26 +49,26 @@ mouse_filter = 2
 
 [node name="NpcEntryHolder" type="HFlowContainer" parent="NPCList"]
 unique_name_in_owner = true
+z_index = 3
 layout_mode = 0
 offset_left = 7.0
 offset_top = 80.0
 offset_right = 1088.945
 offset_bottom = 574.0
 
-[node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+[node name="sludge" parent="NPCList/NpcEntryHolder" instance=ExtResource("3_coiy0")]
 layout_mode = 2
-npcID = "npc_test_1"
-myName = "Aster"
+npcID = "sludge"
+myName = "sludge"
+entryTextureUnlocked = ExtResource("5_cg8tx")
+entryTextureLocked = ExtResource("5_cg8tx")
 
-[node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+[node name="exile" parent="NPCList/NpcEntryHolder" instance=ExtResource("4_cg8tx")]
 layout_mode = 2
-npcID = "npc_test_2"
-myName = "Mira"
-
-[node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
-layout_mode = 2
-npcID = "npc_test_3"
-myName = "Orin"
+npcID = "exile"
+myName = "exile"
+entryTextureUnlocked = ExtResource("4_coiy0")
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="Details" type="Control" parent="."]
 unique_name_in_owner = true
@@ -170,16 +173,48 @@ offset_right = 1363.0
 offset_bottom = 452.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-z_index = -1
+z_index = -2
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(80.776405, 23.390985)
+mouse_filter = 2
+color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 4.9999995
+offset_top = 651.0
+offset_right = 45.0
+offset_bottom = 691.0
+scale = Vector2(80.776405, 23.390985)
+color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 1287.0
+offset_top = -63.99994
+offset_right = 1327.0
+offset_bottom = -23.999939
+scale = Vector2(80.776405, 23.390985)
+color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 329.00006
+offset_top = -801.00006
+offset_right = 369.00006
+offset_bottom = -761.00006
+scale = Vector2(80.776405, 23.390985)
 color = Color(0.0627451, 0.03529412, 0.05490196, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
-visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 392.0
@@ -187,6 +222,7 @@ offset_top = -31.0
 offset_right = 1671.0
 offset_bottom = 985.0
 rotation = 0.0019230221
+scale = Vector2(0.70587754, 0.70587754)
 texture = ExtResource("4_ovhmb")
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

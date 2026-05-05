@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bxyidxqmrtxn5"
-path="res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"
+uid="uid://xcbdr5rtrpus"
+path="res://.godot/imported/area2tank.blend-3461943fff4747c7face2bee7de797a4.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/bigRing.blend"
-dest_files=["res://.godot/imported/bigRing.blend-f86656704ff1ed16a52ed6c05fb3bc6d.scn"]
+source_file="res://models/BlendFiles/area2tank.blend"
+dest_files=["res://.godot/imported/area2tank.blend-3461943fff4747c7face2bee7de797a4.scn"]
 
 [params]
 
@@ -39,7 +39,17 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"RedRust": {
+"clear": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/goop.tres",
+"use_external/path": "res://materials/goop.tres"
+},
+"dark": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/RedRust.tres",
+"use_external/path": "uid://c1m0ge3n7utw6"
+},
+"red": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/PlateMaterial.tres",
 "use_external/path": "uid://ladf8f7cniqt"
