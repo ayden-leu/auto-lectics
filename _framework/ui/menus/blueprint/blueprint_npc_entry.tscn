@@ -10,7 +10,7 @@
 default_font = ExtResource("5_3m1du")
 
 [node name="BlueprintNPCEntry" type="Control"]
-custom_minimum_size = Vector2(200, 120)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 0
 offset_left = 2.0
@@ -21,14 +21,18 @@ theme = ExtResource("1_wg1im")
 script = ExtResource("1_5e3ld")
 entryTextureUnlocked = ExtResource("2_7lniy")
 entryTextureLocked = ExtResource("4_v8nm0")
+portraitTexture = ExtResource("2_7lniy")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 26.0
-offset_top = -50.0
-offset_right = 175.0
-offset_bottom = 99.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5
+offset_right = 74.5
+offset_bottom = 149.0
+grow_horizontal = 2
 texture_normal = ExtResource("2_7lniy")
 ignore_texture_size = true
 stretch_mode = 5
@@ -36,7 +40,7 @@ stretch_mode = 5
 [node name="Label" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5

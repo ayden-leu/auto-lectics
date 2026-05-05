@@ -1,0 +1,10 @@
+{
+	"text": "I just said I'm the overseer.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Then can you tell me what's going on around here?",
+			"nextID": "FakeGoingOn"
+		}
+	]
+}

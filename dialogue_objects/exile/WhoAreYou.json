@@ -1,0 +1,15 @@
+{
+	"text": "I am CLN-R, the facility overseer.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "Can you tell me what's going on around here?",
+			"nextID": "FakeGoingOn"
+		},
+		{
+			"text": "What was you original purpose?",
+			"nextID": "FakePurpose"
+		}
+	]
+}

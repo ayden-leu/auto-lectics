@@ -27,11 +27,12 @@ signal unlock_condition_met(conditionID:String)
 # onready variables
 # ------------------------------------------------
 @onready var _npcEntryHolder = %NpcEntryHolder
-@onready var _details = %Details
+@onready var _details = %NpcDetailPanel
 @onready var _guessNpcNamePanel = %GuessNpcNamePanel
 @onready var _guessNpcNameField = %GuessNpcNameField
-#@onready var _notesPanel = %NotesPanels
+#@onready var _notesPanel = %NpcDetailPanel
 @onready var _notesField = %NotesField
+@onready var _portraitTextureRect:TextureRect = %PortraitTextureRect
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -92,6 +93,12 @@ func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 func _showDetails() -> void:
 	_loadNotes()
 	_guessNpcNamePanel.visible = not _selectedEntry.unlocked
+	
+	if _selectedEntry.portraitTexture != null:
+		_portraitTextureRect.texture = _selectedEntry.portraitTexture
+	else:
+		_portraitTextureRect.texture = null
+		
 	_details.visible = true
 
 ## [b]Internal-use only.[/b]  Hides the NPC entry details.
@@ -191,6 +198,11 @@ func _on_next_page_button_pressed() -> void:
 	if _currentPage < max_page:
 		_currentPage += 1
 		_updateEntryVisibility()
+
+## [b]Internal-use only.[/b]  Handles logic for when the NPC entry details panel is closed.
+func _on_close_detail_button_pressed() -> void:
+	_selectedEntry = null
+	_hideDetails()
 
 ## [b]Internal-use only.[/b]  Mainly here to see what signals are connected.
 func _on_close_button_pressed() -> void:

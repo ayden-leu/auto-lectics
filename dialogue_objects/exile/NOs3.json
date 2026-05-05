@@ -1,0 +1,17 @@
+{
+	"text": "If you go over the ledge to my right and jump down, you should barely make it. Just make sure to keep your visual sensors on the wall.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[End]",
+			"type": "neutral",
+			"setFlags": {
+				"testFlag": true
+			},
+			"checkFlags": {
+				"testFlag": false
+			}
+		}
+	]
+}

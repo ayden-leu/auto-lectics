@@ -80,6 +80,7 @@ var data:Dictionary
 # ------------------------------------------------
 func _ready() -> void:
 	super()
+	windowType = "console_option"
 
 func _gui_input(event: InputEvent) -> void:
 	super(event)

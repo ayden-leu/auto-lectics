@@ -1,0 +1,11 @@
+{
+	"text": "I was supposed to be the one to destroy them, to clean up the factory! NOT YOU, ME! But you stole that from me! All for that stupid jelly project!",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Purpose2"
+		}
+	]
+}

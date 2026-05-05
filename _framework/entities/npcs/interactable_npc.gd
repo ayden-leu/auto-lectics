@@ -38,6 +38,11 @@ signal finished_dialogue()
 @export var initialDialogueID:String = ""
 ## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
 @export var lookAtInteractorWhileTalking:bool = false
+## If true, this [InteractableNPC] makes it so you cannot close the console.
+@export var rejectConsoleExit:bool = false
+## When [member rejectConsoleExit] is true, this will be the message
+## that gets added to the console.
+@export var rejectConsoleExitMessage:String = "[Console Closure Blocked]"
 
 # ------------------------------------------------
 # onready variables
@@ -131,7 +136,7 @@ func _getHitboxShapes() -> Array[CollisionShape3D]:
 func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	var console:DialogueConsole = FR_WindowManager.dialogueConsole
 	
-	console.nameOfNpcTalkingTo = myName
+	console.instigatingNpc = self
 	console.currentDialogueID = _currentDialogueID
 	console.mode = dialogueEntry.mode 
 	
@@ -162,37 +167,16 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
 
-## @deprecated
-## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
-func _beginDialogueEventBox(interactor:Node3D) -> void:
-	# rotate to face player immediately to properly spawn dialogue box
-	# is a hacky work around to spawn the [DialogueBox] in the correct position.
-	var currentRotation:Vector3 = rotation
-	if lookAtInteractorWhileTalking and interactor:
-		look_at(Vector3(
-			interactor.global_position.x,
-			global_position.y,
-			interactor.global_position.z
-		))
-		lookAtPosition = interactor.global_position
-	
-	isTalking = true
-	patrolEnabled = false
-	_currentInteractor = interactor
-
-	_spawnDialogueBox()
-	_connectDialogueBoxSignals()
-	_loadNextDialogueBox(initialDialogueID)
-	
-	# restore rotation from before hacky work around
-	rotation = currentRotation
-
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the player.
 func _beginDialogueEventConsole(interactor:Player) -> void:	
 	isTalking = true
 	patrolEnabled = false
 	_currentInteractor = interactor
-	_currentInteractor.set_input_frozen(true)
+	if _currentInteractor:
+		if _currentInteractor.has_method("disableInput"):
+			_currentInteractor.disableInput(true)
+		if _currentInteractor.has_method("freeze"):
+			_currentInteractor.freeze(true)
 	InputHandler.showCursor()
 	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -205,8 +189,11 @@ func _endDialogueConsole() -> void:
 	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
 	
-	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):
-		_currentInteractor.set_input_frozen(false)
+	if _currentInteractor:
+		if _currentInteractor.has_method("disableInput"):
+			_currentInteractor.disableInput(false)
+		if _currentInteractor.has_method("freeze"):
+			_currentInteractor.freeze(false)
 	InputHandler.hideCursor()
 
 	isTalking = false
@@ -234,18 +221,30 @@ func _on_interaction(interactor:Node3D) -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when a dialogue option is chosen.
 func _on_console_option_chosen(nextID:String) -> void:
+	if not isTalking:
+		return
+	
 	_loadNextDialogueConsole(nextID)
 
 ## [b]Internal-use only.[/b]  Emits [signal option_available].
 func _on_console_new_option_available() -> void:
+	if not isTalking:
+		return
+	
 	option_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [all_options_available].
 func _on_console_all_options_available() -> void:
+	if not isTalking:
+		return
+	
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
 func _on_console_all_dialogue_text_visible() -> void:
+	if not isTalking:
+		return
+	
 	dialogue_all_visible.emit()
 
 # ------------------------------------------------
@@ -422,6 +421,31 @@ func _loadNextDialogueBox(nextDialogueID: String) -> void:
 	_loadDialogueBoxData(dialogue)
 	_dialogueBox.start()
 	dialogue_advanced.emit()
+
+## @deprecated
+## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
+func _beginDialogueEventBox(interactor:Node3D) -> void:
+	# rotate to face player immediately to properly spawn dialogue box
+	# is a hacky work around to spawn the [DialogueBox] in the correct position.
+	var currentRotation:Vector3 = rotation
+	if lookAtInteractorWhileTalking and interactor:
+		look_at(Vector3(
+			interactor.global_position.x,
+			global_position.y,
+			interactor.global_position.z
+		))
+		lookAtPosition = interactor.global_position
+	
+	isTalking = true
+	patrolEnabled = false
+	_currentInteractor = interactor
+
+	_spawnDialogueBox()
+	_connectDialogueBoxSignals()
+	_loadNextDialogueBox(initialDialogueID)
+	
+	# restore rotation from before hacky work around
+	rotation = currentRotation
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
