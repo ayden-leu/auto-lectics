@@ -19,6 +19,10 @@ const DEFAULT_FLAGS: Dictionary = {
 	
 	##exile flags
 	"seeSign": false,
+	
+	##miniBoss2 flags
+	"correctBlueprint": false,
+	"incorrectBlueprint": false,
 }
 #---------------------------------------------------
 
