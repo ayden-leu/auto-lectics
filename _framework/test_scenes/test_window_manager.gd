@@ -1,4 +1,4 @@
-extends Node3D
+extends Control
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -20,8 +20,6 @@ extends Node3D
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var barAnimPlayer:AnimationPlayer = $Bar/AnimationPlayer
-@onready var player:Player = $Player
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -35,8 +33,6 @@ extends Node3D
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
-	FR_WindowManager.subscribeToConsole(self)
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -50,18 +46,47 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+func _on_create_console_pressed() -> void:
+	FR_WindowManager.createDialogueConsole()
+
+func _on_create_console_option_pressed() -> void:
+	FR_WindowManager.createDialogueOptionWindow()
+
+func _on_kill_console_pressed() -> void:
+	FR_WindowManager.killDialogueConsole()
+
+func _on_subscribe_to_console_pressed() -> void:
+	FR_WindowManager.subscribeToConsole(self)
+
+func _on_unsubscribe_to_console_pressed() -> void:
+	FR_WindowManager.unsubscribeToConsole(self)
 
 func _on_console_command_entered(command:String) -> void:
-	if command == "spin_start":
-		barAnimPlayer.play("spin")
-	elif command == "spin_stop":
-		barAnimPlayer.pause()
-	elif command == "spin_reset":
-		barAnimPlayer.play("RESET")
-	elif command == "unfreeze":
-		Player.disableInput(false)
-	elif command == "jump":
-		player.jump()
+	%EnteredConsoleCommand.text = command
+
+func _on_kill_all_windows_pressed() -> void:
+	for _i in range(FR_WindowManager._spawnedWindows.size()):
+		FR_WindowManager._spawnedWindows[0].close()
+
+func _on_start_console_hectic_mode_pressed() -> void:
+	if not FR_WindowManager.dialogueConsole:
+		printerr("Dialogue Console hasn't been created.")
+		return
+	
+	FR_WindowManager.dialogueConsole.mode = "hectic"
+	FR_WindowManager.dialogueConsole.textToAdd = "Starting Hectic Mode"
+	FR_WindowManager.dialogueConsole.start()
+
+func _on_push_message_to_console_pressed() -> void:
+	var meta:Dictionary = {}
+	if %PassWriteSpeed.button_pressed:
+		meta.writeSpeed = %MessageWriteSpeed.value
+	if %PassTheme.button_pressed:
+		meta.theme = %MessageTheme.text
+	if %PassInstant.button_pressed:
+		meta.instant = %MessageInstant.button_pressed
+	
+	FR_WindowManager.pushMessageToConsole(%MessageToConsole.text, meta)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

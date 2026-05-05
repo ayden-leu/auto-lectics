@@ -148,8 +148,11 @@ var _timeSinceApex: float = 0.0
 var _apexHangActive: bool = false
 ## [b]Internal-use only.[/b]  Save last location where character is grounded.
 var _lastValidPosition: Vector3
-## Track if player's movement is frozen
-var input_frozen: bool = false
+## Track if player's is stuck in place.
+static var _frozen:bool = false
+## If the player's inputs are disabled.
+static var _inputDisabled: bool = false
+
 # ------------------------------------------------
 ## Grapple hook variables
 # ------------------------------------------------
@@ -202,7 +205,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	if input_frozen:
+	if _frozen:
 		velocity = Vector3.ZERO
 		return
 	_applyVerticalPhysics(delta)
@@ -332,8 +335,11 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	velocity.z = current_h.z
 
 ## Freeze player upon interacting with NPC
-func set_input_frozen(value: bool) -> void:
-	input_frozen = value
+static func disableInput(value: bool) -> void:
+	_inputDisabled = value
+
+static func freeze(value:bool) -> void:
+	_frozen = value
 
 ## [b]Internal-use only.[/b]  Determines if a passed in node is a valid interactable.
 func _determineIfValidInteractable(interactable:Node3D) -> bool:
@@ -348,7 +354,7 @@ func _determineIfValidInteractable(interactable:Node3D) -> bool:
 
 ## When grappling hook is thrown
 func throw_grapple() -> void:
-	if not grapple_enabled or input_frozen or !can_grapple or grapple_active:
+	if not grapple_enabled or _inputDisabled or !can_grapple or grapple_active:
 		return
 	
 	var camera := get_viewport().get_camera_3d()
@@ -535,7 +541,7 @@ func _hide_grapple_visuals() -> void:
 func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
-	if input_frozen:
+	if _inputDisabled:
 		return
 	# horizontal rotation
 	rotation_degrees.y += -distanceMoved.x * mouseSentitivity
@@ -550,12 +556,18 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when the player wants to interact
 ## with something.
 func _on_interact_pressed() -> void:
+	if _inputDisabled:
+		return
+	
 	#print(name + ": interact pressed")
 	if interactableThing and interactableThing != _loadBearingDummy:
 		interactableThing._on_interaction(self)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the player tries to jump.
 func _on_jump_pressed() -> void:
+	if _inputDisabled:
+		return
+	
 	#if is_grappling:
 		#release_grapple()
 	if is_on_floor():
@@ -563,6 +575,9 @@ func _on_jump_pressed() -> void:
 
 ## [b]Internal-use only.[/b] Handles logic for when palyer attempts to grapple hook
 func _on_grapple_pressed() -> void:
+	if _inputDisabled:
+		return
+	
 	if is_grappling:
 		release_grapple()
 	else:
@@ -571,12 +586,19 @@ func _on_grapple_pressed() -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when the player inputs a new
 ## move direction.
 func _on_updated_input_direction(newDirection:Vector2) -> void:
-	input_direction = newDirection
+	if _inputDisabled:
+		input_direction = Vector2.ZERO
+	else:
+		input_direction = newDirection
+	
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
 	_handleDirectionInput(direction)
 
 #temporary code for Spring Playtest week 3
 func _on_input_handler_respawn() -> void:
+	if _inputDisabled:
+		return
+	
 	position = Vector3(0,0,1)
 
 # ------------------------------------------------

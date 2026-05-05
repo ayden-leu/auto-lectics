@@ -1,4 +1,5 @@
-extends Node3D
+@tool
+extends InteractableNPC
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -20,8 +21,6 @@ extends Node3D
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var barAnimPlayer:AnimationPlayer = $Bar/AnimationPlayer
-@onready var player:Player = $Player
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -36,7 +35,15 @@ extends Node3D
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	super()  # runs the inherited class' _ready() function.
+	
+	if Engine.is_editor_hint():
+		return
+	
 	FR_WindowManager.subscribeToConsole(self)
+
+func _process(delta: float) -> void:
+	super(delta)  # runs the inherited class' _process() function.
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -50,18 +57,17 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+func _on_console_option_chosen(nextID:String) -> void:
+	super(nextID)
+	
+	if not isTalking:
+		print(myName + " isn't talking.")
+	else:
+		print(myName + " is talking.")
 
 func _on_console_command_entered(command:String) -> void:
-	if command == "spin_start":
-		barAnimPlayer.play("spin")
-	elif command == "spin_stop":
-		barAnimPlayer.pause()
-	elif command == "spin_reset":
-		barAnimPlayer.play("RESET")
-	elif command == "unfreeze":
-		Player.disableInput(false)
-	elif command == "jump":
-		player.jump()
+	if command == "yell":
+		FR_WindowManager.pushMessageToConsole("AAAAAAAAAAAAAAAAAAAAAAA")
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

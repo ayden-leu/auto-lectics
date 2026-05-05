@@ -1,15 +1,15 @@
-[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bvocyor065ht5"]
+[gd_resource type="Theme" load_steps=23 format=3 uid="uid://bvocyor065ht5"]
 
-[ext_resource type="StyleBox" uid="uid://gh7vrriyyneh" path="res://_framework/_visual_assets/dialogue_console/close_button_normal.tres" id="1_f3gol"]
-[ext_resource type="StyleBox" uid="uid://x2ch6ugc6psn" path="res://_framework/_visual_assets/dialogue_console/close_button_hover.tres" id="1_ibxls"]
-[ext_resource type="StyleBox" uid="uid://cg04vp7p3ndl0" path="res://_framework/_visual_assets/dialogue_console/window_header.tres" id="1_p17lh"]
-[ext_resource type="StyleBox" uid="uid://dlmtitsgtsegb" path="res://_framework/_visual_assets/dialogue_console/window.tres" id="1_t2v17"]
-[ext_resource type="StyleBox" uid="uid://srb773t8q5rm" path="res://_framework/_visual_assets/dialogue_console/line_edit_normal.tres" id="3_ybx5l"]
-[ext_resource type="StyleBox" uid="uid://mhqiqcr76hbc" path="res://_framework/_visual_assets/dialogue_console/panel_console_contents.tres" id="5_qyjuh"]
-[ext_resource type="StyleBox" uid="uid://dl6vk2u5j558s" path="res://_framework/_visual_assets/dialogue_console/scroll_bar.tres" id="6_ybx5l"]
-[ext_resource type="StyleBox" uid="uid://cs6h0r3p3fvqh" path="res://_framework/_visual_assets/dialogue_console/progress_bar_background.tres" id="7_aug18"]
-[ext_resource type="StyleBox" uid="uid://3atvdavvk3i2" path="res://_framework/_visual_assets/dialogue_console/scroll_bar_background.tres" id="7_ybx5l"]
-[ext_resource type="StyleBox" uid="uid://cik3rwvp1n6d2" path="res://_framework/_visual_assets/dialogue_console/progress_bar_fill.tres" id="8_aab04"]
+[ext_resource type="StyleBox" uid="uid://gh7vrriyyneh" path="res://_framework/_visual_assets/dialogue_window/close_button_normal.tres" id="1_f3gol"]
+[ext_resource type="StyleBox" uid="uid://x2ch6ugc6psn" path="res://_framework/_visual_assets/dialogue_window/close_button_hover.tres" id="1_ibxls"]
+[ext_resource type="StyleBox" uid="uid://cg04vp7p3ndl0" path="res://_framework/_visual_assets/dialogue_window/window_header.tres" id="1_p17lh"]
+[ext_resource type="StyleBox" uid="uid://dlmtitsgtsegb" path="res://_framework/_visual_assets/dialogue_window/window.tres" id="1_t2v17"]
+[ext_resource type="StyleBox" uid="uid://srb773t8q5rm" path="res://_framework/_visual_assets/dialogue_window/line_edit_normal.tres" id="3_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://mhqiqcr76hbc" path="res://_framework/_visual_assets/dialogue_window/panel_console_contents.tres" id="5_qyjuh"]
+[ext_resource type="StyleBox" uid="uid://dl6vk2u5j558s" path="res://_framework/_visual_assets/dialogue_window/scroll_bar.tres" id="6_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://cs6h0r3p3fvqh" path="res://_framework/_visual_assets/dialogue_window/progress_bar_background.tres" id="7_aug18"]
+[ext_resource type="StyleBox" uid="uid://3atvdavvk3i2" path="res://_framework/_visual_assets/dialogue_window/scroll_bar_background.tres" id="7_ybx5l"]
+[ext_resource type="StyleBox" uid="uid://cik3rwvp1n6d2" path="res://_framework/_visual_assets/dialogue_window/progress_bar_fill.tres" id="8_aab04"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cl5rt"]
 
@@ -32,6 +32,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qyjuh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ipegu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_krvry"]
 
 [resource]
 ButtonClose/base_type = &"Button"
@@ -59,6 +61,7 @@ LabelHeaderConsole/base_type = &"Label"
 LabelHeaderConsole/colors/font_color = Color(0.9490196, 0.6313726, 0.101960786, 1)
 LineEdit/colors/caret_color = Color(1, 1, 1, 1)
 LineEdit/colors/font_color = Color(1, 1, 1, 1)
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_krvry")
 LineEdit/styles/normal = ExtResource("3_ybx5l")
 Panel/styles/panel = ExtResource("1_t2v17")
 PanelConsoleContents/base_type = &"Panel"
@@ -69,4 +72,5 @@ ProgressBar/styles/background = ExtResource("7_aug18")
 ProgressBar/styles/fill = ExtResource("8_aab04")
 VScrollBar/styles/grabber = ExtResource("6_ybx5l")
 VScrollBar/styles/grabber_highlight = ExtResource("6_ybx5l")
+VScrollBar/styles/grabber_pressed = ExtResource("6_ybx5l")
 VScrollBar/styles/scroll = ExtResource("7_ybx5l")
