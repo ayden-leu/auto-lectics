@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=20 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="2_r7opt"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="8_12tdw"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/splode.tscn" id="8_as3gw"]
 [ext_resource type="PackedScene" uid="uid://bmgejwfuqqqm6" path="res://entities/npcs/exile.tscn" id="9_b6tvr"]
+[ext_resource type="PackedScene" uid="uid://chifn6ukah4bi" path="res://entities/npcs/miniBoss2.tscn" id="14_4bdpc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -100,3 +101,6 @@ focus = NodePath("../Player")
 [node name="InputHandler" parent="." instance=ExtResource("5_vekyi")]
 
 [node name="LoopManager" parent="." instance=ExtResource("6_hmrtd")]
+
+[node name="miniBoss2" parent="." instance=ExtResource("14_4bdpc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.76616, 0, 2.95328)
