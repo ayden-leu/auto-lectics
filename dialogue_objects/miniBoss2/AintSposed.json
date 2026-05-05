@@ -1,0 +1,11 @@
+{
+	"text": "now, i ain't s'posed to let no one in, but…",
+	"mode": "normal",
+	"writeSpeed": "medium",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "TrustedFriend"
+		}
+	]
+}

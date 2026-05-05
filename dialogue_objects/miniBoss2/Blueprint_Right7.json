@@ -1,0 +1,11 @@
+{
+	"text": "To be honest…she and I go way back. First one that ever gave me any hope…",
+	"mode": "normal",
+	"writeSpeed": "medium",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Blueprint_Right8"
+		}
+	]
+}

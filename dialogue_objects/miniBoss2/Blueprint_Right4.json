@@ -1,0 +1,10 @@
+{
+	"text": "I GOTTA TELL YA, I AIN'T GOT TEW MUCH FAITH IN YEW HUMANS.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Blueprint_Right5"
+		}
+	]
+}

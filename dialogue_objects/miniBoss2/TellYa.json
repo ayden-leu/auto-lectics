@@ -1,0 +1,10 @@
+{
+	"text": "I'LL TELL YA! IF YOU WANT IN TO BIG MAMA'S CHAMBER, YER GONNA HAVE TO PUT. IN. THE. WORK!",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What do I have to do?",
+			"nextID": "ComeCloser"
+		}
+	]
+}

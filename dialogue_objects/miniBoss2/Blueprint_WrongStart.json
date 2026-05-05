@@ -1,0 +1,10 @@
+{
+	"text": "NOW, WHAT! IS THIS?????",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Blueprint_Wrong2"
+		}
+	]
+}

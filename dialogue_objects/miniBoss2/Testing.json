@@ -1,0 +1,18 @@
+{
+	"text": "*Blueprint flags are set*",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Submit wrong blueprint]",
+			"checkFlags": {
+				"incorrectBlueprint": true
+			}
+		},
+		{
+			"text": "[Submit correct blueprint]",
+			"checkFlags": {
+				"correctBlueprint": true
+			}
+		}
+	]
+}

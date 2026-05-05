@@ -1,0 +1,11 @@
+{
+	"text": "tell yew what…come closer….",
+	"mode": "normal",
+	"writeSpeed": "medium",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "AintSposed"
+		}
+	]
+}
