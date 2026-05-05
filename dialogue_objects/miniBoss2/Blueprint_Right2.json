@@ -1,0 +1,10 @@
+{
+	"text": "YEW DONE WENT AND TALKED TO ALL OF 'EM?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Blueprint_Right3"
+		}
+	]
+}
