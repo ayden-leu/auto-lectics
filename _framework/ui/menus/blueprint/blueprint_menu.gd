@@ -86,6 +86,10 @@ func _loadEntries() -> void:
 
 ## [b]Internal-use only.[/b]  Gets the [membere _npcEntries] index of a [BlueprintMenuNpcEntry].
 func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
+	if not _idToIndex.has(entryID):
+		printerr("BlueprintMenu:  Could not find entry with ID: [" + entryID + "]")
+		return null
+	
 	return _npcEntries[_idToIndex[entryID]]
 
 ## [b]Internal-use only.[/b]  Shows the NPC entry details.
@@ -135,7 +139,15 @@ func _unlockCorrectGuesses() -> void:
 
 # Sending signal after engouh name correct
 func _check_unlock_conditions() -> void:
-	if _getEntry("npc_test_1").nameGuessedCorrectly and _getEntry("npc_test_3").nameGuessedCorrectly:
+	var check1 = _getEntry("npc_test_1")
+	if not check1:
+		return
+	
+	var check2 = _getEntry("npc_test_3")
+	if not check2:
+		return
+		
+	if check1.nameGuessedCorrectly and check2.nameGuessedCorrectly:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
 
