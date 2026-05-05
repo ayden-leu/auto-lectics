@@ -45,7 +45,11 @@ signal resize()
 var currentFlags:Dictionary:
 	set(newFlags):
 		for flag in newFlags.keys():
-			_createStoryFlagSection()
+			# need to await for this function to finish because it also awaits.
+			# not doing to results in a crash when loading multiple flags
+			# into one option
+			await _createStoryFlagSection()
+			
 			_currentFlagFields.back().flagID = flag
 			_currentFlagFields.back().enabled = newFlags[flag]
 	get():
@@ -144,7 +148,7 @@ func _updateUnusedFlags() -> void:
 ## [b]Internal-use only.[/b]  Runs when the add button is pressed.
 ## Can also be used to "simulate" the button being pressed with code.
 func _on_add_button_pressed() -> void:
-	_createStoryFlagSection()
+	await _createStoryFlagSection()
 	value_changed.emit()
 
 ## [b]Internal-use only.[/b]  Runs when a [DC_StoryFlagChooser] field is being removed.

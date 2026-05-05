@@ -1,0 +1,14 @@
+{
+	"text": "multiple set flags",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "works",
+			"nextID": "continue1",
+			"setFlags": {
+				"aThirdFlag": false,
+				"doorOpen": false
+			}
+		}
+	]
+}
