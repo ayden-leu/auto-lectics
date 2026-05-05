@@ -4,12 +4,14 @@
 	"options": [
 		{
 			"text": "[Submit wrong blueprint]",
+			"nextID": "Blueprint_WrongStart",
 			"checkFlags": {
 				"incorrectBlueprint": true
 			}
 		},
 		{
 			"text": "[Submit correct blueprint]",
+			"nextID": "Blueprint_RightStart",
 			"checkFlags": {
 				"correctBlueprint": true
 			}
