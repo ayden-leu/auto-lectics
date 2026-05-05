@@ -1,0 +1,13 @@
+{
+	"text": "multiple check flags",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "works",
+			"checkFlags": {
+				"aThirdFlag": false,
+				"doorOpen": false
+			}
+		}
+	]
+}
