@@ -1,0 +1,10 @@
+{
+	"text": "YEW THINK MAMA'LL HAVE AUDIENCE WITH YEW WHEN THAT HEAD OF YOURS IS EMPTY?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Blueprint_Wrong3"
+		}
+	]
+}

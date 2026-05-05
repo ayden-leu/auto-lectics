@@ -1,0 +1,11 @@
+{
+	"text": "i S'POSE that a trusted friend of the district wouldn't be too bad…",
+	"mode": "normal",
+	"writeSpeed": "medium",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "SoGo"
+		}
+	]
+}

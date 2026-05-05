@@ -1,0 +1,26 @@
+{
+	"text": "WHAT DO YEW WANT FROM MEEEEE???",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I want the truth.",
+			"nextID": "GetIt"
+		},
+		{
+			"text": "I want to explore deeper.",
+			"nextID": "GetIt"
+		},
+		{
+			"text": "What's going on around here.",
+			"nextID": "GetIt"
+		},
+		{
+			"text": "[Testing Blueprints]",
+			"nextID": "Testing",
+			"setFlags": {
+				"correctBlueprint": true,
+				"incorrectBlueprint": true
+			}
+		}
+	]
+}

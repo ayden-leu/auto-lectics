@@ -1,0 +1,10 @@
+{
+	"text": "WELL, IF YOU WANT THAT, YOU'RE GONNA HAVE TO GO GET IT YERSELF! YOU YOUNG'INS NEVER CARE ABOUT WHAT CAME BEFORE!",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"nextID": "Humans"
+		}
+	]
+}
