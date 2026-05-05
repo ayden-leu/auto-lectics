@@ -16,7 +16,6 @@
 		},
 		{
 			"text": "[Testing Blueprints]",
-			"nextID": "Testing",
 			"setFlags": {
 				"correctBlueprint": true,
 				"incorrectBlueprint": true

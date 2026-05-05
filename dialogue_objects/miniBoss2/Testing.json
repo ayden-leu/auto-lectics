@@ -6,14 +6,14 @@
 			"text": "[Submit wrong blueprint]",
 			"nextID": "Blueprint_WrongStart",
 			"checkFlags": {
-				"incorrectBlueprint": true
+				"testFlag": false
 			}
 		},
 		{
 			"text": "[Submit correct blueprint]",
 			"nextID": "Blueprint_RightStart",
 			"checkFlags": {
-				"correctBlueprint": true
+				"testFlag": false
 			}
 		}
 	]

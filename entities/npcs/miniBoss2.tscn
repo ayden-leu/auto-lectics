@@ -1,11 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://chifn6ukah4bi"]
+[gd_scene load_steps=5 format=3 uid="uid://tqt27f4t0m0c"]
 
 [ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://_framework/entities/npcs/interactable_npc.gd" id="1_e6fvg"]
+[ext_resource type="PackedScene" uid="uid://5ja5grs5iaao" path="res://models/npcs/miniboss2_model.tscn" id="2_5gbnt"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
-size = Vector3(1.1191406, 1.1877441, 1.2324219)
+size = Vector3(1.1191406, 1.744751, 1.6303711)
 
 [node name="miniBoss2" type="Node3D" node_paths=PackedStringArray("_hitbox", "_dialogueBoxAnchor", "model") groups=["NPCs"]]
 script = ExtResource("1_e6fvg")
@@ -27,8 +28,11 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(6.1926923, 0, 0, 0, 6.1926923, 0, 0, 0, 6.1926923, 0, 2.224686, -1.2321886)
 shape = SubResource("BoxShape3D_vefio")
 
 [node name="DialogueBoxAnchor" type="Marker3D" parent="."]
 transform = Transform3D(0.9573195, 0, 0.28903177, 0, 1, 0, -0.28903177, 0, 0.9573195, 0, 1.214, 1.941)
+
+[node name="miniboss2" parent="." instance=ExtResource("2_5gbnt")]
+transform = Transform3D(3.8097177, 0, 0, 0, 3.8097177, 0, 0, 0, 3.8097177, 0, -3.3156755, -0.25365108)

@@ -1,7 +1,5 @@
-[gd_scene load_steps=28 format=3 uid="uid://drte8m2osgjcm"]
+[gd_scene load_steps=25 format=3 uid="uid://drte8m2osgjcm"]
 
-[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_50l2a"]
-[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_un0cs"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_g1iaf"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_jvite"]
 [ext_resource type="PackedScene" uid="uid://db24nhectuest" path="res://models/environment/environmentscenes/area_2_environment.tscn" id="5_carg2"]
@@ -14,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="12_xy7xj"]
 [ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="13_3sw5i"]
 [ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="14_i75ji"]
+[ext_resource type="PackedScene" uid="uid://tqt27f4t0m0c" path="res://entities/npcs/miniBoss2.tscn" id="15_3sw5i"]
+[ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/splode.tscn" id="16_xy7xj"]
 [ext_resource type="PackedScene" uid="uid://bk6snaqvd0spx" path="res://models/environment/gardens.tscn" id="19_dapek"]
 [ext_resource type="PackedScene" uid="uid://cdc1ote2y5spv" path="res://models/environment/embyro.tscn" id="22_xy7xj"]
 [ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="23_uf4jm"]
@@ -47,28 +47,6 @@ func _ready() -> void:
 		#$npcs/miniboss2/gateNode.open_gate()
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xy7xj"]
-panorama = ExtResource("1_50l2a")
-
-[sub_resource type="Sky" id="Sky_sxeh0"]
-sky_material = SubResource("PanoramaSkyMaterial_xy7xj")
-
-[sub_resource type="Environment" id="Environment_c8ywk"]
-background_mode = 2
-sky = SubResource("Sky_sxeh0")
-ambient_light_color = Color(0.20399997, 0, 0.24, 1)
-ambient_light_sky_contribution = 0.0
-ambient_light_energy = 2.38
-glow_intensity = 0.0
-fog_enabled = true
-fog_mode = 1
-fog_light_color = Color(0.95, 0.6, 0.3, 1)
-fog_sky_affect = 0.0
-fog_depth_begin = 140.0
-fog_depth_end = 1000.0
-volumetric_fog_density = 0.005
-volumetric_fog_anisotropy = 1.0
-
 [sub_resource type="Curve3D" id="Curve3D_sxeh0"]
 closed = true
 _data = {
@@ -90,26 +68,6 @@ shadow_blur = 0.296
 directional_shadow_max_distance = 4096.0
 
 [node name="Environment" type="Node" parent="."]
-
-[node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_c8ywk")
-script = ExtResource("2_un0cs")
-anisotropy = 1.0
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
-stream = ExtResource("3_g1iaf")
-volume_db = 1.824
-unit_size = 4.55
-autoplay = true
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23/AudioStreamPlayer3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
-stream = ExtResource("4_jvite")
-volume_db = 22.018
-unit_size = 8.85
-max_db = 6.0
-autoplay = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("4_jvite")
@@ -138,7 +96,7 @@ transform = Transform3D(-0.20474309, 0, -0.51000875, 0, 0.54957134, 0, 0.5100087
 transform = Transform3D(-0.10876227, 0, -0.2709235, 0, 0.29193965, 0, 0.2709235, 0, -0.10876227, 42.506523, 84.53224, 43.247902)
 
 [node name="scaffoldTower" parent="Environment/Foreground" instance=ExtResource("6_dapek")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.566154, 12.692324, 169.19666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.566154, 8.608952, 169.19666)
 
 [node name="Label3D" type="Label3D" parent="Environment/Foreground/scaffoldTower"]
 transform = Transform3D(4.2901077, 0, 5.1107616, 0, 6.6726985, 0, -5.1107616, 0, 4.2901077, 4.304296, -4.7564545, 3.5162811)
@@ -187,6 +145,15 @@ transform = Transform3D(9.38944, -1.5080807, -5.220319, -1.1345648, 9.648376, -4
 [node name="MetalBigFlat2" parent="Environment" instance=ExtResource("10_4hcl0")]
 transform = Transform3D(6.2827163, 0, -3.627328, 0, 7.254656, 0, 3.627328, 0, 6.2827163, 113.11291, 8.121302, 0.14809227)
 
+[node name="MetalBigFlat4" parent="Environment" instance=ExtResource("10_4hcl0")]
+transform = Transform3D(0.49222654, 0, -0.7198286, 0, 0.5683742, 0, 0.2841871, 0, 1.2467798, 78.68834, 8.565697, 26.390865)
+
+[node name="MetalBigFlat6" parent="Environment" instance=ExtResource("10_4hcl0")]
+transform = Transform3D(0.067967564, 0, -1.4293268, 0, 0.5683742, 0, 0.56429577, 0, 0.17215765, 130.78238, 3.6151114, 127.79369)
+
+[node name="MetalBigFlat5" parent="Environment" instance=ExtResource("10_4hcl0")]
+transform = Transform3D(0.3388283, -0.17331754, 3.973856, -0.020432198, 0.5194959, 2.1621544, -0.45588046, -0.15209982, 2.85662, 79.68103, 16.488518, 69.448326)
+
 [node name="MetalBigFlat3" parent="Environment" instance=ExtResource("10_4hcl0")]
 transform = Transform3D(-2.3841858e-07, -6.2827163, -3.627328, 7.254656, -3.1711107e-07, 0, 0, -3.627328, 6.2827163, 82.395035, -28.107939, -17.586882)
 
@@ -196,11 +163,13 @@ transform = Transform3D(2.4459057, -1.6227187, 8.7477154e-08, 9.256976e-09, -1.2
 [node name="npcs" type="Node" parent="."]
 
 [node name="exile" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("23_uf4jm")]
-transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 85.18743, 16.359184, 161.89082)
+transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 75.89146, 11.654917, 169.0174)
+initialDialogueID = "EB1"
+myName = "exile"
 patrolPath = NodePath("../Path3D")
 
 [node name="Path3D" type="Path3D" parent="npcs"]
-transform = Transform3D(0.64806646, -3.5013168e-09, -3.734738e-09, 7.1193433e-09, 0.6480666, 1.1204213e-08, -3.7347373e-08, -3.7347374e-09, 0.6480666, 84.07865, 16.292515, 155.43292)
+transform = Transform3D(0.64806646, -3.5013168e-09, -3.734738e-09, 7.1193433e-09, 0.6480666, 1.1204213e-08, -3.7347373e-08, -3.7347374e-09, 0.6480666, 76.89665, 11.642079, 163.06252)
 curve = SubResource("Curve3D_sxeh0")
 debug_custom_color = Color(1, 1, 1, 1)
 
@@ -213,9 +182,17 @@ transform = Transform3D(1.2850658, -0.267879, 5.9604645e-08, 0.2678791, 1.285065
 [node name="tub2" parent="npcs" instance=ExtResource("12_dapek")]
 transform = Transform3D(1.8213544, 1.434449, 0, -1.434449, 1.8213549, -1.15484e-07, -5.9604645e-08, 1.1920929e-07, 2.3183997, -3.2960968, -3.4786959, 62.74057)
 
+[node name="miniBoss2" parent="npcs" instance=ExtResource("15_3sw5i")]
+transform = Transform3D(3.002941, 0, 2.543347, 0, 3.9352596, 0, -2.543347, 0, 3.002941, 93.89873, 6.671957, -6.817151)
+
+[node name="splode" parent="npcs" instance=ExtResource("16_xy7xj")]
+transform = Transform3D(0.11958245, 0, -0.99282426, 0, 1, 0, 0.99282426, 0, 0.11958245, 136.21997, 3.6323833, 127.485344)
+_talkOnlyOnce = false
+
 [node name="Player" parent="." instance=ExtResource("32_eiahs")]
-transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, 112.31044, 31.374117, -31.703049)
-maxSpeed = 5.0
+transform = Transform3D(0.77816635, 0, 0.62805825, 0, 1, 0, -0.62805825, 0, 0.77816635, 120.70497, 10.313862, 25.905254)
+maxSpeed = 13.4
+acceleration = 9.5
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_asqrq")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)
@@ -232,4 +209,4 @@ script = ExtResource("36_2kogd")
 transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30690813, -10.712891, -11.071636, -99.01719)
 
 [node name="embyro" parent="." instance=ExtResource("22_xy7xj")]
-transform = Transform3D(1.9996665, 0, 0, 0, 1.9996665, 0, 0, 0, 1.9996665, 51.29074, 77.83626, 62.72262)
+transform = Transform3D(6.382273, 0, 0, 0, 6.382273, 0, 0, 0, 6.382273, 51.29074, 77.83626, 62.72262)

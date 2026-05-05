@@ -50,7 +50,7 @@ maxSpeed = 28.4
 acceleration = 37.0
 grapple_max_length = 32.8
 grapple_initial_impulse = 20.55
-grapple_hook_speed = 29.16
+grapple_hook_speed = 40.07
 max_grapple_speed = 49.58
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

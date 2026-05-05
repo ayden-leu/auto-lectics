@@ -9,13 +9,14 @@
 size = Vector3(1.1191406, 1.1877441, 1.2324219)
 
 [node name="sludge" type="Node3D" node_paths=PackedStringArray("_hitbox", "_dialogueBoxAnchor", "model") groups=["NPCs"]]
+transform = Transform3D(-0.84409237, 0, -7.37929e-08, 0, 0.84409237, 0, 7.37929e-08, 0, -0.84409237, 0, 0, 0)
 script = ExtResource("1_mgact")
 _hitbox = NodePath("Hitbox")
-initialDialogueID = "Dialogue1a"
+initialDialogueID = "SB1"
 lookAtInteractorWhileTalking = true
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
-myName = "NPC_Test"
+myName = "sludge"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -36,4 +37,4 @@ shape = SubResource("BoxShape3D_vefio")
 transform = Transform3D(0.9573195, 0, 0.28903177, 0, 1, 0, -0.28903177, 0, 0.9573195, 0, 1.214, 1.941)
 
 [node name="sludge" parent="." instance=ExtResource("2_2pqvn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50892663, 0.41731787)
+transform = Transform3D(-0.99999994, 0, -8.742276e-08, 0, 0.99999994, 0, 8.742276e-08, 0, -0.99999994, -3.5527137e-15, 0.50892663, 0.41731787)
