@@ -1,7 +1,12 @@
-# Connecting to the GitHub Repository
+# Interacting with the GitHub Repository
 This section will help you setup a git management tool so you can push and pull changes to and from the repository.
-## Step 1:  Setup an SSH key for your GitHub account
+
+
+## Prelude - Setup an SSH key for your GitHub account
 GitHub has deprecated the easier method of using a username and password to login to git in some cases.  I am not aware if this change applies *everywhere*, but I believe it is best to assume so.  Also, using an SSH method *is* more secure even if there is more setup involved.
+
+If you're using the [GitHub Desktop commit method](#method-3--github-desktop), you won't have to do this.
+
 1. Go to your GitHub account settings.
 	- Found by going to User Profile Icon in Top Right on GitHub > Settings
 	- or click this link:  https://github.com/settings
@@ -14,7 +19,8 @@ GitHub has deprecated the easier method of using a username and password to logi
 	- This is technically optional, *but* I recommend doing this just in case a future step goes wrong.
 	- Link:  https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection
 
-## Step 2:  Cloning the GitHub Repository
+
+## Step 1:  Clone the GitHub Repository
 This step assumes you have Git installed.  Please install Git if you do not have it.
 1. Click the green button that's labeled `\<> Code`
 2. Click the `SSH` tab and copy the text within.
@@ -52,27 +58,7 @@ First, configure your name and email in git for this project.
 Then, pick a one of the following methods of your choice.
 
 ### Method 1:  Godot Git Plugin
-The Godot Git Plugin addon will already be installed when you clone the repository.  This section will help you set things up so you can make and push commits to the repository within Godot itself.
-1. Go to `Project > Version Control > Version Control Settings`
-2. Set the VCS Provider to `GitPlugin`
-	- It's the only option there but check just in case.
-3. Enable `Connect to VCS`
-4. Fill out the following fields under `Remote Login`
-	- Username:
-		- Your GitHub username
-	- Password:
-		- Keep blank as we're using the SSH method
-	- SSH Public Key Path:
-		- Click the red file icon and locate the public key file you created during [Connecting to the GitHub Repository](#connecting-to-the-github-repository).  The public key file has a file extension of `.pub`
-	- SSH Private Key Path:
-		- Click the red file icon and locate the private key file you created during [Connecting to the GitHub Repository](#connecting-to-the-github-repository).  This file should be located next to your public key.
-		- Don't worry about these files being uploaded to the repository.  They won't be uploaded.
-	- SSH Passphrase:
-		- The password you set when making your SSH key during [Connecting to the GitHub Repository](#connecting-to-the-github-repository).  If you didn't set one, then leave this blank.
-		- **Important:**  If you did set a password, you will have to re-enter it every time you open this Godot project.
-5. Apply your configuration by clicking the `Apply` button.
-6. Expand the right panel in Godot by hovering over the border between it and the main viewport, and click-dragging to the left.
-7. Enter the `Commit` tab, which is in the same area as the `Inspector` tab.
+
 8. *Verify you are not on the main branch*
 	- You can find which branch you're on by looking at the left dropdown menu below the `Commit List` box, which is below the `Commit Message` box.  This is the branch dropdown menu.
 	- If you are on the main branch, either switch to your branch or create a new one.
@@ -88,15 +74,13 @@ The Godot Git Plugin addon will already be installed when you clone the reposito
 	- To be safe, fetch your branch by clicking the button that looks like a reload symbol.  Then pull your branch by clicking the button next to it, which will look like a down arrow with a line above it.
 9. Make any changes you want to make.
 	- Make sure not to make too many changes per commit though, as you may accidentally break something and not know how to fix it.  Having a working commit from not too long ago can make the process of fixing it easier.
-10. Stage your changes by either double-clicking a change or clicking the `Stage all changes` button in the top right of the `Unstaged Changes` area.  It looks like a down arrow with a line at the top.
+
 11. Enter your commit message in the `Commit Message` box
 	- This can be found below the `Staged Changes` box, which is located under the `Unstaged Changes` box.
 	- Your commit message should be a good summary of the changes you have made up to that point.
 	- If you get an error in the Output tab that says `Signature cannot have an empty name or email`, you need to configure your name and email for this project.  Instructions can be found [at the very top of this section](#committing-changes-to-the-github-repository).
 	- **Important:**  Make sure you're not on the main branch!
-12. Click the `Commit Changes` button.
-13. Click the `Push` button, which is on the bottom and looks like an up arrow with a line below it.
-	- Godot might freeze up for a while when you do this.  This may be due to your SSH Passphrase not being set in the Version Control Settings.  Force-close Godot, reopen the project, and set your SSH Passphrase in the Version Control Settings.  Your changes won't be lost.
+
 
 ### Method 2:  Terminal/Git
 1. Open a terminal/command prompt/git client in the repository directory.

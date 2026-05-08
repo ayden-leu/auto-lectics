@@ -31,7 +31,7 @@ This branch is where all of the custom components are developed.
 
 All components in this branch are considered "stable."  Development of new features or tweaks to existing features are done in separate branches, which are eventually merged into this one upon verification.
 
-Documentation of all custom components and features can be found in [the documentation main page](_documentation/main_page.md)
+Documentation of all custom components and features can be found in [the documentation main page.](_documentation/_main_page.md)
 
 ### main_designers
 This branch is where all of the actual game content is created and stored.
@@ -58,13 +58,13 @@ The branch gets made whenever new components from `main_framework` are wanted in
 1. `_framework`:  Holds all custom components.  These files generally shouldn't need to be modified outside of development unless a visual aspect needs to be modified.
 	- See [this section](#_framework-folder-structure) for a breakdown of this folder's folder structure.
 1. `dialogue_objects`: Holds all dialogue trees for the game.
-	- Refer to [the dialogue file documentation](#todo) for further explanation.
+	- Refer to [the dialogue documentation](_documentation/framework_guides/dialogue.md) for further explanation.
 1. `fonts`:  Holds all text fonts used for the game.
 	1. `_label_presets`:  Holds all Label Presets used for the game.
 1. `script_templates`:  Holds custom script templates for various node classes.  Mainly used to aid in development.
 1. `sounds`:  Holds all sound files used in the game.
 	1. `sfx`:  Holds all SFX IDs used in the game.
-		- Refer to [the audio loader system](#todo) for further explanation.
+		- Refer to [the audio loader system](_documentation/framework_guides/helpers/audio_loader.md) for further explanation.
 
 ### _framework Folder Structure
 1. `_visual_assets`:  Holds resource files for all of the visual aspects of the custom components.
@@ -89,7 +89,7 @@ This is mainly for the team working on this game since this isn't a public repos
 
 1. Create a new branch and develop your new Thing in it.
 1. If your new Thing is supposed to go into `main_framework`:
-	1. Refer to [the style guide](#todo) for how to properly format your code.
+	1. Refer to [the style guide](_documentation/style_guide.md) for how to properly format your code.
 	1. Create a new Pull Request and describe what your new feature is.  Be sure to include documentation on how to use it and what it does!
 	1. Ayden will then review it before merging.
 1. Otherwise (i.e it's going into `main_designers`), you can just merge it as it since it'll most likely not have any merge conflicts*.
