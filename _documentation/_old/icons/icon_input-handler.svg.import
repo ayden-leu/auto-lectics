@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgh51jtqal0ju"
-path="res://.godot/imported/icon_input-handler.svg-950ace3b4195ba772378f82f0ce9464a.ctex"
+path="res://.godot/imported/icon_input-handler.svg-1697dc235a7c450a0e6551e92d015847.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_documentation/icons/icon_input-handler.svg"
-dest_files=["res://.godot/imported/icon_input-handler.svg-950ace3b4195ba772378f82f0ce9464a.ctex"]
+source_file="res://_documentation/_old/icons/icon_input-handler.svg"
+dest_files=["res://.godot/imported/icon_input-handler.svg-1697dc235a7c450a0e6551e92d015847.ctex"]
 
 [params]
 

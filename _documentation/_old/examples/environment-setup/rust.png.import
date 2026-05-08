@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5k5trleyy2uh"
-path.s3tc="res://.godot/imported/rust.png-09d5832a2e4bc9138717e205434f5aef.s3tc.ctex"
+path.s3tc="res://.godot/imported/rust.png-606c8f62245c565644a744d57207df82.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://_documentation/examples/environment-setup/rust.png"
-dest_files=["res://.godot/imported/rust.png-09d5832a2e4bc9138717e205434f5aef.s3tc.ctex"]
+source_file="res://_documentation/_old/examples/environment-setup/rust.png"
+dest_files=["res://.godot/imported/rust.png-606c8f62245c565644a744d57207df82.s3tc.ctex"]
 
 [params]
 

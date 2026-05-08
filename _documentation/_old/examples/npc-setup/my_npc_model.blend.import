@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b7d4fth4g0bqm"
-path="res://.godot/imported/my_npc_model.blend-9ec35d0a3105cef6cde9df82c6e40100.scn"
+path="res://.godot/imported/my_npc_model.blend-8b11de23828f17426f52a072675af015.scn"
 
 [deps]
 
-source_file="res://_documentation/examples/npc-setup/my_npc_model.blend"
-dest_files=["res://.godot/imported/my_npc_model.blend-9ec35d0a3105cef6cde9df82c6e40100.scn"]
+source_file="res://_documentation/_old/examples/npc-setup/my_npc_model.blend"
+dest_files=["res://.godot/imported/my_npc_model.blend-8b11de23828f17426f52a072675af015.scn"]
 
 [params]
 
