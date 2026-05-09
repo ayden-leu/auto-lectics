@@ -60,10 +60,10 @@ func _process(delta: float) -> void:
 func _on_console_option_chosen(nextID:String) -> void:
 	super(nextID)
 	
-	if not isTalking:
-		print(myName + " isn't talking.")
-	else:
-		print(myName + " is talking.")
+	#if not isTalking:
+		#print(internalID + " isn't talking.")
+	#else:
+		#print(internalID + " is talking.")
 
 func _on_console_command_entered(command:String) -> void:
 	if command == "yell":

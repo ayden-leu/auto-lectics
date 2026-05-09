@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://nduyjwlpcojs" path="res://entities/npcs/sideNPCS/splode.gd" id="1_tsffd"]
 [ext_resource type="PackedScene" uid="uid://cs05y8fjcnq14" path="res://models/week6playtestStuff/npcs/side_NPCS/egg.fbx" id="2_560c1"]
-[ext_resource type="Texture2D" uid="uid://dqpdbyg3l3hvk" path="res://textures/Deltrarune Explosion no BG.png" id="3_tsffd"]
+[ext_resource type="Texture2D" uid="uid://c4knmrs3tl4lo" path="res://textures/Deltrarune Explosion no BG.png" id="3_tsffd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.8026067
@@ -209,9 +209,11 @@ script/source = "extends AnimatedSprite3D
 [node name="splode" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_tsffd")
 _hitbox = NodePath("Hitbox")
+dialogueTreeID = "splode"
 initialDialogueID = "Splode"
 model = NodePath("egg")
-myName = "splode"
+internalID = "splode"
+displayName = "splode"
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(-0.707, 0, 0, 0, 0.109, 0, 0, 0, 0.479, -0.092166185, 0.7841451, -0.43215042)

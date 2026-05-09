@@ -12,11 +12,13 @@ size = Vector3(1.1191406, 1.1877441, 1.2324219)
 transform = Transform3D(-0.84409237, 0, -7.37929e-08, 0, 0.84409237, 0, 7.37929e-08, 0, -0.84409237, 0, 0, 0)
 script = ExtResource("1_mgact")
 _hitbox = NodePath("Hitbox")
+dialogueTreeID = "sludge"
 initialDialogueID = "SB1"
 lookAtInteractorWhileTalking = true
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
-myName = "sludge"
+internalID = "sludge"
+displayName = "sludge"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

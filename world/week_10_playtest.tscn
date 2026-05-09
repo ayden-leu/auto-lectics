@@ -22,8 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://cgsl375svaj1x" path="res://models/BlendFiles/dropPod.blend" id="11_musp6"]
 [ext_resource type="PackedScene" uid="uid://ckjpbarwajofg" path="res://models/environment/environmentscenes/battery_block.tscn" id="13_7p6d6"]
 [ext_resource type="PackedScene" uid="uid://ia3m4r8gqxaa" path="res://models/environment/environmentscenes/battery_block2.tscn" id="14_bb1ch"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="14_whg7e"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="15_ooa8t"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="14_whg7e"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="15_ooa8t"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="17_doxto"]
 [ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="19_mw4j8"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="23_7p6d6"]
@@ -440,7 +440,6 @@ transform = Transform3D(-1.3327236, 0, -2.3290458, 0, 2.6833947, 0, 2.3290458, 0
 transform = Transform3D(0.44070414, 0, 6.4035387, 0, 6.418686, 0, -6.4035387, 0, 0.44070414, 0, 47.69836, -177.32164)
 
 [node name="CEOBottomTube" parent="Environment/Models/Background" instance=ExtResource("11_7p6d6")]
-transform = Transform3D(2.9337199, 0, -1.3758786, 0, 3.2403324, 0, 1.3758786, 0, 2.9337199, 0, 4.8914337, -177.84186)
 
 [node name="CEOBottomTube3" parent="Environment/Models/Background" instance=ExtResource("11_7p6d6")]
 transform = Transform3D(-6.0325274, -2.8910992e-07, 2.8291812, 5.273802e-07, -3.3070319, -2.4733484e-07, 2.8291812, 0, 6.0325274, 0, 94.79193, -177.84186)
@@ -643,8 +642,6 @@ shape = SubResource("BoxShape3D_hsv1o")
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("15_ooa8t")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)
 focus = NodePath("../Player")
-_actAsFocus = true
-_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="DeathPlane" parent="." instance=ExtResource("17_doxto")]
 transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 48.671253, -72.754974, -109.03)
