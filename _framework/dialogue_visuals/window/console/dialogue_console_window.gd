@@ -179,7 +179,7 @@ func _gui_input(event: InputEvent) -> void:
 ## Prepares the [DialogueConsole] by setting up initial defaults.
 func prepare() -> void:
 	dialogueEnded = false
-	headerText = instigatingNpc.myName
+	headerText = instigatingNpc.displayName
 	FR_MenuManager.disable()
 	
 	_closeAllOptionWindows()

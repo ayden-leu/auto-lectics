@@ -22,7 +22,7 @@ signal selected(me:BlueprintMenuNpcEntry)
 ## The ID of the NPC in this NPC entry.
 @export var npcID:String = "npc_test"
 ## The name of the NPC in this entry/
-@export var myName:String = "NPC Test"
+@export var displayName:String = "NPC Test"
 ## The text that is displayed when this entry is locked.
 @export var lockedText: String = "???"
 ## The icon for this entry when it is unlocked.  Setting this will update the button node.
@@ -84,7 +84,7 @@ func updateLabel(newText: String) -> void:
 
 ## Unlocks this NPC entry.
 func unlock() -> void:
-	displayedName = "✓ " + myName
+	displayedName = "✓ " + displayName
 	_button.texture_normal = entryTextureUnlocked
 	unlocked = true
 
