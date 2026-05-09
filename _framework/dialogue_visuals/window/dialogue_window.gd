@@ -66,17 +66,19 @@ var headerText:String:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
 ## Is true when the player's cursor is hovering over the window.
-var _hovering:bool = false:
-	set(newState):
-		_hovering = newState
-## [b]Internal-use only.[/b]  Is true when the player is holding the select button
-## on this option (left mouse click).
+var _hovering:bool = false
+## [b]Internal-use only.[/b]
+## Is true when the player is holding the select button on this option (left mouse click).
 var _holdingSelect:bool = false
-## [b]Internal-use only.[/b]  Is true when the player is dragging this around.  
+## [b]Internal-use only.[/b]
+## Is true when the player is dragging this around.
 var _dragging:bool = false
-## [b]Internal-use only.[/b]  The distance between the origin and the mouse
-## when it started being dragged.
+## [b]Internal-use only.[/b]
+## The distance between the origin and the mouse when it started being dragged.
 var _dragOffset := Vector2.ZERO
+## [b]Internal-use only.[/b]
+## The original cursor shape set in the editor.
+var _originalCursorShape:CursorShape
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -84,20 +86,26 @@ var _dragOffset := Vector2.ZERO
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
+	_originalCursorShape = mouse_default_cursor_shape
+
 	if canBeClosed:
 		closeButton.pressed.connect(_on_close_button_pressed)
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	_hovering = _positionInWindow(get_global_mouse_position())
+
+	if _dragging:
+		mouse_default_cursor_shape = Control.CURSOR_CAN_DROP
+	elif _hovering:
+		mouse_default_cursor_shape = _originalCursorShape
 
 func _gui_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		get_parent().move_child(self, -1)
 		_holdingSelect = event.pressed
@@ -105,7 +113,7 @@ func _gui_input(event: InputEvent) -> void:
 			_dragOffset = get_global_mouse_position() - global_position
 		else:
 			window_dropped.emit(self)
-	
+
 	if event is InputEventMouseMotion and _holdingSelect:
 		_dragging = true
 		global_position = get_global_mouse_position() - _dragOffset
@@ -162,7 +170,7 @@ func _center() -> void:
 
 func _positionInWindow(pos:Vector2) -> bool:
 	var corners:Dictionary = getGlobalCornerPositions()
-	
+
 	return (
 		pos.x > corners.topLeft.x and pos.x < corners.bottomRight.x and
 		pos.y > corners.topLeft.y and pos.y < corners.bottomRight.y
@@ -180,22 +188,22 @@ func _on_close_button_pressed() -> void:
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if not headerPanel:
 		warnings.push_back(
 			"The header panel is not set."
 		)
-	
+
 	if not headerLabel:
 		warnings.push_back(
 			"The header label is not set."
 		)
-	
+
 	if canBeClosed and not closeButton:
 		warnings.push_back(
 			"A close button is not set."
 		)
-	
+
 	return warnings
 
 func _validate_property(property: Dictionary) -> void:
