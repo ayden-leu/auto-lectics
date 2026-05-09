@@ -58,7 +58,7 @@ func _ready() -> void:
 	menuID = "blueprint"
 	pausesGame = false
 	super()
-	
+
 	_loadEntries()
 	_hideDetails()
 	_updateEntryVisibility()
@@ -76,7 +76,7 @@ func _ready() -> void:
 func _loadEntries() -> void:
 	if not _npcEntries.is_empty():
 		return
-	
+
 	var index:int = 0
 	for entry:BlueprintMenuNpcEntry in _npcEntryHolder.get_children():
 		entry.selected.connect(_on_npc_entry_selected)
@@ -89,19 +89,19 @@ func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 	if not _idToIndex.has(entryID):
 		printerr("BlueprintMenu:  Could not find entry with ID: [" + entryID + "]")
 		return null
-	
+
 	return _npcEntries[_idToIndex[entryID]]
 
 ## [b]Internal-use only.[/b]  Shows the NPC entry details.
 func _showDetails() -> void:
 	_loadNotes()
 	_guessNpcNamePanel.visible = not _selectedEntry.unlocked
-	
+
 	if _selectedEntry.portraitTexture != null:
 		_portraitTextureRect.texture = _selectedEntry.portraitTexture
 	else:
 		_portraitTextureRect.texture = null
-		
+
 	_details.visible = true
 
 ## [b]Internal-use only.[/b]  Hides the NPC entry details.
@@ -142,11 +142,11 @@ func _check_unlock_conditions() -> void:
 	var check1 = _getEntry("npc_test_1")
 	if not check1:
 		return
-	
+
 	var check2 = _getEntry("npc_test_3")
 	if not check2:
 		return
-		
+
 	if check1.nameGuessedCorrectly and check2.nameGuessedCorrectly:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
@@ -194,7 +194,7 @@ func _on_notes_field_text_changed() -> void:
 		return
 	if _selectedEntry == null:
 		return
-	
+
 	_selectedEntry.notes = _notesField.text
 
 ## [b]Internal-use only.[/b]  Handles logic for when the previous page button is pressed.

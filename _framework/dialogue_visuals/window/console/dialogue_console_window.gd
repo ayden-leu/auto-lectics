@@ -164,6 +164,7 @@ func _ready() -> void:
 		child.queue_free()
 
 func _process(_delta: float) -> void:
+	super(_delta)
 	if Engine.is_editor_hint():
 		return
 		

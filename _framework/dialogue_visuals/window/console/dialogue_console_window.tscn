@@ -18,6 +18,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 428.0
 offset_bottom = 468.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_0et2d")
 script = ExtResource("1_qw6ov")
 headerPanel = NodePath("Header")
@@ -125,6 +126,7 @@ unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Left" type="Marker2D" parent="OptionSpawnPositions"]
 position = Vector2(-327, -9)

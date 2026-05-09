@@ -9,6 +9,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 178.0
 offset_bottom = 186.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_uwr6o")
 script = ExtResource("2_4d7ys")
 headerPanel = NodePath("Header")

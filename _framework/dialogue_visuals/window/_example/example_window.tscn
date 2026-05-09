@@ -7,8 +7,9 @@
 [node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton")]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 138.0
-offset_bottom = 133.0
+offset_right = 355.0
+offset_bottom = 169.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_ngdeh")
 script = ExtResource("1_salyd")
 headerPanel = NodePath("Header")

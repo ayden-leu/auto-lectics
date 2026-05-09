@@ -53,19 +53,26 @@ offset_bottom = 609.0
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_1"
-myName = "Aster"
-portraitTexture = ExtResource("3_ovhmb")
+displayName = "Aster"
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_2"
-myName = "Mira"
-portraitTexture = ExtResource("4_coiy0")
+displayName = "Mira"
+entryTextureLocked = ExtResource("3_ovhmb")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_3"
-myName = "Orin"
+displayName = "Orin"
+entryTextureLocked = ExtResource("3_ovhmb")
+
+[node name="npc_test_4" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+layout_mode = 2
+npcID = "npc_test_4"
+displayName = "John"
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="NpcDetailPanel" type="Panel" parent="."]
 unique_name_in_owner = true
