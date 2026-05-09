@@ -97,7 +97,7 @@ signal no_longer_looking_at_interactable()
 ## [b]Internal-use only.[/b]  The fade overlay.
 @onready var _overlay = %FadeToBlackOverlay
 ## [b]Internal-use only.[/b]  The [AudioStreamPlayer]s that play sound events.
-@onready var _sfxPlayer:Dictionary = {
+@onready var sfxPlayers:Dictionary = {
 	"respawn": %SFX/respawn,
 	"death": %SFX/death
 }
@@ -116,7 +116,7 @@ var interactableThing:Node3D = null:
 		if thing == interactableThing:
 			return
 		interactableThing = thing
-		
+
 		if thing == _loadBearingDummy:
 			no_longer_looking_at_interactable.emit()
 			can_grapple = true
@@ -183,13 +183,13 @@ var grapple_invalid: bool = false
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-		
+
 	grapple_line.visible = false
 	grapple_hook.visible = false
 	_recomputeJumpParameters()
-	
-	AudioLoader.loadSfxFromId("respawn", _sfxPlayer.respawn.stream)
-	AudioLoader.loadSfxFromId("death", _sfxPlayer.death.stream)
+
+	AudioLoader.loadSfxFromId("respawn", sfxPlayers.respawn.stream)
+	AudioLoader.loadSfxFromId("death", sfxPlayers.death.stream)
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -211,7 +211,7 @@ func _physics_process(delta: float) -> void:
 	_applyVerticalPhysics(delta)
 	apply_grapple_physics(delta, input_direction)
 	move_and_slide()
-	
+
 	#print(_interactionRaycast.get_collider())
 	if _interactionRaycast.get_collider() != null:
 		var hit = _interactionRaycast.get_collider().owner
@@ -219,7 +219,7 @@ func _physics_process(delta: float) -> void:
 			interactableThing = hit
 	else:
 		interactableThing = _loadBearingDummy
-	
+
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -240,15 +240,15 @@ func respawnForce():
 
 ## Puts player at [member _lastValidPosition], but only after the fade in.
 func respawn() -> void:
-	_sfxPlayer.death.play()
+	sfxPlayers.death.play()
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
-	
+
 	await get_tree().create_timer(respawnDelay).timeout
-	
+
 	respawnForce()
 	_overlay.startFadeOut()
-	_sfxPlayer.respawn.play()
+	sfxPlayers.respawn.play()
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -302,7 +302,7 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	var target := Vector3.ZERO
 	if direction != Vector3.ZERO:
 		target = direction.normalized() * maxSpeed
-	
+
 	var current_h := Vector3(velocity.x, 0.0, velocity.z)
 	var desired_h := Vector3(target.x, 0.0, target.z)
 
@@ -314,13 +314,13 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	if not is_on_floor():
 		accel = airAcceleration
 		decel = airDeceleration
-		
+
 	var physicsDelta:float = get_physics_process_delta_time()
-	
+
 	## Do not process air drift if grappling, so the two calcs don't overlap
 	if is_grappling && !is_on_floor():
 		return
-		
+
 	if desired_h.length() > 0.0:
 		var step:float = accel * (1.0 if is_on_floor() else airControl) * physicsDelta
 		if turning and is_on_floor():
@@ -345,7 +345,7 @@ static func freeze(value:bool) -> void:
 func _determineIfValidInteractable(interactable:Node3D) -> bool:
 	if interactable.has_method("_on_interaction"):
 		return true
-	
+
 	return false
 
 # ------------------------------------------------
@@ -356,26 +356,26 @@ func _determineIfValidInteractable(interactable:Node3D) -> bool:
 func throw_grapple() -> void:
 	if not grapple_enabled or _inputDisabled or !can_grapple or grapple_active:
 		return
-	
+
 	var camera := get_viewport().get_camera_3d()
 	if camera == null:
 		return
-	
+
 	# Use camera direction for checks
 	var from := camera.global_position
 	var to := from + -camera.global_transform.basis.z * grapple_max_length
-	
+
 	# Check if valid point is hit
 	var query := PhysicsRayQueryParameters3D.create(from, to)
 	query.collide_with_areas = false
 	query.collide_with_bodies = true
 	var result := get_world_3d().direct_space_state.intersect_ray(query)
 	grapple_invalid = false
-	
+
 	# No target to hit
 	if result.is_empty():
 		grapple_target = to
-	
+
 	# Target is in range of grapple hook
 	else:
 		grapple_target = result.position
@@ -383,7 +383,7 @@ func throw_grapple() -> void:
 		var collider: Node = result.get("collider")
 		if !_is_ungrappleable(collider):
 			grapple_invalid = true
-	
+
 	# Set variables to start sending hook out
 	grapple_current = from
 	grapple_active = true
@@ -405,7 +405,7 @@ func _is_ungrappleable(node: Node) -> bool:
 ## Update visuals for the grapple hook while it is moving
 func _update_grapple_projectile_visual(delta: float) -> void:
 	var start := grapple_start_marker.global_position
-	
+
 	# Case: hook is moving to target
 	if !grapple_retracting:
 		grapple_current = grapple_current.move_toward(grapple_target, grapple_hook_speed * delta)
@@ -434,10 +434,10 @@ func _update_rope_between(start: Vector3, end: Vector3) -> void:
 	if length <= 0.01:
 		return
 	var mid := start + dir * 0.5
-	
+
 	grapple_line.visible = true
 	grapple_line.global_position = mid
-	
+
 	var cur_basis := Basis()
 	cur_basis.y = dir.normalized()
 	var side := cur_basis.y.cross(Vector3.FORWARD)
@@ -455,7 +455,7 @@ func _attach_grapple(point: Vector3) -> void:
 	grapple_length = global_position.distance_to(grapple_point)
 	grapple_active = false
 	is_grappling = true
-	
+
 	var dir := (grapple_point - global_position).normalized()
 	velocity += dir * grapple_initial_impulse
 	grapple_hook.global_position = grapple_point
@@ -465,13 +465,13 @@ func _attach_grapple(point: Vector3) -> void:
 func apply_grapple_physics(delta: float, input_dir: Vector2) -> void:
 	if not is_grappling:
 		return
-	
+
 	var to_hook := grapple_point - global_position
 	var distance := to_hook.length()
 	if distance <= 0.01:
 		return
 	var rope_dir := to_hook.normalized()
-	
+
 	# Let player input influence swing trajectory
 	var camera := get_viewport().get_camera_3d()
 	if camera:
@@ -482,11 +482,11 @@ func apply_grapple_physics(delta: float, input_dir: Vector2) -> void:
 		right.y = 0.0
 		forward = forward.normalized()
 		right = right.normalized()
-		
+
 		var swing_dir := (right * input_dir.x + forward * -input_dir.y).normalized()
 		if swing_dir.length() > 0.01:
 			velocity += swing_dir * grapple_swing_input_force * delta
-	
+
 	# If rope is stretched, constrain player to rope length
 	if distance > grapple_length:
 		var away_velocity := velocity.dot(-rope_dir)
@@ -495,7 +495,7 @@ func apply_grapple_physics(delta: float, input_dir: Vector2) -> void:
 			velocity -= (-rope_dir) * away_velocity
 		# correct position back onto rope sphere
 		global_position = grapple_point - rope_dir * grapple_length
-	
+
 	# Set velocity to max it if exceeds it
 	_limit_grapple_speed()
 
@@ -513,7 +513,7 @@ func _limit_grapple_speed() -> void:
 func _update_grapple_visuals() -> void:
 	var start := grapple_start_marker.global_position
 	var end := grapple_point
-	
+
 	grapple_hook.global_position = end
 	grapple_hook.visible = true
 	_update_rope_between(start, end)
@@ -545,7 +545,7 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 		return
 	# horizontal rotation
 	rotation_degrees.y += -distanceMoved.x * mouseSentitivity
-	
+
 	# pitch (on anchor)
 	cameraAnchor.rotation_degrees.x += -distanceMoved.y * mouseSentitivity
 	# Prevent camera from flipping at top of rotation
@@ -558,7 +558,7 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 func _on_interact_pressed() -> void:
 	if _inputDisabled:
 		return
-	
+
 	#print(name + ": interact pressed")
 	if interactableThing and interactableThing != _loadBearingDummy:
 		interactableThing._on_interaction(self)
@@ -567,7 +567,7 @@ func _on_interact_pressed() -> void:
 func _on_jump_pressed() -> void:
 	if _inputDisabled:
 		return
-	
+
 	#if is_grappling:
 		#release_grapple()
 	if is_on_floor():
@@ -577,7 +577,7 @@ func _on_jump_pressed() -> void:
 func _on_grapple_pressed() -> void:
 	if _inputDisabled:
 		return
-	
+
 	if is_grappling:
 		release_grapple()
 	else:
@@ -590,7 +590,7 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 		input_direction = Vector2.ZERO
 	else:
 		input_direction = newDirection
-	
+
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
 	_handleDirectionInput(direction)
 
@@ -598,7 +598,7 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 func _on_input_handler_respawn() -> void:
 	if _inputDisabled:
 		return
-	
+
 	position = Vector3(0,0,1)
 
 # ------------------------------------------------

@@ -71,7 +71,7 @@ const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry
 	"right": %OptionSpawnPositions/Right
 }
 ## Holds the AudioStreamPlayers for each event.
-@onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
+@onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %SFX/spawn,
 	"text": %SFX/text
 }
@@ -147,27 +147,27 @@ var _helpText: String = \
 # ------------------------------------------------
 func _ready() -> void:
 	%ContentsScroller.get_v_scroll_bar().custom_minimum_size.x = 24.0
-	
+
 	if Engine.is_editor_hint():
 		return
 	super()
 	windowType = "console"
-	
+
 	_center()
 	_hecticBar.visible = false
 	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
-	
+
 	for child in _contentsStorage.get_children():
 		if child == _textInput.get_parent():
 			continue
-		
+
 		child.queue_free()
 
 func _process(_delta: float) -> void:
 	super(_delta)
 	if Engine.is_editor_hint():
 		return
-		
+
 	if _hecticCountdownActive:
 		_hecticBar.value = _hecticTimer.time_left
 
@@ -182,10 +182,10 @@ func prepare() -> void:
 	dialogueEnded = false
 	headerText = instigatingNpc.displayName
 	FR_MenuManager.disable()
-	
+
 	_closeAllOptionWindows()
 	_stopHecticMode()
-	
+
 	_textInput.text = ""
 	_textInput.grab_focus()
 
@@ -193,28 +193,28 @@ func prepare() -> void:
 ## records [member currentDialogueID] into [_dialogueHistory],
 ## and spawns options once complete.
 func start() -> void:
-	_sfxPlayer.spawn.play()
+	sfxPlayers.spawn.play()
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
 	_recordHistory = true
-	
+
 	# Spawn warnings before text is typed
 	if mode == "hectic":
 		_spawnHecticWarningWindows()
 	await _addRightText(textToAdd, true)
 
-	all_dialogue_text_visible.emit()	
+	all_dialogue_text_visible.emit()
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
-	
+
 	_spawnOptionWindows()
 	all_options_available.emit()
 	_forceTextInput()
-	
+
 	if _optionData.is_empty():
 		dialogueEnded = true
 		_forceTextInput()
 		return
-	
+
 	if mode == "hectic":
 		_startHecticCountdown()
 
@@ -224,11 +224,11 @@ func close() -> void:
 	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
 		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
 		return
-	
+
 	if not canBeClosed:
 		await _addRightText(exitRejectMessage)
 		return
-	
+
 	FR_MenuManager.enable()
 	_stopHecticMode()
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
@@ -251,18 +251,11 @@ func loadOptionData(options:Array) -> void:
 			printerr("DialogueConsole: Data for this entry is not a Dictionary.")
 			print("Entry data: ", option)
 			continue
-		
+
 		if StoryFlags.flagsMatch(option.checkFlags):
 			_optionData.push_back(option)
 
 	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
-
-## Loads the SFX event players with an audio ID, if given.
-func loadSfx(sfxEventsToLoad:Dictionary) -> void:
-	for eventID in _sfxPlayer.keys():
-		_sfxPlayer[eventID].stop()
-		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
-		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
 
 ## Adds a right text entry to the console.
 ## [br][br]
@@ -276,14 +269,14 @@ func addExternalEntry(message:String, metadata:Dictionary) -> void:
 	var tempSpeed:float = textWriteSpeed
 	var tempTheme:String = themeVariation.right
 	var tempBypass:bool = bypassTextWriting
-	
+
 	if metadata.has("writeSpeed") and typeof(metadata.writeSpeed) == TYPE_FLOAT:
 		textWriteSpeed = metadata.writeSpeed
 	if metadata.has("theme") and typeof(metadata.theme) == TYPE_STRING:
 		themeVariation.right = metadata.theme
 	if metadata.has("instant") and typeof(metadata.instant) == TYPE_BOOL:
 		bypassTextWriting = metadata.instant
-	
+
 	_addRightText(message)
 	textWriteSpeed = tempSpeed
 	themeVariation.right = tempTheme
@@ -297,64 +290,64 @@ func addExternalEntry(message:String, metadata:Dictionary) -> void:
 func _createLogEntry(alignment:HorizontalAlignment, addID:bool = false) -> RichTextLabel:
 	var entry:RichTextLabel = _LOG_ENTRY.instantiate()
 	entry.text = ""
-	
+
 	# just text alignment
 	#entry.horizontal_alignment = alignment
 	#_contentsStorage.add_child(entry)
-	
+
 	# node setup alignment
 	var holder:VBoxContainer = VBoxContainer.new()
 	var textHolder:HBoxContainer = HBoxContainer.new()
 	var spacer:Control = _LOG_ENTRY_SPACER.instantiate()
 	var idLabel:Label
-	
+
 	if addID:
 		idLabel = _LOG_ID_LABEL.instantiate()
 		idLabel.text = "[ID: " + currentDialogueID + "]"
 		holder.add_child(idLabel)
 	holder.add_child(textHolder)
 	_contentsStorage.add_child(holder)
-	
+
 	if alignment == HORIZONTAL_ALIGNMENT_LEFT:
 		textHolder.add_child(entry)
 		textHolder.add_child(spacer)
 	elif alignment == HORIZONTAL_ALIGNMENT_RIGHT:
 		textHolder.add_child(spacer)
 		textHolder.add_child(entry)
-	
+
 	_textInput.get_parent().move_to_front()
-	
+
 	return entry
 
 ## [b]Internal-use only.[/b]  Adds a text entry and displays it
 ## at [member textWriteSpeed] characters per second.
 func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:String, addID:bool) -> void:
 	_isWritingText = true
-	
+
 	var entry:RichTextLabel = _createLogEntry(alignment, addID)
 	entry.theme_type_variation = themeVar
 	entry.visible_characters = 0
 	entry.text = textToWrite
-	
+
 	# the below snippit fixes a bug where if the text length is small enough,
 	# the vertical spacing gets all weird.
 	if entry.text.length() < 5:
 		entry.text += "THIELF"
-	
-	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)	
+
+	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)
 	for _i in range(textToWrite.length()):
 		if bypassTextWriting:
 			entry.visible_characters = -1
 			bypassTextWriting = false
 			break
-		
+
 		entry.visible_characters += 1
 		_scrollToBottom()
-		if not _sfxPlayer.text.playing:
-			_sfxPlayer.text.play()
+		if not sfxPlayers.text.playing:
+			sfxPlayers.text.play()
 		await get_tree().create_timer(delay, false, true).timeout
 	_scrollToBottom()
-	
+
 	_isWritingText = false
 	_all_text_visible.emit()
 
@@ -363,17 +356,17 @@ func _addText(text:String, alignment:HorizontalAlignment, themeVar:String, addID
 	var entry:RichTextLabel = _createLogEntry(alignment, addID)
 	entry.theme_type_variation = themeVar
 	entry.text = text
-	
+
 	# the below snippit fixes a bug where if the text length is small enough,
 	# the vertical spacing gets all weird.
 	if entry.text.length() < (3 + _INPUT_PREFIX.length()):
 		entry.text += "THI"
 		entry.visible_characters = entry.text.length() - 3
-	
+
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]  Helper function to add text from the player to the console.
-func _addLeftText(text:String, addID:bool = false) -> void:	
+func _addLeftText(text:String, addID:bool = false) -> void:
 	_addText(_INPUT_PREFIX + text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left, addID)
 
 func _addLeftTextTyping(text:String, addID:bool = false) -> void:
@@ -388,26 +381,26 @@ func _addRightText(text:String, addID:bool = false) -> void:
 ## [b]Internal-use only.[/b]  Spawns the option windows.
 func _spawnOptionWindows() -> void:
 	_forceTextInput()
-	
+
 	var tempCounter:int = 0
 	var verticalOffset:float = 0
 	for optionData in _optionData:
 		var optionWindow:DialogueConsoleOptionWindow = FR_WindowManager.createDialogueOptionWindow()
-		
+
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.themeVariation = optionData.textThemePreset
-		optionWindow.loadSfx(optionData.sfx)
+		AudioLoader.loadSfxIntoPlayers(optionData.sfx, optionWindow.sfxPlayers)
 		optionWindow.data = optionData
 		_setOptionWindowPosition(optionWindow, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
-		
+
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()
 		tempCounter += 1
 		verticalOffset += optionWindow.size.y + _OPTION_SPAWN_OFFSET
-	
+
 	all_options_available.emit()
 
 func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset:float) -> void:
@@ -437,7 +430,7 @@ func _closeAllOptionWindows() -> void:
 	for optionWindow in _optionWindows:
 		optionWindow.close()
 	_optionWindows.clear()
-	
+
 ## [b]Internal-use only.[/b]  Forces the scroll bar to be moved to the bottom.
 func _scrollToBottom() -> void:
 	await get_tree().process_frame
@@ -479,29 +472,29 @@ func _handleCommand(command:String) -> void:
 		if id >= 0 and id < _optionData.size():
 			_chooseOption(_optionData[id])
 			return
-	
+
 	# command is an option text
 	for option in _optionData:
 		if command.to_lower() == option.text.to_lower():
 			_chooseOption(option)
 			return
-	
+
 	# else assume its an actual command
 	_addLeftText(command)
 	command = command.to_lower()
 	command_entered.emit(command)
 	_scrollToBottom()
-	
+
 	# TODO:  move help text definition to [InteractableNPC]
 	if command == "help":
 		await _addRightText(_helpText)
-	
+
 	elif command == "back":
 		_goBackOneDialogue()
-	
+
 	elif command == "exit":
 		close()
-	
+
 	elif command.begins_with("load "):
 		var nextID:String = command.replace("load ", "")
 		if nextID in ["_default_dialogue", "_default_option"]:
@@ -513,7 +506,7 @@ func _goBackOneDialogue() -> void:
 	if _dialogueHistory.size() <= 1:
 		await _addLeftTextTyping("[No saved history]")
 		return
-	
+
 	_dialogueHistory.pop_back()
 	_recordHistory = false
 	option_chosen.emit(_dialogueHistory.back())
@@ -539,10 +532,10 @@ func _on_input_submitted(input: String) -> void:
 		if input == "":
 			bypassTextWriting = true
 		return
-	
+
 	if input == "":
 		return
-	
+
 	_textInput.text = ""
 	var text := input.strip_edges()
 	_handleCommand(text)
@@ -554,7 +547,7 @@ func _on_hectic_timer_timeout() -> void:
 
 	_stopHecticMode()
 	_closeAllOptionWindows()
-	
+
 	if hecticFailureDialogueID == "":
 		printerr("DialogueConsole:  nextOnHecticFailureID not set for ", currentDialogueID)
 
