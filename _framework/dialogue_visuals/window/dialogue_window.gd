@@ -64,6 +64,11 @@ var headerText:String:
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
+## Is true when the player's cursor is hovering over the window.
+var _hovering:bool = false:
+	set(newState):
+		_hovering = newState
 ## [b]Internal-use only.[/b]  Is true when the player is holding the select button
 ## on this option (left mouse click).
 var _holdingSelect:bool = false
@@ -82,6 +87,12 @@ func _ready() -> void:
 	
 	if canBeClosed:
 		closeButton.pressed.connect(_on_close_button_pressed)
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	_hovering = _positionInWindow(get_global_mouse_position())
 
 func _gui_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
@@ -148,6 +159,14 @@ func close() -> void:
 ## Moves this window to the center of the screen immediately.
 func _center() -> void:
 	position = (get_viewport_rect().size - size) / 2
+
+func _positionInWindow(pos:Vector2) -> bool:
+	var corners:Dictionary = getGlobalCornerPositions()
+	
+	return (
+		pos.x > corners.topLeft.x and pos.x < corners.bottomRight.x and
+		pos.y > corners.topLeft.y and pos.y < corners.bottomRight.y
+	)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

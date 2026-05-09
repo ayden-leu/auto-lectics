@@ -25,6 +25,11 @@ func _ready() -> void:
 	super()
 	windowType = "warning_tile"
 
+func _process(_delta: float) -> void:
+	super(_delta)
+	if Engine.is_editor_hint():
+		return
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------

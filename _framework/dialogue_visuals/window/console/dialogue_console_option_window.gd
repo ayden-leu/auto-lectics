@@ -82,6 +82,11 @@ func _ready() -> void:
 	super()
 	windowType = "console_option"
 
+func _process(_delta: float) -> void:
+	super(_delta)
+	if Engine.is_editor_hint():
+		return
+
 func _gui_input(event: InputEvent) -> void:
 	super(event)
 
