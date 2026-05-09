@@ -35,7 +35,9 @@ signal finished_dialogue()
 ## If this InteractableNPC should only respond to interactions once.
 @export var _talkOnlyOnce:bool = true
 ## The dialogue tree ID of this InteractableNPC.
-## DIalogue trees are located in "dialogue_trees"
+## Dialogue trees are located in "dialogue_trees."
+## Internally, this is just a path to a folder within in "dialogue_trees,"
+## so "_test" and "_test/basic/one" are both valid. 
 @export var dialogueTreeID:String = ""
 ## The dialogue tree node to load when the player first interacts with this InteractableNPC.
 @export var initialDialogueID:String = ""

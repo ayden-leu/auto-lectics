@@ -83,7 +83,7 @@ metadata/_edit_lock_ = true
 
 [node name="test_basic_one" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.048841, 0.24217129, -28.610844)
-dialogueTreeID = "_test_basic_one"
+dialogueTreeID = "_test/basic/one"
 initialDialogueID = "start"
 lookAtInteractorWhileTalking = true
 internalID = "_test_basic_one"
@@ -96,7 +96,7 @@ text = "test_basic_one"
 
 [node name="test_basic_three" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -24.302195)
-dialogueTreeID = "_test_basic_three"
+dialogueTreeID = "_test/basic/three"
 initialDialogueID = "1"
 lookAtInteractorWhileTalking = true
 _dialogueBoxAttachMethod = 1
@@ -110,7 +110,7 @@ text = "test_basic_three"
 
 [node name="test_basic_long" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -19.823872)
-dialogueTreeID = "_test_basic_long"
+dialogueTreeID = "_test/basic/long"
 initialDialogueID = "1"
 internalID = "_test_basic_long"
 displayName = "Test Basic Long"
@@ -122,8 +122,12 @@ text = "test_basic_long"
 
 [node name="test_basic_one_patrolling" parent="NPCs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("16_ejbbu")]
 transform = Transform3D(0.9386556, 0, 0.34485584, 0, 1, 0, -0.34485584, 0, 0.9386556, -3.7907572, 0.24217081, -24.159853)
+dialogueTreeID = "_test/basic/one"
+initialDialogueID = "start"
 lookAtInteractorWhileTalking = true
 _dialogueBoxAttachMethod = 1
+internalID = "_test_basic_one"
+displayName = "Test Basic One"
 patrolEnabled = true
 patrolPath = NodePath("../../Path3D")
 metadata/_edit_group_ = true
@@ -134,10 +138,10 @@ text = "test_basic_one"
 
 [node name="test_basic_sfx" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -15.1764965)
-dialogueTreeID = "_test_basic_sfx"
+dialogueTreeID = "_test/sfx"
 initialDialogueID = "start"
-internalID = "_test_basic_sfx"
-displayName = "Test Basic SFX"
+internalID = "_test_sfx"
+displayName = "Test SFX"
 metadata/_edit_group_ = true
 
 [node name="Label3D" type="Label3D" parent="NPCs/test_basic_sfx"]
@@ -146,10 +150,10 @@ text = "test_basic_sfx"
 
 [node name="test_with_flags" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -11.36389)
-dialogueTreeID = "_test_with_flags"
+dialogueTreeID = "_test/flags"
 initialDialogueID = "start"
-internalID = "_test_with_flags"
-displayName = "Test With Flags"
+internalID = "_test_flags"
+displayName = "Test Flags"
 metadata/_edit_group_ = true
 
 [node name="Label3D" type="Label3D" parent="NPCs/test_with_flags"]
@@ -158,7 +162,7 @@ text = "test_with_flags"
 
 [node name="test_hectic" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -7.2722826)
-dialogueTreeID = "_test_hectic"
+dialogueTreeID = "_test/hectic"
 initialDialogueID = "start"
 internalID = "_test_hectic"
 displayName = "Test Hectic"
@@ -170,7 +174,7 @@ text = "test_hectic"
 
 [node name="test_text_theme" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, -3.7539544)
-dialogueTreeID = "_test_text_theme"
+dialogueTreeID = "_test/text_theme"
 initialDialogueID = "start"
 internalID = "_test_text_theme"
 displayName = "Test Text Theme"
@@ -182,7 +186,7 @@ text = "test_text_theme"
 
 [node name="test_loop_with_defaults" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 0.24604559)
-dialogueTreeID = "_test_loop_with_defaults"
+dialogueTreeID = "_test/loop_with_defaults"
 initialDialogueID = "start"
 internalID = "_test_loop_with_defaults"
 displayName = "Test Loop w/ Defaults"
@@ -194,11 +198,11 @@ text = "test_loop_with_defaults"
 
 [node name="test_basic_one_reject_exit" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 4.0199738)
-dialogueTreeID = "_test_basic_one"
+dialogueTreeID = "_test/basic/one"
 initialDialogueID = "start"
 rejectConsoleExit = true
 internalID = "_test_basic_one_reject_exit"
-displayName = "Test Close Reject"
+displayName = "Test Reject Exiit"
 metadata/_edit_group_ = true
 
 [node name="Label3D" type="Label3D" parent="NPCs/test_basic_one_reject_exit"]
