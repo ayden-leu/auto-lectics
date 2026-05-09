@@ -24,10 +24,15 @@ enum PathFollowMethod {
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The main model.  Not used for anything in the base NPC class, but may be used in classes or scripts that extend the NPC class.
+## The main model.
+## Not used for anything in the base NPC class, but may be used in classes or scripts that extend the NPC class.
 @export var model:Node3D
-## The name of the NPC.  Not used for anything in the base NPC class, but may be used in classes that extend the NPC class.
-@export var myName:String = ""
+## The internal ID of this NPC.
+## Used internally for other things.  Unused by the NPC class itself.
+@export var internalID:String = ""
+## The name of the NPC.
+## Used when this NPC's name needs to be displayed for something.  Unused the NPC class itself.
+@export var displayName:String = ""
 
 ## If this [NPC] should be able to move along its [member patrolPath].
 @export var patrolEnabled: bool = false:
@@ -203,7 +208,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not model:
 		warnings.push_back("This NPC doesn't have a model.")
 	
-	if myName == "":
+	if internalID == "":
+		warnings.push_back("This NPC doesn't have an internal ID yet.")
+	
+	if displayName == "":
 		warnings.push_back("This NPC doesn't have a name yet.")
 	
 	if patrolEnabled:

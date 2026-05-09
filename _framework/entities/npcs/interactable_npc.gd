@@ -29,12 +29,15 @@ signal finished_dialogue()
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The hitbox of this Interactable NPC.  Used to allow players to interact with
-## this [InteractableNPC].
+## The hitbox of this Interactable NPC.
+## Used to allow players to interact with this InteractableNPC.
 @export var _hitbox:Area3D
-## If this Interactable NPC should only respond to interactions once.
+## If this InteractableNPC should only respond to interactions once.
 @export var _talkOnlyOnce:bool = true
-## All dialogues belonging to this Interactable NPC will be under "dialogue_objects/[NPC name]"
+## The dialogue tree ID of this InteractableNPC.
+## DIalogue trees are located in "dialogue_trees"
+@export var dialogueTreeID:String = ""
+## The dialogue tree node to load when the player first interacts with this InteractableNPC.
 @export var initialDialogueID:String = ""
 ## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
 @export var lookAtInteractorWhileTalking:bool = false
@@ -162,7 +165,7 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 		return
 	_currentDialogueID = nextDialogueID
 	
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(myName, _currentDialogueID)
+	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	_loadDialogueConsoleData(dialogue)
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
@@ -315,6 +318,7 @@ const _DIALOGUE_BOX_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBox)
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+@export_subgroup("Deprecated")
 ## @deprecated
 ## Tells the game where to spawn a [DialogueBox] when a player interacts with the Interactable NPC.
 @export var _dialogueBoxAnchor:Marker3D
@@ -416,7 +420,7 @@ func _loadNextDialogueBox(nextDialogueID: String) -> void:
 	
 	_currentDialogueID = nextDialogueID
 	
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(myName, _currentDialogueID)
+	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	#print("dialogue data: ", dialogue)
 	_loadDialogueBoxData(dialogue)
 	_dialogueBox.start()

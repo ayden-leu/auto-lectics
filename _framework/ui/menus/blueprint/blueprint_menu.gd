@@ -116,7 +116,7 @@ func _loadNotes() -> void:
 
 ## [b]Internal-use only.[/b]  Determines if a given guess matches the name of the selected NPC entry.
 func _determineIfGuessMatchesSelectedEntry(guess:String) -> void:
-	var correctName:String = _selectedEntry.myName
+	var correctName:String = _selectedEntry.displayName
 	if guess.to_lower() == correctName.to_lower():
 		print("Correct name correctGuesses for ", _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = true
