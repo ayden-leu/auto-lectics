@@ -54,6 +54,8 @@ var _dialogueConsoleSubscribers:Array
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 
+func _ready() -> void:
+	print(_getCenter(Vector2.ZERO))
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -66,6 +68,7 @@ func createDialogueConsole() -> DialogueConsole:
 	_addWindow(dialogueConsole)
 	_cleanSubscriberList()
 	_resubscribeSubscribers()
+	dialogueConsole.global_position = _getCenter(dialogueConsole.size)
 	return dialogueConsole
 
 ## Kills the current [DialogueConsole].
@@ -281,8 +284,8 @@ func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
 	window.global_position.y = clamp(window.global_position.y, min_y, max_y)
 
 ## Moves this window to the center of the screen immediately.
-func _centerWindow(window:DialogueWindow) -> void:
-	window.global_position = (get_viewport().get_visible_rect().size - window.size) / 2
+func _getCenter(windowSize:Vector2) -> Vector2:
+	return (get_viewport().get_visible_rect().size - windowSize) / 2
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

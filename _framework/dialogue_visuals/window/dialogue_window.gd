@@ -214,10 +214,8 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## Moves this window to the center of the screen immediately.
-func _center() -> void:
-	position = (get_viewport_rect().size - size) / 2
-
+## [b]Internal-use only.[/b]
+## Returns true if the given position in within this window.
 func _positionInWindow(pos:Vector2) -> bool:
 	var corners:Dictionary = getGlobalCornerPositions()
 

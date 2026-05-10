@@ -155,7 +155,6 @@ func _ready() -> void:
 	super()
 	windowType = "console"
 
-	_center()
 	_hecticBar.visible = false
 	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
 
