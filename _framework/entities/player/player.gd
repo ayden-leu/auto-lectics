@@ -649,6 +649,8 @@ func _on_jump_pressed() -> void:
 	#if is_grappling:
 		#release_grapple()
 	if is_on_floor():
+		sfxPlayers.jump.stop()
+		sfxPlayers.jump.play()
 		jump()
 
 ## [b]Internal-use only.[/b] Handles logic for when palyer attempts to grapple hook

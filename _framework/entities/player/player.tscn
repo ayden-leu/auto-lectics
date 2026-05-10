@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=20 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
@@ -14,6 +14,8 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rh8r5"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_483v1"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ugyfj"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
 
@@ -51,8 +53,21 @@ sfxPlayers = {
 "grappleRecall": NodePath("SFX/grapple/Recall"),
 "grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
 "grappleThrow": NodePath("SFX/grapple/Throw"),
+"jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")
 }
+sfxIds = Dictionary[String, String]({
+"death": "",
+"grappleExtending": "",
+"grappleHitFail": "",
+"grappleHitSuccess": "",
+"grappleMaxRangeReached": "",
+"grappleRecall": "",
+"grappleRecallFinish": "",
+"grappleThrow": "",
+"jump": "",
+"respawn": ""
+})
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_hyl87")
@@ -96,6 +111,9 @@ stream = SubResource("AudioStreamRandomizer_rh8r5")
 
 [node name="Death" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_483v1")
+
+[node name="Jump" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_ugyfj")
 
 [node name="grapple" type="Node" parent="SFX"]
 
