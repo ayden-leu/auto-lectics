@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dw5goxjv6rm55"
-path="res://.godot/imported/Console Send.wav-53f5d951e7776aa79d19d3a3c05e204c.sample"
+path="res://.godot/imported/Console Send.wav-676657d520e41b0019bbad3e3485e6ba.sample"
 
 [deps]
 
-source_file="res://sounds/uiSFX/Console Send.wav"
-dest_files=["res://.godot/imported/Console Send.wav-53f5d951e7776aa79d19d3a3c05e204c.sample"]
+source_file="res://sounds/sfx/console_send/Console Send.wav"
+dest_files=["res://.godot/imported/Console Send.wav-676657d520e41b0019bbad3e3485e6ba.sample"]
 
 [params]
 

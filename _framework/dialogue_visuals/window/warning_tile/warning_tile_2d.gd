@@ -55,7 +55,7 @@ func updateOrigin(pos: Vector2) -> void:
 func _on_shake_timer_timeout() -> void:
 	if not shakingEnabled:
 		return
-	
+
 	_rng.randomize()
 	position = _origin + Vector2(
 		_rng.randf_range(-_shake_range.x, _shake_range.x),

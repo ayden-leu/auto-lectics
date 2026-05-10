@@ -171,7 +171,7 @@ func _ready() -> void:
 	super()
 	set_slot_color_left(0, PortColor.OPTION)
 	set_slot_type_left(0, PortType.OPTION)
-	
+
 	set_slot_color_right(1, PortColor.DIALOGUE)
 	set_slot_type_right(1, PortType.DIALOGUE)
 
@@ -192,37 +192,37 @@ func dialogueDisconnected() -> void:
 func _getFields() -> Dictionary:
 	if not textField:
 		return {"error": "textField not loaded"}
-	
+
 	var currentValues:Dictionary = {
 		"text": textField.value
 	}
-	
+
 	if type != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.type = type
-	
+
 	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.textThemePreset = textThemePreset
-	
+
 	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.writeSpeed = writeSpeedPreset
 		if currentValues.writeSpeed == "custom":
 			currentValues.writeSpeedCustom = writeSpeedValue
-	
+
 	if sfxEventAspects != {}:
 		currentValues.sfx = sfxEventAspects
-	
+
 	if spawnDelay >= 0:
 		currentValues.spawnDelay = spawnDelay
-	
+
 	if lifetime >= 0:
 		currentValues.lifetime = lifetime
-	
+
 	if nextID != "":
 		currentValues.nextID = nextID
-	
+
 	if setFlags != {}:
 		currentValues.setFlags = setFlags
-	
+
 	if checkFlags != {}:
 		currentValues.checkFlags = checkFlags
 
@@ -281,39 +281,39 @@ func _on_debug_pressed() -> void:
 	print("Port: ", port)
 	print("Text: ", text)
 	print("Type: ", type)
-	
+
 	if spawnDelay >= 0:
 		print("spawnDelay: ", spawnDelay)
-	
+
 	if lifetime >= 0:
 		print("lifetime: ", lifetime)
-	
+
 	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
 		print("Text Theme: ", textThemePreset)
-	
+
 	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		print("Write Speed Preset: ", writeSpeedPreset)
 		print("Write Speed Value: ", writeSpeedValue)
-	
+
 	var aspects:Dictionary = sfxEventAspects
 	if aspects != {}:
 		print("sfxAspects:")
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
-	
+
 
 	var currentSetFlags:Dictionary = setFlags
 	if currentSetFlags != {}:
 		print("setFlags:")
 		for flagID in currentSetFlags.keys():
 			print("\t", flagID, ": ", currentSetFlags[flagID])
-			
+
 	var currentCheckFlags:Dictionary = checkFlags
 	if currentCheckFlags != {}:
 		print("checkFlags:")
 		for flagID in currentCheckFlags.keys():
 			print("\t", flagID, ": ", currentCheckFlags[flagID])
-	
+
 	print("nextID: ", nextID)
 
 # ------------------------------------------------

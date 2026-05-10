@@ -3,6 +3,9 @@ extends DialogueWindow
 class_name DialogueConsoleOptionWindow
 ## [b]Internal-use only.[/b]  A dialogue option window that spawns when a user
 ## is able to continue a dialogue event.
+##
+## On top of the SFX events for [DialogueWindow], it comes with additional SFX events:[br]
+## - text:  plays when text is being written into a log entry.[br]
 
 # ------------------------------------------------
 # signals
@@ -27,11 +30,6 @@ signal option_selected(myself:DialogueConsoleOptionWindow)
 # ------------------------------------------------
 ## The label that denotes which "index" is associated with this option.
 @onready var contentsLabel:RichTextLabel = %ContentsLabel
-## Holds the AudioStreamPlayers for each event.
-@onready var _sfxPlayer:Dictionary[String, AudioStreamPlayer] = {
-	"spawn": %SFX/spawn,
-	"text": %SFX/text
-}
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -44,7 +42,7 @@ var id:int:
 	set(newID):
 		id = newID
 		_updateLabel()
-		
+
 		#if newID != 0:
 			#print("readd this?")
 			#$ColorRect2.visible = false
@@ -82,6 +80,11 @@ func _ready() -> void:
 	super()
 	windowType = "console_option"
 
+func _process(_delta: float) -> void:
+	super(_delta)
+	if Engine.is_editor_hint():
+		return
+
 func _gui_input(event: InputEvent) -> void:
 	super(event)
 
@@ -90,14 +93,7 @@ func _gui_input(event: InputEvent) -> void:
 # ------------------------------------------------
 ## Starts displaying the the loaded text in [member textToAdd].
 func start() -> void:
-	_sfxPlayer.spawn.play()
-
-## Loads the SFX event players with an audio ID, if given.
-func loadSfx(sfxEventsToLoad:Dictionary) -> void:
-	for eventID in _sfxPlayer.keys():
-		_sfxPlayer[eventID].stop()
-		AudioLoader.clearAudioRandomizer(_sfxPlayer[eventID].stream)
-		AudioLoader.loadSfxFromId(sfxEventsToLoad[eventID], _sfxPlayer[eventID].stream)
+	sfxPlayers.spawn.play()
 
 # ------------------------------------------------
 # functions only referenced inside this script

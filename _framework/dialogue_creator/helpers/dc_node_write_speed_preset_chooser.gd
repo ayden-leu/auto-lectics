@@ -43,7 +43,7 @@ func _ready() -> void:
 		if not addInherit and preset == "inherit":
 			continue
 		temp.push_back(preset)
-	
+
 	_fillValueToOptionIndex(temp)
 
 # ------------------------------------------------

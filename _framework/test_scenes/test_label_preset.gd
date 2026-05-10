@@ -21,14 +21,14 @@ func _getFilesInPath(path:String, type:String) -> Array[String]:
 	if not tempDirAccess:
 		printerr("Directory [", path, "] does not exist.")
 	tempDirAccess.list_dir_begin()
-	
+
 	var files:Array[String]
 	var entryName:String = tempDirAccess.get_next()
 	while entryName != "":
 		if not tempDirAccess.current_is_dir() and entryName.ends_with(type):
 			files.push_back(entryName)
 		entryName = tempDirAccess.get_next()
-	
+
 	files.sort()
 	return files
 

@@ -2,6 +2,9 @@
 @icon("uid://bbxaj8rh6jfm6")
 extends DialogueWindow
 class_name DialogueWarningTileWindow
+## A simple window that houses a [WarningTile2D].
+##
+## Comes with the SFX events for [DialogueWindow].
 
 # ------------------------------------------------
 # onready variables
@@ -25,12 +28,17 @@ func _ready() -> void:
 	super()
 	windowType = "warning_tile"
 
+func _process(_delta: float) -> void:
+	super(_delta)
+	if Engine.is_editor_hint():
+		return
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
 func enableTileShake() -> void:
 	tile.shakingEnabled = true
-	
+
 func disableTileShake() -> void:
 	tile.shakingEnabled = false
 

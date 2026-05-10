@@ -36,10 +36,10 @@ extends InteractableNPC
 # ------------------------------------------------
 func _ready() -> void:
 	super()  # runs the inherited class' _ready() function.
-	
+
 	if Engine.is_editor_hint():
 		return
-	
+
 	FR_WindowManager.subscribeToConsole(self)
 
 func _process(delta: float) -> void:
@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 # ------------------------------------------------
 func _on_console_option_chosen(nextID:String) -> void:
 	super(nextID)
-	
+
 	#if not isTalking:
 		#print(internalID + " isn't talking.")
 	#else:

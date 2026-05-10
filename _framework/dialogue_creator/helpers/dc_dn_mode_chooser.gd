@@ -40,7 +40,7 @@ signal set_hectic_port(on:bool)
 func _ready() -> void:
 	_fillValueToOptionIndex(DialogueDefaults.DIALOGUE_MODES)
 	hecticPortLabel.visible = false
-	
+
 	chosen = DialogueDefaults.DEFAULT_DIALOGUE.mode
 
 # ------------------------------------------------
@@ -64,7 +64,7 @@ func toggleHecticPort(on:bool) -> void:
 func _on_chooser_item_selected(index:int) -> void:
 	var isHectic:bool = (chooser.get_item_text(index) == "hectic")
 	toggleHecticPort(isHectic)
-	
+
 	super(index)
 
 # ------------------------------------------------

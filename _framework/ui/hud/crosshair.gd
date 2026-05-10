@@ -45,7 +45,7 @@ const SPRITE_INTERACTABLE:Resource = preload("uid://dtfn27ojmhrxx")
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	player.looking_at_interactable.connect(_on_player_looking_at_interactable)
 	player.no_longer_looking_at_interactable.connect(_on_player_no_longer_looking_at_interactable)
 
@@ -61,7 +61,7 @@ func _update_crosshair(canInteract: bool) -> void:
 	if canInteract:
 		crosshair.texture = SPRITE_INTERACTABLE
 		return
-	
+
 	crosshair.texture = SPRITE_NORMAL
 
 # ------------------------------------------------
@@ -80,9 +80,9 @@ func _on_player_no_longer_looking_at_interactable() -> void:
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if self != get_tree().edited_scene_root:
 		if not player:
 			warnings.push_back("Player is not set.")
-	
+
 	return warnings

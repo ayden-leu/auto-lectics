@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://s7xtvsqyd2lu"
-path="res://.godot/imported/Console Close.wav-9408d70271be74502b2d60d09a32021e.sample"
+path="res://.godot/imported/Console Close.wav-aca85d86e72606ca32be6ad8efd23540.sample"
 
 [deps]
 
-source_file="res://sounds/uiSFX/Console Close.wav"
-dest_files=["res://.godot/imported/Console Close.wav-9408d70271be74502b2d60d09a32021e.sample"]
+source_file="res://sounds/sfx/console_close/Console Close.wav"
+dest_files=["res://.godot/imported/Console Close.wav-aca85d86e72606ca32be6ad8efd23540.sample"]
 
 [params]
 

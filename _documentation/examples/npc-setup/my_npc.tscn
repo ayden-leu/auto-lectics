@@ -6,13 +6,10 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_8n0r2"]
 size = Vector3(2.1894531, 3.7757568, 2.258789)
 
-[node name="InteractableNPC" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
+[node name="InteractableNPC" type="Node3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_8n0r2")
-hitbox = NodePath("Area3D")
-dialogueBoxAnchor = NodePath("ThisAnchorWillMoveWithNPC")
 initialDialogueID = "Dialogue1a"
 model = NodePath("my_npc")
-myName = "NPC_Test"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
 
 [node name="my_npc" parent="." instance=ExtResource("2_ehkl3")]

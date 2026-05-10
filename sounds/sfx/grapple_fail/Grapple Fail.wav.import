@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://j0wjat81y4ua"
-path="res://.godot/imported/Grapple Fail.wav-4ca079c772fa5142fa9bccfe41bdc99d.sample"
+path="res://.godot/imported/Grapple Fail.wav-abd05b3335c2814235d7868d44bfe8e8.sample"
 
 [deps]
 
-source_file="res://sounds/sfx/Grapple Fail.wav"
-dest_files=["res://.godot/imported/Grapple Fail.wav-4ca079c772fa5142fa9bccfe41bdc99d.sample"]
+source_file="res://sounds/sfx/grapple_fail/Grapple Fail.wav"
+dest_files=["res://.godot/imported/Grapple Fail.wav-abd05b3335c2814235d7868d44bfe8e8.sample"]
 
 [params]
 

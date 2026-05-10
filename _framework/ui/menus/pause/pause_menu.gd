@@ -1,3 +1,4 @@
+@tool
 extends Menu
 
 # ------------------------------------------------
@@ -29,12 +30,13 @@ extends Menu
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 
-#var subMenu:Menu = preload("uid of menu scene")
-
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	menuID = "pause"
 	super()  # runs the inherited class' _ready() function.
 
@@ -52,14 +54,21 @@ func _ready() -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for resume button pressing.
 func _on_resume_pressed() -> void:
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	close()
 
 ## [b]Internal-use only.[/b]  Handles logic for options button pressing.
 func _on_options_pressed() -> void:
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	FR_MenuManager.openMenu("options")
 
 ## [b]Internal-use only.[/b]  Handles logic for blueprint button pressing.
 func _on_blueprint_button_pressed() -> void:
+	print("blueprint open")
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	FR_MenuManager.openMenu("blueprint")
 
 ## [b]Internal-use only.[/b]  Handles logic for quit button pressing.
@@ -70,3 +79,22 @@ func _on_quit_pressed() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+
+	for sfxEvent in sfxPlayers:
+		if sfxPlayers[sfxEvent] == null:
+			warnings.push_back(
+				"SFX player for event \"" + sfxEvent + "\" not set."
+			)
+		elif sfxPlayers[sfxEvent].stream == null:
+			warnings.push_back(
+				"SFX player for event \"" + sfxEvent + "\" doesn't have a resource set.  " +
+				"It should be a Randomizer resource."
+			)
+		elif sfxIds.get(sfxEvent) == null:
+			warnings.push_back(
+				"SFX event \"" + sfxEvent + "\" doesn't have an entry in SFX IDs."
+			)
+
+	return warnings

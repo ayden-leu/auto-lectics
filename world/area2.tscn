@@ -165,7 +165,6 @@ transform = Transform3D(2.4459057, -1.6227187, 8.7477154e-08, 9.256976e-09, -1.2
 [node name="exile" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("23_uf4jm")]
 transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 75.89146, 11.654917, 169.0174)
 initialDialogueID = "EB1"
-myName = "exile"
 patrolPath = NodePath("../Path3D")
 
 [node name="Path3D" type="Path3D" parent="npcs"]
@@ -189,10 +188,22 @@ transform = Transform3D(3.002941, 0, 2.543347, 0, 3.9352596, 0, -2.543347, 0, 3.
 transform = Transform3D(0.11958245, 0, -0.99282426, 0, 1, 0, 0.99282426, 0, 0.11958245, 136.21997, 3.6323833, 127.485344)
 _talkOnlyOnce = false
 
-[node name="Player" parent="." instance=ExtResource("32_eiahs")]
+[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("32_eiahs")]
 transform = Transform3D(0.77816635, 0, 0.62805825, 0, 1, 0, -0.62805825, 0, 0.77816635, 120.70497, 10.313862, 25.905254)
 maxSpeed = 13.4
 acceleration = 9.5
+sfxPlayers = {
+"death": NodePath("SFX/Death"),
+"grappleExtending": NodePath("SFX/grapple/Extending"),
+"grappleHitFail": NodePath("SFX/grapple/HitFail"),
+"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
+"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
+"grappleRecall": NodePath("SFX/grapple/Recall"),
+"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
+"grappleThrow": NodePath("SFX/grapple/Throw"),
+"jump": NodePath("SFX/Jump"),
+"respawn": NodePath("SFX/Respawn")
+}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_asqrq")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)

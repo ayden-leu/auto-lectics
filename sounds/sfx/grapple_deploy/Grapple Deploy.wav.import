@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://drt5esu3olxep"
-path="res://.godot/imported/Grapple Deploy.wav-4615a78946229aadbed4a1de6b87ccb4.sample"
+path="res://.godot/imported/Grapple Deploy.wav-63c50032c60dadc442235991be22450f.sample"
 
 [deps]
 
-source_file="res://sounds/sfx/Grapple Deploy.wav"
-dest_files=["res://.godot/imported/Grapple Deploy.wav-4615a78946229aadbed4a1de6b87ccb4.sample"]
+source_file="res://sounds/sfx/grapple_deploy/Grapple Deploy.wav"
+dest_files=["res://.godot/imported/Grapple Deploy.wav-63c50032c60dadc442235991be22450f.sample"]
 
 [params]
 

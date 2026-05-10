@@ -1,29 +1,55 @@
-[gd_scene load_steps=6 format=3 uid="uid://4opwac4ndc2k"]
+[gd_scene load_steps=10 format=3 uid="uid://4opwac4ndc2k"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_3lyu7"]
 [ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://_framework/dialogue_visuals/window/console/dialogue_console_option_window.gd" id="1_rh22u"]
 [ext_resource type="Theme" uid="uid://cn85v71yksayt" path="res://fonts/text_theme_presets.tres" id="3_bwvnm"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bwvnm"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ravhd"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bwvnm"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7agg0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_clp0v"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ouh73"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_febrp"]
 resource_local_to_scene = true
 playback_mode = 1
 
-[node name="DialogueOptionWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel")]
+[node name="DialogueOptionWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "sfxPlayers")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 300.0
 offset_bottom = 117.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_3lyu7")
 script = ExtResource("1_rh22u")
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HeaderLabel")
+sfxPlayers = {
+"click": NodePath("SFX/Click"),
+"close": NodePath("SFX/Close"),
+"drop": NodePath("SFX/Drop"),
+"hover": NodePath("SFX/Hover"),
+"spawn": NodePath("SFX/Spawn"),
+"text": NodePath("SFX/Text")
+}
+sfxIds = Dictionary[String, String]({
+"click": "_test_3",
+"close": "_test_3",
+"drop": "_test_3",
+"hover": "_test_3",
+"spawn": "_test_3",
+"text": "_test_3"
+})
 
 [node name="Header" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 38.0
+mouse_filter = 1
 theme_type_variation = &"PanelHeader"
 metadata/_edit_lock_ = true
 
@@ -42,6 +68,7 @@ layout_mode = 0
 offset_top = 38.0
 offset_right = 300.0
 offset_bottom = 117.0
+mouse_filter = 1
 
 [node name="ContentsLabel" type="RichTextLabel" parent="Contents"]
 unique_name_in_owner = true
@@ -50,6 +77,7 @@ offset_left = 6.0
 offset_top = 1.0
 offset_right = 294.0
 offset_bottom = 73.0
+mouse_filter = 1
 theme = ExtResource("3_bwvnm")
 text = "[0]"
 
@@ -66,12 +94,23 @@ theme_type_variation = &"ButtonOverlay"
 metadata/_edit_lock_ = true
 
 [node name="SFX" type="Node" parent="."]
-unique_name_in_owner = true
 
-[node name="spawn" type="AudioStreamPlayer" parent="SFX"]
+[node name="Spawn" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_bwvnm")
+
+[node name="Close" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_ravhd")
 
-[node name="text" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_bwvnm")
+[node name="Hover" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_7agg0")
+
+[node name="Click" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_clp0v")
+
+[node name="Drop" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_ouh73")
+
+[node name="Text" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_febrp")
 
 [connection signal="pressed" from="Button" to="." method="_on_pressed"]
