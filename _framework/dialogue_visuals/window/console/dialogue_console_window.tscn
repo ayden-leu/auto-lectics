@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8oqtsvu488a"]
+[gd_scene load_steps=16 format=3 uid="uid://b8oqtsvu488a"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_0et2d"]
 [ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/console/dialogue_console_window.gd" id="1_qw6ov"]
@@ -23,6 +23,10 @@ playback_mode = 1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pmfgf"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wd647"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vfcoi"]
+
 [node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxPlayers")]
 layout_mode = 3
 anchors_preset = 0
@@ -42,7 +46,9 @@ sfxPlayers = {
 "drop": NodePath("SFX/Drop"),
 "hover": NodePath("SFX/Hover"),
 "spawn": NodePath("SFX/Spawn"),
-"text": NodePath("SFX/Text")
+"text": NodePath("SFX/Text"),
+"userTextAdded": NodePath("SFX/Console/TextAdded"),
+"userTextSubmitted": NodePath("SFX/Console/TextSubmitted")
 }
 sfxIds = Dictionary[String, String]({
 "click": "",
@@ -51,7 +57,9 @@ sfxIds = Dictionary[String, String]({
 "drop": "",
 "hover": "",
 "spawn": "",
-"text": ""
+"text": "",
+"userTextAdded": "",
+"userTextSubmitted": ""
 })
 
 [node name="Header" type="Panel" parent="."]
@@ -201,6 +209,14 @@ stream = SubResource("AudioStreamRandomizer_hy2ou")
 
 [node name="CloseReject" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_pmfgf")
+
+[node name="Console" type="Node" parent="SFX"]
+
+[node name="TextAdded" type="AudioStreamPlayer" parent="SFX/Console"]
+stream = SubResource("AudioStreamRandomizer_wd647")
+
+[node name="TextSubmitted" type="AudioStreamPlayer" parent="SFX/Console"]
+stream = SubResource("AudioStreamRandomizer_vfcoi")
 
 [connection signal="text_changed" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_text_changed"]
 [connection signal="text_submitted" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_submitted"]

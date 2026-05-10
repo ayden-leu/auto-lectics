@@ -29,8 +29,6 @@ extends Menu
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 
-#var subMenu:Menu = preload("uid of menu scene")
-
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------

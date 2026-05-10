@@ -2,6 +2,19 @@
 extends CharacterBody3D
 class_name Player
 ## The main node that gets controlled by the player.
+##
+## The player can move around, interact with interactables, and use a grappling hook.
+## [br][br]
+## Comes with the following SFX events:[br]
+## - respawn:  plays when the player respawns.[br]
+## - death:    plays when the player dies.[br]
+## - grappleThrow:      plays when the player throws the grappling hook.[br]
+## - grappleExtending:  plays when the grappling hook is extending.[br]
+## - grappleRecall:     plays when the grappling hook is begin recalled.[br]
+## - grappleRecallFinish:  plays when the grappling hook is finished recalling.[br]
+## - grappleHitSuccess:    plays when the grappling hook hits a hookable target.[br]
+## - grappleHitFail        plays when the grappling hook hits an unhookable target.[br]
+## - grappleMaxRangeReached:  plays when the grappling hook reaches its max throw range.[br]
 
 # ------------------------------------------------
 # signals

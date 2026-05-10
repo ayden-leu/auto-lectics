@@ -8,6 +8,8 @@ class_name DialogueConsole
 ## - text:  plays when text is being written into a log entry.[br]
 ## - closeReject:  plays when the DialogueConsole cannot be closed
 ## and something tries to close it.[br]
+## - userTextAdded:  plays when player adds text to the [member _textInput].
+## - userTextSubmitted:  plays when the player submits text in the [member _textInput].
 
 # ------------------------------------------------
 # signals
@@ -524,6 +526,8 @@ func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated
 func _on_input_text_changed(_new_text: String) -> void:
+	sfxPlayers.userTextAdded.stop()
+	sfxPlayers.userTextAdded.play()
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]
@@ -537,6 +541,8 @@ func _on_input_submitted(input: String) -> void:
 	if input == "":
 		return
 
+	sfxPlayers.userTextSubmitted.stop()
+	sfxPlayers.userTextSubmitted.play()
 	_textInput.text = ""
 	var text := input.strip_edges()
 	_handleCommand(text)
