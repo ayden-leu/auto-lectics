@@ -124,6 +124,8 @@ func _determineIfGuessMatchesSelectedEntry(guess:String) -> void:
 	if guess.to_lower() == correctName.to_lower():
 		print("Correct name correctGuesses for ", _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = true
+		sfxPlayers.entryGuessedCorrectly.stop()
+		sfxPlayers.entryGuessedCorrectly.play()
 		npc_name_guessed_correctly.emit(_selectedEntry.npcID)
 	else:
 		print("Incorrect name for ", _selectedEntry.npcID)

@@ -521,7 +521,7 @@ func _goBackOneDialogue() -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when an option window is selected.
 func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
-	_chooseOption(chosenOptionWindow.data)
+	_on_input_submitted(chosenOptionWindow.text)
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated

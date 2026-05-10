@@ -37,12 +37,12 @@ sfxPlayers = {
 "text": NodePath("SFX/Text")
 }
 sfxIds = Dictionary[String, String]({
-"click": "_test_3",
-"close": "_test_3",
-"drop": "_test_3",
-"hover": "_test_3",
-"spawn": "_test_3",
-"text": "_test_3"
+"click": "",
+"close": "",
+"drop": "",
+"hover": "",
+"spawn": "",
+"text": ""
 })
 
 [node name="Header" type="Panel" parent="."]
