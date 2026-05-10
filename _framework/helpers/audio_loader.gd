@@ -42,10 +42,10 @@ static func clearAudioRandomizer(audioStream:AudioStreamRandomizer) -> void:
 ## [codeblock]
 ## {
 ## 	"eventID1": "sfxID1",
-## 	"eventID2": "sfxID2"
+## 	"eventID2": "sfxID2",
 ## }
 ## [/codeblock]
-## [br][br]
+## [br]
 ## Dictionary setup for [code]sfxPlayers[/code]:
 ## [codeblock]
 ## {

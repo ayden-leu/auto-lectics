@@ -18,6 +18,7 @@ signal no_longer_looking_at_interactable()
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 
 # ------------------------------------------------
 # export variables
@@ -72,6 +73,34 @@ signal no_longer_looking_at_interactable()
 ## Max angle which the camera can turn to; prevents flipping at top
 @export var maxPitchDegrees := 89.0
 
+@export_group("SFX Events")
+## Holds all of the [AudioStreamPlayer]s for each SFX event.
+@export var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
+	"respawn": null,
+	"death": null,
+	"grappleThrow": null,
+	"grappleExtending": null,
+	"grappleRecall": null,
+	"grappleRecallFinish": null,
+	"grappleHitSuccess": null,
+	"grappleHitFail": null,
+	"grappleMaxRangeReached": null
+}
+## Holds the SFX ID for each SFX event.
+## [br]
+## If you plan to load audio into a SFX event through another way, you can leave it blank.
+@export var sfxIds:Dictionary[String, String] = {
+	"respawn": "",
+	"death": "",
+	"grappleThrow": "",
+	"grappleExtending": "",
+	"grappleRecall": "",
+	"grappleRecallFinish": "",
+	"grappleHitSuccess": "",
+	"grappleHitFail": "",
+	"grappleMaxRangeReached": ""
+}
+
 @export_group("Grapple")
 ## Set whether grappling is possible or not
 @export var grapple_enabled: bool = true
@@ -96,11 +125,6 @@ signal no_longer_looking_at_interactable()
 @onready var _interactionRaycast:RayCast3D = %InteractionRaycast
 ## [b]Internal-use only.[/b]  The fade overlay.
 @onready var _overlay = %FadeToBlackOverlay
-## [b]Internal-use only.[/b]  The [AudioStreamPlayer]s that play sound events.
-@onready var sfxPlayers:Dictionary = {
-	"respawn": %SFX/respawn,
-	"death": %SFX/death
-}
 ## [b]Internal-use only.[/b] The visual for the line to the grapple point
 @onready var grapple_line: MeshInstance3D = $GrappleVisuals/GrappleLine
 ## [b]Internal-use only.[/b] The visual for the hook at the grapple point
@@ -152,6 +176,8 @@ var _lastValidPosition: Vector3
 static var _frozen:bool = false
 ## If the player's inputs are disabled.
 static var _inputDisabled: bool = false
+## If the player is currently respawning or not.
+var _respawning:bool = false
 
 # ------------------------------------------------
 ## Grapple hook variables
@@ -171,11 +197,11 @@ var grapple_active: bool = false
 ## Track whether the hook is currently retracting
 var grapple_retracting: bool = false
 ## Track the target for the hook to fly to, even if no valid grapple point exists
-var grapple_target: Vector3
+var grapple_target:Node3D
 ## Track the current location of the hook
 var grapple_current: Vector3
 ## Track whether the hook's target is valid
-var grapple_invalid: bool = false
+var grapple_valid: bool = false
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -188,8 +214,7 @@ func _ready() -> void:
 	grapple_hook.visible = false
 	_recomputeJumpParameters()
 
-	AudioLoader.loadSfxFromId("respawn", sfxPlayers.respawn.stream)
-	AudioLoader.loadSfxFromId("death", sfxPlayers.death.stream)
+	AudioLoader.loadSfxIntoPlayers(sfxIds, sfxPlayers)
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -240,14 +265,21 @@ func respawnForce():
 
 ## Puts player at [member _lastValidPosition], but only after the fade in.
 func respawn() -> void:
+	if _respawning:
+		return
+
+	_respawning = true
+	sfxPlayers.death.stop()
 	sfxPlayers.death.play()
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
 
 	await get_tree().create_timer(respawnDelay).timeout
 
+	_respawning = false
 	respawnForce()
 	_overlay.startFadeOut()
+	sfxPlayers.respawn.stop()
 	sfxPlayers.respawn.play()
 
 # ------------------------------------------------
@@ -370,19 +402,24 @@ func throw_grapple() -> void:
 	query.collide_with_areas = false
 	query.collide_with_bodies = true
 	var result := get_world_3d().direct_space_state.intersect_ray(query)
-	grapple_invalid = false
+	grapple_valid = false
+
+	var endPoint:Marker3D = GRAPPLE_END_POINT.instantiate()
+	get_parent().add_child(endPoint)
+	grapple_target = endPoint
 
 	# No target to hit
 	if result.is_empty():
-		grapple_target = to
-
+		endPoint.global_position = to
+		endPoint.isInAir = true
 	# Target is in range of grapple hook
 	else:
-		grapple_target = result.position
+		endPoint.global_position = result.position
+		endPoint.isInAir = false
 		# Check is target is marked as ungrappleable
 		var collider: Node = result.get("collider")
 		if !_is_ungrappleable(collider):
-			grapple_invalid = true
+			grapple_valid = true
 
 	# Set variables to start sending hook out
 	grapple_current = from
@@ -391,6 +428,9 @@ func throw_grapple() -> void:
 	grapple_hook.global_position = grapple_current
 	grapple_hook.visible = true
 	grapple_line.visible = true
+
+	sfxPlayers.grappleThrow.stop()
+	sfxPlayers.grappleThrow.play()
 
 
 ## Checks if target object is ungrappleable
@@ -408,20 +448,39 @@ func _update_grapple_projectile_visual(delta: float) -> void:
 
 	# Case: hook is moving to target
 	if !grapple_retracting:
-		grapple_current = grapple_current.move_toward(grapple_target, grapple_hook_speed * delta)
+		grapple_current = grapple_current.move_toward(grapple_target.global_position, grapple_hook_speed * delta)
 		grapple_hook.global_position = grapple_current
 		_update_rope_between(start, grapple_current)
+
+		if not sfxPlayers.grappleExtending.playing:
+			sfxPlayers.grappleExtending.stop()
+			sfxPlayers.grappleExtending.play()
+
 		# When grapple reaches target
-		if grapple_current.distance_to(grapple_target) <= 0.05:
-			if grapple_invalid:
-				_attach_grapple(grapple_target)
+		if grapple_current.distance_to(grapple_target.global_position) <= 0.05:
+			if grapple_valid:
+				sfxPlayers.grappleHitSuccess.stop()
+				sfxPlayers.grappleHitSuccess.play()
+				_attach_grapple(grapple_target.global_position)
 			else:
+				if grapple_target.isInAir:
+					sfxPlayers.grappleMaxRangeReached.stop()
+					sfxPlayers.grappleMaxRangeReached.play()
+				else:
+					sfxPlayers.grappleHitFail.stop()
+					sfxPlayers.grappleHitFail.play()
 				grapple_retracting = true
+
 	# Case: hook is moving back to player
 	else:
 		grapple_current = grapple_current.move_toward(start, grapple_hook_speed * delta)
 		grapple_hook.global_position = grapple_current
 		_update_rope_between(start, grapple_current)
+
+		if not sfxPlayers.grappleRecall.playing:
+			sfxPlayers.grappleRecall.stop()
+			sfxPlayers.grappleRecall.play()
+
 		# hook reaches player
 		if grapple_current.distance_to(start) <= 0.05:
 			_hide_grapple_visuals()
@@ -522,9 +581,12 @@ func _update_grapple_visuals() -> void:
 ## De-attach grapple hook from surface
 func release_grapple() -> void:
 	is_grappling = false
-	grapple_invalid = false
+	grapple_valid = false
 	grapple_active = true
 	grapple_retracting = true
+
+	sfxPlayers.grappleRecall.stop()
+	sfxPlayers.grappleRecall.play()
 
 
 ## End grapple hook sequence when it returns to player
@@ -533,6 +595,9 @@ func _hide_grapple_visuals() -> void:
 	grapple_retracting = false
 	grapple_hook.visible = false
 	grapple_line.visible = false
+
+	sfxPlayers.grappleRecallFinish.stop()
+	sfxPlayers.grappleRecallFinish.play()
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -604,3 +669,22 @@ func _on_input_handler_respawn() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+
+	for sfxEvent in sfxPlayers:
+		if sfxPlayers[sfxEvent] == null:
+			warnings.push_back(
+				"SFX player for event \"" + sfxEvent + "\" not set."
+			)
+		elif sfxPlayers[sfxEvent].stream == null:
+			warnings.push_back(
+				"SFX player for event \"" + sfxEvent + "\" doesn't have a resource set.  " +
+				"It should be a Randomizer resource."
+			)
+		elif sfxIds.get(sfxEvent) == null:
+			warnings.push_back(
+				"SFX event \"" + sfxEvent + "\" doesn't have an entry in SFX IDs."
+			)
+
+	return warnings
