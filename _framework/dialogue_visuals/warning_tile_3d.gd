@@ -94,7 +94,7 @@ func _shake() -> void:
 	_rng.randomize()
 	var offsetX = _rng.randf_range(-_OFFSET_RANGE.x, _OFFSET_RANGE.x)
 	var offsetY = _rng.randf_range(-_OFFSET_RANGE.y, _OFFSET_RANGE.y)
-	
+
 	_background.position.x = offsetX * radius/0.6
 	_background.position.y = offsetY * radius/0.6
 

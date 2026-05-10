@@ -72,7 +72,7 @@ func _on_start_console_hectic_mode_pressed() -> void:
 	if not FR_WindowManager.dialogueConsole:
 		printerr("Dialogue Console hasn't been created.")
 		return
-	
+
 	FR_WindowManager.dialogueConsole.mode = "hectic"
 	FR_WindowManager.dialogueConsole.textToAdd = "Starting Hectic Mode"
 	FR_WindowManager.dialogueConsole.start()
@@ -85,7 +85,7 @@ func _on_push_message_to_console_pressed() -> void:
 		meta.theme = %MessageTheme.text
 	if %PassInstant.button_pressed:
 		meta.instant = %MessageInstant.button_pressed
-	
+
 	FR_WindowManager.pushMessageToConsole(%MessageToConsole.text, meta)
 
 # ------------------------------------------------

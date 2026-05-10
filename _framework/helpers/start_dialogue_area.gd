@@ -49,10 +49,10 @@ func _on_area_entered(area:Area3D) -> void:
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if not interactableNpcToInitiate:
 		warnings.push_back(
 			"An InteractableNPC is not set."
 		)
-	
+
 	return warnings

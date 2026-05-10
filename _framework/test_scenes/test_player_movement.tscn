@@ -147,6 +147,7 @@ sfxPlayers = {
 "grappleRecall": NodePath("SFX/grapple/Recall"),
 "grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
 "grappleThrow": NodePath("SFX/grapple/Throw"),
+"jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")
 }
 

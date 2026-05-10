@@ -42,18 +42,18 @@ var expanded:bool = false:
 # ------------------------------------------------
 func _ready() -> void:
 	expanded = false
-	
+
 	%NodeTypeChooser.chosen = DialogueDefaults.DEFAULT_DIALOGUE.type
 	%NodeTextThemeChooser.chosen = DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset
 	%NodeWriteSpeedPresetChooser.chosen = DialogueDefaults.DEFAULT_DIALOGUE.writeSpeed
 	%NodeWriteSpeedValueField.value = DialogueDefaults.DEFAULT_DIALOGUE.writeSpeedCustom
 	%NodeSfxAspects.configuredEvents = DialogueDefaults.DEFAULT_DIALOGUE.sfx
-	
+
 	%OptionTypeChooser.chosen = DialogueDefaults.DEFAULT_OPTION.type
 	%OptionSpawnDelayField.value = DialogueDefaults.DEFAULT_OPTION.spawnDelay
 	%OptionLifetimeField.value = DialogueDefaults.DEFAULT_OPTION.lifetime
 	%OptionWriteSpeedPresetChooser.chosen = DialogueDefaults.DEFAULT_OPTION.writeSpeed
-	%OptionWriteSpeedValueField.value = DialogueDefaults.DEFAULT_OPTION.writeSpeedCustom	
+	%OptionWriteSpeedValueField.value = DialogueDefaults.DEFAULT_OPTION.writeSpeedCustom
 	%OptionTextThemeChooser.chosen = DialogueDefaults.DEFAULT_OPTION.textThemePreset
 	%OptionSfxAspects.configuredEvents = DialogueDefaults.DEFAULT_OPTION.sfx
 
@@ -62,7 +62,7 @@ func _ready() -> void:
 # ------------------------------------------------
 func getDialogueFields() -> Dictionary:
 	var result:Dictionary = {}
-	
+
 	if %NodeTypeChooser.chosen != DialogueDefaults.DEFAULT_DIALOGUE.type:
 		result.type = %NodeTypeChooser.chosen
 	if %NodeTextThemeChooser.chosen != DialogueDefaults.DEFAULT_DIALOGUE.textThemePreset:
@@ -74,7 +74,7 @@ func getDialogueFields() -> Dictionary:
 			result.writeSpeedCustom = %NodeWriteSpeedValueField.value
 	if %NodeSfxAspects.configuredEvents != DialogueDefaults.DEFAULT_DIALOGUE.sfx:
 		result.sfx = %NodeSfxAspects.configuredEvents
-	
+
 	return result
 
 func loadDialogueFields(data:Dictionary) -> void:
@@ -91,7 +91,7 @@ func loadDialogueFields(data:Dictionary) -> void:
 
 func getOptionFields() -> Dictionary:
 	var result:Dictionary = {}
-	
+
 	if %OptionTypeChooser.chosen != DialogueDefaults.DEFAULT_OPTION.type:
 		result.type = %OptionTypeChooser.chosen
 	if %OptionTextThemeChooser.chosen != DialogueDefaults.DEFAULT_OPTION.textThemePreset:
@@ -107,7 +107,7 @@ func getOptionFields() -> Dictionary:
 		result.spawnDelay = %OptionSpawnDelayField.value
 	if %OptionLifetimeField.value != DialogueDefaults.DEFAULT_OPTION.lifetime:
 		result.lifetime = %OptionLifetimeField.value
-	
+
 	return result
 
 func loadOptionFields(data:Dictionary) -> void:

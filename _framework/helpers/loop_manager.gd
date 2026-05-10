@@ -70,14 +70,14 @@ var _timer:Timer:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	_overlayAlphaVisible = _overlay.color.a
 	_overlay.color.a = 0
 	_overlay.visible = true
 	_connectSignals()
 	_createLoopTimer()
 	_configureTimer()
-	
+
 	if not manual:
 		_timer.start()
 
@@ -90,14 +90,14 @@ func performReset() -> void:
 	_loopBeingReset = true
 	resetting.emit()
 	await _fadeOverlay(true)
-	
+
 	#print("faded in")
 	faded_in.emit()
 	await get_tree().create_timer(timeHoldFade).timeout
-	
+
 	#print("fade held")
 	await _fadeOverlay(false)
-	
+
 	#print("faded out")
 	faded_out.emit()
 	_loopBeingReset = false
@@ -121,11 +121,11 @@ func _fadeOverlay(fadingIn:bool) -> void:
 	_overlay.visible = true
 	var tween:Tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	var finalVal:float = _overlayAlphaVisible if fadingIn else 0.0
-	
+
 	tween.tween_property(
 		_overlay, "color:a", finalVal, timeFadeOut
 	)
-	
+
 	await tween.finished
 
 ## [b]Internal-use only.[/b]  Connects all signals to all nodes who need to know about them.
@@ -149,9 +149,9 @@ func _on_loop_timer_timeout() -> void:
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if self != get_tree().edited_scene_root:
 		if _overlay == null:
 			warnings.push_back("Overlay not assigned.")
-	
+
 	return warnings

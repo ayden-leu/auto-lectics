@@ -44,7 +44,7 @@ var separator:VSeparator
 ##
 ## # Get the flag ID this field configures
 ## print(flagField.flagID)  # output: "testFlag"
-## 
+##
 ## # Set the flag ID this field configures
 ## flagField.flagID = "someOtherFlag"
 ## [/codeblock]
@@ -66,7 +66,7 @@ var flagID:String:
 ##
 ## # Get the flag ID this field configures
 ## print(flagField.enabled)  # output: false
-## 
+##
 ## # Set the flag ID this field configures
 ## flagField.enabled = true
 ## [/codeblock]
@@ -79,7 +79,7 @@ var enabled:bool:
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  The previous flag ID that this field handled. 
+## [b]Internal-use only.[/b]  The previous flag ID that this field handled.
 var _prevSelectedFlagID:String
 
 # ------------------------------------------------
@@ -98,7 +98,7 @@ func _delete() -> void:
 	removing.emit(self)
 	separator.queue_free()
 	queue_free()
-	
+
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -106,14 +106,14 @@ func _delete() -> void:
 ## [b]Internal-use only.[/b]  Runs when the remove button is pressed.
 func _on_remove_button_pressed() -> void:
 	_delete()
-	
+
 ## [b]Internal-use only.[/b]  Runs when either [DC_CheckFlagAspects] or [DC_SetFlagAspects]
 ## wants to update all flag fields about which flags are available to choose.
 func _on_update_available_flags(availableFlags:Array[String]) -> void:
 	var tempCopy:Array[String] = availableFlags.duplicate()
 	if flagID:
 		tempCopy.push_front(flagID)
-	
+
 	_valueToOptionIndex = {}
 	for _i in range(chooser.item_count):
 		chooser.remove_item(0)
