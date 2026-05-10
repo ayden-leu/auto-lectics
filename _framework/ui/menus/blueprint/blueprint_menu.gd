@@ -1,3 +1,4 @@
+@tool
 extends Menu
 class_name BlueprintMenu
 
@@ -55,6 +56,9 @@ var _loadingNotes := false
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	menuID = "blueprint"
 	pausesGame = false
 	super()
@@ -166,6 +170,8 @@ func _updateEntryVisibility() -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for when an NPC entry is selected.
 func _on_npc_entry_selected(entry:BlueprintMenuNpcEntry) -> void:
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	print("Selected NPC from menu: ", entry.npcID)
 	_selectedEntry = entry
 	_showDetails()
@@ -176,6 +182,9 @@ func _on_npc_entry_name_submission() -> void:
 		return
 	if _selectedEntry.unlocked:
 		return
+
+	sfxPlayers.entryNameSubmitted.stop()
+	sfxPlayers.entryNameSubmitted.play()
 
 	var submittedName:String = _guessNpcNameField.text.strip_edges()
 	_guessNpcNameField.text = ""
@@ -195,16 +204,27 @@ func _on_notes_field_text_changed() -> void:
 	if _selectedEntry == null:
 		return
 
+	sfxPlayers.notesFieldTextUpdated.stop()
+	sfxPlayers.notesFieldTextUpdated.play()
+
 	_selectedEntry.notes = _notesField.text
+
+func _on_guess_npc_name_field_text_changed(_new_text: String) -> void:
+	sfxPlayers.guessNpcNameTextChanged.stop()
+	sfxPlayers.guessNpcNameTextChanged.play()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the previous page button is pressed.
 func _on_prev_page_button_pressed() -> void:
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	if _currentPage > 0:
 		_currentPage -= 1
 		_updateEntryVisibility()
 
 ## [b]Internal-use only.[/b]  Handles logic for whene the next page button is pressed.
 func _on_next_page_button_pressed() -> void:
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	var max_page = int(ceil(float(_npcEntries.size()) / _npcEntriesPerPage)) - 1
 	if _currentPage < max_page:
 		_currentPage += 1
@@ -212,6 +232,8 @@ func _on_next_page_button_pressed() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when the NPC entry details panel is closed.
 func _on_close_detail_button_pressed() -> void:
+	sfxPlayers.buttonPressed.stop()
+	sfxPlayers.buttonPressed.play()
 	_selectedEntry = null
 	_hideDetails()
 

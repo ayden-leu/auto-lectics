@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cua3xma2ni574"
-path="res://.godot/imported/dfall.wav-c53138682358bf93c033bccc37d156e0.sample"
+uid="uid://b4jlhjw07n6d3"
+path="res://.godot/imported/test1.wav-ee99a6cdefc7f0ba195b84370e5b8735.sample"
 
 [deps]
 
-source_file="res://sounds/sfx/death/dfall.wav"
-dest_files=["res://.godot/imported/dfall.wav-c53138682358bf93c033bccc37d156e0.sample"]
+source_file="res://sounds/sfx/_test_1/test1.wav"
+dest_files=["res://.godot/imported/test1.wav-ee99a6cdefc7f0ba195b84370e5b8735.sample"]
 
 [params]
 

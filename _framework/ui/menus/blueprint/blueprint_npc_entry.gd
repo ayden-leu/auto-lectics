@@ -31,8 +31,8 @@ signal selected(me:BlueprintMenuNpcEntry)
 @export var entryTextureLocked:Texture2D:
 	set(newTexture):
 		entryTextureLocked = newTexture
-		if not Engine.is_editor_hint():  await ready
-		_button.texture_normal = newTexture
+		if _button:
+			_button.texture_normal = newTexture
 ## The image that appears in the details panel.
 @export var portraitTexture: Texture2D
 
@@ -70,9 +70,13 @@ var unlocked:bool = false
 # ------------------------------------------------
 func _ready() -> void:
 	if Engine.is_editor_hint():
+		_button.texture_normal = entryTextureLocked
 		return
 
 	lock()
+
+func _exit_tree() -> void:
+	request_ready()
 
 # ------------------------------------------------
 # functions referenced outside of this script
