@@ -89,31 +89,33 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 @export_group("SFX Events")
 ## Holds all of the [AudioStreamPlayer]s for each SFX event.
 @export var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
+	"jump": null,
 	"respawn": null,
 	"death": null,
 	"grappleThrow": null,
 	"grappleExtending": null,
+	"grappleRecallStart": null,
 	"grappleRecall": null,
 	"grappleRecallFinish": null,
 	"grappleHitSuccess": null,
 	"grappleHitFail": null,
-	"grappleMaxRangeReached": null,
-	"jump": null
+	"grappleMaxRangeReached": null
 }
 ## Holds the SFX ID for each SFX event.
 ## [br]
 ## If you plan to load audio into a SFX event through another way, you can leave it blank.
 @export var sfxIds:Dictionary[String, String] = {
+	"jump": "",
 	"respawn": "",
 	"death": "",
 	"grappleThrow": "",
 	"grappleExtending": "",
+	"grappleRecallStart": "",
 	"grappleRecall": "",
 	"grappleRecallFinish": "",
 	"grappleHitSuccess": "",
 	"grappleHitFail": "",
-	"grappleMaxRangeReached": "",
-	"jump": ""
+	"grappleMaxRangeReached": ""
 }
 
 @export_group("Grapple")

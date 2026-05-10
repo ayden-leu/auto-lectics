@@ -146,11 +146,11 @@ sfxPlayers = {
 "grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
 "grappleRecall": NodePath("SFX/grapple/Recall"),
 "grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
+"grappleRecallStart": NodePath("SFX/grapple/RecallStart"),
 "grappleThrow": NodePath("SFX/grapple/Throw"),
 "jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")
 }
-grapple_hook_speed = 1.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 focus = NodePath("../Player")

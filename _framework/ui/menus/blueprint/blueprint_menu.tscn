@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=15 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
@@ -20,6 +20,8 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uwm47"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fdulq"]
+
 [node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxPlayers")]
 layout_mode = 3
 anchors_preset = 15
@@ -29,9 +31,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
+_numNeededBeforeUnlocking = 1
 sfxPlayers = {
 "buttonPressed": NodePath("SFX/ButtonPressed"),
 "close": NodePath("SFX/Close"),
+"entryGuessedCorrectly": NodePath("SFX/EntryGuessedCorrectly"),
 "entryNameSubmitted": NodePath("SFX/EntryNameSubmitted"),
 "guessNpcNameTextChanged": NodePath("SFX/GuessNpcNameTextChanged"),
 "notesFieldTextUpdated": NodePath("SFX/NotesFieldTextUpdated"),
@@ -40,6 +44,7 @@ sfxPlayers = {
 sfxIds = Dictionary[String, String]({
 "buttonPressed": "",
 "close": "",
+"entryGuessedCorrectly": "yippee",
 "entryNameSubmitted": "",
 "guessNpcNameTextChanged": "",
 "notesFieldTextUpdated": "",
@@ -295,6 +300,9 @@ stream = SubResource("AudioStreamRandomizer_2s35j")
 
 [node name="GuessNpcNameTextChanged" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_uwm47")
+
+[node name="EntryGuessedCorrectly" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_fdulq")
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]

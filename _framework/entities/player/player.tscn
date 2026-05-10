@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=25 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
@@ -13,15 +13,17 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ugyfj"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rh8r5"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_483v1"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ugyfj"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
 
@@ -62,6 +64,7 @@ sfxPlayers = {
 "grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
 "grappleRecall": NodePath("SFX/grapple/Recall"),
 "grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
+"grappleRecallStart": NodePath("SFX/grapple/RecallStart"),
 "grappleThrow": NodePath("SFX/grapple/Throw"),
 "jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")
@@ -74,7 +77,8 @@ sfxIds = Dictionary[String, String]({
 "grappleMaxRangeReached": "",
 "grappleRecall": "grapple_return",
 "grappleRecallFinish": "grapple_return_finish",
-"grappleThrow": "",
+"grappleRecallStart": "grapple_return_start",
+"grappleThrow": "grapple_deploy",
 "jump": "",
 "respawn": ""
 })
@@ -121,14 +125,14 @@ player = NodePath("..")
 
 [node name="SFX" type="Node" parent="."]
 
+[node name="Jump" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_ugyfj")
+
 [node name="Respawn" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_rh8r5")
 
 [node name="Death" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_483v1")
-
-[node name="Jump" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_ugyfj")
 
 [node name="grapple" type="Node" parent="SFX"]
 
@@ -137,6 +141,9 @@ stream = SubResource("AudioStreamRandomizer_qclge")
 
 [node name="Extending" type="AudioStreamPlayer" parent="SFX/grapple"]
 stream = SubResource("AudioStreamRandomizer_hh4bn")
+
+[node name="RecallStart" type="AudioStreamPlayer" parent="SFX/grapple"]
+stream = SubResource("AudioStreamRandomizer_5t5j4")
 
 [node name="Recall" type="AudioStreamPlayer" parent="SFX/grapple"]
 stream = SubResource("AudioStreamRandomizer_k4ncf")
