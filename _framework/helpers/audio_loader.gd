@@ -31,6 +31,7 @@ static func loadSfxFromId(id:String, audioStream:AudioStreamRandomizer) -> int:
 
 	return 0
 
+## Clears the entries in an [AudioStreamRandomizer].
 static func clearAudioRandomizer(audioStream:AudioStreamRandomizer) -> void:
 	for i in range(audioStream.streams_count):
 		audioStream.remove_stream(0)
@@ -53,11 +54,17 @@ static func clearAudioRandomizer(audioStream:AudioStreamRandomizer) -> void:
 ## }
 ## [/codeblock]
 static func loadSfxIntoPlayers(sfxEventsToLoad:Dictionary, sfxPlayers:Dictionary[String, AudioStreamPlayer]) -> void:
-	for eventID in sfxPlayers:
+	for eventID in sfxEventsToLoad:
 		if typeof(sfxEventsToLoad[eventID]) != TYPE_STRING:
 			printerr("AudioLoader: sfxEventsToLoad value at entry [" + eventID +
 				"] isn't a string.  Is [" + type_string(sfxEventsToLoad[eventID]) + "]"
 			)
+			continue
+		elif sfxEventsToLoad[eventID] == "":
+			print("AudioLoader:  Skipping loading of SFX event \"" + eventID + "\"")
+			continue
+		elif not sfxPlayers.has(eventID):
+			printerr("AudioLoader:  There is no SFX player for SFX event\"" + eventID + "\"")
 			continue
 
 		sfxPlayers[eventID].stop()

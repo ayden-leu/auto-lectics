@@ -3,6 +3,11 @@ extends DialogueWindow
 class_name DialogueConsole
 ## [b]Internal-use only.[/b]  The main console-like window for interacting with
 ## a dialogue event.
+##
+## On top of the SFX events for [DialogueWindow], it comes with additional SFX events:[br]
+## - text:  plays when text is being written into a log entry.[br]
+## - closeReject:  plays when the DialogueConsole cannot be closed
+## and something tries to close it.[br]
 
 # ------------------------------------------------
 # signals
@@ -69,11 +74,6 @@ const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry
 @onready var _optionSpawnPositions:Dictionary[String, Marker2D] = {
 	"left": %OptionSpawnPositions/Left,
 	"right": %OptionSpawnPositions/Right
-}
-## Holds the AudioStreamPlayers for each event.
-@onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
-	"spawn": %SFX/spawn,
-	"text": %SFX/text
 }
 
 # ------------------------------------------------
@@ -226,6 +226,7 @@ func close() -> void:
 		return
 
 	if not canBeClosed:
+		sfxPlayers.closeReject.play()
 		await _addRightText(exitRejectMessage)
 		return
 

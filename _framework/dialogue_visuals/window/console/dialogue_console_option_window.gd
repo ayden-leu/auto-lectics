@@ -3,6 +3,9 @@ extends DialogueWindow
 class_name DialogueConsoleOptionWindow
 ## [b]Internal-use only.[/b]  A dialogue option window that spawns when a user
 ## is able to continue a dialogue event.
+##
+## On top of the SFX events for [DialogueWindow], it comes with additional SFX events:[br]
+## - text:  plays when text is being written into a log entry.[br]
 
 # ------------------------------------------------
 # signals
@@ -27,11 +30,6 @@ signal option_selected(myself:DialogueConsoleOptionWindow)
 # ------------------------------------------------
 ## The label that denotes which "index" is associated with this option.
 @onready var contentsLabel:RichTextLabel = %ContentsLabel
-## Holds the AudioStreamPlayers for each event.
-@onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
-	"spawn": %SFX/spawn,
-	"text": %SFX/text
-}
 
 # ------------------------------------------------
 # normal variables referenced outside of script
