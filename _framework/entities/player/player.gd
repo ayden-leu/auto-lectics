@@ -129,6 +129,8 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 @export var grapple_swing_input_force: float = 6.0
 ## Set how fast the hook moves when shot
 @export var grapple_hook_speed: float = 60.0
+## Set how fast the hook moves when retracting
+@export var grapple_hook_retract_speed: float = 100
 ## Set the max speed that can be built up while swinging
 @export var max_grapple_speed: float = 20.0
 
@@ -279,6 +281,8 @@ func respawnForce():
 	velocity = Vector3.ZERO
 	global_position = _lastValidPosition
 	global_position.y += 0.1
+	release_grapple()
+	_hide_grapple_visuals()
 
 ## Puts player at [member _lastValidPosition], but only after the fade in.
 func respawn() -> void:
@@ -291,6 +295,9 @@ func respawn() -> void:
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
 
+	release_grapple()
+	_hide_grapple_visuals()
+	
 	await get_tree().create_timer(respawnDelay).timeout
 
 	_respawning = false
@@ -490,7 +497,7 @@ func _update_grapple_projectile_visual(delta: float) -> void:
 
 	# Case: hook is moving back to player
 	else:
-		grapple_current = grapple_current.move_toward(start, grapple_hook_speed * delta)
+		grapple_current = grapple_current.move_toward(start, grapple_hook_retract_speed * delta)
 		grapple_hook.global_position = grapple_current
 		_update_rope_between(start, grapple_current)
 
@@ -682,7 +689,8 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 func _on_input_handler_respawn() -> void:
 	if _inputDisabled:
 		return
-
+	release_grapple()
+	_hide_grapple_visuals()
 	position = Vector3(0,0,1)
 
 # ------------------------------------------------

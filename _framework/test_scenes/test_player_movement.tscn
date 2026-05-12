@@ -90,6 +90,30 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_eawqy")
 
+[node name="Platform4" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3497286, 8.323192, -7.718843)
+mesh = SubResource("BoxMesh_ax834")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Platform4"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hyee6")
+
+[node name="Platform5" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -2.1855695e-07, -1, 0, 5, -4.371139e-08, 4.3497286, 5.0691805, -11.406886)
+mesh = SubResource("BoxMesh_ax834")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Platform5"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hyee6")
+
 [node name="Slope1" type="MeshInstance3D" parent="Environment"]
 transform = Transform3D(0.9640815, 0.092413574, 0.24901125, 0, 0.93751913, -0.34793404, -0.26560664, 0.3354368, 0.9038449, -5.3834405, 0.6982758, -5.6256933)
 mesh = SubResource("BoxMesh_hyee6")
@@ -146,10 +170,12 @@ sfxPlayers = {
 "grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
 "grappleRecall": NodePath("SFX/grapple/Recall"),
 "grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
+"grappleRecallStart": NodePath("SFX/grapple/RecallStart"),
 "grappleThrow": NodePath("SFX/grapple/Throw"),
 "jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")
 }
+grapple_hook_retract_speed = 100.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 focus = NodePath("../Player")
