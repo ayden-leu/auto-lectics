@@ -40,5 +40,12 @@ An isolated version of the project based on an existing branch at some point in 
 Create a copy of a Git repository.
 
 
+
+
+
+## Godot
+### Signal
+A message that can be emiited by a node and sent to any other node that connects to it.  They're the metaphorical mail that gets sent through the metaphorial post office.  See [the official documentation](https://docs.godotengine.org/en/4.5/getting_started/step_by_step/signals.html) on using them.
+
 ### <img src="./shared_visual_assets/icons/icon_interactable_NPC.svg"> Test Thing Two
 description
