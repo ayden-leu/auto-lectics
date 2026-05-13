@@ -131,6 +131,9 @@ var _isWritingText:bool = false
 ## [b]Internal-use only.[/b]  Stores previously loaded dialogue IDs.
 ## The ID at the end of the array is the currently loaded dialogue.
 var _dialogueHistory:Array[String] = []
+## command history
+var _commandHistory:Array[String] = []
+var _commandHistoryIndex:int = -1
 ## [b]Internal-use only.[/b]  Whether the dialogue IDs loaded get recorded
 ## into [member _dialogueHistory].  Gets set to true whenever the console
 ## is prepared.
@@ -142,7 +145,8 @@ var _helpText: String = \
 		"Here are the commands:\n\n" + \
 		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
 		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
-		"exit        =  close the console"
+		"exit        =  close the console\n\n"+\
+		"clear       =  clear the console"
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -154,7 +158,9 @@ func _ready() -> void:
 		return
 	super()
 	windowType = "console"
-
+	
+	_textInput.gui_input.connect(_on_console_input_gui_input)
+	
 	_hecticBar.visible = false
 	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
 
@@ -443,7 +449,8 @@ func _scrollToBottom() -> void:
 ## [b]Internal-use only.[/b]  Forces current selection to be on the input area.
 func _forceTextInput() -> void:
 	_textInput.edit()
-
+	#_textInput.caret_column = _textInput.text.length()
+	
 ## [b]Internal-use only.[/b]
 ## Spawns [member numHecticWarningWindows] [DialogueWarningTileWindow].
 func _spawnHecticWarningWindows() -> void:
@@ -458,6 +465,7 @@ func _startHecticCountdown() -> void:
 	_hecticBar.visible = true
 	_hecticBar.value = INF
 	_hecticTimer.start(hecticDuration)
+	
 
 ## [b]Internal-use only.[/b]  Stops hectic mode.
 func _stopHecticMode() -> void:
@@ -466,6 +474,7 @@ func _stopHecticMode() -> void:
 	_hecticBar.value = INF
 	_hecticTimer.stop()
 	FR_WindowManager.closeAllWarningTileWindows()
+	
 
 func _handleCommand(command:String) -> void:
 	# command is an option ID
@@ -488,6 +497,9 @@ func _handleCommand(command:String) -> void:
 	_scrollToBottom()
 
 	# TODO:  move help text definition to [InteractableNPC]
+	if command == "clear":
+		_clearConsole()
+	
 	if command == "help":
 		await _addRightText(_helpText)
 
@@ -502,6 +514,20 @@ func _handleCommand(command:String) -> void:
 		if nextID in ["_default_dialogue", "_default_option"]:
 			return
 		option_chosen.emit(nextID)
+		
+## [b]Internal-use only.[/b]  Clear the console
+func _clearConsole() -> void:
+	for child in _contentsStorage.get_children():
+		if child == _textInput.get_parent():
+			continue
+
+		child.queue_free()
+
+	await get_tree().process_frame
+
+	_textInput.get_parent().move_to_front()
+
+	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
 func _goBackOneDialogue() -> void:
@@ -544,7 +570,43 @@ func _on_input_submitted(input: String) -> void:
 	sfxPlayers.userTextSubmitted.play()
 	_textInput.text = ""
 	var text := input.strip_edges()
+	
+	## adding : save command history----------------------------
+	_commandHistory.push_back(text)
+	_commandHistoryIndex = _commandHistory.size()
+	##---------------------------------------------------------
+	
 	_handleCommand(text)
+	
+## [b]Internal-use only.[/b]
+## Handles logic for when text is entered into the [_textInput].
+func _on_console_input_gui_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+
+		if event.keycode == KEY_UP:
+			if _commandHistory.size() > 0:
+				_commandHistoryIndex = max(0, _commandHistoryIndex - 1)
+
+				_textInput.text = _commandHistory[_commandHistoryIndex]
+				_textInput.caret_column = _textInput.text.length()
+
+				get_viewport().set_input_as_handled()
+
+		elif event.keycode == KEY_DOWN:
+			if _commandHistory.size() > 0:
+				_commandHistoryIndex = min(
+					_commandHistory.size(),
+					_commandHistoryIndex + 1
+				)
+
+				if _commandHistoryIndex == _commandHistory.size():
+					_textInput.text = ""
+				else:
+					_textInput.text = _commandHistory[_commandHistoryIndex]
+
+				_textInput.caret_column = _textInput.text.length()
+
+				get_viewport().set_input_as_handled()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:
