@@ -51,7 +51,7 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-
+@export var optionChooseDelay: float = 0.2
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
@@ -333,6 +333,7 @@ func _chooseOption(optionData:Dictionary) -> void:
 	_stopHecticMode()
 	_closeAllOptionWindows()
 	StoryFlags.updateFlags(optionData.setFlags)
+	await get_tree().create_timer(optionChooseDelay).timeout
 	option_chosen.emit(optionData.nextID)
 
 ## [b]Internal-use only.[/b]  Forcebilly closes all spawned option windows.

@@ -36,6 +36,8 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 ## Useful if you want to listen to signals from it.
 var dialogueConsole:DialogueConsole = null
 
+var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
+
 # ------------------------------------------------
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
@@ -61,6 +63,8 @@ func createDialogueConsole() -> DialogueConsole:
 	
 	dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
 	_addWindow(dialogueConsole)
+	if dialogueConsoleLastPosition != Vector2.ZERO:
+		dialogueConsole.position = dialogueConsoleLastPosition
 	_cleanSubscriberList()
 	_resubscribeSubscribers()
 	return dialogueConsole
@@ -68,6 +72,7 @@ func createDialogueConsole() -> DialogueConsole:
 ## Kills the current [DialogueConsole].
 func killDialogueConsole() -> void:
 	if dialogueConsole != null:
+		dialogueConsoleLastPosition = dialogueConsole.position
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
 		dialogueConsole = null

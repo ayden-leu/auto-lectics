@@ -25,6 +25,8 @@ signal no_longer_looking_at_interactable()
 ## How long to wait before actually respawning.
 @export var respawnDelay:float = 2.0
 
+@export var respawnLocation: Marker3D
+
 @export_group("Movement - Ground")
 ## The player's maximum speed.
 @export_range(0.0, 30.0, 0.1) var maxSpeed: float = 20.0
@@ -318,11 +320,12 @@ func _on_jump_pressed() -> void:
 ## move direction.
 func _on_updated_input_direction(newDirection:Vector2) -> void:
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
-	_handleDirectionInput(direction)
+	_handleDirectionInput(direction)	
 
 #temporary code for Spring Playtest week 3
 func _on_input_handler_respawn() -> void:
-	position = Vector3(0,0,1)
+	if respawnLocation:
+		global_position = respawnLocation.global_position
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
