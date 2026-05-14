@@ -218,6 +218,7 @@ stream = SubResource("AudioStreamRandomizer_wd647")
 [node name="TextSubmitted" type="AudioStreamPlayer" parent="SFX/Console"]
 stream = SubResource("AudioStreamRandomizer_vfcoi")
 
+[connection signal="gui_input" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_console_input_gui_input"]
 [connection signal="text_changed" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_text_changed"]
 [connection signal="text_submitted" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_submitted"]
 [connection signal="timeout" from="HecticTimer" to="." method="_on_hectic_timer_timeout"]
