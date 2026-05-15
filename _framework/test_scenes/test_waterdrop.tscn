@@ -62,14 +62,24 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_0wuky")
 
-[node name="Player" parent="." instance=ExtResource("2_wsfuu")]
+[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("2_wsfuu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
+sfxPlayers = {
+"death": NodePath("SFX/Death"),
+"grappleExtending": NodePath("SFX/grapple/Extending"),
+"grappleHitFail": NodePath("SFX/grapple/HitFail"),
+"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
+"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
+"grappleRecall": NodePath("SFX/grapple/Recall"),
+"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
+"grappleThrow": NodePath("SFX/grapple/Throw"),
+"jump": NodePath("SFX/Jump"),
+"respawn": NodePath("SFX/Respawn")
+}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_eqdbr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
 focus = NodePath("../Player")
-_actAsFocus = true
-_distanceFromOrigin = Vector3(0, 5, 10)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6444097, 4.565408, 0)

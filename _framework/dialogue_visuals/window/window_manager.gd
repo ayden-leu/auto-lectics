@@ -15,6 +15,9 @@ class_name WindowManager
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
+## A reference to an example window.
+const _EXAMPLE_WINDOW = preload("uid://cksoxvpnvcbjd")
+## [b]Internal-use only.[/b]
 ## A reference to the [DialogueConsole] scene.
 const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleWindow)
 ## [b]Internal-use only.[/b]
@@ -49,28 +52,43 @@ var _spawnedWindows:Array[DialogueWindow]
 ## [b]Internal-use only.[/b]
 ## Holds all nodes that want to listen to [DialogueConsole]'s signals.
 var _dialogueConsoleSubscribers:Array
+## [b]Internal-use only.[/b]
+## The screen position of the [DialogueConsole].
+var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 
+func _ready() -> void:
+	print(_getCenter(Vector2.ZERO))
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Creates an example [DialogueWindow].
+func createExampleWindow() -> DialogueWindow:
+	var tempWindow:DialogueWindow = _EXAMPLE_WINDOW.instantiate()
+	_addWindow(tempWindow)
+	return tempWindow
+
 ## Creates a [DialogueConsole].  Only one can exist at a time.  Not pre-configured.
 func createDialogueConsole() -> DialogueConsole:
 	if dialogueConsole != null:
 		return dialogueConsole
-	
+
 	dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
 	_addWindow(dialogueConsole)
+	if dialogueConsoleLastPosition != Vector2.ZERO:
+		dialogueConsole.position = dialogueConsoleLastPosition
 	_cleanSubscriberList()
 	_resubscribeSubscribers()
+	dialogueConsole.global_position = _getCenter(dialogueConsole.size)
 	return dialogueConsole
 
 ## Kills the current [DialogueConsole].
 func killDialogueConsole() -> void:
 	if dialogueConsole != null:
+		dialogueConsoleLastPosition = dialogueConsole.position
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
 		dialogueConsole = null
@@ -80,7 +98,7 @@ func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
 	var optionWindow:DialogueConsoleOptionWindow = _OPTION_WINDOW_SCENE.instantiate()
 	_addWindow(optionWindow)
 	return optionWindow
-	
+
 ## Creates a [DialogueWarningTileWindow], while avoiding the main console
 func createDialogueWarningTileWindow() -> DialogueWarningTileWindow:
 	var warningWindow:DialogueWarningTileWindow = _WARNING_WINDOW_SCENE.instantiate()
@@ -93,7 +111,7 @@ func closeAllWarningTileWindows() -> void:
 	for window in _spawnedWindows:
 		if window is DialogueWarningTileWindow:
 			tempStorage.push_back(window)
-	
+
 	for windowToDelete in tempStorage:
 		windowToDelete.close()
 
@@ -124,11 +142,15 @@ func closeAllWarningTileWindows() -> void:
 ## func _on_console_command_entered(command:String) -> void:
 ## 	# Associated signal:  command_entered
 ## 	# Will run whenever the player enters a command into the console.
-## [/codeblock] 
+##
+## func _on_console_close(console:DialogueConsole) -> void
+## 	# Associated signal:  window_closed
+## 	# Will run when the DialogueConsole is closed.
+## [/codeblock]
 func subscribeToConsole(subscriber) -> void:
 	if subscriber in _dialogueConsoleSubscribers:
 		return
-	
+
 	_dialogueConsoleSubscribers.push_back(subscriber)
 	_connectConsoleSignalsToSubscriber(subscriber)
 
@@ -137,7 +159,7 @@ func subscribeToConsole(subscriber) -> void:
 func unsubscribeToConsole(subscriber) -> void:
 	if not subscriber in _dialogueConsoleSubscribers:
 		return
-	
+
 	var subscriberIndex:int = _dialogueConsoleSubscribers.find(subscriber)
 	_dialogueConsoleSubscribers[subscriberIndex] = null
 	_disconnectConsoleSignalsToSubscriber(subscriber)
@@ -153,7 +175,7 @@ func unsubscribeToConsole(subscriber) -> void:
 func pushMessageToConsole(message:String, metadata:Dictionary = {}) -> void:
 	if not dialogueConsole:
 		return
-	
+
 	dialogueConsole.addExternalEntry(message, metadata)
 
 ## Checks if a position is within the screen.
@@ -178,25 +200,25 @@ func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] 
 	var viewport_size := get_viewport().get_visible_rect().size
 	var margin := 20.0
 	var retryAttempts:int = 30
-	
+
 	for attempt in range(retryAttempts):
 		var pos := Vector2(
 			randf_range(margin, viewport_size.x - window_size.x - margin),
 			randf_range(margin, viewport_size.y - window_size.y - margin)
 		)
-		
+
 		var overlapping:bool = false
 		for window in _spawnedWindows:
 			if window.windowType in allowOverlap:
 				continue
-			
+
 			if window.get_global_rect().intersects(Rect2(pos, window_size)):
 				overlapping = true
 				break
-		
+
 		if not overlapping:
 			return pos
-		
+
 	# fallback if all attempts fail
 	return Vector2(margin, margin)
 
@@ -211,7 +233,7 @@ func _addWindow(window:DialogueWindow) -> void:
 	_spawnedWindows.push_back(window)
 	window.window_closed.connect(_on_window_closed)
 	window.window_dropped.connect(_on_window_dropped)
-	
+
 	await get_tree().process_frame
 	_setWindowOnScreen(window, window.offscreenThresold)
 
@@ -220,7 +242,7 @@ func _addWindow(window:DialogueWindow) -> void:
 func _connectConsoleSignalsToSubscriber(subscriber) -> void:
 	if not dialogueConsole:
 		return
-	
+
 	if subscriber.has_method("_on_console_option_chosen"):
 		dialogueConsole.option_chosen.connect(subscriber._on_console_option_chosen)
 	if subscriber.has_method("_on_console_all_dialogue_text_visible"):
@@ -231,13 +253,15 @@ func _connectConsoleSignalsToSubscriber(subscriber) -> void:
 		dialogueConsole.all_options_available.connect(subscriber._on_console_all_options_available)
 	if subscriber.has_method("_on_console_command_entered"):
 		dialogueConsole.command_entered.connect(subscriber._on_console_command_entered)
+	if subscriber.has_method("_on_console_close"):
+		dialogueConsole.window_closed.connect(subscriber._on_console_close)
 
 ## [b]Internal-use only.[/b]
 ## Connects the [DialogueConsole] signals to functions defined by the subscriber.
 func _disconnectConsoleSignalsToSubscriber(subscriber) -> void:
 	if not dialogueConsole:
 		return
-	
+
 	if subscriber.has_method("_on_console_option_chosen"):
 		dialogueConsole.option_chosen.disconnect(subscriber._on_console_option_chosen)
 	if subscriber.has_method("_on_console_all_dialogue_text_visible"):
@@ -280,10 +304,16 @@ func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
 	window.global_position.x = clamp(window.global_position.x, min_x, max_x)
 	window.global_position.y = clamp(window.global_position.y, min_y, max_y)
 
+## [b]Internal-use only.[/b]
 ## Moves this window to the center of the screen immediately.
 func _centerWindow(window:DialogueWindow) -> void:
 	window.global_position = (get_viewport().get_visible_rect().size - window.size) / 2
-	
+
+## [b]Internal-use only.[/b]
+## Get the center of the screen.
+func _getCenter(windowSize:Vector2) -> Vector2:
+	return (get_viewport().get_visible_rect().size - windowSize) / 2
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------

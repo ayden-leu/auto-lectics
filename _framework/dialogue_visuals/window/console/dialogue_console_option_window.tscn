@@ -1,29 +1,37 @@
-[gd_scene load_steps=6 format=3 uid="uid://4opwac4ndc2k"]
+[gd_scene load_steps=10 format=3 uid="uid://4opwac4ndc2k"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_3lyu7"]
 [ext_resource type="Script" uid="uid://c2ux345dipa1e" path="res://_framework/dialogue_visuals/window/console/dialogue_console_option_window.gd" id="1_rh22u"]
 [ext_resource type="Theme" uid="uid://cn85v71yksayt" path="res://fonts/text_theme_presets.tres" id="3_bwvnm"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_ravhd"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ravhd"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bwvnm"]
-resource_local_to_scene = true
-playback_mode = 1
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_clp0v"]
 
-[node name="DialogueOptionWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ouh73"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_febrp"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_echnl"]
+
+[node name="DialogueOptionWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 300.0
 offset_bottom = 117.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_3lyu7")
 script = ExtResource("1_rh22u")
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HeaderLabel")
+sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="Header" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 38.0
+mouse_filter = 1
 theme_type_variation = &"PanelHeader"
 metadata/_edit_lock_ = true
 
@@ -42,6 +50,7 @@ layout_mode = 0
 offset_top = 38.0
 offset_right = 300.0
 offset_bottom = 117.0
+mouse_filter = 1
 
 [node name="ContentsLabel" type="RichTextLabel" parent="Contents"]
 unique_name_in_owner = true
@@ -50,6 +59,7 @@ offset_left = 6.0
 offset_top = 1.0
 offset_right = 294.0
 offset_bottom = 73.0
+mouse_filter = 1
 theme = ExtResource("3_bwvnm")
 text = "[0]"
 
@@ -65,13 +75,30 @@ mouse_filter = 1
 theme_type_variation = &"ButtonOverlay"
 metadata/_edit_lock_ = true
 
-[node name="SFX" type="Node" parent="."]
-unique_name_in_owner = true
+[node name="SfxEventHandler" parent="." instance=ExtResource("4_ravhd")]
+sfxIds = Dictionary[String, String]({
+"click": "",
+"drop": "",
+"hover": ""
+})
 
-[node name="spawn" type="AudioStreamPlayer" parent="SFX"]
+[node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_ravhd")
 
-[node name="text" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_bwvnm")
+[node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_clp0v")
+
+[node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_ouh73")
+
+[node name="ManualSfxPlayers" type="Node" parent="."]
+
+[node name="sfxSpawn" type="AudioStreamPlayer" parent="ManualSfxPlayers"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_febrp")
+
+[node name="sfxText" type="AudioStreamPlayer" parent="ManualSfxPlayers"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_echnl")
 
 [connection signal="pressed" from="Button" to="." method="_on_pressed"]

@@ -17,6 +17,10 @@ layout_mode = 0
 offset_right = 211.0
 offset_bottom = 241.0
 
+[node name="CreateExampleWindow" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Create Example Window"
+
 [node name="CreateConsole" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Create Console"
@@ -48,9 +52,9 @@ text = "Kill All Windows"
 [node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 0
 offset_left = 216.0
-offset_top = 110.0
+offset_top = 143.0
 offset_right = 432.0
-offset_bottom = 133.0
+offset_bottom = 166.0
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Control/HBoxContainer"]
@@ -63,9 +67,9 @@ layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Control"]
 layout_mode = 0
-offset_top = 249.0
+offset_top = 284.0
 offset_right = 423.0
-offset_bottom = 289.0
+offset_bottom = 413.0
 metadata/_edit_group_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer2"]
@@ -127,6 +131,7 @@ text = "Instant:"
 unique_name_in_owner = true
 layout_mode = 2
 
+[connection signal="pressed" from="Control/VBoxContainer/CreateExampleWindow" to="." method="_on_create_example_window_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/CreateConsole" to="." method="_on_create_console_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/CreateConsoleOption" to="." method="_on_create_console_option_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/KillConsole" to="." method="_on_kill_console_pressed"]

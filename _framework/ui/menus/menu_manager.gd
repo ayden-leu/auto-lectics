@@ -34,6 +34,8 @@ const _BLUEPRINT_MENU = preload("uid://bult80lkyvnls")
 ## [b]Internal-use only.[/b]  The darken overlay that gets shown when a menu is open.
 @onready var _overlay:ColorRect = %Overlay
 
+@onready var _sfxEventHandler:SfxEventHandler = %SfxEventHandler
+
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
@@ -82,7 +84,7 @@ var _blueprintMenuSubscribers:Array
 # ------------------------------------------------
 func _ready() -> void:
 	_overlay.z_index = FR_Globals.MENU_Z_INDEX - 1
-	
+
 	_createMenu(_PAUSE_MENU)
 	_createMenu(_OPTIONS_MENU)
 	_createMenu(_KEYBINDS_MENU)
@@ -92,7 +94,7 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
 	if not enabled:
 		return
-	
+
 	if not menuIsOpen:
 		if Input.is_action_just_pressed("open_pause_menu"):
 			openMenu("pause")
@@ -119,14 +121,14 @@ func openMenu(menuID:String) -> void:
 	if not enabled:
 		printerr("MenuManager:  Cannot open menu due to not being enabled.")
 		return
-	
+
 	if not menuID in _idToIndex.keys():
 		printerr("MenuManager:  Invalid menu ID: [" + menuID + "]")
 		return
-	
+
 	if _currentMenu: _currentMenu.disable()
 	var menuToOpen:Menu = _getMenu(menuID)
-	
+
 	if menuToOpen.pausesGame:
 		get_tree().paused = true
 	_menuStack.push_back(menuToOpen)
@@ -134,6 +136,7 @@ func openMenu(menuID:String) -> void:
 	menuIsOpen = true
 	InputHandler.showCursorTemp()
 	Player.disableInput(true)
+	_sfxEventHandler.play("menuOpen")
 
 ## Connects signals from the [BlueprintMenu] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list for internal tracking.
@@ -150,7 +153,7 @@ func openMenu(menuID:String) -> void:
 ## 	# Associated signal:  unlock_condition_met
 ## 	# Will run whenever an unlock condition is met.
 ## 	# conditionID is the ID of the unlock condition.
-## [/codeblock] 
+## [/codeblock]
 func subscribeToBlueprintMenu(subscriber) -> void:
 	_blueprintMenuSubscribers.push_back(subscriber)
 	_connectBlueprintSignalsToSubscriber(subscriber)
@@ -160,7 +163,7 @@ func subscribeToBlueprintMenu(subscriber) -> void:
 func unsubscribeToBlueprintMenu(subscriber) -> void:
 	if not subscriber in _blueprintMenuSubscribers:
 		return
-	
+
 	var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
 	_blueprintMenuSubscribers[subscriberIndex] = null
 	_disconnectBlueprintSignalsToSubscriber(subscriber)
@@ -173,10 +176,10 @@ func unsubscribeToBlueprintMenu(subscriber) -> void:
 func _createMenu(menu:Resource) -> void:
 	var temp:Menu = menu.instantiate()
 	add_child(temp)
-	
+
 	_idToIndex[temp.menuID] = _menus.size()
 	_menus.push_back(temp)
-	
+
 	temp.close_me.connect(_on_menu_close)
 	temp.disable()
 
@@ -190,6 +193,7 @@ func _resume() -> void:
 	menuIsOpen = false
 	InputHandler.restoreCursorMode()
 	Player.disableInput(false)
+	_sfxEventHandler.play("menuClose")
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
@@ -216,6 +220,7 @@ func _on_menu_close() -> void:
 	menuToClose.disable()
 	if _currentMenu != null:
 		_currentMenu.enable()
+		_sfxEventHandler.play("menuClose")
 	else:
 		_resume()
 

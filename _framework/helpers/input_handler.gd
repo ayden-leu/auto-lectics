@@ -74,19 +74,19 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and _interactionEnabledGlobal:
 		interact_button_pressed.emit()
-	
+
 	elif event.is_action_pressed("jump") and _jumpEnabledGlobal:
 		jump_pressed.emit()
-	
+
 	elif event.is_action_pressed("close_game"):
 		get_tree().quit()
-	
+
 	elif event.is_action_pressed("respawn") and _respawnEnabledGlobal:
 		respawn.emit()
-		
+
 	if event.is_action_pressed("grapple") and _movementInputEnabledGlobal and movementInputEnabled:
 		grapple_pressed.emit()
-	
+
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
 		emit_signal("mouse_moved", event.relative * MOUSE_SENSITIVITY)
@@ -103,7 +103,7 @@ static func showCursor() -> void:
 static func showCursorTemp() -> void:
 	if _savedMouseMode != Input.MOUSE_MODE_MAX:
 		return
-	
+
 	print("show cursor temp")
 	_savedMouseMode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -112,12 +112,12 @@ static func showCursorTemp() -> void:
 static func hideCursor() -> void:
 	print("hide cursor")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+
 ## Like [method hideCursor], but saves the current mouse mode to [member _savedMouseMode].
 static func hideCursorTemp() -> void:
 	if _savedMouseMode != Input.MOUSE_MODE_MAX:
 		return
-	
+
 	print("hide cursor temp")
 	_savedMouseMode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

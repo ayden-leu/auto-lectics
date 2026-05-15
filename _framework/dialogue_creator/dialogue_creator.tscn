@@ -26,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
-_npcNameField = NodePath("MenuButtons/VBoxContainer/InputArea/NPCName")
+_npcNameField = NodePath("MenuButtons/VBoxContainer/InputArea/DialogueTreeIdField")
 _sidePanel = NodePath("SidePanel")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -81,12 +81,12 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MenuButtons/VBoxContainer/InputArea"]
 layout_mode = 2
-text = "NPC Name"
+text = "Dialogue Tree ID"
 
-[node name="NPCName" type="LineEdit" parent="MenuButtons/VBoxContainer/InputArea"]
+[node name="DialogueTreeIdField" type="LineEdit" parent="MenuButtons/VBoxContainer/InputArea"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "put name here"
+placeholder_text = "IDs found in dialogue_trees"
 
 [node name="HSeparator" type="HSeparator" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2

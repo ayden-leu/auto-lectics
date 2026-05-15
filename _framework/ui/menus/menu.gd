@@ -1,3 +1,4 @@
+@tool
 @icon("uid://cid3iipxpm568")
 extends Control
 class_name Menu
@@ -20,6 +21,8 @@ signal close_me()
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+
+@export var sfxEventHandler:SfxEventHandler
 
 # ------------------------------------------------
 # onready variables
@@ -45,6 +48,9 @@ var _defaultProcessMode:ProcessMode = Node.PROCESS_MODE_ALWAYS
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	process_mode = _defaultProcessMode
 	z_index = FR_Globals.MENU_Z_INDEX
 
