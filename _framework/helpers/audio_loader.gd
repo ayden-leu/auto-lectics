@@ -46,7 +46,7 @@ const FILE_TYPE:String = ".wav"
 ## # result = Error.ERR_DOES_NOT_EXIST, warning pushed
 ##
 ## # a subfolder named "chair" does not exist.
-## var result = AudioLoader.loadSfxFromId("empty", myAudioStreamRandomizer)
+## var result = AudioLoader.loadSfxFromId("chair", myAudioStreamRandomizer)
 ## # result = Error.ERR_DOES_NOT_EXIST, warning pushed
 ##
 ## [/codeblock]
