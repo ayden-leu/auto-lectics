@@ -49,6 +49,9 @@ var _spawnedWindows:Array[DialogueWindow]
 ## [b]Internal-use only.[/b]
 ## Holds all nodes that want to listen to [DialogueConsole]'s signals.
 var _dialogueConsoleSubscribers:Array
+## [b]Internal-use only.[/b]
+## The screen position of the [DialogueConsole].
+var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -66,6 +69,8 @@ func createDialogueConsole() -> DialogueConsole:
 
 	dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
 	_addWindow(dialogueConsole)
+	if dialogueConsoleLastPosition != Vector2.ZERO:
+		dialogueConsole.position = dialogueConsoleLastPosition
 	_cleanSubscriberList()
 	_resubscribeSubscribers()
 	dialogueConsole.global_position = _getCenter(dialogueConsole.size)
@@ -74,6 +79,7 @@ func createDialogueConsole() -> DialogueConsole:
 ## Kills the current [DialogueConsole].
 func killDialogueConsole() -> void:
 	if dialogueConsole != null:
+		dialogueConsoleLastPosition = dialogueConsole.position
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
 		dialogueConsole = null
@@ -283,7 +289,13 @@ func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
 	window.global_position.x = clamp(window.global_position.x, min_x, max_x)
 	window.global_position.y = clamp(window.global_position.y, min_y, max_y)
 
+## [b]Internal-use only.[/b]
 ## Moves this window to the center of the screen immediately.
+func _centerWindow(window:DialogueWindow) -> void:
+	window.global_position = (get_viewport().get_visible_rect().size - window.size) / 2
+
+## [b]Internal-use only.[/b]
+## Get the center of the screen.
 func _getCenter(windowSize:Vector2) -> Vector2:
 	return (get_viewport().get_visible_rect().size - windowSize) / 2
 

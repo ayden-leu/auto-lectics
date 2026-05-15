@@ -39,6 +39,8 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 # ------------------------------------------------
 ## How long to wait before actually respawning.
 @export var respawnDelay:float = 2.0
+## The location to move the player to when [method respawnCheckpoint] runs.
+@export var respawnCheckpointLocation: Marker3D
 
 @export var sfxEventHandler:SfxEventHandler
 
@@ -265,6 +267,10 @@ func respawn() -> void:
 	respawnForce()
 	_overlay.startFadeOut()
 	sfxEventHandler.play("respawn")
+
+## Moves the player to [memmber respawnCheckpointLocation] immediately.
+func respawnCheckpoint() -> void:
+	global_position = respawnCheckpointLocation.global_position
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -636,13 +642,21 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
 	_handleDirectionInput(direction)
 
-#temporary code for Spring Playtest week 3
+## [b]Internal-use only.[/b]
+## The location to move the player to upon forcing the respawn.
 func _on_input_handler_respawn() -> void:
-	if _inputDisabled:
-		return
-
-	position = Vector3(0,0,1)
+	respawnCheckpoint()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+
+	if self != get_tree().edited_scene_root:
+		if not respawnCheckpointLocation:
+			warnings.push_back(
+				"The respawn checkpoint location of this player is not set."
+			)
+
+	return warnings
