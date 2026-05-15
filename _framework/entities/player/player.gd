@@ -23,7 +23,10 @@ class_name Player
 signal looking_at_interactable()
 ## Emitted when no longer looking at an interactable thing.
 signal no_longer_looking_at_interactable()
-
+## Emitted when looking at a grappleable thing.
+signal looking_at_grappleable()
+## Emitted when no longer looking at a grappleable thing.
+signal no_longer_looking_at_grappleable()
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
@@ -221,6 +224,8 @@ var grapple_target:Node3D
 var grapple_current: Vector3
 ## Track whether the hook's target is valid
 var grapple_valid: bool = false
+## Track whether to send a new signal or not for whether the target looked at is grappleable
+var _grapple_looking: bool = false
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -263,6 +268,16 @@ func _physics_process(delta: float) -> void:
 			interactableThing = hit
 	else:
 		interactableThing = _loadBearingDummy
+		
+	if grapple_enabled:
+		if is_aiming_at_grappleable_target():
+			if !_grapple_looking:
+				_grapple_looking = true
+				looking_at_grappleable.emit()
+		else:
+			if _grapple_looking:
+				_grapple_looking = false
+				no_longer_looking_at_grappleable.emit()
 
 
 # ------------------------------------------------
@@ -465,6 +480,29 @@ func _is_ungrappleable(node: Node) -> bool:
 		node = node.get_parent()
 	return false
 
+## Checks if there is a grappleable target in range (for crosshair updating only)
+func is_aiming_at_grappleable_target() -> bool:
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return false
+	# Use camera direction for checks
+	var from := camera.global_position
+	var to := from + -camera.global_transform.basis.z * grapple_max_length
+
+	# Check if valid point is hit
+	var query := PhysicsRayQueryParameters3D.create(from, to)
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+
+	# Target found
+	if !result.is_empty():
+		# Check to make sure target isn't marked as ungrappleable
+		var collider: Node = result.get("collider")
+		if !_is_ungrappleable(collider):
+			return true
+	# No target or ungrappleable target
+	return false
 
 ## Update visuals for the grapple hook while it is moving
 func _update_grapple_projectile_visual(delta: float) -> void:

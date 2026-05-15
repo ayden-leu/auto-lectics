@@ -78,6 +78,7 @@ sfxPlayers = {
 "grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
 "grappleRecall": NodePath("SFX/grapple/Recall"),
 "grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
+"grappleRecallStart": NodePath("SFX/grapple/RecallStart"),
 "grappleThrow": NodePath("SFX/grapple/Throw"),
 "jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")

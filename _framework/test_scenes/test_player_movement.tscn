@@ -175,7 +175,6 @@ sfxPlayers = {
 "jump": NodePath("SFX/Jump"),
 "respawn": NodePath("SFX/Respawn")
 }
-grapple_hook_retract_speed = 100.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 focus = NodePath("../Player")
