@@ -34,6 +34,8 @@ const _BLUEPRINT_MENU = preload("uid://bult80lkyvnls")
 ## [b]Internal-use only.[/b]  The darken overlay that gets shown when a menu is open.
 @onready var _overlay:ColorRect = %Overlay
 
+@onready var _sfxEventHandler:SfxEventHandler = %SfxEventHandler
+
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
@@ -134,6 +136,7 @@ func openMenu(menuID:String) -> void:
 	menuIsOpen = true
 	InputHandler.showCursorTemp()
 	Player.disableInput(true)
+	_sfxEventHandler.play("menuOpen")
 
 ## Connects signals from the [BlueprintMenu] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list for internal tracking.
@@ -190,6 +193,7 @@ func _resume() -> void:
 	menuIsOpen = false
 	InputHandler.restoreCursorMode()
 	Player.disableInput(false)
+	_sfxEventHandler.play("menuClose")
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
@@ -216,6 +220,7 @@ func _on_menu_close() -> void:
 	menuToClose.disable()
 	if _currentMenu != null:
 		_currentMenu.enable()
+		_sfxEventHandler.play("menuClose")
 	else:
 		_resume()
 

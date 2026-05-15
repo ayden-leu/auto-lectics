@@ -15,6 +15,9 @@ class_name WindowManager
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
+## A reference to an example window.
+const _EXAMPLE_WINDOW = preload("uid://cksoxvpnvcbjd")
+## [b]Internal-use only.[/b]
 ## A reference to the [DialogueConsole] scene.
 const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleWindow)
 ## [b]Internal-use only.[/b]
@@ -62,6 +65,12 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Creates an example [DialogueWindow].
+func createExampleWindow() -> DialogueWindow:
+	var tempWindow:DialogueWindow = _EXAMPLE_WINDOW.instantiate()
+	_addWindow(tempWindow)
+	return tempWindow
+
 ## Creates a [DialogueConsole].  Only one can exist at a time.  Not pre-configured.
 func createDialogueConsole() -> DialogueConsole:
 	if dialogueConsole != null:
@@ -133,6 +142,10 @@ func closeAllWarningTileWindows() -> void:
 ## func _on_console_command_entered(command:String) -> void:
 ## 	# Associated signal:  command_entered
 ## 	# Will run whenever the player enters a command into the console.
+##
+## func _on_console_close(console:DialogueConsole) -> void
+## 	# Associated signal:  window_closed
+## 	# Will run when the DialogueConsole is closed.
 ## [/codeblock]
 func subscribeToConsole(subscriber) -> void:
 	if subscriber in _dialogueConsoleSubscribers:
@@ -240,6 +253,8 @@ func _connectConsoleSignalsToSubscriber(subscriber) -> void:
 		dialogueConsole.all_options_available.connect(subscriber._on_console_all_options_available)
 	if subscriber.has_method("_on_console_command_entered"):
 		dialogueConsole.command_entered.connect(subscriber._on_console_command_entered)
+	if subscriber.has_method("_on_console_close"):
+		dialogueConsole.window_closed.connect(subscriber._on_console_close)
 
 ## [b]Internal-use only.[/b]
 ## Connects the [DialogueConsole] signals to functions defined by the subscriber.

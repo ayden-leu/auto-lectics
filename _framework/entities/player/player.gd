@@ -10,7 +10,8 @@ class_name Player
 ## - death:    plays when the player dies.[br]
 ## - grappleThrow:      plays when the player throws the grappling hook.[br]
 ## - grappleExtending:  plays when the grappling hook is extending.[br]
-## - grappleRecall:     plays when the grappling hook is begin recalled.[br]
+## - grappleRecallStart:   plays when the grappling hook is beginning to be recalled.[br]
+## - grappleRecall:        plays when the grappling hook is being recalled.[br]
 ## - grappleRecallFinish:  plays when the grappling hook is finished recalling.[br]
 ## - grappleHitSuccess:    plays when the grappling hook hits a hookable target.[br]
 ## - grappleHitFail        plays when the grappling hook hits an unhookable target.[br]
@@ -40,6 +41,8 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 @export var respawnDelay:float = 2.0
 ## The location to move the player to when [method respawnCheckpoint] runs.
 @export var respawnCheckpointLocation: Marker3D
+
+@export var sfxEventHandler:SfxEventHandler
 
 @export_group("Movement - Ground")
 ## The player's maximum speed.
@@ -87,38 +90,6 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 @export var mouseSentitivity := 1
 ## Max angle which the camera can turn to; prevents flipping at top
 @export var maxPitchDegrees := 89.0
-
-@export_group("SFX Events")
-## Holds all of the [AudioStreamPlayer]s for each SFX event.
-@export var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
-	"jump": null,
-	"respawn": null,
-	"death": null,
-	"grappleThrow": null,
-	"grappleExtending": null,
-	"grappleRecallStart": null,
-	"grappleRecall": null,
-	"grappleRecallFinish": null,
-	"grappleHitSuccess": null,
-	"grappleHitFail": null,
-	"grappleMaxRangeReached": null
-}
-## Holds the SFX ID for each SFX event.
-## [br]
-## If you plan to load audio into a SFX event through another way, you can leave it blank.
-@export var sfxIds:Dictionary[String, String] = {
-	"jump": "",
-	"respawn": "",
-	"death": "",
-	"grappleThrow": "",
-	"grappleExtending": "",
-	"grappleRecallStart": "",
-	"grappleRecall": "",
-	"grappleRecallFinish": "",
-	"grappleHitSuccess": "",
-	"grappleHitFail": "",
-	"grappleMaxRangeReached": ""
-}
 
 @export_group("Grapple")
 ## Set whether grappling is possible or not
@@ -233,8 +204,6 @@ func _ready() -> void:
 	grapple_hook.visible = false
 	_recomputeJumpParameters()
 
-	AudioLoader.loadSfxIntoPlayers(sfxIds, sfxPlayers)
-
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
@@ -288,8 +257,7 @@ func respawn() -> void:
 		return
 
 	_respawning = true
-	sfxPlayers.death.stop()
-	sfxPlayers.death.play()
+	sfxEventHandler.play("death")
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
 
@@ -298,8 +266,7 @@ func respawn() -> void:
 	_respawning = false
 	respawnForce()
 	_overlay.startFadeOut()
-	sfxPlayers.respawn.stop()
-	sfxPlayers.respawn.play()
+	sfxEventHandler.play("respawn")
 
 ## Moves the player to [memmber respawnCheckpointLocation] immediately.
 func respawnCheckpoint() -> void:
@@ -452,8 +419,7 @@ func throw_grapple() -> void:
 	grapple_hook.visible = true
 	grapple_line.visible = true
 
-	sfxPlayers.grappleThrow.stop()
-	sfxPlayers.grappleThrow.play()
+	sfxEventHandler.play("grappleThrow")
 
 
 ## Checks if target object is ungrappleable
@@ -475,23 +441,19 @@ func _update_grapple_projectile_visual(delta: float) -> void:
 		grapple_hook.global_position = grapple_current
 		_update_rope_between(start, grapple_current)
 
-		if not sfxPlayers.grappleExtending.playing:
-			sfxPlayers.grappleExtending.stop()
-			sfxPlayers.grappleExtending.play()
+		if not sfxEventHandler.getPlayerForEvent("grappleExtending").playing:
+			sfxEventHandler.play("grappleExtending")
 
 		# When grapple reaches target
 		if grapple_current.distance_to(grapple_target.global_position) <= 0.05:
 			if grapple_valid:
-				sfxPlayers.grappleHitSuccess.stop()
-				sfxPlayers.grappleHitSuccess.play()
+				sfxEventHandler.play("grappleHitSuccess")
 				_attach_grapple(grapple_target.global_position)
 			else:
 				if grapple_target.isInAir:
-					sfxPlayers.grappleMaxRangeReached.stop()
-					sfxPlayers.grappleMaxRangeReached.play()
+					sfxEventHandler.play("grappleMaxRangeReached")
 				else:
-					sfxPlayers.grappleHitFail.stop()
-					sfxPlayers.grappleHitFail.play()
+					sfxEventHandler.play("grappleHitFail")
 				grapple_retracting = true
 
 	# Case: hook is moving back to player
@@ -500,9 +462,8 @@ func _update_grapple_projectile_visual(delta: float) -> void:
 		grapple_hook.global_position = grapple_current
 		_update_rope_between(start, grapple_current)
 
-		if not sfxPlayers.grappleRecall.playing:
-			sfxPlayers.grappleRecall.stop()
-			sfxPlayers.grappleRecall.play()
+		if not sfxEventHandler.getPlayerForEvent("grappleRecall").playing:
+			sfxEventHandler.play("grappleRecall")
 
 		# hook reaches player
 		if grapple_current.distance_to(start) <= 0.05:
@@ -608,8 +569,7 @@ func release_grapple() -> void:
 	grapple_active = true
 	grapple_retracting = true
 
-	sfxPlayers.grappleRecall.stop()
-	sfxPlayers.grappleRecall.play()
+	sfxEventHandler.play("grappleRecallStart")
 
 
 ## End grapple hook sequence when it returns to player
@@ -619,8 +579,7 @@ func _hide_grapple_visuals() -> void:
 	grapple_hook.visible = false
 	grapple_line.visible = false
 
-	sfxPlayers.grappleRecallFinish.stop()
-	sfxPlayers.grappleRecallFinish.play()
+	sfxEventHandler.play("grappleRecallFinish")
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -659,8 +618,7 @@ func _on_jump_pressed() -> void:
 	#if is_grappling:
 		#release_grapple()
 	if is_on_floor():
-		sfxPlayers.jump.stop()
-		sfxPlayers.jump.play()
+		sfxEventHandler.play("jump")
 		jump()
 
 ## [b]Internal-use only.[/b] Handles logic for when palyer attempts to grapple hook
