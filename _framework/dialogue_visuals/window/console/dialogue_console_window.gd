@@ -255,7 +255,15 @@ func close() -> void:
 
 	FR_MenuManager.enable()
 	_stopHecticMode()
-	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
+	_closeAllOptionWindows()
+
+	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
+	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
+		sfxEventHandler.play("close")
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hide()
+		await sfxPlayer.finished
+
 	super()
 
 ## Removes this from the scene.

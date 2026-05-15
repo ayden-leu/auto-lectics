@@ -46,6 +46,9 @@ extends Control
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+func _on_create_example_window_pressed() -> void:
+	FR_WindowManager.createExampleWindow()
+
 func _on_create_console_pressed() -> void:
 	FR_WindowManager.createDialogueConsole()
 

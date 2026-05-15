@@ -65,24 +65,12 @@ transform = Transform3D(0.54621893, 0.042597797, -0.8365587, 0.8376424, -0.02777
 light_energy = 0.125
 shadow_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("3_aue1p")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("3_aue1p")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3044707, 2.883009, -26.385525)
+respawnCheckpointLocation = NodePath("../RespawnPosition")
 maxSpeed = 12.6
 acceleration = 15.0
-sfxPlayers = {
-"death": NodePath("SFX/Death"),
-"grappleExtending": NodePath("SFX/grapple/Extending"),
-"grappleHitFail": NodePath("SFX/grapple/HitFail"),
-"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
-"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
-"grappleRecall": NodePath("SFX/grapple/Recall"),
-"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
-"grappleRecallStart": NodePath("SFX/grapple/RecallStart"),
-"grappleThrow": NodePath("SFX/grapple/Throw"),
-"jump": NodePath("SFX/Jump"),
-"respawn": NodePath("SFX/Respawn")
-}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")

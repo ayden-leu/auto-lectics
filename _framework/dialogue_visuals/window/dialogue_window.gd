@@ -119,7 +119,7 @@ func _ready() -> void:
 		sfxEventHandler.play("spawn")
 
 func _process(_delta: float) -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or not visible:
 		return
 
 	_hovering = _positionInWindow(get_global_mouse_position())
@@ -131,6 +131,9 @@ func _process(_delta: float) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
+		return
+
+	if not visible:
 		return
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -184,10 +187,15 @@ func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
 
 ## Closes this window.
 func close() -> void:
-	# NOTE:  this won't actually play since the window dies immediately
-	if sfxEventHandler.getPlayerForEvent("close"):
-		sfxEventHandler.play("close")
 	window_closed.emit(self)
+
+	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
+	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
+		sfxEventHandler.play("close")
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hide()
+		await sfxPlayer.finished
+
 	queue_free()
 
 # ------------------------------------------------
