@@ -1,11 +1,9 @@
-extends DC_BaseNodeChooser
+extends DC_BaseNodeNumber
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
-## Emitted when the current mode is set to "hectic."
-signal set_hectic_port(on:bool)
 
 # ------------------------------------------------
 # enums
@@ -18,12 +16,6 @@ signal set_hectic_port(on:bool)
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The label that denotes the hectic port.
-@export var hecticPortLabel:Label
-## The hectic duration field.
-@export var hecticDurationField:HBoxContainer
-## The separator for the [member hecticDurationField].
-@export var hecticDurationFieldSeparator:HSeparator
 
 # ------------------------------------------------
 # onready variables
@@ -41,23 +33,10 @@ signal set_hectic_port(on:bool)
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
-	_fillValueToOptionIndex(DialogueDefaults.DIALOGUE_MODES)
-	hecticPortLabel.visible = false
-	hecticDurationField.visible = false
-	hecticDurationFieldSeparator.visible = false
-
-	chosen = DialogueDefaults.DEFAULT_DIALOGUE.mode
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Toggles the hectic port on/off.
-func toggleHecticPort(on:bool) -> void:
-	hecticPortLabel.visible = on
-	hecticDurationField.visible = on
-	hecticDurationFieldSeparator.visible = on
-	set_hectic_port.emit(on)
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -65,15 +44,12 @@ func toggleHecticPort(on:bool) -> void:
 # ------------------------------------------------
 
 # ------------------------------------------------
-# functions that run when a signal is emitted
+# functions that run when a signal is esmitted
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
-## Only here to see signal connections.
-func _on_chooser_item_selected(index:int) -> void:
-	var isHectic:bool = (chooser.get_item_text(index) == "hectic")
-	toggleHecticPort(isHectic)
-
-	super(index)
+## Only here to see what signals are connected.
+func _on_input_field_value_changed(_value:float) -> void:
+	super(_value)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

@@ -147,6 +147,7 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 
 	if dialogueEntry.mode == "hectic":
 		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		console.hecticDuration = dialogueEntry.hecticDuration
 		console.delayBtwnWriteDialogueAndOptions = 0.25
 	else:
 		console.hecticFailureDialogueID = ""

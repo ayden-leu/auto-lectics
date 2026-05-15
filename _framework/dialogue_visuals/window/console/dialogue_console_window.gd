@@ -53,6 +53,9 @@ const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
 const _LOG_ENTRY_SPACER:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntrySpacer)
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Label] scene.
 const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntryIdLabel)
+## [b]Internal-use only.[/b]
+## The delay between spawning [DialogueWarningTile]s.
+const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011
 
 # ------------------------------------------------
 # export variables
@@ -155,7 +158,7 @@ var _commandHistoryIndex:int = 0
 ## is prepared.
 var _recordHistory:bool = true
 ## [b]Internal-use only.[/b]  True when the hectic dialgoue event timer is running.
-var _hecticCountdownActive: bool = false
+var _hecticCountdownActive:bool = false
 ## Show this message when "help" is inputted
 var _helpText: String = \
 		"Here are the commands:\n\n" + \
@@ -176,7 +179,6 @@ func _ready() -> void:
 	windowType = "console"
 
 	_hecticBar.visible = false
-	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
 
 	for child in _contentsStorage.get_children():
 		if child == _textInput.get_parent():
@@ -230,6 +232,7 @@ func start() -> void:
 
 	_spawnOptionWindows()
 	all_options_available.emit()
+	move_to_front()
 	_forceTextInput()
 
 	if _optionData.is_empty():
@@ -483,6 +486,7 @@ func _spawnHecticWarningWindows() -> void:
 		var newWindow:DialogueWarningTileWindow = FR_WindowManager.createDialogueWarningTileWindow()
 		var newPosition:Vector2 = FR_WindowManager.getRandomPositionOnScreen(newWindow.size)
 		newWindow.global_position = newPosition
+		await get_tree().create_timer(_HECTIC_WARNING_SPAWN_DELAY).timeout
 
 ## [b]Internal-use only.[/b]  Starts hectic mode.
 func _startHecticCountdown() -> void:
@@ -490,7 +494,6 @@ func _startHecticCountdown() -> void:
 	_hecticBar.visible = true
 	_hecticBar.value = INF
 	_hecticTimer.start(hecticDuration)
-
 
 ## [b]Internal-use only.[/b]  Stops hectic mode.
 func _stopHecticMode() -> void:
