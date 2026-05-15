@@ -7,54 +7,131 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_oj7u1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="CreateConsole" type="Button" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 211.0
+offset_bottom = 241.0
+
+[node name="CreateConsole" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Create Console"
 
-[node name="CreateConsoleOption" type="Button" parent="VBoxContainer"]
+[node name="CreateConsoleOption" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Create Console Option"
 
-[node name="KillConsole" type="Button" parent="VBoxContainer"]
+[node name="KillConsole" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Kill Console"
 
-[node name="SubscribeToConsole" type="Button" parent="VBoxContainer"]
+[node name="SubscribeToConsole" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Subscribe to Console"
 
-[node name="UnsubscribeToConsole" type="Button" parent="VBoxContainer"]
+[node name="UnsubscribeToConsole" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Unsubscribe to Console"
 
-[node name="KillAllWindows" type="Button" parent="VBoxContainer"]
+[node name="StartConsoleHecticMode" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Start Console Hectic Mode"
+
+[node name="KillAllWindows" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Kill All Windows"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 0
-offset_left = 194.0
+offset_left = 216.0
 offset_top = 110.0
-offset_right = 410.0
+offset_right = 432.0
 offset_bottom = 133.0
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="Control/HBoxContainer"]
 layout_mode = 2
 text = "Entered console command:"
 
-[node name="EnteredConsoleCommand" type="Label" parent="HBoxContainer"]
+[node name="EnteredConsoleCommand" type="Label" parent="Control/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/CreateConsole" to="." method="_on_create_console_pressed"]
-[connection signal="pressed" from="VBoxContainer/CreateConsoleOption" to="." method="_on_create_console_option_pressed"]
-[connection signal="pressed" from="VBoxContainer/KillConsole" to="." method="_on_kill_console_pressed"]
-[connection signal="pressed" from="VBoxContainer/SubscribeToConsole" to="." method="_on_subscribe_to_console_pressed"]
-[connection signal="pressed" from="VBoxContainer/UnsubscribeToConsole" to="." method="_on_unsubscribe_to_console_pressed"]
-[connection signal="pressed" from="VBoxContainer/KillAllWindows" to="." method="_on_kill_all_windows_pressed"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_top = 249.0
+offset_right = 423.0
+offset_bottom = 289.0
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer2"]
+layout_mode = 2
+
+[node name="PushMessageToConsole" type="Button" parent="Control/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Push Message to Console"
+
+[node name="MessageToConsole" type="TextEdit" parent="Control/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "..."
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer2"]
+layout_mode = 2
+
+[node name="PassWriteSpeed" type="CheckBox" parent="Control/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Write Speed: "
+
+[node name="MessageWriteSpeed" type="SpinBox" parent="Control/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/VBoxContainer2"]
+layout_mode = 2
+
+[node name="PassTheme" type="CheckBox" parent="Control/VBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+text = "Theme: "
+
+[node name="MessageTheme" type="LineEdit" parent="Control/VBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/VBoxContainer2"]
+layout_mode = 2
+
+[node name="PassInstant" type="CheckBox" parent="Control/VBoxContainer2/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer2/HBoxContainer4"]
+layout_mode = 2
+text = "Instant:"
+
+[node name="MessageInstant" type="CheckBox" parent="Control/VBoxContainer2/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="Control/VBoxContainer/CreateConsole" to="." method="_on_create_console_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/CreateConsoleOption" to="." method="_on_create_console_option_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/KillConsole" to="." method="_on_kill_console_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/SubscribeToConsole" to="." method="_on_subscribe_to_console_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/UnsubscribeToConsole" to="." method="_on_unsubscribe_to_console_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/StartConsoleHecticMode" to="." method="_on_start_console_hectic_mode_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/KillAllWindows" to="." method="_on_kill_all_windows_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer2/HBoxContainer/PushMessageToConsole" to="." method="_on_push_message_to_console_pressed"]

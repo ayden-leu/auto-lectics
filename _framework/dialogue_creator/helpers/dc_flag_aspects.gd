@@ -45,7 +45,11 @@ signal resize()
 var currentFlags:Dictionary:
 	set(newFlags):
 		for flag in newFlags.keys():
-			_createStoryFlagSection()
+			# need to await for this function to finish because it also awaits.
+			# not doing to results in a crash when loading multiple flags
+			# into one option
+			await _createStoryFlagSection()
+
 			_currentFlagFields.back().flagID = flag
 			_currentFlagFields.back().enabled = newFlags[flag]
 	get():
@@ -93,7 +97,7 @@ func _getUnusedStoryFlag() -> String:
 	for flag in StoryFlags.DEFAULT_FLAGS.keys():
 		if flag not in _usedFlags:
 			return flag
-			
+
 	print("SetFlags: All flags have been added.")
 	return ""
 
@@ -103,19 +107,19 @@ func _createStoryFlagSection() -> void:
 	var flagID:String = _getUnusedStoryFlag()
 	if flagID == "":
 		return
-	
+
 	# create the nodes
 	var newFlag:DC_StoryFlagChooser = _storyFlagScene.instantiate()
 	var separator:VSeparator = VSeparator.new()
 	flagHolder.add_child(separator)
 	flagHolder.add_child(newFlag)
 	_currentFlagFields.push_back(newFlag)
-	
+
 	# configure
 	update_available_flags.connect(newFlag._on_update_available_flags)
 	newFlag._on_update_available_flags(_unusedFlags)
 	await get_tree().process_frame  # let flag field get ready
-	
+
 	newFlag.flagID = flagID
 	_usedFlags.push_back(flagID)
 	_updateUnusedFlags()
@@ -133,7 +137,7 @@ func _updateUnusedFlags() -> void:
 	var typingMoment:Array[String] = []
 	for copy in daCopy:
 		typingMoment.push_back(copy)
-		
+
 	_unusedFlags = typingMoment
 	update_available_flags.emit(_unusedFlags)
 	value_changed.emit()
@@ -144,7 +148,7 @@ func _updateUnusedFlags() -> void:
 ## [b]Internal-use only.[/b]  Runs when the add button is pressed.
 ## Can also be used to "simulate" the button being pressed with code.
 func _on_add_button_pressed() -> void:
-	_createStoryFlagSection()
+	await _createStoryFlagSection()
 	value_changed.emit()
 
 ## [b]Internal-use only.[/b]  Runs when a [DC_StoryFlagChooser] field is being removed.

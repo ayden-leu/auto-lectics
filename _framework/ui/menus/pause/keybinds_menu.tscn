@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://b08l8xg1t3ct6"]
+[gd_scene load_steps=5 format=3 uid="uid://b08l8xg1t3ct6"]
 
 [ext_resource type="Script" uid="uid://cxjwaai3jxssf" path="res://_framework/ui/menus/pause/keybinds_menu.gd" id="1_4t1i8"]
 
-[node name="KeybindsMenu" type="Control"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6tie0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a6ri7"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3f70u"]
+
+[node name="KeybindsMenu" type="Control" node_paths=PackedStringArray("sfxPlayers")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +16,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4t1i8")
+sfxPlayers = {
+"buttonPressed": NodePath("SFX/ButtonPressed"),
+"close": NodePath("SFX/Close"),
+"open": NodePath("SFX/Open")
+}
+sfxIds = Dictionary[String, String]({
+"buttonPressed": "",
+"close": "",
+"open": ""
+})
 
 [node name="KeybindsMenu" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -51,5 +67,16 @@ theme_override_constants/separation = 6
 [node name="BackButton" type="Button" parent="KeybindsMenu/VBoxContainer"]
 layout_mode = 2
 text = "Back"
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Open" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_6tie0")
+
+[node name="Close" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_a6ri7")
+
+[node name="ButtonPressed" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_3f70u")
 
 [connection signal="pressed" from="KeybindsMenu/VBoxContainer/BackButton" to="." method="_on_back_pressed"]

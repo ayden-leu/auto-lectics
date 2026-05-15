@@ -82,7 +82,7 @@ var _blueprintMenuSubscribers:Array
 # ------------------------------------------------
 func _ready() -> void:
 	_overlay.z_index = FR_Globals.MENU_Z_INDEX - 1
-	
+
 	_createMenu(_PAUSE_MENU)
 	_createMenu(_OPTIONS_MENU)
 	_createMenu(_KEYBINDS_MENU)
@@ -92,7 +92,7 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
 	if not enabled:
 		return
-	
+
 	if not menuIsOpen:
 		if Input.is_action_just_pressed("open_pause_menu"):
 			openMenu("pause")
@@ -100,9 +100,6 @@ func _process(_delta:float) -> void:
 			openMenu("blueprint")
 	elif Input.is_action_just_pressed("close_current_menu"):
 		_on_menu_close()
-		
-		if _menuStack.is_empty():
-			_resume()
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -122,21 +119,21 @@ func openMenu(menuID:String) -> void:
 	if not enabled:
 		printerr("MenuManager:  Cannot open menu due to not being enabled.")
 		return
-	
+
 	if not menuID in _idToIndex.keys():
 		printerr("MenuManager:  Invalid menu ID: [" + menuID + "]")
 		return
-	
+
 	if _currentMenu: _currentMenu.disable()
 	var menuToOpen:Menu = _getMenu(menuID)
-	
+
 	if menuToOpen.pausesGame:
 		get_tree().paused = true
 	_menuStack.push_back(menuToOpen)
 	menuToOpen.enable()
 	menuIsOpen = true
 	InputHandler.showCursorTemp()
-	InputHandler.disableMovementInputGlobal()
+	Player.disableInput(true)
 
 ## Connects signals from the [BlueprintMenu] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list for internal tracking.
@@ -153,7 +150,7 @@ func openMenu(menuID:String) -> void:
 ## 	# Associated signal:  unlock_condition_met
 ## 	# Will run whenever an unlock condition is met.
 ## 	# conditionID is the ID of the unlock condition.
-## [/codeblock] 
+## [/codeblock]
 func subscribeToBlueprintMenu(subscriber) -> void:
 	_blueprintMenuSubscribers.push_back(subscriber)
 	_connectBlueprintSignalsToSubscriber(subscriber)
@@ -163,7 +160,7 @@ func subscribeToBlueprintMenu(subscriber) -> void:
 func unsubscribeToBlueprintMenu(subscriber) -> void:
 	if not subscriber in _blueprintMenuSubscribers:
 		return
-	
+
 	var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
 	_blueprintMenuSubscribers[subscriberIndex] = null
 	_disconnectBlueprintSignalsToSubscriber(subscriber)
@@ -176,10 +173,10 @@ func unsubscribeToBlueprintMenu(subscriber) -> void:
 func _createMenu(menu:Resource) -> void:
 	var temp:Menu = menu.instantiate()
 	add_child(temp)
-	
+
 	_idToIndex[temp.menuID] = _menus.size()
 	_menus.push_back(temp)
-	
+
 	temp.close_me.connect(_on_menu_close)
 	temp.disable()
 
@@ -192,7 +189,7 @@ func _resume() -> void:
 	get_tree().paused = false
 	menuIsOpen = false
 	InputHandler.restoreCursorMode()
-	InputHandler.enableMovementInputGlobal()
+	Player.disableInput(false)
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.

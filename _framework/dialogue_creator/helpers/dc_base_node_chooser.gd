@@ -65,7 +65,7 @@ var _valueToOptionIndex:Dictionary = {
 ## and records their index into [member _valueToOptionIndex].
 func _fillValueToOptionIndex(referenceArray:Array[String]) -> void:
 	var prefillSize:int = chooser.item_count
-	
+
 	for i:int in range(referenceArray.size()):
 		var value:String = referenceArray[i]
 		chooser.add_item(value)

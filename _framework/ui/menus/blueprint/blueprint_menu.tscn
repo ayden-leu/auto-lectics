@@ -1,11 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=12 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
 [ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="3_ovhmb"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 
-[node name="BlueprintMenu" type="Control"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ovhmb"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_coiy0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cg8tx"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gffea"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8deg6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qfo8r"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_to7hj"]
+
+[node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxPlayers")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +28,24 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
+sfxPlayers = {
+"buttonPressed": NodePath("SFX/ButtonPressed"),
+"close": NodePath("SFX/Close"),
+"entryGuessedCorrectly": NodePath("SFX/EntryGuessedCorrectly"),
+"entryNameSubmitted": NodePath("SFX/EntryNameSubmitted"),
+"guessNpcNameTextChanged": NodePath("SFX/GuessNpcNameTextChanged"),
+"notesFieldTextUpdated": NodePath("SFX/NotesFieldTextUpdated"),
+"open": NodePath("SFX/Open")
+}
+sfxIds = Dictionary[String, String]({
+"buttonPressed": "",
+"close": "",
+"entryGuessedCorrectly": "",
+"entryNameSubmitted": "",
+"guessNpcNameTextChanged": "",
+"notesFieldTextUpdated": "",
+"open": ""
+})
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
@@ -53,19 +85,26 @@ offset_bottom = 609.0
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_1"
-myName = "Aster"
-portraitTexture = ExtResource("3_ovhmb")
+displayName = "Aster"
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_2"
-myName = "Mira"
-portraitTexture = ExtResource("4_coiy0")
+displayName = "Mira"
+entryTextureLocked = ExtResource("3_ovhmb")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_3"
-myName = "Orin"
+displayName = "Orin"
+entryTextureLocked = ExtResource("3_ovhmb")
+
+[node name="npc_test_4" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+layout_mode = 2
+npcID = "npc_test_4"
+displayName = "John"
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="NpcDetailPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -175,8 +214,32 @@ offset_top = 350.0
 offset_right = 1363.0
 offset_bottom = 452.0
 
+[node name="SFX" type="Node" parent="."]
+
+[node name="Open" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_ovhmb")
+
+[node name="Close" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_coiy0")
+
+[node name="ButtonPressed" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_cg8tx")
+
+[node name="EntryNameSubmitted" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_gffea")
+
+[node name="NotesFieldTextUpdated" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_8deg6")
+
+[node name="GuessNpcNameTextChanged" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_qfo8r")
+
+[node name="EntryGuessedCorrectly" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_to7hj")
+
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]
+[connection signal="text_changed" from="NpcDetailPanel/GuessNpcNamePanel/GuessNpcNameField" to="." method="_on_guess_npc_name_field_text_changed"]
 [connection signal="pressed" from="NpcDetailPanel/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
 [connection signal="text_changed" from="NpcDetailPanel/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
 [connection signal="pressed" from="PrevPageButton" to="." method="_on_prev_page_button_pressed"]

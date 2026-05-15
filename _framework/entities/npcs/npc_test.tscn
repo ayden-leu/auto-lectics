@@ -7,8 +7,8 @@
 [node name="NPC_Test" type="Node3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_0qjbd")
 model = NodePath("MeshInstance3D")
-myName = "NPC_Test"
-patrolEnabled = true
+internalID = "_test_npc"
+displayName = "NPC Test"
 metadata/_custom_type_script = "uid://bm5xi2a17vf24"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

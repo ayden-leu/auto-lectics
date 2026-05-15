@@ -77,7 +77,7 @@ func _on_set_flag_value_pressed() -> void:
 	var gathered:Dictionary = {}
 	gathered[flagID] = newFlagStatus.button_pressed
 	StoryFlags.updateFlags(gathered)
-	
+
 	_updateFlagStatus()
 
 func _on_reset_flag_values_pressed() -> void:
@@ -88,7 +88,7 @@ func _on_check_button_pressed() -> void:
 	var flagID:String = flagField.get_item_text(flagField.selected)
 	var toCheckAgainst:Dictionary = {}
 	toCheckAgainst[flagID] = %Checking.button_pressed
-	
+
 	if StoryFlags.flagsMatch(toCheckAgainst):
 		checkStatus.text = "yes"
 	else:

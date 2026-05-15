@@ -174,22 +174,22 @@ func _ready() -> void:
 func createOptionPort() -> void:
 	var optionLabel:Label = _OPTION_LABEL_SCENE.instantiate()
 	_optionPorts.push_back(optionLabel)
-	
+
 	add_child(optionLabel)
 	move_child(optionLabel, _NUM_NODES_ABOVE_OPTIONS + numOptions)
 	optionLabel.text = str(numOptions)
 	optionLabel.theme_type_variation = "LabelOption"
-	
+
 	if _nextOnHecticPortEnabled:
 		_shiftHecticPort(1)
-	
+
 	set_slot(_NUM_NODES_ABOVE_OPTIONS + numOptions,
 		false, 0, Color.TRANSPARENT,
 		true, PortType.OPTION, PortColor.OPTION
 	)
 	_options.push_back({})
 	numOptions += 1
-	
+
 	_option_amount_changed.emit()
 
 ## Returns the currently configured fields for thie [DC_DialogueNode].
@@ -201,47 +201,47 @@ func getFields() -> Dictionary:
 		"text": text,
 	}
 	currentValues.mode = mode
-	
+
 	if type != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.type = type
-	
+
 	if mode == "hectic" and not nextOnHecticFailId:
 		# TODO:  make the warning pop up on screen
 		printerr("Next On Hectic Fail not set!")
 	else:
 		if nextOnHecticFailId:
 			currentValues.nextOnHecticFailureID = nextOnHecticFailId
-	
+
 	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.textThemePreset = textThemePreset
-	
+
 	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.writeSpeed = writeSpeedPreset
 		if writeSpeedPreset == "custom":
 			currentValues.writeSpeedCustom = writeSpeedValue
-	
+
 	if sfxEventAspects != {}:
 		currentValues.sfx = sfxEventAspects
-	
+
 	if _options != []:
 		var optionsToAdd:Array[Dictionary] = []
 		for option in _options:
 			if option == {}:
 				continue
 			optionsToAdd.push_back(option)
-		
+
 		if optionsToAdd != []:
 			currentValues.options = optionsToAdd
-	
+
 	return currentValues
 
 ## Generates a dictionary with all of the set fields and sends it to anyone listening to the [signal save_me] signal.
 func saveToFile() -> void:
 	var data:Dictionary = getFields()
-		
+
 	if data.id == "":
 		printerr("DC_DialogueNode/saveToFile(): Dialogue Object ID not set.")
-	
+
 	save_me.emit(data)
 
 ## Updates an option from an internal list of options to be empty.
@@ -260,33 +260,33 @@ func nextOnHecticFailIdDisconnected() -> void:
 func _removeOptionPort() -> void:
 	if _optionPorts.is_empty():
 		return
-	
+
 	if _nextOnHecticPortEnabled:
 		_shiftHecticPort(-1)
-	
+
 	numOptions -= 1
 	var toRemove:Label = _optionPorts.pop_back()
 	clear_slot(_NUM_NODES_ABOVE_OPTIONS + numOptions)
 	_options.pop_back()
 	toRemove.queue_free()
-	
+
 	disconnect_option.emit(name, numOptions)
-	
+
 	_option_amount_changed.emit()
 
 ## [b]Internal-use only.[/b]
 ## Moves the Hectic port up/down when the number of option ports decreases/increases.
 func _shiftHecticPort(amount:int) -> void:
 	var currentSlot:int = _NUM_NODES_ABOVE_OPTIONS + numOptions
-	
+
 	disconnect_hectic_port.emit(name, numOptions)
 	set_slot(currentSlot,
 		false, 0, Color.TRANSPARENT,
 		false, 0, Color.TRANSPARENT
 	)
-	
+
 	await _option_amount_changed
-	
+
 	set_slot(currentSlot + amount,
 		false, 0, Color.TRANSPARENT,
 		true, PortType.DIALOGUE, PortColor.DIALOGUE
@@ -338,7 +338,7 @@ func _on_option_disconnected(port:int) -> void:
 func _on_set_hectic_port(on: bool) -> void:
 	if not on:
 		disconnect_hectic_port.emit(name, numOptions)
-	
+
 	set_slot(_NUM_NODES_ABOVE_OPTIONS + numOptions,
 		false, 0, Color.TRANSPARENT,
 		on, PortType.DIALOGUE, PortColor.DIALOGUE
@@ -389,23 +389,23 @@ func _on_debug_pressed() -> void:
 	print("Text: ", text)
 	print("Type: ", type)
 	print("Mode: ", mode)
-	
+
 	if textThemePresetField.chosen != _CHECK_NPC_DEFAULT_VALUE:
 		print("Text Theme: ", textThemePresetField.chosen)
-	
+
 	if mode == "hectic":
 		print("Next On Hectic Fail: ", nextOnHecticFailId)
-	
+
 	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		print("Write Speed Preset: ", writeSpeedPreset)
 		print("Write Speed Value: ", writeSpeedValue)
-	
+
 	var aspects:Dictionary = sfxEventAspects
 	if aspects != {}:
 		print("SFX Aspects:")
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
-	
+
 	print("Options: ", _options)
 	print("OptionPorts: ", _optionPorts)
 	print("numOptions: ", numOptions)

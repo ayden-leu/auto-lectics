@@ -5,6 +5,13 @@ class_name DialogueWindow
 ## [b]Internal-use only.[/b]  A window that appears on the player's screen.
 ##
 ## Can be dragged around.
+## [br][br]
+## Comes with the following SFX events:[br]
+## - spawn:  plays when the window is spawned.[br]
+## - close:  plays when the window is closed.[br]
+## - hover:  plays when the player hovers their cursor over the window.[br]
+## - click:  plays when the player clicks the window.[br]
+## - drop:   plays when the player drops the window after letting it go.[br]
 
 # ------------------------------------------------
 # signals
@@ -40,6 +47,26 @@ signal window_dropped(me:DialogueWindow)
 ## before it gets snapped back onto the screen.
 @export var offscreenThresold: float = 0
 
+@export_group("SFX Events")
+## Holds all of the [AudioStreamPlayer]s for each SFX event.
+@export var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": null,
+	"close": null,
+	"hover": null,
+	"click": null,
+	"drop": null
+}
+## Holds the SFX ID for each SFX event.
+## [br]
+## If you plan to load audio into a SFX event through another way, you can leave it blank.
+@export var sfxIds:Dictionary[String, String] = {
+	"spawn": "",
+	"close": "",
+	"hover": "",
+	"click": "",
+	"drop": ""
+}
+
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
@@ -47,6 +74,9 @@ signal window_dropped(me:DialogueWindow)
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
+## The type of this window.
+var windowType:String
+
 ## The text that's in the header of this option window.
 ## [br][br]
 ## Comes with a getter and setter so you can treat it like a normal variable
@@ -61,14 +91,39 @@ var headerText:String:
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Is true when the player is holding the select button
-## on this option (left mouse click).
-var _holdingSelect:bool = false
-## [b]Internal-use only.[/b]  Is true when the player is dragging this around.
+## [b]Internal-use only.[/b]
+## Is true when the player's cursor is hovering over the window.
+var _hovering:bool = false:
+	set(newState):
+		if newState == _hovering:
+			return
+		_hovering = newState
+		if _hovering:
+			sfxPlayers.hover.stop()
+			sfxPlayers.hover.play()
+## [b]Internal-use only.[/b]
+## Is true when the player is holding the select button on this option (left mouse click).
+var _holdingSelect:bool = false:
+	set(newState):
+		if newState == _holdingSelect:
+			return
+
+		_holdingSelect = newState
+		if _holdingSelect:
+			sfxPlayers.click.stop()
+			sfxPlayers.click.play()
+		else:
+			sfxPlayers.drop.stop()
+			sfxPlayers.drop.play()
+## [b]Internal-use only.[/b]
+## Is true when the player is dragging this around.
 var _dragging:bool = false
-## [b]Internal-use only.[/b]  The distance between the origin and the mouse
-## when it started being dragged.
+## [b]Internal-use only.[/b]
+## The distance between the origin and the mouse when it started being dragged.
 var _dragOffset := Vector2.ZERO
+## [b]Internal-use only.[/b]
+## The original cursor shape set in the editor.
+var _originalCursorShape:CursorShape
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -76,15 +131,31 @@ var _dragOffset := Vector2.ZERO
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	_originalCursorShape = mouse_default_cursor_shape
 
 	if canBeClosed:
 		closeButton.pressed.connect(_on_close_button_pressed)
+
+	AudioLoader.loadSfxIntoPlayers(sfxIds, sfxPlayers)
+	sfxPlayers.spawn.play()
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
+	_hovering = _positionInWindow(get_global_mouse_position())
+
+	if _dragging:
+		mouse_default_cursor_shape = Control.CURSOR_CAN_DROP
+	elif _hovering:
+		mouse_default_cursor_shape = _originalCursorShape
 
 func _gui_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		move_to_front()
 		_holdingSelect = event.pressed
 		if _holdingSelect:
 			_dragOffset = get_global_mouse_position() - global_position
@@ -134,6 +205,8 @@ func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
 
 ## Closes this window.
 func close() -> void:
+	# NOTE:  this won't actually play since the window dies immediately
+	sfxPlayers.close.play()
 	window_closed.emit(self)
 	queue_free()
 
@@ -141,18 +214,15 @@ func close() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## Gets a random position on screen.
-## Unused as it doesn't account for overlap.
-func _getRandomPositionOnScreen(window_size: Vector2) -> Vector2:
-	var viewport_size := get_viewport_rect().size
-	return Vector2(
-		randf_range(0.0, max(0.0, viewport_size.x - window_size.x)),
-		randf_range(0.0, max(0.0, viewport_size.y - window_size.y))
-	)
+## [b]Internal-use only.[/b]
+## Returns true if the given position in within this window.
+func _positionInWindow(pos:Vector2) -> bool:
+	var corners:Dictionary = getGlobalCornerPositions()
 
-## Moves this window to the center of the screen immediately.
-func _center() -> void:
-	position = (get_viewport_rect().size - size) / 2
+	return (
+		pos.x > corners.topLeft.x and pos.x < corners.bottomRight.x and
+		pos.y > corners.topLeft.y and pos.y < corners.bottomRight.y
+	)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -181,6 +251,21 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.push_back(
 			"A close button is not set."
 		)
+
+	for sfxEvent in sfxPlayers:
+		if sfxPlayers[sfxEvent] == null:
+			warnings.push_back(
+				"SFX player for event \"" + sfxEvent + "\" not set."
+			)
+		elif sfxPlayers[sfxEvent].stream == null:
+			warnings.push_back(
+				"SFX player for event \"" + sfxEvent + "\" doesn't have a resource set.  " +
+				"It should be a Randomizer resource."
+			)
+		elif sfxIds.get(sfxEvent) == null:
+			warnings.push_back(
+				"SFX event \"" + sfxEvent + "\" doesn't have an entry in SFX IDs."
+			)
 
 	return warnings
 

@@ -20,6 +20,9 @@ const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConso
 ## [b]Internal-use only.[/b]
 ## A reference to the [DialogueConsoleOptionWindow] scene.
 const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
+## [b]Internal-use only.[/b]
+## Contains reference to the warning tile scene where warnings will spawn
+const _WARNING_WINDOW_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWarningTileWindow)
 
 # ------------------------------------------------
 # export variables
@@ -54,6 +57,8 @@ var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 
+func _ready() -> void:
+	print(_getCenter(Vector2.ZERO))
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -68,6 +73,7 @@ func createDialogueConsole() -> DialogueConsole:
 		dialogueConsole.position = dialogueConsoleLastPosition
 	_cleanSubscriberList()
 	_resubscribeSubscribers()
+	dialogueConsole.global_position = _getCenter(dialogueConsole.size)
 	return dialogueConsole
 
 ## Kills the current [DialogueConsole].
@@ -83,6 +89,22 @@ func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
 	var optionWindow:DialogueConsoleOptionWindow = _OPTION_WINDOW_SCENE.instantiate()
 	_addWindow(optionWindow)
 	return optionWindow
+
+## Creates a [DialogueWarningTileWindow], while avoiding the main console
+func createDialogueWarningTileWindow() -> DialogueWarningTileWindow:
+	var warningWindow:DialogueWarningTileWindow = _WARNING_WINDOW_SCENE.instantiate()
+	_addWindow(warningWindow)
+	return warningWindow
+
+## [b]Internal-use only.[/b]  Closes all [DialogueWarningTileWindow] windows.
+func closeAllWarningTileWindows() -> void:
+	var tempStorage:Array[DialogueWarningTileWindow] = []
+	for window in _spawnedWindows:
+		if window is DialogueWarningTileWindow:
+			tempStorage.push_back(window)
+
+	for windowToDelete in tempStorage:
+		windowToDelete.close()
 
 ## Connects signals from the [DialogueConsole] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list so the signals can be reconnected
@@ -128,6 +150,64 @@ func unsubscribeToConsole(subscriber) -> void:
 	var subscriberIndex:int = _dialogueConsoleSubscribers.find(subscriber)
 	_dialogueConsoleSubscribers[subscriberIndex] = null
 	_disconnectConsoleSignalsToSubscriber(subscriber)
+
+## Pushes a text entry to the [DialogueConsole].
+## [br][br]
+## [code]metadata[/code] can have the following fields:
+## [codeblock]
+## 	"writeSpeed":  # a float for the number of characters per second to display.
+## 	"instant":  # if the text should be displayed instantly.
+## 	"theme":  # the text theme to apply to this entry.
+## [/codeblock]
+func pushMessageToConsole(message:String, metadata:Dictionary = {}) -> void:
+	if not dialogueConsole:
+		return
+
+	dialogueConsole.addExternalEntry(message, metadata)
+
+## Checks if a position is within the screen.
+## [code]threshold[/code] is the amount, in pixels, beyond the screen the position can be.
+func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
+	var screen_rect := get_viewport().get_visible_rect()
+
+	var min_x := -threshold
+	var min_y := -threshold
+	var max_x := screen_rect.size.x + threshold
+	var max_y := screen_rect.size.y + threshold
+
+	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
+
+## Gets a random position on screen.
+## [br][br]
+## [code]window_size[/code] is the size of the window to consider.
+## [br][br]
+## [code]allowOverlap[/code] is a list of window types that this position can overlap.
+## The type of a window is defined by [member DialogueWindow.windowType]
+func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] = []) -> Vector2:
+	var viewport_size := get_viewport().get_visible_rect().size
+	var margin := 20.0
+	var retryAttempts:int = 30
+
+	for attempt in range(retryAttempts):
+		var pos := Vector2(
+			randf_range(margin, viewport_size.x - window_size.x - margin),
+			randf_range(margin, viewport_size.y - window_size.y - margin)
+		)
+
+		var overlapping:bool = false
+		for window in _spawnedWindows:
+			if window.windowType in allowOverlap:
+				continue
+
+			if window.get_global_rect().intersects(Rect2(pos, window_size)):
+				overlapping = true
+				break
+
+		if not overlapping:
+			return pos
+
+	# fallback if all attempts fail
+	return Vector2(margin, margin)
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -196,19 +276,6 @@ func _resubscribeSubscribers() -> void:
 		_connectConsoleSignalsToSubscriber(subscriber)
 
 ## [b]Internal-use only.[/b]
-## Checks if a position is within the screen.
-## [code]threshold[/code] is the amount, in pixels, beyond the screen the position can be.
-func _positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
-	var screen_rect := get_viewport().get_visible_rect()
-
-	var min_x := -threshold
-	var min_y := -threshold
-	var max_x := screen_rect.size.x + threshold
-	var max_y := screen_rect.size.y + threshold
-
-	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
-
-## [b]Internal-use only.[/b]
 ## Moves the window back onto the screen if it's outside
 func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
 	var screen_rect := get_viewport().get_visible_rect()
@@ -222,9 +289,15 @@ func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
 	window.global_position.x = clamp(window.global_position.x, min_x, max_x)
 	window.global_position.y = clamp(window.global_position.y, min_y, max_y)
 
+## [b]Internal-use only.[/b]
 ## Moves this window to the center of the screen immediately.
 func _centerWindow(window:DialogueWindow) -> void:
 	window.global_position = (get_viewport().get_visible_rect().size - window.size) / 2
+
+## [b]Internal-use only.[/b]
+## Get the center of the screen.
+func _getCenter(windowSize:Vector2) -> Vector2:
+	return (get_viewport().get_visible_rect().size - windowSize) / 2
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -238,7 +311,7 @@ func _on_window_closed(closedWindow:DialogueWindow) -> void:
 func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 	var cornerPositions:Dictionary[String, Vector2] = droppedWindow.getGlobalCornerPositions()
 	for cornerPosition:Vector2 in cornerPositions.values():
-		if not _positionOnScreen(cornerPosition, droppedWindow.offscreenThresold):
+		if not positionOnScreen(cornerPosition, droppedWindow.offscreenThresold):
 			_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 			break
 
