@@ -41,7 +41,6 @@ const SCENES = {
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {
 	"DIALOGUE": "res://dialogue_trees/",
-	"SFX": "res://sounds/sfx/",
 	"LABEL_PRESETS": "res://fonts/_label_presets/"
 }
 

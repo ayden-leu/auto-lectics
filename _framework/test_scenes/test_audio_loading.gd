@@ -39,7 +39,7 @@ extends Node3D
 func _ready() -> void:
 	_loadOptionButtonOptions(
 		idField,
-		_getFoldersInPath(FR_Globals.STORAGE_PATH.SFX)
+		_getFoldersInPath(AudioLoader.STORAGE_PATH)
 	)
 
 func _process(_delta: float) -> void:
@@ -88,12 +88,11 @@ func _on_load_pressed() -> void:
 	AudioLoader.clearAudioRandomizer(positionalPlayer.stream)
 
 	var sfxID:String = idField.get_item_text(idField.selected)
-	var status:int = 0
 	print("Loading SFX ID: [", sfxID, "]")
-	status += AudioLoader.loadSfxFromId(sfxID, globalPlayer.stream)
-	status += AudioLoader.loadSfxFromId(sfxID, positionalPlayer.stream)
+	var resultOne:Error = AudioLoader.loadSfxFromId(sfxID, globalPlayer.stream)
+	var resultTwo:Error = AudioLoader.loadSfxFromId(sfxID, positionalPlayer.stream)
 
-	if status >= 0:
+	if resultOne == Error.OK and resultTwo == Error.OK:
 		print("Loading successful.")
 
 func _on_play_global_pressed() -> void:

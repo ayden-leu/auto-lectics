@@ -8,9 +8,13 @@ This page will be an index for everything related to the documentation.
 
 ### Framework Guides
 - [Dialogue](framework_guides/dialogue.md)
-- [Godot Node Notes (Built-in & Custom)](framework_guides/nodes_built_in.md)
+- [Godot Node Notes (Built-in & Custom)](framework_guides/nodes.md)
 
 ### Designer Guides
 - [Models](designer_guides/models.md)
 - [World Making](designer_guides/environment.md)
 - [Audio](designer_guides/audio.md)
+
+
+NOTE:  godot documentation has to be generated still.
+ use https://github.com/phaseLineStudios/gdscript_to_docs/tree/main to do it.
