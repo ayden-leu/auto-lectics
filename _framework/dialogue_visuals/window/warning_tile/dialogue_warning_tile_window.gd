@@ -4,7 +4,7 @@ extends DialogueWindow
 class_name DialogueWarningTileWindow
 ## A simple window that houses a [WarningTile2D].
 ##
-## Comes with the SFX events for [DialogueWindow].
+## Comes with the optional SFX events for [DialogueWindow].
 
 # ------------------------------------------------
 # onready variables

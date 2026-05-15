@@ -1,6 +1,6 @@
-@tool
-extends Menu
+extends Control
 
+# feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
@@ -33,12 +33,6 @@ extends Menu
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
-	if Engine.is_editor_hint():
-		return
-
-	menuID = "pause"
-	super()  # runs the inherited class' _ready() function.
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -52,26 +46,9 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for resume button pressing.
-func _on_resume_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
-	close()
-
-## [b]Internal-use only.[/b]  Handles logic for options button pressing.
-func _on_options_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
-	FR_MenuManager.openMenu("options")
-
-## [b]Internal-use only.[/b]  Handles logic for blueprint button pressing.
-func _on_blueprint_button_pressed() -> void:
-	print("blueprint open")
-	sfxEventHandler.play("buttonPressed")
-	FR_MenuManager.openMenu("blueprint")
-
-## [b]Internal-use only.[/b]  Handles logic for quit button pressing.
-func _on_quit_pressed() -> void:
-	get_tree().paused = false
-	get_tree().quit()
+func _on_button_pressed() -> void:
+	print("play")
+	%SfxEventHandler.play(%EventField.text)
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

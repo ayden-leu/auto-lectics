@@ -1,14 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://duxwayninhwqb"]
+[gd_scene load_steps=4 format=3 uid="uid://duxwayninhwqb"]
 
 [ext_resource type="Script" uid="uid://di3gbt1rj8ff5" path="res://_framework/ui/menus/pause/options_menu.gd" id="1_1rh0x"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q6d0r"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xw4hb"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="2_xw4hb"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6x3p0"]
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("sfxPlayers")]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,16 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1rh0x")
-sfxPlayers = {
-"buttonPressed": NodePath("SFX/ButtonPressed"),
-"close": NodePath("SFX/Close"),
-"open": NodePath("SFX/Open")
-}
-sfxIds = Dictionary[String, String]({
-"buttonPressed": "",
-"close": "",
-"open": ""
-})
+sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -77,15 +65,12 @@ alignment = 1
 layout_mode = 2
 text = "Back"
 
-[node name="SFX" type="Node" parent="."]
+[node name="SfxEventHandler" parent="." instance=ExtResource("2_xw4hb")]
+sfxIds = Dictionary[String, String]({
+"buttonPressed": ""
+})
 
-[node name="Open" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_q6d0r")
-
-[node name="Close" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_xw4hb")
-
-[node name="ButtonPressed" type="AudioStreamPlayer" parent="SFX"]
+[node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_6x3p0")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/KeybindsButton" to="." method="_on_keybinds_pressed"]

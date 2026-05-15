@@ -6,7 +6,7 @@ class_name DialogueWindow
 ##
 ## Can be dragged around.
 ## [br][br]
-## Comes with the following SFX events:[br]
+## Comes with the following optional SFX events:[br]
 ## - spawn:  plays when the window is spawned.[br]
 ## - close:  plays when the window is closed.[br]
 ## - hover:  plays when the player hovers their cursor over the window.[br]
@@ -47,29 +47,11 @@ signal window_dropped(me:DialogueWindow)
 ## before it gets snapped back onto the screen.
 @export var offscreenThresold: float = 0
 
-@export_group("SFX Events")
-## Holds all of the [AudioStreamPlayer]s for each SFX event.
-@export var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
-	"spawn": null,
-	"close": null,
-	"hover": null,
-	"click": null,
-	"drop": null
-}
-## Holds the SFX ID for each SFX event.
-## [br]
-## If you plan to load audio into a SFX event through another way, you can leave it blank.
-@export var sfxIds:Dictionary[String, String] = {
-	"spawn": "",
-	"close": "",
-	"hover": "",
-	"click": "",
-	"drop": ""
-}
-
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+## The [SfxEventHandler] that plays SFX events.
+@export var sfxEventHandler:SfxEventHandler
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -98,9 +80,8 @@ var _hovering:bool = false:
 		if newState == _hovering:
 			return
 		_hovering = newState
-		if _hovering:
-			sfxPlayers.hover.stop()
-			sfxPlayers.hover.play()
+		if _hovering and sfxEventHandler.getPlayerForEvent("hover"):
+			sfxEventHandler.play("hover")
 ## [b]Internal-use only.[/b]
 ## Is true when the player is holding the select button on this option (left mouse click).
 var _holdingSelect:bool = false:
@@ -109,12 +90,10 @@ var _holdingSelect:bool = false:
 			return
 
 		_holdingSelect = newState
-		if _holdingSelect:
-			sfxPlayers.click.stop()
-			sfxPlayers.click.play()
-		else:
-			sfxPlayers.drop.stop()
-			sfxPlayers.drop.play()
+		if _holdingSelect and sfxEventHandler.getPlayerForEvent("click"):
+			sfxEventHandler.play("click")
+		elif sfxEventHandler.getPlayerForEvent("drop"):
+			sfxEventHandler.play("drop")
 ## [b]Internal-use only.[/b]
 ## Is true when the player is dragging this around.
 var _dragging:bool = false
@@ -136,8 +115,8 @@ func _ready() -> void:
 	if canBeClosed:
 		closeButton.pressed.connect(_on_close_button_pressed)
 
-	AudioLoader.loadSfxIntoPlayers(sfxIds, sfxPlayers)
-	sfxPlayers.spawn.play()
+	if sfxEventHandler.getPlayerForEvent("spawn"):
+		sfxEventHandler.play("spawn")
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -206,7 +185,8 @@ func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
 ## Closes this window.
 func close() -> void:
 	# NOTE:  this won't actually play since the window dies immediately
-	sfxPlayers.close.play()
+	if sfxEventHandler.getPlayerForEvent("close"):
+		sfxEventHandler.play("close")
 	window_closed.emit(self)
 	queue_free()
 
@@ -251,21 +231,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.push_back(
 			"A close button is not set."
 		)
-
-	for sfxEvent in sfxPlayers:
-		if sfxPlayers[sfxEvent] == null:
-			warnings.push_back(
-				"SFX player for event \"" + sfxEvent + "\" not set."
-			)
-		elif sfxPlayers[sfxEvent].stream == null:
-			warnings.push_back(
-				"SFX player for event \"" + sfxEvent + "\" doesn't have a resource set.  " +
-				"It should be a Randomizer resource."
-			)
-		elif sfxIds.get(sfxEvent) == null:
-			warnings.push_back(
-				"SFX event \"" + sfxEvent + "\" doesn't have an entry in SFX IDs."
-			)
 
 	return warnings
 

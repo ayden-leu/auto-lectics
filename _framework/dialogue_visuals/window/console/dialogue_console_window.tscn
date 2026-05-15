@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b8oqtsvu488a"]
+[gd_scene load_steps=17 format=3 uid="uid://b8oqtsvu488a"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_0et2d"]
 [ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/console/dialogue_console_window.gd" id="1_qw6ov"]
@@ -6,10 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1n8yvdu14dcd" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry.tscn" id="4_pedep"]
 [ext_resource type="PackedScene" uid="uid://2pbfftop6j5e" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry_spacer.tscn" id="5_nsbvi"]
 [ext_resource type="PackedScene" uid="uid://cdt7ouilmdwo0" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry_id.tscn" id="6_mpmwx"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mpmwx"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a26bi"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="7_a26bi"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nusfc"]
 
@@ -18,16 +15,18 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nnkwk"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hy2ou"]
-resource_local_to_scene = true
-playback_mode = 1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pmfgf"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wd647"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vfcoi"]
 
-[node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxPlayers")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7icjp"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xd3os"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a26bi"]
+
+[node name="DialogueConsoleWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 428.0
@@ -39,28 +38,7 @@ headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HeaderLabel")
 canBeClosed = true
 closeButton = NodePath("Header/CloseButton")
-sfxPlayers = {
-"click": NodePath("SFX/Click"),
-"close": NodePath("SFX/Close"),
-"closeReject": NodePath("SFX/CloseReject"),
-"drop": NodePath("SFX/Drop"),
-"hover": NodePath("SFX/Hover"),
-"spawn": NodePath("SFX/Spawn"),
-"text": NodePath("SFX/Text"),
-"userTextAdded": NodePath("SFX/Console/TextAdded"),
-"userTextSubmitted": NodePath("SFX/Console/TextSubmitted")
-}
-sfxIds = Dictionary[String, String]({
-"click": "",
-"close": "",
-"closeReject": "",
-"drop": "",
-"hover": "",
-"spawn": "",
-"text": "",
-"userTextAdded": "",
-"userTextSubmitted": ""
-})
+sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="Header" type="Panel" parent="."]
 layout_mode = 0
@@ -187,36 +165,47 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SFX" type="Node" parent="."]
+[node name="SfxEventHandler" parent="." instance=ExtResource("7_a26bi")]
+sfxIds = Dictionary[String, String]({
+"click": "",
+"close": "",
+"closeReject": "",
+"drop": "",
+"hover": "",
+"userTextAdded": "",
+"userTextSubmitted": ""
+})
 
-[node name="Spawn" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_mpmwx")
-
-[node name="Close" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_a26bi")
-
-[node name="Hover" type="AudioStreamPlayer" parent="SFX"]
+[node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_nusfc")
 
-[node name="Click" type="AudioStreamPlayer" parent="SFX"]
+[node name="close" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_ou5hb")
 
-[node name="Drop" type="AudioStreamPlayer" parent="SFX"]
+[node name="closeReject" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_nnkwk")
 
-[node name="Text" type="AudioStreamPlayer" parent="SFX"]
+[node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_hy2ou")
 
-[node name="CloseReject" type="AudioStreamPlayer" parent="SFX"]
+[node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_pmfgf")
 
-[node name="Console" type="Node" parent="SFX"]
-
-[node name="TextAdded" type="AudioStreamPlayer" parent="SFX/Console"]
-stream = SubResource("AudioStreamRandomizer_wd647")
-
-[node name="TextSubmitted" type="AudioStreamPlayer" parent="SFX/Console"]
+[node name="userTextAdded" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_vfcoi")
+
+[node name="userTextSubmitted" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_7icjp")
+
+[node name="ManualSfxPlayers" type="Node" parent="."]
+
+[node name="sfxText" type="AudioStreamPlayer" parent="ManualSfxPlayers"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_xd3os")
+
+[node name="sfxSpawn" type="AudioStreamPlayer" parent="ManualSfxPlayers"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_a26bi")
 
 [connection signal="gui_input" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_console_input_gui_input"]
 [connection signal="text_changed" from="Contents/ContentsScroller/DialogueLogStorage/InputArea/ConsoleInput" to="." method="_on_input_text_changed"]

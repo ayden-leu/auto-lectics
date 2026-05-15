@@ -131,25 +131,13 @@ transform = Transform3D(1, 0, 0, 0, -0.0508544, 0.9987062, 0, -0.9987062, -0.050
 light_energy = 0.28
 shadow_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("2_nt7id")]
+[node name="Player" parent="." instance=ExtResource("2_nt7id")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4372382, 0)
 maxSpeed = 10.0
 acceleration = 15.0
 deceleration = 50.0
 turnDecelerationBoost = 5.0
-sfxPlayers = {
-"death": NodePath("SFX/Death"),
-"grappleExtending": NodePath("SFX/grapple/Extending"),
-"grappleHitFail": NodePath("SFX/grapple/HitFail"),
-"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
-"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
-"grappleRecall": NodePath("SFX/grapple/Recall"),
-"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
-"grappleThrow": NodePath("SFX/grapple/Throw"),
-"jump": NodePath("SFX/Jump"),
-"respawn": NodePath("SFX/Respawn")
-}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 focus = NodePath("../Player")

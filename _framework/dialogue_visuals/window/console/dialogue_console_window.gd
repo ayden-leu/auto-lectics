@@ -4,11 +4,11 @@ class_name DialogueConsole
 ## [b]Internal-use only.[/b]  The main console-like window for interacting with
 ## a dialogue event.
 ##
-## On top of the SFX events for [DialogueWindow], it comes with additional SFX events:[br]
+## On top of the SFX events for [DialogueWindow], it comes with the following optional SFX events:[br]
 ## - text:  plays when text is being written into a log entry.[br]
 ## - closeReject:  plays when the DialogueConsole cannot be closed
 ## and something tries to close it.[br]
-## - userTextAdded:  plays when player adds text to the [member _textInput].
+## - userTextAdded:  plays when player adds text to the [member _textInput].[br]
 ## - userTextSubmitted:  plays when the player submits text in the [member _textInput].
 
 # ------------------------------------------------
@@ -76,6 +76,13 @@ const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry
 @onready var _optionSpawnPositions:Dictionary[String, Marker2D] = {
 	"left": %OptionSpawnPositions/Left,
 	"right": %OptionSpawnPositions/Right
+}
+
+## The SFX event players that are manually set outside of [SfxEventHandler].
+## Currently, it has "spawn" and "text," which is customized by [InteractableNPC].
+@onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": %sfxSpawn,
+	"text": %sfxText
 }
 
 # ------------------------------------------------
@@ -205,6 +212,7 @@ func prepare() -> void:
 ## records [member currentDialogueID] into [_dialogueHistory],
 ## and spawns options once complete.
 func start() -> void:
+	sfxPlayers.spawn.stop()
 	sfxPlayers.spawn.play()
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
@@ -234,11 +242,12 @@ func start() -> void:
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
 	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
+		sfxEventHandler.play("closeReject")
 		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
 		return
 
 	if not canBeClosed:
-		sfxPlayers.closeReject.play()
+		sfxEventHandler.play("closeReject")
 		await _addRightText(exitRejectMessage)
 		return
 
@@ -357,6 +366,7 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 		entry.visible_characters += 1
 		_scrollToBottom()
 		if not sfxPlayers.text.playing:
+			sfxPlayers.text.stop()
 			sfxPlayers.text.play()
 		await get_tree().create_timer(delay, false, true).timeout
 	_scrollToBottom()
@@ -570,8 +580,7 @@ func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated
 func _on_input_text_changed(_new_text: String) -> void:
-	sfxPlayers.userTextAdded.stop()
-	sfxPlayers.userTextAdded.play()
+	sfxEventHandler.play("userTextAdded")
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]
@@ -585,8 +594,7 @@ func _on_input_submitted(input: String) -> void:
 	if input == "":
 		return
 
-	sfxPlayers.userTextSubmitted.stop()
-	sfxPlayers.userTextSubmitted.play()
+	sfxEventHandler.play("userTextSubmitted")
 	_textInput.text = ""
 	var text := input.strip_edges()
 
