@@ -51,7 +51,9 @@ var _NPCS_PREVENT_CLOSING:Array[String] = [  # TODO:  make this a boolean varaib
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+## The delay between choosing an option and acting on it, in seconds.
 @export var optionChooseDelay: float = 0.2
+
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
@@ -141,18 +143,18 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	super()
-	
+
 	_center()
 	_hecticBar.visible = false
 	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
-	
+
 	for child in _contentsStorage.get_children():
 		child.queue_free()
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-		
+
 	if _hecticCountdownActive:
 		_hecticBar.value = _hecticTimer.time_left
 
@@ -165,10 +167,10 @@ func _gui_input(event: InputEvent) -> void:
 ## Prepares the [DialogueConsole] by setting up initial defaults.
 func prepare() -> void:
 	headerText = nameOfNpcTalkingTo
-	
+
 	_closeAllOptionWindows()
 	_stopHecticMode()
-	
+
 	_textInput.text = ""
 	_textInput.grab_focus()
 
@@ -182,13 +184,13 @@ func start() -> void:
 	_recordHistory = true
 	await _addRightText(textToAdd)
 
-	all_dialogue_text_visible.emit()	
+	all_dialogue_text_visible.emit()
 	await get_tree().create_timer(delayBtwnWriteDialogueAndOptions).timeout
-	
+
 	_spawnOptionWindows()
 	all_options_available.emit()
 	_forceTextInput()
-	
+
 	if mode == "hectic":
 		_startHecticMode()
 
@@ -198,7 +200,7 @@ func close() -> void:
 	if nameOfNpcTalkingTo in _NPCS_PREVENT_CLOSING:
 		await _addRightText(exitRejectMessage)
 		return
-	
+
 	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
 	super()
 
@@ -219,7 +221,7 @@ func loadOptionData(options:Array) -> void:
 			printerr("DialogueConsole: Data for this entry is not a Dictionary.")
 			print("Entry data: ", option)
 			continue
-		
+
 		if StoryFlags.flagsMatch(option.checkFlags):
 			_optionData.push_back(option)
 
@@ -240,36 +242,36 @@ func loadSfx(sfxEventsToLoad:Dictionary) -> void:
 func _createLogEntry(alignment:HorizontalAlignment) -> RichTextLabel:
 	var entry:RichTextLabel = _LOG_ENTRY.instantiate()
 	entry.text = ""
-	
+
 	# just text alignment
 	#entry.horizontal_alignment = alignment
 	#_contentsStorage.add_child(entry)
-	
+
 	# node setup alignment
 	var holder:HBoxContainer = HBoxContainer.new()
 	var spacer:Control = _LOG_ENTRY_SPACER.instantiate()
 	_contentsStorage.add_child(holder)
-	
+
 	if alignment == HORIZONTAL_ALIGNMENT_LEFT:
 		holder.add_child(entry)
 		holder.add_child(spacer)
 	elif alignment == HORIZONTAL_ALIGNMENT_RIGHT:
 		holder.add_child(spacer)
 		holder.add_child(entry)
-	
+
 	return entry
 
 ## [b]Internal-use only.[/b]  Adds a text entry and displays it
 ## at [member textWriteSpeed] characters per second.
 func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:String) -> void:
 	_isWritingText = true
-	
+
 	var entry:RichTextLabel = _createLogEntry(alignment)
 	entry.theme_type_variation = themeVar
 	entry.visible_characters = 0
 	entry.text = textToWrite
-	
-	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)	
+
+	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)
 	for _i in range(textToWrite.length()):
 		entry.visible_characters += 1
 		_scrollToBottom()
@@ -277,7 +279,7 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 			_sfxPlayer.text.play()
 		await get_tree().create_timer(delay, false, true).timeout
 	_scrollToBottom()
-	
+
 	_isWritingText = false
 	_all_text_visible.emit()
 
@@ -289,7 +291,7 @@ func _addText(text:String, alignment:HorizontalAlignment, themeVar:String) -> vo
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]  Helper function to add text from the player to the console.
-func _addLeftText(text:String) -> void:	
+func _addLeftText(text:String) -> void:
 	_addText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left)
 
 func _addLeftTextTyping(text:String) -> void:
@@ -304,12 +306,12 @@ func _addRightText(text:String) -> void:
 ## [b]Internal-use only.[/b]  Spawns the option windows.
 func _spawnOptionWindows() -> void:
 	_forceTextInput()
-	
+
 	var tempCounter:int = 0
 	var verticalOffset:float = 0
 	for optionData in _optionData:
 		var optionWindow = FR_WindowManager.createDialogueOptionWindow()
-		
+
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.themeVariation = optionData.textThemePreset
@@ -318,12 +320,12 @@ func _spawnOptionWindows() -> void:
 		optionWindow.position = _optionSpawnPosition.global_position + Vector2(0, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
 		optionWindow.start()
-		
+
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()
 		tempCounter += 1
 		verticalOffset += optionWindow.size.y + _OPTION_SPAWN_OFFSET
-	
+
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Handles logic for choosing an option.
@@ -341,7 +343,7 @@ func _closeAllOptionWindows() -> void:
 	for optionWindow in _optionWindows:
 		optionWindow.close()
 	_optionWindows.clear()
-	
+
 ## [b]Internal-use only.[/b]  Forces the scroll bar to be moved to the bottom.
 func _scrollToBottom() -> void:
 	await get_tree().process_frame
@@ -374,27 +376,27 @@ func _handleCommand(command:String) -> void:
 		if id >= 0 and id < _optionData.size():
 			_chooseOption(_optionData[id])
 			return
-	
+
 	# command is an option text
 	for option in _optionData:
 		if command == option.text.to_lower():
 			_chooseOption(option)
 			return
-	
+
 	# else assume its an actual command
 	_addLeftText(command)
 	command_entered.emit(command)
 	_scrollToBottom()
-	
+
 	# TODO:  move help text definition to [InteractableNPC]
 	if command == "help":
 		await _addRightText(_helpText)
 		return
-	
+
 	if command == "back":
 		_goBackOneDialogue()
 		return
-	
+
 	if command == "exit":
 		close()
 		return
@@ -404,7 +406,7 @@ func _goBackOneDialogue() -> void:
 	if _dialogueHistory.size() <= 1:
 		await _addLeftTextTyping("[No saved history]")
 		return
-	
+
 	_dialogueHistory.pop_back()
 	_recordHistory = false
 	option_chosen.emit(_dialogueHistory.back())
@@ -421,7 +423,7 @@ func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) 
 func _on_input_submitted(input: String) -> void:
 	if _isWritingText:
 		return
-	
+
 	_textInput.text = ""
 	var text := input.strip_edges()
 	_handleCommand(text.to_lower())
@@ -433,7 +435,7 @@ func _on_hectic_timer_timeout() -> void:
 
 	_stopHecticMode()
 	_closeAllOptionWindows()
-	
+
 	if hecticFailureDialogueID == "":
 		printerr("DialogueConsole:  nextOnHecticFailureID not set for ", currentDialogueID)
 

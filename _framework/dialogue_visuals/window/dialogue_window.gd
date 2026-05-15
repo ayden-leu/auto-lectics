@@ -64,7 +64,7 @@ var headerText:String:
 ## [b]Internal-use only.[/b]  Is true when the player is holding the select button
 ## on this option (left mouse click).
 var _holdingSelect:bool = false
-## [b]Internal-use only.[/b]  Is true when the player is dragging this around.  
+## [b]Internal-use only.[/b]  Is true when the player is dragging this around.
 var _dragging:bool = false
 ## [b]Internal-use only.[/b]  The distance between the origin and the mouse
 ## when it started being dragged.
@@ -76,21 +76,21 @@ var _dragOffset := Vector2.ZERO
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if canBeClosed:
 		closeButton.pressed.connect(_on_close_button_pressed)
 
 func _gui_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		_holdingSelect = event.pressed
 		if _holdingSelect:
 			_dragOffset = get_global_mouse_position() - global_position
 		else:
 			window_dropped.emit(self)
-	
+
 	if event is InputEventMouseMotion and _holdingSelect:
 		_dragging = true
 		global_position = get_global_mouse_position() - _dragOffset
@@ -166,22 +166,22 @@ func _on_close_button_pressed() -> void:
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if not headerPanel:
 		warnings.push_back(
 			"The header panel is not set."
 		)
-	
+
 	if not headerLabel:
 		warnings.push_back(
 			"The header label is not set."
 		)
-	
+
 	if canBeClosed and not closeButton:
 		warnings.push_back(
 			"A close button is not set."
 		)
-	
+
 	return warnings
 
 func _validate_property(property: Dictionary) -> void:

@@ -24,8 +24,8 @@ signal no_longer_looking_at_interactable()
 # ------------------------------------------------
 ## How long to wait before actually respawning.
 @export var respawnDelay:float = 2.0
-
-@export var respawnLocation: Marker3D
+## The location to move the player to when [method respawnCheckpoint] runs.
+@export var respawnCheckpointLocation: Marker3D
 
 @export_group("Movement - Ground")
 ## The player's maximum speed.
@@ -98,7 +98,7 @@ var interactableThing:Node3D = null:
 		if thing == interactableThing:
 			return
 		interactableThing = thing
-		
+
 		if thing == _loadBearingDummy:
 			no_longer_looking_at_interactable.emit()
 		else:
@@ -137,9 +137,9 @@ var input_frozen: bool = false
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	_recomputeJumpParameters()
-	
+
 	AudioLoader.loadSfxFromId("respawn", _sfxPlayer.respawn.stream)
 	AudioLoader.loadSfxFromId("death", _sfxPlayer.death.stream)
 
@@ -155,7 +155,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_applyVerticalPhysics(delta)
 	move_and_slide()
-	
+
 	#print(_interactionRaycast.get_collider())
 	if _interactionRaycast.get_collider() != null:
 		var hit = _interactionRaycast.get_collider().owner
@@ -163,7 +163,7 @@ func _physics_process(delta: float) -> void:
 			interactableThing = hit
 	else:
 		interactableThing = _loadBearingDummy
-	
+
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -187,12 +187,16 @@ func respawn() -> void:
 	_sfxPlayer.death.play()
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
-	
+
 	await get_tree().create_timer(respawnDelay).timeout
-	
+
 	respawnForce()
 	_overlay.startFadeOut()
 	_sfxPlayer.respawn.play()
+
+## Moves the player to [memmber respawnCheckpointLocation] immediately.
+func respawnCheckpoint() -> void:
+	global_position = respawnCheckpointLocation.global_position
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -246,7 +250,7 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	var target := Vector3.ZERO
 	if direction != Vector3.ZERO:
 		target = direction.normalized() * maxSpeed
-	
+
 	var current_h := Vector3(velocity.x, 0.0, velocity.z)
 	var desired_h := Vector3(target.x, 0.0, target.z)
 
@@ -258,7 +262,7 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	if not is_on_floor():
 		accel = airAcceleration
 		decel = airDeceleration
-		
+
 	var physicsDelta:float = get_physics_process_delta_time()
 
 	if desired_h.length() > 0.0:
@@ -282,7 +286,7 @@ func set_input_frozen(value: bool) -> void:
 func _determineIfValidInteractable(interactable:Node3D) -> bool:
 	if interactable.has_method("_on_interaction"):
 		return true
-	
+
 	return false
 
 # ------------------------------------------------
@@ -296,7 +300,7 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 		return
 	# horizontal rotation
 	rotation_degrees.y += -distanceMoved.x * mouseSentitivity
-	
+
 	# pitch (on anchor)
 	cameraAnchor.rotation_degrees.x += -distanceMoved.y * mouseSentitivity
 	# Prevent camera from flipping at top of rotation
@@ -320,13 +324,23 @@ func _on_jump_pressed() -> void:
 ## move direction.
 func _on_updated_input_direction(newDirection:Vector2) -> void:
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
-	_handleDirectionInput(direction)	
+	_handleDirectionInput(direction)
 
-#temporary code for Spring Playtest week 3
+## [b]Internal-use only.[/b]
+## The location to move the player to upon forcing the respawn.
 func _on_input_handler_respawn() -> void:
-	if respawnLocation:
-		global_position = respawnLocation.global_position
+	respawnCheckpoint()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+
+	if self != get_tree().edited_scene_root:
+		if not respawnCheckpointLocation:
+			warnings.push_back(
+				"The respawn checkpoint location of this player is not set."
+			)
+
+	return warnings
