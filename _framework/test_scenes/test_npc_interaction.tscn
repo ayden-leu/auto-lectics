@@ -222,6 +222,18 @@ metadata/_edit_group_ = true
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_one_reject_exit"
 
+[node name="test_reject_back" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 8.482098)
+dialogueTreeID = "_test/back"
+initialDialogueID = "1"
+internalID = "_test_basic_one_reject_exit"
+displayName = "Test Reject Back"
+metadata/_edit_group_ = true
+
+[node name="Label3D" type="Label3D" parent="NPCs/test_reject_back"]
+transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
+text = "test_reject_back"
+
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8527756, 0.470119, -27.61793)
 curve = SubResource("Curve3D_wd7ni")

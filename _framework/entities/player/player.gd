@@ -270,7 +270,7 @@ func _physics_process(delta: float) -> void:
 		interactableThing = _loadBearingDummy
 		
 	if grapple_enabled:
-		if is_aiming_at_grappleable_target():
+		if is_aiming_at_grappleable_target() && !is_grappling:
 			if !_grapple_looking:
 				_grapple_looking = true
 				looking_at_grappleable.emit()
