@@ -38,6 +38,8 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 # ------------------------------------------------
 ## How long to wait before actually respawning.
 @export var respawnDelay:float = 2.0
+## The location to move the player to when [method respawnCheckpoint] runs.
+@export var respawnCheckpointLocation: Marker3D
 
 @export_group("Movement - Ground")
 ## The player's maximum speed.
@@ -298,6 +300,10 @@ func respawn() -> void:
 	_overlay.startFadeOut()
 	sfxPlayers.respawn.stop()
 	sfxPlayers.respawn.play()
+
+## Moves the player to [memmber respawnCheckpointLocation] immediately.
+func respawnCheckpoint() -> void:
+	global_position = respawnCheckpointLocation.global_position
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -678,12 +684,10 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
 	_handleDirectionInput(direction)
 
-#temporary code for Spring Playtest week 3
+## [b]Internal-use only.[/b]
+## The location to move the player to upon forcing the respawn.
 func _on_input_handler_respawn() -> void:
-	if _inputDisabled:
-		return
-
-	position = Vector3(0,0,1)
+	respawnCheckpoint()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
@@ -691,19 +695,10 @@ func _on_input_handler_respawn() -> void:
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 
-	for sfxEvent in sfxPlayers:
-		if sfxPlayers[sfxEvent] == null:
+	if self != get_tree().edited_scene_root:
+		if not respawnCheckpointLocation:
 			warnings.push_back(
-				"SFX player for event \"" + sfxEvent + "\" not set."
-			)
-		elif sfxPlayers[sfxEvent].stream == null:
-			warnings.push_back(
-				"SFX player for event \"" + sfxEvent + "\" doesn't have a resource set.  " +
-				"It should be a Randomizer resource."
-			)
-		elif sfxIds.get(sfxEvent) == null:
-			warnings.push_back(
-				"SFX event \"" + sfxEvent + "\" doesn't have an entry in SFX IDs."
+				"The respawn checkpoint location of this player is not set."
 			)
 
 	return warnings
