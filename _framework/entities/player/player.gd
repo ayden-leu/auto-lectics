@@ -230,7 +230,7 @@ func _ready() -> void:
 	_recomputeJumpParameters()
 
 	var endPoint:Marker3D = GRAPPLE_END_POINT.instantiate()
-	get_parent().add_child.call_deferred(endPoint)
+	get_tree().root.add_child.call_deferred(endPoint)
 	grappleTarget = endPoint
 	_grappleRaycast.target_position.z = -grappleMaxRange
 
@@ -284,7 +284,7 @@ func respawnForce():
 	velocity = Vector3.ZERO
 	global_position = _lastValidPosition
 	global_position.y += 0.1
-	recallGrapple()
+	startGrappleRecall()
 	_hideGrapple()
 
 ## Puts player at [member _lastValidPosition], but only after the fade in.
@@ -297,7 +297,7 @@ func respawn() -> void:
 	_overlay.startFadeIn()
 	await _overlay.fade_in_complete
 
-	recallGrapple()
+	startGrappleRecall()
 	_hideGrapple()
 
 	await get_tree().create_timer(respawnDelay).timeout
@@ -562,10 +562,10 @@ func _applyGrapplePhysics(delta: float, input_dir: Vector2) -> void:
 		global_position = grappleAttachPoint - rope_dir * grappleCurrentLength
 
 	# Set velocity to max it if exceeds it
-	_limitGrappleSpeed()
+	_limitSwingSpeed()
 
 ## Lower player speed if it exceeds threshold while grappling
-func _limitGrappleSpeed() -> void:
+func _limitSwingSpeed() -> void:
 	var horizontal := Vector3(velocity.x, 0.0, velocity.z)
 	if horizontal.length() > grappleMaxSpeed:
 		horizontal = horizontal.normalized() * grappleMaxSpeed
@@ -580,7 +580,7 @@ func _updateGrappleVisuals() -> void:
 	_updateGrappleRopeVisual(start, end)
 
 ## De-attach grapple hook from surface
-func recallGrapple() -> void:
+func startGrappleRecall() -> void:
 	isGrappling = false
 	grappleAttachPointValid = false
 	_currentGrappleState = GrappleState.RECALLING
@@ -628,7 +628,7 @@ func _on_jump_pressed() -> void:
 		return
 
 	#if isGrappling:
-		#recallGrapple()
+		#startGrappleRecall()
 	if is_on_floor():
 		_sfxEventHandler.play("jump")
 		jump()
@@ -639,7 +639,7 @@ func _on_grapple_pressed() -> void:
 		return
 
 	if isGrappling:
-		recallGrapple()
+		startGrappleRecall()
 	else:
 		_throwGrappleHook()
 
@@ -659,7 +659,7 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 func _on_input_handler_respawn() -> void:
 	if _inputDisabled:
 		return
-	recallGrapple()
+	startGrappleRecall()
 	_hideGrapple()
 	respawnCheckpoint()
 

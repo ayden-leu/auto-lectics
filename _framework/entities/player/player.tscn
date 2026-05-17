@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="3_w0ygf"]
 [ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="4_483v1"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_rh8r5"]
+[ext_resource type="CylinderMesh" uid="uid://cn5ha508yy41o" path="res://_framework/_visual_assets/grappling_hook/line.tres" id="6_hh4bn"]
+[ext_resource type="BoxMesh" uid="uid://escx3mb3fiw7" path="res://_framework/_visual_assets/grappling_hook/hook.tres" id="7_6t6ql"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
 
@@ -33,13 +35,6 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0e7fy"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_rh8r5"]
-top_radius = 0.03
-bottom_radius = 0.03
-height = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_qclge"]
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 5
@@ -145,13 +140,11 @@ unique_name_in_owner = true
 [node name="GrappleVisuals" type="Node" parent="."]
 
 [node name="GrappleLine" type="MeshInstance3D" parent="GrappleVisuals"]
-visible = false
-mesh = SubResource("CylinderMesh_rh8r5")
+mesh = ExtResource("6_hh4bn")
 skeleton = NodePath("../..")
 
 [node name="GrappleHook" type="MeshInstance3D" parent="GrappleVisuals"]
-visible = false
-mesh = SubResource("BoxMesh_qclge")
+mesh = ExtResource("7_6t6ql")
 skeleton = NodePath("../..")
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
