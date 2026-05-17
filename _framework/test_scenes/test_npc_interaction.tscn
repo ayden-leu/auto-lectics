@@ -71,6 +71,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3044707, 2.883009, -26.385
 respawnCheckpointLocation = NodePath("../RespawnPosition")
 maxSpeed = 12.6
 acceleration = 15.0
+grappleEnabled = true
+grappleMaxRange = 20.0
+grappleAttachImpulseStrength = 10.0
+grappleSwingInfluenceMultiplier = 6.0
+grappleShootSpeed = 60.0
+grappleRecallSpeed = 100.0
+grappleMaxSpeed = 20.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")

@@ -12,27 +12,27 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rh8r5"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0e7fy"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hacqa"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x6kh8"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ugyfj"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0e7fy"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rh8r5"]
 top_radius = 0.03
@@ -41,11 +41,10 @@ height = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_qclge"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sfxEventHandler")]
+[node name="Player" type="CharacterBody3D"]
 collision_layer = 5
 collision_mask = 2
 script = ExtResource("1_q8vf3")
-sfxEventHandler = NodePath("SfxEventHandler")
 maxSpeed = 28.4
 acceleration = 37.0
 
@@ -66,6 +65,7 @@ target_position = Vector3(0, 50, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
+debug_shape_custom_color = Color(0.13870001, 0.6413051, 0.73, 0.2784314)
 
 [node name="GrappleStartMarker" type="Marker3D" parent="CameraAnchor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23946804, 0)
@@ -85,6 +85,7 @@ debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
 player = NodePath("..")
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
+unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
 "death": "",
 "grappleExtending": "",
@@ -100,42 +101,42 @@ sfxIds = Dictionary[String, String]({
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_6t6ql")
+stream = SubResource("AudioStreamRandomizer_rh8r5")
 
 [node name="grappleExtending" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_s2ddf")
-
-[node name="grappleHitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_0e7fy")
-
-[node name="grappleHitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_5t5j4")
-
-[node name="grappleMaxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_hacqa")
-
-[node name="grappleRecall" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_x6kh8")
-
-[node name="grappleRecallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_ugyfj")
-
-[node name="grappleRecallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_lmmnp")
-
-[node name="grappleThrow" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_k4ncf")
-
-[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_qclge")
 
-[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="grappleHitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_hh4bn")
+
+[node name="grappleHitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_6t6ql")
+
+[node name="grappleMaxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_k4ncf")
+
+[node name="grappleRecall" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_s2ddf")
+
+[node name="grappleRecallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_lmmnp")
+
+[node name="grappleRecallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_x6kh8")
+
+[node name="grappleThrow" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_ugyfj")
+
+[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_5t5j4")
+
+[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_0e7fy")
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true
 
-[node name="GrappleVisuals" type="Node3D" parent="."]
+[node name="GrappleVisuals" type="Node" parent="."]
 
 [node name="GrappleLine" type="MeshInstance3D" parent="GrappleVisuals"]
 visible = false
