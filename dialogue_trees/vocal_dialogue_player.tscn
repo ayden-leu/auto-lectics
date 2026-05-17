@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://nrwq44bva56"]
+
+[ext_resource type="Script" uid="uid://cqmikj0ydwb6f" path="res://dialogue_trees/vocal/vocalDIaloguePlayer.gd" id="1_jitb6"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="2_o8xeo"]
+
+[node name="VocalDialoguePlayer" type="AudioStreamPlayer"]
+script = ExtResource("1_jitb6")
+
+[node name="Subtitles" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(330, 40)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -100.0
+offset_right = 90.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ContinueIcon" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="InputHandler" parent="." instance=ExtResource("2_o8xeo")]
+
+[connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_input_handler_interact_button_pressed"]
