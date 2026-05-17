@@ -125,6 +125,7 @@ const GRAPPLE_END_POINT = preload("uid://bqy7naymjdg4")
 @onready var _sfxEventHandler:SfxEventHandler = %SfxEventHandler
 
 
+@onready var _grappleRaycast:RayCast3D = %GrappleRaycast
 ## [b]Internal-use only.[/b] The visual for the line to the grapple point
 @onready var _grappleLine: MeshInstance3D = $GrappleVisuals/GrappleLine
 ## [b]Internal-use only.[/b] The visual for the hook at the grapple point
@@ -193,16 +194,29 @@ var grappleCurrentLength: float = 0.0
 var canGrapple: bool = true
 ## The current input direction from [InputHandler].
 var currentInputDirection: Vector2
-## If the grappling hook is currently traveling.
-var grappleTraveling: bool = false
-## If the grappling hook is currently being recalled.
-var grappleRecalling: bool = false
 ## Track the target for the hook to fly to, even if no valid grapple point exists
 var grappleTarget:Marker3D
 ## Track whether the hook's target is valid
 var grappleAttachPointValid: bool = false
 ## Track whether to send a new signal or not for whether the target looked at is grappleable
-var _lookingAtGrapplable: bool = false
+var _lookingAtGrapplable: bool = false:
+	set(newState):
+		if newState == _lookingAtGrapplable:
+			return
+
+		if not _lookingAtGrapplable and newState:
+			looking_at_grappleable.emit()
+		elif _lookingAtGrapplable and not newState:
+			no_longer_looking_at_grappleable.emit()
+		_lookingAtGrapplable = newState
+
+## The various states the grappling hook can be in.
+enum GrappleState {
+	IDLE,       ## Doing nothing.
+	TRAVELING,  ## Was thrown and now moving.
+	RECALLING   ## Returning to it's owner.
+}
+var _currentGrappleState:GrappleState = GrappleState.IDLE
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -218,14 +232,15 @@ func _ready() -> void:
 	var endPoint:Marker3D = GRAPPLE_END_POINT.instantiate()
 	get_parent().add_child.call_deferred(endPoint)
 	grappleTarget = endPoint
+	_grappleRaycast.target_position.z = -grappleMaxRange
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
 	# Update grapple hook visuals
-	if grappleTraveling:
+	if _currentGrappleState != GrappleState.IDLE:
 		# update grapple visuals while hook is moving
-		_updateGrappleHookVisual(_delta)
+		_handleGrappleHookState(_delta)
 	if isGrappling:
 		# update grapple visuals while hook is fixed
 		_updateGrappleVisuals()
@@ -249,15 +264,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		interactableThing = _loadBearingDummy
 
-	if grappleEnabled:
-		if _determineLookingAtGrapplable() && !isGrappling:
-			if !_lookingAtGrapplable:
-				_lookingAtGrapplable = true
-				looking_at_grappleable.emit()
-		else:
-			if _lookingAtGrapplable:
-				_lookingAtGrapplable = false
-				no_longer_looking_at_grappleable.emit()
+	if grappleEnabled and not isGrappling:
+		_lookingAtGrapplable = _determineLookingAtGrapplable()
 
 
 # ------------------------------------------------
@@ -407,41 +415,21 @@ func _determineIfValidInteractable(interactable:Node3D) -> bool:
 
 ## When grappling hook is thrown
 func _throwGrappleHook() -> void:
-	if not grappleEnabled or _inputDisabled or !canGrapple or grappleTraveling:
+	if not grappleEnabled or _inputDisabled or !canGrapple or _currentGrappleState == GrappleState.TRAVELING:
 		return
 
-	var camera := get_viewport().get_camera_3d()
-	if camera == null:
-		return
+	var from:Vector3 = _grappleStartPosition.global_position
+	var to:Vector3 = _grappleRaycast.to_global(_grappleRaycast.position + _grappleRaycast.target_position)
 
-	# Use camera direction for checks
-	var from := camera.global_position
-	var to := from + -camera.global_transform.basis.z * grappleMaxRange
-
-	# Check if valid point is hit
-	var query := PhysicsRayQueryParameters3D.create(from, to)
-	query.collide_with_areas = false
-	query.collide_with_bodies = true
-	var result := get_world_3d().direct_space_state.intersect_ray(query)
-	grappleAttachPointValid = false
-
-	# No target to hit
-	if result.is_empty():
-		grappleTarget.global_position = to
-		grappleTarget.isInAir = true
-	# Target is in range of grapple hook
-	else:
-		grappleTarget.global_position = result.position
-		grappleTarget.isInAir = false
-		# Check is target is marked as ungrappleable
-		var collider: Node = result.get("collider")
-		if _isValidGrappleTarget(collider):
-			grappleAttachPointValid = true
+	grappleTarget.isInAir = not _determineGrappleCanHit()
+	grappleTarget.global_position = _grappleRaycast.get_collision_point() \
+		if _determineGrappleCanHit() \
+		else to
+	grappleAttachPointValid = _determineLookingAtGrapplable()
 
 	# Set variables to start sending hook out
 	_grappleHook.global_position = from
-	grappleTraveling = true
-	grappleRecalling = false
+	_currentGrappleState = GrappleState.TRAVELING
 	_grappleHook.visible = true
 	_grappleLine.visible = true
 
@@ -458,64 +446,52 @@ func _isValidGrappleTarget(node: Node) -> bool:
 
 ## Checks if there is a grappleable target in range (for crosshair updating only)
 func _determineLookingAtGrapplable() -> bool:
-	var camera := get_viewport().get_camera_3d()
-	if camera == null:
-		return false
-	# Use camera direction for checks
-	var from := camera.global_position
-	var to := from + -camera.global_transform.basis.z * grappleMaxRange
-
-	# Check if valid point is hit
-	var query := PhysicsRayQueryParameters3D.create(from, to)
-	query.collide_with_areas = false
-	query.collide_with_bodies = true
-	var result := get_world_3d().direct_space_state.intersect_ray(query)
-
-	# Target found
-	if !result.is_empty():
-		# Check to make sure target isn't marked as ungrappleable
-		var collider: Node = result.get("collider")
-		if _isValidGrappleTarget(collider):
-			return true
-	# No target or ungrappleable target
+	if _determineGrappleCanHit():
+		var hit:Node = _grappleRaycast.get_collider()
+		return _isValidGrappleTarget(hit)
 	return false
 
+## Checks if the grappling hook can hit something.
+func _determineGrappleCanHit() -> bool:
+	return _grappleRaycast.is_colliding()
+
 ## Update the position of the grappling hook.
-func _updateGrappleHookVisual(delta: float) -> void:
+func _handleGrappleHookState(delta: float) -> void:
 	var start := _grappleStartPosition.global_position
 
 	# Case: hook is moving to target
-	if !grappleRecalling:
-		_grappleHook.global_position = _grappleHook.global_position.move_toward(grappleTarget.global_position, grappleShootSpeed * delta)
+	match _currentGrappleState:
+		GrappleState.TRAVELING:
+			_grappleHook.global_position = _grappleHook.global_position.move_toward(grappleTarget.global_position, grappleShootSpeed * delta)
 
-		if not _sfxEventHandler.getPlayerForEvent("grappleExtending").playing:
-			_sfxEventHandler.play("grappleExtending")
+			if not _sfxEventHandler.getPlayerForEvent("grappleExtending").playing:
+				_sfxEventHandler.play("grappleExtending")
+			_updateGrappleRopeVisual(start, _grappleHook.global_position)
 
-		# When grapple reaches target
-		if _grappleHook.global_position.distance_to(grappleTarget.global_position) <= 0.05:
-			if grappleAttachPointValid:
-				_sfxEventHandler.play("grappleHitSuccess")
-				_attachGrappleHook(grappleTarget.global_position)
-			else:
-				if grappleTarget.isInAir:
-					_sfxEventHandler.play("grappleMaxRangeReached")
+			# When grapple reaches target
+			if _grappleHook.global_position.distance_to(grappleTarget.global_position) <= 0.05:
+				if grappleAttachPointValid:
+					_sfxEventHandler.play("grappleHitSuccess")
+					_attachGrappleHook(grappleTarget.global_position)
 				else:
-					_sfxEventHandler.play("grappleHitFail")
-				grappleRecalling = true
+					if grappleTarget.isInAir:
+						_sfxEventHandler.play("grappleMaxRangeReached")
+					else:
+						_sfxEventHandler.play("grappleHitFail")
+					_currentGrappleState = GrappleState.RECALLING
 
-	# Case: hook is moving back to player
-	else:
-		_grappleHook.global_position = _grappleHook.global_position.move_toward(start, grappleRecallSpeed * delta)
+		GrappleState.RECALLING:
+			_grappleHook.global_position = _grappleHook.global_position.move_toward(start, grappleRecallSpeed * delta)
 
-		if not _sfxEventHandler.getPlayerForEvent("grappleRecall").playing:
-			_sfxEventHandler.play("grappleRecall")
+			if not _sfxEventHandler.getPlayerForEvent("grappleRecall").playing:
+				_sfxEventHandler.play("grappleRecall")
+			_updateGrappleRopeVisual(start, _grappleHook.global_position)
 
-		# hook reaches player
-		if _grappleHook.global_position.distance_to(start) <= 0.05:
-			_hideGrapple()
-			_sfxEventHandler.play("grappleRecallFinish")
+			# hook reaches player
+			if _grappleHook.global_position.distance_to(start) <= 0.05:
+				_hideGrapple()
+				_sfxEventHandler.play("grappleRecallFinish")
 
-	_updateGrappleRopeVisual(start, _grappleHook.global_position)
 
 ## Makes the grappling rope stretch between two points.
 func _updateGrappleRopeVisual(start: Vector3, end: Vector3) -> void:
@@ -543,7 +519,7 @@ func _attachGrappleHook(point: Vector3) -> void:
 	grappleAttachPoint = point
 	grappleCurrentLength = _grappleStartPosition.global_position.distance_to(grappleAttachPoint)
 	_grappleHook.global_position = grappleAttachPoint
-	grappleTraveling = false
+	_currentGrappleState = GrappleState.IDLE
 	isGrappling = true
 
 	_applyImpulseTowardPoint(grappleAttachPoint, grappleAttachImpulseStrength)
@@ -601,23 +577,19 @@ func _updateGrappleVisuals() -> void:
 	var start := _grappleStartPosition.global_position
 	var end := grappleAttachPoint
 
-	_grappleHook.global_position = end
-	_grappleHook.visible = true
 	_updateGrappleRopeVisual(start, end)
 
 ## De-attach grapple hook from surface
 func recallGrapple() -> void:
 	isGrappling = false
 	grappleAttachPointValid = false
-	grappleTraveling = true
-	grappleRecalling = true
+	_currentGrappleState = GrappleState.RECALLING
 
 	_sfxEventHandler.play("grappleRecallStart")
 
 ## End grapple hook sequence when it returns to player
 func _hideGrapple() -> void:
-	grappleTraveling = false
-	grappleRecalling = false
+	_currentGrappleState = GrappleState.IDLE
 	_grappleHook.visible = false
 	_grappleLine.visible = false
 

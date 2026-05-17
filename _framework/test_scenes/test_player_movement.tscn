@@ -78,7 +78,7 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hyee6")
 
-[node name="Platform3" type="MeshInstance3D" parent="Environment" groups=["NPCs", "Ungrappleable"]]
+[node name="Platform3" type="MeshInstance3D" parent="Environment" groups=["Ungrappleable"]]
 transform = Transform3D(0.9960983, 0.08825106, 0, -0.08825106, 0.9960983, 0, 0, 0, 1, -3.0502033, 3.293045, 7.3710527)
 mesh = SubResource("BoxMesh_ax834")
 skeleton = NodePath("../Floor")
