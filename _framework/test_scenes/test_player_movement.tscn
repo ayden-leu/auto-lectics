@@ -155,13 +155,15 @@ transform = Transform3D(1, 0, 0, 0, -0.0508544, 0.9987062, 0, -0.9987062, -0.050
 light_energy = 0.28
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("2_nt7id")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("2_nt7id")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4372382, 0)
+respawnCheckpointLocation = NodePath("../RespawnPosition")
 maxSpeed = 10.0
 acceleration = 15.0
 deceleration = 50.0
 turnDecelerationBoost = 5.0
+grapple_hook_speed = 10.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 focus = NodePath("../Player")

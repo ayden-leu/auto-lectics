@@ -41,6 +41,7 @@ const SPRITE_GRAPPLEABLE:Resource = preload("uid://dr2qqbj4qmp0a")
 # ------------------------------------------------
 var _grappleable: bool = false
 var _interactable:bool = false
+
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
@@ -62,13 +63,13 @@ func _ready() -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Change crosshair color when interaction is possible.
 func _update_crosshair() -> void:
+	# in order of priority
 	if _interactable:
 		crosshair.texture = SPRITE_INTERACTABLE
-		return
-	if _grappleable:
+	elif _grappleable:
 		crosshair.texture = SPRITE_GRAPPLEABLE
-		return
-	crosshair.texture = SPRITE_NORMAL
+	else:
+		crosshair.texture = SPRITE_NORMAL
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -83,7 +84,7 @@ func _on_player_no_longer_looking_at_interactable() -> void:
 	_interactable = false
 	_update_crosshair()
 
-## [b]Internal-use only.[/b]  Handles logic for when the player is no longer looking at agrappleable object.
+## [b]Internal-use only.[/b]  Handles logic for when the player is no longer looking at a grappleable object.
 func _on_player_looking_at_grappleable() -> void:
 	_grappleable = true
 	_update_crosshair()

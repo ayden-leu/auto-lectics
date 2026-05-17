@@ -35,7 +35,6 @@ extends Node3D
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_1"):
-		%Player.position = %RespawnPosition.position
 		%Player.release_grapple()
 		%Player._hide_grapple_visuals()
 

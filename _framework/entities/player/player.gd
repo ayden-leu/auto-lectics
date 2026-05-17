@@ -239,7 +239,7 @@ func _physics_process(delta: float) -> void:
 			interactableThing = hit
 	else:
 		interactableThing = _loadBearingDummy
-		
+
 	if grapple_enabled:
 		if is_aiming_at_grappleable_target() && !is_grappling:
 			if !_grapple_looking:
@@ -282,7 +282,7 @@ func respawn() -> void:
 
 	release_grapple()
 	_hide_grapple_visuals()
-	
+
 	await get_tree().create_timer(respawnDelay).timeout
 
 	_respawning = false

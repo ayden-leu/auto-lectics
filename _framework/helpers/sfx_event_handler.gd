@@ -149,6 +149,15 @@ func _updateEventNameFromPlayer(player:AudioStreamPlayer) -> void:
 	var index:int = temp.find(player.name)
 	move_child(player, index)
 
+## [b]Internal-use only.[/b]
+## Adds an entry into [member sfxIds], along with other internal variables.
+func _addEntryToSfxIds(player:AudioStreamPlayer) -> void:
+	_addToVariables(player)
+	sfxIds[player.name] = ""
+	player.renamed.connect(_on_child_renamed.bind(player))
+
+## [b]Internal-use only.[/b]
+## Handles the removal of an [AudioStreamPlayer] child.
 func _actuallyRemovePlayer(player:AudioStreamPlayer) -> void:
 	_removeFromVariables(player)
 	sfxIds.erase(player.name)
@@ -165,9 +174,7 @@ func _on_child_entered_tree(node: Node) -> void:
 		return
 	var child:AudioStreamPlayer = node
 
-	_addToVariables(child)
-	sfxIds[child.name] = ""
-	child.renamed.connect(_on_child_renamed.bind(child))
+	_addEntryToSfxIds(child)
 	child.stream = AudioStreamRandomizer.new()
 
 ## [b]Internal-use only.[/b]
@@ -188,6 +195,7 @@ func _on_child_exiting_tree(node: Node) -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a child of this is node is renamed.
 func _on_child_renamed(child:AudioStreamPlayer) -> void:
+	print("eggs")
 	_updateEventNameFromPlayer(child)
 
 func _on_tree_entered() -> void:
@@ -195,6 +203,15 @@ func _on_tree_entered() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	_loading = false
+
+	# failsafe in case there are AudioStreamPlayer children but
+	# the sfxIds list is empty for some reason.
+	if sfxIds.is_empty():
+		for child in get_children():
+			if child is not AudioStreamPlayer:
+				continue
+			var trueChild:AudioStreamPlayer = child as AudioStreamPlayer
+			_addEntryToSfxIds(trueChild)
 
 func _on_tree_exited() -> void:
 	#_loading = true

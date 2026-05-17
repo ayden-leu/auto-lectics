@@ -12,27 +12,27 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0e7fy"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hacqa"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x6kh8"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ugyfj"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0e7fy"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hacqa"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rh8r5"]
 top_radius = 0.03
@@ -99,23 +99,20 @@ sfxIds = Dictionary[String, String]({
 "respawn": ""
 })
 
-[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_qclge")
-
-[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_hh4bn")
-
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_6t6ql")
-
-[node name="grappleThrow" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_k4ncf")
 
 [node name="grappleExtending" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_s2ddf")
 
-[node name="grappleRecallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_lmmnp")
+[node name="grappleHitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_0e7fy")
+
+[node name="grappleHitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_5t5j4")
+
+[node name="grappleMaxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_hacqa")
 
 [node name="grappleRecall" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_x6kh8")
@@ -123,16 +120,17 @@ stream = SubResource("AudioStreamRandomizer_x6kh8")
 [node name="grappleRecallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_ugyfj")
 
-[node name="grappleHitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_5t5j4")
+[node name="grappleRecallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_lmmnp")
 
-[node name="grappleHitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_0e7fy")
+[node name="grappleThrow" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_k4ncf")
 
-[node name="grappleMaxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_hacqa")
+[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_qclge")
 
-[node name="SFX" type="Node" parent="."]
+[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_hh4bn")
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true
