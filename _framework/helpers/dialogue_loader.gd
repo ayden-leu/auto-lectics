@@ -51,6 +51,8 @@ static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary,
 				copy.nextOnHecticFailureID = base.nextOnHecticFailureID
 			else:
 				printerr("DialogueLoader:  Base doesn't have nextOnHecticFailureID when it should.")
+			if base.has("hecticDuration"):
+				copy.hecticDuration = base.hecticDuration
 
 	if base.has("textThemePreset"):
 		copy.textThemePreset = base.textThemePreset
@@ -139,6 +141,8 @@ static func fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dicti
 	)
 	dialogue.nextOnHecticFailureID = configuredAttributes.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
 
+	print_debug("AAAAAAAA ", configuredAttributes)
+	dialogue.hecticDuration = configuredAttributes.get("hecticDuration", dialogue.hecticDuration)
 
 	dialogue.writeSpeed = _verifyInList(
 		configuredAttributes.get("writeSpeed", dialogue.writeSpeed).to_lower(),

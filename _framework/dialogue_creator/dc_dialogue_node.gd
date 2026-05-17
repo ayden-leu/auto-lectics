@@ -55,6 +55,8 @@ const DIALOGUE_ID_PORT:int = 0
 @onready var writeSpeedValueField:DC_BaseNodeField = %WriteSpeedValueField
 ## The node that handles the SFX event SFX IDs you can choose.
 @onready var sfxEventAspectsHandler:DC_BaseNodeField = %SfxAspects
+## The node that handles the hectic duration you can set.
+@onready var hecticDurationField:DC_BaseNodeNumber = %HecticDurationField
 
 # ------------------------------------------------
 # onready variables
@@ -145,6 +147,13 @@ var nextOnHecticPortConnection:Dictionary = {
 	"toPort": 0
 }
 
+## The duration of the hectic dialogue event when this node is loaded.
+var hecticDuration:float = 0.0:
+	set(newValue):
+		hecticDurationField.value = newValue
+	get():
+		return hecticDurationField.value
+
 ## The number of option ports that currently exist for this [DC_DialogueNode].
 var numOptions:int = 0:
 	set(value):
@@ -211,6 +220,8 @@ func getFields() -> Dictionary:
 	else:
 		if nextOnHecticFailId:
 			currentValues.nextOnHecticFailureID = nextOnHecticFailId
+			if hecticDuration != _CHECK_NPC_DEFAULT_VALUE_NUM:
+				currentValues.hecticDuration = hecticDuration
 
 	if textThemePreset != _CHECK_NPC_DEFAULT_VALUE:
 		currentValues.textThemePreset = textThemePreset
@@ -395,6 +406,8 @@ func _on_debug_pressed() -> void:
 
 	if mode == "hectic":
 		print("Next On Hectic Fail: ", nextOnHecticFailId)
+		if hecticDuration != _CHECK_NPC_DEFAULT_VALUE_NUM:
+			print("Hectic Duration: ", hecticDuration)
 
 	if writeSpeedPreset != _CHECK_NPC_DEFAULT_VALUE:
 		print("Write Speed Preset: ", writeSpeedPreset)

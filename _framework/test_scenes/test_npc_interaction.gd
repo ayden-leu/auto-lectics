@@ -38,9 +38,7 @@ func _ready() -> void:
 	FR_MenuManager.enable()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("debug_1"):
-		%Player.position = %RespawnPosition.position
-	elif event.is_action_pressed("debug_2"):
+	if event.is_action_pressed("debug_2"):
 		loopManager.performReset()
 
 # ------------------------------------------------

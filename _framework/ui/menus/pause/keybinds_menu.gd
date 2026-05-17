@@ -123,6 +123,5 @@ func _formatKeybindName(keybind:String) -> String:
 	return keybind.replace("(Physical)", "")
 
 func _on_back_pressed() -> void:
-	sfxPlayers.buttonPressed.stop()
-	sfxPlayers.buttonPressed.play()
+	sfxEventHandler.play("buttonPressed")
 	close()

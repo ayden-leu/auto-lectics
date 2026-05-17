@@ -117,6 +117,9 @@ func _createNodesFromFile(filename:String) -> void:
 	if data.has("nextOnHecticFailureID"):
 		newDialogueNode.nextOnHecticFailId = data.nextOnHecticFailureID
 
+	if data.has("hecticDuration"):
+		newDialogueNode.hecticDuration = data.hecticDuration
+
 	if data.has("textThemePreset"):
 		newDialogueNode.textThemePreset = data.textThemePreset
 

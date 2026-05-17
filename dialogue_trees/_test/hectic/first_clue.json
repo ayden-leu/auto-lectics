@@ -1,8 +1,9 @@
 {
 	"text": "FIRST CLOOOOOO IS SOMETHING GREEN",
-	"type": "happy",
 	"mode": "hectic",
+	"type": "happy",
 	"nextOnHecticFailureID": "fail_timeout",
+	"hecticDuration": 2.0,
 	"options": [
 		{
 			"text": "WEED",

@@ -4,11 +4,11 @@ class_name DialogueConsole
 ## [b]Internal-use only.[/b]  The main console-like window for interacting with
 ## a dialogue event.
 ##
-## On top of the SFX events for [DialogueWindow], it comes with additional SFX events:[br]
+## On top of the SFX events for [DialogueWindow], it comes with the following optional SFX events:[br]
 ## - text:  plays when text is being written into a log entry.[br]
 ## - closeReject:  plays when the DialogueConsole cannot be closed
 ## and something tries to close it.[br]
-## - userTextAdded:  plays when player adds text to the [member _textInput].
+## - userTextAdded:  plays when player adds text to the [member _textInput].[br]
 ## - userTextSubmitted:  plays when the player submits text in the [member _textInput].
 
 # ------------------------------------------------
@@ -53,10 +53,15 @@ const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
 const _LOG_ENTRY_SPACER:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntrySpacer)
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Label] scene.
 const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntryIdLabel)
+## [b]Internal-use only.[/b]
+## The delay between spawning [DialogueWarningTile]s.
+const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011
 
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+## The delay between choosing an option and acting on it, in seconds.
+@export var optionChooseDelay: float = 0.2
 
 # ------------------------------------------------
 # onready variables
@@ -76,6 +81,13 @@ const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry
 @onready var _optionSpawnPositions:Dictionary[String, Marker2D] = {
 	"left": %OptionSpawnPositions/Left,
 	"right": %OptionSpawnPositions/Right
+}
+
+## The SFX event players that are manually set outside of [SfxEventHandler].
+## Currently, it has "spawn" and "text," which is customized by [InteractableNPC].
+@onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": %sfxSpawn,
+	"text": %sfxText
 }
 
 # ------------------------------------------------
@@ -131,27 +143,38 @@ var bypassTextWriting:bool = false
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  The data of each option the player can pick from.
+## [b]Internal-use only.[/b]
+## The data of each option the player can pick from.
 var _optionData:Array = []
-## [b]Internal-use only.[/b]  The windows that represent each option a player can pick from.
+## [b]Internal-use only.[/b]
+## The windows that represent each option a player can pick from.
 var _optionWindows:Array = []
-## [b]Internal-use only.[/b]  IS true when the dialogue text is still being typed.
+## [b]Internal-use only.[/b]
+## Is true when the dialogue text is still being typed.
 var _isWritingText:bool = false
-## [b]Internal-use only.[/b]  Stores previously loaded dialogue IDs.
+## [b]Internal-use only.[/b]
+## Stores previously loaded dialogue IDs.
 ## The ID at the end of the array is the currently loaded dialogue.
 var _dialogueHistory:Array[String] = []
+## [b]Internal-use only.[/b]
+## Keeps a record of every command entered into the console.
+var _commandHistory:Array[String] = []
+## [b]Internal-use only.[/b]
+## The current index of history we're looking at.
+var _commandHistoryIndex:int = 0
 ## [b]Internal-use only.[/b]  Whether the dialogue IDs loaded get recorded
 ## into [member _dialogueHistory].  Gets set to true whenever the console
 ## is prepared.
 var _recordHistory:bool = true
 ## [b]Internal-use only.[/b]  True when the hectic dialgoue event timer is running.
-var _hecticCountdownActive: bool = false
+var _hecticCountdownActive:bool = false
 ## Show this message when "help" is inputted
 var _helpText: String = \
 		"Here are the commands:\n\n" + \
 		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
 		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
-		"exit        =  close the console"
+		"exit        =  close the console\n\n"+\
+		"clear       =  clear the console"
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -165,7 +188,6 @@ func _ready() -> void:
 	windowType = "console"
 
 	_hecticBar.visible = false
-	hecticDuration = 5.0  # TODO:  remove this when it becomes customizable
 
 	for child in _contentsStorage.get_children():
 		if child == _textInput.get_parent():
@@ -203,6 +225,7 @@ func prepare() -> void:
 ## records [member currentDialogueID] into [_dialogueHistory],
 ## and spawns options once complete.
 func start() -> void:
+	sfxPlayers.spawn.stop()
 	sfxPlayers.spawn.play()
 	if _recordHistory:
 		_dialogueHistory.push_back(currentDialogueID)
@@ -218,6 +241,7 @@ func start() -> void:
 
 	_spawnOptionWindows()
 	all_options_available.emit()
+	move_to_front()
 	_forceTextInput()
 
 	if _optionData.is_empty():
@@ -232,17 +256,26 @@ func start() -> void:
 ## is in [member _NPCS_PREVENT_CLOSING].
 func close() -> void:
 	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
+		sfxEventHandler.play("closeReject")
 		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
 		return
 
 	if not canBeClosed:
-		sfxPlayers.closeReject.play()
+		sfxEventHandler.play("closeReject")
 		await _addRightText(exitRejectMessage)
 		return
 
 	FR_MenuManager.enable()
 	_stopHecticMode()
-	option_chosen.emit("")  # TODO:  use the close signal instead to close this.
+	_closeAllOptionWindows()
+
+	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
+	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
+		sfxEventHandler.play("close")
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hide()
+		await sfxPlayer.finished
+
 	super()
 
 ## Removes this from the scene.
@@ -358,6 +391,7 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 		entry.visible_characters += 1
 		_scrollToBottom()
 		if not sfxPlayers.text.playing:
+			sfxPlayers.text.stop()
 			sfxPlayers.text.play()
 		await get_tree().create_timer(delay, false, true).timeout
 	_scrollToBottom()
@@ -437,6 +471,7 @@ func _chooseOption(optionData:Dictionary) -> void:
 	_stopHecticMode()
 	_closeAllOptionWindows()
 	StoryFlags.updateFlags(optionData.setFlags)
+
 	# if allowBack is false, add the option to the blacklist
 	if optionData.get("allowBack", true) == false:
 		print ("back blocked")
@@ -445,6 +480,8 @@ func _chooseOption(optionData:Dictionary) -> void:
 			# First time allowBack is false, disable load command too
 			allowLoad = false
 		dialogueNodeBackRejectMessages[currentDialogueID] = str(optionData.get("rejectBackMessage","Cannot go back to previous dialogue ID."))
+	
+	await get_tree().create_timer(optionChooseDelay).timeout
 	option_chosen.emit(optionData.nextID)
 
 ## [b]Internal-use only.[/b]  Forcebilly closes all spawned option windows.
@@ -471,6 +508,7 @@ func _spawnHecticWarningWindows() -> void:
 		var newWindow:DialogueWarningTileWindow = FR_WindowManager.createDialogueWarningTileWindow()
 		var newPosition:Vector2 = FR_WindowManager.getRandomPositionOnScreen(newWindow.size)
 		newWindow.global_position = newPosition
+		await get_tree().create_timer(_HECTIC_WARNING_SPAWN_DELAY).timeout
 
 ## [b]Internal-use only.[/b]  Starts hectic mode.
 func _startHecticCountdown() -> void:
@@ -486,6 +524,7 @@ func _stopHecticMode() -> void:
 	_hecticBar.value = INF
 	_hecticTimer.stop()
 	FR_WindowManager.closeAllWarningTileWindows()
+
 
 func _handleCommand(command:String) -> void:
 	# command is an option ID
@@ -507,6 +546,9 @@ func _handleCommand(command:String) -> void:
 	command_entered.emit(command)
 	_scrollToBottom()
 
+	if command == "clear":
+		_clearConsole()
+
 	# TODO:  move help text definition to [InteractableNPC]
 	if command == "help":
 		await _addRightText(_helpText)
@@ -527,6 +569,13 @@ func _handleCommand(command:String) -> void:
 			return
 		option_chosen.emit(nextID)
 
+## [b]Internal-use only.[/b]  Clear the console
+func _clearConsole() -> void:
+	for child in _contentsStorage.get_children():
+		if child == _textInput.get_parent():
+			continue
+		child.queue_free()
+
 ## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
 func _goBackOneDialogue() -> void:
 	if _dialogueHistory.size() <= 1:
@@ -545,6 +594,28 @@ func _goBackOneDialogue() -> void:
 	_recordHistory = false
 	option_chosen.emit(targetID)
 
+func _loadHistory(index:int) -> void:
+	if _commandHistory.size() <= 0:
+		print("DialougeConsole:  No history to load.")
+		return
+
+	if index < 0:
+		print("DialogueConsole:  Hit the end of the console's history.")
+		return
+
+	# branch essentially occurs when down is pressed
+	# and the loaded history is the most recent one
+	if index >= _commandHistory.size():
+		_textInput.text = ""
+		_commandHistoryIndex = _commandHistory.size()
+		return
+
+	_commandHistoryIndex = index
+	_textInput.text = _commandHistory[index]
+	_textInput.caret_column = _textInput.text.length()
+
+	get_viewport().set_input_as_handled()
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
@@ -556,8 +627,7 @@ func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated
 func _on_input_text_changed(_new_text: String) -> void:
-	sfxPlayers.userTextAdded.stop()
-	sfxPlayers.userTextAdded.play()
+	sfxEventHandler.play("userTextAdded")
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]
@@ -571,11 +641,24 @@ func _on_input_submitted(input: String) -> void:
 	if input == "":
 		return
 
-	sfxPlayers.userTextSubmitted.stop()
-	sfxPlayers.userTextSubmitted.play()
+	sfxEventHandler.play("userTextSubmitted")
 	_textInput.text = ""
 	var text := input.strip_edges()
+
+	_commandHistory.push_back(text)
+	_commandHistoryIndex = _commandHistory.size()
+
 	_handleCommand(text)
+
+## [b]Internal-use only.[/b]
+## Handles logic for when text is entered into the [_textInput].
+func _on_console_input_gui_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_UP:
+			_loadHistory(_commandHistoryIndex - 1)
+
+		elif event.keycode == KEY_DOWN:
+			_loadHistory(_commandHistoryIndex + 1)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:

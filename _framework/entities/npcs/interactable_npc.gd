@@ -147,6 +147,7 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 
 	if dialogueEntry.mode == "hectic":
 		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		console.hecticDuration = dialogueEntry.hecticDuration
 		console.delayBtwnWriteDialogueAndOptions = 0.25
 	else:
 		console.hecticFailureDialogueID = ""
@@ -251,6 +252,10 @@ func _on_console_all_dialogue_text_visible() -> void:
 		return
 
 	dialogue_all_visible.emit()
+
+## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
+func _on_console_close(console:DialogueConsole) -> void:
+	_endDialogueConsole()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
