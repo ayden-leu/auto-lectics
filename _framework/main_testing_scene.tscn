@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dwmpo6y5x6ios"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_neeny"]
-font_size = 128
+[ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/main_testing_scene.gd" id="1_qqs7v"]
 
 [node name="MainTestingScene" type="Control"]
 layout_mode = 3
@@ -10,12 +9,110 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_qqs7v")
 
-[node name="Label" type="Label" parent="."]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "TODO: make buttons that
-load each test scene
-and other things"
-label_settings = SubResource("LabelSettings_neeny")
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 1120.0
+offset_bottom = 616.0
+columns = 3
+
+[node name="Loadtest_audio_loading" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_audio_loading."
+
+[node name="Loadtest_console_command" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_console_command."
+
+[node name="Loadtest_death_plane" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_death_plane."
+
+[node name="Loadtest_dialogue_loading" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_dialogue_loading."
+
+[node name="Loadtest_label_preset" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_label_preset."
+
+[node name="Loadtest_menu_manager" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_menu_manager."
+
+[node name="Loadtest_npc_interaction" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_npc_interaction."
+
+[node name="Loadtest_npc_patrol" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_npc_patrol."
+
+[node name="Loadtest_player_movement" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_player_movement."
+
+[node name="Loadtest_shader" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_shader."
+
+[node name="Loadtest_story_flags" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_story_flags."
+
+[node name="Loadtest_waterdrop" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_waterdrop."
+
+[node name="Loadtest_window_manager" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(320, 72)
+layout_mode = 2
+text = "Load test_window_manager."
+
+[node name="TestSceneContainer" type="Node" parent="."]
+
+[node name="BackButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -48.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Back (Ctrl+Q)"
+
+[connection signal="pressed" from="GridContainer/Loadtest_audio_loading" to="." method="_on_load_test_audio_loading_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_console_command" to="." method="_on_load_test_console_command_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_death_plane" to="." method="_on_load_test_death_plane_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_dialogue_loading" to="." method="_on_load_test_dialogue_loading_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_label_preset" to="." method="_on_load_test_label_preset_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_menu_manager" to="." method="_on_load_test_menu_manager_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_npc_interaction" to="." method="_on_load_test_npc_interaction_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_npc_patrol" to="." method="_on_load_test_npc_patrol_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_player_movement" to="." method="_on_load_test_player_movement_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_shader" to="." method="_on_load_test_shader_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_story_flags" to="." method="_on_load_test_story_flags_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_waterdrop" to="." method="_on_load_test_waterdrop_pressed"]
+[connection signal="pressed" from="GridContainer/Loadtest_window_manager" to="." method="_on_load_test_window_manager_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
