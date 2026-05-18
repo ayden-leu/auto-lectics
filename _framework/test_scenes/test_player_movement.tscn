@@ -163,7 +163,6 @@ maxSpeed = 10.0
 acceleration = 15.0
 deceleration = 50.0
 turnDecelerationBoost = 5.0
-grappleShootSpeed = 10.0
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_kkbud")]
 focus = NodePath("../Player")

@@ -480,7 +480,7 @@ func _chooseOption(optionData:Dictionary) -> void:
 			# First time allowBack is false, disable load command too
 			allowLoad = false
 		dialogueNodeBackRejectMessages[currentDialogueID] = str(optionData.get("rejectBackMessage","Cannot go back to previous dialogue ID."))
-	
+
 	await get_tree().create_timer(optionChooseDelay).timeout
 	option_chosen.emit(optionData.nextID)
 
@@ -581,15 +581,15 @@ func _goBackOneDialogue() -> void:
 	if _dialogueHistory.size() <= 1:
 		await _addLeftTextTyping("[No saved history]")
 		return
-	
+
 	var targetID: String = _dialogueHistory[_dialogueHistory.size() - 2]
-	
+
 	# Check if the dialogue being returned to is blacklisted
 	if dialogueNodeBackBlacklist.has(targetID):
 		var rejectMessage: String = str(dialogueNodeBackRejectMessages.get(targetID,"Cannot go back to previous dialogue ID."))
 		await _addRightText(rejectMessage)
 		return
-	
+
 	_dialogueHistory.pop_back()
 	_recordHistory = false
 	option_chosen.emit(targetID)

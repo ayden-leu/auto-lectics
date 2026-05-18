@@ -254,7 +254,7 @@ func _on_console_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
-func _on_console_close(console:DialogueConsole) -> void:
+func _on_console_close(_console:DialogueConsole) -> void:
 	_endDialogueConsole()
 
 # ------------------------------------------------

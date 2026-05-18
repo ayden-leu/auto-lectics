@@ -35,8 +35,9 @@ extends Node3D
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_1"):
-		%Player.recallGrapple()
-		%Player._hide_grapple_visuals()
+		Player.disableInput(true)
+	elif event.is_action_pressed("debug_2"):
+		Player.disableInput(false)
 
 # ------------------------------------------------
 # functions referenced outside of this script
