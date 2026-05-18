@@ -245,8 +245,9 @@ func startRecall() -> void:
 
 ## Resets this to its initial state.
 func reset() -> void:
-	_targetIsGrapplable = false
+	hook_detached.emit()
 	currentHookState = GrappleHookState.IDLE
+	_targetIsGrapplable = false
 	_attachPoint = Vector3.ZERO
 	_currentMaxLength = 0.0
 	visible = false

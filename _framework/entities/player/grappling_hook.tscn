@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://0mnvycgijgpy"]
 
-[ext_resource type="Script" uid="uid://bfwenvqoq3dol" path="res://_framework/entities/player/grappling_hook.gd" id="1_qwlkb"]
+[ext_resource type="Script" path="res://_framework/entities/player/grappling_hook.gd" id="1_qwlkb"]
 [ext_resource type="CylinderMesh" uid="uid://cn5ha508yy41o" path="res://_framework/_visual_assets/grappling_hook/line.tres" id="1_w2ev3"]
 [ext_resource type="BoxMesh" uid="uid://escx3mb3fiw7" path="res://_framework/_visual_assets/grappling_hook/hook.tres" id="2_qwlkb"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_3tcms"]

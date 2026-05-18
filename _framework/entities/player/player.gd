@@ -419,7 +419,7 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 
 ## [b]Internal-use only.[/b]
 ## The location to move the player to upon forcing the respawn.
-func _on_input_handler_respawn() -> void:
+func _on_input_handler_respawn() -> void:	
 	if _inputDisabled:
 		return
 	grapplingHook.reset()
