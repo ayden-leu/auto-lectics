@@ -6,17 +6,9 @@ class_name Player
 ## The player can move around, interact with interactables, and use a grappling hook.
 ## [br][br]
 ## Comes with the following SFX events:[br]
-## - death:    plays when the player dies.[br]
-## - grappleExtending:  plays when the grappling hook is extending.[br]
-## - grappleHitFail        plays when the grappling hook hits an unhookable target.[br]
-## - grappleHitSuccess:    plays when the grappling hook hits a hookable target.[br]
-## - grappleMaxRangeReached:  plays when the grappling hook reaches its max throw range.[br]
-## - grappleRecall:        plays when the grappling hook is being recalled.[br]
-## - grappleRecallFinish:  plays when the grappling hook is finished recalling.[br]
-## - grappleRecallStart:   plays when the grappling hook is beginning to be recalled.[br]
-## - grappleThrow:      plays when the player throws the grappling hook.[br]
-## - jump:  plays when the player jumps.[br]
-## - respawn:  plays when the player respawns.[br]
+## - death:   plays when the player dies.[br]
+## - jump:    plays when the player jumps.[br]
+## - respawn: plays when the player respawns.[br]
 
 # ------------------------------------------------
 # signals
@@ -96,6 +88,8 @@ signal no_longer_looking_at_grappleable()
 @export_group("Grappling Hook")
 ## If this grappling hook can be used or not.
 @export var grapplingHookEnabled:bool = true
+## The amount of force applied when the grappling hook successfully hits.
+@export var grappleAttachImpulseStrength:float = 10.0
 
 # ------------------------------------------------
 # onready variables
@@ -433,7 +427,7 @@ func _on_input_handler_respawn() -> void:
 
 func _on_grappling_hook_hook_attached() -> void:
 	isGrappling = true
-	_applyImpulseTowardPoint(grapplingHook._attachPoint, grapplingHook.attachImpulseStrength)
+	_applyImpulseTowardPoint(grapplingHook._attachPoint, grappleAttachImpulseStrength)
 
 func _on_grappling_hook_hook_detached() -> void:
 	isGrappling = false

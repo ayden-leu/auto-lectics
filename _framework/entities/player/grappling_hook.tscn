@@ -5,6 +5,8 @@
 [ext_resource type="BoxMesh" uid="uid://escx3mb3fiw7" path="res://_framework/_visual_assets/grappling_hook/hook.tres" id="2_qwlkb"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_3tcms"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3tcms"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gii0f"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0byxp"]
@@ -18,8 +20,6 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_325l4"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xndbm"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tqaiy"]
 
 [node name="GrapplingHook" type="Node"]
 script = ExtResource("1_qwlkb")
@@ -50,25 +50,25 @@ sfxIds = Dictionary[String, String]({
 })
 
 [node name="extending" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_gii0f")
+stream = SubResource("AudioStreamRandomizer_3tcms")
 
 [node name="hitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_0byxp")
+stream = SubResource("AudioStreamRandomizer_gii0f")
 
 [node name="hitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_8c5ov")
+stream = SubResource("AudioStreamRandomizer_0byxp")
 
 [node name="maxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_xe7c1")
+stream = SubResource("AudioStreamRandomizer_8c5ov")
 
 [node name="recall" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_wrub3")
+stream = SubResource("AudioStreamRandomizer_xe7c1")
 
 [node name="recallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_325l4")
+stream = SubResource("AudioStreamRandomizer_wrub3")
 
 [node name="recallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_xndbm")
+stream = SubResource("AudioStreamRandomizer_325l4")
 
 [node name="throw" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_tqaiy")
+stream = SubResource("AudioStreamRandomizer_xndbm")

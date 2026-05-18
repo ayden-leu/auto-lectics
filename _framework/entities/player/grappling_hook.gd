@@ -2,8 +2,40 @@
 @icon("uid://d3bctx6al0yha")
 extends Node
 class_name GrapplingHook
+## A grappling hook that can be thrown and attached to a grapplable object.
+##
+## To use, add an inherited scene to the node you wish to give a grappling hook to,
+## and assign the appropriate export fields.
+## [br][br]
+## Currently, any collision shapes that are on the Environment collision layer
+## are grappleable.  If you want to make such a collision shape
+## ungrapplable, add it to the global "Ungrappleable" group
+## (with the node selected, go to the right panel, the node tab, then the group tab).
+## If that node or any of its parents are part of that group, it will be ungrapplable.
+## [br][br]
+## When the hook is thrown with [method throwHook], a hook will be sent straight
+## to the target location and not affected by gravity.
+## Once the hook reaches a valid target location, it will attach itself and
+## the user will be able to swing from that point.
+## The target location is determined on call, meaning if the target location is
+## no longer on a grapplable surface when the [member _hook] reaches it,
+## the hook will act as if the grapplable surface didn't move.
+## [br][br]
+## While attached, the user will not be able to go beyond the distance between
+## them and the attachment point at the time of attachment.
+## [br][br]
+## Recall the grapple at any time with [method startRecall].
+## [br][br]
+## Comes with the following SFX events:[br]
+## - [code]extending[/code]:  plays when the hook is extending.[br]
+## - [code]hitFail[/code]:  plays when the hook hits an ungrappleable target.[br]
+## - [code]hitSuccess[/code]:  plays when the hook hits a grappleable target.[br]
+## - [code]maxRangeReached[/code]:  plays when the hook reaches its max throw range.[br]
+## - [code]recall[/code]:  plays when the hook is being recalled.[br]
+## - [code]recallFinish[/code]:  plays when the hook is finished recalling.[br]
+## - [code]recallStart[/code]:  plays when the hook is beginning to be recalled.[br]
+## - [code]throw[/code]:  plays when the user throws the grappling hook.[br]
 
-# feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
@@ -33,7 +65,7 @@ const _END_POINT = preload("uid://bqy7naymjdg4")
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The [Raycast3D] that determines where to throw the grappling hook.
+## The [RayCast3D] that determines where to throw the grappling hook.
 @export var raycast:RayCast3D:
 	set(newRaycast):
 		raycast = newRaycast
@@ -55,11 +87,9 @@ const _END_POINT = preload("uid://bqy7naymjdg4")
 @export var maxRange:float = 20.0:
 	set(newRange):
 		maxRange = max(0, newRange)
-## The amount of force applied when the grappling hook successfully hits.
-@export var attachImpulseStrength:float = 10.0
-## How much an input direction affects the player's velocity while swinging.
+## How much an input direction affects the user's velocity while swinging.
 @export var swingInfluenceForce:float = 6.0
-## The maximum speed the player can build up while swinging.  Can not be lower than 0.
+## The maximum speed the user can build up while swinging.  Can not be lower than 0.
 @export var maxSwingSpeed:float = 20.0:
 	set(newSpeed):
 		maxSwingSpeed = max(0, newSpeed)
@@ -68,12 +98,11 @@ const _END_POINT = preload("uid://bqy7naymjdg4")
 # onready variables
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
-## The visual for the line to the grapple point
+## The visual for the line to the grapple point.
 @onready var _line:MeshInstance3D = %Line
 ## [b]Internal-use only.[/b]
-## The visual for the hook at the grapple point
+## The visual for the hook at the grapple point.
 @onready var _hook:MeshInstance3D = %Hook
-## [b]Internal-use only.[/b]
 ## Handles SFX events.
 @onready var sfxEventHandler:SfxEventHandler = %SfxEventHandler
 
@@ -88,24 +117,23 @@ var visible:bool = false:
 		visible = newState
 		_hook.visible = newState
 		_line.visible = newState
+## The current state of the hook.
+var currentHookState:GrappleHookState = GrappleHookState.IDLE
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
-## The current state of the hook.
-var currentHookState:GrappleHookState = GrappleHookState.IDLE
-## [b]Internal-use only.[/b]
 ## The location the hook will go to, even if it's not on a grapplable.
-## Is set to a [Marker3D] in [method _ready()].
+## Is set to a version of [member _END_POINT] in [method _ready()].
 var _target:Marker3D
 ## [b]Internal-use only.[/b]
 ## The point in space where the hook is attached.
 ## Is usually just the global position of [member _target].
 var _attachPoint:Vector3 = Vector3.ZERO
 ## [b]Internal-use only.[/b]
-## If the thing the hook hti is grapplable.
+## If the thing the hook hit is grapplable.
 var _targetIsGrapplable:bool = false
 ## [b]Internal-use only.[/b]
 ## The distance between [member throwOrigin] and [member _attachPoint].
@@ -140,6 +168,14 @@ func _process(delta:float) -> void:
 ## [code]velocity[/code] is the velocity to modify.[br]
 ## [code]inputDirRelative[/code] is a unit vector representing the direction
 ## to apply [member swingInfluenceForce].
+## [codeblock]
+## var grapplingHook:GrapplingHook = # path/reference to a GrapplingHook scene.
+## var myVelocity:Vector3 = Vector3.ZERO
+## var inputDirection:Vector3 = Vector3(1, 0, 0)
+## func _physics_process(delta:float) -> void:
+## 	# swing in the positive X direction
+## 	myVelocity = grapplingHook.applyGrapplePhysics(delta, myVelocity, inputDirection)
+## [/codeblock]
 func applyGrapplePhysics(delta:float, velocity:Vector3, inputDirRelative:Vector3) -> Vector3:
 	var hookAttachDisplacement:Vector3 = _attachPoint - owner.global_position
 	var distanceToHook:float = hookAttachDisplacement.length()
@@ -150,7 +186,7 @@ func applyGrapplePhysics(delta:float, velocity:Vector3, inputDirRelative:Vector3
 	if inputDirRelative.length() > 0.01:
 		velocity += inputDirRelative * swingInfluenceForce * delta
 
-	# If rope is stretched, constrain player to rope length
+	# If rope is stretched, constrain user to rope length
 	if distanceToHook > _currentMaxLength:
 		var away_velocity:float = velocity.dot(-hookAttachDirection)
 		# remove velocity moving farther away from hook
@@ -178,8 +214,6 @@ func raycastCollidingWithValidTarget() -> bool:
 	return false
 
 ## Throws the [member _hook] out from [member throwOrigin].
-## The final location is determined on call, meaning if the target object moves
-## while the [member _hook] is traveling, the hook will act as if the target didn't move.
 func throwHook() -> void:
 	if not enabled or currentHookState != GrappleHookState.IDLE:
 		return
