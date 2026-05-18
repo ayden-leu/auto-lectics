@@ -89,6 +89,8 @@ func _ready() -> void:
 # ------------------------------------------------
 ## Plays the sound for the SFX given event name.
 func play(eventName:String) -> void:
+	if eventName == "buttonPressed" or "guessNpcNameTextChanged":
+		return
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer[eventName]
 	if player == null:
 		printerr("SfxEventHandler:  Could not find event player of name [", eventName, "]")

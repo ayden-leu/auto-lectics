@@ -26,6 +26,9 @@ const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleO
 ## [b]Internal-use only.[/b]
 ## Contains reference to the warning tile scene where warnings will spawn
 const _WARNING_WINDOW_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWarningTileWindow)
+## [b]Internal-use only.[/b]
+## Contains reference to the blueprint window
+const _BLUEPRINT_WINDOW_SCENE: Resource = preload(FR_Globals.SCENES.BlueprintWindow)
 
 # ------------------------------------------------
 # export variables
@@ -41,6 +44,9 @@ const _WARNING_WINDOW_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWar
 ## A public reference to the [DialogueConsole].
 ## Useful if you want to listen to signals from it.
 var dialogueConsole:DialogueConsole = null
+## A public reference to the [BlueprintWindow].
+## Useful if you want to listen to signals from it.
+var blueprintWindow: BlueprintWindow = null
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -55,6 +61,9 @@ var _dialogueConsoleSubscribers:Array
 ## [b]Internal-use only.[/b]
 ## The screen position of the [DialogueConsole].
 var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
+## [b]Internal-use only.[/b]
+## Holds all nodes that want to listen to [BlueprintWindow]'s signals.
+var _blueprintWindowSubscribers: Array = []
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -62,6 +71,10 @@ var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	print(_getCenter(Vector2.ZERO))
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("open_blueprint"):
+		FR_WindowManager.createBlueprintWindow()
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -114,6 +127,31 @@ func closeAllWarningTileWindows() -> void:
 
 	for windowToDelete in tempStorage:
 		windowToDelete.close()
+
+
+## [b]Internal-use only.[/b] Creates a blueprint window
+func createBlueprintWindow() -> BlueprintWindow:
+	if blueprintWindow != null:
+		return blueprintWindow
+	
+	InputHandler.showCursorTemp()
+	Player.disableInput(true)
+	
+	blueprintWindow = _BLUEPRINT_WINDOW_SCENE.instantiate()
+	_addWindow(blueprintWindow)
+	blueprintWindow.window_closed.connect(_on_blueprint_window_closed)
+	
+	await get_tree().process_frame
+	blueprintWindow.global_position = _getCenter(blueprintWindow.size)
+	
+	_cleanBlueprintSubscriberList()
+	_resubscribeBlueprintSubscribers()
+	return blueprintWindow
+
+## Closes the blueprint window
+func closeBlueprintWindow() -> void:
+	if blueprintWindow != null:
+		blueprintWindow.close()
 
 ## Connects signals from the [DialogueConsole] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list so the signals can be reconnected
@@ -274,6 +312,51 @@ func _disconnectConsoleSignalsToSubscriber(subscriber) -> void:
 		dialogueConsole.command_entered.disconnect(subscriber._on_console_command_entered)
 
 ## [b]Internal-use only.[/b]
+## Sets a window to be a subscriber of [BlueprintWindow].
+func subscribeToBlueprintWindow(subscriber) -> void:
+	if subscriber in _blueprintWindowSubscribers:
+		return
+	
+	_blueprintWindowSubscribers.push_back(subscriber)
+	_connectBlueprintSignalsToSubscriber(subscriber)
+
+## [b]Internal-use only.[/b]
+## disonnects a subscriber from [BlueprintWindow].
+func unsubscribeToBlueprintWindow(subscriber) -> void:
+	if not subscriber in _blueprintWindowSubscribers:
+		return
+	
+	var subscriberIndex: int = _blueprintWindowSubscribers.find(subscriber)
+	_blueprintWindowSubscribers[subscriberIndex] = null
+	_disconnectBlueprintSignalsToSubscriber(subscriber)
+
+## [b]Internal-use only.[/b]
+## Connects the [BlueprintWindow] signals to functions defined by the subscriber.
+func _connectBlueprintSignalsToSubscriber(subscriber) -> void:
+	if not blueprintWindow:
+		return
+	
+	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
+		blueprintWindow.npc_name_guessed_correctly.connect(subscriber._on_blueprint_npc_name_guessed_correctly)
+	
+	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
+		blueprintWindow.unlock_condition_met.connect(subscriber._on_blueprint_unlock_condition_met)
+
+## [b]Internal-use only.[/b]
+## disconnects the [BlueprintWindow] signals to functions defined by the subscriber.
+func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
+	if not blueprintWindow:
+		return
+	
+	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
+		if blueprintWindow.npc_name_guessed_correctly.is_connected(subscriber._on_blueprint_npc_name_guessed_correctly):
+			blueprintWindow.npc_name_guessed_correctly.disconnect(subscriber._on_blueprint_npc_name_guessed_correctly)
+	
+	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
+		if blueprintWindow.unlock_condition_met.is_connected(subscriber._on_blueprint_unlock_condition_met):
+			blueprintWindow.unlock_condition_met.disconnect(subscriber._on_blueprint_unlock_condition_met)
+
+## [b]Internal-use only.[/b]
 ## Removes all [code]null[/code] entries in [member _dialogueConsoleSubscribers].
 func _cleanSubscriberList() -> void:
 	var newList:Array = []
@@ -289,6 +372,23 @@ func _cleanSubscriberList() -> void:
 func _resubscribeSubscribers() -> void:
 	for subscriber in _dialogueConsoleSubscribers:
 		_connectConsoleSignalsToSubscriber(subscriber)
+
+## [b]Internal-use only.[/b]
+## Removes all [code]null[/code] entries in [member _blueprintWindowSubscribers].
+func _cleanBlueprintSubscriberList() -> void:
+	var newList: Array = []
+	for subscriber in _blueprintWindowSubscribers:
+		if subscriber != null:
+			newList.push_back(subscriber)
+	
+	_blueprintWindowSubscribers = newList
+
+## [b]Internal-use only.[/b]
+## Resubscribes all [BlueprintWindow] subscribers to [BlueprintWindow]'s signals.
+func _resubscribeBlueprintSubscribers() -> void:
+	for subscriber in _blueprintWindowSubscribers:
+		_connectBlueprintSignalsToSubscriber(subscriber)
+
 
 ## [b]Internal-use only.[/b]
 ## Moves the window back onto the screen if it's outside
@@ -330,6 +430,12 @@ func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 			_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 			break
 
+## [b]Internal-use only.[/b]  Handles logic for when the blueprint window is closed.
+func _on_blueprint_window_closed(window: DialogueWindow) -> void:
+	if window == blueprintWindow:
+		blueprintWindow = null
+		InputHandler.restoreCursorMode()
+		Player.disableInput(false)
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------

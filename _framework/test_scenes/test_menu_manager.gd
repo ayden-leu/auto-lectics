@@ -37,7 +37,7 @@ extends Node
 # ------------------------------------------------
 func _ready() -> void:
 	FR_MenuManager.enable()
-	FR_MenuManager.subscribeToBlueprintMenu(self)
+	FR_WindowManager.subscribeToBlueprintWindow(self)
 
 # ------------------------------------------------
 # functions referenced outside of this script

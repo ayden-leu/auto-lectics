@@ -1,0 +1,261 @@
+[gd_scene load_steps=13 format=3 uid="uid://ovwd5xcohsao"]
+
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_agwdo"]
+[ext_resource type="Script" uid="uid://c6c85mv86y6ev" path="res://_framework/ui/menus/blueprint/blueprint_window.gd" id="2_sny2w"]
+[ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_gfkyj"]
+[ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="4_lhe8o"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_wp7vy"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="5_r6kuu"]
+[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="6_r6kuu"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pv2hh"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y0p11"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0m01u"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c8kvj"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ggo78"]
+
+[node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 355.0
+offset_bottom = 169.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_agwdo")
+script = ExtResource("2_sny2w")
+headerPanel = NodePath("Header")
+headerLabel = NodePath("Header/HBoxContainer/Label")
+canBeClosed = true
+closeButton = NodePath("Header/HBoxContainer/CloseButton")
+sfxEventHandler = NodePath("SfxEventHandler")
+metadata/_custom_type_script = "uid://bqvscaiprfmtl"
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 355.0
+offset_bottom = 30.0
+mouse_filter = 1
+theme_type_variation = &"PanelHeader"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 355.0
+offset_bottom = 27.0
+
+[node name="Label" type="Label" parent="Header/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "Header Label"
+
+[node name="CloseButton" parent="Header/HBoxContainer" instance=ExtResource("3_gfkyj")]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Contents" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 355.0
+offset_bottom = 169.0
+mouse_filter = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Contents"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 349.0
+offset_bottom = 133.0
+
+[node name="Label" type="Label" parent="Contents/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+mouse_filter = 1
+autowrap_mode = 3
+
+[node name="NPCList" type="Control" parent="Contents"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+
+[node name="NPCEntryHolder" type="HFlowContainer" parent="Contents/NPCList"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 353.0
+offset_bottom = 298.0
+
+[node name="npc_test_1" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+layout_mode = 2
+mouse_filter = 0
+npcID = "npc_test_1"
+displayName = "Aster"
+entryTextureLocked = ExtResource("5_r6kuu")
+
+[node name="npc_test_2" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+layout_mode = 2
+npcID = "npc_test_2"
+displayName = "Mira"
+entryTextureLocked = ExtResource("6_r6kuu")
+
+[node name="npc_test_3" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+layout_mode = 2
+npcID = "npc_test_3"
+displayName = "Orin"
+entryTextureLocked = ExtResource("6_r6kuu")
+
+[node name="npc_test_4" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+layout_mode = 2
+npcID = "npc_test_4"
+displayName = "John"
+entryTextureLocked = ExtResource("5_r6kuu")
+
+[node name="NpcDetailPanel" type="Panel" parent="Contents"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 400)
+layout_mode = 0
+offset_left = -635.0
+offset_top = -7.0
+offset_right = -87.0
+offset_bottom = 719.0
+mouse_filter = 1
+
+[node name="CloseDetailButton" type="Button" parent="Contents/NpcDetailPanel"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 0
+offset_left = 467.0
+offset_top = 3.0
+offset_right = 547.0
+offset_bottom = 83.0
+text = "x"
+
+[node name="GuessNpcNamePanel" type="Panel" parent="Contents/NpcDetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 172.0
+offset_top = 288.0
+offset_right = 359.0
+offset_bottom = 415.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Contents/NpcDetailPanel/GuessNpcNamePanel"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 23.0
+offset_right = 137.0
+offset_bottom = 46.0
+text = "Nameinput"
+
+[node name="GuessNpcNameField" type="LineEdit" parent="Contents/NpcDetailPanel/GuessNpcNamePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 24.5625
+offset_top = 52.0
+offset_right = 156.0
+offset_bottom = 83.0
+placeholder_text = "e.g John"
+
+[node name="SubmitNpcNameButton" type="Button" parent="Contents/NpcDetailPanel/GuessNpcNamePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 56.0
+offset_top = 87.0
+offset_right = 128.0
+offset_bottom = 118.0
+text = "Submit
+"
+
+[node name="NotesPanel" type="Panel" parent="Contents/NpcDetailPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 97.0
+offset_top = 442.0
+offset_right = 427.0
+offset_bottom = 654.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Contents/NpcDetailPanel/NotesPanel"]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 51.0
+offset_right = 224.0
+offset_bottom = 74.0
+text = "NotesPanel Label"
+
+[node name="NotesField" type="TextEdit" parent="Contents/NpcDetailPanel/NotesPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 27.0
+offset_top = 95.0
+offset_right = 299.0
+offset_bottom = 158.0
+placeholder_text = "put notes here"
+
+[node name="Portrait" type="TextureRect" parent="Contents/NpcDetailPanel"]
+custom_minimum_size = Vector2(220, 220)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 32.0
+offset_right = 110.0
+offset_bottom = 220.0
+grow_horizontal = 2
+
+[node name="PrevPageButton" type="Button" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -37.0
+offset_top = 27.0
+offset_right = -3.0
+offset_bottom = 61.0
+
+[node name="NextPageButton" type="Button" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 361.0
+offset_top = 25.0
+offset_right = 399.0
+offset_bottom = 69.0
+
+[node name="SfxEventHandler" parent="." instance=ExtResource("4_wp7vy")]
+sfxIds = Dictionary[String, String]({
+"click": "_test_1",
+"close": "_test_2",
+"drop": "_test_3",
+"hover": "_test_2",
+"spawn": "_test_1"
+})
+
+[node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_pv2hh")
+
+[node name="close" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_y0p11")
+
+[node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_0m01u")
+
+[node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_c8kvj")
+
+[node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_ggo78")
+
+[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_1" to="." method="_on_npc_entry_selected"]
+[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_2" to="." method="_on_npc_entry_selected"]
+[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_3" to="." method="_on_npc_entry_selected"]
+[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_4" to="." method="_on_npc_entry_selected"]
+[connection signal="pressed" from="Contents/NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]
+[connection signal="text_changed" from="Contents/NpcDetailPanel/GuessNpcNamePanel/GuessNpcNameField" to="." method="_on_guess_npc_name_field_text_changed"]
+[connection signal="pressed" from="Contents/NpcDetailPanel/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
+[connection signal="text_changed" from="Contents/NpcDetailPanel/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
+[connection signal="pressed" from="Contents/PrevPageButton" to="." method="_on_prev_page_button_pressed"]
+[connection signal="pressed" from="Contents/NextPageButton" to="." method="_on_next_page_button_pressed"]

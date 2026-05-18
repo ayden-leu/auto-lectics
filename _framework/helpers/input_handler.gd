@@ -90,6 +90,9 @@ func _input(event: InputEvent) -> void:
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
 		emit_signal("mouse_moved", event.relative * MOUSE_SENSITIVITY)
+	
+	if Input.is_action_just_pressed("open_blueprint"):
+		FR_WindowManager.createBlueprintWindow()
 
 # ------------------------------------------------
 # functions referenced outside of this script
