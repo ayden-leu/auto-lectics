@@ -85,7 +85,6 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 		top = DialogueLoader.loadDialogueNodeFile(
 			STORAGE_PATH.DIALOGUE + "fallback" + DialogueLoader.DIALOGUE_FILE_TYPE
 		)
-	print_debug("BBBB ", top)
 
 	var npcDialogueDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_DIALOGUE_ID)
 	var npcDialogueDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcDialogueDefaultsPath, false)

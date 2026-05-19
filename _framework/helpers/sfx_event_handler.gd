@@ -117,7 +117,7 @@ func stop(eventName:String) -> void:
 func getPlayerForEvent(eventName:String) -> AudioStreamPlayer:
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer.get(eventName)
 	if not player:
-		printerr("SfxEventHandler:  Could not find an AudioStreamPlayer for event [", eventName, "]")
+		print("SfxEventHandler:  Could not find an AudioStreamPlayer for event [", eventName, "]")
 
 	return player
 

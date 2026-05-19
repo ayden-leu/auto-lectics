@@ -120,15 +120,16 @@ var themeVariation:Dictionary = {
 	"left": "_defaultConsolePlayer",
 	"right": "_defaultConsoleBot"
 }
-## Maintains a list of dialogue that cannot be gone back to
-var dialogueNodeBackBlacklist: Array[String] = []
-## Maps dialogue IDs to the message displayed when back is denied.
-var dialogueNodeBackRejectMessages: Dictionary = {}
-## Tracks whether loading other dialogue IDs is allowed
+## A list of dialogue node IDs that cannot be loaded when entering the [code]back[/code] command.
+var dialogueNodeBackBlacklist:Array[String] = []
+## Maps dialogue node IDs to the message displayed when the [code]back[/code] command is denied.
+var dialogueNodeBackRejectMessages:Dictionary = {}
+## Whether the [code]load[/code] command is enabled or not.
 var allowLoad: bool = true
-## The message that gets displayed if the player tries to load a different dialogue ID
-## when they aren't able to.  Can be overwritten to be whatever you want via code.
-var rejectLoadMessage: String = "Cannot load dialogue ID."
+## The message that gets displayed when trying to run the [code]load[/code] command
+## while [member allowLoad] is [code]false[/code].
+## Can be overwritten to be whatever you want via code.
+var rejectLoadMessage: String = "[Load Command Disabled]"
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
@@ -473,13 +474,13 @@ func _chooseOption(optionData:Dictionary) -> void:
 	StoryFlags.updateFlags(optionData.setFlags)
 
 	# if allowBack is false, add the option to the blacklist
-	if optionData.get("allowBack", true) == false:
-		print ("back blocked")
-		if !dialogueNodeBackBlacklist.has(currentDialogueID):
+	if not optionData.allowBack:
+		print("DialogueConsole:  back command blocked.")
+		if not dialogueNodeBackBlacklist.has(currentDialogueID):
 			dialogueNodeBackBlacklist.append(currentDialogueID)
 			# First time allowBack is false, disable load command too
 			allowLoad = false
-		dialogueNodeBackRejectMessages[currentDialogueID] = str(optionData.get("rejectBackMessage","Cannot go back to previous dialogue ID."))
+		dialogueNodeBackRejectMessages[currentDialogueID] = optionData.rejectBackMessage
 
 	await get_tree().create_timer(optionChooseDelay).timeout
 	option_chosen.emit(optionData.nextID)
@@ -549,8 +550,7 @@ func _handleCommand(command:String) -> void:
 	if command == "clear":
 		_clearConsole()
 
-	# TODO:  move help text definition to [InteractableNPC]
-	if command == "help":
+	elif command == "help":
 		await _addRightText(_helpText)
 
 	elif command == "back":
@@ -560,12 +560,12 @@ func _handleCommand(command:String) -> void:
 		close()
 
 	elif command.begins_with("load "):
-		var nextID:String = command.replace("load ", "")
-		if nextID in ["_default_dialogue", "_default_option"]:
-			return
-		# Don't load and instead display rejectLoadMessage if allowLoad is false
 		if not allowLoad:
 			await _addRightText(rejectLoadMessage)
+			return
+
+		var nextID:String = command.replace("load ", "")
+		if nextID in ["_default_dialogue", "_default_option"]:
 			return
 		option_chosen.emit(nextID)
 
@@ -582,11 +582,10 @@ func _goBackOneDialogue() -> void:
 		await _addLeftTextTyping("[No saved history]")
 		return
 
-	var targetID: String = _dialogueHistory[_dialogueHistory.size() - 2]
-
+	var targetID:String = _dialogueHistory[_dialogueHistory.size() - 2]
 	# Check if the dialogue being returned to is blacklisted
 	if dialogueNodeBackBlacklist.has(targetID):
-		var rejectMessage: String = str(dialogueNodeBackRejectMessages.get(targetID,"Cannot go back to previous dialogue ID."))
+		var rejectMessage:String = dialogueNodeBackRejectMessages[targetID]
 		await _addRightText(rejectMessage)
 		return
 
