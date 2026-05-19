@@ -439,11 +439,15 @@ func _spawnOptionWindows() -> void:
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.themeVariation = optionData.textThemePreset
+		optionWindow.spawnDelay = optionData.spawnDelay
+		optionWindow.lifetime = optionData.lifetime
 		AudioLoader.loadSfxIntoPlayers(optionData.sfx, optionWindow.sfxPlayers)
-		optionWindow.data = optionData
 		_setOptionWindowPosition(optionWindow, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
+		optionWindow.enabled.connect(_on_option_window_enabled)
+		optionWindow.disabled.connect(_on_option_window_disabled)
 		optionWindow.start()
+		optionData.disabled = false
 
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()
@@ -526,18 +530,21 @@ func _stopHecticMode() -> void:
 	_hecticTimer.stop()
 	FR_WindowManager.closeAllWarningTileWindows()
 
-
+## [b]Internal-use only.[/b]
+## Handles the command entered by the player.
 func _handleCommand(command:String) -> void:
 	# command is an option ID
 	if command.is_valid_int():
 		var id:int = int(command)
 		if id >= 0 and id < _optionData.size():
-			_chooseOption(_optionData[id])
-			return
+			var data:Dictionary = _optionData[id]
+			if not data.disabled:
+				_chooseOption(data)
+				return
 
 	# command is an option text
 	for option in _optionData:
-		if command.to_lower() == option.text.to_lower():
+		if command.to_lower() == option.text.to_lower() and not option.disabled:
 			_chooseOption(option)
 			return
 
@@ -622,6 +629,16 @@ func _loadHistory(index:int) -> void:
 ## Handles logic for when an option window is selected.
 func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
 	_on_input_submitted(chosenOptionWindow.text)
+
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DialogueConsoleOptionWindow] enables itself.
+func _on_option_window_enabled(dataIndex:int) -> void:
+	_optionData[dataIndex].disabled = false
+
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DialogueConsoleOptionWindow] disables itself.
+func _on_option_window_disabled(dataIndex:int) -> void:
+	_optionData[dataIndex].disabled = true
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated

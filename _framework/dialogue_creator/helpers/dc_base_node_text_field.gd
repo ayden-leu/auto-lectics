@@ -1,4 +1,5 @@
 extends DC_BaseNodeField
+class_name DC_BaseNodeTextField
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -26,12 +27,12 @@ extends DC_BaseNodeField
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## The value of this field.  Setting this updates the value visually.
-var value:String:
+## The text in this field.  Setting this updates the text visually.
+var text:String:
+	set(newText):
+		valueHolder.text = newText
 	get():
 		return valueHolder.text
-	set(newValue):
-		valueHolder.text = newValue
 
 # ------------------------------------------------
 # normal variables only referenced in script

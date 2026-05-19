@@ -72,5 +72,5 @@ const DEFAULT_OPTION:Dictionary = {
 	},
 
 	"spawnDelay": 0.0,
-	"lifetime": -0.1,
+	"lifetime": 0.0,
 }
