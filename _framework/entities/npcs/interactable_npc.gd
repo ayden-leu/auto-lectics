@@ -200,7 +200,7 @@ func _endDialogueConsole() -> void:
 			_currentInteractor.disableInput(false)
 		if _currentInteractor.has_method("freeze"):
 			_currentInteractor.freeze(false)
-	InputHandler.hideCursor()
+	FR_WindowManager.updateCursorStateForWindows()
 
 	isTalking = false
 	_currentInteractor = null

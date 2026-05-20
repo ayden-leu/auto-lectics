@@ -28,12 +28,6 @@ signal unlock_condition_met(conditionID:String)
 # onready variables
 # ------------------------------------------------
 @onready var _npcEntryHolder = %NPCEntryHolder
-@onready var _details = %NpcDetailPanel
-@onready var _guessNpcNamePanel = %GuessNpcNamePanel
-@onready var _guessNpcNameField = %GuessNpcNameField
-#@onready var _notesPanel = %NpcDetailPanel
-@onready var _notesField = %NotesField
-@onready var _portraitTextureRect: TextureRect = $Contents/NpcDetailPanel/Portrait
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -49,9 +43,9 @@ var _idToIndex:Dictionary[String, int] = {}
 var _selectedEntry:BlueprintMenuNpcEntry = null:
 	set(newEntry):
 		_selectedEntry = newEntry
-		_details.visible = (newEntry != null)
 var _currentPage:int = 0
-var _loadingNotes := false
+## [b]Internal-use only.[/b] Contains a reference to the NPC detail window when one is created
+var _detailWindow: BlueprintNpcDetailWindow = null
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -60,6 +54,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	super()
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	z_index = FR_Globals.MENU_Z_INDEX + 1
 	windowType = "blueprint"
 	headerText = "Blueprint"
 	
@@ -83,7 +79,8 @@ func _loadEntries() -> void:
 	
 	var index:int = 0
 	for entry:BlueprintMenuNpcEntry in _npcEntryHolder.get_children():
-		#entry.selected.connect(_on_npc_entry_selected)
+		if not entry.selected.is_connected(_on_npc_entry_selected):
+			entry.selected.connect(_on_npc_entry_selected)
 		_npcEntries.push_back(entry)
 		_idToIndex[entry.npcID] = index
 		index += 1
@@ -96,30 +93,54 @@ func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 	
 	return _npcEntries[_idToIndex[entryID]]
 
+## [b]Internal-use only.[/b]  Gets the state and info of each npc from blueprintMenuNpcEntry.
+func get_state() -> Dictionary:
+	var state: Dictionary = {}
+	for entry: BlueprintMenuNpcEntry in _npcEntries:
+		state[entry.npcID] = {
+			"displayedName": entry.displayedName,
+			"notes": entry.notes,
+			"nameGuessedCorrectly": entry.nameGuessedCorrectly,
+			"unlocked": entry.unlocked
+		}
+	return state
+
+## [b]Internal-use only.[/b]  Restores the state of each NPC when window is reloaded.
+func apply_state(state: Dictionary) -> void:
+	for entry: BlueprintMenuNpcEntry in _npcEntries:
+		if not state.has(entry.npcID):
+			continue
+		
+		var entry_state: Dictionary = state[entry.npcID]
+		entry.notes = str(entry_state.get("notes", ""))
+		entry.nameGuessedCorrectly = bool(entry_state.get("nameGuessedCorrectly", false))
+
+		var is_unlocked: bool = bool(entry_state.get("unlocked", false))
+		if is_unlocked:
+			entry.unlock()
+		else:
+			entry.lock()
+			entry.displayedName = str(entry_state.get("displayedName", entry.lockedText))
 
 ## [b]Internal-use only.[/b]  Shows the NPC entry details.
 func _showDetails() -> void:
-	_loadNotes()
-	_guessNpcNamePanel.visible = not _selectedEntry.unlocked
+	if _selectedEntry == null:
+		return
 	
-	if _selectedEntry.portraitTexture != null:
-		_portraitTextureRect.texture = _selectedEntry.portraitTexture
-	else:
-		_portraitTextureRect.texture = null
+	_detailWindow = FR_WindowManager.createBlueprintNpcDetailWindow()
+	_detailWindow.load_entry(_selectedEntry)
 	
-	_details.visible = true
+	if not _detailWindow.npc_name_submitted.is_connected(_on_detail_window_name_submitted):
+		_detailWindow.npc_name_submitted.connect(_on_detail_window_name_submitted)
+	if not _detailWindow.notes_changed.is_connected(_on_detail_window_notes_changed):
+		_detailWindow.notes_changed.connect(_on_detail_window_notes_changed)
 
 
 ## [b]Internal-use only.[/b]  Hides the NPC entry details.
 func _hideDetails() -> void:
-	_details.visible = false
-
-
-## [b]Internal-use only.[/b]  Loads notes for an NPC entry.
-func _loadNotes() -> void:
-	_loadingNotes = true
-	_notesField.text = _selectedEntry.notes
-	_loadingNotes = false
+	if _detailWindow != null:
+		_detailWindow.close()
+		_detailWindow = null
 
 
 ## [b]Internal-use only.[/b]  Determines if a given guess matches the name of the selected NPC entry.
@@ -175,49 +196,43 @@ func _updateEntryVisibility() -> void:
 		child.visible = i >= start_index and i < end_index
 
 
+func close() -> void:
+	if _detailWindow != null:
+		_detailWindow.close()
+		_detailWindow = null
+	
+	super()
+
+
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for when an NPC entry is selected.
-func _on_npc_entry_selected(entry:BlueprintMenuNpcEntry) -> void:
-	sfxEventHandler.play("buttonPressed")
-	print("Selected NPC from menu: ", entry.npcID)
+## [b]Internal-use only.[/b] Handles logic for when a guess for the name is submitted
+func _on_detail_window_name_submitted(entry: BlueprintMenuNpcEntry, submittedName: String) -> void:
 	_selectedEntry = entry
-	_showDetails()
-
-
-## [b]Internal-use only.[/b]  Handles logic for when an NPC entry name is submitted.
-func _on_npc_entry_name_submission() -> void:
-	if _selectedEntry == null:
-		return
-	if _selectedEntry.unlocked:
-		return
-	
-	var submittedName:String = _guessNpcNameField.text.strip_edges()
-	_guessNpcNameField.text = ""
-	if submittedName == "":
-		return
 	_selectedEntry.displayedName = submittedName
 	
 	_determineIfGuessMatchesSelectedEntry(submittedName)
 	_unlockCorrectGuesses()
 	_check_unlock_conditions()
-	_showDetails()
-
-
-## [b]Internal-use only.[/b]  Handles logic for when notes are entered for an NPC entry.
-func _on_notes_field_text_changed() -> void:
-	if _loadingNotes:
-		return
-	if _selectedEntry == null:
-		return
-	sfxEventHandler.play("notesFieldTextUpdated")
 	
-	_selectedEntry.notes = _notesField.text
+	if _detailWindow != null:
+		_detailWindow.load_entry(_selectedEntry)
 
+## [b]Internal-use only.[/b] Handles logic for when notes are typed
+func _on_detail_window_notes_changed(entry: BlueprintMenuNpcEntry, notes: String) -> void:
+	entry.notes = notes
+	
+	if sfxEventHandler:
+		sfxEventHandler.play("notesFieldTextUpdated")
 
-func _on_guess_npc_name_field_text_changed(_new_text: String) -> void:
-	sfxEventHandler.play("guessNpcNameTextChanged")
+## [b]Internal-use only.[/b] Handles logic for when an npc in the menu is clicked
+func _on_npc_entry_selected(entry: BlueprintMenuNpcEntry) -> void:
+	sfxEventHandler.play("buttonPressed")
+	print("Selected NPC from window: ", entry.npcID)
+
+	_selectedEntry = entry
+	_showDetails()
 
 
 ## [b]Internal-use only.[/b]  Handles logic for when the previous page button is pressed.
@@ -235,13 +250,6 @@ func _on_next_page_button_pressed() -> void:
 	if _currentPage < max_page:
 		_currentPage += 1
 		_updateEntryVisibility()
-
-
-## [b]Internal-use only.[/b]  Handles logic for when the NPC entry details panel is closed.
-func _on_close_detail_button_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
-	_selectedEntry = null
-	_hideDetails()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

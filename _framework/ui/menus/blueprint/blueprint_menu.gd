@@ -2,6 +2,7 @@
 extends Menu
 class_name BlueprintMenu
 
+## DEPRECATED
 # ------------------------------------------------
 # signals
 # ------------------------------------------------

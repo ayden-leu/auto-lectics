@@ -22,7 +22,7 @@ const _OPTIONS_MENU = preload("uid://duxwayninhwqb")
 ## [b]Internal-use only.[/b]  A loaded resource copy of the keybinds menu.
 const _KEYBINDS_MENU = preload("uid://b08l8xg1t3ct6")
 ## [b]Internal-use only.[/b]  A loaded resource copy of the blueprint menu.
-#const _BLUEPRINT_MENU = preload("uid://bult80lkyvnls")
+const _BLUEPRINT_MENU = preload("uid://bult80lkyvnls")
 
 # ------------------------------------------------
 # export variables
@@ -53,7 +53,7 @@ var menuIsOpen:bool = false:
 		menuIsOpen = state
 		_overlay.visible = state
 ## A reference to the [BlueprintMenu]
-#var blueprintMenu:BlueprintMenu = null
+var blueprintMenu:BlueprintMenu = null
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -88,8 +88,8 @@ func _ready() -> void:
 	_createMenu(_PAUSE_MENU)
 	_createMenu(_OPTIONS_MENU)
 	_createMenu(_KEYBINDS_MENU)
-	#_createMenu(_BLUEPRINT_MENU)
-	#blueprintMenu = _menus.back()
+	_createMenu(_BLUEPRINT_MENU)
+	blueprintMenu = _menus.back()
 
 func _process(_delta:float) -> void:
 	if not enabled:
@@ -154,19 +154,19 @@ func openMenu(menuID:String) -> void:
 ## 	# Will run whenever an unlock condition is met.
 ## 	# conditionID is the ID of the unlock condition.
 ## [/codeblock]
-#func subscribeToBlueprintMenu(subscriber) -> void:
-	#_blueprintMenuSubscribers.push_back(subscriber)
-	#_connectBlueprintSignalsToSubscriber(subscriber)
+func subscribeToBlueprintMenu(subscriber) -> void:
+	_blueprintMenuSubscribers.push_back(subscriber)
+	_connectBlueprintSignalsToSubscriber(subscriber)
 
 ## Unsubscribes a node from the [DialogueConsole], meaning it won't run any
 ## functions when the [DialogueConsole] emits signals.
-#func unsubscribeToBlueprintMenu(subscriber) -> void:
-	#if not subscriber in _blueprintMenuSubscribers:
-		#return
+func unsubscribeToBlueprintMenu(subscriber) -> void:
+	if not subscriber in _blueprintMenuSubscribers:
+		return
 #
-	#var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
-	#_blueprintMenuSubscribers[subscriberIndex] = null
-	#_disconnectBlueprintSignalsToSubscriber(subscriber)
+	var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
+	_blueprintMenuSubscribers[subscriberIndex] = null
+	_disconnectBlueprintSignalsToSubscriber(subscriber)
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -191,25 +191,24 @@ func _getMenu(menuIO:String) -> Menu:
 func _resume() -> void:
 	get_tree().paused = false
 	menuIsOpen = false
-	InputHandler.restoreCursorMode()
-	Player.disableInput(false)
+	FR_WindowManager.updateCursorStateForWindows()
 	_sfxEventHandler.play("menuClose")
 
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
-#func _connectBlueprintSignalsToSubscriber(subscriber) -> void:
-	#if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
-		#blueprintMenu.npc_name_guessed_correctly.connect(subscriber._on_blueprint_npc_name_guessed_correctly)
-	#if subscriber.has_method("_on_blueprint_unlock_condition_met"):
-		#blueprintMenu.unlock_condition_met.connect(subscriber._on_blueprint_unlock_condition_met)
+func _connectBlueprintSignalsToSubscriber(subscriber) -> void:
+	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
+		blueprintMenu.npc_name_guessed_correctly.connect(subscriber._on_blueprint_npc_name_guessed_correctly)
+	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
+		blueprintMenu.unlock_condition_met.connect(subscriber._on_blueprint_unlock_condition_met)
 #
 ### [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ### functions defined by the subscriber.
-#func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
-	#if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
-		#blueprintMenu.npc_name_guessed_correctly.disconnect(subscriber._on_blueprint_npc_name_guessed_correctly)
-	#if subscriber.has_method("_on_blueprint_unlock_condition_met"):
-		#blueprintMenu.unlock_condition_met.disconnect(subscriber._on_blueprint_unlock_condition_met)
+func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
+	if subscriber.has_method("_on_blueprint_npc_name_guessed_correctly"):
+		blueprintMenu.npc_name_guessed_correctly.disconnect(subscriber._on_blueprint_npc_name_guessed_correctly)
+	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
+		blueprintMenu.unlock_condition_met.disconnect(subscriber._on_blueprint_unlock_condition_met)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

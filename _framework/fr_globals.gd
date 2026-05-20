@@ -36,7 +36,8 @@ const SCENES = {
 	"DialogueConsoleLogEntryIdLabel": "uid://cdt7ouilmdwo0",
 	"DialogueWarningTileWindow": "uid://dpeqr6fpd34gm",
 	"WarningTile2D": "uid://c1qmg4lyrgjqc",
-	"BlueprintWindow": "uid://ovwd5xcohsao"
+	"BlueprintWindow": "uid://ovwd5xcohsao",
+	"BlueprintNpcDetailWindow": "uid://524kk63lga7"
 }
 
 ## Holds information for where certain aspects are stored in the project.

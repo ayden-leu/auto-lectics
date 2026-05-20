@@ -66,7 +66,9 @@ func _on_options_pressed() -> void:
 func _on_blueprint_button_pressed() -> void:
 	print("blueprint open")
 	sfxEventHandler.play("buttonPressed")
-	FR_MenuManager.openMenu("blueprint")
+	FR_WindowManager.createBlueprintWindow()
+	get_tree().paused = false#
+	close()
 
 ## [b]Internal-use only.[/b]  Handles logic for quit button pressing.
 func _on_quit_pressed() -> void:

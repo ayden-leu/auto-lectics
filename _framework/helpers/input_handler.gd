@@ -91,8 +91,11 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		emit_signal("mouse_moved", event.relative * MOUSE_SENSITIVITY)
 	
-	if Input.is_action_just_pressed("open_blueprint"):
-		FR_WindowManager.createBlueprintWindow()
+	#if Input.is_action_just_pressed("open_blueprint"):
+		#var focused_control := get_viewport().gui_get_focus_owner()
+		#if focused_control != null:
+			#return
+		#FR_WindowManager.createBlueprintWindow()
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -104,11 +107,9 @@ static func showCursor() -> void:
 
 ## Like [method showCursor], but saves the current mouse mode to [member _savedMouseMode].
 static func showCursorTemp() -> void:
-	if _savedMouseMode != Input.MOUSE_MODE_MAX:
-		return
-
-	print("show cursor temp")
-	_savedMouseMode = Input.get_mouse_mode()
+	if _savedMouseMode == Input.MOUSE_MODE_MAX:
+		print("show cursor temp")
+		_savedMouseMode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 ## Hides the cursor.  Helpful if you want the player to move the camera around.
@@ -118,17 +119,18 @@ static func hideCursor() -> void:
 
 ## Like [method hideCursor], but saves the current mouse mode to [member _savedMouseMode].
 static func hideCursorTemp() -> void:
-	if _savedMouseMode != Input.MOUSE_MODE_MAX:
-		return
-
-	print("hide cursor temp")
-	_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if _savedMouseMode == Input.MOUSE_MODE_MAX:
+		print("hide cursor temp")
+		_savedMouseMode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 ## Sets the current mouse mode to [member _savedMouseMode].
 static func restoreCursorMode() -> void:
 	print("restore cursor")
-	Input.set_mouse_mode(_savedMouseMode)
+	if _savedMouseMode == Input.MOUSE_MODE_MAX:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(_savedMouseMode)
 	_savedMouseMode = Input.MOUSE_MODE_MAX
 
 ## Lets movement inputs be processed.
