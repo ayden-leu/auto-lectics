@@ -120,15 +120,16 @@ var themeVariation:Dictionary = {
 	"left": "_defaultConsolePlayer",
 	"right": "_defaultConsoleBot"
 }
-## Maintains a list of dialogue that cannot be gone back to
-var dialogueNodeBackBlacklist: Array[String] = []
-## Maps dialogue IDs to the message displayed when back is denied.
-var dialogueNodeBackRejectMessages: Dictionary = {}
-## Tracks whether loading other dialogue IDs is allowed
+## A list of dialogue node IDs that cannot be loaded when entering the [code]back[/code] command.
+var dialogueNodeBackBlacklist:Array[String] = []
+## Maps dialogue node IDs to the message displayed when the [code]back[/code] command is denied.
+var dialogueNodeBackRejectMessages:Dictionary = {}
+## Whether the [code]load[/code] command is enabled or not.
 var allowLoad: bool = true
-## The message that gets displayed if the player tries to load a different dialogue ID
-## when they aren't able to.  Can be overwritten to be whatever you want via code.
-var rejectLoadMessage: String = "Cannot load dialogue ID."
+## The message that gets displayed when trying to run the [code]load[/code] command
+## while [member allowLoad] is [code]false[/code].
+## Can be overwritten to be whatever you want via code.
+var rejectLoadMessage: String = "[Load Command Disabled]"
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
@@ -438,11 +439,15 @@ func _spawnOptionWindows() -> void:
 		optionWindow.id = tempCounter
 		optionWindow.text = optionData.text
 		optionWindow.themeVariation = optionData.textThemePreset
+		optionWindow.spawnDelay = optionData.spawnDelay
+		optionWindow.lifetime = optionData.lifetime
 		AudioLoader.loadSfxIntoPlayers(optionData.sfx, optionWindow.sfxPlayers)
-		optionWindow.data = optionData
 		_setOptionWindowPosition(optionWindow, verticalOffset)
 		optionWindow.option_selected.connect(_on_option_window_selected)
+		optionWindow.enabled.connect(_on_option_window_enabled)
+		optionWindow.disabled.connect(_on_option_window_disabled)
 		optionWindow.start()
+		optionData.disabled = false
 
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()
@@ -473,13 +478,13 @@ func _chooseOption(optionData:Dictionary) -> void:
 	StoryFlags.updateFlags(optionData.setFlags)
 
 	# if allowBack is false, add the option to the blacklist
-	if optionData.get("allowBack", true) == false:
-		print ("back blocked")
-		if !dialogueNodeBackBlacklist.has(currentDialogueID):
+	if not optionData.allowBack:
+		print("DialogueConsole:  back command blocked.")
+		if not dialogueNodeBackBlacklist.has(currentDialogueID):
 			dialogueNodeBackBlacklist.append(currentDialogueID)
 			# First time allowBack is false, disable load command too
 			allowLoad = false
-		dialogueNodeBackRejectMessages[currentDialogueID] = str(optionData.get("rejectBackMessage","Cannot go back to previous dialogue ID."))
+		dialogueNodeBackRejectMessages[currentDialogueID] = optionData.rejectBackMessage
 
 	await get_tree().create_timer(optionChooseDelay).timeout
 	option_chosen.emit(optionData.nextID)
@@ -525,18 +530,21 @@ func _stopHecticMode() -> void:
 	_hecticTimer.stop()
 	FR_WindowManager.closeAllWarningTileWindows()
 
-
+## [b]Internal-use only.[/b]
+## Handles the command entered by the player.
 func _handleCommand(command:String) -> void:
 	# command is an option ID
 	if command.is_valid_int():
 		var id:int = int(command)
 		if id >= 0 and id < _optionData.size():
-			_chooseOption(_optionData[id])
-			return
+			var data:Dictionary = _optionData[id]
+			if not data.disabled:
+				_chooseOption(data)
+				return
 
 	# command is an option text
 	for option in _optionData:
-		if command.to_lower() == option.text.to_lower():
+		if command.to_lower() == option.text.to_lower() and not option.disabled:
 			_chooseOption(option)
 			return
 
@@ -549,8 +557,7 @@ func _handleCommand(command:String) -> void:
 	if command == "clear":
 		_clearConsole()
 
-	# TODO:  move help text definition to [InteractableNPC]
-	if command == "help":
+	elif command == "help":
 		await _addRightText(_helpText)
 
 	elif command == "back":
@@ -560,12 +567,12 @@ func _handleCommand(command:String) -> void:
 		close()
 
 	elif command.begins_with("load "):
-		var nextID:String = command.replace("load ", "")
-		if nextID in ["_default_dialogue", "_default_option"]:
-			return
-		# Don't load and instead display rejectLoadMessage if allowLoad is false
 		if not allowLoad:
 			await _addRightText(rejectLoadMessage)
+			return
+
+		var nextID:String = command.replace("load ", "")
+		if nextID in ["_default_dialogue", "_default_option"]:
 			return
 		option_chosen.emit(nextID)
 
@@ -582,11 +589,10 @@ func _goBackOneDialogue() -> void:
 		await _addLeftTextTyping("[No saved history]")
 		return
 
-	var targetID: String = _dialogueHistory[_dialogueHistory.size() - 2]
-
+	var targetID:String = _dialogueHistory[_dialogueHistory.size() - 2]
 	# Check if the dialogue being returned to is blacklisted
 	if dialogueNodeBackBlacklist.has(targetID):
-		var rejectMessage: String = str(dialogueNodeBackRejectMessages.get(targetID,"Cannot go back to previous dialogue ID."))
+		var rejectMessage:String = dialogueNodeBackRejectMessages[targetID]
 		await _addRightText(rejectMessage)
 		return
 
@@ -623,6 +629,16 @@ func _loadHistory(index:int) -> void:
 ## Handles logic for when an option window is selected.
 func _on_option_window_selected(chosenOptionWindow:DialogueConsoleOptionWindow) -> void:
 	_on_input_submitted(chosenOptionWindow.text)
+
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DialogueConsoleOptionWindow] enables itself.
+func _on_option_window_enabled(dataIndex:int) -> void:
+	_optionData[dataIndex].disabled = false
+
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DialogueConsoleOptionWindow] disables itself.
+func _on_option_window_disabled(dataIndex:int) -> void:
+	_optionData[dataIndex].disabled = true
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated

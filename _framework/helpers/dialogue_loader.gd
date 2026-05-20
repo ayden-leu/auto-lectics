@@ -103,10 +103,10 @@ static func _fillNpcOptionDefaults(base:Dictionary, defaults:Dictionary) -> Dict
 
 	if base.has("setFlags"):
 		copy.setFlags = base.setFlags
-	
+
 	if base.has("allowBack"):
 		copy.allowBack = base.allowBack
-	
+
 	if base.has("rejectBackMessage"):
 		copy.rejectBackMessage = base.rejectBackMessage
 
@@ -141,7 +141,6 @@ static func fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dicti
 	)
 	dialogue.nextOnHecticFailureID = configuredAttributes.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
 
-	print_debug("AAAAAAAA ", configuredAttributes)
 	dialogue.hecticDuration = configuredAttributes.get("hecticDuration", dialogue.hecticDuration)
 
 	dialogue.writeSpeed = _verifyInList(
@@ -191,7 +190,7 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 
 	option.checkFlags = configuredAttributes.get("checkFlags", option.checkFlags)
 	option.setFlags = configuredAttributes.get("setFlags", option.setFlags)
-	
+
 	option.allowBack = configuredAttributes.get("allowBack", option.allowBack)
 	option.rejectBackMessage = configuredAttributes.get("rejectBackMessage", option.rejectBackMessage)
 
