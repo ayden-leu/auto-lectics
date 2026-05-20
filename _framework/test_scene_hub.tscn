@@ -1,21 +1,21 @@
 [gd_scene load_steps=8 format=3 uid="uid://dwmpo6y5x6ios"]
 
-[ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/main_testing_scene.gd" id="1_qqs7v"]
-[ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_gx2oa"]
-[ext_resource type="Texture2D" uid="uid://4k8rw8ox10br" path="res://_framework/editor_files/icon_NPC.svg" id="3_jj8wy"]
-[ext_resource type="Texture2D" uid="uid://c1ramlq6b7v5a" path="res://_framework/dialogue_creator/visual_assets/load.svg" id="3_qjyxf"]
-[ext_resource type="Texture2D" uid="uid://dfdwbkf245m7l" path="res://_framework/editor_files/icon_menu-manager.svg" id="4_uomlr"]
-[ext_resource type="Texture2D" uid="uid://b105kdcrwpi0r" path="res://_framework/editor_files/icon_interactable_NPC.svg" id="5_iuwfh"]
-[ext_resource type="Texture2D" uid="uid://bfg0nlmruxfhi" path="res://_framework/editor_files/icon_window-manager.svg" id="7_bf852"]
+[ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
+[ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_x2kea"]
+[ext_resource type="Texture2D" uid="uid://c1ramlq6b7v5a" path="res://_framework/dialogue_creator/visual_assets/load.svg" id="3_wtvxm"]
+[ext_resource type="Texture2D" uid="uid://dfdwbkf245m7l" path="res://_framework/editor_files/icon_menu-manager.svg" id="4_j2pjv"]
+[ext_resource type="Texture2D" uid="uid://b105kdcrwpi0r" path="res://_framework/editor_files/icon_interactable_NPC.svg" id="5_0fyl3"]
+[ext_resource type="Texture2D" uid="uid://4k8rw8ox10br" path="res://_framework/editor_files/icon_NPC.svg" id="6_f2hun"]
+[ext_resource type="Texture2D" uid="uid://bfg0nlmruxfhi" path="res://_framework/editor_files/icon_window-manager.svg" id="7_3d80c"]
 
-[node name="MainTestingScene" type="Control"]
+[node name="TestSceneHub" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_qqs7v")
+script = ExtResource("1_y5v6x")
 
 [node name="ButtonHolder" type="GridContainer" parent="."]
 unique_name_in_owner = true
@@ -43,14 +43,14 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Load test_death_plane"
-icon = ExtResource("2_gx2oa")
+icon = ExtResource("2_x2kea")
 expand_icon = true
 
 [node name="Loadtest_dialogue_loading" type="Button" parent="ButtonHolder"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Load test_dialogue_loading"
-icon = ExtResource("3_qjyxf")
+icon = ExtResource("3_wtvxm")
 expand_icon = true
 
 [node name="Loadtest_label_preset" type="Button" parent="ButtonHolder"]
@@ -63,21 +63,21 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Load test_menu_manager"
-icon = ExtResource("4_uomlr")
+icon = ExtResource("4_j2pjv")
 expand_icon = true
 
 [node name="Loadtest_npc_interaction" type="Button" parent="ButtonHolder"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Load test_npc_interaction"
-icon = ExtResource("5_iuwfh")
+icon = ExtResource("5_0fyl3")
 expand_icon = true
 
 [node name="Loadtest_npc_patrol" type="Button" parent="ButtonHolder"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Load test_npc_patrol"
-icon = ExtResource("3_jj8wy")
+icon = ExtResource("6_f2hun")
 expand_icon = true
 
 [node name="Loadtest_player_movement" type="Button" parent="ButtonHolder"]
@@ -108,7 +108,7 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Load test_window_manager"
-icon = ExtResource("7_bf852")
+icon = ExtResource("7_3d80c")
 expand_icon = true
 
 [node name="SceneHolder" type="Node" parent="."]
