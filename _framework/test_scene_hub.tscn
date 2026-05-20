@@ -15,9 +15,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_y5v6x")
 
-[node name="ButtonHolder" type="GridContainer" parent="."]
+[node name="MainPanel" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -25,89 +26,138 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+
+[node name="ButtonHolder" type="GridContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -293.0
+offset_top = -165.5
+offset_right = 293.0
+offset_bottom = 165.5
+grow_horizontal = 2
+grow_vertical = 2
 columns = 6
 
-[node name="Loadtest_audio_loading" type="Button" parent="ButtonHolder"]
-custom_minimum_size = Vector2(0, 40)
+[node name="InWorld" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
 layout_mode = 2
-text = "Load test_audio_loading"
-expand_icon = true
+metadata/_edit_group_ = true
 
-[node name="Loadtest_console_command" type="Button" parent="ButtonHolder"]
-custom_minimum_size = Vector2(0, 40)
+[node name="Label" type="Label" parent="MainPanel/ButtonHolder/InWorld"]
 layout_mode = 2
-text = "Load test_console_command"
-expand_icon = true
+text = "In-World Component Tests"
+horizontal_alignment = 1
 
-[node name="Loadtest_death_plane" type="Button" parent="ButtonHolder"]
+[node name="test_death_plane" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_death_plane"
+text = "test_death_plane"
 icon = ExtResource("2_x2kea")
 expand_icon = true
 
-[node name="Loadtest_dialogue_loading" type="Button" parent="ButtonHolder"]
+[node name="test_npc_interaction" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_dialogue_loading"
-icon = ExtResource("3_wtvxm")
-expand_icon = true
-
-[node name="Loadtest_label_preset" type="Button" parent="ButtonHolder"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "Load test_label_preset"
-expand_icon = true
-
-[node name="Loadtest_menu_manager" type="Button" parent="ButtonHolder"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "Load test_menu_manager"
-icon = ExtResource("4_j2pjv")
-expand_icon = true
-
-[node name="Loadtest_npc_interaction" type="Button" parent="ButtonHolder"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "Load test_npc_interaction"
+text = "test_npc_interaction"
 icon = ExtResource("5_0fyl3")
 expand_icon = true
 
-[node name="Loadtest_npc_patrol" type="Button" parent="ButtonHolder"]
+[node name="test_npc_patrol" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_npc_patrol"
+text = "test_npc_patrol"
 icon = ExtResource("6_f2hun")
 expand_icon = true
 
-[node name="Loadtest_player_movement" type="Button" parent="ButtonHolder"]
+[node name="test_player_movement" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_player_movement"
+text = "test_player_movement"
 expand_icon = true
 
-[node name="Loadtest_shader" type="Button" parent="ButtonHolder"]
+[node name="test_console_command" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_shader"
+text = "test_console_command"
 expand_icon = true
 
-[node name="Loadtest_story_flags" type="Button" parent="ButtonHolder"]
+[node name="test_shader" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_story_flags"
+text = "test_shader"
 expand_icon = true
 
-[node name="Loadtest_waterdrop" type="Button" parent="ButtonHolder"]
+[node name="test_waterdrop" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_waterdrop"
+text = "test_waterdrop"
 expand_icon = true
 
-[node name="Loadtest_window_manager" type="Button" parent="ButtonHolder"]
+[node name="VSeparator" type="VSeparator" parent="MainPanel/ButtonHolder"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="CodeHelper" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="MainPanel/ButtonHolder/CodeHelper"]
+layout_mode = 2
+text = "Code Helper Tests"
+horizontal_alignment = 1
+
+[node name="test_audio_loading" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Load test_window_manager"
+text = "test_audio_loading"
+expand_icon = true
+
+[node name="test_dialogue_loading" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "test_dialogue_loading"
+icon = ExtResource("3_wtvxm")
+expand_icon = true
+
+[node name="test_label_preset" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "test_label_preset"
+expand_icon = true
+
+[node name="test_story_flags" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "test_story_flags"
+expand_icon = true
+
+[node name="VSeparator2" type="VSeparator" parent="MainPanel/ButtonHolder"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="GUI" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainPanel/ButtonHolder/GUI"]
+layout_mode = 2
+text = "GUI Component Tests"
+horizontal_alignment = 1
+
+[node name="test_menu_manager" type="Button" parent="MainPanel/ButtonHolder/GUI"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "test_menu_manager"
+icon = ExtResource("4_j2pjv")
+expand_icon = true
+
+[node name="test_window_manager" type="Button" parent="MainPanel/ButtonHolder/GUI"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "test_window_manager"
 icon = ExtResource("7_3d80c")
 expand_icon = true
 
@@ -131,17 +181,17 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Back (Ctrl+Q)"
 
-[connection signal="pressed" from="ButtonHolder/Loadtest_audio_loading" to="." method="_on_load_test_audio_loading_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_console_command" to="." method="_on_load_test_console_command_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_death_plane" to="." method="_on_load_test_death_plane_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_dialogue_loading" to="." method="_on_load_test_dialogue_loading_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_label_preset" to="." method="_on_load_test_label_preset_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_menu_manager" to="." method="_on_load_test_menu_manager_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_npc_interaction" to="." method="_on_load_test_npc_interaction_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_npc_patrol" to="." method="_on_load_test_npc_patrol_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_player_movement" to="." method="_on_load_test_player_movement_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_shader" to="." method="_on_load_test_shader_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_story_flags" to="." method="_on_load_test_story_flags_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_waterdrop" to="." method="_on_load_test_waterdrop_pressed"]
-[connection signal="pressed" from="ButtonHolder/Loadtest_window_manager" to="." method="_on_load_test_window_manager_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_death_plane" to="." method="_on_load_test_death_plane_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_npc_interaction" to="." method="_on_load_test_npc_interaction_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_npc_patrol" to="." method="_on_load_test_npc_patrol_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_player_movement" to="." method="_on_load_test_player_movement_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_console_command" to="." method="_on_load_test_console_command_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_shader" to="." method="_on_load_test_shader_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_waterdrop" to="." method="_on_load_test_waterdrop_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_audio_loading" to="." method="_on_load_test_audio_loading_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_dialogue_loading" to="." method="_on_load_test_dialogue_loading_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_label_preset" to="." method="_on_load_test_label_preset_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_story_flags" to="." method="_on_load_test_story_flags_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/GUI/test_menu_manager" to="." method="_on_load_test_menu_manager_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/GUI/test_window_manager" to="." method="_on_load_test_window_manager_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

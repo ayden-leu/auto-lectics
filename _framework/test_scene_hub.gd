@@ -32,7 +32,7 @@ const _FILE_EXTENSION:String = ".tscn"
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
 ## Holds the buttons that load each test scene.
-@onready var _buttonHolder:Container = %ButtonHolder
+@onready var _mainPanel:Control = %MainPanel
 ## [b]Internal-use only.[/b]
 ## Holds the scene that is loaded.
 @onready var _sceneHolder:Node = %SceneHolder
@@ -83,7 +83,7 @@ func _loadTestScene(sceneName: String) -> void:
 
 	_currentTestScene = packed_scene.instantiate()
 	_sceneHolder.add_child(_currentTestScene)
-	_buttonHolder.hide()
+	_mainPanel.hide()
 	_backButton.show()
 
 ## [b]Internal-use only.[/b]
@@ -94,7 +94,7 @@ func _returnToHub() -> void:
 		_currentTestScene = null
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_buttonHolder.show()
+	_mainPanel.show()
 	_backButton.hide()
 
 # ------------------------------------------------
