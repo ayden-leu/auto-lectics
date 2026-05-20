@@ -1,6 +1,7 @@
 extends Node
 
-# feel free to remove sections you're not using
+# NOTE:  key combo to go back to the hub is CTRL+Q
+
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
@@ -12,6 +13,15 @@ extends Node
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
+## Where the test scenes are stored.
+const _STORAGE_PATH:String = "res://_framework/test_scenes/"
+## [b]Internal-use only.[/b]
+## What each test scene's name is prefixed with.
+const _SCENE_PREFIX:String = "test_"
+## [b]Internal-use only.[/b]
+## The file extension of each test scene.
+const _FILE_EXTENSION:String = ".tscn"
 
 # ------------------------------------------------
 # export variables
@@ -20,9 +30,15 @@ extends Node
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var _button_grid: GridContainer = $GridContainer
-@onready var _test_scene_container: Node = $TestSceneContainer
-@onready var _back_button: Button = $BackButton
+## [b]Internal-use only.[/b]
+## Holds the buttons that load each test scene.
+@onready var _buttonHolder:Container = %ButtonHolder
+## [b]Internal-use only.[/b]
+## Holds the scene that is loaded.
+@onready var _sceneHolder:Node = %SceneHolder
+## [b]Internal-use only.[/b]
+## The button that returns to this scene.
+@onready var _backButton:Button = %BackButton
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -32,108 +48,54 @@ extends Node
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-var _current_test_scene: Node
+## [b]Internal-use only.[/b]
+## The currently loaded scene.
+var _currentTestScene:Node
+
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-#func _ready() -> void:
-	# super()  # needed if inheriting a custom class with its own _ready().  Will run the inherited class' _ready() function.
 func _ready() -> void:
-	_show_hub()
-#func _process(delta: float) -> void:
-	#super(delta)  # needed if inheriting a custom class with its own _process().  Will run the inherited class' _process() function.
+	_returnToHub()
 
-#func _physics_process(delta: float) -> void:
-	#super(delta)  # needed if inheriting a custom class with its own _physics_process().  Will run the inherited class' _physics_process() function.
+func _input(event: InputEvent) -> void:
+	if not is_instance_valid(_currentTestScene):
+		return
+
+	if event is InputEventKey and event.pressed and not event.echo and event.ctrl_pressed and event.keycode == KEY_Q:
+		_returnToHub()
+		get_viewport().set_input_as_handled()
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-func _input(event: InputEvent) -> void:
-	if not is_instance_valid(_current_test_scene):
-		return
+## [b]Internal-use only.[/b]
+## Loads a test scene scene.
+func _loadTestScene(sceneName: String) -> void:
+	if is_instance_valid(_currentTestScene):
+		_currentTestScene.queue_free()
 
-	if event is InputEventKey and event.pressed and not event.echo and event.ctrl_pressed and event.keycode == KEY_Q:
-		_show_hub()
-		get_viewport().set_input_as_handled()
-		
-func _load_test_scene(scene_path: String) -> void:
-	if is_instance_valid(_current_test_scene):
-		_current_test_scene.queue_free()
-
-	var packed_scene := load(scene_path) as PackedScene
+	var fullPath:String = _STORAGE_PATH + _SCENE_PREFIX + sceneName + _FILE_EXTENSION
+	var packed_scene := load(fullPath) as PackedScene
 	if packed_scene == null:
-		push_error("Could not load test scene: %s" % scene_path)
+		push_error("Could not load test scene: %s" % fullPath)
 		return
 
-	_current_test_scene = packed_scene.instantiate()
-	_test_scene_container.add_child(_current_test_scene)
-	_button_grid.hide()
-	_back_button.show()
+	_currentTestScene = packed_scene.instantiate()
+	_sceneHolder.add_child(_currentTestScene)
+	_buttonHolder.hide()
+	_backButton.show()
 
-func _show_hub() -> void:
-	if is_instance_valid(_current_test_scene):
-		_current_test_scene.queue_free()
-		_current_test_scene = null
+## [b]Internal-use only.[/b]
+## Forecibly rturns to the main hub.
+func _returnToHub() -> void:
+	if is_instance_valid(_currentTestScene):
+		_currentTestScene.queue_free()
+		_currentTestScene = null
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_button_grid.show()
-	_back_button.hide()
-	
-func _on_load_test_audio_loading_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_audio_loading.tscn")
-
-
-func _on_load_test_console_command_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_console_command.tscn")
-
-
-func _on_load_test_death_plane_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_death_plane.tscn")
-
-
-func _on_load_test_dialogue_loading_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_dialogue_loading.tscn")
-
-
-func _on_load_test_label_preset_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_label_preset.tscn")
-
-
-func _on_load_test_menu_manager_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_menu_manager.tscn")
-
-
-func _on_load_test_npc_interaction_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_npc_interaction.tscn")
-
-
-func _on_load_test_npc_patrol_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_npc_patrol.tscn")
-
-
-func _on_load_test_player_movement_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_player_movement.tscn")
-
-
-func _on_load_test_shader_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_shader.tscn")
-
-
-func _on_load_test_story_flags_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_story_flags.tscn")
-
-
-func _on_load_test_waterdrop_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_waterdrop.tscn")
-
-
-func _on_load_test_window_manager_pressed() -> void:
-	_load_test_scene("res://_framework/test_scenes/test_window_manager.tscn")
-
-
-func _on_back_button_pressed() -> void:
-	_show_hub()
+	_buttonHolder.show()
+	_backButton.hide()
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -143,6 +105,47 @@ func _on_back_button_pressed() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+func _on_load_test_audio_loading_pressed() -> void:
+	_loadTestScene("audio_loading")
+
+func _on_load_test_console_command_pressed() -> void:
+	_loadTestScene("console_command")
+
+func _on_load_test_death_plane_pressed() -> void:
+	_loadTestScene("death_plane")
+
+func _on_load_test_dialogue_loading_pressed() -> void:
+	_loadTestScene("dialogue_loading")
+
+func _on_load_test_label_preset_pressed() -> void:
+	_loadTestScene("label_preset")
+
+func _on_load_test_menu_manager_pressed() -> void:
+	_loadTestScene("menu_manager")
+
+func _on_load_test_npc_interaction_pressed() -> void:
+	_loadTestScene("npc_interaction")
+
+func _on_load_test_npc_patrol_pressed() -> void:
+	_loadTestScene("npc_patrol")
+
+func _on_load_test_player_movement_pressed() -> void:
+	_loadTestScene("player_movement")
+
+func _on_load_test_shader_pressed() -> void:
+	_loadTestScene("shader")
+
+func _on_load_test_story_flags_pressed() -> void:
+	_loadTestScene("story_flags")
+
+func _on_load_test_waterdrop_pressed() -> void:
+	_loadTestScene("waterdrop")
+
+func _on_load_test_window_manager_pressed() -> void:
+	_loadTestScene("window_manager")
+
+func _on_back_button_pressed() -> void:
+	_returnToHub()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
