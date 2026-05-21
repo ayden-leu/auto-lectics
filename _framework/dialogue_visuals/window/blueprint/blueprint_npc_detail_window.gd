@@ -69,20 +69,20 @@ func load_entry(entry: BlueprintMenuNpcEntry) -> void:
 	selectedEntry = entry
 	if selectedEntry == null:
 		return
-	
+
 	print("Loading detail entry: ", selectedEntry.npcID)
 	print("Portrait texture: ", selectedEntry.portraitTexture)
-	
+
 	headerText = selectedEntry.displayedName
 	_guessNpcNamePanel.visible = not selectedEntry.unlocked
-	
+
 	if _portraitTextureRect == null:
 		printerr("BlueprintNpcDetailWindow: _portraitTextureRect is null.")
 		return
-	
+
 	_portraitTextureRect.texture = selectedEntry.portraitTexture
 	_portraitTextureRect.visible = selectedEntry.portraitTexture != null
-	
+
 	_loadingNotes = true
 	_notesField.text = selectedEntry.notes
 	_loadingNotes = false
@@ -96,10 +96,10 @@ func _on_npc_entry_name_submission() -> void:
 		return
 	if selectedEntry.unlocked:
 		return
-	
+
 	var submittedName: String = _guessNpcNameField.text.strip_edges()
 	_guessNpcNameField.text = ""
-	
+
 	if submittedName == "":
 		return
 	npc_name_submitted.emit(selectedEntry, submittedName)

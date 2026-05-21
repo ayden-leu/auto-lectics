@@ -58,7 +58,7 @@ func _ready() -> void:
 	z_index = FR_Globals.MENU_Z_INDEX + 1
 	windowType = "blueprint"
 	headerText = "Blueprint"
-	
+
 	_loadEntries()
 	_hideDetails()
 	_updateEntryVisibility()
@@ -76,7 +76,7 @@ func _ready() -> void:
 func _loadEntries() -> void:
 	if not _npcEntries.is_empty():
 		return
-	
+
 	var index:int = 0
 	for entry:BlueprintMenuNpcEntry in _npcEntryHolder.get_children():
 		if not entry.selected.is_connected(_on_npc_entry_selected):
@@ -90,7 +90,7 @@ func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 	if not _idToIndex.has(entryID):
 		printerr("BlueprintMenu:  Could not find entry with ID: [" + entryID + "]")
 		return null
-	
+
 	return _npcEntries[_idToIndex[entryID]]
 
 ## [b]Internal-use only.[/b]  Gets the state and info of each npc from blueprintMenuNpcEntry.
@@ -110,7 +110,7 @@ func apply_state(state: Dictionary) -> void:
 	for entry: BlueprintMenuNpcEntry in _npcEntries:
 		if not state.has(entry.npcID):
 			continue
-		
+
 		var entry_state: Dictionary = state[entry.npcID]
 		entry.notes = str(entry_state.get("notes", ""))
 		entry.nameGuessedCorrectly = bool(entry_state.get("nameGuessedCorrectly", false))
@@ -126,10 +126,10 @@ func apply_state(state: Dictionary) -> void:
 func _showDetails() -> void:
 	if _selectedEntry == null:
 		return
-	
+
 	_detailWindow = FR_WindowManager.createBlueprintNpcDetailWindow()
 	_detailWindow.load_entry(_selectedEntry)
-	
+
 	if not _detailWindow.npc_name_submitted.is_connected(_on_detail_window_name_submitted):
 		_detailWindow.npc_name_submitted.connect(_on_detail_window_name_submitted)
 	if not _detailWindow.notes_changed.is_connected(_on_detail_window_notes_changed):
@@ -164,7 +164,7 @@ func _unlockCorrectGuesses() -> void:
 	for entry:BlueprintMenuNpcEntry in _npcEntries:
 		if entry.nameGuessedCorrectly:
 			correctGuesses.append(entry)
-	
+
 	if correctGuesses.size() >= _numNeededBeforeUnlocking:
 		for entry in correctGuesses:
 			entry.unlock()
@@ -175,11 +175,11 @@ func _check_unlock_conditions() -> void:
 	var check1 = _getEntry("npc_test_1")
 	if not check1:
 		return
-	
+
 	var check2 = _getEntry("npc_test_3")
 	if not check2:
 		return
-	
+
 	if check1.nameGuessedCorrectly and check2.nameGuessedCorrectly:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
@@ -190,7 +190,7 @@ func _check_unlock_conditions() -> void:
 func _updateEntryVisibility() -> void:
 	var start_index = _currentPage * _npcEntriesPerPage
 	var end_index = start_index + _npcEntriesPerPage
-	
+
 	for i in range(_npcEntryHolder.get_child_count()):
 		var child = _npcEntryHolder.get_child(i)
 		child.visible = i >= start_index and i < end_index
@@ -200,7 +200,6 @@ func close() -> void:
 	if _detailWindow != null:
 		_detailWindow.close()
 		_detailWindow = null
-	
 	super()
 
 
@@ -211,18 +210,18 @@ func close() -> void:
 func _on_detail_window_name_submitted(entry: BlueprintMenuNpcEntry, submittedName: String) -> void:
 	_selectedEntry = entry
 	_selectedEntry.displayedName = submittedName
-	
+
 	_determineIfGuessMatchesSelectedEntry(submittedName)
 	_unlockCorrectGuesses()
 	_check_unlock_conditions()
-	
+
 	if _detailWindow != null:
 		_detailWindow.load_entry(_selectedEntry)
 
 ## [b]Internal-use only.[/b] Handles logic for when notes are typed
 func _on_detail_window_notes_changed(entry: BlueprintMenuNpcEntry, notes: String) -> void:
 	entry.notes = notes
-	
+
 	if sfxEventHandler:
 		sfxEventHandler.play("notesFieldTextUpdated")
 

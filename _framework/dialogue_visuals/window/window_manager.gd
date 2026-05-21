@@ -2,6 +2,15 @@
 extends Node
 class_name WindowManager
 
+# NOTE:  how to handle cursor stuff
+# make a cursor handler
+#   this is cause Windows and Menus can affect cursor status,
+#   so to make it less complicated just combine it into
+#   one handler
+# have array for cursor states when doing temp show/hide
+#   kind of like how MenuManager does its stack for menus
+
+
 # feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
@@ -166,16 +175,16 @@ func createBlueprintWindow() -> BlueprintWindow:
 		return blueprintWindow
 	InputHandler.showCursorTemp()
 	Player.disableInput(true)
-	
+
 	blueprintWindow = _BLUEPRINT_WINDOW_SCENE.instantiate()
 	_addWindow(blueprintWindow)
-	
+
 	if not blueprintWindow.window_closed.is_connected(_on_blueprint_window_closed):
 		blueprintWindow.window_closed.connect(_on_blueprint_window_closed)
 	blueprintWindow.global_position = _getRightSidePosition(blueprintWindow.size)
 	if not _blueprintSavedState.is_empty(): # apply the saved state of NPC info
 		blueprintWindow.apply_state(_blueprintSavedState)
-	
+
 	_blueprintWindowSubscribers = _cleanSubscriberList(_blueprintWindowSubscribers)
 	_resubscribeList(_blueprintWindowSubscribers, _connectBlueprintSignalsToSubscriber)
 	return blueprintWindow
@@ -184,15 +193,15 @@ func createBlueprintWindow() -> BlueprintWindow:
 func createBlueprintNpcDetailWindow() -> BlueprintNpcDetailWindow:
 	if blueprintDetailWindow != null:
 		return blueprintDetailWindow
-	
+
 	blueprintDetailWindow = _BLUEPRINT_DETAIL_WINDOW_SCENE.instantiate()
 	blueprintDetailWindow.process_mode = Node.PROCESS_MODE_ALWAYS
 	blueprintDetailWindow.z_index = 3
 	_addWindow(blueprintDetailWindow)
-	
+
 	if not blueprintDetailWindow.window_closed.is_connected(_on_blueprint_detail_window_closed):
 		blueprintDetailWindow.window_closed.connect(_on_blueprint_detail_window_closed)
-	
+
 	blueprintDetailWindow.global_position = _getLeftSidePosition(blueprintDetailWindow.size)
 	return blueprintDetailWindow
 
@@ -329,6 +338,7 @@ func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] 
 	# fallback if all attempts fail
 	return Vector2(margin, margin)
 
+# TODO:  check if needed
 ## [b]Internal-use only.[/b]
 ## Updates the player's cursor/input state based on whether any windows are open.
 func updateCursorStateForWindows() -> void:
@@ -351,7 +361,7 @@ func _addWindow(window:DialogueWindow) -> void:
 	_spawnedWindows.push_back(window)
 	window.window_closed.connect(_on_window_closed)
 	window.window_dropped.connect(_on_window_dropped)
-	
+
 	_setWindowOnScreen(window, window.offscreenThresold)
 
 ## [b]Internal-use only.[/b]
@@ -359,7 +369,7 @@ func _addWindow(window:DialogueWindow) -> void:
 func _addSubscriber(subscriber, subscriberList:Array, connectCallable:Callable) -> void:
 	if subscriber in subscriberList:
 		return
-	
+
 	subscriberList.push_back(subscriber)
 	connectCallable.call(subscriber)
 
@@ -368,7 +378,7 @@ func _addSubscriber(subscriber, subscriberList:Array, connectCallable:Callable) 
 func _removeSubscriber(subscriber, subscriberList:Array, disconnectCallable:Callable) -> void:
 	if not subscriber in subscriberList:
 		return
-	
+
 	var subscriberIndex:int = subscriberList.find(subscriber)
 	subscriberList[subscriberIndex] = null
 	disconnectCallable.call(subscriber)
@@ -381,7 +391,7 @@ func _cleanSubscriberList(subscriberList:Array) -> Array:
 		if subscriber == null:
 			continue
 		newList.push_back(subscriber)
-	
+
 	return newList
 
 ## [b]Internal-use only.[/b]
@@ -398,11 +408,11 @@ func _connectSignalsFromMap(window:Node, subscriber, signalMap:Dictionary) -> vo
 	for methodName in signalMap.keys():
 		if not subscriber.has_method(methodName):
 			continue
-		
+
 		var signalName:String = signalMap[methodName]
 		var callable:Callable = Callable(subscriber, methodName)
 		var signalRef:Signal = Signal(window, signalName)
-		
+
 		if not signalRef.is_connected(callable):
 			signalRef.connect(callable)
 
@@ -414,11 +424,11 @@ func _disconnectSignalsFromMap(window:Node, subscriber, signalMap:Dictionary) ->
 	for methodName in signalMap.keys():
 		if not subscriber.has_method(methodName):
 			continue
-		
+
 		var signalName:String = signalMap[methodName]
 		var callable:Callable = Callable(subscriber, methodName)
 		var signalRef:Signal = Signal(window, signalName)
-		
+
 		if signalRef.is_connected(callable):
 			signalRef.disconnect(callable)
 
@@ -501,7 +511,7 @@ func _on_blueprint_window_closed(window: DialogueWindow) -> void:
 			# save the state of the blueprint window (ie. NPC names and notes)
 			_blueprintSavedState = blueprintWindow.get_state()
 		blueprintWindow = null
-		updateCursorStateForWindows()
+	_on_window_closed(window)
 
 ## [b]Internal-use only.[/b]  Handles logic for when the blueprint NPC Details window is closed.
 func _on_blueprint_detail_window_closed(window: DialogueWindow) -> void:

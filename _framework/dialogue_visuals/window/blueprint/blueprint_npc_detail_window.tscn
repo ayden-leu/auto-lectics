@@ -23,11 +23,11 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7vlcx"]
 
-[node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
+[node name="BlueprintNpcDetailWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 355.0
-offset_bottom = 169.0
+offset_right = 364.0
+offset_bottom = 561.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_stmoi")
 script = ExtResource("2_l88yy")
