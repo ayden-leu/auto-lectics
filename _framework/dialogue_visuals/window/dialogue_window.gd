@@ -187,16 +187,19 @@ func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
 
 ## Closes this window.
 func close() -> void:
-	window_closed.emit(self)
-
 	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
 	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
 		sfxEventHandler.play("close")
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		hide()
 		await sfxPlayer.finished
+	window_closed.emit(self)
 
+## Removes this from the scene.
+## If you want to close this window, run [method close] instead.
+func kill() -> void:
 	queue_free()
+
 
 # ------------------------------------------------
 # functions only referenced inside this script

@@ -134,8 +134,7 @@ func openMenu(menuID:String) -> void:
 	_menuStack.push_back(menuToOpen)
 	menuToOpen.enable()
 	menuIsOpen = true
-	InputHandler.showCursorTemp()
-	Player.disableInput(true)
+	CursorHandler.showCursorTemp(menuToOpen)
 	_sfxEventHandler.play("menuOpen")
 
 ## @deprecated
@@ -195,7 +194,6 @@ func _getMenu(menuIO:String) -> Menu:
 func _resume() -> void:
 	get_tree().paused = false
 	menuIsOpen = false
-	FR_WindowManager.updateCursorStateForWindows()
 	_sfxEventHandler.play("menuClose")
 
 ## @deprecated
@@ -223,6 +221,7 @@ func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
 func _on_menu_close() -> void:
 	var menuToClose:Menu = _menuStack.pop_back()
 	menuToClose.disable()
+	CursorHandler.restoreCursorMode(menuToClose)
 	if _currentMenu != null:
 		_currentMenu.enable()
 		_sfxEventHandler.play("menuClose")

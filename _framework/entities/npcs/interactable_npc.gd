@@ -183,8 +183,6 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 			_currentInteractor.disableInput(true)
 		if _currentInteractor.has_method("freeze"):
 			_currentInteractor.freeze(true)
-	InputHandler.showCursor()
-	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 	FR_WindowManager.createDialogueConsole()
 	FR_WindowManager.subscribeToConsole(self)

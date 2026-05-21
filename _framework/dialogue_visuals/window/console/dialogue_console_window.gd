@@ -149,7 +149,7 @@ var bypassTextWriting:bool = false
 var _optionData:Array = []
 ## [b]Internal-use only.[/b]
 ## The windows that represent each option a player can pick from.
-var _optionWindows:Array = []
+var _optionWindows:Array[DialogueConsoleOptionWindow] = []
 ## [b]Internal-use only.[/b]
 ## Is true when the dialogue text is still being typed.
 var _isWritingText:bool = false
@@ -266,6 +266,7 @@ func close() -> void:
 		await _addRightText(exitRejectMessage)
 		return
 
+	print("Preparing to close DialogueConsole.")
 	FR_MenuManager.enable()
 	_stopHecticMode()
 	_closeAllOptionWindows()
@@ -282,13 +283,14 @@ func close() -> void:
 ## Removes this from the scene.
 ## If you want to close this window, run [method close] instead.
 func kill() -> void:
+	print("Killing DialogueConsole")
 	_stopHecticMode()
 	_closeAllOptionWindows()
-	_dialogueHistory.clear()
-	dialogueNodeBackBlacklist.clear()
-	dialogueNodeBackRejectMessages.clear()
-	allowLoad = true
-	queue_free()
+	#_dialogueHistory.clear()
+	#dialogueNodeBackBlacklist.clear()
+	#dialogueNodeBackRejectMessages.clear()
+	#allowLoad = true
+	super()
 
 ## Loads the data of all posible options for this dialogue object.
 ## Also sorts the options from shortest to longest spawn delay.

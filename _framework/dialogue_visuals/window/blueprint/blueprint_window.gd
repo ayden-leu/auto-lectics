@@ -184,7 +184,6 @@ func _check_unlock_conditions() -> void:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
 
-
 ## Updates the visibility of each NPC entry based on if they fit the page or not.
 ## Might be updated in the future.
 func _updateEntryVisibility() -> void:
@@ -195,13 +194,17 @@ func _updateEntryVisibility() -> void:
 		var child = _npcEntryHolder.get_child(i)
 		child.visible = i >= start_index and i < end_index
 
-
 func close() -> void:
 	if _detailWindow != null:
 		_detailWindow.close()
 		_detailWindow = null
 	super()
 
+## Removes this from the scene.
+## If you want to close this window, run [method close] instead.
+func kill() -> void:
+	print("Killing BlueprintWindow")
+	queue_free()
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

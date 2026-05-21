@@ -34,7 +34,7 @@ extends Control
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	InputHandler.showCursor()
+	CursorHandler.showCursor()
 
 # ------------------------------------------------
 # functions referenced outside of this script

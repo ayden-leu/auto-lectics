@@ -2,15 +2,6 @@
 extends Node
 class_name WindowManager
 
-# NOTE:  how to handle cursor stuff
-# make a cursor handler
-#   this is cause Windows and Menus can affect cursor status,
-#   so to make it less complicated just combine it into
-#   one handler
-# have array for cursor states when doing temp show/hide
-#   kind of like how MenuManager does its stack for menus
-
-
 # feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
@@ -79,7 +70,7 @@ var dialogueConsole:DialogueConsole = null
 var blueprintWindow:BlueprintWindow = null
 ## A public reference to the [BlueprintNpcDetailsWindow].
 ## Useful if you want to listen to signals from it.
-var blueprintDetailWindow: BlueprintNpcDetailWindow = null
+var blueprintDetailWindow:BlueprintNpcDetailWindow = null
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -128,10 +119,13 @@ func createDialogueConsole() -> DialogueConsole:
 
 	dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
 	_addWindow(dialogueConsole)
+	dialogueConsole.window_closed.connect(_on_dialogue_console_closed)
+	CursorHandler.showCursorTemp(dialogueConsole)
 
 	if dialogueConsoleLastPosition != Vector2.ZERO:
 		dialogueConsole.position = dialogueConsoleLastPosition
-	dialogueConsole.global_position = _getCenter(dialogueConsole.size)
+	else:
+		dialogueConsole.global_position = _getCenter(dialogueConsole.size)
 
 	_dialogueConsoleSubscribers = _cleanSubscriberList(_dialogueConsoleSubscribers)
 	_resubscribeList(_dialogueConsoleSubscribers, _connectConsoleSignalsToSubscriber)
@@ -142,6 +136,7 @@ func createDialogueConsole() -> DialogueConsole:
 func killDialogueConsole() -> void:
 	if dialogueConsole != null:
 		dialogueConsoleLastPosition = dialogueConsole.position
+		CursorHandler.restoreCursorMode(dialogueConsole)
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
 		dialogueConsole = null
@@ -168,19 +163,17 @@ func closeAllWarningTileWindows() -> void:
 	for windowToDelete in tempStorage:
 		windowToDelete.close()
 
-
 ## [b]Internal-use only.[/b] Creates a blueprint window
 func createBlueprintWindow() -> BlueprintWindow:
 	if blueprintWindow != null:
 		return blueprintWindow
-	InputHandler.showCursorTemp()
-	Player.disableInput(true)
 
 	blueprintWindow = _BLUEPRINT_WINDOW_SCENE.instantiate()
 	_addWindow(blueprintWindow)
+	CursorHandler.showCursorTemp(blueprintWindow)
+	Player.disableInput(true)
 
-	if not blueprintWindow.window_closed.is_connected(_on_blueprint_window_closed):
-		blueprintWindow.window_closed.connect(_on_blueprint_window_closed)
+	blueprintWindow.window_closed.connect(_on_blueprint_window_closed)
 	blueprintWindow.global_position = _getRightSidePosition(blueprintWindow.size)
 	if not _blueprintSavedState.is_empty(): # apply the saved state of NPC info
 		blueprintWindow.apply_state(_blueprintSavedState)
@@ -195,8 +188,6 @@ func createBlueprintNpcDetailWindow() -> BlueprintNpcDetailWindow:
 		return blueprintDetailWindow
 
 	blueprintDetailWindow = _BLUEPRINT_DETAIL_WINDOW_SCENE.instantiate()
-	blueprintDetailWindow.process_mode = Node.PROCESS_MODE_ALWAYS
-	blueprintDetailWindow.z_index = 3
 	_addWindow(blueprintDetailWindow)
 
 	if not blueprintDetailWindow.window_closed.is_connected(_on_blueprint_detail_window_closed):
@@ -206,14 +197,23 @@ func createBlueprintNpcDetailWindow() -> BlueprintNpcDetailWindow:
 	return blueprintDetailWindow
 
 ## Closes the blueprint window
-func closeBlueprintWindow() -> void:
+func killBlueprintWindow() -> void:
 	if blueprintWindow != null:
-		blueprintWindow.close()
+		#dialogueConsoleLastPosition = dialogueConsole.position
+		CursorHandler.restoreCursorMode(blueprintWindow)
+		Player.disableInput(false)
+		_blueprintSavedState = blueprintWindow.get_state()
+		blueprintWindow.kill()
+		_on_window_closed(blueprintWindow)
+		blueprintWindow = null
 
 ## Closes the blueprint NPC detail window
-func closeBlueprintNpcDetailWindow() -> void:
+func killBlueprintNpcDetailWindow() -> void:
 	if blueprintDetailWindow != null:
-		blueprintDetailWindow.close()
+		#dialogueConsoleLastPosition = dialogueConsole.position
+		blueprintDetailWindow.kill()
+		_on_window_closed(blueprintDetailWindow)
+		blueprintDetailWindow = null
 
 ## Connects signals from the [DialogueConsole] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list so the signals can be reconnected
@@ -337,18 +337,6 @@ func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] 
 
 	# fallback if all attempts fail
 	return Vector2(margin, margin)
-
-# TODO:  check if needed
-## [b]Internal-use only.[/b]
-## Updates the player's cursor/input state based on whether any windows are open.
-func updateCursorStateForWindows() -> void:
-	print(_spawnedWindows.size())
-	if _spawnedWindows.size() > 0:
-		InputHandler.showCursorTemp()
-		Player.disableInput(true)
-	else:
-		InputHandler.restoreCursorMode()
-		Player.disableInput(false)
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -494,7 +482,8 @@ func _getRightSidePosition(windowSize: Vector2, margin: float = 180.0) -> Vector
 func _on_window_closed(closedWindow:DialogueWindow) -> void:
 	if closedWindow in _spawnedWindows:
 		_spawnedWindows.erase(closedWindow)
-	updateCursorStateForWindows()
+	if closedWindow.windowType not in ["console", "blueprint", "blueprint_detail"]:
+		closedWindow.kill()
 
 ## [b]Internal-use only.[/b]
 func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
@@ -504,19 +493,16 @@ func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 			_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 			break
 
+func _on_dialogue_console_closed(_window:DialogueWindow) -> void:
+	killDialogueConsole()
+
 ## [b]Internal-use only.[/b]  Handles logic for when the blueprint window is closed.
-func _on_blueprint_window_closed(window: DialogueWindow) -> void:
-	if window == blueprintWindow:
-		if blueprintWindow != null:
-			# save the state of the blueprint window (ie. NPC names and notes)
-			_blueprintSavedState = blueprintWindow.get_state()
-		blueprintWindow = null
-	_on_window_closed(window)
+func _on_blueprint_window_closed(_window:DialogueWindow) -> void:
+	killBlueprintWindow()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the blueprint NPC Details window is closed.
-func _on_blueprint_detail_window_closed(window: DialogueWindow) -> void:
-	if window == blueprintDetailWindow:
-		blueprintDetailWindow = null
+func _on_blueprint_detail_window_closed(window:DialogueWindow) -> void:
+	killBlueprintNpcDetailWindow()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

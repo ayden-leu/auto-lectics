@@ -54,8 +54,6 @@ static var _interactionEnabledGlobal:bool = true
 static var _jumpEnabledGlobal:bool = true
 ## Whether the respawn input should be processed.  Affects all [InputHandler]s.
 static var _respawnEnabledGlobal:bool = true
-## The mouse mode before [method showCursorTemp] or [method hideCursorTemp] was ran.
-static var _savedMouseMode:Input.MouseMode = Input.MOUSE_MODE_MAX
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -100,39 +98,6 @@ func _input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Shows the cursor.  Helpful if you want the player to interact with menus.
-static func showCursor() -> void:
-	print("show cursor")
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-## Like [method showCursor], but saves the current mouse mode to [member _savedMouseMode].
-static func showCursorTemp() -> void:
-	if _savedMouseMode == Input.MOUSE_MODE_MAX:
-		print("show cursor temp")
-		_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-## Hides the cursor.  Helpful if you want the player to move the camera around.
-static func hideCursor() -> void:
-	print("hide cursor")
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-## Like [method hideCursor], but saves the current mouse mode to [member _savedMouseMode].
-static func hideCursorTemp() -> void:
-	if _savedMouseMode == Input.MOUSE_MODE_MAX:
-		print("hide cursor temp")
-		_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-## Sets the current mouse mode to [member _savedMouseMode].
-static func restoreCursorMode() -> void:
-	print("restore cursor")
-	if _savedMouseMode == Input.MOUSE_MODE_MAX:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	else:
-		Input.set_mouse_mode(_savedMouseMode)
-	_savedMouseMode = Input.MOUSE_MODE_MAX
-
 ## Lets movement inputs be processed.
 static func enableMovementInputGlobal() -> void:
 	_movementInputEnabledGlobal = true
