@@ -88,8 +88,8 @@ func _ready() -> void:
 	_createMenu(_PAUSE_MENU)
 	_createMenu(_OPTIONS_MENU)
 	_createMenu(_KEYBINDS_MENU)
-	_createMenu(_BLUEPRINT_MENU)
-	blueprintMenu = _menus.back()
+	#_createMenu(_BLUEPRINT_MENU)
+	#blueprintMenu = _menus.back()
 
 func _process(_delta:float) -> void:
 	if not enabled:
@@ -138,6 +138,7 @@ func openMenu(menuID:String) -> void:
 	Player.disableInput(true)
 	_sfxEventHandler.play("menuOpen")
 
+## @deprecated
 ## Connects signals from the [BlueprintMenu] to specific functions the subscriber
 ## can define.  Also adds the subscriber to a list for internal tracking.
 ## [br][br]
@@ -155,12 +156,15 @@ func openMenu(menuID:String) -> void:
 ## 	# conditionID is the ID of the unlock condition.
 ## [/codeblock]
 func subscribeToBlueprintMenu(subscriber) -> void:
+	return
 	_blueprintMenuSubscribers.push_back(subscriber)
 	_connectBlueprintSignalsToSubscriber(subscriber)
 
+## @deprecated
 ## Unsubscribes a node from the [DialogueConsole], meaning it won't run any
 ## functions when the [DialogueConsole] emits signals.
 func unsubscribeToBlueprintMenu(subscriber) -> void:
+	return
 	if not subscriber in _blueprintMenuSubscribers:
 		return
 #
@@ -194,6 +198,7 @@ func _resume() -> void:
 	FR_WindowManager.updateCursorStateForWindows()
 	_sfxEventHandler.play("menuClose")
 
+## @deprecated
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ## functions defined by the subscriber.
 func _connectBlueprintSignalsToSubscriber(subscriber) -> void:
@@ -201,7 +206,8 @@ func _connectBlueprintSignalsToSubscriber(subscriber) -> void:
 		blueprintMenu.npc_name_guessed_correctly.connect(subscriber._on_blueprint_npc_name_guessed_correctly)
 	if subscriber.has_method("_on_blueprint_unlock_condition_met"):
 		blueprintMenu.unlock_condition_met.connect(subscriber._on_blueprint_unlock_condition_met)
-#
+
+## @deprecated
 ### [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
 ### functions defined by the subscriber.
 func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
