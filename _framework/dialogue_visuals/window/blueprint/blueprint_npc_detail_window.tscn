@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://524kk63lga7"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_stmoi"]
-[ext_resource type="Script" uid="uid://c6ucujnx4pb32" path="res://_framework/ui/menus/blueprint/blueprint_npc_detail_window.gd" id="2_l88yy"]
+[ext_resource type="Script" uid="uid://c6ucujnx4pb32" path="res://_framework/dialogue_visuals/window/blueprint/blueprint_npc_detail_window.gd" id="2_l88yy"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_h8c35"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_re5ia"]
 

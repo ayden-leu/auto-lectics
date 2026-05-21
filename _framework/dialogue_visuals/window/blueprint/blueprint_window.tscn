@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://ovwd5xcohsao"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_agwdo"]
-[ext_resource type="Script" uid="uid://c6c85mv86y6ev" path="res://_framework/ui/menus/blueprint/blueprint_window.gd" id="2_sny2w"]
+[ext_resource type="Script" uid="uid://c6c85mv86y6ev" path="res://_framework/dialogue_visuals/window/blueprint/blueprint_window.gd" id="2_sny2w"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_gfkyj"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="4_lhe8o"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_wp7vy"]
