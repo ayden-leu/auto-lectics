@@ -134,8 +134,9 @@ func openMenu(menuID:String) -> void:
 	_menuStack.push_back(menuToOpen)
 	menuToOpen.enable()
 	menuIsOpen = true
-	CursorHandler.showCursorTemp(menuToOpen)
 	_sfxEventHandler.play("menuOpen")
+	CursorHandler.show(menuToOpen)
+	Player.disableInput(self)
 
 ## @deprecated
 ## Connects signals from the [BlueprintMenu] to specific functions the subscriber
@@ -195,6 +196,8 @@ func _resume() -> void:
 	get_tree().paused = false
 	menuIsOpen = false
 	_sfxEventHandler.play("menuClose")
+	Player.enableInput(self)
+	CursorHandler.restoreDefault()
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Connects the [DialogueConsole] signals to
@@ -221,7 +224,7 @@ func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
 func _on_menu_close() -> void:
 	var menuToClose:Menu = _menuStack.pop_back()
 	menuToClose.disable()
-	CursorHandler.restoreCursorMode(menuToClose)
+	CursorHandler.hide(menuToClose)
 	if _currentMenu != null:
 		_currentMenu.enable()
 		_sfxEventHandler.play("menuClose")

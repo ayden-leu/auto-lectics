@@ -90,7 +90,7 @@ var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
 var _blueprintWindowSubscribers:Array = []
 ## [b]Internal-use only.[/b]
 ## Stores blueprint data between closing and reopening the [BlueprintWindow].
-var _blueprintSavedState: Dictionary = {}
+var _blueprintSavedState:Dictionary = {}
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -102,7 +102,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("open_blueprint"):
-		FR_WindowManager.createBlueprintWindow()
+		createBlueprintWindow()
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -120,7 +121,7 @@ func createDialogueConsole() -> DialogueConsole:
 	dialogueConsole = _DIALOGUE_CONSOLE_SCENE.instantiate()
 	_addWindow(dialogueConsole)
 	dialogueConsole.window_closed.connect(_on_dialogue_console_closed)
-	CursorHandler.showCursorTemp(dialogueConsole)
+	Player.freeze(dialogueConsole)
 
 	if dialogueConsoleLastPosition != Vector2.ZERO:
 		dialogueConsole.position = dialogueConsoleLastPosition
@@ -136,7 +137,7 @@ func createDialogueConsole() -> DialogueConsole:
 func killDialogueConsole() -> void:
 	if dialogueConsole != null:
 		dialogueConsoleLastPosition = dialogueConsole.position
-		CursorHandler.restoreCursorMode(dialogueConsole)
+		Player.unfreeze(dialogueConsole)
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
 		dialogueConsole = null
@@ -170,8 +171,6 @@ func createBlueprintWindow() -> BlueprintWindow:
 
 	blueprintWindow = _BLUEPRINT_WINDOW_SCENE.instantiate()
 	_addWindow(blueprintWindow)
-	CursorHandler.showCursorTemp(blueprintWindow)
-	Player.disableInput(true)
 
 	blueprintWindow.window_closed.connect(_on_blueprint_window_closed)
 	blueprintWindow.global_position = _getRightSidePosition(blueprintWindow.size)
@@ -200,8 +199,6 @@ func createBlueprintNpcDetailWindow() -> BlueprintNpcDetailWindow:
 func killBlueprintWindow() -> void:
 	if blueprintWindow != null:
 		#dialogueConsoleLastPosition = dialogueConsole.position
-		CursorHandler.restoreCursorMode(blueprintWindow)
-		Player.disableInput(false)
 		_blueprintSavedState = blueprintWindow.get_state()
 		blueprintWindow.kill()
 		_on_window_closed(blueprintWindow)
@@ -349,8 +346,9 @@ func _addWindow(window:DialogueWindow) -> void:
 	_spawnedWindows.push_back(window)
 	window.window_closed.connect(_on_window_closed)
 	window.window_dropped.connect(_on_window_dropped)
-
 	_setWindowOnScreen(window, window.offscreenThresold)
+	Player.disableInput(self)
+	CursorHandler.show(self)
 
 ## [b]Internal-use only.[/b]
 ## Adds a node to a subscriber list and connects it to the relevant window.
@@ -482,6 +480,10 @@ func _getRightSidePosition(windowSize: Vector2, margin: float = 180.0) -> Vector
 func _on_window_closed(closedWindow:DialogueWindow) -> void:
 	if closedWindow in _spawnedWindows:
 		_spawnedWindows.erase(closedWindow)
+		if _spawnedWindows.size() == 0:
+			Player.enableInput(self)
+			CursorHandler.hide(self)
+
 	if closedWindow.windowType not in ["console", "blueprint", "blueprint_detail"]:
 		closedWindow.kill()
 
@@ -501,7 +503,7 @@ func _on_blueprint_window_closed(_window:DialogueWindow) -> void:
 	killBlueprintWindow()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the blueprint NPC Details window is closed.
-func _on_blueprint_detail_window_closed(window:DialogueWindow) -> void:
+func _on_blueprint_detail_window_closed(_window:DialogueWindow) -> void:
 	killBlueprintNpcDetailWindow()
 
 # ------------------------------------------------

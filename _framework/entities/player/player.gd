@@ -121,6 +121,10 @@ var interactableThing:Node3D = null:
 		else:
 			looking_at_interactable.emit()
 			canGrapple = false
+## Track if player's is stuck in place.
+static var frozen:bool = false
+## If the player's inputs are disabled.
+static var inputEnabled:bool = true
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -146,12 +150,14 @@ var _timeSinceApex: float = 0.0
 var _apexHangActive: bool = false
 ## [b]Internal-use only.[/b]  Save last location where character is grounded.
 var _lastValidPosition: Vector3
-## Track if player's is stuck in place.
-static var _frozen:bool = false
-## If the player's inputs are disabled.
-static var _inputDisabled: bool = false
 ## If the player is currently respawning or not.
 var _respawning:bool = false
+## [b]Internal-use only.[/b]
+## to write
+static var _nodesFreezingMe:Dictionary[Node, Node] = {}
+## [b]Internal-use only.[/b]
+## to write
+static var _nodesDisablingInput:Dictionary[Node, Node] = {}
 
 # ------------------------------------------------
 ## Grapple hook variables
@@ -192,7 +198,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	if _frozen:
+	if frozen:
 		velocity = Vector3.ZERO
 		return
 	_applyVerticalPhysics(delta)
@@ -337,13 +343,86 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	velocity.x = current_h.x
 	velocity.z = current_h.z
 
-## Disable processing of player inputs for this player character.
-static func disableInput(value: bool) -> void:
-	_inputDisabled = value
+## to write
+static func disableInput(disabler:Node) -> void:
+	if not inputEnabled:
+		print("Player:  Input already disabled.")
+		return
 
-## Freeze player in place.
-static func freeze(value:bool) -> void:
-	_frozen = value
+	if disabler in _nodesDisablingInput:
+		print("Player:  Disabler [", disabler.name, "] already disabled input from player.")
+		return
+
+	print("Player:  Incrementing input disabler counter.")
+	_nodesDisablingInput[disabler] = null
+	print("Player:  Disabling inputs from player due to [", disabler.name, "].")
+	inputEnabled = false
+
+## to write
+static func enableInput(enabler:Node) -> void:
+	if inputEnabled:
+		print("Player:  Input already enabled.")
+		return
+
+	if not enabler in _nodesDisablingInput:
+		printerr("Player:  Enabler [", enabler.name, "] didn't disable input from player.")
+		return
+
+	print("Player:  Decrementing input disabler counter.")
+	_nodesDisablingInput.erase(enabler)
+	if _nodesDisablingInput.is_empty():
+		print("Player:  Enabling inputs from player due to [", enabler.name, "].")
+		inputEnabled = true
+
+## to write
+static func enableInputForce() -> void:
+	if inputEnabled:
+		print("Player:  Input already enabled; don't have to force it.")
+		return
+
+	print("Player:  Forcing inputs from player to be enabled.")
+	inputEnabled = true
+	_nodesDisablingInput.clear()
+
+## to write
+static func freeze(freezer:Node) -> void:
+	if frozen:
+		print("Player:  Player already frozen.")
+		return
+
+	if freezer in _nodesFreezingMe:
+		print("Player:  Freezer [", freezer.name, "] already froze the player.")
+		return
+
+	print("Player:  Incrementing nodes freezing counter.")
+	_nodesFreezingMe[freezer] = null
+	print("Player:  Freezing the Player due to [", freezer.name, "].")
+	frozen = true
+
+## to write
+static func unfreeze(unfreezer:Node) -> void:
+	if not frozen:
+		print("Player:  Player already unfrozen.")
+		return
+
+	if not unfreezer in _nodesFreezingMe:
+		printerr("Player:  Unfreezer [", unfreezer.name, "] didn't freeze the Player.")
+		return
+
+	print("Player:  Decrementing nodes freezing counter.")
+	_nodesFreezingMe.erase(unfreezer)
+	if _nodesFreezingMe.is_empty():
+		print("Player:  Unfreezing Player due to [", unfreezer.name, "].")
+		frozen = false
+
+## to write
+static func unfreezeForce() -> void:
+	if not frozen:
+		print("Player:  Player already unfrozen; don't need to force it.")
+		return
+	print("Player:  Forcibly unfreezing Player.")
+	frozen = false
+	_nodesFreezingMe.clear()
 
 ## [b]Internal-use only.[/b]  Determines if a passed in node is a valid interactable.
 func _determineIfValidInteractable(interactable:Node3D) -> bool:
@@ -364,7 +443,7 @@ func _applyImpulseTowardPoint(point:Vector3, strength:float) -> void:
 func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
-	if _inputDisabled:
+	if not inputEnabled:
 		return
 	# horizontal rotation
 	rotation_degrees.y += -distanceMoved.x * mouseSentitivity
@@ -379,7 +458,7 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when the player wants to interact
 ## with something.
 func _on_interact_pressed() -> void:
-	if _inputDisabled:
+	if not inputEnabled:
 		return
 
 	#print(name + ": interact pressed")
@@ -388,7 +467,7 @@ func _on_interact_pressed() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when the player tries to jump.
 func _on_jump_pressed() -> void:
-	if _inputDisabled:
+	if not inputEnabled:
 		return
 
 	#if isGrappling:
@@ -399,7 +478,7 @@ func _on_jump_pressed() -> void:
 
 ## [b]Internal-use only.[/b] Handles logic for when palyer attempts to grapple hook
 func _on_grapple_pressed() -> void:
-	if _inputDisabled:
+	if not inputEnabled:
 		return
 
 	if isGrappling:
@@ -410,7 +489,7 @@ func _on_grapple_pressed() -> void:
 ## [b]Internal-use only.[/b]  Handles logic for when the player inputs a new
 ## move direction.
 func _on_updated_input_direction(newDirection:Vector2) -> void:
-	if _inputDisabled:
+	if not inputEnabled:
 		newDirection = Vector2.ZERO
 
 	var direction := (transform.basis * Vector3(newDirection.x, 0, newDirection.y)).normalized()
@@ -419,8 +498,8 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 
 ## [b]Internal-use only.[/b]
 ## The location to move the player to upon forcing the respawn.
-func _on_input_handler_respawn() -> void:	
-	if _inputDisabled:
+func _on_input_handler_respawn() -> void:
+	if not inputEnabled:
 		return
 	grapplingHook.reset()
 	respawnCheckpoint()

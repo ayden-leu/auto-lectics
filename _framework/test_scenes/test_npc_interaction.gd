@@ -36,6 +36,7 @@ extends Node3D
 
 func _ready() -> void:
 	FR_MenuManager.enable()
+	CursorHandler.setDefault("hidden")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_2"):

@@ -32,14 +32,14 @@ class_name CursorHandler
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
-## The mouse mode before [method showCursorTemp] or [method hideCursorTemp] was ran.
-static var _baseMouseMode:Input.MouseMode = Input.MOUSE_MODE_MAX
+## to write
+static var _defaultCursorMode:Input.MouseMode
 ## [b]Internal-use only.[/b]
-##
-static var _prevMouseModeStack:Array[Input.MouseMode] = []
+## to write
+static var _nodesHidingCursor:Dictionary[Node, Node] = {}
 ## [b]Internal-use only.[/b]
-##
-static var _nodeToStackIndex:Array[Node] = []
+## to write
+static var _nodesShowingCursor:Dictionary[Node, Node] = {}
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -49,57 +49,102 @@ static var _nodeToStackIndex:Array[Node] = []
 # functions referenced outside of this script
 # ------------------------------------------------
 ## to write
-static func showCursor() -> void:
-	print("Cursor forced to be visible.")
-	_baseMouseMode = Input.MOUSE_MODE_VISIBLE
+static func show(shower:Node) -> void:
+	match Input.mouse_mode:
+		Input.MOUSE_MODE_CAPTURED:
+			if not shower in _nodesHidingCursor and not _nodesHidingCursor.is_empty():
+				print("CursorHandler/show():  Shower [", shower.name, "] didn't hide the cursor.")
+				return
 
-	if _prevMouseModeStack.is_empty():
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			print("CursorHandler/show():  Decrementing hide cursor counter.")
+			print("CursorHandler/show():  ", _nodesHidingCursor.size(), ": ", _nodesHidingCursor)
+			_nodesHidingCursor.erase(shower)
+			if _nodesHidingCursor.is_empty():
+				print("CursorHandler/show():  Showing cursor due to [", shower.name, "].")
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+				_nodesShowingCursor[shower] = null
+				print("CursorHandler/show():  ", _nodesShowingCursor.size(), ": ", _nodesShowingCursor)
 
-## to write
-static func hideCursor() -> void:
-	print("Cursor forced to be captured.")
-	_baseMouseMode = Input.MOUSE_MODE_CAPTURED
-
-	if _prevMouseModeStack.is_empty():
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-## to write
-static func showCursorTemp(caller:Node) -> void:
-	print("Cursor temporarily shown.")
-	_nodeToStackIndex.push_back(caller)
-	_prevMouseModeStack.push_back(Input.mouse_mode)
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-	print(_nodeToStackIndex)
-	print(_prevMouseModeStack)
+		Input.MOUSE_MODE_VISIBLE:
+			print("CursorHandler/show():  Incrementing show cursor counter.")
+			_nodesShowingCursor[shower] = null
+			print("CursorHandler/show():  ", _nodesShowingCursor.size(), ": ", _nodesShowingCursor)
+		_:
+			printerr("CursorHandler/show():  Unhandled mouse mode.")
 
 ## to write
-static func hideCursorTemp(caller:Node) -> void:
-	print("Cursor temporarily hidden.")
-	_nodeToStackIndex.push_back(caller)
-	_prevMouseModeStack.push_back(Input.mouse_mode)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+static func hide(hider:Node) -> void:
+	match Input.mouse_mode:
+		Input.MOUSE_MODE_CAPTURED:
+			print("CursorHandler/hide():  Incrementing hide cursor counter.")
+			_nodesHidingCursor[hider] = null
+			print("CursorHandler/hide():  ", _nodesHidingCursor.size(), ": ", _nodesHidingCursor)
+		Input.MOUSE_MODE_VISIBLE:
+			if not hider in _nodesShowingCursor and not _nodesShowingCursor.is_empty():
+				print("CursorHandler/hide():  Hider [", hider.name, "] didn't show cursor.")
+				return
+
+			print("CursorHandler/hide():  Decrementing show cursor counter.")
+			_nodesShowingCursor.erase(hider)
+			print("CursorHandler/hide():  ", _nodesShowingCursor.size(), ": ", _nodesShowingCursor)
+			if _nodesShowingCursor.is_empty():
+				print("CursorHandler/hide():  Hiding cursor due to [", hider.name, "]")
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				_nodesHidingCursor[hider] = null
+				print("CursorHandler/hide():  ", _nodesHidingCursor.size(), ": ", _nodesHidingCursor)
+
+		_:
+			printerr("CursorHandler/hide():  Unhandled mouse mode.")
 
 ## to write
-static func _removeFromStack(toRemove:Node) -> void:
-	var index:int = _nodeToStackIndex.find(toRemove)
-	_prevMouseModeStack.remove_at(index)
-	_nodeToStackIndex.remove_at(index)
-	_nodeToStackIndex.erase(toRemove)
+static func showForce(shower:Node) -> void:
+	match Input.mouse_mode:
+		Input.MOUSE_MODE_CAPTURED:
+			print("CursorHandler/showForce():  Forcing cursor to be shown due to [", shower.name, "].")
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			_nodesHidingCursor.clear()
+			_nodesShowingCursor[shower] = null
+			print("CursorHandler/showForce():  ", _nodesShowingCursor.size(), ": ", _nodesShowingCursor)
+
+		Input.MOUSE_MODE_VISIBLE:
+			print("CursorHandler/showForce():  Cursor already shown; no need to force it.")
+
+		_:
+			printerr("CursorHandler/showForce():  Unhandled mouse mode.")
 
 ## to write
-static func restoreCursorMode(caller:Node) -> void:
-	print(_nodeToStackIndex)
-	print(_prevMouseModeStack)
+static func hideForce(hider:Node) -> void:
+	match Input.mouse_mode:
+		Input.MOUSE_MODE_CAPTURED:
+			print("CursorHandler/hideForce():  Cursor already hidden.")
 
-	if _nodeToStackIndex.find(caller) == _prevMouseModeStack.size()-1 \
-		and not _nodeToStackIndex.is_empty() and not _prevMouseModeStack.is_empty():
-		_nodeToStackIndex.erase(caller)
-		Input.set_mouse_mode(_prevMouseModeStack.pop_back())
-		print("Previous cursor state restored.")
-	else:
-		_removeFromStack(caller)
+		Input.MOUSE_MODE_VISIBLE:
+			print("CursorHandler/hideForce():  Forcing cursor to be hidden due to [", hider.name, "].")
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			_nodesShowingCursor.clear()
+			_nodesHidingCursor[hider] = null
+			print("CursorHandler/hideForce():  ", _nodesHidingCursor.size(), ": ", _nodesHidingCursor)
+
+		_:
+			printerr("CursorHandler/hideForce():  Unhandled mouse mode.")
+
+## to write
+## choices:  [code]"shown"[/code], [code]"hidden"[/code].
+static func setDefault(mode:String) -> void:
+	match mode:
+		"shown":
+			print("CursorHandler/setDefault():  Default cursor mode is now [shown/visible].")
+			_defaultCursorMode = Input.MOUSE_MODE_VISIBLE
+		"hidden":
+			print("CursorHandler/setDefault():  Default cursor mode is now [hidden/captured].")
+			_defaultCursorMode = Input.MOUSE_MODE_CAPTURED
+
+## to write
+static func restoreDefault() -> void:
+	print("CursorHandler/restoreDefault():  Restoring default cursor mode: ", _defaultCursorMode)
+	_nodesShowingCursor.clear()
+	_nodesHidingCursor.clear()
+	Input.mouse_mode = _defaultCursorMode
 
 # ------------------------------------------------
 # functions only referenced inside this script

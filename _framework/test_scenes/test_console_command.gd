@@ -59,7 +59,7 @@ func _on_console_command_entered(command:String) -> void:
 	elif command == "spin_reset":
 		barAnimPlayer.play("RESET")
 	elif command == "unfreeze":
-		Player.disableInput(false)
+		Player.unfreezeForce()
 	elif command == "jump":
 		player.jump()
 

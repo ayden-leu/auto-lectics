@@ -35,9 +35,9 @@ extends Node3D
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_1"):
-		Player.disableInput(true)
+		Player.disableInput(self)
 	elif event.is_action_pressed("debug_2"):
-		Player.disableInput(false)
+		Player.enableInput(self)
 
 # ------------------------------------------------
 # functions referenced outside of this script
