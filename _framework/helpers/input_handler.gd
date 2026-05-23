@@ -146,7 +146,3 @@ static func disableRespawnInputGlobal() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
-
-
-func _on_interact_button_pressed() -> void:
-	pass # Replace with function body.

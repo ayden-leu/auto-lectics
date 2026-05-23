@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://nrwq44bva56"]
 
-[ext_resource type="Script" uid="uid://cqmikj0ydwb6f" path="res://dialogue_trees/vocal/vocalDIaloguePlayer.gd" id="1_jitb6"]
+[ext_resource type="Script" uid="uid://cqmikj0ydwb6f" path="res://_framework/helpers/vocal_dialogue_player.gd" id="1_jitb6"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="2_o8xeo"]
 
 [node name="VocalDialoguePlayer" type="AudioStreamPlayer"]
