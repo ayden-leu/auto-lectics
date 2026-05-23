@@ -37,6 +37,7 @@ const DEFAULT_DIALOGUE:Dictionary = {
 	"type": "neutral",  # see DIALOGUE_TYPES
 	"mode": "normal",
 	"nextOnHecticFailureID": "",
+	"hecticDuration": 25.0,
 	"textThemePreset": "_defaultConsoleBot",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 0.0,
@@ -62,11 +63,14 @@ const DEFAULT_OPTION:Dictionary = {
 	"checkFlags": {},
 	"setFlags": {},
 
+	"allowBack": true,
+	"rejectBackMessage": "[ERROR: Cannot go back to previous dialogue ID]",
+
 	"sfx": {
 		"spawn": "none",
 		"text": "none"
 	},
 
 	"spawnDelay": 0.0,
-	"lifetime": -0.1,
+	"lifetime": 0.0,
 }

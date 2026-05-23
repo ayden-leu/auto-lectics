@@ -12,10 +12,12 @@ size = Vector3(1.1191406, 1.744751, 1.6303711)
 script = ExtResource("1_e6fvg")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
+dialogueTreeID = "miniBoss2"
 initialDialogueID = "start"
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
-myName = "miniBoss2"
+internalID = "miniBoss2"
+displayName = "miniBoss2"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

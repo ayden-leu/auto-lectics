@@ -33,15 +33,15 @@ extends Node3D
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-
 func _ready() -> void:
 	FR_MenuManager.enable()
+	FR_WindowManager.enable()
+	CursorHandler.setDefault("hidden")
+	CursorHandler.hideNuclear()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("debug_1"):
-		%Player.position = %RespawnPosition.position
-	elif event.is_action_pressed("debug_2"):
-		loopManager.performReset()
+	if event.is_action_pressed("debug_2"):
+		loopManager._on_loop_timer_timeout()
 
 # ------------------------------------------------
 # functions referenced outside of this script

@@ -1,0 +1,24 @@
+{
+	"text": "FIRST CLOOOOOO IS SOMETHING GREEN",
+	"mode": "hectic",
+	"type": "happy",
+	"nextOnHecticFailureID": "fail_timeout",
+	"hecticDuration": 2.0,
+	"options": [
+		{
+			"text": "WEED",
+			"type": "negative",
+			"nextID": "fail_answered"
+		},
+		{
+			"text": "MONEY",
+			"type": "positive",
+			"nextID": "correct"
+		},
+		{
+			"text": "i love you",
+			"type": "positive",
+			"nextID": "confusion"
+		}
+	]
+}

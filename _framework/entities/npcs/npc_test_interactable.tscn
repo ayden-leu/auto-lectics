@@ -14,10 +14,12 @@ size = Vector3(1.1191406, 1.1877441, 1.2324219)
 script = ExtResource("1_qa3od")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
-initialDialogueID = "1"
+dialogueTreeID = "ReplaceMe"
+initialDialogueID = "ReplaceMe"
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
-myName = "ReplaceMe"
+internalID = "_test_npc_interactable"
+displayName = "NPC Test Interactable"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

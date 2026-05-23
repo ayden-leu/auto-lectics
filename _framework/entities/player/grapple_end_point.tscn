@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqy7naymjdg4"]
+
+[ext_resource type="Script" uid="uid://h65nmuaaysqs" path="res://_framework/entities/player/grapple_end_point.gd" id="1_fgpia"]
+
+[node name="GrappleEndPoint" type="Marker3D"]
+script = ExtResource("1_fgpia")

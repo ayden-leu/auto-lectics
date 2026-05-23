@@ -1,0 +1,6 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://18w6n64r5gen"]
+
+[ext_resource type="Material" uid="uid://6ti5mqkxfenp" path="res://_framework/_visual_assets/dont_change/purple_translucent.tres" id="1_sg8r7"]
+
+[resource]
+material = ExtResource("1_sg8r7")

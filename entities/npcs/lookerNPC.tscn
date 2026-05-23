@@ -10,9 +10,11 @@ radius = 1.47114
 script = ExtResource("3_y34t1")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
+dialogueTreeID = "gossip"
 initialDialogueID = "GB1"
 model = NodePath("looker")
-myName = "gossip"
+internalID = "gossip"
+displayName = "gossip"
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 6.396848, -0.15410192)

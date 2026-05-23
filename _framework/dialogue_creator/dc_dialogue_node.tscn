@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c5o5n3jy08obe"]
+[gd_scene load_steps=16 format=3 uid="uid://c5o5n3jy08obe"]
 
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_1f1bm"]
 [ext_resource type="Script" uid="uid://d3u8573fuhhgw" path="res://_framework/dialogue_creator/dc_dialogue_node.gd" id="1_g3bfk"]
@@ -6,12 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://bja6lj4ex1dsn" path="res://_framework/dialogue_creator/visual_assets/save.svg" id="3_u2mdd"]
 [ext_resource type="Texture2D" uid="uid://bum2oa0w66hc" path="res://_framework/dialogue_creator/visual_assets/plus.svg" id="4_mug1a"]
 [ext_resource type="Texture2D" uid="uid://mnxyf2eo0fry" path="res://_framework/dialogue_creator/visual_assets/minus.svg" id="5_i0lsd"]
-[ext_resource type="Script" uid="uid://ddr81llov87d4" path="res://_framework/dialogue_creator/helpers/dc_node_text_field.gd" id="5_tid56"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_button_toggle_area.gd" id="6_je0p8"]
+[ext_resource type="Script" uid="uid://ddr81llov87d4" path="res://_framework/dialogue_creator/helpers/dc_base_node_text_field.gd" id="5_tid56"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="6_je0p8"]
 [ext_resource type="Script" uid="uid://cvbtel5rsv0md" path="res://_framework/dialogue_creator/helpers/dc_dn_type_chooser.gd" id="6_ysh6o"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="9_mug1a"]
 [ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="10_ysh6o"]
 [ext_resource type="Script" uid="uid://bqs3yrgf1fbeb" path="res://_framework/dialogue_creator/helpers/dc_dn_mode_chooser.gd" id="11_5aabi"]
+[ext_resource type="Script" uid="uid://da2gb40t77scr" path="res://_framework/dialogue_creator/helpers/dc_dn_hectic_duration_field.gd" id="12_5aabi"]
 [ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="12_ysh6o"]
 [ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="13_5aabi"]
 
@@ -210,15 +211,14 @@ item_count = 1
 popup/item_0/text = "npcDefault"
 popup/item_0/id = 0
 
-[node name="VSeparator" type="VSeparator" parent="AdvancedOptions/Row1"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ModeChooser" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("hecticPortLabel", "chooser")]
+[node name="ModeChooser" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("hecticPortLabel", "hecticDurationField", "hecticDurationFieldSeparator", "chooser")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 10
 script = ExtResource("11_5aabi")
 hecticPortLabel = NodePath("../../../Row2/HecticPortLabel")
+hecticDurationField = NodePath("../../Row1_5")
+hecticDurationFieldSeparator = NodePath("../../HSeparator3")
 chooser = NodePath("OptionButton")
 
 [node name="OptionButton" type="OptionButton" parent="AdvancedOptions/Row1/ModeChooser"]
@@ -229,6 +229,30 @@ layout_mode = 2
 text = "Mode"
 
 [node name="HSeparator" type="HSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="Row1_5" type="HBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="HecticDurationField" type="HBoxContainer" parent="AdvancedOptions/Row1_5" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+script = ExtResource("12_5aabi")
+valueHolder = NodePath("InputField")
+
+[node name="Label" type="Label" parent="AdvancedOptions/Row1_5/HecticDurationField"]
+layout_mode = 2
+text = "Hectic Duration"
+
+[node name="InputField" type="SpinBox" parent="AdvancedOptions/Row1_5/HecticDurationField"]
+layout_mode = 2
+min_value = -0.1
+step = 0.1
+value = -0.1
+allow_greater = true
+
+[node name="HSeparator3" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 
 [node name="Row2" type="VBoxContainer" parent="AdvancedOptions"]
@@ -325,6 +349,8 @@ layout_mode = 2
 [connection signal="item_selected" from="AdvancedOptions/Row1/TextThemeChooser/Chooser" to="AdvancedOptions/Row1/TextThemeChooser" method="_on_chooser_item_selected"]
 [connection signal="set_hectic_port" from="AdvancedOptions/Row1/ModeChooser" to="." method="_on_set_hectic_port"]
 [connection signal="item_selected" from="AdvancedOptions/Row1/ModeChooser/OptionButton" to="AdvancedOptions/Row1/ModeChooser" method="_on_chooser_item_selected"]
+[connection signal="field_updated" from="AdvancedOptions/Row1_5/HecticDurationField" to="." method="_on_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/Row1_5/HecticDurationField/InputField" to="AdvancedOptions/Row1_5/HecticDurationField" method="_on_input_field_value_changed"]
 [connection signal="resize" from="AdvancedOptions/Row2/WriteSpeedAspectsToggler" to="." method="_on_resize_height"]
 [connection signal="chooser_updated_via_code" from="AdvancedOptions/Row2/WriteSpeedAspects/WriteSpeedPresetChooser" to="AdvancedOptions/Row2/WriteSpeedAspects/WriteSpeedValueField" method="_on_preset_chooser_updated_via_code"]
 [connection signal="preset_updated" from="AdvancedOptions/Row2/WriteSpeedAspects/WriteSpeedPresetChooser" to="AdvancedOptions/Row2/WriteSpeedAspects/WriteSpeedValueField" method="_on_preset_chooser_updated"]

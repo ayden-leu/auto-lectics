@@ -11,9 +11,11 @@ size = Vector3(3.671997, 10.670654, 9.139801)
 script = ExtResource("1_wco8e")
 _hitbox = NodePath("Area3D")
 _talkOnlyOnce = false
+dialogueTreeID = "exile"
 initialDialogueID = "EB1"
 model = NodePath("exile_model")
-myName = "exile"
+internalID = "exile"
+displayName = "exile"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
 
 [node name="Area3D" type="Area3D" parent="."]

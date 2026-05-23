@@ -1,14 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=14 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
 [ext_resource type="Theme" uid="uid://6tapf6h7f8h8" path="res://textTheme.tres" id="3_nde6x"]
 [ext_resource type="Texture2D" uid="uid://cmsanw5s1v23x" path="res://textures/NPCS/1x/Asset 1.png" id="4_cg8tx"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
-[ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/ui/menus/textures/Asset 1.png" id="4_ovhmb"]
+[ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/_visual_assets/blueprint_menu/Asset 1.png" id="4_ovhmb"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="5_coiy0"]
 [ext_resource type="Texture2D" uid="uid://bmipyeeivehjj" path="res://textures/NPCS/1x/Asset 2.png" id="5_gffea"]
 
-[node name="BlueprintMenu" type="Control"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8deg6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qfo8r"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_to7hj"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2s35j"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uwm47"]
+
+[node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,13 +28,42 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
+sfxEventHandler = NodePath("SfxEventHandler")
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1422.173
+offset_bottom = -775.3713
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(80.776405, 23.390985)
+mouse_filter = 2
+color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+
+[node name="Detail" type="TextureRect" parent="."]
+visible = false
+z_index = -1
+layout_mode = 0
+offset_left = 392.0
+offset_top = -31.0
+offset_right = 1671.0
+offset_bottom = 985.0
+rotation = 0.0019230221
+texture = ExtResource("4_ovhmb")
 
 [node name="TitleLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 305.0
-offset_top = 1.0
-offset_right = 812.0
-offset_bottom = 29.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -253.5
+offset_right = 253.5
+offset_bottom = 28.0
+grow_horizontal = 2
 text = "DOCUMENTATION"
 horizontal_alignment = 1
 
@@ -56,27 +96,21 @@ offset_right = 1359.0
 offset_bottom = 643.0
 metadata/_edit_group_ = true
 
-[node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+[node name="sludge" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-npcID = "npc_test_1"
-myName = "sludge"
+npcID = "sludge"
+displayName = "sludge"
 entryTextureUnlocked = ExtResource("4_cg8tx")
 entryTextureLocked = ExtResource("4_cg8tx")
 portraitTexture = ExtResource("4_cg8tx")
 
-[node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+[node name="CLN-R" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
-npcID = "npc_test_2"
-myName = "CLN-R"
+npcID = "CLN-R"
+displayName = "CLN-R"
 entryTextureUnlocked = ExtResource("5_gffea")
 entryTextureLocked = ExtResource("5_gffea")
 portraitTexture = ExtResource("5_gffea")
-
-[node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
-visible = false
-layout_mode = 2
-npcID = "npc_test_3"
-myName = "Orin"
 
 [node name="NpcDetailPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -87,6 +121,18 @@ offset_left = 36.0
 offset_top = 44.0
 offset_right = 584.0
 offset_bottom = 770.0
+
+[node name="Background" type="TextureRect" parent="NpcDetailPanel"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 4.0
+offset_right = 1278.0
+offset_bottom = 1811.3107
+rotation = 0.0019230221
+scale = Vector2(0.42081988, 0.42081988)
+texture = ExtResource("4_ovhmb")
+stretch_mode = 1
 
 [node name="PortraitTextureRect" type="TextureRect" parent="NpcDetailPanel"]
 unique_name_in_owner = true
@@ -141,7 +187,7 @@ z_index = 1
 layout_mode = 0
 offset_left = 18.0
 offset_top = 22.0
-offset_right = 86.5625
+offset_right = 113.0
 offset_bottom = 53.0
 theme = ExtResource("3_nde6x")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
@@ -151,9 +197,9 @@ placeholder_text = "..."
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 0
-offset_left = 116.0
+offset_left = 120.0
 offset_top = 54.0
-offset_right = 188.0
+offset_right = 192.0
 offset_bottom = 85.0
 theme = ExtResource("3_nde6x")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
@@ -196,28 +242,6 @@ theme = ExtResource("3_nde6x")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
 placeholder_text = "..."
 
-[node name="TextureRect" type="TextureRect" parent="NpcDetailPanel"]
-visible = false
-layout_mode = 0
-offset_left = -1.0
-offset_top = 4.0
-offset_right = 1278.0
-offset_bottom = 1020.0
-rotation = 0.0019230221
-scale = Vector2(0.42081988, 0.42081988)
-texture = ExtResource("4_ovhmb")
-
-[node name="TextureRect2" type="TextureRect" parent="NpcDetailPanel"]
-visible = false
-layout_mode = 0
-offset_left = -1.0
-offset_top = 336.99997
-offset_right = 1278.0
-offset_bottom = 1353.0
-rotation = 0.0019230221
-scale = Vector2(0.42081988, 0.42081988)
-texture = ExtResource("4_ovhmb")
-
 [node name="PrevPageButton" type="Button" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -236,25 +260,29 @@ offset_top = 350.0
 offset_right = 1363.0
 offset_bottom = 452.0
 
-[node name="ColorRect" type="ColorRect" parent="."]
-z_index = -1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(80.776405, 23.390985)
-mouse_filter = 2
-color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+[node name="SfxEventHandler" parent="." instance=ExtResource("5_coiy0")]
+sfxIds = Dictionary[String, String]({
+"buttonPressed": "",
+"entryGuessedCorrectly": "",
+"entryNameSubmitted": "",
+"guessNpcNameTextChanged": "",
+"notesFieldTextUpdated": ""
+})
 
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-z_index = -1
-layout_mode = 0
-offset_left = 392.0
-offset_top = -31.0
-offset_right = 1671.0
-offset_bottom = 985.0
-rotation = 0.0019230221
-texture = ExtResource("4_ovhmb")
+[node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_8deg6")
+
+[node name="entryGuessedCorrectly" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_qfo8r")
+
+[node name="entryNameSubmitted" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_to7hj")
+
+[node name="guessNpcNameTextChanged" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_2s35j")
+
+[node name="notesFieldTextUpdated" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_uwm47")
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]

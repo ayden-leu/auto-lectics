@@ -1,18 +1,32 @@
 @icon("uid://bxn4xxvlf1s0e")
 extends Node
 class_name InputHandler
-## Handles all inputs a player can possibly make.  Emits signals when a player input happens.
+## Handles all inputs a player can possibly make.
+##
+## When a player executes and input, a signal for that input will be emitted.
+## To use, attach this to your node and connect the corresponding signals.
+## [br][br]
+## The input direction passed with the [signal update_input_direction] signal
+## is normalized, meaning diagonal inputs will be equal to the square root of 2
+## instead of 1.
+## [br][br]
+## The move distance passed with the [signal mouse_moved] signal is multiplied
+## by [member MOUSE_SENSITIVITY] before being sent along the way.
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
 ## Emitted when the mouse moves.
+## [code]distanceMoved[/code] is multiplied by [member MOUSE_SENSITIVITY] before
+## being sent with the signal.
 signal mouse_moved(distanceMoved:Vector2)
 ## Emitted when the interact button is just pressed.
 signal interact_button_pressed()
 ## Emitted when the jump button is pressed.
 signal jump_pressed()
 ## Emitted constantly to update the player's current input direction.
+## [code]newDirection[/code] is normalized, meaning diagonal inputs will be
+## equal to the square root of 2 instead of 1.
 signal update_input_direction(newDirection:Vector2)
 ## Emitted when the "Respawn" key is pressed.
 signal respawn()
@@ -54,17 +68,10 @@ static var _interactionEnabledGlobal:bool = true
 static var _jumpEnabledGlobal:bool = true
 ## Whether the respawn input should be processed.  Affects all [InputHandler]s.
 static var _respawnEnabledGlobal:bool = true
-## The mouse mode before [method showCursorTemp] or [method hideCursorTemp] was ran.
-static var _savedMouseMode:Input.MouseMode = Input.MOUSE_MODE_MAX
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
-	#if Engine.is_editor_hint():
-		#return
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
 func _physics_process(_delta: float) -> void:
 	var input_dir:Vector2 = Vector2.ZERO
 	if _movementInputEnabledGlobal and movementInputEnabled:
@@ -74,60 +81,32 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and _interactionEnabledGlobal:
 		interact_button_pressed.emit()
-	
+
 	elif event.is_action_pressed("jump") and _jumpEnabledGlobal:
 		jump_pressed.emit()
-	
+
 	elif event.is_action_pressed("close_game"):
 		get_tree().quit()
-	
+
 	elif event.is_action_pressed("respawn") and _respawnEnabledGlobal:
 		respawn.emit()
-		
+
 	if event.is_action_pressed("grapple") and _movementInputEnabledGlobal and movementInputEnabled:
 		grapple_pressed.emit()
-	
+
 	# https://kidscancode.org/godot_recipes/4.x/3d/basic_fps/
 	if event is InputEventMouseMotion:
 		emit_signal("mouse_moved", event.relative * MOUSE_SENSITIVITY)
 
+	#if Input.is_action_just_pressed("open_blueprint"):
+		#var focused_control := get_viewport().gui_get_focus_owner()
+		#if focused_control != null:
+			#return
+		#FR_WindowManager.createBlueprintWindow()
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Shows the cursor.  Helpful if you want the player to interact with menus.
-static func showCursor() -> void:
-	print("show cursor")
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-## Like [method showCursor], but saves the current mouse mode to [member _savedMouseMode].
-static func showCursorTemp() -> void:
-	if _savedMouseMode != Input.MOUSE_MODE_MAX:
-		return
-	
-	print("show cursor temp")
-	_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-## Hides the cursor.  Helpful if you want the player to move the camera around.
-static func hideCursor() -> void:
-	print("hide cursor")
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-## Like [method hideCursor], but saves the current mouse mode to [member _savedMouseMode].
-static func hideCursorTemp() -> void:
-	if _savedMouseMode != Input.MOUSE_MODE_MAX:
-		return
-	
-	print("hide cursor temp")
-	_savedMouseMode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-## Sets the current mouse mode to [member _savedMouseMode].
-static func restoreCursorMode() -> void:
-	print("restore cursor")
-	Input.set_mouse_mode(_savedMouseMode)
-	_savedMouseMode = Input.MOUSE_MODE_MAX
-
 ## Lets movement inputs be processed.
 static func enableMovementInputGlobal() -> void:
 	_movementInputEnabledGlobal = true
