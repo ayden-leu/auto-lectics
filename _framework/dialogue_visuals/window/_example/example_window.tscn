@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="2_ngdeh"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_spo03"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_spo03"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pv2hh"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y0p11"]
@@ -12,8 +14,6 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0m01u"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c8kvj"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ggo78"]
 
 [node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
 layout_mode = 3
@@ -40,7 +40,6 @@ theme_type_variation = &"PanelHeader"
 [node name="HBoxContainer" type="HBoxContainer" parent="Header"]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 3.0
 offset_right = 355.0
 offset_bottom = 27.0
 
@@ -79,24 +78,24 @@ autowrap_mode = 3
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_spo03")]
 sfxIds = Dictionary[String, String]({
-"click": "_test_1",
-"close": "_test_2",
-"drop": "_test_3",
-"hover": "_test_2",
-"spawn": "_test_1"
+"click": "",
+"close": "",
+"drop": "",
+"hover": "",
+"spawn": ""
 })
 
 [node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_pv2hh")
+stream = SubResource("AudioStreamRandomizer_spo03")
 
 [node name="close" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_y0p11")
+stream = SubResource("AudioStreamRandomizer_pv2hh")
 
 [node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_0m01u")
+stream = SubResource("AudioStreamRandomizer_y0p11")
 
 [node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_c8kvj")
+stream = SubResource("AudioStreamRandomizer_0m01u")
 
 [node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_ggo78")
+stream = SubResource("AudioStreamRandomizer_c8kvj")

@@ -34,7 +34,10 @@ extends Control
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	CursorHandler.showForce(self)
+	FR_MenuManager.disable()
+	FR_WindowManager.enable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
 
 # ------------------------------------------------
 # functions referenced outside of this script

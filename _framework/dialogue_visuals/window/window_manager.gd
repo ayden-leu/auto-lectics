@@ -1,6 +1,37 @@
 @icon("uid://bfg0nlmruxfhi")
 extends Node
 class_name WindowManager
+## A helper class that createss and manages all [DialogueWindow] types.
+##
+## All nodes that inherit [DialogueWindow] are created and managed by this.
+## [br][br]
+## To create a window, run [code]create<window-type>()[/code].  The return value will
+## be the newly created window.
+## [br][br]
+## To kill a "unique" window, run [code]kill<window-type>()[/code].
+## [br][br]
+## To subscribe to a window's signals (if they have them), run [code]subscribeTo<window-type>()[/code].
+## This will make it so the node is still connected to the window's signals after its closed and reopened.
+## [br][br]
+## To unsubscribe to a window's signals (if they have them), run [code]unsubscribeTo<window-type>()[/code].
+## This will reverse the process of subscribing to it.
+## [br][br]
+## [b]Current Window Types[/b][br]
+## - ExampleWindow (this doesn't do anything)[br]
+## - DialogueConsole[br]
+## - DialogueConsoleOptionWindow[br]
+## - DialogueWarningTileWindow[br]
+## - BlueprintWindow[br]
+## - BlueprintNpcDetailWindow[br]
+## [br][br]
+## [b]Current "Unique" Window Types[/b][br]
+## - DialogueConsole[br]
+## - BlueprintWindow[br]
+## - BlueprintNpcDetailWindow[br]
+## [br][br]
+## [b]Current Windows Types With Signals[/b][br]
+## - Console (this is just DialogueConsole)[br]
+## - BlueprintWindow[br]
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -24,14 +55,14 @@ const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConso
 ## A reference to the [DialogueConsoleOptionWindow] scene.
 const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
 ## [b]Internal-use only.[/b]
-## Contains reference to the warning tile scene where warnings will spawn
-const _WARNING_WINDOW_SCENE: PackedScene = preload(FR_Globals.SCENES.DialogueWarningTileWindow)
+## A reference to the [DialogueWarnringTileWindow] scene.
+const _WARNING_WINDOW_SCENE:PackedScene = preload(FR_Globals.SCENES.DialogueWarningTileWindow)
 ## [b]Internal-use only.[/b]
-## Contains reference to the blueprint window
-const _BLUEPRINT_WINDOW_SCENE: Resource = preload(FR_Globals.SCENES.BlueprintWindow)
+## A reference to the [BlueprintWindow] scene.
+const _BLUEPRINT_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.BlueprintWindow)
 ## [b]Internal-use only.[/b]
-## Contains reference to the blueprint's npc details window
-const _BLUEPRINT_DETAIL_WINDOW_SCENE: Resource = preload(FR_Globals.SCENES.BlueprintNpcDetailWindow)
+## A reference to the [BlueprintNpcDetailWindow] scene.
+const _BLUEPRINT_DETAIL_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.BlueprintNpcDetailWindow)
 
 ## [b]Internal-use only.[/b]
 ## Maps subscriber method names to [DialogueConsole] signal names.
@@ -63,13 +94,13 @@ const _BLUEPRINT_SIGNAL_MAP:Dictionary = {
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## A public reference to the [DialogueConsole].
-## Useful if you want to listen to signals from it.
+## Please do not modify the value of this directly.
 var dialogueConsole:DialogueConsole = null
 ## A public reference to the [BlueprintWindow].
-## Useful if you want to listen to signals from it.
+## Please do not modify the value of this directly.
 var blueprintWindow:BlueprintWindow = null
 ## A public reference to the [BlueprintNpcDetailsWindow].
-## Useful if you want to listen to signals from it.
+## Please do not modify the value of this directly.
 var blueprintDetailWindow:BlueprintNpcDetailWindow = null
 
 # ------------------------------------------------
@@ -77,44 +108,66 @@ var blueprintDetailWindow:BlueprintNpcDetailWindow = null
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
+## Whether this does stuff or not.
+var enabled:bool = true
+## [b]Internal-use only.[/b]
 ## Holds all windows created by the manager.
 var _spawnedWindows:Array[DialogueWindow] = []
+## [b]Internal-use only.[/b]
+## The last known position of certain [DialogueWindow]s before they were closed.
+## Each key corresponds to a [member DialogueWindow.windowType].
+## Due to not being able to set a [Vector2] to [code]null[/code],
+## [code]Vector2(-1000,-1000)[/code] will represent it.
+var _prevWindowPosition:Dictionary[String, Vector2] = {
+	"console": Vector2(-1000,-1000),
+	"blueprint": Vector2(-1000,-1000),
+	"blueprint_detail": Vector2(-1000,-1000)
+}
 ## [b]Internal-use only.[/b]
 ## Holds all nodes that want to listen to [DialogueConsole]'s signals.
 var _dialogueConsoleSubscribers:Array = []
 ## [b]Internal-use only.[/b]
-## The screen position of the [DialogueConsole].
-var dialogueConsoleLastPosition: Vector2 = Vector2.ZERO
-## [b]Internal-use only.[/b]
 ## Holds all nodes that want to listen to [BlueprintWindow]'s signals.
 var _blueprintWindowSubscribers:Array = []
 ## [b]Internal-use only.[/b]
-## Stores blueprint data between closing and reopening the [BlueprintWindow].
+## Stores [BlueprintWindow] data between closing and reopening the [BlueprintWindow].
 var _blueprintSavedState:Dictionary = {}
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
+func _input(event:InputEvent) -> void:
+	if not enabled:
+		return
 
-func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	print(_getCenter(Vector2.ZERO))
-
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("open_blueprint"):
+	if event.is_action_pressed("open_blueprint"):
 		createBlueprintWindow()
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Enables the [WindowManager].
+func enable() -> void:
+	enabled = true
+
+## Disables the [WindowManager].
+func disable() -> void:
+	enabled = false
+
 ## Creates an example [DialogueWindow].
 func createExampleWindow() -> DialogueWindow:
+	if not enabled:
+		return
+
 	var tempWindow:DialogueWindow = _EXAMPLE_WINDOW.instantiate()
 	_addWindow(tempWindow)
 	return tempWindow
 
 ## Creates a [DialogueConsole].  Only one can exist at a time.  Not pre-configured.
 func createDialogueConsole() -> DialogueConsole:
+	if not enabled:
+		return null
+
 	if dialogueConsole != null:
 		return dialogueConsole
 
@@ -123,8 +176,8 @@ func createDialogueConsole() -> DialogueConsole:
 	dialogueConsole.window_closed.connect(_on_dialogue_console_closed)
 	Player.freeze(dialogueConsole)
 
-	if dialogueConsoleLastPosition != Vector2.ZERO:
-		dialogueConsole.position = dialogueConsoleLastPosition
+	if _prevWindowPosition[dialogueConsole.windowType] != Vector2(-1000,-1000):
+		dialogueConsole.global_position = _prevWindowPosition[dialogueConsole.windowType]
 	else:
 		dialogueConsole.global_position = _getCenter(dialogueConsole.size)
 
@@ -135,8 +188,11 @@ func createDialogueConsole() -> DialogueConsole:
 
 ## Kills the current [DialogueConsole].
 func killDialogueConsole() -> void:
+	if not enabled:
+		return
+
 	if dialogueConsole != null:
-		dialogueConsoleLastPosition = dialogueConsole.position
+		_prevWindowPosition[dialogueConsole.windowType] = dialogueConsole.global_position
 		Player.unfreeze(dialogueConsole)
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
@@ -144,18 +200,27 @@ func killDialogueConsole() -> void:
 
 ## Creates a [DialogueConsoleOptionWindow].  Not pre-configured.
 func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
+	if not enabled:
+		return null
+
 	var optionWindow:DialogueConsoleOptionWindow = _OPTION_WINDOW_SCENE.instantiate()
 	_addWindow(optionWindow)
 	return optionWindow
 
 ## Creates a [DialogueWarningTileWindow], while avoiding the main console
 func createDialogueWarningTileWindow() -> DialogueWarningTileWindow:
+	if not enabled:
+		return null
+
 	var warningWindow:DialogueWarningTileWindow = _WARNING_WINDOW_SCENE.instantiate()
 	_addWindow(warningWindow)
 	return warningWindow
 
-## [b]Internal-use only.[/b]  Closes all [DialogueWarningTileWindow] windows.
+## Closes all [DialogueWarningTileWindow] windows.
 func closeAllWarningTileWindows() -> void:
+	if not enabled:
+		return
+
 	var tempStorage:Array[DialogueWarningTileWindow] = []
 	for window in _spawnedWindows:
 		if window is DialogueWarningTileWindow:
@@ -164,8 +229,12 @@ func closeAllWarningTileWindows() -> void:
 	for windowToDelete in tempStorage:
 		windowToDelete.close()
 
-## [b]Internal-use only.[/b] Creates a blueprint window
+## Creates a [BlueprintWindow] and restores its previous state ([member _blueprintSavedStat]) if it had one.
+## Only only can exist at a time.
 func createBlueprintWindow() -> BlueprintWindow:
+	if not enabled:
+		return null
+
 	if blueprintWindow != null:
 		return blueprintWindow
 
@@ -173,16 +242,35 @@ func createBlueprintWindow() -> BlueprintWindow:
 	_addWindow(blueprintWindow)
 
 	blueprintWindow.window_closed.connect(_on_blueprint_window_closed)
-	blueprintWindow.global_position = _getRightSidePosition(blueprintWindow.size)
 	if not _blueprintSavedState.is_empty(): # apply the saved state of NPC info
-		blueprintWindow.apply_state(_blueprintSavedState)
+		blueprintWindow.loadState(_blueprintSavedState)
+
+	if _prevWindowPosition[blueprintWindow.windowType] != Vector2(-1000,-1000):
+		blueprintWindow.global_position = _prevWindowPosition[blueprintWindow.windowType]
+	else:
+		blueprintWindow.global_position = _getRightSidePosition(blueprintWindow.size)
 
 	_blueprintWindowSubscribers = _cleanSubscriberList(_blueprintWindowSubscribers)
 	_resubscribeList(_blueprintWindowSubscribers, _connectBlueprintSignalsToSubscriber)
 	return blueprintWindow
 
-## [b]Internal-use only.[/b] Creates blueprint NPC detail window when clicking on NPCs in blueprint
+## Kills the current [member blueprintWindow].
+func killBlueprintWindow() -> void:
+	if not enabled:
+		return
+
+	if blueprintWindow != null:
+		_prevWindowPosition[blueprintWindow.windowType] = blueprintWindow.global_position
+		_blueprintSavedState = blueprintWindow.getState()
+		blueprintWindow.kill()
+		_on_window_closed(blueprintWindow)
+		blueprintWindow = null
+
+## Creates a [BlueprintNpcDetailWindow].  Only one can exist at a time.
 func createBlueprintNpcDetailWindow() -> BlueprintNpcDetailWindow:
+	if not enabled:
+		return null
+
 	if blueprintDetailWindow != null:
 		return blueprintDetailWindow
 
@@ -192,22 +280,20 @@ func createBlueprintNpcDetailWindow() -> BlueprintNpcDetailWindow:
 	if not blueprintDetailWindow.window_closed.is_connected(_on_blueprint_detail_window_closed):
 		blueprintDetailWindow.window_closed.connect(_on_blueprint_detail_window_closed)
 
-	blueprintDetailWindow.global_position = _getLeftSidePosition(blueprintDetailWindow.size)
+	if _prevWindowPosition[blueprintDetailWindow.windowType] != Vector2(-1000,-1000):
+		blueprintDetailWindow.global_position = _prevWindowPosition[blueprintDetailWindow.windowType]
+	else:
+		blueprintDetailWindow.global_position = _getLeftSidePosition(blueprintDetailWindow.size)
+
 	return blueprintDetailWindow
 
-## Closes the blueprint window
-func killBlueprintWindow() -> void:
-	if blueprintWindow != null:
-		#dialogueConsoleLastPosition = dialogueConsole.position
-		_blueprintSavedState = blueprintWindow.get_state()
-		blueprintWindow.kill()
-		_on_window_closed(blueprintWindow)
-		blueprintWindow = null
-
-## Closes the blueprint NPC detail window
+## Kills the current [member blueprintDetailWindow].
 func killBlueprintNpcDetailWindow() -> void:
+	if not enabled:
+		return
+
 	if blueprintDetailWindow != null:
-		#dialogueConsoleLastPosition = dialogueConsole.position
+		_prevWindowPosition[blueprintDetailWindow.windowType] = blueprintDetailWindow.global_position
 		blueprintDetailWindow.kill()
 		_on_window_closed(blueprintDetailWindow)
 		blueprintDetailWindow = null
@@ -245,11 +331,17 @@ func killBlueprintNpcDetailWindow() -> void:
 ## 	# Will run when the DialogueConsole is closed.
 ## [/codeblock]
 func subscribeToConsole(subscriber) -> void:
+	if not enabled:
+		return
+
 	_addSubscriber(subscriber, _dialogueConsoleSubscribers, _connectConsoleSignalsToSubscriber)
 
 ## Unsubscribes a node from the [DialogueConsole], meaning it won't run any
 ## functions when the [DialogueConsole] emits signals.
 func unsubscribeToConsole(subscriber) -> void:
+	if not enabled:
+		return
+
 	_removeSubscriber(subscriber, _dialogueConsoleSubscribers, _disconnectConsoleSignalsToSubscriber)
 
 ## Connects signals from the [BlueprintWindow] to specific functions the subscriber
@@ -270,11 +362,17 @@ func unsubscribeToConsole(subscriber) -> void:
 ## 	# conditionID is the ID of the unlock condition.
 ## [/codeblock]
 func subscribeToBlueprintWindow(subscriber) -> void:
+	if not enabled:
+		return
+
 	_addSubscriber(subscriber, _blueprintWindowSubscribers, _connectBlueprintSignalsToSubscriber)
 
 ## Unsubscribes a node from the [BlueprintWindow], meaning it won't run any
 ## functions when the [BlueprintWindow] emits signals.
 func unsubscribeToBlueprintWindow(subscriber) -> void:
+	if not enabled:
+		return
+
 	_removeSubscriber(subscriber, _blueprintWindowSubscribers, _disconnectBlueprintSignalsToSubscriber)
 
 ## Pushes a text entry to the [DialogueConsole].
@@ -286,6 +384,9 @@ func unsubscribeToBlueprintWindow(subscriber) -> void:
 ## 	"theme":  # the text theme to apply to this entry.
 ## [/codeblock]
 func pushMessageToConsole(message:String, metadata:Dictionary = {}) -> void:
+	if not enabled:
+		return
+
 	if not dialogueConsole:
 		return
 
@@ -294,12 +395,12 @@ func pushMessageToConsole(message:String, metadata:Dictionary = {}) -> void:
 ## Checks if a position is within the screen.
 ## [code]threshold[/code] is the amount, in pixels, beyond the screen the position can be.
 func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
-	var screen_rect := get_viewport().get_visible_rect()
+	var screen_size := _getScreenSize()
 
 	var min_x := -threshold
 	var min_y := -threshold
-	var max_x := screen_rect.size.x + threshold
-	var max_y := screen_rect.size.y + threshold
+	var max_x := screen_size.x + threshold
+	var max_y := screen_size.y + threshold
 
 	return pos.x >= min_x and pos.x <= max_x and pos.y >= min_y and pos.y <= max_y
 
@@ -310,7 +411,7 @@ func positionOnScreen(pos:Vector2, threshold:float = 0) -> bool:
 ## [code]allowOverlap[/code] is a list of window types that this position can overlap.
 ## The type of a window is defined by [member DialogueWindow.windowType]
 func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] = []) -> Vector2:
-	var viewport_size := get_viewport().get_visible_rect().size
+	var viewport_size := _getScreenSize()
 	var margin := 20.0
 	var retryAttempts:int = 30
 
@@ -342,13 +443,14 @@ func getRandomPositionOnScreen(window_size: Vector2, allowOverlap:Array[String] 
 ## [b]Internal-use only.[/b]
 ## Finishes creating a window.
 func _addWindow(window:DialogueWindow) -> void:
+	Player.disableInput(self)
+	CursorHandler.showForce(self)
+
 	add_child(window)
 	_spawnedWindows.push_back(window)
 	window.window_closed.connect(_on_window_closed)
 	window.window_dropped.connect(_on_window_dropped)
 	_setWindowOnScreen(window, window.offscreenThresold)
-	Player.disableInput(self)
-	CursorHandler.show(self)
 
 ## [b]Internal-use only.[/b]
 ## Adds a node to a subscriber list and connects it to the relevant window.
@@ -439,55 +541,57 @@ func _disconnectBlueprintSignalsToSubscriber(subscriber) -> void:
 	_disconnectSignalsFromMap(blueprintWindow, subscriber, _BLUEPRINT_SIGNAL_MAP)
 
 ## [b]Internal-use only.[/b]
-## Moves the window back onto the screen if it's outside
+## Moves the window back onto the screen if it's outside the threshold.
 func _setWindowOnScreen(window:DialogueWindow, threshold:float = 0) -> void:
-	var screen_rect := get_viewport().get_visible_rect()
+	var screen_size := _getScreenSize()
 	var window_size := window.size
 
 	var min_x := -threshold
 	var min_y := -threshold
-	var max_x := screen_rect.size.x - window_size.x + threshold
-	var max_y := screen_rect.size.y - window_size.y + threshold
+	var max_x := screen_size.x - window_size.x + threshold
+	var max_y := screen_size.y - window_size.y + threshold
 
 	window.global_position.x = clamp(window.global_position.x, min_x, max_x)
 	window.global_position.y = clamp(window.global_position.y, min_y, max_y)
 
 ## [b]Internal-use only.[/b]
-## Moves this window to the center of the screen immediately.
-func _centerWindow(window:DialogueWindow) -> void:
-	window.global_position = (get_viewport().get_visible_rect().size - window.size) / 2
+## Gets the viewport's size.
+func _getScreenSize() -> Vector2:
+	return get_viewport().get_visible_rect().size
 
 ## [b]Internal-use only.[/b]
 ## Get the center of the screen.
 func _getCenter(windowSize:Vector2) -> Vector2:
-	return (get_viewport().get_visible_rect().size - windowSize) / 2
+	return (_getScreenSize() - windowSize) / 2
 
 ## [b]Internal-use only.[/b]
 ## Gets a position for a window on the left side of the screen.
 func _getLeftSidePosition(windowSize: Vector2, margin: float = 180.0) -> Vector2:
-	var screenSize: Vector2 = get_viewport().get_visible_rect().size
-	return Vector2(margin,(screenSize.y - windowSize.y) / 3)
+	var screenSize:Vector2 = _getScreenSize()
+	return Vector2(margin, (screenSize.y - windowSize.y) / 3)
 
 ## [b]Internal-use only.[/b]
 ## Gets a position for a window on the right side of the screen.
 func _getRightSidePosition(windowSize: Vector2, margin: float = 180.0) -> Vector2:
-	var screenSize: Vector2 = get_viewport().get_visible_rect().size
-	return Vector2(screenSize.x - windowSize.x - margin,(screenSize.y - windowSize.y) / 3)
+	var screenSize: Vector2 = _getScreenSize()
+	return Vector2(screenSize.x - windowSize.x - margin, (screenSize.y - windowSize.y) / 3)
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for when a window is closed.
+## [b]Internal-use only.[/b]
+## Handles logic for when a window is closed.
 func _on_window_closed(closedWindow:DialogueWindow) -> void:
 	if closedWindow in _spawnedWindows:
 		_spawnedWindows.erase(closedWindow)
 		if _spawnedWindows.size() == 0:
 			Player.enableInput(self)
-			CursorHandler.hide(self)
+			CursorHandler.restoreDefault()
 
 	if closedWindow.windowType not in ["console", "blueprint", "blueprint_detail"]:
 		closedWindow.kill()
 
 ## [b]Internal-use only.[/b]
+## Handless logic for when a window is dropped.
 func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 	var cornerPositions:Dictionary[String, Vector2] = droppedWindow.getGlobalCornerPositions()
 	for cornerPosition:Vector2 in cornerPositions.values():
@@ -495,14 +599,18 @@ func _on_window_dropped(droppedWindow:DialogueWindow) -> void:
 			_setWindowOnScreen(droppedWindow, droppedWindow.offscreenThresold)
 			break
 
+## [b]Internal-use only.[/b]
+## Handles logic for when a [DialogueConsole] is closed.
 func _on_dialogue_console_closed(_window:DialogueWindow) -> void:
 	killDialogueConsole()
 
-## [b]Internal-use only.[/b]  Handles logic for when the blueprint window is closed.
+## [b]Internal-use only.[/b]
+## Handles logic for when a [BlueprintWindow] is closed.
 func _on_blueprint_window_closed(_window:DialogueWindow) -> void:
 	killBlueprintWindow()
 
-## [b]Internal-use only.[/b]  Handles logic for when the blueprint NPC Details window is closed.
+## [b]Internal-use only.[/b]
+## Handles logic for when a [BlueprintNpcDetailWindow] is closed.
 func _on_blueprint_detail_window_closed(_window:DialogueWindow) -> void:
 	killBlueprintNpcDetailWindow()
 

@@ -1,18 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://y186te5d3kpy"]
+[gd_scene load_steps=5 format=3 uid="uid://y186te5d3kpy"]
 
 [ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="1_5e3ld"]
 [ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_wg1im"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="3_v8nm0"]
+[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="4_3m1du"]
 
-[node name="BlueprintNPCEntry" type="Control"]
+[node name="BlueprintNpcEntry" type="Control"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 0
-offset_left = 2.0
-offset_right = 202.0
-offset_bottom = 120.0
+offset_right = 200.0
+offset_bottom = 200.0
 mouse_filter = 2
 theme = ExtResource("1_wg1im")
 script = ExtResource("1_5e3ld")
+entryTextureUnlocked = ExtResource("3_v8nm0")
+entryTextureLocked = ExtResource("4_3m1du")
+portraitTexture = ExtResource("4_3m1du")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
@@ -25,6 +29,7 @@ offset_right = 74.5
 offset_bottom = 149.0
 grow_horizontal = 2
 mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_3m1du")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -42,7 +47,7 @@ offset_right = 64.5
 offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "This is npc name"
+text = "Blueprint NPC Entry"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

@@ -4,14 +4,41 @@ extends Control
 class_name DialogueWindow
 ## [b]Internal-use only.[/b]  A window that appears on the player's screen.
 ##
-## Can be dragged around.
+## DialogueWindows are UI elements that can be dragged around by the player.
+## All DialogueWindows are managed by the [WindowManager].
 ## [br][br]
+## [b]Features Brief[/b][br]
+## Can optionally be closable by enabling the [member canBeClosed] export field.
+## Enabling this will provide a new export field named [member closeButton],
+## which will be the button that closes this window.
+## [br]
+## The [offscreenThreshold] export field configures how many pixels offscreen
+## this window can be.  Dropping the window beyond the threshold will bring it within bounds.
+## [br][br]
+## [b]Styling[/b][br]
+## When styling a DialogueWindow, there a few things you'll need to know about.[br]
+## 1) If you keep accidentally selecting a nonde instead of its parent, you can group it and its parent together by clicking the parent node,[br]
+## then hitting the "Group Selected Nodes" button in the top bar next to the lock icon.  Despite its name, it just groups that node's children[br]
+## with the parent instead of grouping all selected nodes.
+## [[br]
+## 2) The main theme resource can be found in [code]_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres[/code].[br]
+## Modifying the theme properties of this resource will propagate to all DialogueWindows and their children, unless said children have their[br]
+## theme overrides set.
+## [br]
+## 3) The "hitbox" that allows players to drag around the window is determined by the size of the root node.  Modifying the root node's size[br]
+## won't affect its contents. (Modifying the scale will affect the contents though).
+## [br]
+## 4) Anything can go anywhere.[br]
+## 5) The "Contents" panel that is typically seen with DialogueWindows won't automatically resize to surround its contents.  You have to do[br]
+## that manually.
+## [br][br]
+## [b]SFX events[/b][br]
 ## Comes with the following optional SFX events:[br]
-## - spawn:  plays when the window is spawned.[br]
-## - close:  plays when the window is closed.[br]
-## - hover:  plays when the player hovers their cursor over the window.[br]
 ## - click:  plays when the player clicks the window.[br]
+## - close:  plays when the window is closed.[br]
 ## - drop:   plays when the player drops the window after letting it go.[br]
+## - hover:  plays when the player hovers their cursor over the window.[br]
+## - spawn:  plays when the window is spawned.[br]
 
 # ------------------------------------------------
 # signals
@@ -80,8 +107,8 @@ var _hovering:bool = false:
 		if newState == _hovering:
 			return
 		_hovering = newState
-		if _hovering and sfxEventHandler.getPlayerForEvent("hover"):
-			sfxEventHandler.play("hover")
+		if _hovering and _getSfxPlayerSafe("hover"):
+			_playSfxSafe("hover")
 ## [b]Internal-use only.[/b]
 ## Is true when the player is holding the select button on this option (left mouse click).
 var _holdingSelect:bool = false:
@@ -90,10 +117,10 @@ var _holdingSelect:bool = false:
 			return
 
 		_holdingSelect = newState
-		if _holdingSelect and sfxEventHandler.getPlayerForEvent("click"):
-			sfxEventHandler.play("click")
-		elif sfxEventHandler.getPlayerForEvent("drop"):
-			sfxEventHandler.play("drop")
+		if _holdingSelect and _getSfxPlayerSafe("click"):
+			_playSfxSafe("click")
+		elif _getSfxPlayerSafe("drop"):
+			_playSfxSafe("drop")
 ## [b]Internal-use only.[/b]
 ## Is true when the player is dragging this around.
 var _dragging:bool = false
@@ -115,8 +142,8 @@ func _ready() -> void:
 	if canBeClosed:
 		closeButton.pressed.connect(_on_close_button_pressed)
 
-	if sfxEventHandler.getPlayerForEvent("spawn"):
-		sfxEventHandler.play("spawn")
+	if _getSfxPlayerSafe("spawn"):
+		_playSfxSafe("spawn")
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint() or not visible:
@@ -130,10 +157,7 @@ func _process(_delta: float) -> void:
 		mouse_default_cursor_shape = _originalCursorShape
 
 func _gui_input(event: InputEvent) -> void:
-	if Engine.is_editor_hint():
-		return
-
-	if not visible:
+	if Engine.is_editor_hint() or not visible:
 		return
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -187,9 +211,9 @@ func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
 
 ## Closes this window.
 func close() -> void:
-	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
+	var sfxPlayer:AudioStreamPlayer = _getSfxPlayerSafe("close")
 	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
-		sfxEventHandler.play("close")
+		_playSfxSafe("close")
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		hide()
 		await sfxPlayer.finished
@@ -214,6 +238,21 @@ func _positionInWindow(pos:Vector2) -> bool:
 		pos.x > corners.topLeft.x and pos.x < corners.bottomRight.x and
 		pos.y > corners.topLeft.y and pos.y < corners.bottomRight.y
 	)
+
+## [b]Internal-use only.[/b]
+## A safer way of playing SFX events since this is a base class.
+func _playSfxSafe(id:String) -> void:
+	if not sfxEventHandler:
+		printerr("DialogueWindow:  SfxEventHandler export field not set.  Please set it.")
+	sfxEventHandler.play(id)
+
+## [b]Internal-use only.[/b]
+## A safer way of getting the [AudioStreamPlayer] for an event since this is a base class.
+func _getSfxPlayerSafe(id:String) -> AudioStreamPlayer:
+	if not sfxEventHandler:
+		printerr("DialogueWindow:  SfxEventHandler export field not set.  Please set it.")
+		return null
+	return sfxEventHandler.getPlayerForEvent(id)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

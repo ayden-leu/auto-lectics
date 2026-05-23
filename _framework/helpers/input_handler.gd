@@ -1,7 +1,10 @@
 @icon("uid://bxn4xxvlf1s0e")
 extends Node
 class_name InputHandler
-## Handles all inputs a player can possibly make.  Emits signals when a player input happens.
+## Handles all inputs a player can possibly make.
+##
+## When a player executes and input, a signal for that input will be emitted.
+##
 
 # ------------------------------------------------
 # signals
@@ -61,7 +64,9 @@ static var _respawnEnabledGlobal:bool = true
 func _ready() -> void:
 	#if Engine.is_editor_hint():
 		#return
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#print_rich("[color=green]READY[/color]")
+	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
 
 func _physics_process(_delta: float) -> void:
 	var input_dir:Vector2 = Vector2.ZERO
