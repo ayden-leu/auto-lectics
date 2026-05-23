@@ -51,6 +51,10 @@ folder_colors={
 "res://world/": "blue"
 }
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 NPCs=""
