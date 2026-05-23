@@ -37,6 +37,9 @@ extends Node
 # ------------------------------------------------
 func _ready() -> void:
 	FR_MenuManager.enable()
+	FR_WindowManager.disable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
 	FR_MenuManager.subscribeToBlueprintMenu(self)
 
 # ------------------------------------------------

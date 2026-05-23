@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://djrev4nfrrplx" path="res://_framework/dialogue_creator/dc_option_node.gd" id="1_sx0xf"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_ynasb"]
-[ext_resource type="Script" uid="uid://ddr81llov87d4" path="res://_framework/dialogue_creator/helpers/dc_node_text_field.gd" id="3_okpco"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_button_toggle_area.gd" id="4_l41k6"]
+[ext_resource type="Script" uid="uid://ddr81llov87d4" path="res://_framework/dialogue_creator/helpers/dc_base_node_text_field.gd" id="3_okpco"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="4_l41k6"]
 [ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="4_okpco"]
 [ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="6_okpco"]
 [ext_resource type="Script" uid="uid://bqrkamioy7nsv" path="res://_framework/dialogue_creator/helpers/dc_on_lifetime.gd" id="7_60hqa"]
@@ -17,8 +17,8 @@
 
 [node name="DC_OptionNode" type="GraphNode"]
 texture_filter = 2
-offset_right = 554.0
-offset_bottom = 642.0
+offset_right = 551.0
+offset_bottom = 690.0
 theme = ExtResource("1_ynasb")
 theme_type_variation = &"DialogueOption"
 resizable = true
@@ -124,18 +124,39 @@ metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 [node name="AdvancedOptions" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="SpawnDelayField" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("valueHolder")]
+[node name="Row1" type="HBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="SpawnDelayField" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("valueHolder")]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("6_okpco")
 valueHolder = NodePath("InputField")
 
-[node name="Label" type="Label" parent="AdvancedOptions/SpawnDelayField"]
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/SpawnDelayField"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Spawn Delay"
 
-[node name="InputField" type="SpinBox" parent="AdvancedOptions/SpawnDelayField"]
+[node name="InputField" type="SpinBox" parent="AdvancedOptions/Row1/SpawnDelayField"]
+layout_mode = 2
+min_value = -0.1
+step = 0.1
+value = -0.1
+allow_greater = true
+
+[node name="LifetimeField" type="HBoxContainer" parent="AdvancedOptions/Row1" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("7_60hqa")
+valueHolder = NodePath("InputField")
+
+[node name="Label" type="Label" parent="AdvancedOptions/Row1/LifetimeField"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Lifetime"
+
+[node name="InputField" type="SpinBox" parent="AdvancedOptions/Row1/LifetimeField"]
 layout_mode = 2
 min_value = -0.1
 step = 0.1
@@ -144,24 +165,6 @@ allow_greater = true
 
 [node name="HSeparator" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
-
-[node name="LifetimeField" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("valueHolder")]
-unique_name_in_owner = true
-layout_mode = 2
-script = ExtResource("7_60hqa")
-valueHolder = NodePath("InputField")
-
-[node name="Label" type="Label" parent="AdvancedOptions/LifetimeField"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Lifetime"
-
-[node name="InputField" type="SpinBox" parent="AdvancedOptions/LifetimeField"]
-layout_mode = 2
-min_value = -0.1
-step = 0.1
-value = -0.1
-allow_greater = true
 
 [node name="HSeparator2" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
@@ -335,6 +338,41 @@ icon = ExtResource("8_hpmiq")
 [node name="Flags" type="VBoxContainer" parent="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags"]
 layout_mode = 2
 
+[node name="HSeparator4" type="HSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="AllowBackField" type="HBoxContainer" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AdvancedOptions/AllowBackField"]
+layout_mode = 2
+text = "Disable Back Command"
+
+[node name="DisableBackToggler" type="CheckBox" parent="AdvancedOptions/AllowBackField" node_paths=PackedStringArray("fields")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("4_l41k6")
+fields = [NodePath("../../RejectBackMessageField")]
+metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
+
+[node name="HSeparator7" type="HSeparator" parent="AdvancedOptions"]
+layout_mode = 2
+
+[node name="RejectBackMessageField" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("valueHolder")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_okpco")
+valueHolder = NodePath("InputField")
+
+[node name="Label" type="Label" parent="AdvancedOptions/RejectBackMessageField"]
+layout_mode = 2
+text = "\"Reject Back\" Message"
+
+[node name="InputField" type="TextEdit" parent="AdvancedOptions/RejectBackMessageField"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Debug" type="Button" parent="."]
 layout_mode = 2
 text = "Debug"
@@ -344,10 +382,10 @@ text = "Debug"
 [connection signal="field_updated" from="TypeChooser" to="." method="_on_field_updated"]
 [connection signal="item_selected" from="TypeChooser/Chooser" to="TypeChooser" method="_on_chooser_item_selected"]
 [connection signal="resize" from="AdvancedToggler" to="." method="_on_resize_height"]
-[connection signal="field_updated" from="AdvancedOptions/SpawnDelayField" to="." method="_on_field_updated"]
-[connection signal="value_changed" from="AdvancedOptions/SpawnDelayField/InputField" to="AdvancedOptions/SpawnDelayField" method="_on_input_field_value_changed"]
-[connection signal="field_updated" from="AdvancedOptions/LifetimeField" to="." method="_on_field_updated"]
-[connection signal="value_changed" from="AdvancedOptions/LifetimeField/InputField" to="AdvancedOptions/LifetimeField" method="_on_input_field_value_changed"]
+[connection signal="field_updated" from="AdvancedOptions/Row1/SpawnDelayField" to="." method="_on_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/Row1/SpawnDelayField/InputField" to="AdvancedOptions/Row1/SpawnDelayField" method="_on_input_field_value_changed"]
+[connection signal="field_updated" from="AdvancedOptions/Row1/LifetimeField" to="." method="_on_field_updated"]
+[connection signal="value_changed" from="AdvancedOptions/Row1/LifetimeField/InputField" to="AdvancedOptions/Row1/LifetimeField" method="_on_input_field_value_changed"]
 [connection signal="field_updated" from="AdvancedOptions/TextThemeChooser" to="." method="_on_field_updated"]
 [connection signal="item_selected" from="AdvancedOptions/TextThemeChooser/Chooser" to="AdvancedOptions/TextThemeChooser" method="_on_chooser_item_selected"]
 [connection signal="resize" from="AdvancedOptions/WriteSpeedAspectsToggler" to="." method="_on_resize_height"]
@@ -369,4 +407,8 @@ text = "Debug"
 [connection signal="value_changed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" to="." method="_on_field_updated"]
 [connection signal="resize" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/CheckBox" to="." method="_on_resize_height"]
 [connection signal="pressed" from="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags/Buttons/AddButton" to="AdvancedOptions/StoryFlags/HBoxContainer/CheckFlags" method="_on_add_button_pressed"]
+[connection signal="resize" from="AdvancedOptions/AllowBackField/DisableBackToggler" to="." method="_on_resize_height"]
+[connection signal="toggled" from="AdvancedOptions/AllowBackField/DisableBackToggler" to="." method="_on_field_updated_state"]
+[connection signal="field_updated" from="AdvancedOptions/RejectBackMessageField" to="." method="_on_field_updated"]
+[connection signal="text_changed" from="AdvancedOptions/RejectBackMessageField/InputField" to="AdvancedOptions/RejectBackMessageField" method="_on_input_field_text_changed"]
 [connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

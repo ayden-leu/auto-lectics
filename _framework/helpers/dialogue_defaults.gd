@@ -63,11 +63,14 @@ const DEFAULT_OPTION:Dictionary = {
 	"checkFlags": {},
 	"setFlags": {},
 
+	"allowBack": true,
+	"rejectBackMessage": "[ERROR: Cannot go back to previous dialogue ID]",
+
 	"sfx": {
 		"spawn": "none",
 		"text": "none"
 	},
 
 	"spawnDelay": 0.0,
-	"lifetime": -0.1,
+	"lifetime": 0.0,
 }

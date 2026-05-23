@@ -6,15 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="5_coiy0"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_coiy0"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cg8tx"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gffea"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8deg6"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qfo8r"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_to7hj"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2s35j"]
 
 [node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
 layout_mode = 3
@@ -204,19 +204,19 @@ sfxIds = Dictionary[String, String]({
 })
 
 [node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_cg8tx")
+stream = SubResource("AudioStreamRandomizer_coiy0")
 
 [node name="entryGuessedCorrectly" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_8deg6")
+stream = SubResource("AudioStreamRandomizer_cg8tx")
 
 [node name="entryNameSubmitted" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_qfo8r")
+stream = SubResource("AudioStreamRandomizer_gffea")
 
 [node name="guessNpcNameTextChanged" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_to7hj")
+stream = SubResource("AudioStreamRandomizer_8deg6")
 
 [node name="notesFieldTextUpdated" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_2s35j")
+stream = SubResource("AudioStreamRandomizer_qfo8r")
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]

@@ -8,6 +8,7 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5cye6"]
 
 [node name="MenuManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_ymnrr")
 
 [node name="Overlay" type="ColorRect" parent="."]

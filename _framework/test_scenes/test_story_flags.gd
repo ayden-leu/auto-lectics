@@ -38,6 +38,11 @@ extends Control
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	FR_MenuManager.disable()
+	FR_WindowManager.disable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
+
 	_loadOptionButtonOptions(
 		flagField,
 		_getFlags().keys()
