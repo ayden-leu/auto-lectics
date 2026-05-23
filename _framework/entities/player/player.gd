@@ -21,6 +21,10 @@ signal no_longer_looking_at_interactable()
 signal looking_at_grappleable()
 ## Emitted when no longer looking at a grappleable thing.
 signal no_longer_looking_at_grappleable()
+## Emitted when starting to respawn.
+signal respawning_start()
+## Emitted when finishing respawning.
+signal respawning_finished()
 
 # ------------------------------------------------
 # enums
@@ -239,6 +243,7 @@ func respawnForce():
 	global_position = _lastValidPosition
 	global_position.y += 0.1
 	grapplingHook.reset()
+	respawning_finished.emit()
 
 ## Puts player at [member _lastValidPosition], but only after the fade in.
 func respawn() -> void:
@@ -248,6 +253,7 @@ func respawn() -> void:
 	_respawning = true
 	_sfxEventHandler.play("death")
 	_overlay.startFadeIn()
+	respawning_start.emit()
 	await _overlay.fade_in_complete
 
 	grapplingHook.reset()
@@ -262,6 +268,26 @@ func respawn() -> void:
 ## Moves the player to [memmber respawnCheckpointLocation] immediately.
 func respawnCheckpoint() -> void:
 	global_position = respawnCheckpointLocation.global_position
+
+## Fancy respawn method due to dying to [RestartLoopManagerArea3D].
+func respawnFancy() -> void:
+	if _respawning:
+		return
+
+	_respawning = true
+	_sfxEventHandler.play("deathFancy")
+	_overlay.startFadeIn()
+	respawning_start.emit()
+	await _overlay.fade_in_complete
+
+	grapplingHook.reset()
+
+	await get_tree().create_timer(respawnDelay).timeout
+
+	_respawning = false
+	respawnForce()
+	_overlay.startFadeOut()
+	_sfxEventHandler.play("respawnFancy")
 
 # ------------------------------------------------
 # functions only referenced inside this script

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://nnv27ko17ev3"]
+
+[ext_resource type="Script" uid="uid://dgbvsvuhralbt" path="res://_framework/helpers/restart_loop_manager_area_3d.gd" id="1_dxhej"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lv1n7"]
+resource_local_to_scene = true
+
+[node name="RestartLoopManagerArea3D" type="Area3D"]
+collision_layer = 0
+script = ExtResource("1_dxhej")
+growRate = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_lv1n7")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

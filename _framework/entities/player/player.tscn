@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=15 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
@@ -15,9 +15,13 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 5
@@ -74,18 +78,26 @@ player = NodePath("..")
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
 "death": "death",
+"deathFancy": "",
 "jump": "",
-"respawn": "respawn"
+"respawn": "respawn",
+"respawnFancy": ""
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_qclge")
+
+[node name="deathFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_k4ncf")
 
 [node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_hh4bn")
 
 [node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_6t6ql")
+
+[node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_s2ddf")
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true
