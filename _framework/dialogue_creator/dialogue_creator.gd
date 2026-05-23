@@ -89,7 +89,7 @@ func _createNodesFromFile(filename:String) -> void:
 	var filePath:String = _SAVE_PATH + _npcNameField.text + "/" + filename
 	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
 	if file == null:
-		printerr("DialogueCreator: Error opening file: ", filePath)
+		printerr("DialogueCreator: Error opening file [", filePath, "] during node creation.")
 		return
 
 	var data = JSON.parse_string(file.get_as_text())
@@ -170,6 +170,13 @@ func _createNodesFromFile(filename:String) -> void:
 
 		if option.has("checkFlags"):
 			newOptionNode.checkFlags = option.checkFlags
+
+		if option.has("allowBack"):
+			newOptionNode.disableBack = !option.allowBack
+
+		if option.has("rejectBackMessage"):
+			print_debug(option.rejectBackMessage)
+			newOptionNode.rejectBackMessage = option.rejectBackMessage
 
 		if option.has("nextID"):
 			newOptionNode.nextID = option.nextID
@@ -258,7 +265,7 @@ func _loadNpcDefaults() -> void:
 	var filePath:String = _SAVE_PATH + _npcNameField.text + "/" + DialogueLoader.DEFAULT_DIALOGUE_ID + DialogueLoader.DIALOGUE_FILE_TYPE
 	var file:FileAccess = FileAccess.open(filePath, FileAccess.READ)
 	if file == null:
-		printerr("DialogueCreator: Error opening file: ", filePath)
+		printerr("DialogueCreator:  Error opening file [", filePath, "] during load NPC dialogue defaults.  Error #", FileAccess.get_open_error())
 		return
 
 	# TODO:  move json parsing to own function
@@ -276,7 +283,7 @@ func _loadNpcDefaults() -> void:
 	filePath = _SAVE_PATH + _npcNameField.text + "/" + DialogueLoader.DEFAULT_OPTION_ID + DialogueLoader.DIALOGUE_FILE_TYPE
 	file = FileAccess.open(filePath, FileAccess.READ)
 	if file == null:
-		printerr("DialogueCreator: Error opening file: ", filePath)
+		printerr("DialogueCreator:  Error opening file [", filePath, "] during load NPC option defaults.  Error #", FileAccess.get_open_error())
 		return
 
 	data = JSON.parse_string(file.get_as_text())

@@ -94,17 +94,28 @@ func play(eventName:String) -> void:
 		printerr("SfxEventHandler:  Could not find event player of name [", eventName, "]")
 		return
 
-	print("playing ", eventName)
+	print("SfxEventHandler:  Playing ", eventName)
 
 	player.stop()
 	player.play()
+
+## Stops the sound for the SFX given event name.
+func stop(eventName:String) -> void:
+	var player:AudioStreamPlayer = _sfxEventNameToPlayer[eventName]
+	if player == null:
+		printerr("SfxEventHandler:  Could not find event player of name [", eventName, "]")
+		return
+
+	print("SfxEventHandler:  Stopping ", eventName)
+
+	player.stop()
 
 ## Returns the [AudioStreamPlayer] for the given SFX event name.
 ## Returns [code]null[/code] if it can't find one.
 func getPlayerForEvent(eventName:String) -> AudioStreamPlayer:
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer.get(eventName)
 	if not player:
-		printerr("SfxEventHandler:  Could not find an AudioStreamPlayer for event [", eventName, "]")
+		print("SfxEventHandler:  Could not find an AudioStreamPlayer for event [", eventName, "]")
 
 	return player
 
@@ -149,6 +160,17 @@ func _updateEventNameFromPlayer(player:AudioStreamPlayer) -> void:
 	var index:int = temp.find(player.name)
 	move_child(player, index)
 
+## [b]Internal-use only.[/b]
+## Adds an entry into [member sfxIds], along with other internal variables.
+func _addEntryToSfxIds(player:AudioStreamPlayer) -> void:
+	_addToVariables(player)
+	sfxIds = sfxIds.duplicate(true)  # needed to avoid an error
+	sfxIds[player.name] = ""
+	player.renamed.connect(_on_child_renamed.bind(player))
+	notify_property_list_changed()
+
+## [b]Internal-use only.[/b]
+## Handles the removal of an [AudioStreamPlayer] child.
 func _actuallyRemovePlayer(player:AudioStreamPlayer) -> void:
 	_removeFromVariables(player)
 	sfxIds.erase(player.name)
@@ -165,9 +187,7 @@ func _on_child_entered_tree(node: Node) -> void:
 		return
 	var child:AudioStreamPlayer = node
 
-	_addToVariables(child)
-	sfxIds[child.name] = ""
-	child.renamed.connect(_on_child_renamed.bind(child))
+	_addEntryToSfxIds(child)
 	child.stream = AudioStreamRandomizer.new()
 
 ## [b]Internal-use only.[/b]
@@ -188,17 +208,24 @@ func _on_child_exiting_tree(node: Node) -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a child of this is node is renamed.
 func _on_child_renamed(child:AudioStreamPlayer) -> void:
+	print("eggs")
 	_updateEventNameFromPlayer(child)
 
 func _on_tree_entered() -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
+	if not Engine.is_editor_hint():
+		return
+	call_deferred("_continue_on_tree_entered")
+func _continue_on_tree_entered() -> void:
 	_loading = false
 
-func _on_tree_exited() -> void:
-	#_loading = true
-	pass
+	# failsafe in case there are AudioStreamPlayer children but
+	# the sfxIds list is empty for some reason.
+	if sfxIds.is_empty():
+		sfxIds = sfxIds.duplicate(true)  # needed to avoid an error
+		for child in get_children():
+			if child is not AudioStreamPlayer:
+				continue
+			sfxIds[child.name] = ""
 
 func _on_tree_exiting() -> void:
 	_loading = true

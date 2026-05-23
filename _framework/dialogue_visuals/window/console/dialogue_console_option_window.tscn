@@ -101,4 +101,8 @@ stream = SubResource("AudioStreamRandomizer_febrp")
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_echnl")
 
+[node name="LifetimeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
 [connection signal="pressed" from="Button" to="." method="_on_pressed"]
+[connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]

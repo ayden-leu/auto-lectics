@@ -62,8 +62,10 @@ func _on_options_pressed() -> void:
 	sfxEventHandler.play("buttonPressed")
 	FR_MenuManager.openMenu("options")
 
+## @deprecated
 ## [b]Internal-use only.[/b]  Handles logic for blueprint button pressing.
 func _on_blueprint_button_pressed() -> void:
+	return
 	print("blueprint open")
 	sfxEventHandler.play("buttonPressed")
 	FR_MenuManager.openMenu("blueprint")

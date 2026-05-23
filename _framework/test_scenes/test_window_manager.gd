@@ -33,6 +33,11 @@ extends Control
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
+func _ready() -> void:
+	FR_MenuManager.disable()
+	FR_WindowManager.enable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -90,6 +95,21 @@ func _on_push_message_to_console_pressed() -> void:
 		meta.instant = %MessageInstant.button_pressed
 
 	FR_WindowManager.pushMessageToConsole(%MessageToConsole.text, meta)
+
+func _on_create_blueprint_window_pressed() -> void:
+	FR_WindowManager.createBlueprintWindow()
+
+func _on_subscribe_to_blueprint_window_pressed() -> void:
+	FR_WindowManager.subscribeToBlueprintWindow(self)
+
+func _on_unsubscribe_to_blueprint_window_pressed() -> void:
+	FR_WindowManager.unsubscribeToBlueprintWindow(self)
+
+func _on_blueprint_npc_name_guessed_correctly(npcID:String) -> void:
+	%BlueprintEntryGuessedCorrectlyID.text = npcID
+
+func _on_blueprint_unlock_condition_met(conditionID:String) -> void:
+	%BlueprintUnlockConditionMet.text = conditionID
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

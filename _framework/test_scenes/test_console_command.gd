@@ -36,6 +36,10 @@ extends Node3D
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	FR_MenuManager.enable()
+	FR_WindowManager.enable()
+	CursorHandler.setDefault("hidden")
+	CursorHandler.hideNuclear()
 	FR_WindowManager.subscribeToConsole(self)
 
 # ------------------------------------------------
@@ -59,7 +63,7 @@ func _on_console_command_entered(command:String) -> void:
 	elif command == "spin_reset":
 		barAnimPlayer.play("RESET")
 	elif command == "unfreeze":
-		Player.disableInput(false)
+		Player.unfreezeForce()
 	elif command == "jump":
 		player.jump()
 

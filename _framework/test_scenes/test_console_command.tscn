@@ -102,23 +102,11 @@ transform = Transform3D(0.54621893, 0.042597797, -0.8365587, 0.8376424, -0.02777
 light_energy = 0.125
 shadow_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("3_od5lk")]
+[node name="Player" parent="." instance=ExtResource("3_od5lk")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3044707, 2.883009, -3.839714)
 maxSpeed = 12.6
 acceleration = 15.0
-sfxPlayers = {
-"death": NodePath("SFX/Death"),
-"grappleExtending": NodePath("SFX/grapple/Extending"),
-"grappleHitFail": NodePath("SFX/grapple/HitFail"),
-"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
-"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
-"grappleRecall": NodePath("SFX/grapple/Recall"),
-"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
-"grappleThrow": NodePath("SFX/grapple/Throw"),
-"jump": NodePath("SFX/Jump"),
-"respawn": NodePath("SFX/Respawn")
-}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_4x3dp")]
 focus = NodePath("../Player")
@@ -136,7 +124,7 @@ initialDialogueID = "start"
 metadata/_edit_group_ = true
 
 [node name="Bar" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.81208336, 0, -0.58354115, 0, 1, 0, 0.58354115, 0, 0.81208336, 2.686091, 4.3653107, 4.212739)
+transform = Transform3D(0.81208336, 0, -0.5835411, 0, 1, 0, 0.5835411, 0, 0.81208336, 2.686091, 4.3653107, 4.212739)
 mesh = SubResource("BoxMesh_ee424")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Bar"]

@@ -42,7 +42,7 @@ const DIALOGUE_ID_PORT:int = 0
 ## The ID field you can edit.
 @onready var idField:DC_BaseNodeField = %IdField
 ## The text field you can edit.
-@onready var textField:DC_BaseNodeField = %TextField
+@onready var textField:DC_BaseNodeTextField = %TextField
 ## The node that handles the type you can choose.
 @onready var typeField:DC_BaseNodeChooser = %TypeChooser
 ## The node that handles the text themes you can choose.
@@ -83,9 +83,9 @@ var idUpdateFromField:bool = true
 ## Setting this will update other nodes appropriately.
 var text:String:
 	get():
-		return textField.value
+		return textField.text
 	set(newText):
-		textField.value = newText
+		textField.text = newText
 
 ## The type of this [DC_DialogueNode].
 ## Setting this will update other nodes appropriately.

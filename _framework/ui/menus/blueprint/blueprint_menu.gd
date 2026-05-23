@@ -1,6 +1,7 @@
 @tool
 extends Menu
 class_name BlueprintMenu
+## @deprecated
 
 # ------------------------------------------------
 # signals

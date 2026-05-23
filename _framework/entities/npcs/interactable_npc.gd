@@ -178,13 +178,13 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	isTalking = true
 	patrolEnabled = false
 	_currentInteractor = interactor
-	if _currentInteractor:
-		if _currentInteractor.has_method("disableInput"):
-			_currentInteractor.disableInput(true)
-		if _currentInteractor.has_method("freeze"):
-			_currentInteractor.freeze(true)
-	InputHandler.showCursor()
-	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	# moved logic to WindowManager.createDialogueConsole()
+	# since there is only one interactor at the moment:  the Player
+	#if _currentInteractor:
+		#if _currentInteractor.has_method("disableInput"):
+			#_currentInteractor.disableInput(true)
+		#if _currentInteractor.has_method("freeze"):
+			#_currentInteractor.freeze(true)
 
 	FR_WindowManager.createDialogueConsole()
 	FR_WindowManager.subscribeToConsole(self)
@@ -195,12 +195,14 @@ func _endDialogueConsole() -> void:
 	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
 
-	if _currentInteractor:
-		if _currentInteractor.has_method("disableInput"):
-			_currentInteractor.disableInput(false)
-		if _currentInteractor.has_method("freeze"):
-			_currentInteractor.freeze(false)
-	InputHandler.hideCursor()
+	# moved logic to WindowManager.createDialogueConsole()
+	# since there is only one interactor at the moment:  the Player
+	#if _currentInteractor:
+		#if _currentInteractor.has_method("disableInput"):
+			#_currentInteractor.disableInput(false)
+		#if _currentInteractor.has_method("freeze"):
+			#_currentInteractor.freeze(false)
+	#FR_WindowManager.updateCursorStateForWindows()
 
 	isTalking = false
 	_currentInteractor = null
@@ -254,7 +256,7 @@ func _on_console_all_dialogue_text_visible() -> void:
 	dialogue_all_visible.emit()
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
-func _on_console_close(console:DialogueConsole) -> void:
+func _on_console_close(_console:DialogueConsole) -> void:
 	_endDialogueConsole()
 
 # ------------------------------------------------
