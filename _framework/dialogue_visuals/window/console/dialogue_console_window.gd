@@ -303,6 +303,7 @@ func loadOptionData(options:Array) -> void:
 			continue
 
 		if StoryFlags.flagsMatch(option.checkFlags):
+			option.disabled = false
 			_optionData.push_back(option)
 
 	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
@@ -449,7 +450,6 @@ func _spawnOptionWindows() -> void:
 		optionWindow.enabled.connect(_on_option_window_enabled)
 		optionWindow.disabled.connect(_on_option_window_disabled)
 		optionWindow.start()
-		optionData.disabled = false
 
 		_optionWindows.push_back(optionWindow)
 		new_option_available.emit()

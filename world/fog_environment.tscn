@@ -1,6 +1,7 @@
-[gd_scene load_steps=39 format=3 uid="uid://cfwl7pu6nk30f"]
+[gd_scene load_steps=37 format=3 uid="uid://cfwl7pu6nk30f"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_p18v3"]
+[ext_resource type="Script" uid="uid://bebv6r4h26304" path="res://world/fog_environment.gd" id="1_pllfd"]
 [ext_resource type="PackedScene" uid="uid://jdqp5kjdb116" path="res://models/week6playtestStuff/environment/bridge.fbx" id="2_1cb3g"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_d312g"]
 [ext_resource type="PackedScene" uid="uid://bx4ewdt3mbu28" path="res://models/week6playtestStuff/environment/MainTube/bridgeExport.fbx" id="3_d312g"]
@@ -13,8 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://cet3x0me6kuu3" path="res://models/week6playtestStuff/environment/embellishments/scaffoldRound.fbx" id="10_0kckk"]
 [ext_resource type="PackedScene" uid="uid://c06qm20jo0ih2" path="res://models/week6playtestStuff/environment/embellishments/bigFence.fbx" id="11_ogbfj"]
 [ext_resource type="PackedScene" uid="uid://cjm7e1rpufunn" path="res://models/week6playtestStuff/environment/MainTube/box.fbx" id="12_n67xg"]
-[ext_resource type="PackedScene" path="res://models/environment/MainTube/catwalk_with_collision.tscn" id="13_0lgic"]
-[ext_resource type="PackedScene" path="res://models/environment/MainTube/catwalkSupport.fbx" id="14_ne63c"]
 [ext_resource type="PackedScene" uid="uid://c4tgf65dl5wfu" path="res://models/week6playtestStuff/environment/MainTube/plank.fbx" id="15_1cjcc"]
 [ext_resource type="PackedScene" uid="uid://c3hd7y2hgpe7p" path="res://models/week6playtestStuff/environment/MainTube/plank.tscn" id="16_csckh"]
 [ext_resource type="PackedScene" uid="uid://coq7r7deuegla" path="res://models/week6playtestStuff/environment/tubes/classicBend.fbx" id="17_5a8su"]
@@ -25,21 +24,20 @@
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="22_lp4es"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="23_h7x46"]
 [ext_resource type="PackedScene" uid="uid://tuts1n43wyb5" path="res://entities/npcs/collectorNPC.tscn" id="24_4awyc"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://entities/player/player.tscn" id="25_l8c0b"]
-[ext_resource type="PackedScene" path="res://test_scenes/debug_camera.tscn" id="26_uyloo"]
-[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://entities/player/player_camera.tscn" id="27_t7mbn"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="25_l8c0b"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="27_t7mbn"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="28_tiui6"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1cb3g"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_v04sp"]
 panorama = ExtResource("1_p18v3")
 energy_multiplier = 2.2
 
-[sub_resource type="Sky" id="Sky_d312g"]
-sky_material = SubResource("PanoramaSkyMaterial_1cb3g")
+[sub_resource type="Sky" id="Sky_pllfd"]
+sky_material = SubResource("PanoramaSkyMaterial_v04sp")
 
-[sub_resource type="Environment" id="Environment_eo0mw"]
+[sub_resource type="Environment" id="Environment_p18v3"]
 background_mode = 2
-sky = SubResource("Sky_d312g")
+sky = SubResource("Sky_pllfd")
 glow_enabled = true
 fog_enabled = true
 fog_mode = 1
@@ -69,12 +67,13 @@ size = Vector3(8.547119, 60.115936, 172.20242)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_rfx78"]
 radius = 28.77295
 
-[node name="week_6_playtest" type="Node3D"]
+[node name="FogTest" type="Node3D"]
+script = ExtResource("1_pllfd")
 
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_eo0mw")
+environment = SubResource("Environment_p18v3")
 script = ExtResource("2_d312g")
 smog_density = 0.035
 fog_start = 80.0
@@ -422,18 +421,58 @@ shape = SubResource("CylinderShape3D_rfx78")
 [node name="flooring" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("8_awwiw")]
 transform = Transform3D(0.3612845, 0, 0, 0, 0.03371544, 0, 0, 0, 0.3612845, 0.041815437, 1.0112926, -0.007515796)
 
-[node name="catwalk_with_collision" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("13_0lgic")]
+[node name="catwalk_with_collision" parent="Environment/Models/mainTower/structural  elements"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(0.0600285, 0, 0, 0, 0.0016192042, 0, 0, 0, 0.0600285, 0.018481346, 1.4581476, -0.014156662)
+script = null
 
-[node name="catwalk_with_collision3" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("13_0lgic")]
+[node name="catwalk_with_collision3" parent="Environment/Models/mainTower/structural  elements"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(0.0600285, 0, 0, 0, 0.0016192042, 0, 0, 0, 0.0600285, 0.018481346, 1.829531, -0.014156662)
+script = null
 
-[node name="catwalk_with_collision2" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("13_0lgic")]
+[node name="catwalk_with_collision2" parent="Environment/Models/mainTower/structural  elements"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(0.056572743, 0.00037438446, 0.014501931, -0.016419206, 0.0015359935, 0.009552555, -0.011547986, -0.00034983153, 0.05746185, 0.24652198, 1.2594978, 0.0009975638)
 visible = false
+script = null
 
-[node name="catwalkSupport" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("14_ne63c")]
+[node name="catwalkSupport" parent="Environment/Models/mainTower/structural  elements"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(0.055927217, 0, -0.020352522, 0, 0.03371544, 0, 0.020352522, 0, 0.055927217, 0.018481346, 0.98951674, -0.014156662)
+script = null
 
 [node name="plank" parent="Environment/Models/mainTower/structural  elements" instance=ExtResource("15_1cjcc")]
 transform = Transform3D(0.07223833, 0, 0, 0, 0.066591404, 0.02799929, 0, -0.02799929, 0.066591404, 0.1661584, 1.3192453, 0.36771134)
@@ -511,9 +550,8 @@ omni_range = 37.16013
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="dishNPC" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("21_s0gvk")]
+[node name="dishNPC" parent="npcs" instance=ExtResource("21_s0gvk")]
 transform = Transform3D(-0.47506624, 0, -0.49349466, 0, 0.685, 0, 0.49349466, 0, -0.47506624, 7.4640045, 0.04699976, -17.95951)
-dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
 
 [node name="Node" type="Node" parent="npcs/dishNPC"]
 
@@ -521,9 +559,8 @@ dialogueBoxAnchor = NodePath("Node/DialogueBoxAnchor")
 transform = Transform3D(0.014214218, 0, -0.6848525, 0, 0.68500006, 0, 0.6848525, 0, 0.014214218, 4.5947924, 1.1005831, -18.945412)
 metadata/_edit_group_ = true
 
-[node name="looker" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("22_lp4es")]
+[node name="looker" parent="npcs" instance=ExtResource("22_lp4es")]
 transform = Transform3D(0.7508609, 0, 0.6604606, 0, 1, 0, -0.6604606, 0, 0.7508609, 20.853655, -0.7124715, 6.023035)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
 
 [node name="Node" type="Node" parent="npcs/looker"]
 
@@ -531,9 +568,8 @@ dialogueBoxAnchor = NodePath("Node/Marker3D")
 transform = Transform3D(0.20240945, 0.16826245, 1.5173407, -0.86017233, 1.2770988, -0.026876323, -1.2612439, -0.8439833, 0.2618389, 24.246983, 6.8383894, 5.856095)
 metadata/_edit_group_ = true
 
-[node name="preacher" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("23_h7x46")]
+[node name="preacher" parent="npcs" instance=ExtResource("23_h7x46")]
 transform = Transform3D(0.42500845, 0, 0.76174265, 0, 0.8722867, 0, -0.76174265, 0, 0.42500845, 4.6545963, 7.2353973, 19.53167)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
 
 [node name="Node" type="Node" parent="npcs/preacher"]
 
@@ -541,9 +577,8 @@ dialogueBoxAnchor = NodePath("Node/Marker3D")
 transform = Transform3D(0.42860356, 0.29127365, 0.9709255, -0.5996677, 0.922762, -0.012108367, -0.8172731, -0.5243165, 0.51806825, 5.241706, 10.335478, 18.586046)
 metadata/_edit_group_ = true
 
-[node name="collector" parent="npcs" node_paths=PackedStringArray("dialogueBoxAnchor") instance=ExtResource("24_4awyc")]
+[node name="collector" parent="npcs" instance=ExtResource("24_4awyc")]
 transform = Transform3D(-0.71693957, 0, -0.49687183, 0, 0.8722866, 0, 0.49687183, 0, -0.71693957, 22.222721, -12.451921, 42.56765)
-dialogueBoxAnchor = NodePath("Node/Marker3D")
 
 [node name="Node" type="Node" parent="npcs/collector"]
 
@@ -554,22 +589,9 @@ metadata/_edit_group_ = true
 [node name="Player" parent="." instance=ExtResource("25_l8c0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 1.7612977, 1.3495631)
 acceleration = 18.0
-deceleration = 28.0
-
-[node name="DebugCamera" parent="." node_paths=PackedStringArray("mainCamera") instance=ExtResource("26_uyloo")]
-transform = Transform3D(0.99440265, 0.023447629, -0.10302201, 0, 0.9750643, 0.22192293, 0.10565666, -0.22068074, 0.9696065, 0, 4.3198805, 7.5824165)
-mainCamera = NodePath("../PlayerCamera/Camera3D")
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("27_t7mbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.721436, 2.2003224, 1.3495631)
 focus = NodePath("../Player")
 
-[node name="Camera3D" parent="PlayerCamera" index="0"]
-current = true
-
-[node name="InputHandler" parent="." node_paths=PackedStringArray("player", "wantsToKnowMouseMoved", "wantsToKnowWhenInteract") instance=ExtResource("28_tiui6")]
-player = NodePath("../Player")
-wantsToKnowMouseMoved = [NodePath("../Player"), NodePath("../PlayerCamera")]
-wantsToKnowWhenInteract = [NodePath("../Player")]
-
-[editable path="PlayerCamera"]
+[node name="InputHandler" parent="." instance=ExtResource("28_tiui6")]
