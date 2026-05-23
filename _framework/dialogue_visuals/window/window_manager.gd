@@ -111,6 +111,9 @@ var blueprintDetailWindow:BlueprintNpcDetailWindow = null
 ## Whether this does stuff or not.
 var enabled:bool = true
 ## [b]Internal-use only.[/b]
+## Whether inputs from the player should be registered or not.
+var keybindsEnabled:bool = true
+## [b]Internal-use only.[/b]
 ## Holds all windows created by the manager.
 var _spawnedWindows:Array[DialogueWindow] = []
 ## [b]Internal-use only.[/b]
@@ -137,7 +140,7 @@ var _blueprintSavedState:Dictionary = {}
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _input(event:InputEvent) -> void:
-	if not enabled:
+	if not enabled or not keybindsEnabled:
 		return
 
 	if event.is_action_pressed("open_blueprint"):
@@ -153,6 +156,14 @@ func enable() -> void:
 ## Disables the [WindowManager].
 func disable() -> void:
 	enabled = false
+
+## Enables the reading of player inputs.
+func enableKeybinds() -> void:
+	keybindsEnabled = true
+
+## Disables the reading of player inputs.
+func disableKeybinds() -> void:
+	keybindsEnabled = false
 
 ## Creates an example [DialogueWindow].
 func createExampleWindow() -> DialogueWindow:

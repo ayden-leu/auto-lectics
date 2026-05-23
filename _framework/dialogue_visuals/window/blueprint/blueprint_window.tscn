@@ -85,7 +85,6 @@ offset_bottom = 206.0
 
 [node name="npc_test_1" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
 layout_mode = 2
-mouse_filter = 0
 npcID = "npc_test_1"
 displayName = "Aster"
 entryTextureUnlocked = ExtResource("6_r6kuu")

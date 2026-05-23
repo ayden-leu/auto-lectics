@@ -11,7 +11,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 200.0
 offset_bottom = 200.0
-mouse_filter = 2
+mouse_filter = 1
 theme = ExtResource("1_wg1im")
 script = ExtResource("1_5e3ld")
 entryTextureUnlocked = ExtResource("3_v8nm0")
@@ -47,6 +47,7 @@ offset_right = 64.5
 offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
 text = "Blueprint NPC Entry"
 horizontal_alignment = 1
 
