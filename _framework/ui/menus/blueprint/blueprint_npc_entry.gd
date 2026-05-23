@@ -30,7 +30,11 @@ signal selected(me:BlueprintMenuNpcEntry)
 		npcID = newName
 		name = newName
 ## The "correct" name of the NPC in this entry.
-@export var displayName:String = "Blueprint NPC Entry"
+@export var displayName:String = "Blueprint NPC Entry":
+	set(newName):
+		displayName = newName
+		if Engine.is_editor_hint() and _label:
+			_label.text = newName
 ## The text that is displayed when this entry is locked.
 @export var lockedText:String = "???"
 ## The icon for this entry when it is unlocked.

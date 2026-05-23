@@ -323,7 +323,7 @@ func _on_detail_window_name_submitted(entry:BlueprintMenuNpcEntry, submittedName
 	_checkUnlockConditions()
 
 	if _detailWindow != null:
-		_detailWindow.load_entry(_selectedEntry)
+		_detailWindow.loadEntry(_selectedEntry)
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when notes are typed.
