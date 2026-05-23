@@ -23,7 +23,7 @@ static var currentFlags: Dictionary = DEFAULT_FLAGS.duplicate(true)
 ## 	"testFlag": false,
 ## 	"anotherFlag": true
 ## }
-## 
+##
 ## if StoryFlags.flagsMatch(flagsToCheck):
 ## 	print("All flags pass.")
 ## else:
@@ -37,7 +37,7 @@ static var currentFlags: Dictionary = DEFAULT_FLAGS.duplicate(true)
 static func flagsMatch(flagsToCheck: Dictionary) -> bool:
 	for flagID in flagsToCheck.keys():
 		var currentValue: Variant = currentFlags[flagID]
-		
+
 		if currentValue != flagsToCheck[flagID]:
 			print(flagID, " fails check. (is ", currentValue, ", check is ", flagsToCheck[flagID], ")")
 			return false
@@ -50,7 +50,7 @@ static func flagsMatch(flagsToCheck: Dictionary) -> bool:
 ## 	"testFlag": false,
 ## 	"anotherFlag": true
 ## }
-## 
+##
 ## StoryFlags.updateFlags(flagsToUpdate)
 ## [/codeblock]
 ## If you only need to check against one flag, you can just read [member currentFlags] directly.
@@ -61,7 +61,7 @@ static func updateFlags(flagsToUpdate: Dictionary) -> void:
 	for flagID in flagsToUpdate.keys():
 		var value: Variant = flagsToUpdate[flagID]
 		var currentValue: Variant = currentFlags[flagID]
-		
+
 		# support increment / decrement for int flags
 		if typeof(value) == TYPE_STRING and value == "increment":
 			if typeof(currentValue) == TYPE_INT:

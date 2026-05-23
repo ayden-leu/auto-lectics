@@ -1,4 +1,4 @@
-extends Node 
+extends Node
 
 # ------------------------------------------------
 # signals
@@ -28,16 +28,21 @@ const SCENES = {
 	"Player": "uid://co1nc22ck82l0",
 	"DialogueBox": "uid://dwqide2q2tp3i",
 	"DialogueBoxOption": "uid://pdwngeenin11",
-	"DialogueWarningTile3D": "uid://wm6t0orfpjfl",
+	"WarningTile3D": "uid://wm6t0orfpjfl",
 	"DialogueConsoleWindow": "uid://b8oqtsvu488a",
 	"DialogueConsoleOptionWindow": "uid://4opwac4ndc2k",
 	"DialogueConsoleLogEntry": "uid://1n8yvdu14dcd",
-	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e"
+	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e",
+	"DialogueConsoleLogEntryIdLabel": "uid://cdt7ouilmdwo0",
+	"DialogueWarningTileWindow": "uid://dpeqr6fpd34gm",
+	"WarningTile2D": "uid://c1qmg4lyrgjqc",
+	"BlueprintWindow": "uid://ovwd5xcohsao",
+	"BlueprintNpcDetailWindow": "uid://524kk63lga7"
 }
 
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {
-	"DIALOGUE": "res://dialogue_objects/",
+	"DIALOGUE": "res://dialogue_trees/",
 	"SFX": "res://sounds/sfx/",
 	"LABEL_PRESETS": "res://fonts/_label_presets/"
 }
@@ -78,33 +83,29 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 	var top:Dictionary = DialogueLoader.loadDialogueNodeFile(topPath)
 	if top.is_empty():
 		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, topPath])
-		return DialogueLoader.loadDialogueNodeFile(
+		top = DialogueLoader.loadDialogueNodeFile(
 			STORAGE_PATH.DIALOGUE + "fallback" + DialogueLoader.DIALOGUE_FILE_TYPE
 		)
-	
+
 	var npcDialogueDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_DIALOGUE_ID)
 	var npcDialogueDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcDialogueDefaultsPath, false)
 	if npcDialogueDefaults.is_empty():
 		print("NPC: No default dialogue attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
-	
+
 	var npcOptionDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_OPTION_ID)
 	var npcOptionDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcOptionDefaultsPath, false)
 	if npcOptionDefaults.is_empty():
 		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
-	
+
 	var withNpcDefaults:Dictionary = DialogueLoader.fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
-	#print(withNpcDefaults.options)
-	
+
 	var result:Dictionary = DialogueLoader.fillDialogueMissingFields(withNpcDefaults)
-	#print(result.options)
-	
+
 	return result
 
 ## Gets the current size of the screen.
 func getScreenSize() -> Vector2:
 	return get_viewport().get_visible_rect().size
-	#return DisplayServer.screen_get_size()
-	#return get_window().size
 
 # ------------------------------------------------
 # functions only referenced inside this script

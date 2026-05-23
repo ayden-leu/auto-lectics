@@ -29,15 +29,25 @@ signal finished_dialogue()
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The hitbox of this Interactable NPC.  Used to allow players to interact with
-## this [InteractableNPC].
+## The hitbox of this Interactable NPC.
+## Used to allow players to interact with this InteractableNPC.
 @export var _hitbox:Area3D
-## If this Interactable NPC should only respond to interactions once.
+## If this InteractableNPC should only respond to interactions once.
 @export var _talkOnlyOnce:bool = true
-## All dialogues belonging to this Interactable NPC will be under "dialogue_objects/[NPC name]"
+## The dialogue tree ID of this InteractableNPC.
+## Dialogue trees are located in "dialogue_trees."
+## Internally, this is just a path to a folder within in "dialogue_trees,"
+## so "_test" and "_test/basic/one" are both valid.
+@export var dialogueTreeID:String = ""
+## The dialogue tree node to load when the player first interacts with this InteractableNPC.
 @export var initialDialogueID:String = ""
 ## Whether this [InteractableNPC] looks at the player while the dialogue event is happening.
 @export var lookAtInteractorWhileTalking:bool = false
+## If true, this [InteractableNPC] makes it so you cannot close the console.
+@export var rejectConsoleExit:bool = false
+## When [member rejectConsoleExit] is true, this will be the message
+## that gets added to the console.
+@export var rejectConsoleExitMessage:String = "[Console Closure Blocked]"
 
 # ------------------------------------------------
 # onready variables
@@ -72,7 +82,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	super()
-	
+
 	_shouldPatrol = patrolEnabled
 	_currentDialogueID = initialDialogueID
 	_hitboxShapes = _getHitboxShapes()
@@ -80,7 +90,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-		
+
 	super(delta)
 	if lookAtInteractorWhileTalking and _currentInteractor and isTalking:
 		lookAtPosition = _currentInteractor.global_position
@@ -120,7 +130,7 @@ func reset() -> void:
 func _getHitboxShapes() -> Array[CollisionShape3D]:
 	var children:Array[Node] = _hitbox.get_children()
 	var shapes:Array[CollisionShape3D] = []
-	
+
 	for child in children:
 		if child is CollisionShape3D:
 			shapes.push_back(child)
@@ -130,22 +140,23 @@ func _getHitboxShapes() -> Array[CollisionShape3D]:
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
 func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	var console:DialogueConsole = FR_WindowManager.dialogueConsole
-	
-	console.nameOfNpcTalkingTo = myName
+
+	console.instigatingNpc = self
 	console.currentDialogueID = _currentDialogueID
-	console.mode = dialogueEntry.mode 
-	
+	console.mode = dialogueEntry.mode
+
 	if dialogueEntry.mode == "hectic":
 		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		console.hecticDuration = dialogueEntry.hecticDuration
 		console.delayBtwnWriteDialogueAndOptions = 0.25
 	else:
 		console.hecticFailureDialogueID = ""
-	
+
 	if dialogueEntry.textThemePreset != "":
 		console.themeVariation.right = dialogueEntry.textThemePreset
-	
+
 	console.textWriteSpeed = dialogueEntry.writeSpeedCustom
-	console.loadSfx(dialogueEntry.sfx)
+	AudioLoader.loadSfxIntoPlayers(dialogueEntry.sfx, console.sfxPlayers)
 	console.textToAdd = dialogueEntry.text
 	console.loadOptionData(dialogueEntry.options)
 	console.prepare()
@@ -156,46 +167,24 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 		_endDialogueConsole()
 		return
 	_currentDialogueID = nextDialogueID
-	
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(myName, _currentDialogueID)
+
+	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	_loadDialogueConsoleData(dialogue)
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
 
-# TODO:  move this to deprecated zone
-## @deprecated
-## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
-func _beginDialogueEventBox(interactor:Node3D) -> void:
-	# rotate to face player immediately to properly spawn dialogue box
-	# is a hacky work around to spawn the [DialogueBox] in the correct position.
-	var currentRotation:Vector3 = rotation
-	if lookAtInteractorWhileTalking and interactor:
-		look_at(Vector3(
-			interactor.global_position.x,
-			global_position.y,
-			interactor.global_position.z
-		))
-		lookAtPosition = interactor.global_position
-	
-	isTalking = true
-	patrolEnabled = false
-	_currentInteractor = interactor
-
-	_spawnDialogueBox()
-	_connectDialogueBoxSignals()
-	_loadNextDialogueBox(initialDialogueID)
-	
-	# restore rotation from before hacky work around
-	rotation = currentRotation
-
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the player.
-func _beginDialogueEventConsole(interactor:Player) -> void:	
+func _beginDialogueEventConsole(interactor:Player) -> void:
 	isTalking = true
 	patrolEnabled = false
 	_currentInteractor = interactor
-	_currentInteractor.set_input_frozen(true)
-	InputHandler.showCursor()
-	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	# moved logic to WindowManager.createDialogueConsole()
+	# since there is only one interactor at the moment:  the Player
+	#if _currentInteractor:
+		#if _currentInteractor.has_method("disableInput"):
+			#_currentInteractor.disableInput(true)
+		#if _currentInteractor.has_method("freeze"):
+			#_currentInteractor.freeze(true)
 
 	FR_WindowManager.createDialogueConsole()
 	FR_WindowManager.subscribeToConsole(self)
@@ -205,10 +194,15 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 func _endDialogueConsole() -> void:
 	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
-	
-	if _currentInteractor and _currentInteractor.has_method("set_input_frozen"):
-		_currentInteractor.set_input_frozen(false)
-	InputHandler.hideCursor()
+
+	# moved logic to WindowManager.createDialogueConsole()
+	# since there is only one interactor at the moment:  the Player
+	#if _currentInteractor:
+		#if _currentInteractor.has_method("disableInput"):
+			#_currentInteractor.disableInput(false)
+		#if _currentInteractor.has_method("freeze"):
+			#_currentInteractor.freeze(false)
+	#FR_WindowManager.updateCursorStateForWindows()
 
 	isTalking = false
 	_currentInteractor = null
@@ -228,47 +222,63 @@ func _endDialogueConsole() -> void:
 func _on_interaction(interactor:Node3D) -> void:
 	if wasTalkedTo or isTalking:
 		return
-		
+
 	#_beginDialogueEventBox(interactor)
 	if interactor is Player:
 		_beginDialogueEventConsole(interactor)
 
 ## [b]Internal-use only.[/b]  Handles logic for when a dialogue option is chosen.
 func _on_console_option_chosen(nextID:String) -> void:
+	if not isTalking:
+		return
+
 	_loadNextDialogueConsole(nextID)
 
 ## [b]Internal-use only.[/b]  Emits [signal option_available].
 func _on_console_new_option_available() -> void:
+	if not isTalking:
+		return
+
 	option_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [all_options_available].
 func _on_console_all_options_available() -> void:
+	if not isTalking:
+		return
+
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
 func _on_console_all_dialogue_text_visible() -> void:
+	if not isTalking:
+		return
+
 	dialogue_all_visible.emit()
+
+## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
+func _on_console_close(_console:DialogueConsole) -> void:
+	_endDialogueConsole()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-		
+
 	if not _hitbox:
 		warnings.push_back("This NPC doesn't have a hitbox assigned yet. This is needed to allow the player to interact with them. A hitbox is an Area3D node.")
 	elif _hitbox.collision_layer != 4:
 		warnings.push_back("The hitbox's collision layer should only have square #3/Bit 2/the Interactable NPC layer enabled.")
-	
+
 	if initialDialogueID == "":
 		warnings.push_back("The initial dialogue ID is not set.")
-	
+
 	#if not _dialogueBoxAnchor:
 		#warnings.push_back("A marker for the dialogue box has not been set yet.")
-	
+
 	var inheritedWarnings:PackedStringArray = super()
 	inheritedWarnings.append_array(warnings)
-	
+
 	return inheritedWarnings
 
 
@@ -317,6 +327,7 @@ const _DIALOGUE_BOX_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBox)
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+@export_subgroup("Deprecated")
 ## @deprecated
 ## Tells the game where to spawn a [DialogueBox] when a player interacts with the Interactable NPC.
 @export var _dialogueBoxAnchor:Marker3D
@@ -354,13 +365,13 @@ var _connectedDialogueBoxSignals:bool = false
 func _spawnDialogueBox() -> void:
 	if _dialogueBox != null:
 		return
-	
+
 	_dialogueBox = _DIALOGUE_BOX_SCENE.instantiate()
 	if(_dialogueBoxAttachMethod == BoxAttachMethod.FOLLOW):
 		_dialogueBoxAnchor.add_child(_dialogueBox)
 		# undo the scaling being inherited from this InteractableNPC
-		_dialogueBox.scale += Vector3.ONE - scale 
-	
+		_dialogueBox.scale += Vector3.ONE - scale
+
 	elif(_dialogueBoxAttachMethod == BoxAttachMethod.STAY):
 		get_parent().add_child(_dialogueBox)
 		_dialogueBox.global_position = _dialogueBoxAnchor.global_position
@@ -373,7 +384,7 @@ func _connectDialogueBoxSignals() -> void:
 	if _connectedDialogueBoxSignals:
 		return
 	_connectedDialogueBoxSignals = true
-	
+
 	_dialogueBox.update_me.connect(_loadNextDialogueBox)
 	_dialogueBox.new_option_available.connect(_on_console_option_chosen)
 	_dialogueBox.all_options_available.connect(_on_console_all_options_available)
@@ -415,14 +426,39 @@ func _loadNextDialogueBox(nextDialogueID: String) -> void:
 	if nextDialogueID == "" and isTalking:
 		_endDialogueBox()
 		return
-	
+
 	_currentDialogueID = nextDialogueID
-	
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(myName, _currentDialogueID)
+
+	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	#print("dialogue data: ", dialogue)
 	_loadDialogueBoxData(dialogue)
 	_dialogueBox.start()
 	dialogue_advanced.emit()
+
+## @deprecated
+## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
+func _beginDialogueEventBox(interactor:Node3D) -> void:
+	# rotate to face player immediately to properly spawn dialogue box
+	# is a hacky work around to spawn the [DialogueBox] in the correct position.
+	var currentRotation:Vector3 = rotation
+	if lookAtInteractorWhileTalking and interactor:
+		look_at(Vector3(
+			interactor.global_position.x,
+			global_position.y,
+			interactor.global_position.z
+		))
+		lookAtPosition = interactor.global_position
+
+	isTalking = true
+	patrolEnabled = false
+	_currentInteractor = interactor
+
+	_spawnDialogueBox()
+	_connectDialogueBoxSignals()
+	_loadNextDialogueBox(initialDialogueID)
+
+	# restore rotation from before hacky work around
+	rotation = currentRotation
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.

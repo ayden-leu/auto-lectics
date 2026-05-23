@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="9_flnpa"]
 [ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="11_3oc8m"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="11_wipx8"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_button_toggle_area.gd" id="12_p0r8u"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
 [ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="12_qo5h7"]
 [ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="14_u8beo"]
 [ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="15_pwsq1"]
@@ -26,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vav2e")
 script = ExtResource("1_emjdv")
-_npcNameField = NodePath("MenuButtons/VBoxContainer/InputArea/NPCName")
+_npcNameField = NodePath("MenuButtons/VBoxContainer/InputArea/DialogueTreeIdField")
 _sidePanel = NodePath("SidePanel")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -81,12 +81,12 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MenuButtons/VBoxContainer/InputArea"]
 layout_mode = 2
-text = "NPC Name"
+text = "Dialogue Tree ID"
 
-[node name="NPCName" type="LineEdit" parent="MenuButtons/VBoxContainer/InputArea"]
+[node name="DialogueTreeIdField" type="LineEdit" parent="MenuButtons/VBoxContainer/InputArea"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "put name here"
+placeholder_text = "IDs found in dialogue_trees"
 
 [node name="HSeparator" type="HSeparator" parent="MenuButtons/VBoxContainer"]
 layout_mode = 2
@@ -156,10 +156,11 @@ layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="SidePanel/Contents/Defaults"]
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 use_hidden_tabs_for_min_size = true
 
 [node name="Dialogue Node" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -273,7 +274,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="Dialogue Option" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -333,9 +333,7 @@ text = "Lifetime"
 
 [node name="InputField" type="SpinBox" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionLifetimeField"]
 layout_mode = 2
-min_value = -0.1
 step = 0.1
-value = -0.1
 allow_greater = true
 
 [node name="HSeparator3" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]

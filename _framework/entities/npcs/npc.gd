@@ -24,10 +24,15 @@ enum PathFollowMethod {
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The main model.  Not used for anything in the base NPC class, but may be used in classes or scripts that extend the NPC class.
+## The main model.
+## Not used for anything in the base NPC class, but may be used in classes or scripts that extend the NPC class.
 @export var model:Node3D
-## The name of the NPC.  Not used for anything in the base NPC class, but may be used in classes that extend the NPC class.
-@export var myName:String = ""
+## The internal ID of this NPC.
+## Used internally for other things.  Unused by the NPC class itself.
+@export var internalID:String = ""
+## The name of the NPC.
+## Used when this NPC's name needs to be displayed for something.  Unused the NPC class itself.
+@export var displayName:String = ""
 
 ## If this [NPC] should be able to move along its [member patrolPath].
 @export var patrolEnabled: bool = false:
@@ -40,7 +45,7 @@ enum PathFollowMethod {
 	set(value):
 		patrolPath = value
 		notify_property_list_changed()
-## How fast this [NPC] should move along the [member patrolPath]. 
+## How fast this [NPC] should move along the [member patrolPath].
 @export var patrolSpeed: float = 2.0
 ## How this [NPC] should patrol on its [member patrolPath].
 @export var pathFollowMode:PathFollowMethod:
@@ -80,17 +85,17 @@ func _ready() -> void:
 
 	if Engine.is_editor_hint():
 		return
-	
+
 	if patrolEnabled:
 		_setupPathFollow()
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if patrolEnabled and not stopFollowingPath and patrolPath:
 		_moveOnPath(delta)
-	
+
 	if lookAtPosition != Vector3.ZERO:
 		_turnToLookAtPosition(delta)
 
@@ -100,7 +105,7 @@ func _process(delta: float) -> void:
 ## Enables this [NPC].  Currently does nothing.
 func enable() -> void:
 	pass
-	
+
 ## Disables this [NPC].  Currently does nothing.
 func disable() -> void:
 	pass
@@ -116,12 +121,12 @@ func reset() -> void:
 func _setupPathFollow() -> void:
 	if patrolPath == null:
 		return
-	
+
 	# Create PathFollow3D child node
 	_pathFollower = PathFollow3D.new()
 	_pathFollower.loop = (pathFollowMode == PathFollowMethod.LOOP)
 	patrolPath.add_child(_pathFollower)
-	
+
 	# Start at closest point
 	if patrolPath.curve:
 		var offset := patrolPath.curve.get_closest_offset(patrolPath.to_local(global_position))
@@ -133,7 +138,7 @@ func _setupPathFollow() -> void:
 func _moveOnPath(delta:float) -> void:
 	var curve_len := patrolPath.curve.get_baked_length()
 	_pathFollower.progress += patrolSpeed * delta * _pathFollowDirection
-	
+
 	# Behavior when ping pong (going back and forth on path)
 	if (pathFollowMode == PathFollowMethod.PING_PONG):
 		if _pathFollower.progress >= curve_len:
@@ -144,21 +149,21 @@ func _moveOnPath(delta:float) -> void:
 			_pathFollower.progress = 0.0
 			_pathFollowDirection = 1.0
 			_waitForAMoment()
-	
+
 	# Behavior when on a closed curve w/ looping enabled
 	elif (pathFollowMode == PathFollowMethod.LOOP):
 		_pathFollower.progress = fposmod(_pathFollower.progress, curve_len)
-	
+
 	# Undefined behavior - follows path once to completion
 	else:
 		_pathFollower.progress = clamp(_pathFollower.progress, 0.0, curve_len)
-	
+
 	# Face forward on path
 	lookAtPosition = _pathFollower.global_position
-	
+
 	# wait for this NPC to turn "forward"
 	await get_tree().process_frame
-	
+
 	# Move NPC on path
 	global_position = _pathFollower.global_position
 
@@ -166,10 +171,10 @@ func _moveOnPath(delta:float) -> void:
 func _turnToLookAtPosition(delta: float) -> void:
 	var direction := lookAtPosition - global_position
 	direction.y = 0.0
-	
+
 	direction = direction.normalized()
 	var target_dir := atan2(-direction.x, -direction.z)
-	
+
 	rotation.y = lerp_angle(rotation.y, target_dir, 5 * delta)
 
 ## [b]Internal-use only.[/b]  If this [NPC] is moving along its [member patrolPath],
@@ -177,7 +182,7 @@ func _turnToLookAtPosition(delta: float) -> void:
 func _waitForAMoment() -> void:
 	if waitAtEndDuration <= 0.0:
 		return
-	
+
 	stopFollowingPath = true
 	await get_tree().create_timer(waitAtEndDuration).timeout
 	stopFollowingPath = false
@@ -199,17 +204,20 @@ func _on_loop_manager_overlay_faded_out() -> void:
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if not model:
 		warnings.push_back("This NPC doesn't have a model.")
-	
-	if myName == "":
+
+	if internalID == "":
+		warnings.push_back("This NPC doesn't have an internal ID yet.")
+
+	if displayName == "":
 		warnings.push_back("This NPC doesn't have a name yet.")
-	
+
 	if patrolEnabled:
 		if not patrolPath and self != get_tree().edited_scene_root:
 			warnings.push_back("This NPC can patrol but doesn't have a path set.")
-	
+
 	return warnings
 
 # Credit for how to do this:
@@ -218,6 +226,6 @@ func _validate_property(property: Dictionary) -> void:
 	if property.name in ["patrolPath", "patrolSpeed", "pathFollowMode", "waitAtEndDuration"] \
 		and not patrolEnabled:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
-	
+
 	if property.name in ["waitAtEndDuration"] and pathFollowMode != PathFollowMethod.PING_PONG:
 		property.usage = PROPERTY_USAGE_NO_EDITOR

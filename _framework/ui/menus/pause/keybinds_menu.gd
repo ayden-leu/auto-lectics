@@ -1,3 +1,4 @@
+@tool
 extends Menu
 
 # ------------------------------------------------
@@ -37,9 +38,12 @@ extends Menu
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	menuID = "keybinds"
 	super()  # runs the inherited class' _ready() function.
-	
+
 	_generateKeybindEntries()
 
 # ------------------------------------------------
@@ -83,16 +87,16 @@ func _generateKeybindEntries() -> void:
 				break
 		if skip:
 			continue
-		
+
 		var entry:HBoxContainer = HBoxContainer.new()
 		_bindingsHolder.add_child(entry)
-		
+
 		var actionName:String = _formatActionName(action)
 		var actionLabel:Label = Label.new()
 		actionLabel.text = actionName
 		actionLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		entry.add_child(actionLabel)
-		
+
 		var bindingLabel:Label = Label.new()
 		var events:Array[InputEvent] = InputMap.action_get_events(action)
 		if events.is_empty():
@@ -105,7 +109,7 @@ func _generateKeybindEntries() -> void:
 		bindingLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		bindingLabel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		entry.add_child(bindingLabel)
-		
+
 
 		# Divider between entries
 		var sep:HSeparator = HSeparator.new()
@@ -118,6 +122,6 @@ func _formatActionName(action:String) -> String:
 func _formatKeybindName(keybind:String) -> String:
 	return keybind.replace("(Physical)", "")
 
-
 func _on_back_pressed() -> void:
+	sfxEventHandler.play("buttonPressed")
 	close()

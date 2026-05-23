@@ -1,11 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=11 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
 [ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="3_ovhmb"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="5_coiy0"]
 
-[node name="BlueprintMenu" type="Control"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_coiy0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cg8tx"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gffea"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8deg6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qfo8r"]
+
+[node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
+sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
@@ -53,19 +65,26 @@ offset_bottom = 609.0
 [node name="npc_test_1" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_1"
-myName = "Aster"
-portraitTexture = ExtResource("3_ovhmb")
+displayName = "Aster"
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="npc_test_2" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_2"
-myName = "Mira"
-portraitTexture = ExtResource("4_coiy0")
+displayName = "Mira"
+entryTextureLocked = ExtResource("3_ovhmb")
 
 [node name="npc_test_3" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
 layout_mode = 2
 npcID = "npc_test_3"
-myName = "Orin"
+displayName = "Orin"
+entryTextureLocked = ExtResource("3_ovhmb")
+
+[node name="npc_test_4" parent="NPCList/NpcEntryHolder" instance=ExtResource("2_puj0o")]
+layout_mode = 2
+npcID = "npc_test_4"
+displayName = "John"
+entryTextureLocked = ExtResource("4_coiy0")
 
 [node name="NpcDetailPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -175,8 +194,33 @@ offset_top = 350.0
 offset_right = 1363.0
 offset_bottom = 452.0
 
+[node name="SfxEventHandler" parent="." instance=ExtResource("5_coiy0")]
+sfxIds = Dictionary[String, String]({
+"buttonPressed": "",
+"entryGuessedCorrectly": "",
+"entryNameSubmitted": "",
+"guessNpcNameTextChanged": "",
+"notesFieldTextUpdated": ""
+})
+
+[node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_coiy0")
+
+[node name="entryGuessedCorrectly" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_cg8tx")
+
+[node name="entryNameSubmitted" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_gffea")
+
+[node name="guessNpcNameTextChanged" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_8deg6")
+
+[node name="notesFieldTextUpdated" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_qfo8r")
+
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]
+[connection signal="text_changed" from="NpcDetailPanel/GuessNpcNamePanel/GuessNpcNameField" to="." method="_on_guess_npc_name_field_text_changed"]
 [connection signal="pressed" from="NpcDetailPanel/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
 [connection signal="text_changed" from="NpcDetailPanel/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]
 [connection signal="pressed" from="PrevPageButton" to="." method="_on_prev_page_button_pressed"]

@@ -1,0 +1,25 @@
+{
+	"text": "hello!",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "hi",
+			"type": "neutral",
+			"spawnDelay": 1.5,
+			"lifetime": 1.5,
+			"nextID": "2a"
+		},
+		{
+			"text": "hello",
+			"type": "neutral",
+			"lifetime": 1.0,
+			"nextID": "2b"
+		},
+		{
+			"text": "bye",
+			"type": "neutral",
+			"nextID": "2c"
+		}
+	]
+}

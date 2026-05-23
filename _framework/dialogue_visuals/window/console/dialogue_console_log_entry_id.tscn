@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdt7ouilmdwo0"]
+
+[ext_resource type="LabelSettings" uid="uid://cbd46j8ek6p87" path="res://fonts/_label_presets/_console_dialogue_id_label.tres" id="1_8kn6m"]
+
+[node name="DialogueIdLabel" type="Label"]
+mouse_filter = 1
+text = "[ID: ]"
+label_settings = ExtResource("1_8kn6m")
+horizontal_alignment = 2

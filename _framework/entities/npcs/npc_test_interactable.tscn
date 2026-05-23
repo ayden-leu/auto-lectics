@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bq04u0nihuu52"]
 
-[ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://_framework/entities/npcs/interactable_npc.gd" id="1_vefio"]
+[ext_resource type="Script" uid="uid://btqx410naj1xf" path="res://_framework/entities/npcs/npc_test_interactable.gd" id="1_qa3od"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4o76d"]
 
@@ -11,13 +11,15 @@ size = Vector3(1.115, 0.175, 1.57)
 size = Vector3(1.1191406, 1.1877441, 1.2324219)
 
 [node name="NPC_TestInteractable" type="Node3D" node_paths=PackedStringArray("_hitbox", "_dialogueBoxAnchor", "model") groups=["NPCs"]]
-script = ExtResource("1_vefio")
+script = ExtResource("1_qa3od")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
-initialDialogueID = "1"
+dialogueTreeID = "ReplaceMe"
+initialDialogueID = "ReplaceMe"
 _dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
 model = NodePath("model")
-myName = "ReplaceMe"
+internalID = "_test_npc_interactable"
+displayName = "NPC Test Interactable"
 
 [node name="model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

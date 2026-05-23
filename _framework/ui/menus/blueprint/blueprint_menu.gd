@@ -1,5 +1,7 @@
+@tool
 extends Menu
 class_name BlueprintMenu
+## @deprecated
 
 # ------------------------------------------------
 # signals
@@ -55,10 +57,13 @@ var _loadingNotes := false
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	menuID = "blueprint"
 	pausesGame = false
 	super()
-	
+
 	_loadEntries()
 	_hideDetails()
 	_updateEntryVisibility()
@@ -76,7 +81,7 @@ func _ready() -> void:
 func _loadEntries() -> void:
 	if not _npcEntries.is_empty():
 		return
-	
+
 	var index:int = 0
 	for entry:BlueprintMenuNpcEntry in _npcEntryHolder.get_children():
 		entry.selected.connect(_on_npc_entry_selected)
@@ -86,18 +91,22 @@ func _loadEntries() -> void:
 
 ## [b]Internal-use only.[/b]  Gets the [membere _npcEntries] index of a [BlueprintMenuNpcEntry].
 func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
+	if not _idToIndex.has(entryID):
+		printerr("BlueprintMenu:  Could not find entry with ID: [" + entryID + "]")
+		return null
+
 	return _npcEntries[_idToIndex[entryID]]
 
 ## [b]Internal-use only.[/b]  Shows the NPC entry details.
 func _showDetails() -> void:
 	_loadNotes()
 	_guessNpcNamePanel.visible = not _selectedEntry.unlocked
-	
+
 	if _selectedEntry.portraitTexture != null:
 		_portraitTextureRect.texture = _selectedEntry.portraitTexture
 	else:
 		_portraitTextureRect.texture = null
-		
+
 	_details.visible = true
 
 ## [b]Internal-use only.[/b]  Hides the NPC entry details.
@@ -112,14 +121,16 @@ func _loadNotes() -> void:
 
 ## [b]Internal-use only.[/b]  Determines if a given guess matches the name of the selected NPC entry.
 func _determineIfGuessMatchesSelectedEntry(guess:String) -> void:
-	var correctName:String = _selectedEntry.myName
+	var correctName:String = _selectedEntry.displayName
 	if guess.to_lower() == correctName.to_lower():
 		print("Correct name correctGuesses for ", _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = true
+		sfxEventHandler.play("entryGuessedCorrectly")
 		npc_name_guessed_correctly.emit(_selectedEntry.npcID)
 	else:
 		print("Incorrect name for ", _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = false
+		sfxEventHandler.play("entryNameSubmitted")
 
 ## [b]Internal-use only.[/b]  "Unlocks" all NPC entries whose names were
 ## guessed correctly.
@@ -135,7 +146,15 @@ func _unlockCorrectGuesses() -> void:
 
 # Sending signal after engouh name correct
 func _check_unlock_conditions() -> void:
-	if _getEntry("npc_test_1").nameGuessedCorrectly and _getEntry("npc_test_3").nameGuessedCorrectly:
+	var check1 = _getEntry("npc_test_1")
+	if not check1:
+		return
+
+	var check2 = _getEntry("npc_test_3")
+	if not check2:
+		return
+
+	if check1.nameGuessedCorrectly and check2.nameGuessedCorrectly:
 		print("Door_A can now open")
 		unlock_condition_met.emit("Door_A")
 
@@ -154,6 +173,7 @@ func _updateEntryVisibility() -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for when an NPC entry is selected.
 func _on_npc_entry_selected(entry:BlueprintMenuNpcEntry) -> void:
+	sfxEventHandler.play("buttonPressed")
 	print("Selected NPC from menu: ", entry.npcID)
 	_selectedEntry = entry
 	_showDetails()
@@ -182,17 +202,23 @@ func _on_notes_field_text_changed() -> void:
 		return
 	if _selectedEntry == null:
 		return
-	
+	sfxEventHandler.play("notesFieldTextUpdated")
+
 	_selectedEntry.notes = _notesField.text
+
+func _on_guess_npc_name_field_text_changed(_new_text: String) -> void:
+	sfxEventHandler.play("guessNpcNameTextChanged")
 
 ## [b]Internal-use only.[/b]  Handles logic for when the previous page button is pressed.
 func _on_prev_page_button_pressed() -> void:
+	sfxEventHandler.play("buttonPressed")
 	if _currentPage > 0:
 		_currentPage -= 1
 		_updateEntryVisibility()
 
 ## [b]Internal-use only.[/b]  Handles logic for whene the next page button is pressed.
 func _on_next_page_button_pressed() -> void:
+	sfxEventHandler.play("buttonPressed")
 	var max_page = int(ceil(float(_npcEntries.size()) / _npcEntriesPerPage)) - 1
 	if _currentPage < max_page:
 		_currentPage += 1
@@ -200,6 +226,7 @@ func _on_next_page_button_pressed() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when the NPC entry details panel is closed.
 func _on_close_detail_button_pressed() -> void:
+	sfxEventHandler.play("buttonPressed")
 	_selectedEntry = null
 	_hideDetails()
 

@@ -27,7 +27,7 @@ const _OFFSET_RANGE:Dictionary = {
 	"y": 0.03
 }
 
-# ---------------------------------`---------------
+# ------------------------------------------------
 # export variables
 # ------------------------------------------------
 ## The radius of the warning tile from its center.
@@ -94,7 +94,7 @@ func _shake() -> void:
 	_rng.randomize()
 	var offsetX = _rng.randf_range(-_OFFSET_RANGE.x, _OFFSET_RANGE.x)
 	var offsetY = _rng.randf_range(-_OFFSET_RANGE.y, _OFFSET_RANGE.y)
-	
+
 	_background.position.x = offsetX * radius/0.6
 	_background.position.y = offsetY * radius/0.6
 
