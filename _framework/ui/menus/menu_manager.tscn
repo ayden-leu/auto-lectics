@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://cb4rjmbp4f3bu"]
+[gd_scene load_steps=5 format=3 uid="uid://cb4rjmbp4f3bu"]
 
 [ext_resource type="Script" uid="uid://ccx4vjxn004nx" path="res://_framework/ui/menus/menu_manager.gd" id="1_ymnrr"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="2_0rods"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7rwfh"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5cye6"]
 
 [node name="MenuManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_ymnrr")
 
 [node name="Overlay" type="ColorRect" parent="."]
@@ -15,3 +21,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.6)
+
+[node name="SfxEventHandler" parent="." instance=ExtResource("2_0rods")]
+unique_name_in_owner = true
+sfxIds = Dictionary[String, String]({
+"menuClose": "",
+"menuOpen": ""
+})
+
+[node name="menuClose" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_7rwfh")
+
+[node name="menuOpen" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_5cye6")

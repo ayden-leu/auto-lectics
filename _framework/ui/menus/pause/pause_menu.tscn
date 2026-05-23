@@ -1,14 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqesuy1fypg26"]
+[gd_scene load_steps=4 format=3 uid="uid://bqesuy1fypg26"]
 
 [ext_resource type="Script" uid="uid://byyt4gnnhig0u" path="res://_framework/ui/menus/pause/pause_menu.gd" id="1_urpkf"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="2_ymmsg"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kx45b"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6jgm3"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ymmsg"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fkiu8"]
-
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("sfxPlayers")]
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,16 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_urpkf")
-sfxPlayers = {
-"buttonPressed": NodePath("SFX/ButtonPressed"),
-"close": NodePath("SFX/Close"),
-"open": NodePath("SFX/Open")
-}
-sfxIds = Dictionary[String, String]({
-"buttonPressed": "",
-"close": "",
-"open": ""
-})
+sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -35,9 +23,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = -113.5
+offset_top = -92.0
 offset_right = 150.0
-offset_bottom = 113.5
+offset_bottom = 92.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -58,30 +46,28 @@ layout_mode = 2
 layout_mode = 2
 text = "Resume"
 
+[node name="BlueprintButton" type="Button" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Blueprint"
+
 [node name="OptionsButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Options"
-
-[node name="BlueprintButton" type="Button" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Blueprint"
 
 [node name="QuitButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
 
-[node name="SFX" type="Node" parent="."]
+[node name="SfxEventHandler" parent="." instance=ExtResource("2_ymmsg")]
+sfxIds = Dictionary[String, String]({
+"buttonPressed": ""
+})
 
-[node name="Open" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_kx45b")
-
-[node name="Close" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_ymmsg")
-
-[node name="ButtonPressed" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_fkiu8")
+[node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_6jgm3")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/BlueprintButton" to="." method="_on_blueprint_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]

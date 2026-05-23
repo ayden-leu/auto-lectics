@@ -147,6 +147,7 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 
 	if dialogueEntry.mode == "hectic":
 		console.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
+		console.hecticDuration = dialogueEntry.hecticDuration
 		console.delayBtwnWriteDialogueAndOptions = 0.25
 	else:
 		console.hecticFailureDialogueID = ""
@@ -177,13 +178,13 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	isTalking = true
 	patrolEnabled = false
 	_currentInteractor = interactor
-	if _currentInteractor:
-		if _currentInteractor.has_method("disableInput"):
-			_currentInteractor.disableInput(true)
-		if _currentInteractor.has_method("freeze"):
-			_currentInteractor.freeze(true)
-	InputHandler.showCursor()
-	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	# moved logic to WindowManager.createDialogueConsole()
+	# since there is only one interactor at the moment:  the Player
+	#if _currentInteractor:
+		#if _currentInteractor.has_method("disableInput"):
+			#_currentInteractor.disableInput(true)
+		#if _currentInteractor.has_method("freeze"):
+			#_currentInteractor.freeze(true)
 
 	FR_WindowManager.createDialogueConsole()
 	FR_WindowManager.subscribeToConsole(self)
@@ -194,12 +195,14 @@ func _endDialogueConsole() -> void:
 	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
 
-	if _currentInteractor:
-		if _currentInteractor.has_method("disableInput"):
-			_currentInteractor.disableInput(false)
-		if _currentInteractor.has_method("freeze"):
-			_currentInteractor.freeze(false)
-	InputHandler.hideCursor()
+	# moved logic to WindowManager.createDialogueConsole()
+	# since there is only one interactor at the moment:  the Player
+	#if _currentInteractor:
+		#if _currentInteractor.has_method("disableInput"):
+			#_currentInteractor.disableInput(false)
+		#if _currentInteractor.has_method("freeze"):
+			#_currentInteractor.freeze(false)
+	#FR_WindowManager.updateCursorStateForWindows()
 
 	isTalking = false
 	_currentInteractor = null
@@ -251,6 +254,10 @@ func _on_console_all_dialogue_text_visible() -> void:
 		return
 
 	dialogue_all_visible.emit()
+
+## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
+func _on_console_close(_console:DialogueConsole) -> void:
+	_endDialogueConsole()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

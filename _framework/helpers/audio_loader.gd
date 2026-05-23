@@ -64,7 +64,7 @@ static func loadSfxIntoPlayers(sfxEventsToLoad:Dictionary, sfxPlayers:Dictionary
 			print("AudioLoader:  Skipping loading of SFX event \"" + eventID + "\"")
 			continue
 		elif not sfxPlayers.has(eventID):
-			printerr("AudioLoader:  There is no SFX player for SFX event\"" + eventID + "\"")
+			printerr("AudioLoader:  There is no SFX player for SFX event \"" + eventID + "\"")
 			continue
 
 		sfxPlayers[eventID].stop()

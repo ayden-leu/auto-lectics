@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cksoxvpnvcbjd"]
+[gd_scene load_steps=10 format=3 uid="uid://cksoxvpnvcbjd"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_ngdeh"]
 [ext_resource type="Script" uid="uid://bqvscaiprfmtl" path="res://_framework/dialogue_visuals/window/dialogue_window.gd" id="1_salyd"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="2_ngdeh"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ngdeh"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_spo03"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_spo03"]
 
@@ -14,7 +13,9 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0m01u"]
 
-[node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxPlayers")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c8kvj"]
+
+[node name="DialogueWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 355.0
@@ -26,20 +27,7 @@ headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
 canBeClosed = true
 closeButton = NodePath("Header/HBoxContainer/CloseButton")
-sfxPlayers = {
-"click": NodePath("SFX/Click"),
-"close": NodePath("SFX/Close"),
-"drop": NodePath("SFX/Drop"),
-"hover": NodePath("SFX/Hover"),
-"spawn": NodePath("SFX/Spawn")
-}
-sfxIds = Dictionary[String, String]({
-"click": "_test_2",
-"close": "_test_3",
-"drop": "_test_3",
-"hover": "_test_1",
-"spawn": "_test_1"
-})
+sfxEventHandler = NodePath("SfxEventHandler")
 metadata/_custom_type_script = "uid://bqvscaiprfmtl"
 
 [node name="Header" type="Panel" parent="."]
@@ -52,7 +40,6 @@ theme_type_variation = &"PanelHeader"
 [node name="HBoxContainer" type="HBoxContainer" parent="Header"]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 3.0
 offset_right = 355.0
 offset_bottom = 27.0
 
@@ -89,19 +76,26 @@ text = "For each Control node (green) that doesn't care about mouse input, set t
 Also, the close button for this window doesn't work due to the WindowManager handling that.  All DialogueWindows need to be created by the WindowManager to close properly."
 autowrap_mode = 3
 
-[node name="SFX" type="Node" parent="."]
+[node name="SfxEventHandler" parent="." instance=ExtResource("4_spo03")]
+sfxIds = Dictionary[String, String]({
+"click": "",
+"close": "",
+"drop": "",
+"hover": "",
+"spawn": ""
+})
 
-[node name="Spawn" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_ngdeh")
-
-[node name="Close" type="AudioStreamPlayer" parent="SFX"]
+[node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_spo03")
 
-[node name="Hover" type="AudioStreamPlayer" parent="SFX"]
+[node name="close" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_pv2hh")
 
-[node name="Click" type="AudioStreamPlayer" parent="SFX"]
+[node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_y0p11")
 
-[node name="Drop" type="AudioStreamPlayer" parent="SFX"]
+[node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_0m01u")
+
+[node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_c8kvj")

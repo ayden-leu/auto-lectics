@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bult80lkyvnls"]
+[gd_scene load_steps=14 format=3 uid="uid://bult80lkyvnls"]
 
 [ext_resource type="Script" uid="uid://ditdgnsn4b0cw" path="res://_framework/ui/menus/blueprint/blueprint_menu.gd" id="1_k0l7g"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="2_puj0o"]
@@ -6,9 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cmsanw5s1v23x" path="res://textures/NPCS/1x/Asset 1.png" id="4_cg8tx"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_coiy0"]
 [ext_resource type="Texture2D" uid="uid://b5jjq0e4m5ac1" path="res://_framework/_visual_assets/blueprint_menu/Asset 1.png" id="4_ovhmb"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="5_coiy0"]
 [ext_resource type="Texture2D" uid="uid://bmipyeeivehjj" path="res://textures/NPCS/1x/Asset 2.png" id="5_gffea"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gffea"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8deg6"]
 
@@ -20,9 +19,7 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uwm47"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fdulq"]
-
-[node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxPlayers")]
+[node name="BlueprintMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,25 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_k0l7g")
-_numNeededBeforeUnlocking = 1
-sfxPlayers = {
-"buttonPressed": NodePath("SFX/ButtonPressed"),
-"close": NodePath("SFX/Close"),
-"entryGuessedCorrectly": NodePath("SFX/EntryGuessedCorrectly"),
-"entryNameSubmitted": NodePath("SFX/EntryNameSubmitted"),
-"guessNpcNameTextChanged": NodePath("SFX/GuessNpcNameTextChanged"),
-"notesFieldTextUpdated": NodePath("SFX/NotesFieldTextUpdated"),
-"open": NodePath("SFX/Open")
-}
-sfxIds = Dictionary[String, String]({
-"buttonPressed": "",
-"close": "",
-"entryGuessedCorrectly": "yippee",
-"entryNameSubmitted": "",
-"guessNpcNameTextChanged": "",
-"notesFieldTextUpdated": "",
-"open": ""
-})
+sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="Background" type="ColorRect" parent="."]
 z_index = -1
@@ -281,28 +260,29 @@ offset_top = 350.0
 offset_right = 1363.0
 offset_bottom = 452.0
 
-[node name="SFX" type="Node" parent="."]
+[node name="SfxEventHandler" parent="." instance=ExtResource("5_coiy0")]
+sfxIds = Dictionary[String, String]({
+"buttonPressed": "",
+"entryGuessedCorrectly": "",
+"entryNameSubmitted": "",
+"guessNpcNameTextChanged": "",
+"notesFieldTextUpdated": ""
+})
 
-[node name="Open" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_gffea")
-
-[node name="Close" type="AudioStreamPlayer" parent="SFX"]
+[node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_8deg6")
 
-[node name="ButtonPressed" type="AudioStreamPlayer" parent="SFX"]
+[node name="entryGuessedCorrectly" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_qfo8r")
 
-[node name="EntryNameSubmitted" type="AudioStreamPlayer" parent="SFX"]
+[node name="entryNameSubmitted" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_to7hj")
 
-[node name="NotesFieldTextUpdated" type="AudioStreamPlayer" parent="SFX"]
+[node name="guessNpcNameTextChanged" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_2s35j")
 
-[node name="GuessNpcNameTextChanged" type="AudioStreamPlayer" parent="SFX"]
+[node name="notesFieldTextUpdated" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_uwm47")
-
-[node name="EntryGuessedCorrectly" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_fdulq")
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="NpcDetailPanel/CloseDetailButton" to="." method="_on_close_detail_button_pressed"]

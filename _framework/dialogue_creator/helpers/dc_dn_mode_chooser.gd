@@ -20,6 +20,10 @@ signal set_hectic_port(on:bool)
 # ------------------------------------------------
 ## The label that denotes the hectic port.
 @export var hecticPortLabel:Label
+## The hectic duration field.
+@export var hecticDurationField:HBoxContainer
+## The separator for the [member hecticDurationField].
+@export var hecticDurationFieldSeparator:HSeparator
 
 # ------------------------------------------------
 # onready variables
@@ -40,6 +44,8 @@ signal set_hectic_port(on:bool)
 func _ready() -> void:
 	_fillValueToOptionIndex(DialogueDefaults.DIALOGUE_MODES)
 	hecticPortLabel.visible = false
+	hecticDurationField.visible = false
+	hecticDurationFieldSeparator.visible = false
 
 	chosen = DialogueDefaults.DEFAULT_DIALOGUE.mode
 
@@ -49,6 +55,8 @@ func _ready() -> void:
 ## Toggles the hectic port on/off.
 func toggleHecticPort(on:bool) -> void:
 	hecticPortLabel.visible = on
+	hecticDurationField.visible = on
+	hecticDurationFieldSeparator.visible = on
 	set_hectic_port.emit(on)
 
 # ------------------------------------------------

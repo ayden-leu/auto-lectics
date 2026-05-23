@@ -65,23 +65,12 @@ transform = Transform3D(0.54621893, 0.042597797, -0.8365587, 0.8376424, -0.02777
 light_energy = 0.125
 shadow_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("3_aue1p")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("3_aue1p")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3044707, 2.883009, -26.385525)
+respawnCheckpointLocation = NodePath("../RespawnPosition")
 maxSpeed = 12.6
 acceleration = 15.0
-sfxPlayers = {
-"death": NodePath("SFX/Death"),
-"grappleExtending": NodePath("SFX/grapple/Extending"),
-"grappleHitFail": NodePath("SFX/grapple/HitFail"),
-"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
-"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
-"grappleRecall": NodePath("SFX/grapple/Recall"),
-"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
-"grappleThrow": NodePath("SFX/grapple/Throw"),
-"jump": NodePath("SFX/Jump"),
-"respawn": NodePath("SFX/Respawn")
-}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("2_s4y84")]
 focus = NodePath("../Player")
@@ -220,6 +209,30 @@ metadata/_edit_group_ = true
 [node name="Label3D" type="Label3D" parent="NPCs/test_basic_one_reject_exit"]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_basic_one_reject_exit"
+
+[node name="test_reject_back" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 8.482098)
+dialogueTreeID = "_test/back"
+initialDialogueID = "1"
+internalID = "_test_basic_one_reject_exit"
+displayName = "Test Reject Back"
+metadata/_edit_group_ = true
+
+[node name="Label3D" type="Label3D" parent="NPCs/test_reject_back"]
+transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
+text = "test_reject_back"
+
+[node name="test_life_and_delay" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 12.196631)
+dialogueTreeID = "_test/life_and_delay"
+initialDialogueID = "1"
+internalID = "_test_life_and_delay"
+displayName = "Test Life and Delay"
+metadata/_edit_group_ = true
+
+[node name="Label3D" type="Label3D" parent="NPCs/test_life_and_delay"]
+transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
+text = "test_life_and_delay"
 
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8527756, 0.470119, -27.61793)

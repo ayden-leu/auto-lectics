@@ -3,18 +3,17 @@
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_uwr6o"]
 [ext_resource type="Script" uid="uid://dhv4cp1yyfby4" path="res://_framework/dialogue_visuals/window/warning_tile/dialogue_warning_tile_window.gd" id="2_4d7ys"]
 [ext_resource type="PackedScene" uid="uid://c1qmg4lyrgjqc" path="res://_framework/dialogue_visuals/window/warning_tile/warning_tile_2d.tscn" id="3_shngt"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uwr6o"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4d7ys"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_4d7ys"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_shngt"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_br15a"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dx5fm"]
 
-[node name="DialogueWarningTileWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "sfxPlayers")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j6tp0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_thdmi"]
+
+[node name="DialogueWarningTileWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 178.0
@@ -24,13 +23,7 @@ theme = ExtResource("1_uwr6o")
 script = ExtResource("2_4d7ys")
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
-sfxPlayers = {
-"click": NodePath("SFX/Click"),
-"close": NodePath("SFX/Close"),
-"drop": NodePath("SFX/Drop"),
-"hover": NodePath("SFX/Hover"),
-"spawn": NodePath("SFX/Spawn")
-}
+sfxEventHandler = NodePath("SfxEventHandler")
 metadata/_custom_type_script = "uid://bqvscaiprfmtl"
 
 [node name="Header" type="Panel" parent="."]
@@ -74,17 +67,22 @@ offset_bottom = 147.0
 
 [node name="SFX" type="Node" parent="."]
 
-[node name="Spawn" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_uwr6o")
+[node name="SfxEventHandler" parent="." instance=ExtResource("4_4d7ys")]
+sfxIds = Dictionary[String, String]({
+"click": "",
+"drop": "",
+"hover": "",
+"spawn": ""
+})
 
-[node name="Close" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_4d7ys")
-
-[node name="Hover" type="AudioStreamPlayer" parent="SFX"]
+[node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_shngt")
 
-[node name="Click" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource("AudioStreamRandomizer_br15a")
-
-[node name="Drop" type="AudioStreamPlayer" parent="SFX"]
+[node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_dx5fm")
+
+[node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_j6tp0")
+
+[node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_thdmi")

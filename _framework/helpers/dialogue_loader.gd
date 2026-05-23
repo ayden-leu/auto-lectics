@@ -18,6 +18,8 @@ static func assemblePath(entityName:String, id:String) -> String:
 	return FR_Globals.STORAGE_PATH.DIALOGUE + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
 ## Loads a single dialogue node file. Returns a dialogue object with all settings.
+## [br][br]
+## Returns an empty dictionary if it fails.
 static func loadDialogueNodeFile(path: String, reportError:bool = true) -> Dictionary:
 	var jsonData := _readTextFile(path, reportError)
 	if jsonData == "":
@@ -51,6 +53,8 @@ static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary,
 				copy.nextOnHecticFailureID = base.nextOnHecticFailureID
 			else:
 				printerr("DialogueLoader:  Base doesn't have nextOnHecticFailureID when it should.")
+			if base.has("hecticDuration"):
+				copy.hecticDuration = base.hecticDuration
 
 	if base.has("textThemePreset"):
 		copy.textThemePreset = base.textThemePreset
@@ -102,6 +106,12 @@ static func _fillNpcOptionDefaults(base:Dictionary, defaults:Dictionary) -> Dict
 	if base.has("setFlags"):
 		copy.setFlags = base.setFlags
 
+	if base.has("allowBack"):
+		copy.allowBack = base.allowBack
+
+	if base.has("rejectBackMessage"):
+		copy.rejectBackMessage = base.rejectBackMessage
+
 	if base.has("sfx"):
 		copy.sfx = _mergeSfxAttributes(base.sfx, copy.get("sfx", {}))
 
@@ -133,6 +143,7 @@ static func fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dicti
 	)
 	dialogue.nextOnHecticFailureID = configuredAttributes.get("nextOnHecticFailureID", dialogue.nextOnHecticFailureID)
 
+	dialogue.hecticDuration = configuredAttributes.get("hecticDuration", dialogue.hecticDuration)
 
 	dialogue.writeSpeed = _verifyInList(
 		configuredAttributes.get("writeSpeed", dialogue.writeSpeed).to_lower(),
@@ -181,6 +192,9 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 
 	option.checkFlags = configuredAttributes.get("checkFlags", option.checkFlags)
 	option.setFlags = configuredAttributes.get("setFlags", option.setFlags)
+
+	option.allowBack = configuredAttributes.get("allowBack", option.allowBack)
+	option.rejectBackMessage = configuredAttributes.get("rejectBackMessage", option.rejectBackMessage)
 
 	option.writeSpeed = _verifyInList(
 		configuredAttributes.get("writeSpeed", option.writeSpeed).to_lower(),

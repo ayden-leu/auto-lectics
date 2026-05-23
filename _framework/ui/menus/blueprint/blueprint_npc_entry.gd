@@ -1,11 +1,15 @@
 @tool
+@icon("uid://bayydan3cr5na")
 extends Control
 class_name BlueprintMenuNpcEntry
-## A clickable NPC entry in the [BlueprintMenu].
+## A clickable NPC entry in the [BlueprintMenu] or [BlueprintWindow].
+##
+## The export fields should be self-explanatory.
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
+## Emitted when this entry is selected.  [code]me[/code] is this node.
 signal selected(me:BlueprintMenuNpcEntry)
 
 # ------------------------------------------------
@@ -19,32 +23,35 @@ signal selected(me:BlueprintMenuNpcEntry)
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The ID of the NPC in this NPC entry.
-@export var npcID:String = "npc_test":
+## The ID of the NPC in this NPC entry.  The name of the node in the editor is
+## updated to match this value.
+@export var npcID:String = "BlueprintNpcEntry":
 	set(newName):
 		npcID = newName
 		name = newName
-## The name of the NPC in this entry/
-@export var displayName:String = "NPC Test"
+## The "correct" name of the NPC in this entry.
+@export var displayName:String = "Blueprint NPC Entry"
 ## The text that is displayed when this entry is locked.
-@export var lockedText: String = "???"
-## The icon for this entry when it is unlocked.  Setting this will update the button node.
+@export var lockedText:String = "???"
+## The icon for this entry when it is unlocked.
 @export var entryTextureUnlocked:Texture2D
-## The icon for this entry when it is unlocked.  Setting this will update the button node.
+## The icon for this entry when it is locked.  Setting this will update [member button] in-editor.
 @export var entryTextureLocked:Texture2D:
 	set(newTexture):
 		entryTextureLocked = newTexture
 		if _button:
 			_button.texture_normal = newTexture
 ## The image that appears in the details panel.
-@export var portraitTexture: Texture2D
+@export var portraitTexture:Texture2D
 
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  The label node for this entry.
+## [b]Internal-use only.[/b]
+## The label node for this entry.
 @onready var _label = %Label
-## [b]Internal-use only.[/b]  The icon node for this entry.
+## [b]Internal-use only.[/b]
+## The icon node for this entry.
 @onready var _button = %TextureButton
 
 # ------------------------------------------------
@@ -57,7 +64,7 @@ var displayedName:String:
 	get():
 		return _label.text
 ## The notes the player has written for this NPC entry.
-var notes:String
+var notes:String = ""
 ## Whether the player has guessed the name of the NPC in this entry correctly or not.
 var nameGuessedCorrectly:bool = false
 ## Whether this NPC entry is unlocked or not.
@@ -108,7 +115,8 @@ func unlock() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for when this NPC entry is clicked.
+## [b]Internal-use only.[/b]
+## Handles logic for when this NPC entry is clicked.
 func _on_pressed() -> void:
 	selected.emit(self)
 

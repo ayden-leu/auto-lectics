@@ -35,7 +35,9 @@ const SCENES = {
 	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e",
 	"DialogueConsoleLogEntryIdLabel": "uid://cdt7ouilmdwo0",
 	"DialogueWarningTileWindow": "uid://dpeqr6fpd34gm",
-	"WarningTile2D": "uid://c1qmg4lyrgjqc"
+	"WarningTile2D": "uid://c1qmg4lyrgjqc",
+	"BlueprintWindow": "uid://ovwd5xcohsao",
+	"BlueprintNpcDetailWindow": "uid://524kk63lga7"
 }
 
 ## Holds information for where certain aspects are stored in the project.
@@ -104,8 +106,6 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 ## Gets the current size of the screen.
 func getScreenSize() -> Vector2:
 	return get_viewport().get_visible_rect().size
-	#return DisplayServer.screen_get_size()
-	#return get_window().size
 
 # ------------------------------------------------
 # functions only referenced inside this script

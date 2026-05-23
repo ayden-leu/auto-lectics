@@ -4,7 +4,7 @@ class_name DialogueConsoleOptionWindow
 ## [b]Internal-use only.[/b]  A dialogue option window that spawns when a user
 ## is able to continue a dialogue event.
 ##
-## On top of the SFX events for [DialogueWindow], it comes with additional SFX events:[br]
+## On top of the SFX events for [DialogueWindow], it comes with the following optional SFX events:[br]
 ## - text:  plays when text is being written into a log entry.[br]
 
 # ------------------------------------------------
@@ -12,6 +12,14 @@ class_name DialogueConsoleOptionWindow
 # ------------------------------------------------
 ## Emitted when this option is chosen.
 signal option_selected(myself:DialogueConsoleOptionWindow)
+## Emitted when this option window enables itself.
+## [code]dataIndex[/code] is the index in [member DialogueConsole._optionData]
+## of the data used to create this window.
+signal enabled(dataIndex:int)
+## Emitted when this option window disables itself.
+## [code]dataIndex[/code] is the index in [member DialogueConsole._optionData]
+## of the data used to create this window.
+signal disabled(dataIndex:int)
 
 # ------------------------------------------------
 # enums
@@ -30,6 +38,14 @@ signal option_selected(myself:DialogueConsoleOptionWindow)
 # ------------------------------------------------
 ## The label that denotes which "index" is associated with this option.
 @onready var contentsLabel:RichTextLabel = %ContentsLabel
+## The timer representing the lifetime of this window.
+@onready var lifetimeTimer:Timer = %LifetimeTimer
+## The SFX event players that are manually set outside of [SfxEventHandler].
+## Currently, it has "spawn" and "text," which is customized by [InteractableNPC].
+@onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
+	"spawn": %sfxSpawn,
+	"text": %sfxText
+}
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -65,8 +81,19 @@ var themeVariation:String:
 		themeVariation = value
 		contentsLabel.theme_type_variation = value
 
-## The data related to this option.
-var data:Dictionary
+## How long to wait after [DialogueConsole] starts spawning [DialogueConsoleOptionWindow]s.
+var spawnDelay:float = 0.0
+## How long this option lives before disabling itself.
+var lifetime:float = 0.0
+## If this option is disabled or not.
+var isDisabled:bool = false:
+	set(newState):
+		isDisabled = newState
+		visible = !newState
+		if newState:
+			disabled.emit(id)
+		else:
+			enabled.emit(id)
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -95,21 +122,38 @@ func _gui_input(event: InputEvent) -> void:
 func start() -> void:
 	sfxPlayers.spawn.play()
 
+	if spawnDelay > 0.0:
+		isDisabled = true
+		await get_tree().create_timer(spawnDelay).timeout
+		isDisabled = false
+
+	if lifetime > 0:
+		lifetimeTimer.wait_time = lifetime
+		lifetimeTimer.start()
+
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-
+## [b]Internal-use only.[/b]
+## Updates the contents label.
 func _updateLabel() -> void:
 	contentsLabel.text = "[" + str(id) + "] " + text
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
+## Handles logic for when this window is clicked.
 func _on_pressed() -> void:
 	if not _dragging:
 		#print("option selected via button")
 		option_selected.emit(self)
+
+## [b]Internal-use only.[/b]
+## Handles logic for when this window's lifespan runs out.
+func _on_lifetime_timer_timeout() -> void:
+	isDisabled = true
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
