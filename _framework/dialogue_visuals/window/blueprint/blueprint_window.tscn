@@ -21,9 +21,9 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kmye7"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_25bmj"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2853f"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_unxuv"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_25bmj"]
 
 [node name="BlueprintWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
 layout_mode = 3
@@ -162,10 +162,10 @@ stream = SubResource("AudioStreamRandomizer_jtcjk")
 stream = SubResource("AudioStreamRandomizer_kmye7")
 
 [node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_25bmj")
+stream = SubResource("AudioStreamRandomizer_2853f")
 
 [node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_unxuv")
+stream = SubResource("AudioStreamRandomizer_25bmj")
 
 [connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_1" to="." method="_on_npc_entry_selected"]
 [connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_2" to="." method="_on_npc_entry_selected"]

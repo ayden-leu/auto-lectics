@@ -4,18 +4,29 @@ class_name InputHandler
 ## Handles all inputs a player can possibly make.
 ##
 ## When a player executes and input, a signal for that input will be emitted.
-##
+## To use, attach this to your node and connect the corresponding signals.
+## [br][br]
+## The input direction passed with the [signal update_input_direction] signal
+## is normalized, meaning diagonal inputs will be equal to the square root of 2
+## instead of 1.
+## [br][br]
+## The move distance passed with the [signal mouse_moved] signal is multiplied
+## by [member MOUSE_SENSITIVITY] before being sent along the way.
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
 ## Emitted when the mouse moves.
+## [code]distanceMoved[/code] is multiplied by [member MOUSE_SENSITIVITY] before
+## being sent with the signal.
 signal mouse_moved(distanceMoved:Vector2)
 ## Emitted when the interact button is just pressed.
 signal interact_button_pressed()
 ## Emitted when the jump button is pressed.
 signal jump_pressed()
 ## Emitted constantly to update the player's current input direction.
+## [code]newDirection[/code] is normalized, meaning diagonal inputs will be
+## equal to the square root of 2 instead of 1.
 signal update_input_direction(newDirection:Vector2)
 ## Emitted when the "Respawn" key is pressed.
 signal respawn()
@@ -61,13 +72,6 @@ static var _respawnEnabledGlobal:bool = true
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
-	#if Engine.is_editor_hint():
-		#return
-	#print_rich("[color=green]READY[/color]")
-	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	pass
-
 func _physics_process(_delta: float) -> void:
 	var input_dir:Vector2 = Vector2.ZERO
 	if _movementInputEnabledGlobal and movementInputEnabled:
