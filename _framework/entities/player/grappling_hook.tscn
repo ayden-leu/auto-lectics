@@ -1,13 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://0mnvycgijgpy"]
+[gd_scene load_steps=15 format=3 uid="uid://0mnvycgijgpy"]
 
-[ext_resource type="Script" path="res://_framework/entities/player/grappling_hook.gd" id="1_qwlkb"]
-[ext_resource type="CylinderMesh" uid="uid://cn5ha508yy41o" path="res://_framework/_visual_assets/grappling_hook/line.tres" id="1_w2ev3"]
-[ext_resource type="BoxMesh" uid="uid://escx3mb3fiw7" path="res://_framework/_visual_assets/grappling_hook/hook.tres" id="2_qwlkb"]
+[ext_resource type="Script" uid="uid://bfwenvqoq3dol" path="res://_framework/entities/player/grappling_hook.gd" id="1_qwlkb"]
+[ext_resource type="CylinderMesh" uid="uid://b1p83o0av4dro" path="res://_framework/_visual_assets/grappling_hook/line.tres" id="2_3tcms"]
+[ext_resource type="Material" uid="uid://bnyu37nnjg8o6" path="res://_framework/_visual_assets/grappling_hook/line_material.tres" id="3_0byxp"]
+[ext_resource type="BoxMesh" uid="uid://5aw8jhh3f0cf" path="res://_framework/_visual_assets/grappling_hook/hook.tres" id="3_3tcms"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_3tcms"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3tcms"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gii0f"]
+[ext_resource type="Material" uid="uid://8jkrnkvn4ojk" path="res://_framework/_visual_assets/grappling_hook/hook_material.tres" id="5_8c5ov"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0byxp"]
 
@@ -21,54 +19,63 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xndbm"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tqaiy"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lylpn"]
+
 [node name="GrapplingHook" type="Node"]
 script = ExtResource("1_qwlkb")
+shootSpeed = 40.07
+recallSpeed = 40.07
+maxRange = 32.8
+maxSwingSpeed = 49.58
 
 [node name="Line" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-visible = false
-mesh = ExtResource("1_w2ev3")
+mesh = ExtResource("2_3tcms")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("3_0byxp")
 
 [node name="Hook" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-visible = false
-mesh = ExtResource("2_qwlkb")
+transform = Transform3D(0.094, 0, 0, 0, 0.094, 0, 0, 0, 0.094, 0, 0, 0)
+mesh = ExtResource("3_3tcms")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_8c5ov")
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_3tcms")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
 "extending": "",
-"hitFail": "",
-"hitSuccess": "",
+"hitFail": "grapple_fail",
+"hitSuccess": "grapple_success",
 "maxRangeReached": "",
-"recall": "",
-"recallFinish": "",
-"recallStart": "",
-"throw": ""
+"recall": "grapple_return",
+"recallFinish": "grapple_return_finish",
+"recallStart": "grapple_return_start",
+"throw": "grapple_deploy"
 })
 
 [node name="extending" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_3tcms")
-
-[node name="hitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_gii0f")
-
-[node name="hitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_0byxp")
 
-[node name="maxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="hitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_8c5ov")
 
-[node name="recall" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="hitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_xe7c1")
 
-[node name="recallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="maxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_wrub3")
 
-[node name="recallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="recall" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_325l4")
 
-[node name="throw" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="recallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_xndbm")
+
+[node name="recallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_tqaiy")
+
+[node name="throw" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_lylpn")

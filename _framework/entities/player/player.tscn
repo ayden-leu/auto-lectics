@@ -25,6 +25,7 @@ collision_mask = 2
 script = ExtResource("1_q8vf3")
 maxSpeed = 28.4
 acceleration = 37.0
+grappleAttachImpulseStrength = 20.55
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.53040814, 0, 0, 0, 0.96031815, 0, 0, 0, 0.53040814, 0, 0, -0.004080862)
@@ -72,9 +73,9 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "",
+"death": "death",
 "jump": "",
-"respawn": ""
+"respawn": "respawn"
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]

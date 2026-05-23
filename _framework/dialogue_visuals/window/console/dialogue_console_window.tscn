@@ -171,12 +171,12 @@ one_shot = true
 [node name="SfxEventHandler" parent="." instance=ExtResource("7_a26bi")]
 sfxIds = Dictionary[String, String]({
 "click": "",
-"close": "",
+"close": "console_close",
 "closeReject": "",
 "drop": "",
 "hover": "",
 "userTextAdded": "",
-"userTextSubmitted": ""
+"userTextSubmitted": "console_send"
 })
 
 [node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]

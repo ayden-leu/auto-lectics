@@ -137,7 +137,7 @@ sfxIds = Dictionary[String, String]({
 "click": "",
 "close": "",
 "drop": "",
-"entryGuessedCorrectly": "",
+"entryGuessedCorrectly": "yippee",
 "entryNameSubmitted": "",
 "hover": "",
 "spawn": ""
