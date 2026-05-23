@@ -1,15 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://nrwq44bva56"]
+[gd_scene load_steps=4 format=3 uid="uid://nrwq44bva56"]
 
 [ext_resource type="Script" uid="uid://cqmikj0ydwb6f" path="res://_framework/helpers/vocal_dialogue_player.gd" id="1_jitb6"]
+[ext_resource type="Texture2D" uid="uid://iiag2iw0xu6b" path="res://_framework/_visual_assets/vocal_dialogue_player/continue_icon.png" id="2_fiadj"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="2_o8xeo"]
 
 [node name="VocalDialoguePlayer" type="AudioStreamPlayer"]
 script = ExtResource("1_jitb6")
 
 [node name="Subtitles" type="Label" parent="."]
+unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(330, 40)
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -24,7 +26,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="ContinueIcon" type="TextureRect" parent="."]
-visible = false
+unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 anchors_preset = 3
 anchor_left = 1.0
@@ -35,6 +37,7 @@ offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+texture = ExtResource("2_fiadj")
 
 [node name="InputHandler" parent="." instance=ExtResource("2_o8xeo")]
 

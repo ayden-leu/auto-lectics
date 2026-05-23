@@ -1,6 +1,6 @@
 {
   "file": "hello",
-  "subtitles": "Hello world.",
+  "subtitles": "Hello there.",
   "delayBeforeAllowContinue": 0.5,
-  "nextID": ""
+  "nextID": "next"
 }

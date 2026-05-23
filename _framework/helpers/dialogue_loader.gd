@@ -18,6 +18,8 @@ static func assemblePath(entityName:String, id:String) -> String:
 	return FR_Globals.STORAGE_PATH.DIALOGUE + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
 ## Loads a single dialogue node file. Returns a dialogue object with all settings.
+## [br][br]
+## Returns an empty dictionary if it fails.
 static func loadDialogueNodeFile(path: String, reportError:bool = true) -> Dictionary:
 	var jsonData := _readTextFile(path, reportError)
 	if jsonData == "":
