@@ -153,10 +153,12 @@ var _lastValidPosition: Vector3
 ## If the player is currently respawning or not.
 var _respawning:bool = false
 ## [b]Internal-use only.[/b]
-## to write
+## A list of nodes freezing this.  Only has unique entries.
+## The values of each key are always [code]null[/code].
 static var _nodesFreezingMe:Dictionary[Node, Node] = {}
 ## [b]Internal-use only.[/b]
-## to write
+## A list of nodes disabling player input from affecting this.  Only has unique entries.
+## The values of each key are always [code]null[/code].
 static var _nodesDisablingInput:Dictionary[Node, Node] = {}
 
 # ------------------------------------------------
@@ -343,7 +345,8 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	velocity.x = current_h.x
 	velocity.z = current_h.z
 
-## to write
+## Prevents player input from affecting this.
+## Also adds the disabler to [member _nodesDisablingInput].
 static func disableInput(disabler:Node) -> void:
 	if not inputEnabled:
 		print("Player:  Input already disabled.")
@@ -358,7 +361,8 @@ static func disableInput(disabler:Node) -> void:
 	print("Player:  Disabling inputs from player due to [", disabler.name, "].")
 	inputEnabled = false
 
-## to write
+## Allows player input to affect this.
+## Also removes the enabler from [member _nodesDisablingInput].
 static func enableInput(enabler:Node) -> void:
 	if inputEnabled:
 		print("Player:  Input already enabled.")
@@ -374,7 +378,8 @@ static func enableInput(enabler:Node) -> void:
 		print("Player:  Enabling inputs from player due to [", enabler.name, "].")
 		inputEnabled = true
 
-## to write
+## Forcibly allows player input to affect this.
+## Also clears [member _nodesDisablingInput].
 static func enableInputForce() -> void:
 	if inputEnabled:
 		print("Player:  Input already enabled; don't have to force it.")
@@ -384,7 +389,8 @@ static func enableInputForce() -> void:
 	inputEnabled = true
 	_nodesDisablingInput.clear()
 
-## to write
+## Freezes this player character in place.
+## Also adds the freezer to [member _nodesFreezingMe].
 static func freeze(freezer:Node) -> void:
 	if frozen:
 		print("Player:  Player already frozen.")
@@ -399,7 +405,8 @@ static func freeze(freezer:Node) -> void:
 	print("Player:  Freezing the Player due to [", freezer.name, "].")
 	frozen = true
 
-## to write
+## Unfreezes this player character so they can move around again.
+## Also removes the unfreezer from [member _nodesFreezingMe].
 static func unfreeze(unfreezer:Node) -> void:
 	if not frozen:
 		print("Player:  Player already unfrozen.")
@@ -415,7 +422,8 @@ static func unfreeze(unfreezer:Node) -> void:
 		print("Player:  Unfreezing Player due to [", unfreezer.name, "].")
 		frozen = false
 
-## to write
+## Forcibly unfreezes this player character so they can move around again.
+## Also clears [member _nodesFreezingMe].
 static func unfreezeForce() -> void:
 	if not frozen:
 		print("Player:  Player already unfrozen; don't need to force it.")
