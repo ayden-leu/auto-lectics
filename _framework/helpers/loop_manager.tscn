@@ -5,6 +5,7 @@
 [node name="LoopManager" type="Node" node_paths=PackedStringArray("_overlay")]
 script = ExtResource("1_8cw2q")
 _overlay = NodePath("ColorRect")
+"Fancy Stuff" = null
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
