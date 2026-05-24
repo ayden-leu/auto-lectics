@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgah43yaddw5g"]
+[gd_scene load_steps=13 format=3 uid="uid://bgah43yaddw5g"]
 
 [ext_resource type="Script" uid="uid://cfut6xv2uo7og" path="res://_framework/test_scenes/test_npc_interaction.gd" id="1_wd7ni"]
 [ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="2_dxq4g"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_aue1p"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="7_qo27r"]
 [ext_resource type="PackedScene" uid="uid://bl6d0fex7oyfb" path="res://_framework/helpers/start_dialogue_area.tscn" id="8_lahna"]
+[ext_resource type="PackedScene" uid="uid://nnv27ko17ev3" path="res://_framework/helpers/restart_loop_manager_area_3d.tscn" id="8_nos05"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://_framework/entities/npcs/npc_test_interactable.tscn" id="16_ejbbu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ivx4p"]
@@ -239,9 +240,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8527756, 0.470119, -27.617
 curve = SubResource("Curve3D_wd7ni")
 debug_custom_color = Color(1, 1, 1, 1)
 
-[node name="LoopManager" parent="." instance=ExtResource("7_qo27r")]
+[node name="LoopManager" parent="." node_paths=PackedStringArray("fancyArea") instance=ExtResource("7_qo27r")]
 unique_name_in_owner = true
 manual = true
+fancy = true
+fancyArea = NodePath("../RestartLoopManagerArea3D")
+
+[node name="RestartLoopManagerArea3D" parent="." instance=ExtResource("8_nos05")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3399184, -4.3977995)
+growRate = 100.0
 
 [node name="StartDialogueArea" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("8_lahna")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0403737, 0.90832114, -28.423306)
