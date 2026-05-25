@@ -46,8 +46,6 @@ emission = Color(0.6156564, 0.837284, 0.6358764, 1)
 collision_layer = 5
 collision_mask = 2
 script = ExtResource("1_q8vf3")
-maxSpeed = 28.4
-acceleration = 37.0
 grapple_max_length = 32.8
 grapple_initial_impulse = 20.55
 grapple_hook_speed = 40.07
@@ -121,7 +119,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qclge")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("6_qclge")
 volume_db = -1.908
-autoplay = true
 parameters/looping = true
 
 [node name="playermodel" parent="." instance=ExtResource("7_hh4bn")]

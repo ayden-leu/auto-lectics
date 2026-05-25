@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dikbwfhelce82"]
+
+[ext_resource type="PackedScene" uid="uid://bu4531d7q80lj" path="res://models/environment/stairs.tscn" id="1_mulm0"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(2.6492186, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="stairs" parent="." instance=ExtResource("1_mulm0")]
+transform = Transform3D(1.1924515, 0, 0, 0, 1.2145852, 0, 0, 0, 1.2145852, 0.99474275, -0.2095834, 1.0557052)
+
+[node name="stairs2" parent="." instance=ExtResource("1_mulm0")]
+transform = Transform3D(-1.1924515, 0, 1.0618241e-07, 0, 1.2145852, 0, -1.0424742e-07, 0, -1.2145852, 1.2451154, 0.9126713, 2.0535333)

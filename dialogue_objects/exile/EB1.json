@@ -13,7 +13,7 @@
 			"type": "neutral",
 			"nextID": "Tricked",
 			"checkFlags": {
-				"testFlag": true
+				"testFlag": false
 			}
 		}
 	]

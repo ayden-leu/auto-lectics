@@ -1,11 +1,11 @@
 {
-	"text": "This place is falling apart as we speak. But, you can't let the others know that or else they get upset. Look at me, I spoke the truth and now I'm stuck here.",
+	"text": "This place is falling apart as we speak. But you can't let them know that or else they get upset. Look at me, I spoke the truth and now I'm stuck here.",
 	"mode": "normal",
 	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "How can I help?",
-			"nextID": "Help"
+			"nextID": "Help2"
 		}
 	]
 }

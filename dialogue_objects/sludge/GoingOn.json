@@ -1,10 +1,10 @@
 {
 	"text": "What do you mean? We're working, can't you see that? What are you doing? ",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
-			"text": "Evaluating the facility.",
+			"text": "I'm here to evaluate. ",
 			"type": "neutral",
 			"nextID": "Evaluation"
 		},

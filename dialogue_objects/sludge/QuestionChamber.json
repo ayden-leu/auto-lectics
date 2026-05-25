@@ -1,7 +1,7 @@
 {
-	"text": "THE CHAMBER! You don't know about THE CHAMBER? The whole reason we're here.",
-	"type": "angry",
+	"text": "THE CHAMBER! You don't know about THE CHAMBER? That's the whole reason we're here.",
 	"mode": "normal",
+	"type": "angry",
 	"options": [
 		{
 			"text": "So what's in there?",

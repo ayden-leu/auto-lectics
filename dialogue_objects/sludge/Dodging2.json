@@ -1,11 +1,12 @@
 {
-	"text": "I don't know what exactly what's in there. I just do as I'm told.",
-	"type": "neutral",
+	"text": "I don't actually KNOW what's in there. I've just been following directions. Everyone else thinks it's important thouhg. ",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
 			"text": "What were you told to do?",
-			"type": "neutral"
+			"type": "neutral",
+			"nextID": "Monitor"
 		}
 	]
 }

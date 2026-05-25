@@ -1,7 +1,7 @@
 {
-	"text": "WAIT! Back up, don't get too close. This case is fragile, are you crazy?!?!",
-	"type": "neutral",
+	"text": "WAIT! Back up, don't get too close. This case is fragile!!!",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
 			"text": "What are you?",

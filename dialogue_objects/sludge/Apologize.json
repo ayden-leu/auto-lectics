@@ -1,7 +1,7 @@
 {
 	"text": "Sorry? SORRY! You could've killed me. ",
-	"type": "neutral",
 	"mode": "hectic",
+	"type": "neutral",
 	"nextOnHecticFailureID": "Apolgize_HecticFail",
 	"options": [
 		{

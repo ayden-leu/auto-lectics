@@ -1,0 +1,11 @@
+{
+	"text": "Well Doc said to monitor  the PH and tell them if went outside certain... wait this is my job! I'm not gonna let you in on my work.  ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Conversation Over Bad"
+		}
+	]
+}

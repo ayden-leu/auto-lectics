@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://lq3n23a8ltbr"]
+
+[ext_resource type="Shader" uid="uid://bpclmy64ynle1" path="res://visuals/shaders/fog.gdshader" id="1_mpqkb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5lfti"]
+shader = ExtResource("1_mpqkb")
+shader_parameter/density = 0.4958997850537301
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/emission = Color(0, 0, 0, 1)
+shader_parameter/height_falloff = 0.0
+shader_parameter/edge_fade = 0.065
+
+[node name="FogVolume" type="FogVolume" unique_id=745354760]
+transform = Transform3D(1.6963272, 0, 0, 0, 3.7622173, 0, 0, 0, 1, 0, 0, 0)
+size = Vector3(26.33612, 2, 40.83374)
+material = SubResource("ShaderMaterial_5lfti")

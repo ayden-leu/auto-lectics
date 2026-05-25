@@ -1,10 +1,10 @@
 {
 	"text": "HAHA, that's pretty funny. Messed up, but funny. I'm Sludge.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
-			"text": "I'm MC.",
+			"text": "I'm a representative of the company. ",
 			"type": "neutral",
 			"nextID": "DontCare"
 		},

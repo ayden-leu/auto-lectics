@@ -1,7 +1,7 @@
 {
 	"text": "You see that big chamber up there? Yeah, that's all me.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
 			"text": "You made that chamber?",
@@ -14,7 +14,7 @@
 			"nextID": "StupidQuestion"
 		},
 		{
-			"text": "What is that?",
+			"text": "So what's in the chamber?",
 			"type": "neutral",
 			"nextID": "QuestionChamber"
 		}

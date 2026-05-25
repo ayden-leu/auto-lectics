@@ -1,7 +1,7 @@
 {
 	"text": "Well, hurry up and ask already, I don't have all day.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
 			"text": "What is going on here?",
