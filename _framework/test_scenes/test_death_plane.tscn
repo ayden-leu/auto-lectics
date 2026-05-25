@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4elv63htgufa"]
+[gd_scene load_steps=11 format=3 uid="uid://c4elv63htgufa"]
 
 [ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="1_jxvag"]
+[ext_resource type="Script" uid="uid://b1ko3uwfsnvvm" path="res://_framework/test_scenes/test_death_plane.gd" id="1_l2yny"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="3_d2s42"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="4_4x84g"]
 [ext_resource type="Script" uid="uid://ngayr0wn30tw" path="res://_framework/helpers/death_plane.gd" id="4_60sf8"]
@@ -19,6 +20,7 @@ data = PackedVector3Array(-2.5, 0.25, 2.5, 2.5, 0.25, 2.5, -2.5, -0.25, 2.5, 2.5
 size = Vector3(1, 4.1533203, 4.439209)
 
 [node name="Test_DeathPlane" type="Node3D"]
+script = ExtResource("1_l2yny")
 
 [node name="Environment" type="Node" parent="."]
 

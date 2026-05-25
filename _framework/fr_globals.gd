@@ -1,4 +1,4 @@
-extends Node 
+extends Node
 
 # ------------------------------------------------
 # signals
@@ -35,12 +35,14 @@ const SCENES = {
 	"DialogueConsoleLogEntrySpacer": "uid://2pbfftop6j5e",
 	"DialogueConsoleLogEntryIdLabel": "uid://cdt7ouilmdwo0",
 	"DialogueWarningTileWindow": "uid://dpeqr6fpd34gm",
-	"WarningTile2D": "uid://c1qmg4lyrgjqc"
+	"WarningTile2D": "uid://c1qmg4lyrgjqc",
+	"BlueprintWindow": "uid://ovwd5xcohsao",
+	"BlueprintNpcDetailWindow": "uid://524kk63lga7"
 }
 
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {
-	"DIALOGUE": "res://dialogue_objects/",
+	"DIALOGUE": "res://dialogue_trees/",
 	"SFX": "res://sounds/sfx/",
 	"LABEL_PRESETS": "res://fonts/_label_presets/"
 }
@@ -84,28 +86,26 @@ func getDialogueNode(entityName:String, id: String) -> Dictionary:
 		top = DialogueLoader.loadDialogueNodeFile(
 			STORAGE_PATH.DIALOGUE + "fallback" + DialogueLoader.DIALOGUE_FILE_TYPE
 		)
-	
+
 	var npcDialogueDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_DIALOGUE_ID)
 	var npcDialogueDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcDialogueDefaultsPath, false)
 	if npcDialogueDefaults.is_empty():
 		print("NPC: No default dialogue attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
-	
+
 	var npcOptionDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_OPTION_ID)
 	var npcOptionDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcOptionDefaultsPath, false)
 	if npcOptionDefaults.is_empty():
 		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
-	
+
 	var withNpcDefaults:Dictionary = DialogueLoader.fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
-	
+
 	var result:Dictionary = DialogueLoader.fillDialogueMissingFields(withNpcDefaults)
-	
+
 	return result
 
 ## Gets the current size of the screen.
 func getScreenSize() -> Vector2:
 	return get_viewport().get_visible_rect().size
-	#return DisplayServer.screen_get_size()
-	#return get_window().size
 
 # ------------------------------------------------
 # functions only referenced inside this script

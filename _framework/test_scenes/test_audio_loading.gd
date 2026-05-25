@@ -37,6 +37,11 @@ extends Node3D
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	FR_MenuManager.disable()
+	FR_WindowManager.disable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
+
 	_loadOptionButtonOptions(
 		idField,
 		_getFoldersInPath(FR_Globals.STORAGE_PATH.SFX)
@@ -64,14 +69,14 @@ func _getFoldersInPath(path:String) -> Array[String]:
 	if not tempDirAccess:
 		printerr("Directory [", path, "] does not exist.")
 	tempDirAccess.list_dir_begin()
-	
+
 	var directories:Array[String]
 	var entryName:String = tempDirAccess.get_next()
 	while entryName != "":
 		if tempDirAccess.current_is_dir():
 			directories.push_back(entryName)
 		entryName = tempDirAccess.get_next()
-	
+
 	directories.sort()
 	return directories
 
@@ -86,13 +91,13 @@ func _loadOptionButtonOptions(button:OptionButton, options:Array[String]) -> voi
 func _on_load_pressed() -> void:
 	AudioLoader.clearAudioRandomizer(globalPlayer.stream)
 	AudioLoader.clearAudioRandomizer(positionalPlayer.stream)
-	
+
 	var sfxID:String = idField.get_item_text(idField.selected)
 	var status:int = 0
 	print("Loading SFX ID: [", sfxID, "]")
 	status += AudioLoader.loadSfxFromId(sfxID, globalPlayer.stream)
 	status += AudioLoader.loadSfxFromId(sfxID, positionalPlayer.stream)
-	
+
 	if status >= 0:
 		print("Loading successful.")
 

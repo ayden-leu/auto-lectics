@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkiyyqnrj805g"]
+
+[ext_resource type="Script" uid="uid://fbsg4ividpnn" path="res://_framework/helpers/sfx_event_handler.gd" id="1_feegs"]
+
+[node name="SfxEventHandler" type="Node"]
+script = ExtResource("1_feegs")
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

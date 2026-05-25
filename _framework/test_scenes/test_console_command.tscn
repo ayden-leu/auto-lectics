@@ -121,11 +121,10 @@ metadata/_edit_lock_ = true
 [node name="test_no_options" parent="NPCs" instance=ExtResource("5_vr6d7")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.048841, 0.4689678, -0.8327484)
 initialDialogueID = "start"
-myName = "_test_no_options"
 metadata/_edit_group_ = true
 
 [node name="Bar" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.8120834, 0, -0.58354115, 0, 1, 0, 0.58354115, 0, 0.8120834, 2.686091, 4.3653107, 4.212739)
+transform = Transform3D(0.81208336, 0, -0.5835411, 0, 1, 0, 0.5835411, 0, 0.81208336, 2.686091, 4.3653107, 4.212739)
 mesh = SubResource("BoxMesh_ee424")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Bar"]

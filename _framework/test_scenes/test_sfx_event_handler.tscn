@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://bq1xv6ouwttcl"]
+
+[ext_resource type="Script" uid="uid://u7mm2w5ogj8e" path="res://_framework/test_scenes/test_sfx_event_handler.gd" id="1_bqhkb"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="2_n6f2p"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bqhkb"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gk6f8"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_n6f2p"]
+
+[node name="Test_SfxEventHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_bqhkb")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 489.0
+offset_top = 250.0
+offset_right = 582.0
+offset_bottom = 281.0
+text = "Play sound"
+
+[node name="EventField" type="LineEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 592.0
+offset_top = 251.0
+offset_right = 834.0
+offset_bottom = 282.0
+
+[node name="SfxEventHandler" parent="." instance=ExtResource("2_n6f2p")]
+unique_name_in_owner = true
+sfxIds = Dictionary[String, String]({
+"one": "_test_1",
+"three": "_test_2",
+"two": "_test_3"
+})
+
+[node name="one" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_bqhkb")
+
+[node name="three" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_gk6f8")
+
+[node name="two" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_n6f2p")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

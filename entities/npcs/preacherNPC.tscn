@@ -10,9 +10,11 @@ size = Vector3(1.0087891, 1.8596134, 0.97631836)
 script = ExtResource("1_hswvp")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
+dialogueTreeID = "preacher"
 initialDialogueID = "PB1"
 model = NodePath("preacherModel")
-myName = "preacher"
+internalID = "preacher"
+displayName = "preacher"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
 
 [node name="preacherModel" parent="." instance=ExtResource("2_67wvj")]

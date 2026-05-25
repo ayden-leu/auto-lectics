@@ -7,14 +7,14 @@
 height = 1.0175781
 radius = 3.0581055
 
-[node name="spinner" type="Node3D" node_paths=PackedStringArray("hitbox", "dialogueBoxAnchor", "model")]
+[node name="spinner" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_5b655")
-hitbox = NodePath("Hitbox")
-dialogueBoxAnchor = NodePath("Marker3D")
-dialogueBoxAttachMethod = 1
+_hitbox = NodePath("Hitbox")
+dialogueTreeID = "spinner"
 initialDialogueID = "Dialogue1a"
 model = NodePath("spinner")
-myName = "spinner"
+internalID = "spinner"
+displayName = "spinner"
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 0.13899732, -0.15410192)

@@ -10,9 +10,11 @@ size = Vector3(3.7146912, 3.3453865, 3.8427734)
 script = ExtResource("3_ac2w6")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
+dialogueTreeID = "dish"
 initialDialogueID = "dialogue1"
 model = NodePath("dishmodel")
-myName = "dish"
+internalID = "dish"
+displayName = "dish"
 
 [node name="dishmodel" parent="." instance=ExtResource("2_tmrmk")]
 transform = Transform3D(0.3630648, 0, 0.9317639, 0, 1, 0, -0.9317639, 0, 0.3630648, 0, -0.10553214, 0)

@@ -1,6 +1,3 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bnau1gg2ifc3y"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a44tc"]
+[gd_resource type="Theme" format=3 uid="uid://bnau1gg2ifc3y"]
 
 [resource]
-Button/styles/normal = SubResource("StyleBoxEmpty_a44tc")

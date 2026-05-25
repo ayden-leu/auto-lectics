@@ -94,9 +94,9 @@ func _ready() -> void:
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
 		return
-	
+
 	visible = false
-	
+
 func _process(_delta: float) -> void:
 	# Only runs this code while the game is running
 	if Engine.is_editor_hint():
@@ -110,14 +110,14 @@ func prepare() -> void:
 	await get_tree().create_timer(0.0001).timeout
 	if _goingToDie:
 		return
-	
+
 	_applySettings()
 	visible = true
 	_interactionHitbox.disabled = false
 	if lifetime > 0:
 		_lifeTimer.wait_time = lifetime
 		_lifeTimer.start()
-	
+
 	_sfxPlayer.spawn.play()
 
 ## Loads the SFX from the files.
@@ -146,12 +146,12 @@ func kill():
 func _applySettings() -> void:
 	if not Engine.is_editor_hint():
 		loadSfx()
-	
+
 	_applyLabelSettings()
 	_applyBackgroundSettings()
 
 ## [b]Internal-use only.[/b]  Applies the horizontal and vertical alignment settings of the label.
-func _applyLabelSettings() -> void:    
+func _applyLabelSettings() -> void:
 	match horizontalAlignment:
 		HorizAlignment.LEFT:
 			_label.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
@@ -164,7 +164,7 @@ func _applyLabelSettings() -> void:
 			_label.position.z = 0
 		_:
 			printerr("DialogueBoxOption: Unhandled horizontal alignment for label: ", horizontalAlignment)
-	
+
 	match verticalAlignment:
 		VertiAlignment.TOP:
 			_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
@@ -181,11 +181,11 @@ func _applyLabelSettings() -> void:
 ## [b]Internal-use only.[/b]  Applies the horizontal and vertical alignment settings of the _background.
 func _applyBackgroundSettings() -> void:
 	var labelSize:Vector3 = _label.get_aabb().size
-	
+
 	_background.mesh.size.x = thickness
 	_background.mesh.size.y = labelSize.y + labelPadding.y
 	_background.mesh.size.z = labelSize.x + labelPadding.x
-	
+
 	match horizontalAlignment:
 		HorizAlignment.LEFT:
 			_background.position.z = -labelSize.x/2 + _label.position.z
@@ -195,7 +195,7 @@ func _applyBackgroundSettings() -> void:
 			_background.position.z = 0
 		_:
 			printerr("DialogueBoxOption: Unhandled horizontal alignment for _background: ", horizontalAlignment)
-	
+
 	match verticalAlignment:
 		VertiAlignment.TOP:
 			#_background.mesh.size.y = labelSize.y - label.position.y * 2
@@ -211,7 +211,7 @@ func _applyBackgroundSettings() -> void:
 	_interactionHitbox.shape.size = _background.mesh.size + Vector3.ONE * _INTERACTION_HITBOX_PADDING
 	_interactionHitbox.position.y = _background.position.y
 	_interactionHitbox.position.z = _background.position.z
-	
+
 	labelHeight = _interactionHitbox.shape.size.y
 
 # ------------------------------------------------

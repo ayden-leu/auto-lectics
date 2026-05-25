@@ -42,14 +42,16 @@ script/source = "extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	FR_MenuManager.enable() # either enable() or disable()
+	FR_WindowManager.enable() # either enable() or disable()
+	CursorHandler.setDefault(\"hidden\") # refer to documentation or hover over the function for valid values
+	CursorHandler.hideNuclear() # either hideNuclear() or showNuclear()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
 #		get_tree().reload_current_scene()
-		
 "
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_hsv1o"]
@@ -76,7 +78,7 @@ volumetric_fog_anisotropy = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hsv1o"]
 
-[node name="week_6_playtest" type="Node3D"]
+[node name="week_10_playtest" type="Node3D"]
 script = SubResource("GDScript_doxto")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

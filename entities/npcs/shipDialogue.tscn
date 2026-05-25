@@ -9,10 +9,12 @@ size = Vector3(5.7617188, 4.720703, 0.20898438)
 [node name="ship" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_6ak60")
 _hitbox = NodePath("Hitbox")
+dialogueTreeID = "the_office"
 initialDialogueID = "1"
 rejectConsoleExit = true
 model = NodePath("dropPod")
-myName = "The Office"
+internalID = "the_office"
+displayName = "The Office"
 
 [node name="dropPod" parent="." instance=ExtResource("2_fax51")]
 
