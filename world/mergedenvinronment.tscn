@@ -1,6 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://ci7dkpgdttqp2"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_nelfo"]
+[ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_qa0tg"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_kc27b"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_opcsi"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_0j5t5"]
@@ -29,40 +30,15 @@
 [ext_resource type="PackedScene" uid="uid://cohj3ym45tr8w" path="res://models/environment/scaffold_tower.tscn" id="40_sms72"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="41_vxmv4"]
 
-[sub_resource type="GDScript" id="GDScript_doxto"]
-script/source = "extends Node3D
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
-#		get_tree().reload_current_scene()
-		
-
-
-
-# ---------------------------------------------------------------
-# uncomment the below code if you want the `open_gate` command
-# to work regardless of who opened the DialogueConsole
-# ---------------------------------------------------------------
-
-#func _ready() -> void:
-	#FR_WindowManager.subscribeToConsole(self)
-#
-#func _on_console_command_entered(command:String) -> void:
-	#if command == \"open_gate\":
-		#$npcs/miniboss2/gateNode.open_gate()
-"
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_j228d"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dylvw"]
 panorama = ExtResource("1_nelfo")
 
-[sub_resource type="Sky" id="Sky_crjn4"]
-sky_material = SubResource("PanoramaSkyMaterial_j228d")
+[sub_resource type="Sky" id="Sky_fm1lc"]
+sky_material = SubResource("PanoramaSkyMaterial_dylvw")
 
-[sub_resource type="Environment" id="Environment_r1rwl"]
+[sub_resource type="Environment" id="Environment_34yam"]
 background_mode = 2
-sky = SubResource("Sky_crjn4")
+sky = SubResource("Sky_fm1lc")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -78,12 +54,12 @@ volumetric_fog_anisotropy = 1.0
 
 [node name="mergedEnvironment" type="Node3D"]
 transform = Transform3D(0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0)
-script = SubResource("GDScript_doxto")
+script = ExtResource("1_qa0tg")
 
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_r1rwl")
+environment = SubResource("Environment_34yam")
 script = ExtResource("2_kc27b")
 anisotropy = 1.0
 
@@ -119,14 +95,12 @@ transform = Transform3D(0.3069081, 0, -0.9517391, 0, 1, 0, 0.9517391, 0, 0.30690
 [node name="npcs" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("32_vdqmy")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -120.707306, 136.95566, 126.72429)
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -120.70731, 133.35829, 126.7243)
 maxSpeed = 5.2
 acceleration = 2.5
 deceleration = 5.0
 airAcceleration = 5.0
 jumpHeight = 0.6
-grapple_max_length = 7.235
-grapple_initial_impulse = 6.54
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_b2sj0")]
 transform = Transform3D(-0.014573097, 0, 0.999894, 0, 1, 0, -0.999894, 0, -0.014573097, 52.039295, 115.865364, 5.2925925)
