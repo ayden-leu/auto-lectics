@@ -44,7 +44,7 @@ func _ready() -> void:
 
 	_loadOptionButtonOptions(
 		idField,
-		_getFoldersInPath(FR_Globals.STORAGE_PATH.SFX)
+		_getFoldersInPath(AudioLoader.STORAGE_PATH)
 	)
 
 func _process(_delta: float) -> void:

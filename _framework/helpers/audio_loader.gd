@@ -3,6 +3,9 @@ extends Node
 class_name AudioLoader
 ## Helper script to load audio files from project file structure.
 
+## The storage path for all SFX ID folders.
+const STORAGE_PATH:String = "res://sounds/sfx/"
+
 ## Loads audio files related to a given ID and loads them into a given [AudioStreamRandomizer].
 static func loadSfxFromId(id:String, audioStream:AudioStreamRandomizer) -> int:
 	if id == "":
@@ -12,12 +15,12 @@ static func loadSfxFromId(id:String, audioStream:AudioStreamRandomizer) -> int:
 	if id == "none":
 		return 0
 
-	var tempDirAccess:DirAccess = DirAccess.open(FR_Globals.STORAGE_PATH.SFX)
+	var tempDirAccess:DirAccess = DirAccess.open(STORAGE_PATH)
 	if not tempDirAccess.dir_exists(id):
 		printerr("AudioLoader: Could not find the SFX ID folder: ", id)
 		return -2
 
-	var soundIDPath:String = FR_Globals.STORAGE_PATH.SFX + id
+	var soundIDPath:String = STORAGE_PATH + id
 	var audioFileNames:PackedStringArray = ResourceLoader.list_directory(soundIDPath)
 	if audioFileNames.is_empty():
 		printerr("AudioLoader: Could not find any SFX in SFX ID folder: ", id)

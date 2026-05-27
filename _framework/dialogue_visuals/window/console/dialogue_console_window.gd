@@ -48,11 +48,11 @@ const _OPTION_SPAWN_OFFSET:int = 3
 ## This is just visual, so the input will not have this included.
 const _INPUT_PREFIX:String = ""
 ## [b]Internal-use only.[/b]  A reference to a pre-set [RichTextLabel] scene.
-const _LOG_ENTRY:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntry)
+const _LOG_ENTRY:Resource = preload("uid://1n8yvdu14dcd")
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Control] scene.
-const _LOG_ENTRY_SPACER:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntrySpacer)
+const _LOG_ENTRY_SPACER:Resource = preload("uid://2pbfftop6j5e")
 ## [b]Internal-use only.[/b]  A reference to a pre-set [Label] scene.
-const _LOG_ID_LABEL:Resource = preload(FR_Globals.SCENES.DialogueConsoleLogEntryIdLabel)
+const _LOG_ID_LABEL:Resource = preload("uid://cdt7ouilmdwo0")
 ## [b]Internal-use only.[/b]
 ## The delay between spawning [DialogueWarningTile]s.
 const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011

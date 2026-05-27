@@ -36,7 +36,7 @@ var eventID:String = "":
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## A list of valid entries to add that won't be in [member FR_Globals.STORAGE_PATH.SFX]
+## A list of valid entries to add that won't be in [member AudioLoader.STORAGE_PATH]
 var _entriesToAdd:Array[String] = ["none", "inherit"]
 
 # ------------------------------------------------
@@ -57,7 +57,7 @@ func removeInherit() -> void:
 ## Setups the option entries.
 ## Part of the work around mentioned in [method removeFirstEntry].
 func setup() -> void:
-	_entriesToAdd.append_array(DirAccess.get_directories_at(FR_Globals.STORAGE_PATH.SFX))
+	_entriesToAdd.append_array(DirAccess.get_directories_at(AudioLoader.STORAGE_PATH))
 	_fillValueToOptionIndex(_entriesToAdd)
 
 # ------------------------------------------------

@@ -50,19 +50,19 @@ class_name WindowManager
 const _EXAMPLE_WINDOW = preload("uid://cksoxvpnvcbjd")
 ## [b]Internal-use only.[/b]
 ## A reference to the [DialogueConsole] scene.
-const _DIALOGUE_CONSOLE_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleWindow)
+const _DIALOGUE_CONSOLE_SCENE:Resource = preload("uid://b8oqtsvu488a")
 ## [b]Internal-use only.[/b]
 ## A reference to the [DialogueConsoleOptionWindow] scene.
-const _OPTION_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.DialogueConsoleOptionWindow)
+const _OPTION_WINDOW_SCENE:Resource = preload("uid://4opwac4ndc2k")
 ## [b]Internal-use only.[/b]
 ## A reference to the [DialogueWarnringTileWindow] scene.
-const _WARNING_WINDOW_SCENE:PackedScene = preload(FR_Globals.SCENES.DialogueWarningTileWindow)
+const _WARNING_WINDOW_SCENE:PackedScene = preload("uid://dpeqr6fpd34gm")
 ## [b]Internal-use only.[/b]
 ## A reference to the [BlueprintWindow] scene.
-const _BLUEPRINT_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.BlueprintWindow)
+const _BLUEPRINT_WINDOW_SCENE:Resource = preload("uid://ovwd5xcohsao")
 ## [b]Internal-use only.[/b]
 ## A reference to the [BlueprintNpcDetailWindow] scene.
-const _BLUEPRINT_DETAIL_WINDOW_SCENE:Resource = preload(FR_Globals.SCENES.BlueprintNpcDetailWindow)
+const _BLUEPRINT_DETAIL_WINDOW_SCENE:Resource = preload("uid://524kk63lga7")
 
 ## [b]Internal-use only.[/b]
 ## Maps subscriber method names to [DialogueConsole] signal names.

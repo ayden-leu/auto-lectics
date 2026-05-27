@@ -15,11 +15,11 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
@@ -86,13 +86,13 @@ sfxIds = Dictionary[String, String]({
 stream = SubResource("AudioStreamRandomizer_qclge")
 
 [node name="deathFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_k4ncf")
-
-[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_hh4bn")
 
-[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_6t6ql")
+
+[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_k4ncf")
 
 [node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_s2ddf")

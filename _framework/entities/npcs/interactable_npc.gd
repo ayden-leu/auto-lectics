@@ -168,7 +168,7 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 		return
 	_currentDialogueID = nextDialogueID
 
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
+	var dialogue:Dictionary = DialogueLoader.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	_loadDialogueConsoleData(dialogue)
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
@@ -322,7 +322,7 @@ enum BoxAttachMethod {
 # ------------------------------------------------
 ## @deprecated
 ## [b]Internal-use only.[/b]  A reference to the [DialogueBox] scene.
-const _DIALOGUE_BOX_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBox)
+const _DIALOGUE_BOX_SCENE:Resource = preload("uid://dwqide2q2tp3i")
 
 # ------------------------------------------------
 # export variables
@@ -429,7 +429,7 @@ func _loadNextDialogueBox(nextDialogueID: String) -> void:
 
 	_currentDialogueID = nextDialogueID
 
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
+	var dialogue:Dictionary = DialogueLoader.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	#print("dialogue data: ", dialogue)
 	_loadDialogueBoxData(dialogue)
 	_dialogueBox.start()
