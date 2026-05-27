@@ -1,3 +1,4 @@
+@icon("uid://id471bfglpdp")
 extends Node
 class_name DialogueLoader
 ## Helper script for loading dialogue files into the game.

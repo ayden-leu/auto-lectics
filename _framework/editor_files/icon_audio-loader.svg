@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333333 4.2333333"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   sodipodi:docname="icon_audio_loader.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="32"
+     inkscape:cx="7.5"
+     inkscape:cy="14.6875"
+     inkscape:window-width="2048"
+     inkscape:window-height="1198"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g33" /><defs
+     id="defs1" /><g
+     inkscape:groupmode="layer"
+     id="g33"
+     inkscape:label="content"
+     transform="translate(0.29232604,-1.8708867)"
+     style="display:inline"><path
+       id="rect6"
+       clip-path="none"
+       style="display:inline;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0.132292;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       inkscape:label="arrow-cutout"
+       d="M 1.8093544 2.5307947 A 0.1320667 0.1320667 0 0 0 1.6873981 2.6444829 L 1.4005939 4.5487594 L 1.1504799 3.3007736 A 0.1320667 0.1320667 0 0 0 0.8946816 3.2873377 L 0.63061503 4.165837 L 0.48437073 3.6232345 A 0.1320667 0.1320667 0 0 0 0.2342568 3.6072148 L 0.056489875 4.0526657 L -0.054614453 3.9079716 A 0.13205349 0.13205349 0 0 0 -0.24013284 3.8826502 A 0.13205349 0.13205349 0 0 0 -0.2654543 4.0681686 L -0.013790072 4.398381 A 0.1320667 0.1320667 0 0 0 0.21461976 4.3673751 L 0.33192526 4.0743698 L 0.49625631 4.6836349 A 0.1320667 0.1320667 0 0 0 0.74998759 4.6872522 L 0.99596741 3.8692143 L 1.2889728 5.3357915 A 0.1320667 0.1320667 0 0 0 1.5509723 5.3301071 L 1.8181394 3.5529546 L 2.0408649 5.0314173 L 2.4072508 5.0314173 L 2.5684812 4.2288823 L 2.5684812 3.9880701 C 2.568283 3.9365028 2.5979268 3.8917285 2.6408282 3.8697311 C 2.6589822 3.8604751 2.6794974 3.8551779 2.7012897 3.8552617 L 2.9105792 3.8552617 L 2.740047 3.2873377 A 0.1320667 0.1320667 0 0 0 2.4842486 3.3007736 L 2.2341347 4.5466923 L 1.9493976 2.6444829 A 0.1320667 0.1320667 0 0 0 1.8093544 2.5307947 z M 3.2697304 3.5250493 A 0.1320667 0.1320667 0 0 0 3.1503579 3.6232345 L 3.0878294 3.8552617 L 3.1973834 3.8552617 C 3.2708504 3.8549793 3.3304742 3.9146031 3.3301918 3.9880701 L 3.3301918 4.1379318 L 3.4216591 4.3673751 A 0.1320667 0.1320667 0 0 0 3.6464516 4.400448 L 3.9120685 4.0702356 A 0.13205349 0.13205349 0 0 0 3.8924314 3.8847173 A 0.13205349 0.13205349 0 0 0 3.704846 3.9043543 L 3.5818561 4.0583501 L 3.4004718 3.6072148 A 0.1320667 0.1320667 0 0 0 3.2697304 3.5250493 z " /><path
+       style="display:inline;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0.132292;stroke-dasharray:none;stroke-opacity:0.5115"
+       d="m 2.7007729,3.9875534 h 0.4960938 v 1.175926 H 3.9410073 L 2.9488197,6.1042201 1.9566323,5.1634794 h 0.7441406 z"
+       id="path33"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="arrow" /><path
+       style="display:none;fill:none;fill-opacity:1;stroke:#e0e0e0;stroke-width:0.264107;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="M -0.16027255,3.9875477 0.09195259,4.3183539 0.35745272,3.6567416 0.62295285,4.6491599 1.0212031,3.3259354 l 0.3982502,1.9848368 0.3982502,-2.646449 0.3982502,2.646449 0.3982501,-1.9848368 0.3982504,1.3232245 0.2655,-0.9924183 0.2655003,0.6616123 0.2655,-0.3308062"
+       id="path8"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:label="wave-path" /></g></svg>

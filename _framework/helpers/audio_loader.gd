@@ -1,3 +1,4 @@
+@icon("uid://dvylpsokk73w0")
 extends Node
 class_name AudioLoader
 ## Helper script to load audio files from project file structure.

@@ -1,3 +1,4 @@
+@icon("uid://cd5jlaus7ngf7")
 extends Node
 class_name StoryFlags
 

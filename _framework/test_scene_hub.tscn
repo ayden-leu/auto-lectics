@@ -1,12 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwmpo6y5x6ios"]
+[gd_scene load_steps=13 format=3 uid="uid://dwmpo6y5x6ios"]
 
 [ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_x2kea"]
-[ext_resource type="Texture2D" uid="uid://c1ramlq6b7v5a" path="res://_framework/dialogue_creator/visual_assets/load.svg" id="3_wtvxm"]
 [ext_resource type="Texture2D" uid="uid://dfdwbkf245m7l" path="res://_framework/editor_files/icon_menu-manager.svg" id="4_j2pjv"]
-[ext_resource type="Texture2D" uid="uid://b105kdcrwpi0r" path="res://_framework/editor_files/icon_interactable_NPC.svg" id="5_0fyl3"]
+[ext_resource type="Texture2D" uid="uid://b105kdcrwpi0r" path="res://_framework/editor_files/icon_interactable-NPC.svg" id="5_0fyl3"]
+[ext_resource type="Texture2D" uid="uid://d3bctx6al0yha" path="res://_framework/editor_files/icon_grappling-hook.svg" id="5_wtvxm"]
+[ext_resource type="Texture2D" uid="uid://bbxaj8rh6jfm6" path="res://_framework/editor_files/icon_dialogue-window.svg" id="5_x2kea"]
 [ext_resource type="Texture2D" uid="uid://4k8rw8ox10br" path="res://_framework/editor_files/icon_NPC.svg" id="6_f2hun"]
 [ext_resource type="Texture2D" uid="uid://bfg0nlmruxfhi" path="res://_framework/editor_files/icon_window-manager.svg" id="7_3d80c"]
+[ext_resource type="Texture2D" uid="uid://dvylpsokk73w0" path="res://_framework/editor_files/icon_audio-loader.svg" id="7_j2pjv"]
+[ext_resource type="Texture2D" uid="uid://id471bfglpdp" path="res://_framework/editor_files/icon_dialogue-loader.svg" id="8_j2pjv"]
+[ext_resource type="Texture2D" uid="uid://mjaagygagbwl" path="res://_framework/editor_files/icon_label-preset-loader.svg" id="9_0fyl3"]
+[ext_resource type="Texture2D" uid="uid://cd5jlaus7ngf7" path="res://_framework/editor_files/icon_story-flags.svg" id="10_f2hun"]
 
 [node name="TestSceneHub" type="Control"]
 layout_mode = 3
@@ -77,18 +82,14 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_player_movement"
+icon = ExtResource("5_wtvxm")
 expand_icon = true
 
 [node name="test_console_command" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_console_command"
-expand_icon = true
-
-[node name="test_shader" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "test_shader"
+icon = ExtResource("5_x2kea")
 expand_icon = true
 
 [node name="test_waterdrop" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
@@ -103,7 +104,6 @@ mouse_filter = 1
 
 [node name="CodeHelper" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
 layout_mode = 2
-metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="MainPanel/ButtonHolder/CodeHelper"]
 layout_mode = 2
@@ -114,25 +114,28 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_audio_loading"
+icon = ExtResource("7_j2pjv")
 expand_icon = true
 
 [node name="test_dialogue_loading" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_dialogue_loading"
-icon = ExtResource("3_wtvxm")
+icon = ExtResource("8_j2pjv")
 expand_icon = true
 
 [node name="test_label_preset" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_label_preset"
+icon = ExtResource("9_0fyl3")
 expand_icon = true
 
 [node name="test_story_flags" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_story_flags"
+icon = ExtResource("10_f2hun")
 expand_icon = true
 
 [node name="VSeparator2" type="VSeparator" parent="MainPanel/ButtonHolder"]
@@ -186,7 +189,6 @@ text = "Back (Ctrl+Q)"
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_npc_patrol" to="." method="_on_load_test_npc_patrol_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_player_movement" to="." method="_on_load_test_player_movement_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_console_command" to="." method="_on_load_test_console_command_pressed"]
-[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_shader" to="." method="_on_load_test_shader_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_waterdrop" to="." method="_on_load_test_waterdrop_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_audio_loading" to="." method="_on_load_test_audio_loading_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_dialogue_loading" to="." method="_on_load_test_dialogue_loading_pressed"]

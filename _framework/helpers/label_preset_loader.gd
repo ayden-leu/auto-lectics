@@ -1,3 +1,4 @@
+@icon("uid://mjaagygagbwl")
 extends Object
 class_name LabelPresetLoader
 ## Loads label preset resources into [Label]s via code.

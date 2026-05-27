@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bayydan3cr5na"
-path="res://.godot/imported/icon_blueprint_entry.svg-d52dce88ca035f682ed657abe1753680.ctex"
+uid="uid://dvylpsokk73w0"
+path="res://.godot/imported/icon_audio-loader.svg-08dcf3f50e88d6278e31f5497780ee68.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_framework/editor_files/icon_blueprint_entry.svg"
-dest_files=["res://.godot/imported/icon_blueprint_entry.svg-d52dce88ca035f682ed657abe1753680.ctex"]
+source_file="res://_framework/editor_files/icon_audio-loader.svg"
+dest_files=["res://.godot/imported/icon_audio-loader.svg-08dcf3f50e88d6278e31f5497780ee68.ctex"]
 
 [params]
 
