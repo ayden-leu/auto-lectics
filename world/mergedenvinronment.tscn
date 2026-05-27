@@ -1,13 +1,15 @@
-[gd_scene load_steps=33 format=3 uid="uid://ci7dkpgdttqp2"]
+[gd_scene load_steps=35 format=3 uid="uid://ci7dkpgdttqp2"]
 
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_nelfo"]
-[ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_qa0tg"]
+[ext_resource type="Script" path="res://world/mergedenvinronment.gd" id="1_qa0tg"]
 [ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_kc27b"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_opcsi"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_0j5t5"]
 [ext_resource type="PackedScene" uid="uid://db24nhectuest" path="res://models/environment/environmentscenes/area_2_environment.tscn" id="5_drrb8"]
 [ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="6_3rlo5"]
+[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="7_fm1lc"]
 [ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="7_qvgb3"]
+[ext_resource type="PackedScene" uid="uid://nnv27ko17ev3" path="res://_framework/helpers/restart_loop_manager_area_3d.tscn" id="8_34yam"]
 [ext_resource type="PackedScene" uid="uid://dgim7xtnvx8nn" path="res://models/environment/big_floor_arc.tscn" id="10_crunk"]
 [ext_resource type="PackedScene" uid="uid://dikbwfhelce82" path="res://models/environment/environmentscenes/stairs.tscn" id="12_1mbap"]
 [ext_resource type="PackedScene" uid="uid://ckjpbarwajofg" path="res://models/environment/environmentscenes/battery_block.tscn" id="14_0pyij"]
@@ -30,15 +32,15 @@
 [ext_resource type="PackedScene" uid="uid://cohj3ym45tr8w" path="res://models/environment/scaffold_tower.tscn" id="40_sms72"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="41_vxmv4"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dylvw"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fm1lc"]
 panorama = ExtResource("1_nelfo")
 
-[sub_resource type="Sky" id="Sky_fm1lc"]
-sky_material = SubResource("PanoramaSkyMaterial_dylvw")
+[sub_resource type="Sky" id="Sky_34yam"]
+sky_material = SubResource("PanoramaSkyMaterial_fm1lc")
 
-[sub_resource type="Environment" id="Environment_34yam"]
+[sub_resource type="Environment" id="Environment_xqn2u"]
 background_mode = 2
-sky = SubResource("Sky_fm1lc")
+sky = SubResource("Sky_34yam")
 ambient_light_color = Color(0.20399997, 0, 0.24, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 2.38
@@ -59,7 +61,7 @@ script = ExtResource("1_qa0tg")
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_34yam")
+environment = SubResource("Environment_xqn2u")
 script = ExtResource("2_kc27b")
 anisotropy = 1.0
 
@@ -81,6 +83,14 @@ directional_shadow_max_distance = 4096.0
 
 [node name="Area 2 Environment" parent="Environment" instance=ExtResource("5_drrb8")]
 transform = Transform3D(0.54, 0, 0, 0, 0.54, 0, 0, 0, 0.54, -17, 0, -55)
+visible = false
+
+[node name="LoopManager" parent="Environment" node_paths=PackedStringArray("fancyArea") instance=ExtResource("7_fm1lc")]
+loopDurationSeconds = 1.0
+fancy = true
+fancyArea = NodePath("RestartLoopManagerArea3D")
+
+[node name="RestartLoopManagerArea3D" parent="Environment/LoopManager" instance=ExtResource("8_34yam")]
 
 [node name="DeathPlane" parent="." instance=ExtResource("35_u8ycg")]
 transform = Transform3D(0.94075656, 0, -0.3390827, 0, 1, 0, 0.3390827, 0, 0.94075656, 38.405388, -97.754974, -70.28115)
@@ -94,8 +104,12 @@ transform = Transform3D(0.3069081, 0, -0.9517391, 0, 1, 0, 0.9517391, 0, 0.30690
 
 [node name="npcs" type="Node" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("32_vdqmy")]
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, -58.702377, 30.445662, 164.33159)
+
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("32_vdqmy")]
 transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -120.70731, 133.35829, 126.7243)
+respawnCheckpointLocation = NodePath("../Marker3D")
 maxSpeed = 5.2
 acceleration = 2.5
 deceleration = 5.0

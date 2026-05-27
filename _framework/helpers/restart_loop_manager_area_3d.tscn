@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://nnv27ko17ev3"]
+[gd_scene load_steps=5 format=3 uid="uid://nnv27ko17ev3"]
 
 [ext_resource type="Script" uid="uid://dgbvsvuhralbt" path="res://_framework/helpers/restart_loop_manager_area_3d.gd" id="1_dxhej"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lv1n7"]
 resource_local_to_scene = true
+radius = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxhej"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 9.75
+
+[sub_resource type="SphereMesh" id="SphereMesh_dxhej"]
+material = SubResource("StandardMaterial3D_dxhej")
 
 [node name="RestartLoopManagerArea3D" type="Area3D"]
 collision_layer = 0
@@ -13,5 +22,9 @@ growRate = 5.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
 shape = SubResource("SphereShape3D_lv1n7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_dxhej")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

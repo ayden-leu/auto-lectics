@@ -158,6 +158,10 @@ grapple={
 3d_physics/layer_3="NPC"
 3d_physics/layer_4="Visuals"
 
+[physics]
+
+3d/solver/contact_max_allowed_penetration=0.001
+
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true

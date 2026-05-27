@@ -15,11 +15,11 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
@@ -32,7 +32,7 @@ acceleration = 37.0
 grappleAttachImpulseStrength = 20.55
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.53040814, 0, 0, 0, 0.96031815, 0, 0, 0, 0.53040814, 0, 0, -0.004080862)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004080862)
 mesh = SubResource("CapsuleMesh_hh4bn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -77,10 +77,10 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "death",
+"death": "",
 "deathFancy": "",
 "jump": "",
-"respawn": "respawn",
+"respawn": "",
 "respawnFancy": ""
 })
 
@@ -88,13 +88,13 @@ sfxIds = Dictionary[String, String]({
 stream = SubResource("AudioStreamRandomizer_qclge")
 
 [node name="deathFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_k4ncf")
-
-[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_hh4bn")
 
-[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_6t6ql")
+
+[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_k4ncf")
 
 [node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_s2ddf")

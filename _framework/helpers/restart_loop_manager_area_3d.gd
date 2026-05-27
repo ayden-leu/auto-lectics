@@ -36,6 +36,7 @@ enum State {
 # ------------------------------------------------
 ## The collision area.
 @onready var collision:CollisionShape3D = %CollisionShape3D
+@onready var mesh:MeshInstance3D = %MeshInstance3D
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -54,7 +55,10 @@ var _currentState:State = State.IDLE
 # ------------------------------------------------
 func _ready() -> void:
 	collision.shape.radius = 0
-
+	mesh.mesh.radius = 0.5 
+	mesh.mesh.height = 1
+	
+	
 func _process(delta:float) -> void:
 	_handleState(delta)
 
@@ -64,7 +68,8 @@ func _process(delta:float) -> void:
 ## Makes the collision shape start growing.
 func startGrowing() -> void:
 	_currentState = State.GROW
-
+	
+	
 func reset() -> void:
 	_currentState = State.RESET
 
@@ -80,8 +85,12 @@ func _handleState(delta:float) -> void:
 			pass
 		State.GROW:
 			collision.shape.radius += growRate * delta
+			mesh.mesh.radius += growRate * delta
+			mesh.mesh.height += growRate * delta * 2
 		State.RESET:
 			collision.shape.radius = 0
+			mesh.mesh.radius = 0
+			mesh.mesh.height = 0
 			_currentState = State.IDLE
 
 # ------------------------------------------------
