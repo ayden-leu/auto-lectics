@@ -5,8 +5,8 @@ class_name CursorHandler
 ##
 ## Since there are multiple things that can mess with the cursor,
 ## a state-machine-like system was created to handle it.
-## But in short, run [method show]/[member hide] if you don't want to mess with
-## other node's wants, and drun [method showForce]/[method hideForce] if you
+## But in short, run [method show]/[method hide] if you don't want to mess with
+## other node's wants, and run [method showForce]/[method hideForce] if you
 ## really need the mouse in a certain mode.
 ## [br][br]
 ## If you're just starting the game or loading an environment, use
