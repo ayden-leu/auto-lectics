@@ -49,6 +49,7 @@ grow_vertical = 2
 columns = 6
 
 [node name="InWorld" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
+custom_minimum_size = Vector2(230, 0)
 layout_mode = 2
 metadata/_edit_group_ = true
 
@@ -62,6 +63,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_death_plane"
 icon = ExtResource("2_x2kea")
+alignment = 0
 expand_icon = true
 
 [node name="test_npc_interaction" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
@@ -69,6 +71,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_npc_interaction"
 icon = ExtResource("5_0fyl3")
+alignment = 0
 expand_icon = true
 
 [node name="test_npc_patrol" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
@@ -76,6 +79,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_npc_patrol"
 icon = ExtResource("6_f2hun")
+alignment = 0
 expand_icon = true
 
 [node name="test_player_movement" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
@@ -83,6 +87,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_player_movement"
 icon = ExtResource("5_wtvxm")
+alignment = 0
 expand_icon = true
 
 [node name="test_console_command" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
@@ -90,12 +95,14 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_console_command"
 icon = ExtResource("5_x2kea")
+alignment = 0
 expand_icon = true
 
 [node name="test_waterdrop" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_waterdrop"
+alignment = 0
 expand_icon = true
 
 [node name="VSeparator" type="VSeparator" parent="MainPanel/ButtonHolder"]
@@ -103,6 +110,7 @@ layout_mode = 2
 mouse_filter = 1
 
 [node name="CodeHelper" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
+custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MainPanel/ButtonHolder/CodeHelper"]
@@ -115,6 +123,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_audio_loading"
 icon = ExtResource("7_j2pjv")
+alignment = 0
 expand_icon = true
 
 [node name="test_dialogue_loading" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
@@ -122,6 +131,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_dialogue_loading"
 icon = ExtResource("8_j2pjv")
+alignment = 0
 expand_icon = true
 
 [node name="test_label_preset" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
@@ -129,6 +139,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_label_preset"
 icon = ExtResource("9_0fyl3")
+alignment = 0
 expand_icon = true
 
 [node name="test_story_flags" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
@@ -136,6 +147,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_story_flags"
 icon = ExtResource("10_f2hun")
+alignment = 0
 expand_icon = true
 
 [node name="VSeparator2" type="VSeparator" parent="MainPanel/ButtonHolder"]
@@ -143,6 +155,7 @@ layout_mode = 2
 mouse_filter = 1
 
 [node name="GUI" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
+custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MainPanel/ButtonHolder/GUI"]
@@ -155,6 +168,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_menu_manager"
 icon = ExtResource("4_j2pjv")
+alignment = 0
 expand_icon = true
 
 [node name="test_window_manager" type="Button" parent="MainPanel/ButtonHolder/GUI"]
@@ -162,6 +176,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_window_manager"
 icon = ExtResource("7_3d80c")
+alignment = 0
 expand_icon = true
 
 [node name="SceneHolder" type="Node" parent="."]
