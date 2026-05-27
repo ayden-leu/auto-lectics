@@ -52,7 +52,7 @@ func _ready() -> void:
 		return
 
 	process_mode = _defaultProcessMode
-	z_index = FR_Globals.MENU_Z_INDEX
+	z_index = MenuManager.MENU_Z_INDEX
 
 # ------------------------------------------------
 # functions referenced outside of this script

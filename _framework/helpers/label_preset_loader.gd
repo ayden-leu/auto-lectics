@@ -1,6 +1,12 @@
+@icon("uid://mjaagygagbwl")
 extends Object
 class_name LabelPresetLoader
 ## Loads label preset resources into [Label]s via code.
+
+## The storage location for all [LabelSettings] resources.
+const STORAGE_PATH:String = "res://fonts/_label_presets/"
+## The file type of the [LabelSettings] resources.
+const FILE_TYPE:String = ".tres"
 
 ## Loads the given preset.  Storage path can be found in [member FR_Blobals.STORAGE_PATH].
 static func loadPreset(preset:String) -> LabelSettings:
@@ -8,7 +14,7 @@ static func loadPreset(preset:String) -> LabelSettings:
 	if preset.is_empty():
 		return null
 
-	var path:String = FR_Globals.STORAGE_PATH.LABEL_PRESETS + preset + FR_Globals.LABEL_PRESET_FILE_TYPE
+	var path:String = STORAGE_PATH + preset + FILE_TYPE
 	if not ResourceLoader.exists(path):
 		printerr("Label preset not found: %s" % path)
 		return null

@@ -9,7 +9,7 @@ func _ready() -> void:
 	CursorHandler.setDefault("shown")
 	CursorHandler.showNuclear()
 
-	var presets:Array[String] = _getFilesInPath(FR_Globals.STORAGE_PATH.LABEL_PRESETS, FR_Globals.LABEL_PRESET_FILE_TYPE)
+	var presets:Array[String] = _getFilesInPath(LabelPresetLoader.STORAGE_PATH, LabelPresetLoader.FILE_TYPE)
 	if presets.size() == 0:
 		printerr("Oops! No presets.")
 

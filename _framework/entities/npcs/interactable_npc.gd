@@ -168,7 +168,7 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 		return
 	_currentDialogueID = nextDialogueID
 
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
+	var dialogue:Dictionary = DialogueLoader.getDialogueNode(dialogueTreeID, _currentDialogueID)
 	_loadDialogueConsoleData(dialogue)
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
@@ -320,9 +320,6 @@ enum BoxAttachMethod {
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-## @deprecated
-## [b]Internal-use only.[/b]  A reference to the [DialogueBox] scene.
-const _DIALOGUE_BOX_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBox)
 
 # ------------------------------------------------
 # export variables
@@ -330,10 +327,20 @@ const _DIALOGUE_BOX_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBox)
 @export_subgroup("Deprecated")
 ## @deprecated
 ## Tells the game where to spawn a [DialogueBox] when a player interacts with the Interactable NPC.
-@export var _dialogueBoxAnchor:Marker3D
+@export var _dialogueBoxAnchor:Marker3D:
+	get():
+		printerr("InteractableNPC:  _dialogueBoxAnchor is deprecated")
+		return _dialogueBoxAnchor
+	set(newState):
+		printerr("InteractableNPC:  _dialogueBoxAnchor is deprecated")
 ## @deprecated
 ## How the [DialogueBox] should act after beind spawned.
-@export var _dialogueBoxAttachMethod:BoxAttachMethod
+@export var _dialogueBoxAttachMethod:BoxAttachMethod:
+	get():
+		printerr("InteractableNPC:  _dialogueBoxAttachMethod is deprecated")
+		return _dialogueBoxAttachMethod
+	set(newState):
+		printerr("InteractableNPC:  _dialogueBoxAttachMethod is deprecated")
 
 # ------------------------------------------------
 # onready variables
@@ -348,10 +355,20 @@ const _DIALOGUE_BOX_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBox)
 # ------------------------------------------------
 ## @deprecated
 ## [b]Internal-use only.[/b]  Holds a reference to this [InteractableNPC]'s dialogue box scene.
-var _dialogueBox:DialogueBox = null
+var _dialogueBox:DialogueBox = null:
+	get():
+		printerr("InteractableNPC:  _dialogueBox is deprecated")
+		return _dialogueBox
+	set(newState):
+		printerr("InteractableNPC:  _dialogueBox is deprecated")
 ## @deprecated
 ## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
-var _connectedDialogueBoxSignals:bool = false
+var _connectedDialogueBoxSignals:bool = false:
+	get():
+		printerr("InteractableNPC:  _connectedDialogueBoxSignals is deprecated")
+		return _connectedDialogueBoxSignals
+	set(newState):
+		printerr("InteractableNPC:  _connectedDialogueBoxSignals is deprecated")
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -363,119 +380,46 @@ var _connectedDialogueBoxSignals:bool = false
 ## @deprecated
 ## [b]Internal-use only.[/b]  Creates a [DialogueBox]. Only one can exist at a time.
 func _spawnDialogueBox() -> void:
-	if _dialogueBox != null:
-		return
-
-	_dialogueBox = _DIALOGUE_BOX_SCENE.instantiate()
-	if(_dialogueBoxAttachMethod == BoxAttachMethod.FOLLOW):
-		_dialogueBoxAnchor.add_child(_dialogueBox)
-		# undo the scaling being inherited from this InteractableNPC
-		_dialogueBox.scale += Vector3.ONE - scale
-
-	elif(_dialogueBoxAttachMethod == BoxAttachMethod.STAY):
-		get_parent().add_child(_dialogueBox)
-		_dialogueBox.global_position = _dialogueBoxAnchor.global_position
-		_dialogueBox.global_rotation = _dialogueBoxAnchor.global_rotation
+	printerr("InteractableNPC:  _spawnDialogueBox is deprecated.")
+	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Connects the [member _dialogueBox] signals to functions.
 ## Only needs to be ran once.
 func _connectDialogueBoxSignals() -> void:
-	if _connectedDialogueBoxSignals:
-		return
-	_connectedDialogueBoxSignals = true
-
-	_dialogueBox.update_me.connect(_loadNextDialogueBox)
-	_dialogueBox.new_option_available.connect(_on_console_option_chosen)
-	_dialogueBox.all_options_available.connect(_on_console_all_options_available)
-	_dialogueBox.all_dialogue_text_visible.connect(_on_console_all_dialogue_text_visible)
+	printerr("InteractableNPC:  _connectDialogueBoxSignals is deprecated.")
+	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Disconnects the [member _dialogueBox] signals to functions.
 func _disconnectDialogueBoxSignals() -> void:
-	if not _connectedDialogueBoxSignals:
-		return
-	_connectedDialogueBoxSignals = false
-
-	_dialogueBox.update_me.disconnect(_loadNextDialogueBox)
-	_dialogueBox.new_option_available.disconnect(_on_console_option_chosen)
-	_dialogueBox.all_options_available.disconnect(_on_console_all_options_available)
-	_dialogueBox.all_dialogue_text_visible.disconnect(_on_console_all_dialogue_text_visible)
+	printerr("InteractableNPC:  _disconnectDialogueBoxSignals is deprecated.")
+	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueBox].
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
-func _loadDialogueBoxData(dialogueEntry:Dictionary) -> void:
-	_dialogueBox.realOwner = self
-	_dialogueBox.currentDialogueID = _currentDialogueID
-	_dialogueBox.mode = dialogueEntry.mode
-	if dialogueEntry.mode == "hectic":
-		_dialogueBox.hecticFailureDialogueID = dialogueEntry.nextOnHecticFailureID
-	else:
-		_dialogueBox.hecticFailureDialogueID = ""
-	_dialogueBox.text = dialogueEntry.text
-	_dialogueBox.textWriteSpeed = dialogueEntry.writeSpeedCustom
-	_dialogueBox.loadSfx(dialogueEntry.sfx)
-	_dialogueBox.loadOptionData(dialogueEntry.options)
-	_dialogueBox.prepare()
+func _loadDialogueBoxData(_dialogueEntry:Dictionary) -> void:
+	printerr("InteractableNPC:  _loadDialogueBoxData is deprecated.")
+	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Loads the next dialogue to display.
-func _loadNextDialogueBox(nextDialogueID: String) -> void:
-	#print("\nloading dialogue: [", nextDialogueID, "]")
-	if nextDialogueID == "" and isTalking:
-		_endDialogueBox()
-		return
-
-	_currentDialogueID = nextDialogueID
-
-	var dialogue:Dictionary = FR_Globals.getDialogueNode(dialogueTreeID, _currentDialogueID)
-	#print("dialogue data: ", dialogue)
-	_loadDialogueBoxData(dialogue)
-	_dialogueBox.start()
-	dialogue_advanced.emit()
+func _loadNextDialogueBox(_nextDialogueID: String) -> void:
+	printerr("InteractableNPC:  _loadNextDialogueBox is deprecated.")
+	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
-func _beginDialogueEventBox(interactor:Node3D) -> void:
-	# rotate to face player immediately to properly spawn dialogue box
-	# is a hacky work around to spawn the [DialogueBox] in the correct position.
-	var currentRotation:Vector3 = rotation
-	if lookAtInteractorWhileTalking and interactor:
-		look_at(Vector3(
-			interactor.global_position.x,
-			global_position.y,
-			interactor.global_position.z
-		))
-		lookAtPosition = interactor.global_position
-
-	isTalking = true
-	patrolEnabled = false
-	_currentInteractor = interactor
-
-	_spawnDialogueBox()
-	_connectDialogueBoxSignals()
-	_loadNextDialogueBox(initialDialogueID)
-
-	# restore rotation from before hacky work around
-	rotation = currentRotation
+func _beginDialogueEventBox(_interactor:Node3D) -> void:
+	printerr("InteractableNPC:  _beginDialogueEventBox is deprecated.")
+	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
 func _endDialogueBox() -> void:
-	_disconnectDialogueBoxSignals()
-	if _dialogueBox != null:
-		_dialogueBox.kill()
-		_dialogueBox = null
-
-	isTalking = false
-	_currentInteractor = null
-	if _shouldPatrol:
-		patrolEnabled = true
-	if _talkOnlyOnce:
-		wasTalkedTo = true
-
-	finished_dialogue.emit()
+	printerr("InteractableNPC:  _endDialogueBox is deprecated.")
+	return
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

@@ -1,4 +1,5 @@
 @tool
+@icon("uid://b2wigq2n6kjs8")
 extends Node
 class_name SfxEventHandler
 ## A helper class to add SFX events that are loaded with sound files from [AudioLoader].

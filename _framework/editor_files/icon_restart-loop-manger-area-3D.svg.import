@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b105kdcrwpi0r"
-path="res://.godot/imported/icon_interactable_NPC.svg-99430bb72ed9af866d09647fc47653cb.ctex"
+uid="uid://c0agse6m0shng"
+path="res://.godot/imported/icon_restart-loop-manger-area-3D.svg-3ac83fe1e5e1c21ee07cb5da3264873c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_framework/editor_files/icon_interactable_NPC.svg"
-dest_files=["res://.godot/imported/icon_interactable_NPC.svg-99430bb72ed9af866d09647fc47653cb.ctex"]
+source_file="res://_framework/editor_files/icon_restart-loop-manger-area-3D.svg"
+dest_files=["res://.godot/imported/icon_restart-loop-manger-area-3D.svg-3ac83fe1e5e1c21ee07cb5da3264873c.ctex"]
 
 [params]
 

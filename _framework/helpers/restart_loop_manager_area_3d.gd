@@ -1,4 +1,5 @@
 @tool
+@icon("uid://c0agse6m0shng")
 extends Area3D
 class_name RestartLoopManagerArea3D
 ## The

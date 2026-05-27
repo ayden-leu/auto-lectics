@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0xrrnjriup2r"
-path="res://.godot/imported/icon_vocal_dialogue_player.svg-b8cc06873308020976db7f29f0911a8e.ctex"
+uid="uid://bayydan3cr5na"
+path="res://.godot/imported/icon_blueprint-entry.svg-22f251a87646a4cbc3b5364ae90f3a4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_framework/editor_files/icon_vocal_dialogue_player.svg"
-dest_files=["res://.godot/imported/icon_vocal_dialogue_player.svg-b8cc06873308020976db7f29f0911a8e.ctex"]
+source_file="res://_framework/editor_files/icon_blueprint-entry.svg"
+dest_files=["res://.godot/imported/icon_blueprint-entry.svg-22f251a87646a4cbc3b5364ae90f3a4c.ctex"]
 
 [params]
 

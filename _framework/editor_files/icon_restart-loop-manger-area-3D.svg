@@ -4,7 +4,7 @@
    height="128"
    version="1.1"
    id="svg1"
-   sodipodi:docname="icon_loop-manager.svg"
+   sodipodi:docname="icon_restart-loop-manger-area-3D.svg"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -21,9 +21,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="3.7265625"
-     inkscape:cx="51.522012"
-     inkscape:cy="42.398323"
+     inkscape:zoom="2.6350778"
+     inkscape:cx="31.498122"
+     inkscape:cy="44.400967"
      inkscape:window-width="2048"
      inkscape:window-height="1198"
      inkscape:window-x="0"
@@ -48,10 +48,11 @@
        sodipodi:start="0.058676154"
        sodipodi:end="2.2431579"
        d="M 12.991395,8.2932125 A 5,5 0 0 1 10.038251,12.565691 5,5 0 0 1 4.8858235,11.911765"
-       sodipodi:open="true" />
+       sodipodi:open="true"
+       style="stroke:#fc7f7f;stroke-opacity:1" />
     <path
        sodipodi:type="star"
-       style="fill:#e0e0e0;fill-opacity:1;stroke-width:4"
+       style="fill:#fc7f7f;fill-opacity:1;stroke-width:4"
        id="path1"
        inkscape:flatsided="true"
        sodipodi:sides="3"
@@ -86,10 +87,11 @@
        sodipodi:start="0.058676154"
        sodipodi:end="2.2918242"
        d="M 12.991395,8.2932125 A 5,5 0 0 1 9.9265611,12.613931 5,5 0 0 1 4.6992146,11.755638"
-       sodipodi:open="true" />
+       sodipodi:open="true"
+       style="stroke:#fc7f7f;stroke-opacity:1" />
     <path
        sodipodi:type="star"
-       style="fill:#e0e0e0;fill-opacity:1;stroke-width:4"
+       style="fill:#fc7f7f;fill-opacity:1;stroke-width:4"
        id="path3"
        inkscape:flatsided="true"
        sodipodi:sides="3"
@@ -106,4 +108,10 @@
        inkscape:transform-center-y="-0.54212409"
        transform="matrix(0.69531459,0,0,0.49734513,3.8175501,6.061008)" />
   </g>
+  <circle
+     style="fill:#fc7f7f;fill-opacity:1;stroke:#fc7f7f;stroke-width:7.60343;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:fill markers stroke"
+     id="path4"
+     cy="64"
+     cx="64"
+     r="20.198284" />
 </svg>
