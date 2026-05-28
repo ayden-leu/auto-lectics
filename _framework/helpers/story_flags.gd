@@ -11,8 +11,29 @@ const DEFAULT_FLAGS: Dictionary = {
 	"aThirdFlag": false,
 	"doorOpen": false,
 	
+	##overall flags
+	"knowsSomeone": false,
+	
 	##preacher flags
 	"heardSermon": false,
+	"metPreacher": false,
+	"knowsPreacher": false,
+	
+	##gossip flags
+	"metGossip": false,
+	"knowsGossip": false,
+	
+	##dish flags
+	"metDish": false,
+	"knowsDish": false,
+	
+	##generator flags
+	"metGenerator": false,
+	"knowsGenerator": false,
+	
+	##miniBoss flags
+	"metMiniBoss": false,
+	"knowsMiniBoss": false,
 	
 	##splode flags
 	"hasExploded": false,
