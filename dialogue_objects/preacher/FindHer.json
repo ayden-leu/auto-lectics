@@ -1,7 +1,7 @@
 {
 	"text": "Why do you wish to know? (≖_≖ ) ",
-	"type": "confused",
 	"mode": "hectic",
+	"type": "confused",
 	"nextOnHecticFailureID": "FindHer_HecticFail",
 	"writeSpeed": "fast",
 	"sfx": {

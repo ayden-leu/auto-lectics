@@ -1,0 +1,31 @@
+{
+	"text": "Ah yes, I've tried speaking to them before. Was never able to know what they were saying...will have to find another way to turn them on.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about the spider bot.",
+			"nextID": "G0SP",
+			"checkFlags": {
+				"testFlag": false
+			}
+		},
+		{
+			"text": "Tell me about that big spinning bot.",
+			"nextID": "Generator Bot",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		},
+		{
+			"text": "Tell me about that gate bot.",
+			"nextID": "Gate Bot",
+			"checkFlags": {
+				"metMiniBoss": true
+			}
+		},
+		{
+			"text": "I have other questions.",
+			"nextID": "OtherQuestions"
+		}
+	]
+}

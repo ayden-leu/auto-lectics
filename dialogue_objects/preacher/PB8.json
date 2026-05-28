@@ -1,7 +1,7 @@
 {
 	"text": "YOU! ARE YOU TURNED ON?!?! ",
-	"type": "neutral",
 	"mode": "hectic",
+	"type": "neutral",
 	"nextOnHecticFailureID": "PB8_HecticFail",
 	"writeSpeed": "fast",
 	"sfx": {

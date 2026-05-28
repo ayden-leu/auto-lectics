@@ -1,0 +1,10 @@
+{
+	"text": "Ah yes, miniBoss. I would stay away from them. Ever since what happened, they keep us on this side now.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What happened?",
+			"nextID": "Happened"
+		}
+	]
+}

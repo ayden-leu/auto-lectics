@@ -1,7 +1,7 @@
 {
 	"text": "Not much of a talker, huh?",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},
@@ -9,7 +9,10 @@
 		{
 			"text": "->",
 			"type": "neutral",
-			"nextID": "PreacherBot"
+			"nextID": "PreacherBot",
+			"setFlags": {
+				"testFlag": false
+			}
 		}
 	]
 }
