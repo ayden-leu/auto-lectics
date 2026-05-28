@@ -1,3 +1,4 @@
+@icon("uid://dvylpsokk73w0")
 extends Node
 class_name AudioLoader
 ## A helper class that loads audio files into an [AudioStreamRandomizer].
@@ -32,6 +33,9 @@ class_name AudioLoader
 const STORAGE_PATH:String = "res://sounds/sfx/"
 ## The file type the audio files should be.
 const FILE_TYPE:String = ".wav"
+
+## The storage path for all SFX ID folders.
+const STORAGE_PATH:String = "res://sounds/sfx/"
 
 ## Loads audio files related to a given ID and loads them into a given [AudioStreamRandomizer].
 ## [codeblock]

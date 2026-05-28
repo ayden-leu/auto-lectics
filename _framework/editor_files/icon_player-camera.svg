@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="icon_player-camera.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="7.9288446,-0.18974774"
+       end_point="7.9288446,15.810252"
+       center_point="7.9288446,7.8102523"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="vertical"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="7.7906859,1.6686013"
+       end_point="7.7906859,13.668449"
+       center_point="7.7906859,7.668525"
+       id="path-effect4"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="vertical"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="powerclip"
+       message=""
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false" />
+    <filter
+       id="mask-powermask-path-effect5_inverse"
+       inkscape:label="filtermask-powermask-path-effect5"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect5_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect5_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="7.701005,1.6351764"
+       end_point="7.701005,13.635024"
+       center_point="7.701005,7.6351"
+       id="path-effect4-7"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="vertical"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.9112912"
+     inkscape:cx="12.365647"
+     inkscape:cy="53.927961"
+     inkscape:window-width="2048"
+     inkscape:window-height="1198"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="false" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="body"
+     style="display:inline">
+    <path
+       id="rect1"
+       style="fill:#fc7f7f;fill-opacity:1;stroke:none;stroke-width:159.7;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       inkscape:label="body"
+       d="M 35.75,14 C 33.674042,14 32,15.674042 32,17.75 V 26 H 15.5625 C 11.376042,26 8,29.376042 8,33.5625 v 72.875 C 8,110.62395 11.376042,114 15.5625,114 h 96.875 C 116.62395,114 120,110.62395 120,106.4375 V 33.5625 C 120,29.376042 116.62395,26 112.4375,26 H 96 V 17.75 C 96,15.674042 94.32596,14 92.25,14 Z m 7.40625,8 H 84.843752 C 86.593,22 88,23.406998 88,25.15625 v 9.6875 C 88,36.593002 86.593,38 84.843752,38 H 43.15625 C 41.406998,38 40,36.593002 40,34.84375 v -9.6875 C 40,23.406998 41.406998,22 43.15625,22 Z M 64,50 A 28,28 0 0 1 92,78 28,28 0 0 1 64,106 28,28 0 0 1 36,78 28,28 0 0 1 64,50 Z" />
+  </g>
+</svg>

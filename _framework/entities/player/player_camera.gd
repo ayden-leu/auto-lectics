@@ -1,4 +1,5 @@
 @tool
+@icon("uid://dycpbdo33wb4c")
 extends Node3D
 class_name PlayerCamera
 ## Holds both the player's camera.

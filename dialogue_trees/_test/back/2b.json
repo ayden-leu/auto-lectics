@@ -1,0 +1,11 @@
+{
+	"text": "default back reject msg on this one",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "exit",
+			"type": "neutral"
+		}
+	]
+}

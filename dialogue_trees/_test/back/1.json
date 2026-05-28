@@ -1,0 +1,25 @@
+{
+	"text": "start",
+	"type": "neutral",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "back yes",
+			"type": "neutral",
+			"nextID": "2a"
+		},
+		{
+			"text": "back no",
+			"type": "neutral",
+			"nextID": "2b",
+			"allowBack": false
+		},
+		{
+			"text": "back no (custom msg)",
+			"type": "neutral",
+			"nextID": "2c",
+			"allowBack": false,
+			"rejectBackMessage": "man i dont have time for this"
+		}
+	]
+}

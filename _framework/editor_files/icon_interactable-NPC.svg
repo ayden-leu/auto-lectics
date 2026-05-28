@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="icon_interactable-NPC.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="7.9288446,-0.18974774"
+       end_point="7.9288446,15.810252"
+       center_point="7.9288446,7.8102523"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="vertical"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="7.7906859,1.6686013"
+       end_point="7.7906859,13.668449"
+       center_point="7.7906859,7.668525"
+       id="path-effect4"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="vertical"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="powerclip"
+       message=""
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false" />
+    <filter
+       id="mask-powermask-path-effect5_inverse"
+       inkscape:label="filtermask-powermask-path-effect5"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect5_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect5_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="7.701005,1.6351764"
+       end_point="7.701005,13.635024"
+       center_point="7.701005,7.6351"
+       id="path-effect4-7"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="vertical"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="64.70027"
+     inkscape:cy="100.76272"
+     inkscape:window-width="2048"
+     inkscape:window-height="1198"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="rect2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="body"
+     style="display:inline">
+    <path
+       id="path2"
+       style="opacity:1;fill:#fc7f7f;fill-opacity:1;stroke:none;stroke-width:3.33392;stroke-opacity:0.39484"
+       inkscape:label="hexagon"
+       d="m 77.378884,72.060459 0.515625,-3.308602 c 2.111483,-1.351355 2.918578,-2.54011 3.20312,-3.437509 0.284541,-0.8974 0.140605,-1.684128 -0.275391,-2.550789 C 80.1463,61.355346 78.940732,60.328371 78.429664,59.913943 H 61.326175 c -6.329406,0 -11.488455,-5.15888 -11.488264,-11.488312 l 2.66e-4,-8.817993 c -0.576002,-0.0035 -1.153306,-0.0043 -1.730732,-0.0043 -10.496912,0 -20.993838,0.575393 -22.984339,1.724614 C 21.142103,43.626395 2.129,76.543674 2.129,81.140558 c 0,4.596886 19.013103,37.514162 22.994106,39.812612 3.981002,2.29844 41.985723,2.29844 45.966726,0 3.981003,-2.29845 22.982386,-35.215726 22.982386,-39.812612 0,-1.354914 -1.64969,-5.169362 -4.080103,-9.935835 -3.177632,-2.528835 -7.088002,0.119799 -12.613231,0.855736 z M 32.869187,64.587783 c 4.220035,0 7.61327,3.953808 7.61327,8.867212 v 7.298847 c 0,4.913403 -3.393235,8.869164 -7.61327,8.869164 -4.220035,0 -7.624988,-3.955761 -7.624988,-8.869164 v -7.298847 c 0,-4.913404 3.404953,-8.867212 7.624988,-8.867212 z m 30.257766,0 c 4.220038,0 7.624989,3.953808 7.624989,8.867212 v 7.298847 c 0,4.913403 -3.404951,8.869164 -7.624989,8.869164 -4.220034,0 -7.611316,-3.955761 -7.611316,-8.869164 v -7.298847 c 0,-4.913404 3.391282,-8.867212 7.611316,-8.867212 z"
+       sodipodi:nodetypes="ccsscsscssssssccssssssssssssss" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="talk-bubble"
+     style="display:inline">
+    <g
+       id="rect2"
+       style="opacity:1">
+      <path
+         id="path6"
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#fc7f7f;stroke-width:1;paint-order:stroke fill markers;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 61.326175,5.322 c -9.54962,0 -17.488255,7.938668 -17.488255,17.488328 v 25.615303 c 0,9.54966 8.840372,10.270891 17.738255,13.738318 l 9.623031,3.75001 1.972654,8.976585 5.929678,3.544932 c 13.136685,-0.211883 21.686792,-3.878061 26.767532,-8.464866 1.5408,-1.390998 2.64361,-2.800916 3.55664,-4.164074 C 118.49476,65.2448 125.871,57.61899 125.871,48.425631 V 22.810328 C 125.871,13.260673 117.93236,5.322 108.38275,5.322 Z m 0,8.000021 h 47.056575 c 5.256,0 9.48826,4.232281 9.48826,9.488307 v 25.615303 c 0,5.256026 -4.23226,9.488306 -9.48826,9.488306 h -3.98438 c 0,0 -1.89704,12.143974 -25.425738,12.523472 9.487377,-6.071945 0.189453,-12.523472 0.189453,-12.523472 h -17.83591 c -5.256005,0 -9.488267,-4.23228 -9.488267,-9.488306 V 22.810328 c 0,-5.256026 4.232259,-9.488307 9.488267,-9.488307 z" />
+    </g>
+  </g>
+</svg>

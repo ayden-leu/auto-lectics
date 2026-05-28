@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=15 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
 [ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="3_w0ygf"]
 [ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="4_483v1"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_rh8r5"]
+[ext_resource type="PackedScene" uid="uid://0mnvycgijgpy" path="res://_framework/entities/player/grappling_hook.tscn" id="8_6t6ql"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hyl87"]
 
@@ -22,30 +23,10 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x6kh8"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ugyfj"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5t5j4"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0e7fy"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hacqa"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_rh8r5"]
-top_radius = 0.03
-bottom_radius = 0.03
-height = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_qclge"]
-
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sfxEventHandler")]
+[node name="Player" type="CharacterBody3D"]
 collision_layer = 5
 collision_mask = 2
 script = ExtResource("1_q8vf3")
-sfxEventHandler = NodePath("SfxEventHandler")
 maxSpeed = 28.4
 acceleration = 37.0
 
@@ -66,9 +47,16 @@ target_position = Vector3(0, 50, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
+debug_shape_custom_color = Color(0.13870001, 0.6413051, 0.73, 0.2784314)
 
 [node name="GrappleStartMarker" type="Marker3D" parent="CameraAnchor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23946804, 0)
+
+[node name="GrappleRaycast" type="RayCast3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1)
+collision_mask = 2
+debug_shape_custom_color = Color(0.4968, 0.69, 0.61915994, 0.4392157)
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("2_abrql")
@@ -85,69 +73,37 @@ debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
 player = NodePath("..")
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
+unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
 "death": "",
-"grappleExtending": "",
-"grappleHitFail": "",
-"grappleHitSuccess": "",
-"grappleMaxRangeReached": "",
-"grappleRecall": "",
-"grappleRecallFinish": "",
-"grappleRecallStart": "",
-"grappleThrow": "",
+"deathFancy": "",
 "jump": "",
-"respawn": ""
+"respawn": "",
+"respawnFancy": ""
 })
 
-[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_qclge")
 
-[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="deathFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_hh4bn")
 
-[node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_6t6ql")
 
-[node name="grappleThrow" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_k4ncf")
 
-[node name="grappleExtending" type="AudioStreamPlayer" parent="SfxEventHandler"]
+[node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_s2ddf")
-
-[node name="grappleRecallStart" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_lmmnp")
-
-[node name="grappleRecall" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_x6kh8")
-
-[node name="grappleRecallFinish" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_ugyfj")
-
-[node name="grappleHitSuccess" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_5t5j4")
-
-[node name="grappleHitFail" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_0e7fy")
-
-[node name="grappleMaxRangeReached" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_hacqa")
-
-[node name="SFX" type="Node" parent="."]
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true
 
-[node name="GrappleVisuals" type="Node3D" parent="."]
-
-[node name="GrappleLine" type="MeshInstance3D" parent="GrappleVisuals"]
-visible = false
-mesh = SubResource("CylinderMesh_rh8r5")
-skeleton = NodePath("../..")
-
-[node name="GrappleHook" type="MeshInstance3D" parent="GrappleVisuals"]
-visible = false
-mesh = SubResource("BoxMesh_qclge")
-skeleton = NodePath("../..")
+[node name="GrapplingHook" parent="." node_paths=PackedStringArray("raycast", "throwOrigin") instance=ExtResource("8_6t6ql")]
+unique_name_in_owner = true
+raycast = NodePath("../CameraAnchor/GrappleRaycast")
+throwOrigin = NodePath("../CameraAnchor/GrappleStartMarker")
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
@@ -155,3 +111,5 @@ skeleton = NodePath("../..")
 [connection signal="mouse_moved" from="InputHandler" to="." method="_on_mouse_moved"]
 [connection signal="respawn" from="InputHandler" to="." method="_on_input_handler_respawn"]
 [connection signal="update_input_direction" from="InputHandler" to="." method="_on_updated_input_direction"]
+[connection signal="hook_attached" from="GrapplingHook" to="." method="_on_grappling_hook_hook_attached"]
+[connection signal="hook_detached" from="GrapplingHook" to="." method="_on_grappling_hook_hook_detached"]

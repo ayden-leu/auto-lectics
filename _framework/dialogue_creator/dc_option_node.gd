@@ -25,19 +25,19 @@ const NEXT_ID_PORT:int = 0
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The text field you can edit.
-@onready var textField:DC_BaseNodeField = %TextField
+## The node that handles the text field you can edit.
+@onready var textField:DC_BaseNodeTextField = %TextField
 ## The node that handles the type you can choose.
 @onready var typeField:DC_BaseNodeField = %TypeChooser
-## The spawn delay field you can set.
+## The node that handles the spawn delay field you can set.
 @onready var spawnDelayField:DC_BaseNodeNumber = %SpawnDelayField
-## The lifetime field you can set.
+## The node that handles the lifetime field you can set.
 @onready var lifetimeField:DC_BaseNodeNumber = %LifetimeField
 ## The node that handles the text themes you can choose.
 @onready var textThemeField:DC_BaseNodeChooser = %TextThemeChooser
-## The node that handdles the text writee speed preset you can choose.
+## The node that handles the text writee speed preset you can choose.
 @onready var writeSpeedPresetField:DC_BaseNodeChooser = %WriteSpeedPresetChooser
-## The node that handdles the text writee speed value you can set.
+## The node that handles the text write speed value you can set.
 @onready var writeSpeedValueField:DC_BaseNodeField = %WriteSpeedValueField
 ## The node that handles the SFX event SFX IDs you can choose.
 @onready var sfxEventAspectsHandler:DC_BaseNodeField = %SfxAspects
@@ -45,6 +45,11 @@ const NEXT_ID_PORT:int = 0
 @onready var setFlagsAspectsHandler:DC_SetFlagAspects = %SetFlags
 ## The node that handles all [StoryFlags] to check wheen loading this option.
 @onready var checkFlagsAspectsHandler:DC_CheckFlagAspects = %CheckFlags
+## The node that handles the disableBack state you can toggle.
+@onready var disableBackToggler:DC_SectionToggle = %DisableBackToggler
+## The node that handles the reject back message you can edit.
+@onready var rejectBackMessageField: DC_BaseNodeTextField = %RejectBackMessageField
+
 
 # ------------------------------------------------
 # onready variables
@@ -59,14 +64,10 @@ var port:int = -1
 ## The text for this [DC_OptionNode].
 ## Setting this will update other nodes appropriately.
 var text:String:
+	set(newText):
+		textField.text = newText
 	get():
-		return textField.value
-	set(value):
-		#if not textUpdateFromField:
-		textField.value = value
-			#textUpdateFromField = true
-## Whether the update the text in the text field with a new value or not.
-#var textUpdateFromField:bool = true
+		return textField.text
 
 ## The type for this [DC_OptionNode].
 ## Setting this will update other nodes appropriately.
@@ -157,6 +158,22 @@ var checkFlags:Dictionary:
 	get():
 		return checkFlagsAspectsHandler.currentFlags
 
+## The configured "disableBack" state for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
+var disableBack:bool:
+	set(newState):
+		disableBackToggler.button_pressed = newState
+	get():
+		return disableBackToggler.button_pressed
+
+## The back command rejection message for this [DC_OptionNode].
+## Setting this will update other nodes appropriately.
+var rejectBackMessage:String:
+	set(newText):
+		rejectBackMessageField.text = newText
+	get():
+		return rejectBackMessageField.text
+
 ## The [member DC_DialogueNode.id] to load when a player chooses this option.
 var nextID:String = ""
 
@@ -194,7 +211,7 @@ func _getFields() -> Dictionary:
 		return {"error": "textField not loaded"}
 
 	var currentValues:Dictionary = {
-		"text": textField.value
+		"text": text
 	}
 
 	if type != _CHECK_NPC_DEFAULT_VALUE:
@@ -211,10 +228,10 @@ func _getFields() -> Dictionary:
 	if sfxEventAspects != {}:
 		currentValues.sfx = sfxEventAspects
 
-	if spawnDelay >= 0:
+	if spawnDelay > _CHECK_NPC_DEFAULT_VALUE_NUM:
 		currentValues.spawnDelay = spawnDelay
 
-	if lifetime >= 0:
+	if lifetime > _CHECK_NPC_DEFAULT_VALUE_NUM:
 		currentValues.lifetime = lifetime
 
 	if nextID != "":
@@ -225,6 +242,11 @@ func _getFields() -> Dictionary:
 
 	if checkFlags != {}:
 		currentValues.checkFlags = checkFlags
+
+	if disableBack:
+		currentValues.allowBack = !disableBack
+		if rejectBackMessage != "":
+			currentValues.rejectBackMessage = rejectBackMessage
 
 	return currentValues
 
@@ -245,6 +267,9 @@ func _on_dialogue_node_disconnected() -> void:
 func _on_field_updated() -> void:
 	#print("option modified, emitting")
 	values_updated.emit(port, _getFields())
+
+func _on_field_updated_state(_newState:bool) -> void:
+	_on_field_updated()
 
 ## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
 func _on_attribute_modified_parameter(_ignore_me) -> void:

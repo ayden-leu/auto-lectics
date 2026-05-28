@@ -59,9 +59,14 @@ var _optionData:Array[Dictionary] = []
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	FR_MenuManager.disable()
+	FR_WindowManager.disable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
+
 	_loadOptionButtonOptions(
 		fieldNPC,
-		_getFoldersInPath(FR_Globals.STORAGE_PATH.DIALOGUE)
+		_getFoldersInPath(DialogueLoader.STORAGE_PATH)
 	)
 	_on_npc_field_item_selected(fieldNPC.selected)
 
@@ -119,7 +124,7 @@ func _clearOptionButtonOptions(button:OptionButton) -> void:
 		button.remove_item(0)
 
 func _loadDialogueFile() -> void:
-	var path:String = FR_Globals.STORAGE_PATH.DIALOGUE + "/" + \
+	var path:String = DialogueLoader.STORAGE_PATH + "/" + \
 			fieldNPC.get_item_text(fieldNPC.selected) + "/" + \
 			fieldFile.get_item_text(fieldFile.selected)
 
@@ -180,7 +185,7 @@ func _on_npc_field_item_selected(index: int) -> void:
 	_loadOptionButtonOptions(
 		fieldFile,
 		_getFilesInPath(
-			FR_Globals.STORAGE_PATH.DIALOGUE + "/" + selectedFolder,
+			DialogueLoader.STORAGE_PATH + "/" + selectedFolder,
 			FILE_EXTENSION
 		)
 	)
