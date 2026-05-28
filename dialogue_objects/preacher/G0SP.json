@@ -1,0 +1,31 @@
+{
+	"text": "Ah yes, G0SP. She was very difficult to turn on, you should've seen her face when I asked. Not very happy at being asked questions.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about that satellite bot.",
+			"nextID": "Satellite Bot",
+			"checkFlags": {
+				"metDish": true
+			}
+		},
+		{
+			"text": "Tell me about that big spinning bot.",
+			"nextID": "Generator Bot",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		},
+		{
+			"text": "Tell me about that gate bot.",
+			"nextID": "Gate Bot",
+			"checkFlags": {
+				"metMiniBoss": true
+			}
+		},
+		{
+			"text": "I have other questions.",
+			"nextID": "OtherQuestions"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "I don't feel like discussing this any further.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

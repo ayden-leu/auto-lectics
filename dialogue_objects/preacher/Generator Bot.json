@@ -1,0 +1,13 @@
+{
+	"text": "I don't know who you speak of.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "The big spinning bot? I think he said he manages the power?",
+			"nextID": "NervousExit",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		}
+	]
+}
