@@ -1,14 +1,17 @@
 {
-	"text": "Don’t you have a purpose? Go do that and quit bothering me.",
-	"type": "neutral",
+	"text": "Know what's going on? Don’t you have an actual purpose? Quit bothering me.",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

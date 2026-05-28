@@ -1,13 +1,13 @@
 {
-	"text": "I should be asking what you do!? Look at you: arms, legs, some kind of head! \n\nWhat purpose do you even serve?  \n",
-	"type": "neutral",
+	"text": "Hey! I should be asking what you do!? Look at you: arms, legs, some kind of head! \n\nWhat purpose do you even serve?  ",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
 	"options": [
 		{
-			"text": "I just want to know whats going on.",
+			"text": "I just want to know what's going on.",
 			"type": "neutral",
 			"nextID": "DontYouHavePurposeEnd"
 		},
