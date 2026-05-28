@@ -1,7 +1,7 @@
 {
-	"text": "The original plan was to make it perfect. A space with no flaws that would last forever. I was made to watch over the other bots, do analytics, check maintenance. ",
-	"type": "neutral",
+	"text": "The original plan was to make it perfect. A flawless space that would last forever. I was fabricated to oversee the other bots, run analytics, and perform maintenance checks. ",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
@@ -12,7 +12,7 @@
 			"nextID": "Conversation End Bad"
 		},
 		{
-			"text": "So, you are not perfect.",
+			"text": "So, the factory is no longer perfect.",
 			"type": "neutral",
 			"nextID": "Perfection"
 		},

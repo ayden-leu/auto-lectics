@@ -1,0 +1,14 @@
+{
+	"text": "Ah P0WR-2, also known as the biggest fraud this side of the factory...",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What do you mean?",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Please, elaborate.",
+			"nextID": "P0WR-2 Continued"
+		}
+	]
+}

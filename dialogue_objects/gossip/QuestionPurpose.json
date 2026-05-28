@@ -1,7 +1,7 @@
 {
-	"text": "So what were you made to do? Are you malfunctioning? I wasn't told about you.",
-	"type": "happy",
+	"text": "So what were you made to do? Are you malfunctioning? I was not informed of your arrival.",
 	"mode": "hectic",
+	"type": "happy",
 	"nextOnHecticFailureID": "QuestionPurpose_HecticFail",
 	"writeSpeed": "fast",
 	"sfx": {
@@ -19,9 +19,16 @@
 			"nextID": "Conversation End Bad"
 		},
 		{
-			"text": "I'm here to look at the center of the factory. ",
+			"text": "I'm here to inspect the factory. ",
 			"type": "neutral",
 			"nextID": "Evaluate"
+		},
+		{
+			"text": "I need to know about some of the other bots.",
+			"nextID": "OtherBots",
+			"checkFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

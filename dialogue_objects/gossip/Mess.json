@@ -1,13 +1,13 @@
 {
-	"text": "Yeah, this place is not what it used to be. I've done my job as well as anybot could while everyone else rusts and messes around. ",
-	"type": "neutral",
+	"text": "Yeah, this place is not what it used to be. I've done my job as well as anybot could while everyone else malfunctions and rusts away.",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
 	"options": [
 		{
-			"text": "Tell me about what it once was.",
+			"text": "Tell me more about what it used to be like.",
 			"type": "neutral",
 			"nextID": "TellEm"
 		}

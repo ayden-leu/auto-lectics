@@ -1,7 +1,7 @@
 {
 	"text": "You wouldn't know what perfection looks like.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},

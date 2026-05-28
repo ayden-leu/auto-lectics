@@ -1,14 +1,17 @@
 {
-	"text": "WHY WOULD YOU ASK ME THAT!?!?! I'M NOT MALFUNCTIONING!!!",
-	"type": "angry",
+	"text": "WHY WOULD YOU ASK ME THAT!?!?! I'M NOT MALFUNCTIONING!!! YOU'RE THE ONE MALFUNCTIONING!!!",
 	"mode": "normal",
+	"type": "angry",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

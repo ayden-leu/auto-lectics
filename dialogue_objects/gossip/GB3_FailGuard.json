@@ -1,8 +1,8 @@
 {
-	"text": "DON'T EVER QUESTION ME, YOU INSIGNIFICANT SPECK! Now I ask again, who are you?",
-	"type": "neutral",
+	"text": "DON'T EVER QUESTION ME, YOU INSIGNIFICANT SPECK! Now I ask again: who are you?",
 	"mode": "hectic",
-	"nextOnHecticFailureID": "GB3_HecticFail",
+	"type": "neutral",
+	"nextOnHecticFailureID": "GB3_FailGuard_HecticFail",
 	"writeSpeed": "fast",
 	"sfx": {
 		"spawn": "gossipSound"
@@ -16,7 +16,7 @@
 		{
 			"text": "What?",
 			"type": "neutral",
-			"nextID": "GB3_FailGuard"
+			"nextID": "Conversation End Bad"
 		},
 		{
 			"text": "I'm new here.",
