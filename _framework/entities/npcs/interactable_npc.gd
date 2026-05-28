@@ -328,17 +328,11 @@ enum BoxAttachMethod {
 ## @deprecated
 ## Tells the game where to spawn a [DialogueBox] when a player interacts with the Interactable NPC.
 @export var _dialogueBoxAnchor:Marker3D:
-	get():
-		printerr("InteractableNPC:  _dialogueBoxAnchor is deprecated")
-		return _dialogueBoxAnchor
 	set(newState):
 		printerr("InteractableNPC:  _dialogueBoxAnchor is deprecated")
 ## @deprecated
 ## How the [DialogueBox] should act after beind spawned.
 @export var _dialogueBoxAttachMethod:BoxAttachMethod:
-	get():
-		printerr("InteractableNPC:  _dialogueBoxAttachMethod is deprecated")
-		return _dialogueBoxAttachMethod
 	set(newState):
 		printerr("InteractableNPC:  _dialogueBoxAttachMethod is deprecated")
 
