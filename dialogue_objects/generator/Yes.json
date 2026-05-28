@@ -1,0 +1,10 @@
+{
+	"text": "Yes you do,\nYou spoke pattern without knowing.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "This is all very confusing.",
+			"nextID": "Confusing"
+		}
+	]
+}

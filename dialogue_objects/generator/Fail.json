@@ -1,0 +1,12 @@
+{
+	"text": "Pattern lost\nYou must try again when ready.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"testFlag": false
+			}
+		}
+	]
+}

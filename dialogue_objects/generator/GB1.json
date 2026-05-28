@@ -1,0 +1,27 @@
+{
+	"text": "Who are you?\nWhat is purpose for being here? ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I'm not from here.",
+			"nextID": "Problem",
+			"setFlags": {
+				"testFlag": false
+			}
+		},
+		{
+			"text": "What do you do?",
+			"nextID": "Problem",
+			"setFlags": {
+				"testFlag": false
+			}
+		},
+		{
+			"text": "Can you tell me what's going on?",
+			"nextID": "Problem",
+			"setFlags": {
+				"testFlag": false
+			}
+		}
+	]
+}

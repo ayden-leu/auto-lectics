@@ -1,0 +1,18 @@
+{
+	"text": "But it works,\npatterns bring order to chaos.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What chaos?",
+			"nextID": "Chaos"
+		},
+		{
+			"text": "Explain.",
+			"nextID": "Fail"
+		},
+		{
+			"text": "Does it really?",
+			"nextID": "Fail"
+		}
+	]
+}
