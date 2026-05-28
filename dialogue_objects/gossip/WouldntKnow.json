@@ -1,11 +1,14 @@
 {
-	"text": "I wouldn't know! Even my near perfect knowledge of the world can't convince them to let me fix this broken world and serve the boss!",
-	"type": "neutral",
+	"text": "I wouldn't know! Even my near perfect knowledge can't convince them to let me fix this broken world and serve the Boss!",
 	"mode": "normal",
+	"type": "neutral",
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

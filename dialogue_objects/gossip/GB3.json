@@ -1,7 +1,7 @@
 {
 	"text": "Who are you? Where'd you come from? How'd you get here?",
-	"type": "neutral",
 	"mode": "hectic",
+	"type": "neutral",
 	"nextOnHecticFailureID": "GB3_HecticFail",
 	"writeSpeed": "fast",
 	"sfx": {

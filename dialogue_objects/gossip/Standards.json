@@ -1,7 +1,7 @@
 {
 	"text": "We forgone standards long ago. Everyone now does their own thing.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},

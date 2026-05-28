@@ -1,7 +1,7 @@
 {
-	"text": "Well if your job is to check things out, tell me- what do you think? ",
-	"type": "neutral",
+	"text": "Well, if your job is to check things out, what do you think of our operation? ",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
