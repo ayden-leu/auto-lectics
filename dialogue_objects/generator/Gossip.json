@@ -1,0 +1,12 @@
+{
+	"text": "Keep eyes out,\nAlways be vigilant with them.\n\nThey manage,\nBut cannot stay out of business.\n\nKnow too much,\nCannot be captured by other side.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

@@ -1,0 +1,33 @@
+{
+	"text": "I will help,\nYou must remember the pattern.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "This is all very confusing.",
+			"nextID": "Confusing"
+		},
+		{
+			"text": "Tell me about the factory.",
+			"nextID": "Factory"
+		},
+		{
+			"text": "What is going on here?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "What is your purpose?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "Tell me about your purpose here.",
+			"nextID": "Purpose"
+		},
+		{
+			"text": "Tell me about the other bots.",
+			"nextID": "OtherBots",
+			"checkFlags": {
+				"testFlag": false
+			}
+		}
+	]
+}

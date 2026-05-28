@@ -1,0 +1,12 @@
+{
+	"text": "Our savior,\nKeeping out the chaos for us.\n\nNo pattern,\nDangerous but very useful.\n\nLeft one though,\nShame not everyone could make it.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}
