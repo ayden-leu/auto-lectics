@@ -1,14 +1,17 @@
 {
-	"text": "Change? Oh you want to change things???? I see what you are. Get out of here and talk to some reasonable bots till you have some sense in you.",
-	"type": "neutral",
+	"text": "Change? You want to change things? What are you, some kind of change bot? Get out of here and talk to some reasonable bots till you have some sense in you.",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }
