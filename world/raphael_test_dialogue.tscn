@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=21 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
 [ext_resource type="PackedScene" uid="uid://bxfsxhyjvsml8" path="res://entities/npcs/lookerNPC.tscn" id="2_r7opt"]
@@ -13,7 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="8_12tdw"]
 [ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/splode.tscn" id="8_as3gw"]
 [ext_resource type="PackedScene" uid="uid://bmgejwfuqqqm6" path="res://entities/npcs/exile.tscn" id="9_b6tvr"]
-[ext_resource type="PackedScene" uid="uid://chifn6ukah4bi" path="res://entities/npcs/miniBoss2.tscn" id="14_4bdpc"]
+[ext_resource type="PackedScene" uid="uid://tqt27f4t0m0c" path="res://entities/npcs/miniBoss2.tscn" id="14_4bdpc"]
+[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://_framework/entities/npcs/npc_test_interactable.tscn" id="15_46t5o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -64,6 +65,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.19771, 0.8558941, -9.9777
 
 [node name="generator" parent="npcs" instance=ExtResource("3_vekyi")]
 transform = Transform3D(-0.37573904, 0, 0.9267255, 0, 1, 0, -0.9267255, 0, -0.37573904, 15.905488, 0.12296009, 9.410873)
+initialDialogueID = "GB1"
 
 [node name="preacher" parent="npcs" instance=ExtResource("1_k4mrd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.497595, 0.09056449, -12.203161)
@@ -82,8 +84,6 @@ lookAtInteractorWhileTalking = true
 [node name="sludge" parent="npcs" instance=ExtResource("8_12tdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.15765, -1.9073486e-06, -9.286918)
 _talkOnlyOnce = false
-initialDialogueID = "SB1"
-myName = "sludge"
 
 [node name="splode" parent="npcs" instance=ExtResource("8_as3gw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.33909, 0.19867021, -10.060766)
@@ -104,3 +104,9 @@ focus = NodePath("../Player")
 
 [node name="miniBoss2" parent="." instance=ExtResource("14_4bdpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.76616, 0, 2.95328)
+
+[node name="NPC_TestInteractable" parent="." instance=ExtResource("15_46t5o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.108421, 9.536743e-07, -7.2517395)
+_talkOnlyOnce = true
+initialDialogueID = "LearnEverything"
+myName = "testBot"
