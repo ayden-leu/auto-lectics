@@ -1,0 +1,14 @@
+{
+	"text": "*play neutral.wav*\n*play happy.wav*\n*play angry.wav*",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "That wasn't very helpful.",
+			"nextID": "Not Helpful"
+		},
+		{
+			"text": "Tell me about someone else.",
+			"nextID": "OtherBotsAnnoyed"
+		}
+	]
+}

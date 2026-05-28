@@ -1,7 +1,7 @@
 {
 	"text": "*play happy.wav*\n*play happy.wav*\n*play happy.wav*",
-	"type": "happy",
 	"mode": "normal",
+	"type": "happy",
 	"sfx": {
 		"spawn": "dbHelp"
 	},
@@ -15,6 +15,13 @@
 			"text": "What's your designated purpose?",
 			"type": "neutral",
 			"nextID": "Purpose"
+		},
+		{
+			"text": "Can you tell me about the other bots?",
+			"nextID": "OtherBots",
+			"checkFlags": {
+				"testFlag": false
+			}
 		}
 	]
 }

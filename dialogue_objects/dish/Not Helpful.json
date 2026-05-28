@@ -1,14 +1,9 @@
 {
-	"text": "*begin transmission*",
+	"text": "*play angry.wav*\n*play angry.wav*\n*play angry.wav*",
 	"mode": "normal",
-	"type": "neutral",
-	"sfx": {
-		"spawn": "dbPurpose"
-	},
 	"options": [
 		{
 			"text": "[End]",
-			"type": "neutral",
 			"setFlags": {
 				"knowsSomeone": true
 			}
