@@ -1,0 +1,38 @@
+{
+	"text": "*play happy.wav*\n*play happy.wav*\n*play happy.wav*",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about the bot holding all the speakers.",
+			"nextID": "Preacher",
+			"checkFlags": {
+				"metPreacher": true
+			}
+		},
+		{
+			"text": "Tell me about the spider bot.",
+			"nextID": "Gossip",
+			"checkFlags": {
+				"metGossip": true
+			}
+		},
+		{
+			"text": "Tell me about the spinning generator bot.",
+			"nextID": "Generator",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		},
+		{
+			"text": "Tell me about that gate bot.",
+			"nextID": "miniBoss",
+			"checkFlags": {
+				"metMiniBoss": true
+			}
+		},
+		{
+			"text": "I have other questions.",
+			"nextID": "Other Questions"
+		}
+	]
+}
