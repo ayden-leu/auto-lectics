@@ -10,13 +10,13 @@ size = Vector3(1.115, 0.175, 1.57)
 [sub_resource type="BoxShape3D" id="BoxShape3D_vefio"]
 size = Vector3(1.1191406, 1.1877441, 1.2324219)
 
-[node name="NPC_TestInteractable" type="Node3D" node_paths=PackedStringArray("_hitbox", "_dialogueBoxAnchor", "model") groups=["NPCs"]]
+[node name="NPC_TestInteractable" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_qa3od")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
 dialogueTreeID = "ReplaceMe"
 initialDialogueID = "ReplaceMe"
-_dialogueBoxAnchor = NodePath("DialogueBoxAnchor")
+_dialogueBoxAttachMethod = null
 model = NodePath("model")
 internalID = "_test_npc_interactable"
 displayName = "NPC Test Interactable"
