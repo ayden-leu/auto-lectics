@@ -260,7 +260,9 @@ func reset() -> void:
 ## Handles the state of the [member _hook].
 func _handleHookState(delta:float) -> void:
 	var start := throwOrigin.global_position
-
+	
+	_hook.look_at(_target.global_position)
+	
 	match currentHookState:
 		GrappleHookState.TRAVELING:
 			_hook.global_position = _hook.global_position.move_toward(_target.global_position, shootSpeed * delta)
@@ -306,9 +308,11 @@ func _updateLineVisual(start:Vector3, end:Vector3) -> void:
 	if length <= 0.01:
 		return
 	var mid := start + dir * 0.5
-
+	
+	
 	_line.global_position = mid
-
+	
+	
 	var cur_basis := Basis()
 	cur_basis.y = dir.normalized()
 	var side := cur_basis.y.cross(Vector3.FORWARD)
@@ -317,7 +321,7 @@ func _updateLineVisual(start:Vector3, end:Vector3) -> void:
 	cur_basis.x = side.normalized()
 	cur_basis.z = cur_basis.x.cross(cur_basis.y).normalized()
 	_line.global_transform.basis = cur_basis
-	_line.scale = Vector3(1.0, length, 1.0)
+	_line.scale = Vector3(0.5, length, 0.5)
 
 ## [b]Internal-use only.[/b]
 ## Attach the grappling hook to a position.

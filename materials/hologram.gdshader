@@ -2,6 +2,9 @@ shader_type spatial;
 render_mode blend_mix,cull_disabled,diffuse_burley,specular_schlick_ggx
 ,depth_draw_opaque
 ;
+uniform vec4 p_o574015679930_albedo_color = vec4(0.458823562, 1.000000000, 0.936580896, 0.474509805);
+uniform vec3 wawa = vec3(0.1, 0.3, 0.5);
+//uniform vec4 set_albedo = vec4(0.0.);
 uniform vec3 uv1_offset = vec3(0.0, 0.0, 0.0);
 uniform vec3 uv1_scale = vec3(1.0, 1.0, 1.0);
 uniform int depth_min_layers = 8;
@@ -48,7 +51,6 @@ vec3 hsv2rgb(vec3 c) {
 	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
 	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
-const vec4 p_o574015679930_albedo_color = vec4(0.458823562, 1.000000000, 0.936580896, 0.474509805);
 const float p_o574015679930_metallic = 0.000000000;
 const float p_o574015679930_roughness = 0.390000000;
 const float p_o574015679930_emission_energy = 1.000000000;
@@ -79,6 +81,7 @@ float anisotropic(vec2 uv, vec2 size, float seed, float smoothness, float interp
 	return mix(linear, smoothed, interpolation);
 }
 void fragment() {
+	ALBEDO = vec3(0.1, 0.3, 0.5);
 	float _seed_variation_ = variation;
 	vec2 uv = fract(UV);
 

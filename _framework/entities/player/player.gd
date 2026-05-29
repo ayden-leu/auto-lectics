@@ -224,6 +224,8 @@ func _physics_process(delta: float) -> void:
 
 	if grapplingHook.enabled:
 		_lookingAtGrapplable = grapplingHook.raycastCollidingWithValidTarget()
+		
+	
 
 
 # ------------------------------------------------

@@ -1,8 +1,6 @@
-[gd_scene load_steps=35 format=3 uid="uid://ci7dkpgdttqp2"]
+[gd_scene load_steps=30 format=3 uid="uid://ci7dkpgdttqp2"]
 
-[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="1_nelfo"]
-[ext_resource type="Script" path="res://world/mergedenvinronment.gd" id="1_qa0tg"]
-[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="2_kc27b"]
+[ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_qa0tg"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_opcsi"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_0j5t5"]
 [ext_resource type="PackedScene" uid="uid://db24nhectuest" path="res://models/environment/environmentscenes/area_2_environment.tscn" id="5_drrb8"]
@@ -32,38 +30,11 @@
 [ext_resource type="PackedScene" uid="uid://cohj3ym45tr8w" path="res://models/environment/scaffold_tower.tscn" id="40_sms72"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="41_vxmv4"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fm1lc"]
-panorama = ExtResource("1_nelfo")
-
-[sub_resource type="Sky" id="Sky_34yam"]
-sky_material = SubResource("PanoramaSkyMaterial_fm1lc")
-
-[sub_resource type="Environment" id="Environment_xqn2u"]
-background_mode = 2
-sky = SubResource("Sky_34yam")
-ambient_light_color = Color(0.20399997, 0, 0.24, 1)
-ambient_light_sky_contribution = 0.0
-ambient_light_energy = 2.38
-glow_intensity = 0.0
-fog_enabled = true
-fog_mode = 1
-fog_light_color = Color(0.95, 0.6, 0.3, 1)
-fog_sky_affect = 0.0
-fog_depth_begin = 140.0
-fog_depth_end = 1000.0
-volumetric_fog_density = 0.005
-volumetric_fog_anisotropy = 1.0
-
 [node name="mergedEnvironment" type="Node3D"]
 transform = Transform3D(0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0)
 script = ExtResource("1_qa0tg")
 
 [node name="Environment" type="Node" parent="."]
-
-[node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_xqn2u")
-script = ExtResource("2_kc27b")
-anisotropy = 1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("4_0j5t5")
@@ -83,10 +54,9 @@ directional_shadow_max_distance = 4096.0
 
 [node name="Area 2 Environment" parent="Environment" instance=ExtResource("5_drrb8")]
 transform = Transform3D(0.54, 0, 0, 0, 0.54, 0, 0, 0, 0.54, -17, 0, -55)
-visible = false
 
 [node name="LoopManager" parent="Environment" node_paths=PackedStringArray("fancyArea") instance=ExtResource("7_fm1lc")]
-loopDurationSeconds = 1.0
+loopDurationSeconds = 300.0
 fancy = true
 fancyArea = NodePath("RestartLoopManagerArea3D")
 

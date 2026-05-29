@@ -1,0 +1,120 @@
+[gd_scene load_steps=16 format=3 uid="uid://demskrupssf0a"]
+
+[ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_884m8"]
+[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="2_7bxh6"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_auol0"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_gwjmm"]
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_464g4"]
+[ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="5_v11qn"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="9_2rwj4"]
+[ext_resource type="Script" uid="uid://cwtbpvdwgynmd" path="res://world/forceRepsawn.gd" id="10_5s1tn"]
+[ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="11_5pq20"]
+[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="22_dybqa"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2oajf"]
+panorama = ExtResource("2_7bxh6")
+
+[sub_resource type="Sky" id="Sky_mjjo0"]
+sky_material = SubResource("PanoramaSkyMaterial_2oajf")
+
+[sub_resource type="Environment" id="Environment_yf667"]
+background_mode = 2
+sky = SubResource("Sky_mjjo0")
+ambient_light_color = Color(0.20399997, 0, 0.24, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 2.38
+glow_intensity = 0.0
+fog_mode = 1
+fog_light_color = Color(0.95, 0.6, 0.3, 1)
+fog_sky_affect = 0.0
+fog_depth_begin = 140.0
+fog_depth_end = 1000.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_anisotropy = 0.9
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_cngjn"]
+
+[sub_resource type="FogMaterial" id="FogMaterial_7o0hm"]
+density = 1.923
+density_texture = SubResource("NoiseTexture3D_cngjn")
+
+[node name="mergedEnvironment" type="Node3D"]
+transform = Transform3D(0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0)
+script = ExtResource("1_884m8")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_yf667")
+
+[node name="FogVolume" type="FogVolume" parent="Environment/WorldEnvironment23"]
+transform = Transform3D(984.3471, 0, 0, 0, 13.662, 0, 0, 0, 814.80164, 0, -25, 0)
+material = SubResource("FogMaterial_7o0hm")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("4_464g4")
+volume_db = 17.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("5_v11qn")
+
+[node name="DeathPlane" parent="." instance=ExtResource("9_2rwj4")]
+transform = Transform3D(0.94075656, 0, -0.3390827, 0, 1, 0, 0.3390827, 0, 0.94075656, 38.405388, -97.754974, -70.28115)
+
+[node name="Node3D" type="Node3D" parent="DeathPlane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.739603, 73.80671, 120.61255)
+script = ExtResource("10_5s1tn")
+
+[node name="FadeToBlackHitbox" parent="." instance=ExtResource("11_5pq20")]
+transform = Transform3D(0.3069081, 0, -0.9517391, 0, 1, 0, 0.9517391, 0, 0.3069081, 14.035847, 13.928366, -95.48166)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, 1.4017067, 0.44566727, -1.1314104)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_gwjmm")]
+transform = Transform3D(-0.014573097, 0, 0.999894, 0, 1, 0, -0.999894, 0, -0.014573097, 52.039295, 115.865364, 5.2925925)
+focus = NodePath("../Player")
+
+[node name="MetalBigFlat" parent="." instance=ExtResource("22_dybqa")]
+
+[node name="MetalBigFlat2" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(12, 0, 0, 0, 1, 0, 0, 0, 2.6, 0, 35.000008, 40.000004)
+
+[node name="MetalBigFlat11" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(2.6519992, 0, 0, 0, 1.3, 0, 0, 0, 3.7179997, 71.00002, 35.000008, 85.00001)
+
+[node name="MetalBigFlat12" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(2.6519992, 0, 0, 0, 1.3, 0, 0, 0, 3.7179997, 71.00002, 4.768372e-06, 85.00001)
+
+[node name="MetalBigFlat13" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(2.6519992, 0, 0, 0, 1.3, 0, 0, 0, 3.7179997, 71.00002, -19.999996, 85.00001)
+
+[node name="MetalBigFlat9" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(1.1999997, 0, 0, 0, 3104.4727, 0, 0, 0, 2.6, 75.000015, 74.50001, 85.00001)
+
+[node name="MetalBigFlat8" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(3.105829, 0, -2.5114071, 0, 1, 0, 11.59111, 0, 0.6729296, 0, 35.000008, 75.000015)
+
+[node name="MetalBigFlat3" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(3.6000001, 0, 0, 0, 1, 0, 0, 0, 2.6, -20.000002, 25.00001, 40.000004)
+
+[node name="MetalBigFlat5" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(6.1200004, 0, 0, 0, 1, 0, 0, 0, 0.5199999, 10.000001, 25.00001, 40.000004)
+
+[node name="MetalBigFlat7" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(17.748003, 0, 0, 0, 2.6, 0, 0, 0, 0.15599999, 10.000001, 25.000011, 10.000001)
+
+[node name="MetalBigFlat10" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(15.37022, 0, -0.077999994, 0, 2.6, 0, 8.8740015, 0, 0.13509996, 10.000001, 36.000015, 10.000001)
+
+[node name="MetalBigFlat6" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(3.06, -2.220446e-15, 0.45033318, -2.650038, 0.8660254, 0.12999994, -4.59, -0.49999994, 0.22516654, -20.000004, 15.000009, 20.000004)
+
+[node name="MetalBigFlat4" parent="." instance=ExtResource("22_dybqa")]
+transform = Transform3D(3.6000001, 0, 0, 0, 1, 0, 0, 0, 2.6, 45.000004, 25.00001, 40.000004)
+
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("2_auol0")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 5.0000005, 0)
+respawnCheckpointLocation = NodePath("../Marker3D")

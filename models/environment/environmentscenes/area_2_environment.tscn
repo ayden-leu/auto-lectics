@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://db24nhectuest"]
+[gd_scene load_steps=29 format=3 uid="uid://db24nhectuest"]
 
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="1_1c776"]
 [ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="2_wbm8u"]
@@ -9,38 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://chka61lp34f8r" path="res://models/BlendFiles/trussingForstairs.blend" id="7_gpiq4"]
 [ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="8_dexkp"]
 [ext_resource type="PackedScene" uid="uid://bxyidxqmrtxn5" path="res://models/BlendFiles/bigRing.blend" id="8_wbm8u"]
-[ext_resource type="Script" uid="uid://cvl25kniytaf4" path="res://world/fog.gd" id="9_1ox1w"]
 [ext_resource type="PackedScene" uid="uid://dmkoidkma4qj3" path="res://models/BlendFiles/cable.blend" id="9_tldiu"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="10_5j8fo"]
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="10_p6b6d"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="11_lq8kl"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="11_p6b6d"]
 [ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="12_bhlbt"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_p6b6d"]
-panorama = ExtResource("8_dexkp")
-
-[sub_resource type="Sky" id="Sky_bhlbt"]
-sky_material = SubResource("PanoramaSkyMaterial_p6b6d")
-
-[sub_resource type="Environment" id="Environment_gpiq4"]
-background_mode = 2
-sky = SubResource("Sky_bhlbt")
-ambient_light_color = Color(0.20399997, 0, 0.24, 1)
-ambient_light_sky_contribution = 0.0
-ambient_light_energy = 2.38
-glow_intensity = 0.0
-fog_enabled = true
-fog_mode = 1
-fog_light_color = Color(0.95, 0.6, 0.3, 1)
-fog_sky_affect = 0.0
-fog_depth_begin = 140.0
-fog_depth_end = 1000.0
-volumetric_fog_density = 0.005
-volumetric_fog_emission = Color(0.893155, 0.52674365, 0.755425, 1)
-volumetric_fog_gi_inject = 1.31
-volumetric_fog_anisotropy = 1.0
-volumetric_fog_length = 816.32
+[ext_resource type="PackedScene" uid="uid://bmbe7d0f5cvlq" path="res://models/BlendFiles/cloud.blend" id="16_dexkp"]
+[ext_resource type="Script" uid="uid://bh5gr5gwafogb" path="res://models/cloud.gd" id="17_1ox1w"]
+[ext_resource type="Script" uid="uid://dnf7coojs8gdm" path="res://models/cloud2.gd" id="17_dexkp"]
+[ext_resource type="PackedScene" uid="uid://bxhlw186j3y0s" path="res://models/BlendFiles/cloud3.blend" id="18_5j8fo"]
+[ext_resource type="PackedScene" uid="uid://dpdkwguohl4l2" path="res://models/BlendFiles/cloud2.blend" id="19_lq8kl"]
 
 [sub_resource type="Curve" id="Curve_bhlbt"]
 _data = [Vector2(0, 0), 0.0, 6.025281, 0, 0, Vector2(0.061538458, 0.97752815), 0.0, 0.0, 0, 0, Vector2(0.90000004, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -9.129198, 0.0, 0, 0]
@@ -78,6 +57,32 @@ albedo_color = Color(0.11764706, 0.09019608, 0.050980393, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_gpiq4"]
 material = SubResource("StandardMaterial3D_bhlbt")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qwkcv"]
+panorama = ExtResource("8_dexkp")
+
+[sub_resource type="Sky" id="Sky_p6b6d"]
+sky_material = SubResource("PanoramaSkyMaterial_qwkcv")
+
+[sub_resource type="Environment" id="Environment_n0do3"]
+background_mode = 2
+sky = SubResource("Sky_p6b6d")
+ambient_light_color = Color(0.20399997, 0, 0.24, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 2.38
+glow_intensity = 0.0
+fog_mode = 1
+fog_light_color = Color(0.95, 0.6, 0.3, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 140.0
+fog_depth_end = 1000.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_emission = Color(0.893155, 0.52674365, 0.755425, 1)
+volumetric_fog_gi_inject = 1.31
+volumetric_fog_anisotropy = 1.0
+volumetric_fog_length = 816.32
 
 [node name="Area 2 Environment" type="Node3D"]
 
@@ -231,26 +236,6 @@ directional_shadow_max_distance = 4096.0
 
 [node name="Environment" type="Node" parent="."]
 
-[node name="WorldEnvironment23" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_gpiq4")
-script = ExtResource("9_1ox1w")
-anisotropy = 1.0
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
-stream = ExtResource("10_5j8fo")
-volume_db = 1.824
-unit_size = 4.55
-autoplay = true
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WorldEnvironment23/AudioStreamPlayer3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
-stream = ExtResource("11_lq8kl")
-volume_db = 22.018
-unit_size = 8.85
-max_db = 6.0
-autoplay = true
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
 stream = ExtResource("11_lq8kl")
 volume_db = 17.0
@@ -260,6 +245,7 @@ stream = ExtResource("10_5j8fo")
 
 [node name="GPUParticles3D2" type="GPUParticles3D" parent="Environment"]
 transform = Transform3D(1177.6345, 0, 0, 0, 1.5217211, 0, 0, 0, 5393.2344, 0, -430.3659, 56.604645)
+visible = false
 amount = 100
 lifetime = 103.69
 process_material = SubResource("ParticleProcessMaterial_p6b6d")
@@ -267,14 +253,45 @@ draw_pass_1 = SubResource("SphereMesh_gpiq4")
 
 [node name="r" type="GPUParticles3D" parent="Environment"]
 transform = Transform3D(296.87863, 0, 0, 0, 6.9628396, 0, 0, 0, 391.6042, 0, -311.03885, 56.604645)
+visible = false
 amount = 100
 lifetime = 103.69
 explosiveness = 0.68
 process_material = SubResource("ParticleProcessMaterial_p6b6d")
 draw_pass_1 = SubResource("SphereMesh_gpiq4")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
+stream = ExtResource("10_5j8fo")
+volume_db = 1.824
+unit_size = 4.55
+autoplay = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/AudioStreamPlayer3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
+stream = ExtResource("11_lq8kl")
+volume_db = 22.018
+unit_size = 8.85
+max_db = 6.0
+autoplay = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_n0do3")
+
 [node name="largePipe" parent="." instance=ExtResource("3_tf1lc")]
 transform = Transform3D(27.100058, 0, 0, 0, -1.1845813e-06, -27.100058, 0, 27.100058, -1.1845813e-06, -381.5511, -78.82627, 2015.5769)
 
 [node name="largePipe2" parent="." instance=ExtResource("3_tf1lc")]
 transform = Transform3D(27.100058, 0, 0, 0, -1.1845813e-06, -27.100058, 0, 27.100058, -1.1845813e-06, -183.99464, -319.7762, 1794.4779)
+
+[node name="cloud" parent="." instance=ExtResource("16_dexkp")]
+transform = Transform3D(41.913082, 0, 0, 0, -41.913082, 3.664158e-06, 0, -3.664158e-06, -41.913082, -78.34295, -644.65283, -5.110415e-05)
+script = ExtResource("17_dexkp")
+
+[node name="cloud3" parent="." instance=ExtResource("18_5j8fo")]
+transform = Transform3D(29.729145, 0, 0, 0, 29.729145, 0, 0, 0, 29.729145, 0, -339.56393, 0)
+script = ExtResource("17_dexkp")
+
+[node name="cloud2" parent="." instance=ExtResource("19_lq8kl")]
+transform = Transform3D(35.758194, 0, 0, 0, 35.758194, 0, 0, 0, 35.758194, 0, -97.24627, 0)
+script = ExtResource("17_1ox1w")

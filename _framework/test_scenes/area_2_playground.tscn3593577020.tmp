@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://demskrupssf0a"]
+
+[ext_resource type="PackedScene" uid="uid://b3f6wsupd5ys4" path="res://models/BlendFiles/MetalBigFlat.blend" id="1_88hv5"]
+[ext_resource type="Script" uid="uid://dtug5q7dd3u8i" path="res://_framework/test_scenes/area_2_playground.gd" id="1_auol0"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_auol0"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_gwjmm"]
+
+[node name="area2playground" type="Node3D"]
+script = ExtResource("1_auol0")
+
+[node name="MetalBigFlat" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(0.30797076, 0, 0, 0, 5.922055, 0, 0, 0, 0.30797076, 0, -1.0590419, 0)
+
+[node name="MetalBigFlat2" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(6.1738157, 0, 0, 0, 0.30797076, 0, 0, 0, 0.8347886, 0, 11.087607, 18.88052)
+
+[node name="MetalBigFlat7" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(1.5979012, 0, -0.80634385, 0, 0.30797076, 0, 5.9634485, 0, 0.21605924, 7.8684464, 0.08299923, 32.986916)
+
+[node name="MetalBigFlat4" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(1.8509694, 0, 0, 0, 0.30797076, 0, 0, 0, 0.8347886, -12.87093, 7.4184885, 18.88052)
+
+[node name="MetalBigFlat6" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(1.8509694, 0, 0, 0, 0.30797076, 0, 0, 0, 0.13330314, 3.1290703, 7.4184885, 18.88052)
+
+[node name="MetalBigFlat5" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(1.8509694, 0, 0, 0, 0.30797076, 0, 0, 0, 0.8347886, 19.12907, 7.4184885, 18.88052)
+
+[node name="MetalBigFlat3" parent="." instance=ExtResource("1_88hv5")]
+transform = Transform3D(3.9754484, 0.024845606, 0.076504596, -3.5885634, 0.21502815, 0.042022303, -3.0714877, -0.21906975, 0.04992377, -6.172737, 3.9685736, 5.6384897)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, -58.702377, 30.445662, 164.33159)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_gwjmm")]
+transform = Transform3D(-0.014573097, 0, 0.999894, 0, 1, 0, -0.999894, 0, -0.014573097, 52.039295, 115.865364, 5.2925925)
+focus = NodePath("../Player")
+
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("2_auol0")]
+transform = Transform3D(0.64200926, 0, 0, 0, 0.64200926, 0, 0, 0, 0.64200926, 0, 1.2242765, 0)
+respawnCheckpointLocation = NodePath("../Marker3D")

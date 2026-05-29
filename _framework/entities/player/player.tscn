@@ -27,9 +27,15 @@
 collision_layer = 5
 collision_mask = 2
 script = ExtResource("1_q8vf3")
-maxSpeed = 28.4
-acceleration = 37.0
-grappleAttachImpulseStrength = 20.55
+maxSpeed = 11.2
+acceleration = 8.0
+deceleration = 7.5
+airControl = 0.5
+jumpHeight = 0.95
+timeToApex = 0.45999999999999996
+apexHangTime = 0.1
+fallGravityMultiplier = 2.8
+grappleAttachImpulseStrength = 5.75
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004080862)
@@ -56,6 +62,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23946804, 0)
 
 [node name="GrappleRaycast" type="RayCast3D" parent="CameraAnchor"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49326694, 0)
 target_position = Vector3(0, 0, -1)
 collision_mask = 2
 debug_shape_custom_color = Color(0.4968, 0.69, 0.61915994, 0.4392157)
@@ -106,6 +113,11 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 raycast = NodePath("../CameraAnchor/GrappleRaycast")
 throwOrigin = NodePath("../CameraAnchor/GrappleStartMarker")
+shootSpeed = 30.085
+recallSpeed = 10.105
+maxRange = 25.185
+swingInfluenceForce = 1.8050000000000002
+maxSwingSpeed = 73.065
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
