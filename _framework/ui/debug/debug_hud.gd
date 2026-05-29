@@ -1,4 +1,11 @@
 extends Control
+## This is auto-loaded into the game as DebugHud.
+##
+## To show/hide, press thee "toggle_debug_hud"" keybind (shift + quote left (`/~ key)).
+## While this is visible, it eats all mouse inputs.  Can't fix this without making
+## the scroll part of it not work.
+## [br][br]
+## To add an entry to the log, run [method addToLog].
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -36,6 +43,8 @@ const LogTypeColor:Dictionary[LogType, String] = {
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
+## The thing that logs all of the logs.
 @onready var _log:Container = %Log
 
 # ------------------------------------------------
@@ -65,6 +74,7 @@ func _input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Adds the given message to the log.  Can optionally take in a [enum LogType].
 func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 	var newEntry:RichTextLabel = RichTextLabel.new()
 	_log.add_child(newEntry)
