@@ -329,12 +329,14 @@ enum BoxAttachMethod {
 ## Tells the game where to spawn a [DialogueBox] when a player interacts with the Interactable NPC.
 @export var _dialogueBoxAnchor:Marker3D:
 	set(newState):
-		printerr("InteractableNPC:  _dialogueBoxAnchor is deprecated")
+		printerr("InteractableNPC:  [", displayName, "] _dialogueBoxAnchor is deprecated")
+		_dialogueBoxAnchor = newState
 ## @deprecated
 ## How the [DialogueBox] should act after beind spawned.
 @export var _dialogueBoxAttachMethod:BoxAttachMethod:
 	set(newState):
-		printerr("InteractableNPC:  _dialogueBoxAttachMethod is deprecated")
+		printerr("InteractableNPC:  [", displayName, "] _dialogueBoxAttachMethod is deprecated")
+		_dialogueBoxAttachMethod = newState
 
 # ------------------------------------------------
 # onready variables
@@ -351,18 +353,18 @@ enum BoxAttachMethod {
 ## [b]Internal-use only.[/b]  Holds a reference to this [InteractableNPC]'s dialogue box scene.
 var _dialogueBox:DialogueBox = null:
 	get():
-		printerr("InteractableNPC:  _dialogueBox is deprecated")
+		printerr("InteractableNPC:  [", displayName, "] _dialogueBox is deprecated")
 		return _dialogueBox
 	set(newState):
-		printerr("InteractableNPC:  _dialogueBox is deprecated")
+		printerr("InteractableNPC:  [", displayName, "] _dialogueBox is deprecated")
 ## @deprecated
 ## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
 var _connectedDialogueBoxSignals:bool = false:
 	get():
-		printerr("InteractableNPC:  _connectedDialogueBoxSignals is deprecated")
+		printerr("InteractableNPC:  [", displayName, "] _connectedDialogueBoxSignals is deprecated")
 		return _connectedDialogueBoxSignals
 	set(newState):
-		printerr("InteractableNPC:  _connectedDialogueBoxSignals is deprecated")
+		printerr("InteractableNPC:  [", displayName, "] _connectedDialogueBoxSignals is deprecated")
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -374,45 +376,45 @@ var _connectedDialogueBoxSignals:bool = false:
 ## @deprecated
 ## [b]Internal-use only.[/b]  Creates a [DialogueBox]. Only one can exist at a time.
 func _spawnDialogueBox() -> void:
-	printerr("InteractableNPC:  _spawnDialogueBox is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _spawnDialogueBox is deprecated.")
 	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Connects the [member _dialogueBox] signals to functions.
 ## Only needs to be ran once.
 func _connectDialogueBoxSignals() -> void:
-	printerr("InteractableNPC:  _connectDialogueBoxSignals is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _connectDialogueBoxSignals is deprecated.")
 	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Disconnects the [member _dialogueBox] signals to functions.
 func _disconnectDialogueBoxSignals() -> void:
-	printerr("InteractableNPC:  _disconnectDialogueBoxSignals is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _disconnectDialogueBoxSignals is deprecated.")
 	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueBox].
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
 func _loadDialogueBoxData(_dialogueEntry:Dictionary) -> void:
-	printerr("InteractableNPC:  _loadDialogueBoxData is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _loadDialogueBoxData is deprecated.")
 	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Loads the next dialogue to display.
 func _loadNextDialogueBox(_nextDialogueID: String) -> void:
-	printerr("InteractableNPC:  _loadNextDialogueBox is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _loadNextDialogueBox is deprecated.")
 	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
 func _beginDialogueEventBox(_interactor:Node3D) -> void:
-	printerr("InteractableNPC:  _beginDialogueEventBox is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _beginDialogueEventBox is deprecated.")
 	return
 
 ## @deprecated
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
 func _endDialogueBox() -> void:
-	printerr("InteractableNPC:  _endDialogueBox is deprecated.")
+	printerr("InteractableNPC:  [", displayName, "] _endDialogueBox is deprecated.")
 	return
 
 # ------------------------------------------------

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cako4lfmiqhw2"]
+
+[ext_resource type="Script" uid="uid://56od2odhasha" path="res://_framework/test_scenes/test_automated.gd" id="1_syy6x"]
+
+[node name="Test_Automated" type="Node"]
+script = ExtResource("1_syy6x")
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -15.5
+offset_right = 23.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Tests"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

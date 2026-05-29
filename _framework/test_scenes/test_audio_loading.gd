@@ -67,7 +67,7 @@ func _process(_delta: float) -> void:
 func _getFoldersInPath(path:String) -> Array[String]:
 	var tempDirAccess:DirAccess = DirAccess.open(path)
 	if not tempDirAccess:
-		printerr("Directory [", path, "] does not exist.")
+		DebugHud.addToLog("Directory [" + path + "] does not exist.", DebugHud.LogType.ERROR)
 	tempDirAccess.list_dir_begin()
 
 	var directories:Array[String]
@@ -88,18 +88,53 @@ func _loadOptionButtonOptions(button:OptionButton, options:Array[String]) -> voi
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-func _on_load_pressed() -> void:
+func _on_load_both_pressed() -> void:
 	AudioLoader.clearAudioRandomizer(globalPlayer.stream)
 	AudioLoader.clearAudioRandomizer(positionalPlayer.stream)
 
 	var sfxID:String = idField.get_item_text(idField.selected)
-	var status:int = 0
-	print("Loading SFX ID: [", sfxID, "]")
-	status += AudioLoader.loadSfxFromId(sfxID, globalPlayer.stream)
-	status += AudioLoader.loadSfxFromId(sfxID, positionalPlayer.stream)
+	DebugHud.addToLog("Loading SFX ID: [" + sfxID + "] into both AudioStreamPlayers.")
 
-	if status >= 0:
-		print("Loading successful.")
+	var eventsToLoad:Dictionary = {
+		"positional": sfxID,
+		"global": sfxID
+	}
+	var playersToLoad:Dictionary = {
+		"positional": positionalPlayer,
+		"global": globalPlayer
+	}
+	AudioLoader.loadSfxIntoPlayers(eventsToLoad, playersToLoad)
+
+	if not globalPlayer.stream.streams_count > 0:
+		DebugHud.addToLog("Loading of both unsuccessful due to global.", DebugHud.LogType.BAD)
+	elif not positionalPlayer.stream.streams_count > 0:
+		DebugHud.addToLog("Loading of both unsuccessful due to positional.", DebugHud.LogType.BAD)
+	else:
+		DebugHud.addToLog("Loading of both successful.", DebugHud.LogType.GOOD)
+
+func _on_load_global_pressed() -> void:
+	AudioLoader.clearAudioRandomizer(globalPlayer.stream)
+
+	var sfxID:String = idField.get_item_text(idField.selected)
+	DebugHud.addToLog("Loading SFX ID: [" + sfxID + "] in global AudioStreamPlayer.")
+	var resultOne:Error = AudioLoader.loadSfxFromId(sfxID, globalPlayer.stream)
+
+	if resultOne == Error.OK:
+		DebugHud.addToLog("Loading of just global successful.", DebugHud.LogType.GOOD)
+	else:
+		DebugHud.addToLog("Loading of just global unsuccessful.", DebugHud.LogType.BAD)
+
+func _on_load_positional_pressed() -> void:
+	AudioLoader.clearAudioRandomizer(positionalPlayer.stream)
+
+	var sfxID:String = idField.get_item_text(idField.selected)
+	DebugHud.addToLog("Loading SFX ID: [" + sfxID + "] in positional AudioStreamPlayer.")
+	var resultTwo:Error = AudioLoader.loadSfxFromId(sfxID, positionalPlayer.stream)
+
+	if resultTwo == Error.OK:
+		DebugHud.addToLog("Loading of just positional successful.", DebugHud.LogType.GOOD)
+	else:
+		DebugHud.addToLog("Loading of just positional unsuccessful.", DebugHud.LogType.BAD)
 
 func _on_play_global_pressed() -> void:
 	globalPlayer.play()
