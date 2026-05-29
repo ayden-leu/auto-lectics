@@ -16,7 +16,6 @@ _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
 dialogueTreeID = "ReplaceMe"
 initialDialogueID = "ReplaceMe"
-_dialogueBoxAttachMethod = null
 model = NodePath("model")
 internalID = "_test_npc_interactable"
 displayName = "NPC Test Interactable"

@@ -305,7 +305,7 @@ func loadOptionData(options:Array) -> void:
 		if StoryFlags.flagsMatch(option.checkFlags):
 			_optionData.push_back(option)
 
-	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
+	_optionData.sort_custom(func(a, b): return a.get("spawnDelay", 0.0) <= b.get("spawnDelay", 0.0))
 
 ## Adds a right text entry to the console.
 ## [br][br]
