@@ -59,7 +59,7 @@ text = "Back"
 unique_name_in_owner = true
 process_mode = 3
 sfxIds = Dictionary[String, String]({
-"buttonPressed": "_test_3"
+"buttonPressed": ""
 })
 
 [node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
