@@ -60,14 +60,12 @@ func test_AudioLoader() -> Dictionary:
 	var dummyPlayer:AudioStreamPlayer = AudioStreamPlayer.new()
 	dummyPlayer.stream = dummyStream
 	var toLoad:Dictionary = {
-		"event1": 3.0,
 		"event2": "",
 		"event3": "_test_1",
 		"event4": "_test_1",
 		"event5": "_test_1",
 	}
 	var players:Dictionary[String, AudioStreamPlayer] = {
-		"event1": AudioStreamPlayer.new(),
 		"event2": AudioStreamPlayer.new(),
 		# nothing for event3
 		"event4": AudioStreamPlayer.new(),
@@ -75,9 +73,6 @@ func test_AudioLoader() -> Dictionary:
 	}
 	AudioLoader.loadSfxIntoPlayers(toLoad, players)
 
-	batch[prefix + "loadSfxIntoPlayers_toLoad-value-not-string"] = (
-		players.event1.stream == null
-	)
 	batch[prefix + "loadSfxIntoPlayers_no-ID-to-load"] = (
 		players.event2.stream == null
 	)

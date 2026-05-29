@@ -90,7 +90,7 @@ const MENU_Z_INDEX:int = 10
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	printerr("Everything in FR_Globals is deprecated.  Things that were here have been moved to other locations.  Consult the documentation for FR_Globals to figure out where.")
+	push_warning("Everything in FR_Globals is deprecated.  Things that were here have been moved to other locations.  Consult the documentation for FR_Globals to figure out where.")
 
 # ------------------------------------------------
 # functions referenced outside of this script

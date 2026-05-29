@@ -1,15 +1,29 @@
 @icon("uid://dvylpsokk73w0")
 extends Node
 class_name AudioLoader
-## A helper class that loads audio files into an [AudioStreamRandomizer].
+## A helper class that loads audio files into an [AudioStreamRandomizer] resource.
 ##
+## This helper class can be useful if you want to load multiple sound files into
+## an [AudioStreamPlayer]'s [AudioStreamRandomizer] stream, which you may be using
+## to making sound events less "repetitive."
+##
+## [br][br]
+## [b]Using:[/b][br]
 ## This is not a component you add to a scene, but rather a static class that
 ## can be referred to in code from anywhere.
 ## [codeblock]
+## # Assumption:  You have an AudioStreamPlayer node or a node that inherits
+## # from it named "myAudioPlayer"
+##
+## var myStream:AudioStreamRandomizer = $myAudioPlayer.stream
+## # or
 ## var myStream:AudioStreamRandomizer = AudioStreamRandomizer.new()
-## AudioLoader.loadSfxFromId("_test_1", myAudioStreamRandomizer)
-## $AudioStreamPlayer.stream = myStream
-## $AudioStreamPlayer.play()
+## $myAudioPlayer.stream = myStream
+##
+## AudioLoader.loadSfxFromId("_test_1", myStream)
+## # you can also load multiple SFX IDs into multiple AudioStreamPlayers
+## # at once using AudioLoader.loadSfxIntoPlayers()
+## $myAudioPlayer.play()
 ## [/codeblock]
 ## Audio files that can be loaded by this class are located in subfolders
 ## located in [member STORAGE_PATH].
@@ -28,18 +42,21 @@ class_name AudioLoader
 ##      └── _test_3
 ##          └── file1.FILE_TYPE
 ## [/codeblock]
+## [br]
+## [b]Other Information:[/b][br]
+## Consider using a [SfxEventHandler] if you want to make the process simpler
+## and do not care about the position of your [AudioStreamPlayer].
 
 ## Where all of the SFX ID folders are stored in the project.
 const STORAGE_PATH:String = "res://sounds/sfx/"
 ## The file type the audio files should be.
 const FILE_TYPE:String = ".wav"
 
-## The storage path for all SFX ID folders.
-const STORAGE_PATH:String = "res://sounds/sfx/"
-
-## Loads audio files related to a given ID and loads them into a given [AudioStreamRandomizer].
+## Loads audio files related to a given ID into a given [AudioStreamRandomizer].
 ## [codeblock]
 ## var myStream:AudioStreamRandomizer = AudioStreamRandomizer.new()
+## # or
+## var myStream:AudioStreamRandomizer = $myAudioPlayer.stream
 ##
 ## # a subfolder named "_test_1" with audio files exists.
 ## var result = AudioLoader.loadSfxFromId("_test_1", myAudioStreamRandomizer)
@@ -88,42 +105,56 @@ static func loadSfxFromId(id:String, audioStream:AudioStreamRandomizer) -> Error
 	return Error.OK
 
 ## Removes all stream entries in an [AudioStreamRandomizer].
+## Can be useful if you want to remove the streams from an [AudioStreamRandomizer]
+## with a lot of streams in it.
 static func clearAudioRandomizer(audioStream:AudioStreamRandomizer) -> void:
 	for _i in range(audioStream.streams_count):
 		audioStream.remove_stream(0)
 
 ## Loads SFX IDs from [code]sfxEventsToLoad[/code] into SFX events in [code]sfxPlayers[/code].
+## Useful if you have a bunch of [AudioStreamPlayer]s you want to sounds into.
 ## [br][br]
 ## Dictionary setup for [code]sfxEventsToLoad[/code]:
 ## [codeblock]
 ## {
 ## 	"eventID1": "sfxID1",
 ## 	"eventID2": "sfxID2",
+## 	"eventID3": "sfxID3"
 ## }
 ## [/codeblock]
 ## [br]
 ## Dictionary setup for [code]sfxPlayers[/code]:
 ## [codeblock]
+## # It is assumed that the AudioStreamPlayers in this dictionary already have
+## # an AudioStreamRandomizer resource loaded into them
+## var sameWithOnesMadeViaCode:AudioStreamPlayer = AudioStreamPlayer.new()
+## sameWithOnesMadeViaCode.stream = AudioStreamRandomizer.new()
 ## {
 ## 	"eventID1": $node_path_to_AudioStreamPlayer,
-## 	"eventID2": %unique_name_also_works
+## 	"eventID2": %unique_name_accessor_also_works,
+## 	"eventID3": sameWithOnesMadeViaCode
 ## }
 ## [/codeblock]
-static func loadSfxIntoPlayers(sfxEventsToLoad:Dictionary, sfxPlayers:Dictionary[String, AudioStreamPlayer]) -> void:
+static func loadSfxIntoPlayers(sfxEventsToLoad:Dictionary, sfxPlayers:Dictionary) -> void:
 	for eventID in sfxEventsToLoad:
-		if typeof(sfxEventsToLoad[eventID]) != TYPE_STRING:
-			push_warning("AudioLoader:  sfxEventsToLoad value at entry [", eventID,
-				"] isn't a string.  It is of type [", type_string(typeof(sfxEventsToLoad[eventID])), "]."
-			)
+		if typeof(eventID) != TYPE_STRING:
+			push_error("AudioLoader:  A key of the given sfxEventsToLoad Dictionary is not a string.  It is a ", type_string(typeof(eventID)))
 			continue
+		elif typeof(sfxEventsToLoad[eventID]) != TYPE_STRING:
+			push_error("AudioLoader:  The value of [", eventID, "] in given sfxEventsToLoad Dictionary is not a string.  It is a ", type_string(typeof(sfxEventsToLoad[eventID])))
+			continue
+
 		elif sfxEventsToLoad[eventID] == "":
 			print("AudioLoader:  Skipping loading of SFX event [", eventID, "]")
 			continue
 		elif not sfxPlayers.has(eventID):
-			push_warning("AudioLoader:  There is no SFX player for SFX event [", eventID, "]")
+			push_warning("AudioLoader:  There is no SFX player for SFX event [", eventID, "] in the given sfxPlayers Dictionary.")
+			continue
+		elif sfxPlayers[eventID] is not AudioStreamPlayer and sfxPlayers[eventID] is not AudioStreamPlayer3D and sfxPlayers[eventID] is not AudioStreamPlayer2D:
+			push_error("AudioLoader:  The value of [", eventID, "] in the given sfxPlayers Dictionary is not an AudioStreamPlayer or a type that inherits from it.")
 			continue
 		elif sfxPlayers[eventID].stream is not AudioStreamRandomizer:
-			push_warning("AudioLoader:  Loaded player for SFX event [", eventID, "] does not have an AudioStreamRandomizer resource.  It has resource of type [", type_string(typeof(sfxPlayers[eventID].stream)), "]")
+			push_error("AudioLoader:  Loaded player for SFX event [", eventID, "] does not have an AudioStreamRandomizer resource.  It has resource of type [", type_string(typeof(sfxPlayers[eventID].stream)), "]")
 			continue
 
 		sfxPlayers[eventID].stop()
