@@ -3,8 +3,10 @@ extends Node
 class_name MenuManager
 ## A helper class that manages any menus opened by the player.
 ##
+##
 ## All nodes that inherit [Menu] are created and managed by this.
 ## [br][br]
+## [b]Using:[/b][br]
 ## To open a menu, run [method openMenu] with a valid menu ID.
 ## Refer to the documentation for that function for valid menu IDs.
 ## [br][br]
@@ -20,6 +22,48 @@ class_name MenuManager
 ## [b]Current Menu Types With Signals[/b][br]
 ## - BlueprintMenu (deprecated)[br]
 ## [br][br]
+## [b]Adding a new [Menu] to this system:[/b][br]
+## To add a new [Menu] to this system, do the following:
+## [br][br]
+## 1)  Follow the steps and notes listed in the documentation for [Menu].
+## [br][br]
+## 2)  Add a new constant that loads the resource for your menu.
+## It is recommended you follow the naming conventions of the other related variables,
+## as well as put 'em in their appropriate areas so the code stay consistent.
+## [codeblock]
+## # Assumption:  your new menu is called "MyNewMenu" with a menuID of "myNewMenu"
+## ## [b]Internal-use only.[/b]
+## ## A loaded resource copy of my new menu menu.
+## const _MY_NEW_MENU:Resource = preload("UID string")
+## [/codeblock]
+## You can obtain your menu's UID string by right-clicking its saved scene in the
+## FileSystem panel and clicking "Copy UID."  You can also drag the scene file
+## into the script editor, then hold Ctrl+Alt before dropping it.
+## Be sure to remove the "preload" part.
+## [br][br]
+## 3)  Add another line to [method _ready] function to create the menu.
+## [codeblock]
+## func _ready() -> void:
+## 	_overlay.z_index = MENU_Z_INDEX - 1
+## 	_createMenu(_PAUSE_MENU)
+## 	_createMenu(_OPTIONS_MENU)
+## 	_createMenu(_KEYBINDS_MENU)
+##
+## 	_createMenu(_MY_NEW_MENU) # <-- new
+## [/codeblock]
+## [br]
+## 4)  You can now open the menu by calling [code]FR_MenuManager.openMenu("myNewMenu")[/code].
+## You can put this line of code anywhere, but you'll most likely want to be able
+## to access your new menu from a different menu.
+## [br][br]
+## To do that, you'll just need to hook a button's [code]pressed()[/code] signal
+## to a function in that different menu's script.  You'll then put that line of code
+## into that function.
+## [codeblock]
+## # example from the pause menu for opening the options menu
+## func _on_options_pressed() -> void:
+## 	FR_MenuManager.openMenu("options")
+## [/codeblock]
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -40,14 +84,14 @@ const MENU_Z_INDEX:int = 10
 const _PAUSE_MENU:Resource = preload("uid://bqesuy1fypg26")
 ## [b]Internal-use only.[/b]
 ## A loaded resource copy of the options menu.
-const _OPTIONS_MENU = preload("uid://duxwayninhwqb")
+const _OPTIONS_MENU:Resource = preload("uid://duxwayninhwqb")
 ## [b]Internal-use only.[/b]
 ## A loaded resource copy of the keybinds menu.
-const _KEYBINDS_MENU = preload("uid://b08l8xg1t3ct6")
+const _KEYBINDS_MENU:Resource = preload("uid://b08l8xg1t3ct6")
 ## @deprecated
 ## [b]Internal-use only.[/b]
 ## A loaded resource copy of the blueprint menu.
-const _BLUEPRINT_MENU = preload("uid://bult80lkyvnls")
+const _BLUEPRINT_MENU:Resource = preload("uid://bult80lkyvnls")
 
 # ------------------------------------------------
 # export variables
