@@ -18,9 +18,9 @@ class_name Crosshair
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-const SPRITE_NORMAL:Resource = preload("uid://dnfswnomwkg02")
-const SPRITE_INTERACTABLE:Resource = preload("uid://dtfn27ojmhrxx")
-const SPRITE_GRAPPLEABLE:Resource = preload("uid://dr2qqbj4qmp0a")
+const SPRITE_NORMAL:Resource = preload("res://_framework/_visual_assets/crosshair/crosshair_normal.png")
+const SPRITE_INTERACTABLE:Resource = preload("res://_framework/_visual_assets/crosshair/crosshair_interact.png")
+const SPRITE_GRAPPLEABLE:Resource = preload("res://_framework/_visual_assets/crosshair/crosshair_grapple.png")
 
 # ------------------------------------------------
 # export variables
