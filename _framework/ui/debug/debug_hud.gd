@@ -46,6 +46,9 @@ const LogTypeColor:Dictionary[LogType, String] = {
 ## [b]Internal-use only.[/b]
 ## The thing that logs all of the logs.
 @onready var _log:Container = %Log
+## [b]Internal-use only.[/b]
+## The thing that does the scrolling for all of the logs.
+@onready var _scrollContainer: ScrollContainer = %ScrollContainer
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -74,14 +77,15 @@ func _input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Adds the given message to the log.  Can optionally take in a [enum LogType].
+## Adds the given message to the log, as well as the built-in debugger and terminal.  Can optionally take in a [enum LogType].
 func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 	var newEntry:RichTextLabel = RichTextLabel.new()
 	_log.add_child(newEntry)
 
 	newEntry.bbcode_enabled = true
 	newEntry.custom_minimum_size.y = 25.0
-	newEntry.size_flags_vertical = Control.SIZE_SHRINK_END & SIZE_EXPAND
+	newEntry.size_flags_vertical = Control.SIZE_SHRINK_END
+	newEntry.fit_content = true
 
 	newEntry.text = "" + LogTypeColor[type]
 	newEntry.text += message
@@ -92,6 +96,11 @@ func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 			push_warning(message)
 		LogType.ERROR:
 			push_error(message)
+		_:
+			print_rich(message)
+
+	await get_tree().process_frame
+	_scrollContainer.scroll_vertical = ceil(_scrollContainer.get_v_scroll_bar().max_value)
 
 # ------------------------------------------------
 # functions only referenced inside this script
