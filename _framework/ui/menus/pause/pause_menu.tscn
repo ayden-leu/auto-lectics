@@ -5,7 +5,7 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6jgm3"]
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
+[node name="PauseMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_urpkf")
-sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -60,6 +59,7 @@ layout_mode = 2
 text = "Exit"
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("2_ymmsg")]
+unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
 "buttonPressed": ""
 })

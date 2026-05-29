@@ -44,6 +44,7 @@ const _OPTIONS_MENU = preload("uid://duxwayninhwqb")
 ## [b]Internal-use only.[/b]
 ## A loaded resource copy of the keybinds menu.
 const _KEYBINDS_MENU = preload("uid://b08l8xg1t3ct6")
+## @deprecated
 ## [b]Internal-use only.[/b]
 ## A loaded resource copy of the blueprint menu.
 const _BLUEPRINT_MENU = preload("uid://bult80lkyvnls")
@@ -106,7 +107,7 @@ var _currentMenu:Menu:
 		return _menuStack.back()
 ## [b]Internal-use only.[/b]
 ## Holds all nodes that want to listen to [BlueprintWindow]'s signals.
-var _blueprintMenuSubscribers:Array
+#var _blueprintMenuSubscribers:Array
 ## [b]Internal-use only.[/b]
 ## Stores the cursor mode before opening a menu.
 ## If it is [member Input.MOUSE_MODE_MAX], then the menu didn't pause the game.
@@ -193,22 +194,22 @@ func openMenu(menuID:String) -> void:
 ## 	# Will run whenever an unlock condition is met.
 ## 	# conditionID is the ID of the unlock condition.
 ## [/codeblock]
-func subscribeToBlueprintMenu(subscriber) -> void:
+func subscribeToBlueprintMenu(_subscriber) -> void:
 	return
-	_blueprintMenuSubscribers.push_back(subscriber)
-	_connectBlueprintSignalsToSubscriber(subscriber)
+	#_blueprintMenuSubscribers.push_back(subscriber)
+	#_connectBlueprintSignalsToSubscriber(subscriber)
 
 ## @deprecated
 ## Unsubscribes a node from the [DialogueConsole], meaning it won't run any
 ## functions when the [DialogueConsole] emits signals.
-func unsubscribeToBlueprintMenu(subscriber) -> void:
+func unsubscribeToBlueprintMenu(_subscriber) -> void:
 	return
-	if not subscriber in _blueprintMenuSubscribers:
-		return
-#
-	var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
-	_blueprintMenuSubscribers[subscriberIndex] = null
-	_disconnectBlueprintSignalsToSubscriber(subscriber)
+	#if not subscriber in _blueprintMenuSubscribers:
+		#return
+##
+	#var subscriberIndex:int = _blueprintMenuSubscribers.find(subscriber)
+	#_blueprintMenuSubscribers[subscriberIndex] = null
+	#_disconnectBlueprintSignalsToSubscriber(subscriber)
 
 # ------------------------------------------------
 # functions only referenced inside this script

@@ -22,6 +22,9 @@ extends Menu
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Holds each keeybind entry.
 @onready var _bindingsHolder = %BindingHolder
+## [b]Internal-use only.[/b]
+## The [SfxEventHandler] for this menu.
+@onready var _sfxEventHandler:SfxEventHandler = %SfxEventHandler
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -63,15 +66,9 @@ var _actionsToSkip:Array[String] = [
 # functions that run when a signal is emitted
 # ------------------------------------------------
 
-#func _on_open_submenu_pressed() -> void:
-#_TS_open.emit(subMenu)
-
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
-
-
-
 
 
 func _generateKeybindEntries() -> void:
@@ -123,5 +120,5 @@ func _formatKeybindName(keybind:String) -> String:
 	return keybind.replace("(Physical)", "")
 
 func _on_back_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
+	_sfxEventHandler.play("buttonPressed")
 	close()

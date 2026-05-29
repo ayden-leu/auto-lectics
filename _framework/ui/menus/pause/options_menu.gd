@@ -22,6 +22,9 @@ extends Menu
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Holds thee window size modes that can be set.
 @onready var _windowModeOptions:OptionButton = %WindowModeOptions
+## [b]Internal-use only.[/b]
+## The [SfxEventHandler] for this menu.
+@onready var _sfxEventHandler:SfxEventHandler = %SfxEventHandler
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -85,16 +88,16 @@ func _updateWindowMode(newMode:String) -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Handles logic for when the keybinds button is pressed.
 func _on_keybinds_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
+	_sfxEventHandler.play("buttonPressed")
 	FR_MenuManager.openMenu("keybinds")
 
 ## [b]Internal-use only.[/b]  Handles logic for when the back button is pressed.
 func _on_back_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
+	_sfxEventHandler.play("buttonPressed")
 	close()
 
 ## [b]Internal-use only.[/b]  Handles logic for when the apply settings button is pressed.
 func _on_apply_settings_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
+	_sfxEventHandler.play("buttonPressed")
 	var selectedMode:String = _windowModeOptions.get_item_text(_windowModeOptions.selected)
 	_updateWindowMode(selectedMode)

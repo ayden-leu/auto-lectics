@@ -1,5 +1,14 @@
 @tool
 extends Menu
+## The menu that appears when the player pauses the game during gameplay.
+##
+## Comes with three buttons:[br]
+## - To resume the game.[br]
+## - To open the [BlueprintMenu] (deprecated and not usable).[br]
+## - To open the Options menu.[br]
+## - To close the game.[br]
+## [br][br]
+## Also plays a sound whenever a button is clicked via its [member _sfxEventHandler].
 
 # ------------------------------------------------
 # signals
@@ -20,6 +29,9 @@ extends Menu
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
+## The [SfxEventHandler] for this menu.
+@onready var _sfxEventHandler:SfxEventHandler = %SfxEventHandler
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -52,25 +64,28 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles logic for resume button pressing.
+## [b]Internal-use only.[/b]
+## Handles logic for resume button pressing.
 func _on_resume_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
+	_sfxEventHandler.play("buttonPressed")
 	close()
 
-## [b]Internal-use only.[/b]  Handles logic for options button pressing.
+## [b]Internal-use only.[/b]
+## Handles logic for options button pressing.
 func _on_options_pressed() -> void:
-	sfxEventHandler.play("buttonPressed")
+	_sfxEventHandler.play("buttonPressed")
 	FR_MenuManager.openMenu("options")
 
 ## @deprecated
-## [b]Internal-use only.[/b]  Handles logic for blueprint button pressing.
+## [b]Internal-use only.[/b]
+## Handles logic for blueprint button pressing.
 func _on_blueprint_button_pressed() -> void:
 	return
-	print("blueprint open")
-	sfxEventHandler.play("buttonPressed")
-	FR_MenuManager.openMenu("blueprint")
+	#sfxEventHandler.play("buttonPressed")
+	#FR_MenuManager.openMenu("blueprint")
 
-## [b]Internal-use only.[/b]  Handles logic for quit button pressing.
+## [b]Internal-use only.[/b]
+## Handles logic for quit button pressing.
 func _on_quit_pressed() -> void:
 	get_tree().paused = false
 	get_tree().quit()

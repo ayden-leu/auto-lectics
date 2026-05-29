@@ -1,6 +1,7 @@
 # meta-default: true
 # meta-description: Base template for Menu with default Godot cycle methods
 
+@tool
 extends _BASE_
 
 # feel free to remove sections you're not using
@@ -37,7 +38,9 @@ extends _BASE_
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-_TS_menuID = ""
+_TS_if Engine.is_editor_hint():
+_TS__TS_return
+_TS_menuID =  # give it a unique menu ID
 _TS_#pauseGame = true  # is true by default
 _TS_super()  # runs the inherited class' _ready() function.
 
