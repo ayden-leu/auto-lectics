@@ -82,6 +82,9 @@ func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 	var newEntry:RichTextLabel = RichTextLabel.new()
 	_log.add_child(newEntry)
 
+	var seperator:HSeparator = HSeparator.new()
+	_log.add_child(seperator)
+
 	newEntry.bbcode_enabled = true
 	newEntry.custom_minimum_size.y = 25.0
 	newEntry.size_flags_vertical = Control.SIZE_SHRINK_END
