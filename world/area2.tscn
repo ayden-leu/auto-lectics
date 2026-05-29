@@ -165,10 +165,14 @@ transform = Transform3D(3.002941, 0, 2.543347, 0, 3.9352596, 0, -2.543347, 0, 3.
 transform = Transform3D(0.11958245, 0, -0.99282426, 0, 1, 0, 0.99282426, 0, 0.11958245, 136.21997, 3.6323833, 127.485344)
 _talkOnlyOnce = false
 
-[node name="Player" parent="." instance=ExtResource("32_eiahs")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("32_eiahs")]
 transform = Transform3D(0.77816635, 0, 0.62805825, 0, 1, 0, -0.62805825, 0, 0.77816635, 120.70497, 10.313862, 25.905254)
+respawnCheckpointLocation = NodePath("../RespawnCheckpoint")
 maxSpeed = 13.4
 acceleration = 9.5
+
+[node name="RespawnCheckpoint" type="Marker3D" parent="."]
+transform = Transform3D(0.77816635, 0, 0.62805825, 0, 1, 0, -0.62805825, 0, 0.77816635, 120.70497, 10.313862, 25.905254)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_asqrq")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)

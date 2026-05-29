@@ -101,7 +101,6 @@ transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09
 dialogueTreeID = "_test/basic/three"
 initialDialogueID = "1"
 lookAtInteractorWhileTalking = true
-_dialogueBoxAttachMethod = 1
 internalID = "_test_basic_three"
 displayName = "Test Basic Three"
 metadata/_edit_group_ = true
@@ -127,7 +126,6 @@ transform = Transform3D(0.9386556, 0, 0.34485584, 0, 1, 0, -0.34485584, 0, 0.938
 dialogueTreeID = "_test/basic/one"
 initialDialogueID = "start"
 lookAtInteractorWhileTalking = true
-_dialogueBoxAttachMethod = 1
 internalID = "_test_basic_one"
 displayName = "Test Basic One"
 patrolEnabled = true
@@ -198,18 +196,18 @@ metadata/_edit_group_ = true
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
 text = "test_loop_with_defaults"
 
-[node name="test_basic_one_reject_exit" parent="NPCs" instance=ExtResource("16_ejbbu")]
-transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 4.0199738)
+[node name="test_reject_exit" parent="NPCs" instance=ExtResource("16_ejbbu")]
+transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 4.271533)
 dialogueTreeID = "_test/basic/one"
 initialDialogueID = "start"
 rejectConsoleExit = true
 internalID = "_test_basic_one_reject_exit"
-displayName = "Test Reject Exiit"
+displayName = "Test Reject Exit"
 metadata/_edit_group_ = true
 
-[node name="Label3D" type="Label3D" parent="NPCs/test_basic_one_reject_exit"]
+[node name="Label3D" type="Label3D" parent="NPCs/test_reject_exit"]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, 0.07618189, 1.3081801, -0.013542175)
-text = "test_basic_one_reject_exit"
+text = "test_reject_exit"
 
 [node name="test_reject_back" parent="NPCs" instance=ExtResource("16_ejbbu")]
 transform = Transform3D(-0.09931993, 0, 0.9950555, 0, 1, 0, -0.9950555, 0, -0.09931993, 4.012983, 0.24217129, 8.482098)

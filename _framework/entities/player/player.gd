@@ -53,6 +53,8 @@ signal respawning_finished()
 @export_range(0.0, 120.0, 0.5) var deceleration: float = 28.0
 ## Gives you a boost in movement speed when turning.
 @export_range(0.0, 20.0, 0.1) var turnDecelerationBoost: float = 6.0 # setting for turn
+## The time between each step event while moving.
+@export var timeBetweenSteps:float = 0.8
 
 @export_group("Movement - Air")
 ## The player's air acceleration.
@@ -129,6 +131,13 @@ var interactableThing:Node3D = null:
 static var frozen:bool = false
 ## If the player's inputs are disabled.
 static var inputEnabled:bool = true
+## True if the player is currently in the grappling state.
+var isGrappling: bool = false
+## If the player is allowed to grapple currently.
+var canGrapple: bool = true
+## The current input direction from [InputHandler] in local space,
+## converted to global space.
+var inputDirectionRelative: Vector2
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -156,6 +165,8 @@ var _apexHangActive: bool = false
 var _lastValidPosition: Vector3
 ## If the player is currently respawning or not.
 var _respawning:bool = false
+## If the player is currrently moving or not.
+var _moving:bool = false
 ## [b]Internal-use only.[/b]
 ## A list of nodes freezing this.  Only has unique entries.
 ## The values of each key are always [code]null[/code].
@@ -164,17 +175,6 @@ static var _nodesFreezingMe:Dictionary[Node, Node] = {}
 ## A list of nodes disabling player input from affecting this.  Only has unique entries.
 ## The values of each key are always [code]null[/code].
 static var _nodesDisablingInput:Dictionary[Node, Node] = {}
-
-# ------------------------------------------------
-## Grapple hook variables
-# ------------------------------------------------
-## True if the player is currently in the grappling state.
-var isGrappling: bool = false
-## If the player is allowed to grapple currently.
-var canGrapple: bool = true
-## The current input direction from [InputHandler] in local space,
-## converted to global space.
-var inputDirectionRelative: Vector2
 ## Track whether to send a new signal or not for whether the target looked at is grappleable
 var _lookingAtGrapplable: bool = false:
 	set(newState):
@@ -186,6 +186,8 @@ var _lookingAtGrapplable: bool = false:
 		elif _lookingAtGrapplable and not newState:
 			no_longer_looking_at_grappleable.emit()
 		_lookingAtGrapplable = newState
+## A dummy counter that increments every [method _process] call.  Used for step events.
+var _movingDeltaCounter:float = 0.0
 
 var unstuck_respawn
 # ------------------------------------------------
@@ -198,10 +200,19 @@ func _ready() -> void:
 
 	_recomputeJumpParameters()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
 		return
+
+	if _moving:
+		_movingDeltaCounter += delta
+		if _movingDeltaCounter > timeBetweenSteps:
+			_sfxEventHandler.play("step")
+			_movingDeltaCounter = 0.0
+	else:
+		_movingDeltaCounter = 0.0
+
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -343,6 +354,9 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	var target := Vector3.ZERO
 	if direction != Vector3.ZERO:
 		target = direction.normalized() * maxSpeed
+		_moving = true
+	else:
+		_moving = false
 
 	var current_h := Vector3(velocity.x, 0.0, velocity.z)
 	var desired_h := Vector3(target.x, 0.0, target.z)

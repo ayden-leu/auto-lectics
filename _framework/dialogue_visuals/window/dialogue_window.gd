@@ -11,20 +11,23 @@ class_name DialogueWindow
 ## Can optionally be closable by enabling the [member canBeClosed] export field.
 ## Enabling this will provide a new export field named [member closeButton],
 ## which will be the button that closes this window.
-## [br]
-## The [offscreenThreshold] export field configures how many pixels offscreen
+## [br][br]
+## The [member offscreenThreshold] export field configures how many pixels offscreen
 ## this window can be.  Dropping the window beyond the threshold will bring it within bounds.
 ## [br][br]
 ## [b]Styling[/b][br]
-## When styling a DialogueWindow, there a few things you'll need to know about.[br]
-## 1) If you keep accidentally selecting a nonde instead of its parent, you can group it and its parent together by clicking the parent node,[br]
-## then hitting the "Group Selected Nodes" button in the top bar next to the lock icon.  Despite its name, it just groups that node's children[br]
-## with the parent instead of grouping all selected nodes.
-## [[br]
-## 2) The main theme resource can be found in [code]_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres[/code].[br]
-## Modifying the theme properties of this resource will propagate to all DialogueWindows and their children, unless said children have their[br]
-## theme overrides set.
-## [br]
+## When styling a DialogueWindow, there a few things you'll need to know about.[br][br]
+## 1) If you keep accidentally selecting a nonde instead of its parent, you can
+## group it and its parent together by clicking the parent node, then hitting
+## the "Group Selected Nodes" button in the top bar next to the lock icon.
+## Despite its name, it just groups that node's children with the parent instead
+## of grouping all selected nodes.
+## [br][br]
+## 2) The main theme resource can be found in [code]_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres[/code].
+## Modifying the theme properties of this resource will propagate to all
+## DialogueWindows and their children, unless said children have their theme
+## overrides set.
+## [br][br]
 ## 3) The "hitbox" that allows players to drag around the window is determined by the size of the root node.  Modifying the root node's size[br]
 ## won't affect its contents. (Modifying the scale will affect the contents though).
 ## [br]

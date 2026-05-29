@@ -33,6 +33,8 @@ class_name MenuManager
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## The z-index value that will be applied to all [Menu]s.
+const MENU_Z_INDEX:int = 10
 ## [b]Internal-use only.[/b]
 ## A loaded resource copy of the pause menu.
 const _PAUSE_MENU:Resource = preload("uid://bqesuy1fypg26")
@@ -114,7 +116,7 @@ var _cursorModeBeforePause:Input.MouseMode = Input.MOUSE_MODE_MAX
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	_overlay.z_index = FR_Globals.MENU_Z_INDEX - 1
+	_overlay.z_index = MENU_Z_INDEX - 1
 
 	_createMenu(_PAUSE_MENU)
 	_createMenu(_OPTIONS_MENU)
