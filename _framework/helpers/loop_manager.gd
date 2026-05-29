@@ -12,17 +12,18 @@ class_name LoopManager
 ## if it's in fancy mode, it'll make a [RestartLoopManagerArea3D] start to grow.
 ## when it collides with a [Player], then the reset process will happen.
 
+
 # TODO:  create a proper test scene to test functionality.
 # TODO:  add export variable for fade overlay
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
-## Emitted immediately when the loop timer times out.
+## Emitted immediately when the loop timer times out or [method performReset] begins.
 signal resetting()
-## Emitted after the overlay fades in.
+## Emitted after the overlay has faded in and before [member timeHoldFade] begins.
 signal faded_in()
-## Emitted after the overlay fades out.
+## Emitted after the overlay has faded back out and the reset sequence is finished.
 signal faded_out()
 
 # ------------------------------------------------
@@ -36,9 +37,13 @@ signal faded_out()
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The [ColorRect] that gets faded in and out whenever the loop resets.
+## The [ColorRect] faded in and out during the reset sequence.
+## [br][br]
+## Its original alpha value is saved when the scene starts.  The overlay is then set to transparent until a reset begins.
 @export var _overlay:ColorRect
-## If the looping system should be handled externally or not.  Mainly for testing.
+## If true, the loop timer does not start automatically.
+## [br][br]
+## Use this for tests, scripted events, or scenes where another system should decide when [method performReset] runs.
 @export var manual:bool
 ## How long a loop lasts.  Default value = 10 minutes.
 @export var loopDurationSeconds:float = 10 * 60
@@ -80,11 +85,16 @@ signal faded_out()
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  The original alpha value of the screen overlay.  Gets set when the LoopManager is ready.
+## [b]Internal-use Only.[/b]
+## The original alpha value of [member _overlay], saved when this manager is ready.
 var _overlayAlphaVisible:float
-## [b]Internal-use only.[/b]   If the loop is currently resetting or not.
+## [b]Internal-use Only.[/b]
+## If true, the reset sequence is currently running.
 var _loopBeingReset:bool = false
-## The loop timer that ticks down.  See [mmethod _on_loop_timer_timeout] for what happens when it times out.
+## [b]Internal-use Only.[/b]
+## The [Timer] that counts down to the next automatic reset.
+## [br][br]
+## See [method _on_loop_timer_timeout] for what happens when this timer expires.
 var _timer:Timer:
 	set(value):
 		if _timer == null:
@@ -101,6 +111,10 @@ var _actualTimeFadeIn:float = 0.6
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
+## [b]Internal-use Only.[/b]
+## Prepares the overlay, connects reset signals, creates the timer, and starts it when not in manual mode.
+## [br][br]
+## In the editor, this returns early so runtime-only timers and signal connections are not created.
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
@@ -162,14 +176,20 @@ func performFancyReset() -> void:
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]
-## Creates the loop timer.  Shouldn't be ran externally.
+
+## [b]Internal-use Only.[/b]
+## Creates the [Timer] used for automatic loop resets.
+## [br][br]
+## This should only run during setup.
 func _createLoopTimer() -> void:
 	_timer = Timer.new()
 	add_child(_timer)
 
-## [b]Internal-use only.[/b]
-## Configures the loop timer based on the export variables.
+## [b]Internal-use Only.[/b]
+## Configures [member _timer] from the exported loop settings.
+## [br][br]
+## The timer waits for [member loopDurationSeconds], fires once, and calls [method _on_loop_timer_timeout] when it expires.
+
 func _configureTimer() -> void:
 	_timer.wait_time = loopDurationSeconds
 	_timer.one_shot = true
@@ -179,6 +199,7 @@ func _configureTimer() -> void:
 ## Fades the darkening overlay in/out.
 ## If the first parameter is true, it will fade the overlay in (visible).
 ## If false, it will fade the overlay out (invisible).
+
 func _fadeOverlay(fadingIn:bool) -> void:
 	_overlay.visible = true
 	var tween:Tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
@@ -191,8 +212,12 @@ func _fadeOverlay(fadingIn:bool) -> void:
 
 	await tween.finished
 
-## [b]Internal-use only.[/b]
-## Connects all signals to all nodes who need to know about them.
+
+## [b]Internal-use Only.[/b]
+## Connects loop fade signals to every [NPC] currently in the [code]NPCs[/code] group.
+## [br][br]
+## [signal faded_in] connects to [method NPC._on_loop_manager_overlay_faded_in], and [signal faded_out] connects to [method NPC._on_loop_manager_overlay_faded_out].
+
 func _connectSignals() -> void:
 	var npcs:Array = get_tree().get_nodes_in_group("NPCs")
 	for npc in npcs as Array[NPC]:
@@ -202,9 +227,12 @@ func _connectSignals() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]
-## Handles logic for when the timer times out.
-## When the loop timer times out, the screen will get darker, all NPCs will be "reset," and the screen darkness will go away.
+
+## [b]Internal-use Only.[/b]
+## Handles logic for when [member _timer] times out.
+## [br][br]
+## Runs [method performReset], then starts [member _timer] again so the next loop can begin.
+
 func _on_loop_timer_timeout() -> void:
 	if fancy:
 		await performFancyReset()
@@ -215,6 +243,10 @@ func _on_loop_timer_timeout() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Internal-use Only.[/b]
+## Returns editor warnings for missing loop setup.
+## [br][br]
+## Warns when [member _overlay] is not assigned, except when this node is the edited scene root.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 

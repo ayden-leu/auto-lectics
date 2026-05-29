@@ -1,7 +1,16 @@
 @icon("uid://mjaagygagbwl")
 extends Object
 class_name LabelPresetLoader
-## Loads label preset resources into [Label]s via code.
+## Loads saved [LabelSettings] presets so they can be assigned to [Label]s through code.
+## [br][br]
+## [b]Use Case[/b][br]
+## Use this when a dialogue label, menu label, or test scene needs to apply a shared text style without manually dragging a [LabelSettings] resource into the inspector.  The returned resource can be assigned directly to [member Label.label_settings].
+## [br][br]
+## [b]Preset Storage[/b][br]
+## Presets are expected to live in [member FR_Globals.STORAGE_PATH] under the [code]LABEL_PRESETS[/code] entry.  [method loadPreset] receives the preset name without the file extension, then appends [member FR_Globals.LABEL_PRESET_FILE_TYPE] before loading the resource.
+## [br][br]
+## [b]Failure Cases[/b][br]
+## If the preset name is empty, the resource does not exist, or the loaded resource is not a [LabelSettings], this returns [code]null[/code] and prints an error when a path was attempted.
 
 ## The storage location for all [LabelSettings] resources.
 const STORAGE_PATH:String = "res://fonts/_label_presets/"
@@ -9,6 +18,7 @@ const STORAGE_PATH:String = "res://fonts/_label_presets/"
 const FILE_TYPE:String = ".tres"
 
 ## Loads the given preset.  Storage path can be found in [member FR_Blobals.STORAGE_PATH].
+
 static func loadPreset(preset:String) -> LabelSettings:
 	preset = preset.strip_edges()
 	if preset.is_empty():

@@ -19,16 +19,18 @@ class_name InputHandler
 ## Emitted when the mouse moves.
 ## [code]distanceMoved[/code] is multiplied by [member MOUSE_SENSITIVITY] before
 ## being sent with the signal.
+
 signal mouse_moved(distanceMoved:Vector2)
-## Emitted when the interact button is just pressed.
+## Emitted when the [code]interact[/code] action is pressed.
 signal interact_button_pressed()
-## Emitted when the jump button is pressed.
+## Emitted when the [code]jump[/code] action is pressed.
 signal jump_pressed()
 ## Emitted constantly to update the player's current input direction.
 ## [code]newDirection[/code] is normalized, meaning diagonal inputs will be
 ## equal to the square root of 2 instead of 1.
+
 signal update_input_direction(newDirection:Vector2)
-## Emitted when the "Respawn" key is pressed.
+## Emitted when the [code]respawn[/code] action is pressed.
 signal respawn()
 ## Emitted when grapple hook buttons are pressed
 signal grapple_pressed()
@@ -40,7 +42,9 @@ signal grapple_pressed()
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
-## Mouse movement sensitivity.
+## Multiplier applied to raw mouse motion before emitting [signal mouse_moved].
+## [br][br]
+## Larger values make emitted mouse movement stronger.  Camera scripts may also apply their own sensitivity after receiving the signal.
 const MOUSE_SENSITIVITY:float = 0.15
 
 # ------------------------------------------------
@@ -54,14 +58,18 @@ const MOUSE_SENSITIVITY:float = 0.15
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## Whether movement inputs should be processed.  Only affects this [InputHandler].
+## Whether movement input should be processed by this InputHandler instance.
+## [br][br]
+## When false, this instance emits [constant Vector2.ZERO] through [signal update_input_direction] even if the player is pressing movement keys.  This does not affect other [InputHandler] nodes.
 var movementInputEnabled:bool = true
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## Whether movement inputs should be processed.  Affects all [InputHandler]s.
+## [b]Internal-use Only.[/b]
+## Whether movement input should be processed by all [InputHandler] instances.
 static var _movementInputEnabledGlobal:bool = true
+
 ## Whether interaction inputs should be processed.  Affects all [InputHandler]s.
 static var _interactionEnabledGlobal:bool = true
 ## Whether the jump input should be processed.  Affects all [InputHandler]s.
@@ -69,15 +77,35 @@ static var _jumpEnabledGlobal:bool = true
 ## Whether the respawn input should be processed.  Affects all [InputHandler]s.
 static var _respawnEnabledGlobal:bool = true
 
+
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
+
+## [b]Internal-use Only.[/b]
+## Captures the mouse when this handler enters the scene tree.
+## [br][br]
+## This lets first-person camera controls receive relative mouse movement during gameplay.
+func _ready() -> void:
+	#if Engine.is_editor_hint():
+		#return
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+## [b]Internal-use Only.[/b]
+## Emits [signal update_input_direction] every physics frame.
+## [br][br]
+## If either [member movementInputEnabled] or the global movement-input flag is false, this emits [constant Vector2.ZERO].
+
 func _physics_process(_delta: float) -> void:
 	var input_dir:Vector2 = Vector2.ZERO
 	if _movementInputEnabledGlobal and movementInputEnabled:
 		input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	update_input_direction.emit(input_dir)
 
+## [b]Internal-use Only.[/b]
+## Handles action presses and mouse motion.
+## [br][br]
+## Emits the matching signals for [code]interact[/code], [code]jump[/code], [code]respawn[/code], and mouse movement.  If [code]close_game[/code] is pressed, the scene tree quits immediately.
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and _interactionEnabledGlobal:
 		interact_button_pressed.emit()
@@ -107,11 +135,12 @@ func _input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Lets movement inputs be processed.
 static func enableMovementInputGlobal() -> void:
 	_movementInputEnabledGlobal = true
 
-## Prevents movement inputs from being processed.
+## Prevents all [InputHandler] instances from processing movement input.
+## [br][br]
+## While disabled, [signal update_input_direction] emits [constant Vector2.ZERO] from every instance.
 static func disableMovementInputGlobal() -> void:
 	_movementInputEnabledGlobal = false
 
