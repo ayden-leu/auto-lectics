@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="16"
-   height="16"
-   viewBox="0 0 4.2333333 4.2333333"
+   width="128"
+   height="128"
+   viewBox="0 0 33.866666 33.866666"
    version="1.1"
    id="svg1"
    xml:space="preserve"
-   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    sodipodi:docname="icon_crosshair.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="25.919883"
-     inkscape:cx="5.767773"
-     inkscape:cy="12.114252"
+     inkscape:zoom="4.5820313"
+     inkscape:cx="16.150043"
+     inkscape:cy="45.394714"
      inkscape:window-width="2048"
      inkscape:window-height="1198"
      inkscape:window-x="0"
@@ -38,6 +38,6 @@
      id="layer1"
      transform="translate(-0.03141086,-0.03141113)"><path
        id="rect16"
-       style="display:inline;fill:#8eef97;fill-opacity:1;stroke:none;stroke-width:0.158749;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:#8eef97;fill-opacity:1;stroke:none;stroke-width:1.26999;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="minus_top_v"
-       d="M 1.8305775,0.56057779 V 1.8305778 H 0.56057752 v 0.635 H 1.8305775 v 1.27 h 0.635 v -1.27 h 1.27 v -0.635 h -1.27 V 0.56057779 Z" /></g></svg>
+       d="M 14.424744,4.2647445 V 14.424745 H 4.2647443 v 5.08 H 14.424744 v 10.16 h 5.080001 v -10.16 h 10.16 v -5.08 h -10.16 V 4.2647445 Z" /></g></svg>

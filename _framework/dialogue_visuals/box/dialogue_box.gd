@@ -31,9 +31,9 @@ enum _OptionAnchor {
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Holds a reference to the dialogue option resource.
-const _OPTION_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBoxOption)
+const _OPTION_SCENE:Resource = preload("uid://pdwngeenin11")
 ## [b]Internal-use only.[/b]  Holds a reference to the warning tile resource.
-const _WARNING_TILE_SCENE:Resource = preload(FR_Globals.SCENES.WarningTile3D)
+const _WARNING_TILE_SCENE:Resource = preload("uid://wm6t0orfpjfl")
 ## [b]Internal-use only.[/b]  The number of warning tiles to spawn during hectic mode.
 const _NUM_WARNINGS:int = 6
 
@@ -162,7 +162,7 @@ func loadOptionData(options: Array) -> void:
 		if StoryFlags.flagsMatch(check_flags):
 			_optionData.push_back(option)
 
-	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
+	_optionData.sort_custom(func(a, b): return a.get("spawnDelay", 0.0) <= b.get("spawnDelay", 0.0))
 
 ## Loads the SFX from the files.
 func loadSfx(sfxEventsToLoad:Dictionary) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b4srktkju34tq"]
+[gd_scene load_steps=16 format=3 uid="uid://b4srktkju34tq"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_q8vf3"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_abrql"]
@@ -23,6 +23,8 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 5
 collision_mask = 2
@@ -30,6 +32,7 @@ script = ExtResource("1_q8vf3")
 maxSpeed = 28.4
 acceleration = 37.0
 grappleAttachImpulseStrength = 20.55
+timeBetweenSteps = 0.8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004080862)
@@ -81,7 +84,8 @@ sfxIds = Dictionary[String, String]({
 "deathFancy": "",
 "jump": "",
 "respawn": "",
-"respawnFancy": ""
+"respawnFancy": "",
+"step": ""
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
@@ -98,6 +102,9 @@ stream = SubResource("AudioStreamRandomizer_k4ncf")
 
 [node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_s2ddf")
+
+[node name="step" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_lmmnp")
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true

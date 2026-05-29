@@ -19,6 +19,12 @@ enum COLLISION_LAYER {
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## @deprecated
+## Deprecated due to the places where these were used in the framework have just been applied directly
+## to said places, instead of referencing FR_Globals.
+## This is because these scenes were only being referenced in one place.
+## This is left just in case, but will be removed in the future.
+## [br][br]
 ## Holds path references to any scene that needs to be spawned via code. Should be in the format "uid://[string of characters]" so things don't break when files are moved around.
 ## [br][br]
 ## You can get this UID string by right-clicking the scene in the FileSystem
@@ -40,15 +46,26 @@ const SCENES = {
 	"BlueprintNpcDetailWindow": "uid://524kk63lga7"
 }
 
+## @deprecated
+## Moved to more appropriate places.[br]
+## - [code]DIALOGUE[/code]:  [DialogueLoader][br]
+## - [code]SFX[/code]:  [AudioLoader][br]
+## - [code]LABEL_PRESETSs[/code]:  [LabelPresetLoader][br]
+## [br]
 ## Holds information for where certain aspects are stored in the project.
 const STORAGE_PATH = {
 	"DIALOGUE": "res://dialogue_trees/",
-	"SFX": "res://sounds/sfx/",
 	"LABEL_PRESETS": "res://fonts/_label_presets/"
 }
 
+## @deprecated
+## Moved to [LabelPresetLoader].
+## [br][br]
 ## Determines the file type of label presets.
 const LABEL_PRESET_FILE_TYPE = ".tres"
+## @deprecated
+## Moved to [LabelPresetLoader].
+## [br][br]
 ## The z index of [Menu]s.
 const MENU_Z_INDEX:int = 10
 
@@ -72,37 +89,23 @@ const MENU_Z_INDEX:int = 10
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
+func _ready() -> void:
+	push_warning("Everything in FR_Globals is deprecated.  Things that were here have been moved to other locations.  Consult the documentation for FR_Globals to figure out where.")
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
 
+## @deprecated
+## Moved to [DialogueLoader].
+## [br][br]
 ## Gets the dialogue information within a dialogue object.
-func getDialogueNode(entityName:String, id: String) -> Dictionary:
-	var topPath:String = DialogueLoader.assemblePath(entityName, id)
-	var top:Dictionary = DialogueLoader.loadDialogueNodeFile(topPath)
-	if top.is_empty():
-		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, topPath])
-		top = DialogueLoader.loadDialogueNodeFile(
-			STORAGE_PATH.DIALOGUE + "fallback" + DialogueLoader.DIALOGUE_FILE_TYPE
-		)
+func getDialogueNode(_entityName:String, _id: String) -> Dictionary:
+	return {"newLocation": "DialogueLoader.getDialogueNode()"}
 
-	var npcDialogueDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_DIALOGUE_ID)
-	var npcDialogueDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcDialogueDefaultsPath, false)
-	if npcDialogueDefaults.is_empty():
-		print("NPC: No default dialogue attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
-
-	var npcOptionDefaultsPath:String = DialogueLoader.assemblePath(entityName, DialogueLoader.DEFAULT_OPTION_ID)
-	var npcOptionDefaults:Dictionary = DialogueLoader.loadDialogueNodeFile(npcOptionDefaultsPath, false)
-	if npcOptionDefaults.is_empty():
-		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
-
-	var withNpcDefaults:Dictionary = DialogueLoader.fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
-
-	var result:Dictionary = DialogueLoader.fillDialogueMissingFields(withNpcDefaults)
-
-	return result
-
+## @deprecated
+## This isn't used anywhere in the framework anymore.
+## [br][br]
 ## Gets the current size of the screen.
 func getScreenSize() -> Vector2:
 	return get_viewport().get_visible_rect().size

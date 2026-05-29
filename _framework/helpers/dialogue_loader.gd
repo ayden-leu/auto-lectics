@@ -1,3 +1,4 @@
+@icon("uid://id471bfglpdp")
 extends Node
 class_name DialogueLoader
 ## Helper script for loading dialogue files into the game.
@@ -6,16 +7,43 @@ class_name DialogueLoader
 # TODO: rename writeSpeed to writeSpeedPreset
 # TODO: rename writeSpeedCustom to writeSpeed
 
+## The storage location of all dialogue trees.
+const STORAGE_PATH:String = "res://dialogue_trees/"
 ## Determines the file type of the dialogue objects.
-const DIALOGUE_FILE_TYPE = ".json"
+const DIALOGUE_FILE_TYPE:String = ".json"
 ## Determines the file name of an NPC's default dialogue attributes.
 const DEFAULT_DIALOGUE_ID:String = "_default_dialogue"
 ## Determines the file name of an NPC's default option attributes.
 const DEFAULT_OPTION_ID:String = "_default_option"
 
+static func getDialogueNode(entityName:String, id: String) -> Dictionary:
+	var topPath:String = assemblePath(entityName, id)
+	var top:Dictionary = loadDialogueNodeFile(topPath)
+	if top.is_empty():
+		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, topPath])
+		top = loadDialogueNodeFile(
+			STORAGE_PATH + "fallback" + DIALOGUE_FILE_TYPE
+		)
+
+	var npcDialogueDefaultsPath:String = assemblePath(entityName, DEFAULT_DIALOGUE_ID)
+	var npcDialogueDefaults:Dictionary = loadDialogueNodeFile(npcDialogueDefaultsPath, false)
+	if npcDialogueDefaults.is_empty():
+		print("NPC: No default dialogue attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
+
+	var npcOptionDefaultsPath:String = assemblePath(entityName, DEFAULT_OPTION_ID)
+	var npcOptionDefaults:Dictionary = loadDialogueNodeFile(npcOptionDefaultsPath, false)
+	if npcOptionDefaults.is_empty():
+		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
+
+	var withNpcDefaults:Dictionary = fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
+
+	var result:Dictionary = fillDialogueMissingFields(withNpcDefaults)
+
+	return result
+
 ## Gets the path to a dialogue object.
 static func assemblePath(entityName:String, id:String) -> String:
-	return FR_Globals.STORAGE_PATH.DIALOGUE + entityName + "/" + id + DIALOGUE_FILE_TYPE
+	return STORAGE_PATH + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
 ## Loads a single dialogue node file. Returns a dialogue object with all settings.
 ## [br][br]

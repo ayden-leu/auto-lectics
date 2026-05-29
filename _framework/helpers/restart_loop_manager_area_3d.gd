@@ -1,4 +1,5 @@
 @tool
+@icon("uid://c0agse6m0shng")
 extends Area3D
 class_name RestartLoopManagerArea3D
 ## The
@@ -55,10 +56,9 @@ var _currentState:State = State.IDLE
 # ------------------------------------------------
 func _ready() -> void:
 	collision.shape.radius = 0
-	mesh.mesh.radius = 0.5 
+	mesh.mesh.radius = 0.5
 	mesh.mesh.height = 1
-	
-	
+
 func _process(delta:float) -> void:
 	_handleState(delta)
 
@@ -68,8 +68,7 @@ func _process(delta:float) -> void:
 ## Makes the collision shape start growing.
 func startGrowing() -> void:
 	_currentState = State.GROW
-	
-	
+
 func reset() -> void:
 	_currentState = State.RESET
 

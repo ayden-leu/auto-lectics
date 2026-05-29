@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxr02fonaatcw"]
+[gd_scene load_steps=6 format=3 uid="uid://bxr02fonaatcw"]
 
 [ext_resource type="Script" uid="uid://b5elcmyprr8gr" path="res://_framework/test_scenes/test_audio_loading.gd" id="1_e6hn2"]
+[ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="2_t00jm"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e6hn2"]
 
@@ -12,10 +13,10 @@
 script = ExtResource("1_e6hn2")
 
 [node name="Notes" type="Label" parent="."]
-offset_left = 53.0
-offset_top = -158.0
-offset_right = 800.0
-offset_bottom = -109.0
+offset_left = 6.0
+offset_top = -92.0
+offset_right = 783.0
+offset_bottom = -43.0
 text = "This is just to test if the audio loaded from the AudioLoader works or not.
 This is teeeeechnically covered by test_npc_interaction but its best to have a separate thing to test it."
 
@@ -25,53 +26,63 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Load" type="Button" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 50.0
-offset_right = 129.0
-offset_bottom = 81.0
-text = "Load Audio"
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 472.0
+offset_bottom = 129.0
+metadata/_edit_group_ = true
 
-[node name="PlayGlobal" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 142.0
-offset_top = 50.0
-offset_right = 296.0
-offset_bottom = 81.0
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "You can move around using WASD."
+
+[node name="Id" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/Id"]
+layout_mode = 2
+text = "SFX ID: "
+
+[node name="IdField" type="OptionButton" parent="Control/VBoxContainer/Id"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadBoth" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Load Both"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadGlobal" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load Audio (Global)"
+
+[node name="PlayGlobal" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
 text = "Play Audio (Global)
 "
 
-[node name="PlayPositional" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 315.0
-offset_top = 56.0
-offset_right = 495.0
-offset_bottom = 87.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadPositional" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Load Audio (Positional)"
+
+[node name="PlayPositional" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
 text = "Play Audio (Positional)
 "
-
-[node name="Id" type="Control" parent="Control"]
-anchors_preset = 0
-offset_left = 36.0
-offset_top = 14.0
-offset_right = 76.0
-offset_bottom = 54.0
-metadata/_edit_group_ = true
-
-[node name="Label" type="Label" parent="Control/Id"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "SFX ID: "
-
-[node name="IdField" type="OptionButton" parent="Control/Id"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 56.0
-offset_top = 3.0
-offset_right = 88.0
-offset_bottom = 23.0
 
 [node name="Global" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -89,6 +100,11 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.0922167)
 current = true
 
-[connection signal="pressed" from="Control/Load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="Control/PlayGlobal" to="." method="_on_play_global_pressed"]
-[connection signal="pressed" from="Control/PlayPositional" to="." method="_on_play_positional_pressed"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_t00jm")
+
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/LoadBoth" to="." method="_on_load_both_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/LoadGlobal" to="." method="_on_load_global_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/PlayGlobal" to="." method="_on_play_global_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2/LoadPositional" to="." method="_on_load_positional_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2/PlayPositional" to="." method="_on_play_positional_pressed"]

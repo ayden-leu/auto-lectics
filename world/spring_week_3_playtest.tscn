@@ -591,14 +591,19 @@ transform = Transform3D(2.7341738, -4.7518034, -5.3802125e-07, 1.4326831e-07, -2
 [node name="brokenUpPipe2" parent="npcs" instance=ExtResource("30_phryc")]
 transform = Transform3D(1.5249524, 0, 2.5087337, 0, 2.280819, 0, -1.6960704, 0, 2.255625, -81.5706, -22.855928, -52.229336)
 
-[node name="Player" parent="." instance=ExtResource("30_f150j")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("30_f150j")]
 transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
+respawnCheckpointLocation = NodePath("../RespawnCheckpoint")
 maxSpeed = 5.0
 
-[node name="StartDialogueAreaTemp" parent="Player" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("31_tujtg")]
-interactableNpcToInitiate = NodePath("../../npcs/ship")
+[node name="RespawnCheckpoint" type="Marker3D" parent="."]
+transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/StartDialogueAreaTemp"]
+[node name="StartDialogueAreaTemp" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("31_tujtg")]
+transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
+interactableNpcToInitiate = NodePath("../npcs/ship")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartDialogueAreaTemp"]
 transform = Transform3D(4.91608, 0, 0, 0, 4.91608, 0, 0, 0, 4.91608, 0, 0, 0)
 shape = SubResource("BoxShape3D_hsv1o")
 
