@@ -56,6 +56,11 @@ var _currentTestScene:Node
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	FR_MenuManager.disable()
+	FR_WindowManager.disable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
+
 	_returnToHub()
 
 func _input(event: InputEvent) -> void:
