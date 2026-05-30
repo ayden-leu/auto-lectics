@@ -200,11 +200,11 @@ func disable() -> void:
 ## [code]pause[/code], [code]options[/code], [code]keybinds[/code]
 func openMenu(menuID:String) -> void:
 	if not enabled:
-		printerr("MenuManager:  Cannot open menu due to not being enabled.")
+		DebugHud.addToLog("MenuManager:  Cannot open menu due to not being enabled.", DebugHud.LogType.ERROR)
 		return
 
 	if not menuID in _idToIndex.keys():
-		printerr("MenuManager:  Invalid menu ID: [" + menuID + "]")
+		DebugHud.addToLog("MenuManager:  Invalid menu ID: [" + menuID + "]", DebugHud.LogType.ERROR)
 		return
 
 	if _currentMenu: _currentMenu.disable()
