@@ -1,11 +1,24 @@
 @icon("uid://cb6ajbh4fp7fh")
 extends Control
 class_name FadeToBlackOverlay
-## A simple helper scene that creates a "fade-to-black" effect.
-##
-## The animation is entirely controlled by the attached [AnimationPlayer],
-## so modify the animation in there.  It's unfortunately not easy (or possible?)
-## to make it so the animation is in a separate file.
+## A helper scene that creates a fade-to-black screen transition. 
+## 
+## Can be used for scene transitions, player respawning, 
+## cutscenes, dialogue sequences, or any situation where the screen 
+## should fade in or out. 
+## [br][br] 
+## To use, add the pre-built [FadeToBlackOverlay] scene to your scene. 
+## Then call [method startFadeIn] or [method startFadeOut] 
+## whenever a fade transition is needed. 
+## [br][br] 
+## The [signal fade_in_complete] and [signal fade_out_complete] 
+## signals can be used to perform actions once the transition 
+## animation has finished. 
+## [br][br] 
+## The animation is entirely controlled by the attached 
+## [class AnimationPlayer]. 
+## Modify the fade animations there if a different transition speed 
+## or appearance is desired.
 
 # ------------------------------------------------
 # signals

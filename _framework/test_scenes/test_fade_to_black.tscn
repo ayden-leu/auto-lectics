@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca2yt8rd8yvsq"]
+
+[ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="1_ai1ac"]
+[ext_resource type="Script" uid="uid://cxwlwia0htk2d" path="res://_framework/test_scenes/Test_fadeToBlack.gd" id="2_mi6me"]
+
+[node name="Test_fadeToBlack" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FadeToBlackOverlay" parent="CanvasLayer" instance=ExtResource("1_ai1ac")]
+
+[node name="label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("overlay", "status_label")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_mi6me")
+overlay = NodePath("../CanvasLayer/FadeToBlackOverlay")
+status_label = NodePath("../CanvasLayer/label")

@@ -2,8 +2,27 @@
 @icon("uid://dycpbdo33wb4c")
 extends Node3D
 class_name PlayerCamera
-## Holds both the player's camera.
-## Might be switched to a Camera3D node if time allows us to relook at the camera setup.
+## Controls the camera used by the player. 
+## 
+## Supports both first-person and third-person camera modes while 
+## automatically following a target player. 
+## [br][br] 
+## To use, add the pre-built [PlayerCamera] scene to your gameplay scene. 
+## Then assign the desired player to [member focus]. 
+## [br][br] 
+## When [member _actAsFocus] is enabled, the camera operates in 
+## first-person mode and matches the position of the player's 
+## camera anchor. 
+## [br][br] 
+## When [member _actAsFocus] is disabled, the camera operates in 
+## third-person mode and positions itself using 
+## [member _distanceFromOrigin]. 
+## [br][br] 
+## This camera automatically follows the assigned [class Player] 
+## and updates its position every frame. 
+## 
+## Might be switched to a [Camera3D] node directly if the camera 
+## system is redesigned in the future.
 
 # ------------------------------------------------
 # signals
@@ -20,7 +39,7 @@ class_name PlayerCamera
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The target the camera wants to look at.
+## The [class Player] this camera should follow.
 @export var focus:Node3D:
 	set(newFocus):
 		focus = newFocus

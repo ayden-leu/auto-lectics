@@ -2,10 +2,24 @@
 @icon("uid://d3bw2lwsbjpfb")
 extends Control
 class_name Crosshair
-## The crosshair that appears in the middle of the screen.
-##
-## Add this to any scene to add a crosshair to the player's screen.
-## The icon changes based on what the player is looking at.
+## Displays a crosshair in the center of the screen. 
+## 
+## The crosshair automatically changes appearance based on what the 
+## assigned [class Player] is currently looking at. 
+## [br][br] 
+## To use, add the pre-built [Crosshair] scene to a gameplay scene. 
+## Then assign the desired [class Player] to [member player]. 
+## [br][br] 
+## The crosshair listens for interaction and grappling signals emitted 
+## by the player and updates its appearance automatically. 
+## [br][br] 
+## The following crosshair states are supported:[br] 
+## - Normal: nothing special is being targeted.[br] 
+## - Interactable: the player is looking at an interactable object.[br] 
+## - Grappleable: the player is looking at a valid grappling target. 
+## [br][br] 
+## Interactable targets take priority over grappleable targets when 
+## determining which crosshair icon to display.
 
 # ------------------------------------------------
 # signals
@@ -25,6 +39,7 @@ const SPRITE_GRAPPLEABLE:Resource = preload("uid://dr2qqbj4qmp0a")
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
+## The [class Player] this crosshair should monitor.
 @export var player:Player
 
 # ------------------------------------------------

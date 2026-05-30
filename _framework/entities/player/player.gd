@@ -1,14 +1,29 @@
 @tool
 extends CharacterBody3D
 class_name Player
-## The main node that gets controlled by the player.
+## The main first-person character controlled by the player. 
 ##
-## The player can move around, interact with interactables, and use a grappling hook.
-## [br][br]
-## Comes with the following SFX events:[br]
-## - death:   plays when the player dies.[br]
-## - jump:    plays when the player jumps.[br]
-## - respawn: plays when the player respawns.[br]
+## Handles movement, jumping, camera control, interaction, respawning, 
+## and optional grappling hook traversal. 
+## [br][br] 
+## To use, add the pre-built [Player] scene to a gameplay scene. 
+## The player should be used as the main controllable character throughout the game. 
+## [br][br] ## Most player behavior can be adjusted through the export fields in the Inspector. 
+## Designers can tune movement, jumping, camera, respawn, and grappling hook settings 
+## without changing the script directly. 
+## [br][br] 
+## Interactable objects can be detected by the player when they implement 
+## an [code]_on_interaction()[/code] function. 
+## [br][br] 
+## The player also supports integration with the [class GrapplingHook] system. 
+## The grappling hook can be enabled or disabled with [member grapplingHookEnabled]. 
+## [br][br] ## Comes with the following SFX events:[br] 
+## - death: plays when the player dies.[br] 
+## - deathFancy: plays when the player uses the fancy respawn sequence.[br] 
+## - jump: plays when the player jumps.[br] 
+## - respawn: plays when the player respawns.[br] 
+## - respawnFancy: plays when the fancy respawn sequence finishes.[br] 
+## - step: plays while the player is moving.
 
 # ------------------------------------------------
 # signals
@@ -37,7 +52,8 @@ signal respawning_finished()
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## How long to wait before actually respawning.
+## How long to wait before the player is moved during [method respawn] 
+## or [method respawnFancy].
 @export var respawnDelay:float = 2.0
 ## The location to move the player to when [method respawnCheckpoint] runs.
 @export var respawnCheckpointLocation: Marker3D
