@@ -87,7 +87,7 @@ func _input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Adds the given message to the log, as well as the built-in debugger and terminal.  Can optionally take in a [enum LogType].
+## Adds the given message to [member _log], as well as the built-in debugger and terminal.  Can optionally take in a [enum LogType].
 func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 	var newEntry:RichTextLabel = RichTextLabel.new()
 	_log.add_child(newEntry)
@@ -115,6 +115,11 @@ func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 	await get_tree().process_frame
 	_logScrollContainer.scroll_vertical = ceil(_logScrollContainer.get_v_scroll_bar().max_value)
 
+## Empties the [member _log] of all entries.
+func clearLog() -> void:
+	for child in _log.get_children():
+		child.queue_free()
+
 ## Adds a checklist entry to [member _checklist] and names it with the given entry name.
 func addChecklistEntry(entryName:String) -> void:
 	_checklistArea.show()
@@ -130,6 +135,12 @@ func addChecklistEntry(entryName:String) -> void:
 
 	container.size_flags_horizontal = Control.SIZE_SHRINK_END
 	label.text = entryName
+
+## Empties the [member _checklist] of all entries.
+func clearChecklist() -> void:
+	for child in _checklist.get_children():
+		child.queue_free()
+	_checklistArea.hide()
 
 # ------------------------------------------------
 # functions only referenced inside this script

@@ -102,6 +102,9 @@ func _returnToHub() -> void:
 	_mainPanel.show()
 	_backButton.hide()
 
+	DebugHud.clearLog()
+	DebugHud.clearChecklist()
+
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]

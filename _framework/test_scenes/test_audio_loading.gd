@@ -1,4 +1,7 @@
 extends Node3D
+## Test scene for [AudioLoader]
+##
+## Lets user test [MenuManager]'s functionalities in an isolated environment.
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -46,6 +49,16 @@ func _ready() -> void:
 		idField,
 		_getFoldersInPath(AudioLoader.STORAGE_PATH)
 	)
+
+	DebugHud.addChecklistEntry("SFX ID can be loaded into global player")
+	DebugHud.addChecklistEntry("Audio can be heard from global player anywhere")
+
+	DebugHud.addChecklistEntry("SFX ID can be loaded into positional player")
+	DebugHud.addChecklistEntry("Audio can be heard from positional player in right speaker while to the left of the source")
+	DebugHud.addChecklistEntry("Audio can be heard from positional player in left speaker while to the right of the source")
+	DebugHud.addChecklistEntry("Audio from positional player gets quieter the further away you are")
+
+	DebugHud.addChecklistEntry("SFX ID can be loaded into both players at once")
 
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("move_forward"):
