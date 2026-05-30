@@ -1,0 +1,9 @@
+{
+	"text": "The option should receive default values.",
+	"options": [
+		{
+			"text": "Continue",
+			"nextID": "end"
+		}
+	]
+}

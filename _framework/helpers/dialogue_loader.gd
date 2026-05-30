@@ -1,21 +1,80 @@
 @icon("uid://id471bfglpdp")
 extends Node
 class_name DialogueLoader
-## Helper script for loading dialogue files into the game.
-## Dialogue files can be found in "dialogue_loader/<npc_name>/"
+## Loads dialogue JSON files and fills in missing dialogue fields.
+##
+## This helper class converts dialogue JSON files into fully configured dialogue
+## dictionaries that can be used by dialogue-related systems such as
+## [DialogueConsole] and [InteractableNPC].
+## [br][br]
+## [b]Use Case[/b][br]
+## This class is used whenever a dialogue node needs to be loaded from a dialogue
+## tree. It handles reading the JSON file, applying NPC-specific defaults, and
+## filling any remaining missing fields with [DialogueDefaults].
+## [br][br]
+## [b]How to Use[/b][br]
+## Call [method getDialogueNode] with the NPC/entity folder name and the dialogue
+## ID you want to load. Dialogue files should be stored under
+## [code]res://dialogue_trees/<entity_name>/[/code] and should use the
+## [code].json[/code] file extension.
+## [br][br]
+## [b]Default Files[/b][br]
+## Each NPC/entity folder may optionally include [code]_default_dialogue.json[/code]
+## and [code]_default_option.json[/code]. These files define NPC-specific defaults
+## that are applied before the global defaults in [DialogueDefaults].
+## [br][br]
+## [b]Important Notes[/b][br]
+## This class only loads and prepares dialogue data. It does not display dialogue,
+## spawn options, update story flags, or run dialogue events.
+## [br][br]
+## Dialogue flow is handled by [InteractableNPC], while dialogue display, option
+## selection, commands, and story flag updates are handled by [DialogueConsole].
+## Dialogue-related windows are created through [WindowManager].
 
 # TODO: rename writeSpeed to writeSpeedPreset
 # TODO: rename writeSpeedCustom to writeSpeed
 
 ## The storage location of all dialogue trees.
+## [br]
+## Dialogue folders should be placed inside this directory. Each entity/NPC should
+## have its own folder under this path.
+## [br][br]
 const STORAGE_PATH:String = "res://dialogue_trees/"
+
 ## Determines the file type of the dialogue objects.
+## [br]
+## Dialogue files are expected to use this file extension.
+## [br][br]
 const DIALOGUE_FILE_TYPE:String = ".json"
+
 ## Determines the file name of an NPC's default dialogue attributes.
+## [br]
+## If this file exists in an NPC/entity dialogue folder, its values are used as
+## NPC-specific defaults for dialogue nodes in that folder.
+## [br][br]
 const DEFAULT_DIALOGUE_ID:String = "_default_dialogue"
+
 ## Determines the file name of an NPC's default option attributes.
+## [br]
+## If this file exists in an NPC/entity dialogue folder, its values are used as
+## NPC-specific defaults for options in that folder.
+## [br][br]
 const DEFAULT_OPTION_ID:String = "_default_option"
 
+
+## Loads a dialogue node for a given entity and dialogue ID.
+## [br][br]
+## This is the main function other scripts should use when requesting dialogue
+## data. It loads the requested dialogue JSON file, applies optional NPC-specific
+## defaults, then fills any remaining missing fields using [DialogueDefaults].
+## [br][br]
+## If the requested dialogue file cannot be loaded, the fallback dialogue file is
+## loaded instead.
+## [br][br]
+## [param entityName] is the name of the dialogue folder to load from.
+## [param id] is the dialogue file ID without the [code].json[/code] extension.
+## [br][br]
+## Returns a fully configured dialogue dictionary.
 static func getDialogueNode(entityName:String, id: String) -> Dictionary:
 	var topPath:String = assemblePath(entityName, id)
 	var top:Dictionary = loadDialogueNodeFile(topPath)
@@ -42,12 +101,23 @@ static func getDialogueNode(entityName:String, id: String) -> Dictionary:
 	return result
 
 ## Gets the path to a dialogue object.
+## [br][br]
+## [param entityName] is the name of the dialogue folder to load from.
+## [param id] is the dialogue file ID without the [code].json[/code] extension.
+## [br][br]
+## Returns the full path to the dialogue JSON file.
 static func assemblePath(entityName:String, id:String) -> String:
 	return STORAGE_PATH + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
-## Loads a single dialogue node file. Returns a dialogue object with all settings.
+## Loads a single dialogue node file.
 ## [br][br]
-## Returns an empty dictionary if it fails.
+## Reads a JSON file at the given path and returns its root dictionary.
+## [br][br]
+## [param path] should include the full file path and file extension.
+## [param reportError] controls whether loading errors should be printed.
+## [br][br]
+## Returns an empty dictionary if the file is missing, empty, invalid, or if the
+## JSON root is not a dictionary.
 static func loadDialogueNodeFile(path: String, reportError:bool = true) -> Dictionary:
 	var jsonData := _readTextFile(path, reportError)
 	if jsonData == "":
@@ -62,6 +132,18 @@ static func loadDialogueNodeFile(path: String, reportError:bool = true) -> Dicti
 	return configuredAttributes
 
 
+## Applies NPC-specific default dialogue and option values to a dialogue object.
+## [br][br]
+## This function is used before [method fillDialogueMissingFields]. It first
+## duplicates the NPC-specific dialogue defaults, then overwrites those values
+## with any fields found in [param base]. Options are also passed through
+## [method _fillNpcOptionDefaults] so NPC-specific option defaults can be applied.
+## [br][br]
+## [param base] is the dialogue dictionary loaded from the requested dialogue file.
+## [param defaultDialogue] is the NPC-specific default dialogue dictionary.
+## [param defaultOption] is the NPC-specific default option dictionary.
+## [br][br]
+## Returns a dialogue dictionary with NPC-specific defaults applied.
 static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary, defaultOption:Dictionary) -> Dictionary:
 	var copy:Dictionary = defaultDialogue.duplicate(true)
 
@@ -107,6 +189,13 @@ static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary,
 
 	return copy
 
+## [b]Internal-use Only.[/b]
+## Applies NPC-specific option defaults to a dialogue option.
+## [br][br]
+## This function duplicates [param defaults], then overwrites those values with
+## fields found in [param base].
+## [br][br]
+## Returns an option dictionary with NPC-specific defaults applied.
 static func _fillNpcOptionDefaults(base:Dictionary, defaults:Dictionary) -> Dictionary:
 	var copy:Dictionary = defaults.duplicate(true)
 
@@ -151,7 +240,16 @@ static func _fillNpcOptionDefaults(base:Dictionary, defaults:Dictionary) -> Dict
 
 	return copy
 
-## [b]Internal-use only.[/b]  Fills in any missing fields from the dialogue node file with default values.
+## Fills in any missing fields from the dialogue node file with default values.
+## [br][br]
+## This function applies the global fallback values stored in
+## [member DialogueDefaults.DEFAULT_DIALOGUE] and validates fields such as
+## dialogue type, dialogue mode, and write speed.
+## [br][br]
+## Each option in the dialogue's [code]options[/code] array is also passed through
+## [method _fillOptionMissingFields].
+## [br][br]
+## Returns a fully configured dialogue dictionary.
 static func fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dictionary:
 	var dialogue:Dictionary = DialogueDefaults.DEFAULT_DIALOGUE.duplicate(true)
 
@@ -202,7 +300,17 @@ static func fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dicti
 
 	return dialogue
 
-## [b]Internal-use only.[/b]  Fills in any missing fields from the option object with default values.
+## [b]Internal-use Only.[/b]
+## Fills in any missing fields from the option object with default values.
+## [br][br]
+## This function applies the global fallback values stored in
+## [member DialogueDefaults.DEFAULT_OPTION] and validates fields such as option
+## type and write speed.
+## [br][br]
+## After the option is filled, inherited values are resolved with
+## [method _resolveOptionInheritance].
+## [br][br]
+## Returns a fully configured option dictionary.
 static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwner: Dictionary) -> Dictionary:
 	var option:Dictionary = DialogueDefaults.DEFAULT_OPTION.duplicate(true)
 
@@ -244,7 +352,12 @@ static func _fillOptionMissingFields(configuredAttributes: Dictionary, optionOwn
 
 	return option
 
-## [b]Internal-use only.[/b]  Replaces any instance of "inherit" in an option object configuration with the dialogue's corresponding value.
+## [b]Internal-use Only.[/b]
+## Replaces any instance of [code]inherit[/code] in an option object
+## configuration with the dialogue's corresponding value.
+## [br][br]
+## This is used so options can automatically match the parent dialogue's text
+## theme, write speed, and SFX values.
 static func _resolveOptionInheritance(option: Dictionary, optionOwner: Dictionary) -> void:
 	if option.textThemePreset == "inherit":
 		option.textThemePreset = optionOwner.textThemePreset
@@ -262,7 +375,14 @@ static func _resolveOptionInheritance(option: Dictionary, optionOwner: Dictionar
 		if option.sfx[event] == "inherit":
 			option.sfx[event] = optionOwner.sfx[event]
 
-## [b]Internal-use only.[/b]  Helper function to merge the SFX attributes.
+## [b]Internal-use Only.[/b]
+## Merges configured SFX values with default SFX values.
+## [br][br]
+## Only SFX events listed in [member DialogueDefaults.SFX_EVENTS] are checked.
+## If [param configuredEvents] contains one of those events, it overrides the
+## corresponding value from [param default].
+## [br][br]
+## Returns a merged SFX dictionary.
 static func _mergeSfxAttributes(default: Dictionary, configuredEvents:Dictionary) -> Dictionary:
 	if configuredEvents.is_empty():
 		return default
@@ -274,11 +394,22 @@ static func _mergeSfxAttributes(default: Dictionary, configuredEvents:Dictionary
 
 	return merged
 
-## [b]Internal-use only.[/b]  Verifies if value is in list. If not, return fallback.
+## [b]Internal-use Only.[/b]
+## Verifies that a value exists in a list of accepted values.
+## [br][br]
+## If [param value] exists in [param list], it is returned. Otherwise,
+## [param fallback] is returned.
 static func _verifyInList(value: String, list: Array, fallback: String) -> String:
 	return value if list.has(value) else fallback
 
-## [b]Internal-use only.[/b]  Reads a file at the path. Path needs to include the file.
+## [b]Internal-use Only.[/b]
+## Reads a text file at a given path.
+## [br][br]
+## [param path] needs to include the full file path and file extension.
+## [param reportError] controls whether file access errors should be printed.
+## [br][br]
+## Returns the file contents as a [String]. Returns an empty string if the file
+## does not exist or cannot be opened.
 static func _readTextFile(path: String, reportError:bool = true) -> String:
 	if not FileAccess.file_exists(path):
 		if reportError: printerr("DialogueLoader: File does not exist: ", path)
