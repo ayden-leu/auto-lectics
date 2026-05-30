@@ -1,7 +1,7 @@
 extends Node3D
 ## Test scene for [AudioLoader]
 ##
-## Lets user test [MenuManager]'s functionalities in an isolated environment.
+## Lets user test [AudioLoader]'s functionalities in an isolated environment.
 
 # feel free to remove sections you're not using
 # ------------------------------------------------

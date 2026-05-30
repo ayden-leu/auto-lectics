@@ -17,9 +17,6 @@ class_name VocalDialoguePlayer
 ## [br][br]
 ## [member initialDialogueID] is the first vocal dialogue tree node that gets loaded.
 ## [br][br]
-## [member delayBeforeAllowContinue] is the delay, in seconds, between the audio
-## finishing and allowing the player to load the next vocal dialogue tree node.
-## [br][br]
 ## If [member fadeSubtitles] is on, the subtitles will fade away after the audio
 ## file is finished playing.  This takes [code]1.0[/code] seconds and will add
 ## onto the delay that [member delayBeforeAllowContinue] provides.
@@ -76,6 +73,8 @@ class_name VocalDialoguePlayer
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
+## Emitted when the player can advance the dialogue.
+signal can_contine(state:bool)
 ## Emitted when the next vocal dialogue node is loaded.
 signal dialogue_advanced()
 ## Emitted when the vocal dialogue hits an end.
@@ -117,8 +116,6 @@ const ERROR_MSG_AUDIO_TO_LOAD_NOT_SET:String = "an error has occured due to ther
 @export var dialogueTreeID:String
 ## The vocal dialogue file to load at the start.
 @export var initialDialogueID:String
-## The delay, in seconds, between the audio file finishing playing, and being able to continue.
-@export var delayBeforeAllowContinue:float = 0.0
 ## If the subtitles should fade out or not before the player is able to continue.
 ## This takes [code]1.0[/code] seconds and will add onto the delay that
 ## [member delayBeforeAllowContinue] provides.
@@ -147,7 +144,13 @@ var currentDialogueID:String = ""
 ## The next vocal dialogue file to load.
 var _nextDialogueID: String = ""
 ## Whether the player can continue forward or not.
-var _canContinue:bool = true
+var _canContinue:bool = true:
+	set(newState):
+		_canContinue = newState
+		can_contine.emit(newState)
+## The delay, in seconds, between the audio file finishing playing, and being able to continue.
+## Is set by the vocal dialogue file.
+var _delayBeforeAllowContinue:float = 0.0
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -226,8 +229,11 @@ func loadNextDialogue() -> void:
 ## [/codeblock]
 ## [br]
 ## Returns [member Error.ERR_INVALID_DATA] if the value of a field isn't the right type.
+## [br]
+## If [code]strict[/code] is enabled, will return [member Error.ERR_INVALID_DATA]
+## if there are any missing fields.
 ## Otherwise, returns [member Error.OK].
-func _verifyDataFields(dialogue_data:Dictionary) -> Error:
+func _verifyDataFields(dialogue_data:Dictionary, strict:bool = false) -> Error:
 	var fields:Dictionary[String, int] = {
 		"file": TYPE_STRING,
 		"subtitles": TYPE_STRING,
@@ -237,7 +243,9 @@ func _verifyDataFields(dialogue_data:Dictionary) -> Error:
 
 	for field:String in fields:
 		if not dialogue_data.has(field):
-			DebugHud.addToLog("VocalDialoguePlayer:  Vocal dialogue file is missing the [" + field + "] field.", DebugHud.LogType.WARNING)
+			if strict:
+				DebugHud.addToLog("VocalDialoguePlayer:  Vocal dialogue file is missing the [" + field + "] field.", DebugHud.LogType.ERROR)
+				return Error.ERR_INVALID_DATA
 			continue
 		elif not typeof(dialogue_data[field]) == fields[field]:
 			DebugHud.addToLog("VocalDialoguePlayer:  Field [" + field + "] in dialogue data doesn't match expected type [" + type_string(fields[field]) + "].", DebugHud.LogType.ERROR)
@@ -254,7 +262,7 @@ func _loadTreeDefaults(dialogueData:Dictionary) -> Dictionary:
 		DebugHud.addToLog("VocalDialoguePlayer:  Defaults dialogue file [" + filePath + "] is either empty, doesn't exist, or an error occurred.  Will continue without loading defaults.", DebugHud.LogType.WARNING)
 		return dialogueData
 
-	if not _verifyDataFields(defaultData):
+	if _verifyDataFields(defaultData) != Error.OK:
 		DebugHud.addToLog("VocalDialoguePlayer:  Defaults dialogue file at [" + filePath + "] is invalid.  Check above for the potential reason.  Will continue without loading defaults.", DebugHud.LogType.WARNING)
 		return dialogueData
 
@@ -281,15 +289,18 @@ func _prepare(dialogue_data: Dictionary) -> void:
 
 		var loaded_audio:AudioStream = load(audio_path)
 		if loaded_audio == null:
-			DebugHud.addToLog("VocalDialoguePlayer:  Could not load vocal dialogue audio file at [" + audio_path + "].", DebugHud.LogType.WARNING)
+			DebugHud.addToLog("VocalDialoguePlayer:  Could not load vocal dialogue audio file at [" + audio_path + "].", DebugHud.LogType.ERROR)
 			dialogue_data.subtitles = ERROR_MSG_CANT_LOAD_AUDIO
 			fadeSubtitles = false
+		else:
+			DebugHud.addToLog("VocalDialoguePlayer:  Loaded audio at [" + audio_path + "] successfully.", DebugHud.LogType.GOOD)
+
 		stream = loaded_audio
 	else:
 		dialogue_data.subtitles = ERROR_MSG_AUDIO_TO_LOAD_NOT_SET
 
 	subtitles.text = dialogue_data.subtitles
-	delayBeforeAllowContinue = float(dialogue_data.delayBeforeAllowContinue)
+	_delayBeforeAllowContinue = float(dialogue_data.delayBeforeAllowContinue)
 	_nextDialogueID = dialogue_data.nextID
 
 ## [b]Internal-use only.[/b]
@@ -302,9 +313,9 @@ func _begin() -> void:
 	if stream != null:
 		await finished
 
-	if delayBeforeAllowContinue > 0.0:
+	if _delayBeforeAllowContinue > 0.0:
 		#await get_tree().create_timer(delayBeforeAllowContinue).finished
-		var timer:SceneTreeTimer = get_tree().create_timer(delayBeforeAllowContinue)
+		var timer:SceneTreeTimer = get_tree().create_timer(_delayBeforeAllowContinue)
 		await timer.timeout
 
 	if fadeSubtitles and subtitles.text != FALLBACK.subtitles:
@@ -331,6 +342,8 @@ func _fadeOutSubtitles() -> void:
 ## [b]Internal-use only.[/b]
 ## Ends the vocal dialogue event.
 func _finish() -> void:
+	_delayBeforeAllowContinue = 0.0
+	subtitles.text = ""
 	subtitles.visible = false
 	continueIcon.visible = false
 	dialogue_finished.emit()

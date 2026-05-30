@@ -57,7 +57,7 @@ const LogTypeColor:Dictionary[LogType, String] = {
 @onready var _checklist: VBoxContainer = %Checklist
 ## [b]Internal-use only.[/b]
 ## The thing that does the scrolling for all of the checklist entries.
-@onready var _checklistScrollContainer: ScrollContainer = %ChecklistScrollContainer
+#@onready var _checklistScrollContainer: ScrollContainer = %ChecklistScrollContainer
 
 # ------------------------------------------------
 # normal variables referenced outside of script

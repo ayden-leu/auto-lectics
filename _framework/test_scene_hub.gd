@@ -152,6 +152,9 @@ func _on_load_test_waterdrop_pressed() -> void:
 func _on_load_test_window_manager_pressed() -> void:
 	_loadTestScene("window_manager")
 
+func _on_test_vocal_dialogue_player_pressed() -> void:
+	_loadTestScene("vocal_dialogue_player")
+
 func _on_back_button_pressed() -> void:
 	_returnToHub()
 
