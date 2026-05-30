@@ -65,6 +65,21 @@ class_name SfxEventHandler
 ## await myEventPlayer.finished
 ## print("My event player has finished playing.")
 ## [/codeblock]
+## [br][br]
+## [b]Q&A:[/b][br]
+## [b]"No sounds are playing!"[/b][br]
+## - Are your speakers able to play sound?
+## [br][br]
+## - Are the SFX IDs for your events set?
+## If not, the console will display the following:
+## [codeblock lang=text]
+## AudioLoader:  Skipping loading of SFX event [<event-name>]
+## [/codeblock]
+## - Do the sounds for a SFX ID have "empty padding" at the beginning?
+## It's possible that it's just taking a bit before the sound actually plays.
+## [br][br]
+## - Is the sound event being stopped before it can actually play?
+## Playing an event will first stop the event from playing, then start playing it.
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -134,6 +149,7 @@ func _ready() -> void:
 # ------------------------------------------------
 ## Plays the sound for the given event name.
 ## If there isn't an [AudioStreamPlayer] for the given event name, nothing happens.
+## Will stop the current event from playing its sound an immediately start playing it again.
 func play(eventName:String) -> void:
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer[eventName]
 	if player == null:
