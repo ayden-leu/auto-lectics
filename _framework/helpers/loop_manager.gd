@@ -228,8 +228,8 @@ func performNormalReset() -> void:
 ## Executes the fancy resetting flow.
 ## [br]
 ## Makes [member fancyArea] start growing, waits for it to collide with a [Player],
-## then performs the reset functions, then waits for the collided [Player] to respawn
-## before saying its finished.
+## performs the reset functions, waits for the collided [Player] to respawn,
+## then resets [member fancyArea] and says its finished.
 func performFancyReset() -> void:
 	if not fancy:
 		DebugHud.addToLog("LoopManager:  Cannot do a fancy reset if fancy isn't enabled.", DebugHud.LogType.ERROR)

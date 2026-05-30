@@ -3,22 +3,26 @@
 extends Area3D
 class_name RestartLoopManagerArea3D
 ## An expanding [Area3D] trigger used by [LoopManager] to start a fancy loop reset when it reaches a [Player].
+##
+## Use if you want to achieve that one effect from Outer Wilds.
 ## [br][br]
-## [b]Use Case[/b][br]
-## Use this with [member LoopManager.fancyArea] when a loop reset should spread outward through the world instead of happening immediately.  The [LoopManager] calls [method startGrowing], waits for [signal collided_with_player], then finishes the fancy reset flow after the [Player] respawn sequence completes.
+## [b]Using:[/b][br]
+## Shouldn't be used directly, as [LoopManager] handles it.
 ## [br][br]
-## [b]How It Works[/b][br]
-## The collision shape starts with a radius of [code]0.0[/code].  When [method startGrowing] is called, the shape radius increases every frame by [member growRate].  When a [Player]'s area enters this trigger, [signal collided_with_player] is emitted and the player runs its fancy respawn behavior.
+## [b]How it works:[/b][br]
+## This area can be in multiple states.  Refer to [enum State] to get a general brief on them.
 ## [br][br]
-## [b]Resetting[/b][br]
-## Call [method reset] to shrink the collision shape back to [code]0.0[/code] and return the area to its idle state.
+## While [member _currentState] is [constant GROW], the shape radius of the collision area
+## increases every frame by [member growRate].
+## Once a [Player]'s area collides, the [signal collided_with_player] signal is emitted
+## and the collided [Player]'s [method Player.respawnFancy] function is ran.
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
 ## Emitted when a [Player] enters this area's collision shape.
-## [br][br]
+## [br]
 ## [param player] is the [Player] that entered the area.
 signal collided_with_player(player:Player)
 
@@ -40,8 +44,9 @@ enum State {
 # export variables
 # ------------------------------------------------
 ## How fast the collision shape radius grows, in units per second.
-## [br][br]
-## Larger values make the expanding trigger reach the [Player] sooner.  A value of [code]0.0[/code] means the area will not grow.
+## [br]
+## Larger values make the expanding trigger reach the [Player] sooner.
+## A value of [code]0.0[/code] means the area will not grow.
 @export var growRate:float = 1.0
 
 # ------------------------------------------------
@@ -80,13 +85,13 @@ func _process(delta:float) -> void:
 # functions referenced outside of this script
 # ------------------------------------------------
 ## Makes the collision shape start growing outward.
-## [br][br]
+## [br]
 ## This is normally called by [LoopManager] when a fancy reset begins.
 func startGrowing() -> void:
 	_currentState = State.GROW
 
 ## Shrinks the collision shape back to [code]0.0[/code] and returns this area to [constant IDLE].
-## [br][br]
+## [br]
 ## This is normally called by [LoopManager] after the fancy reset finishes.
 func reset() -> void:
 	_currentState = State.RESET
@@ -97,8 +102,10 @@ func reset() -> void:
 # ------------------------------------------------
 ## [b]Internal-use Only.[/b]
 ## Handles the current growth state.
-## [br][br]
-## [constant GROW] increases [member collision]'s radius by [member growRate] each second.  [constant RESET] clears the radius and returns to [constant IDLE].
+## [br]
+## [constant GROW] increases [member collision]'s radius by [member growRate] each second.
+## [br]
+## [constant RESET] clears the radius and sets [member _currentState] to [constant IDLE].
 func _handleState(delta:float) -> void:
 	match _currentState:
 		State.IDLE:
@@ -114,8 +121,6 @@ func _handleState(delta:float) -> void:
 # ------------------------------------------------
 ## [b]Internal-use Only.[/b]
 ## Handles logic for when another [Area3D] enters this trigger.
-## [br][br]
-## If the entering area's parent is a [Player], this emits [signal collided_with_player] and starts the player's fancy respawn behavior.
 func _on_area_entered(area:Area3D) -> void:
 	var areaOwner:Node3D = area.get_parent()
 	if areaOwner is Player:
