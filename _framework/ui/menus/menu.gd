@@ -4,7 +4,7 @@ extends Control
 class_name Menu
 ## A base class for all full-screen HUD elements managed by [MenuManager].
 ##
-## The setup for a [Menu] is pretty minimal.
+## The setup for a Menu is pretty minimal.
 ## You don't need to add anything to make one "functional."
 ## Just make sure to use the "Default" script template when making a new script for it.
 ## You'll know if you did it properly if the [method _ready] function has an

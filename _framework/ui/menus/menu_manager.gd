@@ -110,7 +110,7 @@ const _BLUEPRINT_MENU:Resource = preload("uid://bult80lkyvnls")
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## If the [MenuManager] can do stuff or not.
+## If the MenuManager can do stuff or not.
 var enabled:bool = false:
 	set(state):
 		enabled = state
@@ -184,12 +184,12 @@ func _process(_delta:float) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Enables the [MenuManager].  Same thing as setting [member enabled] to true.
+## Enables the MenuManager.  Same thing as setting [member enabled] to true.
 func enable() -> void:
 	if not enabled:  enabled = true
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
-## Disables the [MenuManager].  Same thing as setting [member enabled] to false.
+## Disables the MenuManager.  Same thing as setting [member enabled] to false.
 func disable() -> void:
 	if enabled:  enabled = false
 	process_mode = Node.PROCESS_MODE_DISABLED

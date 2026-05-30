@@ -7,7 +7,7 @@ class_name VocalDialoguePlayer
 ## during the game.
 ## [br][br][br]
 ## [b]Using:[/b][br]
-## Add the pre-built [VocalDialoguePlayer] scene to your current scene.
+## Add the pre-built VocalDialoguePlayer scene to your current scene.
 ## You cannot add it through the "Create New Node" dialogue due to it acting differently.
 ## [br][br]
 ## You can then configure the export fields to to load your vocal dialogue tree.

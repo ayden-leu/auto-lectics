@@ -12,7 +12,7 @@ class_name SfxEventHandler
 ## each [AudioStreamPlayer] with a [AudioStreamRandomizer] resource.
 ## [br][br][br]
 ## [b]Using:[/b][br]
-## Add the pre-built [SfxEventHandler] scene to your current scene.
+## Add the pre-built SfxEventHandler scene to your current scene.
 ## You cannot add it through the "Create New Node" dialogue due to it acting differently.
 ## [br][br]
 ## To add an event, attach an [AudioStreamPlayer] or those that inherit it to this node.
