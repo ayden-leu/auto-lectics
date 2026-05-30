@@ -44,8 +44,20 @@ const LogTypeColor:Dictionary[LogType, String] = {
 # onready variables
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
-## The thing that logs all of the logs.
+## The thing that holds all of the logs.
 @onready var _log:Container = %Log
+## [b]Internal-use only.[/b]
+## The thing that does the scrolling for all of the logs.
+@onready var _logScrollContainer: ScrollContainer = %LogScrollContainer
+## [b]Internal-use only.[/b]
+## The thing that holds all of the checklist-related stuff.
+@onready var _checklistArea: VBoxContainer = %ChecklistArea
+## [b]Internal-use only.[/b]
+## The thing that holds all of the checklist entries.
+@onready var _checklist: VBoxContainer = %Checklist
+## [b]Internal-use only.[/b]
+## The thing that does the scrolling for all of the checklist entries.
+#@onready var _checklistScrollContainer: ScrollContainer = %ChecklistScrollContainer
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -61,6 +73,7 @@ const LogTypeColor:Dictionary[LogType, String] = {
 # ------------------------------------------------
 func _ready() -> void:
 	hide()
+	_checklistArea.hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_debug_hud"):
@@ -74,14 +87,18 @@ func _input(event: InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Adds the given message to the log.  Can optionally take in a [enum LogType].
+## Adds the given message to [member _log], as well as the built-in debugger and terminal.  Can optionally take in a [enum LogType].
 func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 	var newEntry:RichTextLabel = RichTextLabel.new()
 	_log.add_child(newEntry)
 
+	var seperator:HSeparator = HSeparator.new()
+	_log.add_child(seperator)
+
 	newEntry.bbcode_enabled = true
 	newEntry.custom_minimum_size.y = 25.0
-	newEntry.size_flags_vertical = Control.SIZE_SHRINK_END & SIZE_EXPAND
+	newEntry.size_flags_vertical = Control.SIZE_SHRINK_END
+	newEntry.fit_content = true
 
 	newEntry.text = "" + LogTypeColor[type]
 	newEntry.text += message
@@ -92,6 +109,38 @@ func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 			push_warning(message)
 		LogType.ERROR:
 			push_error(message)
+		_:
+			print_rich(message)
+
+	await get_tree().process_frame
+	_logScrollContainer.scroll_vertical = ceil(_logScrollContainer.get_v_scroll_bar().max_value)
+
+## Empties the [member _log] of all entries.
+func clearLog() -> void:
+	for child in _log.get_children():
+		child.queue_free()
+
+## Adds a checklist entry to [member _checklist] and names it with the given entry name.
+func addChecklistEntry(entryName:String) -> void:
+	_checklistArea.show()
+
+	var container:HBoxContainer = HBoxContainer.new()
+	var label:Label = Label.new()
+	var checker:CheckBox = CheckBox.new()
+	var separator:HSeparator = HSeparator.new()
+	_checklist.add_child(container)
+	_checklist.add_child(separator)
+	container.add_child(label)
+	container.add_child(checker)
+
+	container.size_flags_horizontal = Control.SIZE_SHRINK_END
+	label.text = entryName
+
+## Empties the [member _checklist] of all entries.
+func clearChecklist() -> void:
+	for child in _checklist.get_children():
+		child.queue_free()
+	_checklistArea.hide()
 
 # ------------------------------------------------
 # functions only referenced inside this script

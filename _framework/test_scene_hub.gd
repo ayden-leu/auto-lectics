@@ -56,6 +56,11 @@ var _currentTestScene:Node
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	FR_MenuManager.disable()
+	FR_WindowManager.disable()
+	CursorHandler.setDefault("shown")
+	CursorHandler.showNuclear()
+
 	_returnToHub()
 
 func _input(event: InputEvent) -> void:
@@ -96,6 +101,9 @@ func _returnToHub() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_mainPanel.show()
 	_backButton.hide()
+
+	DebugHud.clearLog()
+	DebugHud.clearChecklist()
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -143,6 +151,9 @@ func _on_load_test_waterdrop_pressed() -> void:
 
 func _on_load_test_window_manager_pressed() -> void:
 	_loadTestScene("window_manager")
+
+func _on_test_vocal_dialogue_player_pressed() -> void:
+	_loadTestScene("vocal_dialogue_player")
 
 func _on_back_button_pressed() -> void:
 	_returnToHub()

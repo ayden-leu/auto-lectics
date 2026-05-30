@@ -5,7 +5,7 @@ Engine:  Godot v4.5.1
 
 **Relevant links:**
 - Main game page:  https://meep-marcelle.itch.io/auto-lectics-demo
-- Documentation main page:  [_documentation/main_page.md](_documentation/main_page.md)
+- Documentation main page:  [_documentation/main_page.md](_documentation/_main_page.md)
 
 
 

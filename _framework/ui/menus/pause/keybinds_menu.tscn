@@ -5,7 +5,7 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3f70u"]
 
-[node name="KeybindsMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
+[node name="KeybindsMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4t1i8")
-sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="KeybindsMenu" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -57,6 +56,8 @@ layout_mode = 2
 text = "Back"
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("2_a6ri7")]
+unique_name_in_owner = true
+process_mode = 3
 sfxIds = Dictionary[String, String]({
 "buttonPressed": ""
 })

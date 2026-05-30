@@ -4,23 +4,82 @@ extends Node
 class_name SfxEventHandler
 ## A helper class to add SFX events that are loaded with sound files from [AudioLoader].
 ##
-## To use, add the pre-built [SfxEventHandler] scene to your current scene.
+## This helper class can be helpful to use if you plan to make multiple [AudioStreamPlayer]s
+## utilize the SFX ID system from [AudioLoader].
+## [br][br]
+## Without this, you would need manually add code in a script to load each
+## [AudioStreamPlayer] with the corresponding sounds from a SFX ID, as well as load
+## each [AudioStreamPlayer] with a [AudioStreamRandomizer] resource.
+## [br][br][br]
+## [b]Using:[/b][br]
+## Add the pre-built SfxEventHandler scene to your current scene.
 ## You cannot add it through the "Create New Node" dialogue due to it acting differently.
 ## [br][br]
 ## To add an event, attach an [AudioStreamPlayer] or those that inherit it to this node.
 ## The name of this node will be the event name.
+## [codeblock lang=text]
+## SfxEventHandler
+## 	├── MyEvent1 (AudioStreamPlayer)
+## 	├── MyEvent2 (AudioStreamPlayer)
+## 	└── MyEvent3 (AudioStreamPlayer)
+## [/codeblock]
+## Upon being added, the [AudioStreamPlayer]'s stream will be filled with an [AudioStreamRandomizer]
+## resource if it doesn't have a resource already.  You'll see an in-editor warning if
+## the [AudioStreamPlayer] doesn't have an [AudioStreamRandomizer] resource.
 ## [br][br]
-## [b]IMPORTANT:  If you care about the position of the [AudioStreamPlayer]s, you shouldn't use this
-## as the position relative to the parent won't automatically be inherited. [/b]
+## [b]IMPORTANT:  If you care about the position of the [AudioStreamPlayer]s,
+## you shouldn't use this since its position relative to the parent won't
+## be kept.[/b]  You'll have to use [AudioLoader] directly if you do care about
+## your [AudioStreamPlayer]'s position.
 ## [br][br]
-## You can then enter the SFX ID for each SFX event in the [member sfxIds] export field on the right panel.
+## You can then enter the SFX ID for each SFX event in the [member sfxIds]
+## export field on the right panel.
 ## The audio files for each SFX ID will then be loaded by the [AudioLoader]
 ## when this node is loaded in-game.
 ## If you don't want a sound to play for a SFX event, you can leave it blank.
 ## [br][br]
 ## To play one of these events, call [method play].
+## [codeblock]
+## # Assumption:  an instance of the pre-built SfxEventHandler scene exists
+## # as a child to this script's node, with the above events.
+## var myHandler:SfxEventHandler = $SfxEventHandler
+## myHandler.play("MyEvent1")
+## [/codeblock]
+## [br]
+## To stop one of these events, call [method stop].
+## [codeblock]
+## # Assumption:  an instance of the pre-built SfxEventHandler scene exists
+## # as a child to this script's node, with the above events.
+## var myHandler:SfxEventHandler = $SfxEventHandler
+## myHandler.stop("MyEvent1")
+## [/codeblock]
+## [br]
+## To get the [AudioStreamPlayer] responsible for an event, use the returned value of [method getPlayerForEvent].
+## [codeblock]
+## # Assumption:  an instance of the pre-built SfxEventHandler scene exists
+## # as a child to this script's node, with the above events.
+## var myHandler:SfxEventHandler = $SfxEventHandler
+## var myEventPlayer:AudioStreamPlayer = myHandler.getPlayerForEvent("MyEvent1")
+##
+## myHandler.play("MyEvent1")
+## await myEventPlayer.finished
+## print("My event player has finished playing.")
+## [/codeblock]
 ## [br][br]
-## To get the [AudioStreamPlayer] responsible for an event, use the result of [method getPlayerForEvent].
+## [b]Q&A:[/b][br]
+## [b]"No sounds are playing!"[/b][br]
+## - Are your speakers able to play sound?
+## [br][br]
+## - Are the SFX IDs for your events set?
+## If not, the console will display the following:
+## [codeblock lang=text]
+## AudioLoader:  Skipping loading of SFX event [<event-name>]
+## [/codeblock]
+## - Do the sounds for a SFX ID have "empty padding" at the beginning?
+## It's possible that it's just taking a bit before the sound actually plays.
+## [br][br]
+## - Is the sound event being stopped before it can actually play?
+## Playing an event will first stop the event from playing, then start playing it.
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
@@ -39,6 +98,15 @@ class_name SfxEventHandler
 # export variables
 # ------------------------------------------------
 ## Holds the SFX ID for each SFX event to be loaded with [AudioLoader].
+## [br]
+## Dictionary format:
+## [codeblock]
+## {
+## 	"eventName1": "sfxId1",
+## 	"eventName2": "sfxId2",
+## 	"eventName3": "sfxId3"
+## }
+## [/codeblock]
 @export var sfxIds:Dictionary[String, String] = {}
 
 # ------------------------------------------------
@@ -59,9 +127,27 @@ var _sfxPlayers:Array[AudioStreamPlayer] = []
 ## [b]Internal-use only.[/b]
 ## Maps [AudioStreamPlayer]s to their SFX event name.
 ## You can also just reference the [AudioStreamPlayer]'s name.
+## [br]
+## Dictionary format:
+## [codeblock]
+## {
+## 	<reference-to-AudioStreamPlayer-node>: "eventName1",
+## 	<reference-to-AudioStreamPlayer-node>: "eventName2",
+## 	<reference-to-AudioStreamPlayer-node>: "eventName3"
+## }
+## [/codeblock]
 var _sfxPlayerToEventName:Dictionary[AudioStreamPlayer, String] = {}
 ## [b]Internal-use only.[/b]
 ## Maps SFX event names to [AudioStreamPlayer]s.
+## [br]
+## Dictionary format:
+## [codeblock]
+## {
+## 	"eventName1": <reference-to-AudioStreamPlayer-node>,
+## 	"eventName2": <reference-to-AudioStreamPlayer-node>,
+## 	"eventName3": <reference-to-AudioStreamPlayer-node>
+## }
+## [/codeblock]
 var _sfxEventNameToPlayer:Dictionary[String, AudioStreamPlayer] = {}
 ## [b]Internal-use only.[/b]
 ## If this is currently sorting the nodes or not.
@@ -88,23 +174,25 @@ func _ready() -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Plays the sound for the SFX given event name.
+## Plays the sound for the given event name.
+## If there isn't an [AudioStreamPlayer] for the given event name, nothing happens.
+## Will stop the current event from playing its sound an immediately start playing it again.
 func play(eventName:String) -> void:
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer[eventName]
 	if player == null:
-		printerr("SfxEventHandler:  Could not find event player of name [", eventName, "]")
+		DebugHud.addToLog("SfxEventHandler:  Could not find event player of name [" + eventName + "]", DebugHud.LogType.ERROR)
 		return
 
 	print("SfxEventHandler:  Playing ", eventName)
-
 	player.stop()
 	player.play()
 
-## Stops the sound for the SFX given event name.
+## Stops the sound for the given event name.
+## If there isn't an [AudioStreamPlayer] for the given event name, nothing happens.
 func stop(eventName:String) -> void:
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer[eventName]
 	if player == null:
-		printerr("SfxEventHandler:  Could not find event player of name [", eventName, "]")
+		DebugHud.addToLog("SfxEventHandler:  Could not find event player of name [" + eventName + "]", DebugHud.LogType.ERROR)
 		return
 
 	print("SfxEventHandler:  Stopping ", eventName)
@@ -116,7 +204,7 @@ func stop(eventName:String) -> void:
 func getPlayerForEvent(eventName:String) -> AudioStreamPlayer:
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer.get(eventName)
 	if not player:
-		print("SfxEventHandler:  Could not find an AudioStreamPlayer for event [", eventName, "]")
+		DebugHud.addToLog("SfxEventHandler:  Could not find an AudioStreamPlayer for event [" + eventName + "]", DebugHud.LogType.WARNING)
 
 	return player
 
@@ -145,7 +233,7 @@ func _updateEventNameFromPlayer(player:AudioStreamPlayer) -> void:
 	# only do stuff if it was renamed
 	var oldName:String = _sfxPlayerToEventName[player]
 	if oldName == null:
-		print("SfxEventHandler:  AudioStreamPlayer not found in _sfxPlayerToEventName.")
+		printerr("SfxEventHandler:  AudioStreamPlayer not found in _sfxPlayerToEventName.")
 		return
 	if oldName == player.name:
 		return
@@ -175,6 +263,8 @@ func _addEntryToSfxIds(player:AudioStreamPlayer) -> void:
 func _actuallyRemovePlayer(player:AudioStreamPlayer) -> void:
 	_removeFromVariables(player)
 	sfxIds.erase(player.name)
+	player.renamed.disconnect(_on_child_renamed)
+	notify_property_list_changed()
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -189,7 +279,8 @@ func _on_child_entered_tree(node: Node) -> void:
 	var child:AudioStreamPlayer = node
 
 	_addEntryToSfxIds(child)
-	child.stream = AudioStreamRandomizer.new()
+	if child.stream == null:
+		child.stream = AudioStreamRandomizer.new()
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a child is removed from this node.
@@ -205,13 +296,21 @@ func _on_child_exiting_tree(node: Node) -> void:
 	await get_tree().create_timer(0.01).timeout
 	if not _loading:
 		_actuallyRemovePlayer(child)
+	notify_property_list_changed()
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a child of this is node is renamed.
 func _on_child_renamed(child:AudioStreamPlayer) -> void:
-	print("eggs")
 	_updateEventNameFromPlayer(child)
 
+## [b]Internal-use only.[/b]
+## Handles logic for when the list of children is changed.
+func _on_child_order_changed() -> void:
+	notify_property_list_changed()
+	update_configuration_warnings()
+
+## [b]Internal-use only.[/b]
+## Handles logic for when this node enters the tree.
 func _on_tree_entered() -> void:
 	if not Engine.is_editor_hint():
 		return
@@ -228,6 +327,8 @@ func _continue_on_tree_entered() -> void:
 				continue
 			sfxIds[child.name] = ""
 
+## [b]Internal-use only.[/b]
+## Handles logic for when this node exits the tree.
 func _on_tree_exiting() -> void:
 	_loading = true
 
@@ -247,9 +348,5 @@ func _get_configuration_warnings() -> PackedStringArray:
 			warnings.push_back(
 				"SFX player for event \"" + sfxPlayer.name + "\" should be a Randomizer resource."
 			)
-		#elif sfxIds[sfxPlayer.name] == "":
-			#warnings.push_back(
-				#"SFX event \"" + sfxPlayer.name + "\" doesn't have an entry in SFX IDs."
-			#)
 
 	return warnings

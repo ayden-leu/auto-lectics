@@ -54,9 +54,13 @@ var _currentState:State = State.IDLE
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	collision.shape.radius = 0
 
 func _process(delta:float) -> void:
+	if Engine.is_editor_hint():
+		return
 	_handleState(delta)
 
 # ------------------------------------------------

@@ -5,7 +5,7 @@
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6x3p0"]
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("sfxEventHandler")]
+[node name="OptionsMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1rh0x")
-sfxEventHandler = NodePath("SfxEventHandler")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -50,13 +49,22 @@ text = "View Keybinds"
 layout_mode = 2
 
 [node name="ApplySettings" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Apply Settings"
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="WindowModeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Window Mode: "
+
+[node name="WindowModeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
@@ -66,6 +74,8 @@ layout_mode = 2
 text = "Back"
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("2_xw4hb")]
+unique_name_in_owner = true
+process_mode = 3
 sfxIds = Dictionary[String, String]({
 "buttonPressed": ""
 })
@@ -75,4 +85,5 @@ stream = SubResource("AudioStreamRandomizer_6x3p0")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/KeybindsButton" to="." method="_on_keybinds_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/ApplySettings" to="." method="_on_apply_settings_pressed"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer/WindowModeOptions" to="." method="_on_window_mode_options_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/BackButton" to="." method="_on_back_pressed"]

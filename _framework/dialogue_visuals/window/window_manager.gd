@@ -149,11 +149,11 @@ func _input(event:InputEvent) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Enables the [WindowManager].
+## Enables the WindowManager.
 func enable() -> void:
 	enabled = true
 
-## Disables the [WindowManager].
+## Disables the WindowManager.
 func disable() -> void:
 	enabled = false
 

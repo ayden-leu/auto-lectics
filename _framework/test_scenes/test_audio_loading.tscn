@@ -12,14 +12,6 @@
 [node name="Test_AudioLoading" type="Node3D"]
 script = ExtResource("1_e6hn2")
 
-[node name="Notes" type="Label" parent="."]
-offset_left = 6.0
-offset_top = -92.0
-offset_right = 783.0
-offset_bottom = -43.0
-text = "This is just to test if the audio loaded from the AudioLoader works or not.
-This is teeeeechnically covered by test_npc_interaction but its best to have a separate thing to test it."
-
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0

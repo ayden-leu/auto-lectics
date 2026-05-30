@@ -32,15 +32,15 @@ class_name AudioLoader
 ## should be of type [member FILE_TYPE].
 ## [codeblock lang=text]
 ## STORAGE_PATH
-##  └── sfx
-##      ├── _test_1
-##      │   ├── file1.FILE_TYPE
-##      │   ├── file2.FILE_TYPE
-##      │   ├── file3.FILE_TYPE
-##      ├── _test_2
-##      │   └── file1.FILE_TYPE
-##      └── _test_3
-##          └── file1.FILE_TYPE
+## └── sfx
+## 	├── _test_1
+## 	│	├── file1.FILE_TYPE
+## 	│	├── file2.FILE_TYPE
+## 	│	├── file3.FILE_TYPE
+## 	├── _test_2
+## 	│	└── file1.FILE_TYPE
+## 	└── _test_3
+## 		└── file1.FILE_TYPE
 ## [/codeblock]
 ## [br]
 ## [b]Other Information:[/b][br]
