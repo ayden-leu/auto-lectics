@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://f37saf310u6v"]
+[gd_scene load_steps=16 format=3 uid="uid://f37saf310u6v"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_ujtst"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_2xnlg"]
@@ -13,15 +13,17 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ujtst"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2xnlg"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8hc64"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q128n"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_n5wcn"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_413rv"]
 
 [node name="playerSpace" type="CharacterBody3D"]
 collision_layer = 5
@@ -37,9 +39,11 @@ grappleAttachImpulseStrength = 20.55
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004080862)
+visible = false
 mesh = SubResource("CapsuleMesh_hh4bn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.40253866, 0, 0, 0, 1, 0, 0, 0, 0.40253866, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_h4x50")
 
 [node name="CameraAnchor" type="Marker3D" parent="."]
@@ -82,27 +86,31 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_q128n")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "",
-"deathFancy": "",
-"jump": "",
-"respawn": "",
-"respawnFancy": ""
+"death": "step",
+"deathFancy": "step",
+"jump": "step",
+"respawn": "step",
+"respawnFancy": "step",
+"step": "step"
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_qclge")
+stream = SubResource("AudioStreamRandomizer_ujtst")
 
 [node name="deathFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_hh4bn")
+stream = SubResource("AudioStreamRandomizer_2xnlg")
 
 [node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_6t6ql")
+stream = SubResource("AudioStreamRandomizer_8hc64")
 
 [node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_k4ncf")
+stream = SubResource("AudioStreamRandomizer_q128n")
 
 [node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
-stream = SubResource("AudioStreamRandomizer_s2ddf")
+stream = SubResource("AudioStreamRandomizer_n5wcn")
+
+[node name="step" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_413rv")
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("5_n5wcn")]
 unique_name_in_owner = true
