@@ -44,11 +44,20 @@ const LogTypeColor:Dictionary[LogType, String] = {
 # onready variables
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
-## The thing that logs all of the logs.
+## The thing that holds all of the logs.
 @onready var _log:Container = %Log
 ## [b]Internal-use only.[/b]
 ## The thing that does the scrolling for all of the logs.
-@onready var _scrollContainer: ScrollContainer = %ScrollContainer
+@onready var _logScrollContainer: ScrollContainer = %LogScrollContainer
+## [b]Internal-use only.[/b]
+## The thing that holds all of the checklist-related stuff.
+@onready var _checklistArea: VBoxContainer = %ChecklistArea
+## [b]Internal-use only.[/b]
+## The thing that holds all of the checklist entries.
+@onready var _checklist: VBoxContainer = %Checklist
+## [b]Internal-use only.[/b]
+## The thing that does the scrolling for all of the checklist entries.
+@onready var _checklistScrollContainer: ScrollContainer = %ChecklistScrollContainer
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -64,6 +73,7 @@ const LogTypeColor:Dictionary[LogType, String] = {
 # ------------------------------------------------
 func _ready() -> void:
 	hide()
+	_checklistArea.hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_debug_hud"):
@@ -103,7 +113,23 @@ func addToLog(message:String, type:LogType = LogType.NORMAL) -> void:
 			print_rich(message)
 
 	await get_tree().process_frame
-	_scrollContainer.scroll_vertical = ceil(_scrollContainer.get_v_scroll_bar().max_value)
+	_logScrollContainer.scroll_vertical = ceil(_logScrollContainer.get_v_scroll_bar().max_value)
+
+## Adds a checklist entry to [member _checklist] and names it with the given entry name.
+func addChecklistEntry(entryName:String) -> void:
+	_checklistArea.show()
+
+	var container:HBoxContainer = HBoxContainer.new()
+	var label:Label = Label.new()
+	var checker:CheckBox = CheckBox.new()
+	var separator:HSeparator = HSeparator.new()
+	_checklist.add_child(container)
+	_checklist.add_child(separator)
+	container.add_child(label)
+	container.add_child(checker)
+
+	container.size_flags_horizontal = Control.SIZE_SHRINK_END
+	label.text = entryName
 
 # ------------------------------------------------
 # functions only referenced inside this script
