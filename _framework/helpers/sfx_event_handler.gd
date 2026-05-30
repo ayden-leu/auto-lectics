@@ -10,7 +10,7 @@ class_name SfxEventHandler
 ## Without this, you would need manually add code in a script to load each
 ## [AudioStreamPlayer] with the corresponding sounds from a SFX ID, as well as load
 ## each [AudioStreamPlayer] with a [AudioStreamRandomizer] resource.
-## [br][br]
+## [br][br][br]
 ## [b]Using:[/b][br]
 ## Add the pre-built [SfxEventHandler] scene to your current scene.
 ## You cannot add it through the "Create New Node" dialogue due to it acting differently.

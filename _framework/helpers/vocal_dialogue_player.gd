@@ -3,9 +3,34 @@ extends AudioStreamPlayer
 class_name VocalDialoguePlayer
 ## Plays audio files in a vocal dialogue tree and displays subtitles.
 ##
+## This component will be helpful to use if you want to play spoken dialogue
+## during the game.
+## [br][br][br]
+## [b]Using:[/b][br]
+## Add the pre-built [VocalDialoguePlayer] scene to your current scene.
+## You cannot add it through the "Create New Node" dialogue due to it acting differently.
+## [br][br]
+## You can then configure the export fields to to load your vocal dialogue tree.
+## [br][br]
+## [member dialogueTreeID] is the name of the subfolder that contains all of the
+## vocal dialogue tree nodes for that vocal dialogue tree.
+## [br][br]
+## [member initialDialogueID] is the first vocal dialogue tree node that gets loaded.
+## [br][br]
+## [member delayBeforeAllowContinue] is the delay, in seconds, between the audio
+## finishing and allowing the player to load the next vocal dialogue tree node.
+## [br][br]
+## If [member fadeSubtitles] is on, the subtitles will fade away after the audio
+## file is finished playing.  This takes [code]1.0[/code] seconds and will add
+## onto the delay that [member delayBeforeAllowContinue] provides.
+## [br][br]
+## There are also signals for various events that occur while this runs.  Refer
+## to the signals section for a list of them.
+## [br][br][br]
+## [b]Formatting:[/b][br]
 ## Vocal dialogue files that can be loaded by this are located in subfolders
 ## located in [member STORAGE_PATH] and are of type [member DIALOGUE_FILE_EXTENSION].
-## The name of a subfolder corresponds to the dialogue tree ID.
+## The name of a subfolder corresponds to the vocal dialogue tree ID.
 ## The names of each audio file do not matter, however their file extension/type
 ## should be of type [member AUDIO_FILE_EXTENSION].
 ## [codeblock lang=text]
@@ -13,14 +38,19 @@ class_name VocalDialoguePlayer
 ## ├── tree_id_1
 ## │   ├── DEFAULTS_FILE_NAME.DIALOGUE_FILE_EXTENSION
 ## │   ├── node_id_1.DIALOGUE_FILE_EXTENSION
+## │   ├── node_1_audio_file.AUDIO_FILE_EXTENSION
 ## │   ├── node_id_2.DIALOGUE_FILE_EXTENSION
-## │   └── node_id_3.DIALOGUE_FILE_EXTENSION
+## │   ├── node_2_audio_file.AUDIO_FILE_EXTENSION
+## │   ├── node_id_3.DIALOGUE_FILE_EXTENSION
+## │   └── node_3_audio_file.AUDIO_FILE_EXTENSION
 ## ├── tree_id_2
 ## │   ├── DEFAULTS_FILE_NAME.DIALOGUE_FILE_EXTENSION
-## │   └── node_id_1.DIALOGUE_FILE_EXTENSION
+## │   ├── node_id_1.DIALOGUE_FILE_EXTENSION
+## │   └── node_1_audio_file.AUDIO_FILE_EXTENSION
 ## └── tree_id_3
 ##     ├── DEFAULTS_FILE_NAME.DIALOGUE_FILE_EXTENSION
-##     └── node_id_1.DIALOGUE_FILE_EXTENSION
+##     ├── node_id_1.DIALOGUE_FILE_EXTENSION
+##     └── node_1_audio_file.AUDIO_FILE_EXTENSION
 ## [/codeblock]
 ## [br]
 ## The format of the file's content should be in JSON format, and it supports the following fields:
@@ -28,24 +58,28 @@ class_name VocalDialoguePlayer
 ## {
 ## 	"file": "the name of the audio file, without the extension",
 ## 	"subtitles": "what is loaded into the subtitles",
-## 	"delayBeforeAllowContinue": # how long to wait after the audio file is finished before continuing, in seconds.
+## 	"delayBeforeAllowContinue": 0.0, # how long to wait after the
+## 	# audio file is finished before continuing, in seconds.
 ## 	"nextID": "the file name/ID of the next vocal dialogue file to load"
 ## }
 ## [/codeblock]
 ## Every field will be given a fallback value if it is not found in the main vocal dialogue file,
 ## or the vocal dialogue tree's defaults, except for [code]"file"[/code].
 ## If the [code]"file"[/code] field is missing, the subtitles will be overwritten with an error message.
-## [br][br]
+## [br][br][br]
 ## [b]Styling[/b][br]
 ## The continue icon can be found in [code]_framework/_visual_assets/vocal_dialogue_player/continue_icon.png[/code].
 ## You can overwrite it or replace [member contineIcon]'s texture with a different file.
+## [br]
+## It looks like this:  [img]res://_framework/_visual_assets/vocal_dialogue_player/continue_icon.png[/img]
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
-## Emitted when the next vocal dialogue is loaded.
+## Emitted when the next vocal dialogue node is loaded.
 signal dialogue_advanced()
 ## Emitted when the vocal dialogue hits an end.
+## (i.e when [member _nextDialogueID] is empty).
 signal dialogue_finished()
 
 # ------------------------------------------------
@@ -86,6 +120,8 @@ const ERROR_MSG_AUDIO_TO_LOAD_NOT_SET:String = "an error has occured due to ther
 ## The delay, in seconds, between the audio file finishing playing, and being able to continue.
 @export var delayBeforeAllowContinue:float = 0.0
 ## If the subtitles should fade out or not before the player is able to continue.
+## This takes [code]1.0[/code] seconds and will add onto the delay that
+## [member delayBeforeAllowContinue] provides.
 @export var fadeSubtitles:bool = false
 
 # ------------------------------------------------
@@ -94,6 +130,8 @@ const ERROR_MSG_AUDIO_TO_LOAD_NOT_SET:String = "an error has occured due to ther
 ## The node that holds the subtitles text.
 @onready var subtitles:Label = %Subtitles
 ## The node that holds the image to display when the player is able to continue the dialogue.
+## [br]
+## It looks like this:  [img]res://_framework/_visual_assets/vocal_dialogue_player/continue_icon.png[/img]
 @onready var continueIcon:TextureRect = %ContinueIcon
 
 # ------------------------------------------------
@@ -123,6 +161,18 @@ func _ready() -> void:
 # functions referenced outside of this script
 # ------------------------------------------------
 ## Loads the [member _nextDialogueID] vocal dialogue file and starts playing it.
+## [br]
+## It loads the data in a top-down fashion, with each layer replacing the fields
+## of the layer below if they happen to overlap.
+## [codeblock lang=text]
+## Actual File
+##   \/
+## Vocal Dialogue Tree defaults
+##   \/
+## FALLBACK data
+## [/codeblock]
+## So if the defaults has a value for [member delayBeforeAllowContinue], but the
+## actual file doesn't, the system will use the defaults' value.
 func loadNextDialogue() -> void:
 	if not enabled or not _canContinue:
 		return
@@ -137,11 +187,11 @@ func loadNextDialogue() -> void:
 	var file_path:String = STORAGE_PATH + dialogueTreeID + "/" + currentDialogueID + DIALOGUE_FILE_EXTENSION
 	var dialogue_data:Dictionary = DialogueLoader.loadDialogueNodeFile(file_path)
 	if dialogue_data.is_empty():
-		printerr("VocalDialoguePlayer:  Loaded vocal dialogue file at [", file_path, " is empty or invalid.")
+		DebugHud.addToLog("VocalDialoguePlayer:  Loaded vocal dialogue file at [" + file_path + " is empty or invalid.", DebugHud.LogType.ERROR)
 
 	var result:Error = _verifyDataFields(dialogue_data)
 	if result == Error.ERR_INVALID_DATA:
-		print("VocalDialoguePlayer:  Vocal dialogue file at [", file_path, "]'s field is the wrong data type.  Check above for which field.")
+		DebugHud.addToLog("VocalDialoguePlayer:  Vocal dialogue file at [" + file_path + "]'s field is the wrong data type.  Check above for which field.", DebugHud.LogType.WARNING)
 
 	# tree defaults
 	dialogue_data = _loadTreeDefaults(dialogue_data)
@@ -166,6 +216,15 @@ func loadNextDialogue() -> void:
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]
 ## Verifies the contents of the vocal dialogue file data.
+## [br][br]
+## A valid vocal dialogue file has the following data types associated with the following keys.
+## [codeblock]
+## "file":  A string.
+## "subtitles":  A string.
+## "delayBeforeAllowContinue":  A float.
+## "nextID":  A string.
+## [/codeblock]
+## [br]
 ## Returns [member Error.ERR_INVALID_DATA] if the value of a field isn't the right type.
 ## Otherwise, returns [member Error.OK].
 func _verifyDataFields(dialogue_data:Dictionary) -> Error:
@@ -176,27 +235,27 @@ func _verifyDataFields(dialogue_data:Dictionary) -> Error:
 		"nextID": TYPE_STRING
 	}
 
-	for field in fields:
+	for field:String in fields:
 		if not dialogue_data.has(field):
-			printerr("VocalDialoguePlayer:  Vocal dialogue file is missing the [", field, "] field.")
+			DebugHud.addToLog("VocalDialoguePlayer:  Vocal dialogue file is missing the [" + field + "] field.", DebugHud.LogType.WARNING)
 			continue
-		if not typeof(dialogue_data[field]) == fields[field]:
-			printerr("VocalDialoguePlayer:  Field [", field, "] in dialogue data doesn't match expected type [", type_string(fields[field]), "].")
+		elif not typeof(dialogue_data[field]) == fields[field]:
+			DebugHud.addToLog("VocalDialoguePlayer:  Field [" + field + "] in dialogue data doesn't match expected type [" + type_string(fields[field]) + "].", DebugHud.LogType.ERROR)
 			return Error.ERR_INVALID_DATA
 	return Error.OK
 
 ## [b]Internal-use only.[/b]
-## Merges the dialogue tree's default values into the given dialogue data.
+## Merges the given dialogue data into the dialogue tree's default values.
 ## Returns the result of that merge.
 func _loadTreeDefaults(dialogueData:Dictionary) -> Dictionary:
 	var filePath:String = STORAGE_PATH + dialogueTreeID + "/" + DEFAULTS_FILE_NAME + DIALOGUE_FILE_EXTENSION
 	var defaultData:Dictionary = DialogueLoader.loadDialogueNodeFile(filePath)
 	if defaultData.is_empty():
-		print("VocalDialoguePlayer:  defaults dialogue file [", filePath, "] is either empty, doesn't exist, or an error occurred.  Will continue without loading defaults.")
+		DebugHud.addToLog("VocalDialoguePlayer:  Defaults dialogue file [" + filePath + "] is either empty, doesn't exist, or an error occurred.  Will continue without loading defaults.", DebugHud.LogType.WARNING)
 		return dialogueData
 
 	if not _verifyDataFields(defaultData):
-		print("VocalDialoguePlayer:  defaults dialogue file at [", filePath, "] is invalid.  Check above for the potential reason.  Will continue without loading defaults.")
+		DebugHud.addToLog("VocalDialoguePlayer:  Defaults dialogue file at [" + filePath + "] is invalid.  Check above for the potential reason.  Will continue without loading defaults.", DebugHud.LogType.WARNING)
 		return dialogueData
 
 	if dialogueData.has("file"):
@@ -222,7 +281,7 @@ func _prepare(dialogue_data: Dictionary) -> void:
 
 		var loaded_audio:AudioStream = load(audio_path)
 		if loaded_audio == null:
-			printerr("VocalDialoguePlayer:  Could not load vocal dialogue audio file at [", audio_path, "].")
+			DebugHud.addToLog("VocalDialoguePlayer:  Could not load vocal dialogue audio file at [" + audio_path + "].", DebugHud.LogType.WARNING)
 			dialogue_data.subtitles = ERROR_MSG_CANT_LOAD_AUDIO
 			fadeSubtitles = false
 		stream = loaded_audio
@@ -263,7 +322,7 @@ func _fadeOutSubtitles() -> void:
 		subtitles,
 		"modulate:a",
 		0.0,
-		1.0
+		1.0  # the duration of the fade out
 	)
 	await tween.finished
 
