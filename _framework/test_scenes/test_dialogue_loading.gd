@@ -25,6 +25,8 @@ const FILE_EXTENSION:String = ".json"
 @onready var labelDialogueText:Label = %DialogueText
 @onready var labelDialogueMode:Label = %DialogueMode
 @onready var labelDialogueHecticFailID:Label = %DialogueHecticFailID
+@onready var labelDialogueHecticDuration: Label = %DialogueHecticDuration
+@onready var labelDialogueOptionCount: Label = %DialogueOptionCount
 @onready var labelDialogueTextTheme:Label = %DialogueTextTheme
 @onready var labelDialogueType:Label = %DialogueType
 @onready var labelDialogueWriteSpeedPreset:Label = %DialogueWriteSpeedPreset
@@ -45,6 +47,10 @@ const FILE_EXTENSION:String = ".json"
 @onready var labelOptionLifetime:Label = %OptionLifetime
 @onready var labelOptionSfxEventSpawn:Label = %OptionSfxEventSpawn
 @onready var labelOptionSfxEventText:Label = %OptionSfxEventText
+@onready var labelOptionCheckFlags: Label = %OptionCheckFlags
+@onready var labelOptionSetFlags: Label = %OptionSetFlags
+@onready var labelOptionAllowBack: Label = %OptionAllowBack
+@onready var labelOptionRejectBackMessage: Label = %OptionRejectBackMessage
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -114,62 +120,127 @@ func _getFilesInPath(path:String, type:String) -> Array[String]:
 	files.sort()
 	return files
 
+
+func _getFilesInPathRecursive(path: String, type: String, relativePrefix: String = "") -> Array[String]:
+	var tempDirAccess: DirAccess = DirAccess.open(path)
+	if not tempDirAccess:
+		printerr("Directory [", path, "] does not exist.")
+		return []
+	
+	var files: Array[String] = []
+	
+	tempDirAccess.list_dir_begin()
+	var entryName: String = tempDirAccess.get_next()
+	
+	while entryName != "":
+		if entryName.begins_with("."):
+			entryName = tempDirAccess.get_next()
+			continue
+		
+		var fullPath: String = path.path_join(entryName)
+		var relativePath: String = relativePrefix.path_join(entryName) if relativePrefix != "" else entryName
+		
+		if tempDirAccess.current_is_dir():
+			files.append_array(_getFilesInPathRecursive(fullPath, type, relativePath))
+		elif entryName.ends_with(type):
+			files.push_back(relativePath)
+		
+		entryName = tempDirAccess.get_next()
+	
+	tempDirAccess.list_dir_end()
+	files.sort()
+	return files
+
+
 func _loadOptionButtonOptions(button:OptionButton, options:Array[String]) -> void:
 	for option in options:
 		button.add_item(option)
 	button.selected = 0
+
 
 func _clearOptionButtonOptions(button:OptionButton) -> void:
 	for _i in range(button.item_count):
 		button.remove_item(0)
 
 func _loadDialogueFile() -> void:
-	var path:String = DialogueLoader.STORAGE_PATH + "/" + \
-			fieldNPC.get_item_text(fieldNPC.selected) + "/" + \
-			fieldFile.get_item_text(fieldFile.selected)
-
-	var data:Dictionary = DialogueLoader.loadDialogueNodeFile(path)
-	labelDialogueText.text = data.text
-	labelDialogueMode.text = data.mode
-	labelDialogueHecticFailID.text = data.nextOnHecticFailureID
-	labelDialogueTextTheme.text = data.textThemePreset
-	labelDialogueType.text = data.type
-	labelDialogueWriteSpeedPreset.text = data.writeSpeed
-	labelDialogueWriteSpeedValue.text = str(data.writeSpeedCustom)
-	labelDialogueBackgroundTheme.text = data.backgroundTheme
-
-	labelDialogueSfxEventSpawn.text = data.sfx.spawn
-	labelDialogueSfxEventText.text = data.sfx.text
-
+	var topFolder: String = fieldNPC.get_item_text(fieldNPC.selected)
+	var selectedRelativeFile: String = fieldFile.get_item_text(fieldFile.selected)
+	var fileFolder: String = selectedRelativeFile.get_base_dir()
+	var fileName: String = selectedRelativeFile.get_file()
+	var dialogueID: String = fileName.trim_suffix(FILE_EXTENSION)
+	var entityName: String = topFolder
+	if fileFolder != "":
+		entityName = topFolder.path_join(fileFolder)
+	var data: Dictionary = DialogueLoader.getDialogueNode(entityName, dialogueID)
+	
+	if data.is_empty():
+		labelDialogueText.text = "[ERROR: Failed to load dialogue file]"
+		return
+	
+	labelDialogueText.text = str(data.get("text", ""))
+	labelDialogueMode.text = str(data.get("mode", ""))
+	labelDialogueHecticFailID.text = str(data.get("nextOnHecticFailureID", ""))
+	labelDialogueHecticDuration.text = str(data.get("hecticDuration", "N/A"))
+	labelDialogueOptionCount.text = str(data.get("options", []).size())
+	labelDialogueTextTheme.text = str(data.get("textThemePreset", ""))
+	labelDialogueType.text = str(data.get("type", ""))
+	labelDialogueWriteSpeedPreset.text = str(data.get("writeSpeed", ""))
+	labelDialogueWriteSpeedValue.text = str(data.get("writeSpeedCustom", ""))
+	labelDialogueBackgroundTheme.text = str(data.get("backgroundTheme", "N/A"))
+	var sfx: Dictionary = data.get("sfx", {})
+	labelDialogueSfxEventSpawn.text = str(sfx.get("spawn", ""))
+	labelDialogueSfxEventText.text = str(sfx.get("text", ""))
+	_clearOptionButtonOptions(fieldOption)
 	_optionData = []
-	var hashtagMyText:Array[String] = []
-	for option in data.options:
+	
+	var optionNames: Array[String] = []
+	for option in data.get("options", []):
+		if typeof(option) != TYPE_DICTIONARY:
+			continue
+		
 		_optionData.push_back(option)
-		hashtagMyText.push_back(option.text)
+		
+		var optionText: String = str(option.get("text", ""))
+		if optionText.strip_edges() == "":
+			optionText = "[continue / empty option]"
+		
+		optionNames.push_back(optionText)
+	
+	if not optionNames.is_empty():
+		_loadOptionButtonOptions(fieldOption, optionNames)
 
-	if hashtagMyText != []:
-		_loadOptionButtonOptions(fieldOption, hashtagMyText)
 
 func _loadOption() -> void:
+	if _optionData.is_empty():
+		return
+	
+	if fieldOption.selected < 0 or fieldOption.selected >= _optionData.size():
+		return
+	
 	var data:Dictionary = _optionData[fieldOption.selected]
-
-	labelOptionText.text = data.text
-	labelOptionNextID.text = data.nextID
-	labelOptionTextTheme.text = data.textThemePreset
-	labelOptionType.text = data.type
-	labelOptionWriteSpeedPreset.text = data.writeSpeed
-	labelOptionWriteSpeedValue.text = str(data.writeSpeedCustom)
-	labelOptionBackgroundTheme.text = data.backgroundTheme
-	labelOptionSpawnDelay.text = str(data.spawnDelay)
-	labelOptionLifetime.text = str(data.lifetime)
-
-	labelOptionSfxEventSpawn.text = data.sfx.spawn
-	labelOptionSfxEventText.text = data.sfx.text
-
+	
+	labelOptionText.text = str(data.get("text", ""))
+	labelOptionNextID.text = str(data.get("nextID", ""))
+	labelOptionTextTheme.text = str(data.get("textThemePreset", ""))
+	labelOptionType.text = str(data.get("type", ""))
+	labelOptionWriteSpeedPreset.text = str(data.get("writeSpeed", ""))
+	labelOptionWriteSpeedValue.text = str(data.get("writeSpeedCustom", ""))
+	labelOptionBackgroundTheme.text = str(data.get("backgroundTheme", "N/A"))
+	labelOptionSpawnDelay.text = str(data.get("spawnDelay", ""))
+	labelOptionLifetime.text = str(data.get("lifetime", ""))
+	labelOptionCheckFlags.text = str(data.get("checkFlags", {}))
+	labelOptionSetFlags.text = str(data.get("setFlags", {}))
+	labelOptionAllowBack.text = str(data.get("allowBack", true))
+	labelOptionRejectBackMessage.text = str(data.get("rejectBackMessage", "N/A"))
+	
+	var sfx:Dictionary = data.get("sfx", {})
+	labelOptionSfxEventSpawn.text = str(sfx.get("spawn", ""))
+	labelOptionSfxEventText.text = str(sfx.get("text", ""))
+	
 	print("checkFlags:")
-	print(data.checkFlags)
+	print(data.get("checkFlags", {}))
 	print("setFlags")
-	print(data.setFlags)
+	print(data.get("setFlags", {}))
 
 	# TODO:  particles
 
@@ -184,8 +255,8 @@ func _on_npc_field_item_selected(index: int) -> void:
 	var selectedFolder:String = fieldNPC.get_item_text(index)
 	_loadOptionButtonOptions(
 		fieldFile,
-		_getFilesInPath(
-			DialogueLoader.STORAGE_PATH + "/" + selectedFolder,
+		_getFilesInPathRecursive(
+			DialogueLoader.STORAGE_PATH.path_join(selectedFolder),
 			FILE_EXTENSION
 		)
 	)

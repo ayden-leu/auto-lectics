@@ -66,7 +66,7 @@ focus = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7017784, -1.7234268, 0)
 
 [node name="DeathPlaneCustomShape" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.243298, 2.4578354, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.011122, 2.4578354, 0)
 script = ExtResource("4_60sf8")
 metadata/_custom_type_script = "uid://ngayr0wn30tw"
 metadata/_edit_group_ = true
