@@ -267,15 +267,29 @@ func _waitForAMoment() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## @deprecated
+## Use [method _on_loop_manager_do_reset] instead.
 ## [b]Internal-use Only.[/b]
 ## Handles logic for when the loop overlay finishes fading in.
 func _on_loop_manager_overlay_faded_in() -> void:
+	_on_loop_manager_do_reset()
+
+## @deprecated
+## Use [method _on_loop_manager_reset_finished] instead.
+## [b]Internal-use Only.[/b]
+## Handles logic for when the loop overlay finishes fading out.
+func _on_loop_manager_overlay_faded_out() -> void:
+	_on_loop_manager_reset_finished()
+
+## [b]Internal-use Only.[/b]
+## Handles logic for when the [LoopManager] performs the reset.
+func _on_loop_manager_do_reset() -> void:
 	self.disable()
 	self.reset()
 
 ## [b]Internal-use Only.[/b]
-## Handles logic for when the loop overlay finishes fading out.
-func _on_loop_manager_overlay_faded_out() -> void:
+## Handles logic for when the [LoopManager] finishes resetting.
+func _on_loop_manager_reset_finished() -> void:
 	self.enable()
 
 # ------------------------------------------------
