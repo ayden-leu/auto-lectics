@@ -98,6 +98,15 @@ class_name SfxEventHandler
 # export variables
 # ------------------------------------------------
 ## Holds the SFX ID for each SFX event to be loaded with [AudioLoader].
+## [br]
+## Dictionary format:
+## [codeblock]
+## {
+## 	"eventName1": "sfxId1",
+## 	"eventName2": "sfxId2",
+## 	"eventName3": "sfxId3"
+## }
+## [/codeblock]
 @export var sfxIds:Dictionary[String, String] = {}
 
 # ------------------------------------------------
@@ -118,9 +127,27 @@ var _sfxPlayers:Array[AudioStreamPlayer] = []
 ## [b]Internal-use only.[/b]
 ## Maps [AudioStreamPlayer]s to their SFX event name.
 ## You can also just reference the [AudioStreamPlayer]'s name.
+## [br]
+## Dictionary format:
+## [codeblock]
+## {
+## 	<reference-to-AudioStreamPlayer-node>: "eventName1",
+## 	<reference-to-AudioStreamPlayer-node>: "eventName2",
+## 	<reference-to-AudioStreamPlayer-node>: "eventName3"
+## }
+## [/codeblock]
 var _sfxPlayerToEventName:Dictionary[AudioStreamPlayer, String] = {}
 ## [b]Internal-use only.[/b]
 ## Maps SFX event names to [AudioStreamPlayer]s.
+## [br]
+## Dictionary format:
+## [codeblock]
+## {
+## 	"eventName1": <reference-to-AudioStreamPlayer-node>,
+## 	"eventName2": <reference-to-AudioStreamPlayer-node>,
+## 	"eventName3": <reference-to-AudioStreamPlayer-node>
+## }
+## [/codeblock]
 var _sfxEventNameToPlayer:Dictionary[String, AudioStreamPlayer] = {}
 ## [b]Internal-use only.[/b]
 ## If this is currently sorting the nodes or not.
