@@ -243,10 +243,8 @@ func _on_loop_timer_timeout() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
-## [b]Internal-use Only.[/b]
-## Returns editor warnings for missing loop setup.
-## [br][br]
-## Warns when [member _overlay] is not assigned, except when this node is the edited scene root.
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 
@@ -258,6 +256,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return warnings
 
+## [b]Editor-use Only.[/b]
+## Hides certain export fields depending on this thing's state.
 func _validate_property(property: Dictionary) -> void:
 	if property.name in ["Fancy Stuff", "fancyArea", "fancyTimeFadeOut", "fancyTimeHoldFade",
 	"fancyTimeFadeIn"] and not fancy:

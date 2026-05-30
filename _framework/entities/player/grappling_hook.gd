@@ -346,6 +346,8 @@ func _capVelocity(velocity:Vector3) -> Vector3:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 

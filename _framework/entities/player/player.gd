@@ -562,6 +562,8 @@ func _on_grappling_hook_hook_detached() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 

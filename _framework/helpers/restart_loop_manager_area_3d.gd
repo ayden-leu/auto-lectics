@@ -126,10 +126,8 @@ func _on_area_entered(area:Area3D) -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
-## [b]Internal-use Only.[/b]
-## Returns editor warnings for this area.
-## [br][br]
-## This currently returns no warnings.
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 
