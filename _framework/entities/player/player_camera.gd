@@ -101,6 +101,8 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 

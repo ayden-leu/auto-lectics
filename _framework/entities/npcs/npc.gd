@@ -2,7 +2,39 @@
 @tool
 extends Node3D
 class_name NPC
-## The base class of all NPCs in the game.
+## The base class for all NPC characters.
+##
+## Use this for simple non-interactable NPCs, or extend it when building more
+## specialized NPC types such as [InteractableNPC].
+## [br][br]
+## The base class registers itself in the [code]NPCs[/code] group so systems
+## such as [LoopManager] can find and affect all NPCs together.
+## [br][br][br]
+## [b]Patrolling[/b][br]
+## When [member patrolEnabled] is [code]true[/code], this NPC follows [member patrolPath] at
+## [member patrolSpeed] units per second.
+## [br][br]
+## [member pathFollowMode] controls whether the NPC loops back to the start or
+## reverses direction at each end of the path.
+## [br][br]
+## A larger [member patrolSpeed] value makes the NPC move faster along the path.
+## [br][br]
+## The NPC will follow the path exactly, meaning they will float in the air
+## if [member patrolPath] goes into the air, or clip into the ground if [member patrolPath]
+## goes into the ground.
+## [br][br][br]
+## [b]Facing Targets[/b][br]
+## Set [member lookAtPosition] to make the NPC smoothly rotate toward a world-space
+## position on the horizontal plane.  Set it to [constant Vector3.ZERO] when the
+## NPC should stop trying to face a target.
+## [br][br]
+## If [member patrolEnabled] and [member stopFollowingPath] are [code]true[/code],
+## [member lookAtPosition] gets set to a point on [member patrolPath].
+## [br][br][br]
+## [b]Extending This Class[/b][br]
+## [method enable], [method disable], and [method reset] are intentionally empty
+## in this base class.  Override them in child classes when an NPC needs custom
+## state changes during loop transitions or gameplay events.
 
 # ------------------------------------------------
 # signals
@@ -11,10 +43,10 @@ class_name NPC
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
-## The ways an [NPC] can follow a [member patrolPath].
+## The ways an NPC can follow [member patrolPath].
 enum PathFollowMethod {
-	LOOP,      ## When this [NPC] reaches the last point on the [member patrolPath], it will go to the starting point on the [member patrolPath] directly.
-	PING_PONG  ## When this [NPC] reaches the last point on the [member patrolPath], it will turn around and follow the [member patrolPath] in reverse.
+	LOOP,      ## When this NPC reaches the last point on [member patrolPath], it wraps directly to the start of [member patrolPath].
+	PING_PONG  ## When this NPC reaches the last point on [member patrolPath], it turns around and follows [member patrolPath] in reverse.
 }
 
 # ------------------------------------------------
@@ -31,30 +63,39 @@ enum PathFollowMethod {
 ## Used internally for other things.  Unused by the NPC class itself.
 @export var internalID:String = ""
 ## The name of the NPC.
-## Used when this NPC's name needs to be displayed for something.  Unused the NPC class itself.
+## Used when this NPC's name needs to be displayed for something.  Unused by the NPC class itself.
 @export var displayName:String = ""
-
-## If this [NPC] should be able to move along its [member patrolPath].
+## If true, this NPC can move along [member patrolPath].
+## [br]
+## When starting to move along the path, this NPC will start at a point on the
+## path closest to them.
 @export var patrolEnabled: bool = false:
 	set(value):
 		patrolEnabled = value
 		notify_property_list_changed()
+
 @export_category("Patrolling")
-## The path this [NPC] follows while patrolling.
+## The [Path3D] this NPC follows while patrolling.
 @export var patrolPath: Path3D:
 	set(value):
 		patrolPath = value
 		notify_property_list_changed()
-## How fast this [NPC] should move along the [member patrolPath].
+
+## How fast this NPC moves along [member patrolPath], in path units per second.
+## [br]
+## Larger values make the NPC move faster.
+## Negative values are not expected; use [member pathFollowMode] to choose how the NPC changes direction at the ends of the path.
 @export var patrolSpeed: float = 2.0
-## How this [NPC] should patrol on its [member patrolPath].
+## How this NPC behaves when it reaches the ends of [member patrolPath].
 @export var pathFollowMode:PathFollowMethod:
 	set(value):
 		pathFollowMode = value
 		notify_property_list_changed()
-## If [member pathFollowMode] is set to [constant PING_PONG] and this [NPC] reaches the end of the path, it will wait this long in seconds before traversing the path backwards.
+## How long, in seconds, this NPC waits before reversing direction at the end of [member patrolPath].
+## [br][br]
+## A value of [code]0.0[/code] means the NPC reverses immediately.
 @export var waitAtEndDuration: float = 0.0
-## Unused and doesn't do anything.
+# Unused and doesn't do anything.
 #@export var faceMoveDirection: bool = true
 
 # ------------------------------------------------
@@ -64,17 +105,28 @@ enum PathFollowMethod {
 # ------------------------------------------------
 # normal variables referenced outside of script
 # ------------------------------------------------
-## If true, this [NPC] will stop moving along its [member patrolPath].
-var stopFollowingPath: bool = false
-## The position that this [NPC] should look at.  Set to Vector3.ZERO if you don't want them to look at anything.  Cannot set to null due to [url]https://github.com/godotengine/godot-proposals/issues/162[/url]
+## If true, this NPC pauses movement along [member patrolPath].
+## Can be used to make this NPC stop moving along the path while still sticking to it.
+## [br][br]
+## This is updated momentarily while waiting at the end of a ping-pong patrol.
+var stopFollowingPath:bool = false
+## The world-space position this NPC should turn toward.
+## [br][br]
+## Set this to [constant Vector3.ZERO] when the NPC should not look at anything.
+## This uses [constant Vector3.ZERO] instead of [code]null[/code] because typed
+## [Vector3] values cannot be [code]null[/code].
 var lookAtPosition:Vector3 = Vector3.ZERO
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Used to figure out the next position this [NPC] should go to along the [member patrolPath].
+## [b]Internal-use Only.[/b]
+## Used to calculate the next position this NPC should move to along [member patrolPath].
 var _pathFollower: PathFollow3D
-## [b]Internal-use only.[/b]  The direction along the [member patrolPath] this [NPC] should go.  1.0 means it goes "forward," -1.0 means it goes "backward."  Can also modify the [member patrolSpeed].
+## [b]Internal-use Only.[/b]
+## The direction this NPC moves along [member patrolPath].
+## [code]1.0[/code] moves forward, and [code]-1.0[/code] moves backward.
+## This value is multiplied with [member patrolSpeed].
 var _pathFollowDirection: float = 1.0
 
 # ------------------------------------------------
@@ -102,22 +154,33 @@ func _process(delta: float) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Enables this [NPC].  Currently does nothing.
+## Enables this NPC.  Currently does nothing in the base NPC class.
+## [br][br]
+## When overriding in a child class, be sure to add [code]super()[/code] at some point
+## so this version will be ran.
 func enable() -> void:
 	pass
 
-## Disables this [NPC].  Currently does nothing.
+## Disables this NPC.  Currently does nothing in the base NPC class.
+## [br][br]
+## When overriding in a child class, be sure to add [code]super()[/code] at some point
+## so this version will be ran.
 func disable() -> void:
 	pass
 
-## Resets this [NPC] to their default state.  Currently does nothing.
+## Resets this NPC to its default state.  Currently does nothing in the base NPC class.
+## [br][br]
+## When overriding in a child class, be sure to add [code]super()[/code] at some point
+## so this version will be ran.
 func reset() -> void:
 	pass
 
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Sets up stuff related to patrolling.
+## [b]Internal-use Only.[/b]
+## Sets up the [PathFollow3D] node that this NPC follows while patrolling.
+## Gets placed at the path offset closest to this NPC's current position.
 func _setupPathFollow() -> void:
 	if patrolPath == null:
 		return
@@ -134,7 +197,15 @@ func _setupPathFollow() -> void:
 	else:
 		_pathFollower.progress = 0.0
 
-## [b]Internal-use only.[/b]  Moves this [NPC] along the [member patrolPath].
+## [b]Internal-use Only.[/b]
+## Moves this NPC along [member patrolPath].
+## [br][br]
+## When [member pathFollowMode] is [constant PING_PONG] and the [member _pathFollower] reaches one of the ends of the path,
+## it clamps to the appropriate end, inverts [member _pathFollowDirection], and waits
+## for [member waitAtEndDuration] seconds before continuing.
+## [br][br]
+## When [member pathFollowMode] is [constant LOOP] and the NPC reaches the end,
+## [member _pathFollower] returns to the start of the path and continues onward.
 func _moveOnPath(delta:float) -> void:
 	var curve_len := patrolPath.curve.get_baked_length()
 	_pathFollower.progress += patrolSpeed * delta * _pathFollowDirection
@@ -167,7 +238,10 @@ func _moveOnPath(delta:float) -> void:
 	# Move NPC on path
 	global_position = _pathFollower.global_position
 
-## [b]Internal-use only.[/b]  Turns this [NPC] to face the [member lookAtPosition].
+## [b]Internal-use Only.[/b]
+## Smoothly turns this NPC to face [member lookAtPosition] on the horizontal plane.
+## [br]
+## The vertical difference is ignored so the NPC rotates around the Y axis without pitching up or down.
 func _turnToLookAtPosition(delta: float) -> void:
 	var direction := lookAtPosition - global_position
 	direction.y = 0.0
@@ -177,8 +251,11 @@ func _turnToLookAtPosition(delta: float) -> void:
 
 	rotation.y = lerp_angle(rotation.y, target_dir, 5 * delta)
 
-## [b]Internal-use only.[/b]  If this [NPC] is moving along its [member patrolPath],
-## this will make them stop for [member waitAtEndDuration] and then resume moving.
+## [b]Internal-use Only.[/b]
+## Pauses this NPC's path movement for [member waitAtEndDuration].
+## [br][br]
+## This is used at the ends of a [constant PING_PONG] patrol.
+## If [member waitAtEndDuration] is [code]0.0[/code] or lower, the NPC keeps moving without waiting.
 func _waitForAMoment() -> void:
 	if waitAtEndDuration <= 0.0:
 		return
@@ -190,18 +267,36 @@ func _waitForAMoment() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## Handles logic for when the HUD overlay fades in.  Currently, it disables and resets the Interactable NPC.
+## @deprecated
+## Use [method _on_loop_manager_do_reset] instead.
+## [b]Internal-use Only.[/b]
+## Handles logic for when the loop overlay finishes fading in.
 func _on_loop_manager_overlay_faded_in() -> void:
+	_on_loop_manager_do_reset()
+
+## @deprecated
+## Use [method _on_loop_manager_reset_finished] instead.
+## [b]Internal-use Only.[/b]
+## Handles logic for when the loop overlay finishes fading out.
+func _on_loop_manager_overlay_faded_out() -> void:
+	_on_loop_manager_reset_finished()
+
+## [b]Internal-use Only.[/b]
+## Handles logic for when the [LoopManager] performs the reset.
+func _on_loop_manager_do_reset() -> void:
 	self.disable()
 	self.reset()
 
-## Handles logic for when the HUD overlay fades in.  Currently, it enables the Interactable NPC.
-func _on_loop_manager_overlay_faded_out() -> void:
+## [b]Internal-use Only.[/b]
+## Handles logic for when the [LoopManager] finishes resetting.
+func _on_loop_manager_reset_finished() -> void:
 	self.enable()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 
@@ -222,6 +317,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 # Credit for how to do this:
 # https://github.com/godotengine/godot-proposals/issues/1056
+## [b]Editor-use Only.[/b]
+## Hides certain export fields depending on this thing's state.
 func _validate_property(property: Dictionary) -> void:
 	if property.name in ["patrolPath", "patrolSpeed", "pathFollowMode", "waitAtEndDuration"] \
 		and not patrolEnabled:

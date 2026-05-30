@@ -274,7 +274,7 @@ func respawn() -> void:
 	_overlay.startFadeOut()
 	_sfxEventHandler.play("respawn")
 
-## Moves the player to [memmber respawnCheckpointLocation] immediately.
+## Moves the player to [member respawnCheckpointLocation] immediately.
 func respawnCheckpoint() -> void:
 	global_position = respawnCheckpointLocation.global_position
 
@@ -294,7 +294,8 @@ func respawnFancy() -> void:
 	await get_tree().create_timer(respawnDelay).timeout
 
 	_respawning = false
-	respawnForce()
+	respawnCheckpoint()
+	respawning_finished.emit()
 	_overlay.startFadeOut()
 	_sfxEventHandler.play("respawnFancy")
 
@@ -562,6 +563,8 @@ func _on_grappling_hook_hook_detached() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 

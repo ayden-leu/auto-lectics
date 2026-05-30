@@ -107,7 +107,7 @@ func enable() -> void:
 
 ## Disables the [InteractableNPC].  This will make it so the player cannot interact with this Interactable NPC.
 func disable() -> void:
-	_hitbox.monitorable = false
+	_hitbox.set_deferred("monitorable", false)
 	for shape in _hitboxShapes:
 		shape.set_deferred("disabled", true)
 	super()

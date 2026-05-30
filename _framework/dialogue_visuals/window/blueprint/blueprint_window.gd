@@ -360,11 +360,15 @@ func _on_next_page_button_pressed() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
 
 	warnings.append_array(super())
 	return warnings
 
+## [b]Editor-use Only.[/b]
+## Hides certain export fields depending on this thing's state.
 func _validate_property(property: Dictionary) -> void:
 	super(property)

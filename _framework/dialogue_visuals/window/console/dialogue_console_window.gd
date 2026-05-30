@@ -694,8 +694,12 @@ func _on_hectic_timer_timeout() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
 func _get_configuration_warnings() -> PackedStringArray:
 	return super()
 
+## [b]Editor-use Only.[/b]
+## Hides certain export fields depending on this thing's state.
 func _validate_property(property: Dictionary) -> void:
 	super(property)
