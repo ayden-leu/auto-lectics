@@ -6,6 +6,9 @@ class_name DialogueWindow
 ##
 ## DialogueWindows are UI elements that can be dragged around by the player.
 ## All DialogueWindows are managed by the [WindowManager].
+##
+##
+##
 ## [br][br]
 ## [b]Features Brief[/b][br]
 ## Can optionally be closable by enabling the [member canBeClosed] export field.
@@ -14,6 +17,9 @@ class_name DialogueWindow
 ## [br][br]
 ## The [member offscreenThreshold] export field configures how many pixels offscreen
 ## this window can be.  Dropping the window beyond the threshold will bring it within bounds.
+##
+##
+##
 ## [br][br]
 ## [b]Styling[/b][br]
 ## When styling a DialogueWindow, there a few things you'll need to know about.[br][br]
@@ -34,6 +40,9 @@ class_name DialogueWindow
 ## 4) Anything can go anywhere.[br]
 ## 5) The "Contents" panel that is typically seen with DialogueWindows won't automatically resize to surround its contents.  You have to do[br]
 ## that manually.
+##
+##
+##
 ## [br][br]
 ## [b]SFX events[/b][br]
 ## Comes with the following optional SFX events:[br]
