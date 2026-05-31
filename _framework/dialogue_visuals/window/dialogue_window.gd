@@ -236,7 +236,6 @@ func close() -> void:
 func kill() -> void:
 	queue_free()
 
-
 # ------------------------------------------------
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
@@ -255,14 +254,14 @@ func _positionInWindow(pos:Vector2) -> bool:
 ## A safer way of playing SFX events since this is a base class.
 func _playSfxSafe(id:String) -> void:
 	if not sfxEventHandler:
-		printerr("DialogueWindow:  SfxEventHandler export field not set.  Please set it.")
+		DebugHud.addToLog("DialogueWindow:  Cant play event if SfxEventHandler export field not set.  Please set it.", DebugHud.LogType.ERROR)
 	sfxEventHandler.play(id)
 
 ## [b]Internal-use only.[/b]
 ## A safer way of getting the [AudioStreamPlayer] for an event since this is a base class.
 func _getSfxPlayerSafe(id:String) -> AudioStreamPlayer:
 	if not sfxEventHandler:
-		printerr("DialogueWindow:  SfxEventHandler export field not set.  Please set it.")
+		DebugHud.addToLog("DialogueWindow:  Can't get player when SfxEventHandler export field not set.  Please set it.", DebugHud.LogType.ERROR)
 		return null
 	return sfxEventHandler.getPlayerForEvent(id)
 
