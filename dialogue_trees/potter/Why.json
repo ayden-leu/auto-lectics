@@ -1,0 +1,18 @@
+{
+	"text": "Why are you here? ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "It's my job.",
+			"nextID": "What"
+		},
+		{
+			"text": "I like exploring. ",
+			"nextID": "What"
+		},
+		{
+			"text": "To chat.",
+			"nextID": "What"
+		}
+	]
+}

@@ -1,6 +1,7 @@
-[gd_scene load_steps=83 format=3 uid="uid://wlc865s3d24k"]
+[gd_scene load_steps=84 format=3 uid="uid://wlc865s3d24k"]
 
 [ext_resource type="PackedScene" uid="uid://bdbt2axrk0xap" path="res://models/BlendFiles/space.blend" id="1_0o34o"]
+[ext_resource type="PackedScene" uid="uid://td64clnb8tjd" path="res://models/BlendFiles/dropPodforSpace.blend" id="2_e70in"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0o34o"]
 points = PackedVector3Array(10, -0.008871061, 9.996423, -9.146651, -3, -9.143055, -9.146651, -3, 9.143055, -10, -0.0089241, -9.996083, 9.146312, -3, -9.143055, 10, -0.008871061, -9.996423, -10, -0.0089241, 9.996083, 9.146312, -3, 9.143055)
@@ -50,8 +51,8 @@ points = PackedVector3Array(-0.1184001, 0.7149231, 1.6704737, 2.2760823, 1.41188
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5nufo"]
 points = PackedVector3Array(-1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1, -1, -1, -1, 1, -1, 1, -1)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_051ta"]
-points = PackedVector3Array(-1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1, -1, -1, -1, 1, -1, 1, -1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_0o34o"]
+size = Vector3(1.7930908, 41.274536, 2.6574707)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0o34o"]
 data = PackedVector3Array(-1, -1.0002, -0.5036, -1, 1, -1, -1, 1, -0.5036, -1, -1.0002, -0.5036, -1, -1.0002, -1, -1, 1, -1, -1, -14.3403, 0.0042, -1, -1.0002, -0.5036, -1, 1, -0.5036, -1, -14.3403, 0.0042, -1, 1, -0.5036, -1, -12.3404, 0.0042, -1, -14.3403, 1, -1, -14.3403, 0.0042, -1, -12.3404, 0.0042, -1, -14.3403, 1, -1, -12.3404, 0.0042, -1, -12.3404, 1, -1, -1.0002, -1, 1, 1, -1, -1, 1, -1, -1, -1.0002, -1, 1, -1.0002, -1, 1, 1, -1, 1, -14.3403, 0.0042, 1, -12.3404, 1, 1, -12.3404, 0.0042, 1, -14.3403, 0.0042, 1, -14.3403, 1, 1, -12.3404, 1, 1, -1.0002, -0.5036, 1, -14.3403, 0.0042, 1, -12.3404, 0.0042, 1, -1.0002, -0.5036, 1, -12.3404, 0.0042, 1, 1, -0.5036, 1, -1.0002, -1, 1, -1.0002, -0.5036, 1, 1, -0.5036, 1, -1.0002, -1, 1, 1, -0.5036, 1, 1, -1, 1, -14.3403, 1, -1, -12.3404, 1, 1, -12.3404, 1, 1, -14.3403, 1, -1, -14.3403, 1, -1, -12.3404, 1, -1, -14.3403, 0.0042, 1, -14.3403, 1, 1, -14.3403, 0.0042, -1, -14.3403, 0.0042, -1, -14.3403, 1, 1, -14.3403, 1, 1, -12.3404, 0.0042, -1, -12.3404, 1, -1, -12.3404, 0.0042, 1, -12.3404, 0.0042, 1, -12.3404, 1, -1, -12.3404, 1, 1, 1, -1, -1, 1, -0.5036, -1, 1, -1, 1, 1, -1, 1, 1, -0.5036, -1, 1, -0.5036, -1, -1.0002, -1, 1, -1.0002, -0.5036, 1, -1.0002, -1, -1, -1.0002, -1, -1, -1.0002, -0.5036, 1, -1.0002, -0.5036, 1, 1, -0.5036, -1, -12.3404, 0.0042, -1, 1, -0.5036, 1, 1, -0.5036, 1, -12.3404, 0.0042, -1, -12.3404, 0.0042, -1, -1.0002, -0.5036, 1, -14.3403, 0.0042, 1, -1.0002, -0.5036, -1, -1.0002, -0.5036, -1, -14.3403, 0.0042, 1, -14.3403, 0.0042)
@@ -360,10 +361,11 @@ collision_mask = 0
 shape = SubResource("ConvexPolygonShape3D_5nufo")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_007" index="0"]
-collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_007/StaticBody3D" index="0"]
-shape = SubResource("ConvexPolygonShape3D_051ta")
+transform = Transform3D(1, 0, 3.7252903e-09, 0, 0.9999705, 0, 0, 0, 1.000001, 0.05401516, -17.55745, -0.13458495)
+shape = SubResource("BoxShape3D_0o34o")
+disabled = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_008" index="0"]
 collision_layer = 6
@@ -820,3 +822,6 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Circle_016/StaticBody3D" index="0"]
 transform = Transform3D(1.1522273, 0, 0, 0, 1, 0, 0, 0, 1.259295, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_d0p5e")
+
+[node name="dropPodforSpace" parent="." index="86" instance=ExtResource("2_e70in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.56721, -12.239507, 132.62033)

@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci2sp25krps8a"]
+
+[ext_resource type="Script" uid="uid://p8gkxpwwi7lc" path="res://models/environment/environmentscenes/flicker.gd" id="1_3ol8k"]
+[ext_resource type="PackedScene" uid="uid://n41wo1q732c2" path="res://models/environment/tub.tscn" id="1_b5w8p"]
+
+[sub_resource type="Curve" id="Curve_3ol8k"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.14565825, 0.17142862), 0.0, 0.0, 0, 0, Vector2(0.23249301, 0.47142863), 0.0, 0.0, 0, 0, Vector2(0.3669468, 0.16428578), 0.0, 0.0, 0, 0, Vector2(0.4481793, 0.32142866), 0.0, 0.0, 0, 0, Vector2(0.74509805, 0.07857144), 0.0, 0.0, 0, 0, Vector2(0.8179272, 1.5), 0.0, 0.0, 0, 0, Vector2(0.8655462, 0), 0.0, 0.0, 0, 0]
+point_count = 8
+
+[node name="lamp" type="Node3D"]
+script = ExtResource("1_3ol8k")
+curveHere = SubResource("Curve_3ol8k")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.036099672, -1.5779668e-09)
+light_color = Color(0.7374925, 0.5997583, 0, 1)
+light_energy = 7.645
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+spot_range = 24.182701
+spot_angle = 43.349377
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SpotLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14119804)
+omni_range = 0.36568737
+
+[node name="tub" parent="." instance=ExtResource("1_b5w8p")]
+transform = Transform3D(-0.09827012, -8.591047e-09, 0, 8.591047e-09, -0.09827012, 0, 0, 0, 0.09827012, 0.11451674, 0.62716657, 0)

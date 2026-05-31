@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=22 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="Script" uid="uid://cypt3ypnimoj5" path="res://world/raphael_test_dialogue.gd" id="1_4bdpc"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bq3oe7fa42f38" path="res://entities/npcs/dishNPC.tscn" id="4_hmrtd"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_r7opt"]
 [ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="5_vekyi"]
+[ext_resource type="PackedScene" uid="uid://bearq8quulj0c" path="res://_framework/helpers/start_dialogue_area_one_shot.tscn" id="6_46t5o"]
 [ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="6_hmrtd"]
 [ext_resource type="PackedScene" uid="uid://g21ua47x4g7g" path="res://entities/npcs/shipDialogue.tscn" id="7_12tdw"]
 [ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="8_12tdw"]
@@ -33,6 +34,8 @@ size = Vector2(18.48, 37.805)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wd7ni"]
 data = PackedVector3Array(9.24, 0, 18.9025, -9.24, 0, 18.9025, 9.24, 0, -18.9025, -9.24, 0, 18.9025, -9.24, 0, -18.9025, 9.24, 0, -18.9025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dfxh"]
 
 [node name="RaphaelTestDialogue" type="Node3D"]
 script = ExtResource("1_4bdpc")
@@ -72,6 +75,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.497595, 0.09056449, -12.20
 [node name="dishNPC" parent="npcs" instance=ExtResource("4_hmrtd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.97189605, -0.07807258, -11.054205)
 initialDialogueID = "DB1"
+
+[node name="dishNPC2" parent="npcs" instance=ExtResource("4_hmrtd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.997374, -0.07807258, -21.464008)
+initialDialogueID = "DB1"
+
+[node name="StartDialogueArea" parent="npcs/dishNPC2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_46t5o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43089676, 3.8631449, 0.48758888)
+interactableNpcToInitiate = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/dishNPC2/StartDialogueArea"]
+transform = Transform3D(7.160615, 0, 0, 0, 7.160615, 0, 0, 0, 7.160615, 0, 0, 0)
+shape = SubResource("BoxShape3D_3dfxh")
 
 [node name="miniboss" parent="npcs" instance=ExtResource("14_4bdpc")]
 transform = Transform3D(0.99940413, 0, 0.034515753, 0, 1, 0, -0.034515753, 0, 0.99940413, -7.0590224, 4.1478424, 12.177582)

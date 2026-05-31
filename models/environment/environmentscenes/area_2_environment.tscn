@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cm0raywcnfphc" path="res://models/BlendFiles/bigWedgeTemp.blend" id="5_p6b6d"]
 [ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="6_bhlbt"]
 [ext_resource type="PackedScene" uid="uid://chka61lp34f8r" path="res://models/BlendFiles/trussingForstairs.blend" id="7_gpiq4"]
-[ext_resource type="Texture2D" uid="uid://coxw3vwx62rii" path="res://textures/skybox.png" id="8_dexkp"]
 [ext_resource type="PackedScene" uid="uid://bxyidxqmrtxn5" path="res://models/BlendFiles/bigRing.blend" id="8_wbm8u"]
 [ext_resource type="PackedScene" uid="uid://dmkoidkma4qj3" path="res://models/BlendFiles/cable.blend" id="9_tldiu"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="10_5j8fo"]
@@ -15,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="11_lq8kl"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="11_p6b6d"]
 [ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="12_bhlbt"]
+[ext_resource type="Texture2D" uid="uid://capq82bdntjri" path="res://textures/skybox3.png" id="15_1ox1w"]
 [ext_resource type="PackedScene" uid="uid://bmbe7d0f5cvlq" path="res://models/BlendFiles/cloud.blend" id="16_dexkp"]
 [ext_resource type="Script" uid="uid://bh5gr5gwafogb" path="res://models/cloud.gd" id="17_1ox1w"]
 [ext_resource type="Script" uid="uid://dnf7coojs8gdm" path="res://models/cloud2.gd" id="17_dexkp"]
@@ -59,7 +59,7 @@ albedo_color = Color(0.11764706, 0.09019608, 0.050980393, 1)
 material = SubResource("StandardMaterial3D_bhlbt")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qwkcv"]
-panorama = ExtResource("8_dexkp")
+panorama = ExtResource("15_1ox1w")
 
 [sub_resource type="Sky" id="Sky_p6b6d"]
 sky_material = SubResource("PanoramaSkyMaterial_qwkcv")
@@ -140,15 +140,19 @@ transform = Transform3D(21.382542, -20.63518, -9.1261614e-07, -1.1362657e-06, 6.
 
 [node name="MetalBigFlat4" parent="Node3D" instance=ExtResource("6_bhlbt")]
 transform = Transform3D(21.382542, -20.63518, -9.1261614e-07, -1.1362657e-06, 6.2934936e-07, -21.614727, 20.63518, 21.382542, -2.4453476e-07, 134.53276, 305.4393, 24.556107)
+visible = false
 
 [node name="MetalBigFlat5" parent="Node3D" instance=ExtResource("6_bhlbt")]
 transform = Transform3D(28.933594, -69.01046, -6.411e-07, -1.3430887e-06, 8.0957807e-07, -15.184039, 10.735597, 185.9907, -1.7178219e-07, 131.75096, 514.4531, 23.523937)
+visible = false
 
 [node name="MetalBigFlat6" parent="Node3D" instance=ExtResource("6_bhlbt")]
 transform = Transform3D(-1.4252386, -198.16925, -6.411e-07, -2.885929e-07, 8.470742e-06, -15.184039, 30.828148, -9.16169, -1.7178218e-07, -14.493347, 514.4531, 138.2318)
+visible = false
 
 [node name="MetalBigFlat7" parent="Node3D" instance=ExtResource("6_bhlbt")]
 transform = Transform3D(-38.106026, -8.963069e-07, 17.091686, -1.8714778e-06, -331.46164, 1.4844477e-06, 34.738308, 2.7088341e-05, 18.748648, -110.403046, 514.4531, -99.43379)
+visible = false
 
 [node name="trussingForstairs" parent="Node3D" instance=ExtResource("7_gpiq4")]
 transform = Transform3D(0.651889, 0, -0.5238138, 0, 0.8362655, 0, 0.5238138, 0, 0.651889, 222.0408, 19.469059, 93.49116)
@@ -162,38 +166,40 @@ transform = Transform3D(0.651889, 0, -0.5238138, 0, 0.8362655, 0, 0.5238138, 0, 
 [node name="bigRing" parent="Node3D" instance=ExtResource("8_wbm8u")]
 transform = Transform3D(16.803125, 0, 0, 0, 16.803125, 0, 0, 0, 16.803125, 0, -77.21266, 0)
 
+[node name="cable" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(2.8717115, 0, -5.8644814, 0, 9.794764, 0, 5.8644814, 0, 2.8717115, -126.29517, 93.173706, -1.9230188)
+
+[node name="cable7" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-3.8358362, -0.67904073, -5.2406206, -0.40106454, 6.494441, -0.54794514, 5.269191, 0, -3.8567464, 88.4316, 122.55798, 51.228214)
+
+[node name="cable8" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-5.956527, -0.58806664, -2.6101391, -0.40106454, 6.494441, -0.54794514, 2.6453345, -0.33952036, -5.960351, 24.84979, 101.36395, 92.102325)
+
+[node name="cable4" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-1.6900482, 0, -6.307345, 0, 6.529845, 0, 6.307345, 0, -1.6900482, 69.8511, 132.11981, -202.52454)
+
+[node name="cable2" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-3.6526914, 0, -1.7775931, 0, 4.062266, 0, 1.7775931, 0, -3.6526914, 23.846907, 124.20055, 68.49644)
+
+[node name="cable5" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-5.443319, 0, 3.6068175, 0, 6.529842, 0, -3.6068175, 0, -5.443319, -80.6468, 122.55798, 40.342804)
+
+[node name="cable9" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-1.2986023, 0, 6.3994136, 0, 6.529842, 0, -6.3994136, 0, -1.2986023, -98.81328, 148.6774, 20.472248)
+
+[node name="cable6" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(3.2262168, 0.66706556, 2.3766646, -4.511635e-08, 3.9111314, -1.0977486, -2.4685032, 0.8718235, 3.1061888, -78.60761, 146.37051, -49.71691)
+
+[node name="cable3" parent="Node3D" instance=ExtResource("9_tldiu")]
+transform = Transform3D(-2.0175476, 0, -3.5258334, 0, 4.062266, 0, 3.5258334, 0, -2.0175476, -105.751724, 124.20055, 131.56602)
+
 [node name="bigRing2" parent="Node3D" instance=ExtResource("8_wbm8u")]
 transform = Transform3D(16.803125, 0, 0, 0, 16.803125, 0, 0, 0, 16.803125, 0, 377.4026, 0)
-
-[node name="cable" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(0.17090341, 0, -0.34901136, 0, 0.5829132, 0, 0.34901136, 0, 0.17090341, -7.5161715, -16.91524, -0.114444114)
-
-[node name="cable7" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.22828111, -0.040411573, -0.3118837, -0.023868449, 0.38650197, -0.032609716, 0.31358397, 0, -0.22952554, 5.262807, -15.1665, 3.0487313)
-
-[node name="cable8" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.35448924, -0.034997456, -0.15533653, -0.023868449, 0.38650197, -0.032609716, 0.1574311, -0.020205786, -0.3547168, 1.4788791, -16.427814, 5.4812617)
-
-[node name="cable4" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.100579396, 0, -0.37536737, 0, 0.38860896, 0, 0.37536737, 0, -0.100579396, 4.15703, -14.597449, -12.05279)
-
-[node name="cable2" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.21738167, 0, -0.10578944, 0, 0.24175657, 0, 0.10578944, 0, -0.21738167, 1.4191947, -15.068747, 4.0764103)
-
-[node name="cable5" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.3239468, 0, 0.21465158, 0, 0.38860878, 0, -0.21465158, 0, -0.3239468, -4.799512, -15.1665, 2.4009106)
-
-[node name="cable9" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.07728338, 0, 0.38084662, 0, 0.38860878, 0, -0.38084662, 0, -0.07728338, -5.8806486, -13.612062, 1.2183596)
-
-[node name="cable6" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(0.192001, 0.0396989, 0.14144182, -2.6849976e-09, 0.23276214, -0.06533003, -0.14690739, 0.051884603, 0.1848578, -4.6781545, -13.7493515, -2.9587896)
-
-[node name="cable3" parent="Node3D/bigRing2" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-0.12006979, 0, -0.209832, 0, 0.24175657, 0, 0.209832, 0, -0.12006979, -6.293575, -15.068747, 7.829854)
+visible = false
 
 [node name="bigRing3" parent="Node3D" instance=ExtResource("8_wbm8u")]
 transform = Transform3D(7.1190658, 0, -15.91785, 0, 31.341036, 0, 15.91785, 0, 7.1190658, 0, 626.211, 0)
+visible = false
 
 [node name="bigWedgeTemp9" parent="Node3D" instance=ExtResource("10_p6b6d")]
 transform = Transform3D(17.099499, 0, -3.5856662, 0, 17.471397, 0, 3.5856662, 0, 17.099499, 66.01496, 69.11684, -52.967815)
@@ -223,7 +229,7 @@ transform = Transform3D(1.4972531, -92.345116, -11.314306, 3.0942434e-07, -213.2
 transform = Transform3D(-2.2113929e-07, -5.0590773, 0, 5.0590773, -2.2113929e-07, 0, 0, 0, 5.0590773, -178.02106, 73.52362, 106.53924)
 
 [node name="bigtrussing" parent="Node3D" instance=ExtResource("12_bhlbt")]
-transform = Transform3D(2.5032713, 4.335793, -1.8952356e-07, 0, -2.1884291e-07, -5.006543, -4.335793, 2.5032713, -1.0942148e-07, -140.86337, 40.526974, 173.76709)
+transform = Transform3D(2.5032713, 4.335793, -1.8952356e-07, 0, -2.1884291e-07, -5.006543, -4.335793, 2.5032713, -1.0942148e-07, -183.82764, 40.526974, 248.18338)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)
@@ -285,13 +291,13 @@ transform = Transform3D(27.100058, 0, 0, 0, -1.1845813e-06, -27.100058, 0, 27.10
 transform = Transform3D(27.100058, 0, 0, 0, -1.1845813e-06, -27.100058, 0, 27.100058, -1.1845813e-06, -183.99464, -319.7762, 1794.4779)
 
 [node name="cloud" parent="." instance=ExtResource("16_dexkp")]
-transform = Transform3D(41.913082, 0, 0, 0, -41.913082, 3.664158e-06, 0, -3.664158e-06, -41.913082, -78.34295, -644.65283, -5.110415e-05)
+transform = Transform3D(41.913082, 0, 0, 0, -41.913082, 3.664158e-06, 0, -3.664158e-06, -41.913082, -78.34295, -734.6091, -5.110415e-05)
 script = ExtResource("17_dexkp")
 
 [node name="cloud3" parent="." instance=ExtResource("18_5j8fo")]
-transform = Transform3D(29.729145, 0, 0, 0, 29.729145, 0, 0, 0, 29.729145, 0, -339.56393, 0)
+transform = Transform3D(29.729145, 0, 0, 0, 29.729145, 0, 0, 0, 29.729145, 0, -429.52014, 0)
 script = ExtResource("17_dexkp")
 
 [node name="cloud2" parent="." instance=ExtResource("19_lq8kl")]
-transform = Transform3D(35.758194, 0, 0, 0, 35.758194, 0, 0, 0, 35.758194, 0, -97.24627, 0)
+transform = Transform3D(35.758194, 0, 0, 0, 35.758194, 0, 0, 0, 35.758194, 0, -187.20248, 0)
 script = ExtResource("17_1ox1w")

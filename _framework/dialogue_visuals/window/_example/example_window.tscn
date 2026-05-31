@@ -78,11 +78,11 @@ autowrap_mode = 3
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_spo03")]
 sfxIds = Dictionary[String, String]({
-"click": "",
-"close": "",
+"click": "console_send",
+"close": "console_close",
 "drop": "",
 "hover": "",
-"spawn": ""
+"spawn": "console_send"
 })
 
 [node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]

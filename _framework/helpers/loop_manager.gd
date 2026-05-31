@@ -25,6 +25,9 @@ signal faded_in()
 ## Emitted after the overlay fades out.
 signal faded_out()
 
+## .
+signal started_fancy()
+
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
@@ -148,13 +151,14 @@ func performNormalReset() -> void:
 
 ## Executes the fancy resetting flow.
 func performFancyReset() -> void:
-	#print("loop resetting")
+	print("loop resetting")
 	_loopBeingReset = true
 	resetting.emit()
+
 	fancyArea.startGrowing()
 	var player:Player = await fancyArea.collided_with_player
 	await player.respawning_finished
-
+	
 	player.respawnCheckpoint()
 	fancyArea.reset()
 	_loopBeingReset = false
@@ -206,6 +210,7 @@ func _connectSignals() -> void:
 ## Handles logic for when the timer times out.
 ## When the loop timer times out, the screen will get darker, all NPCs will be "reset," and the screen darkness will go away.
 func _on_loop_timer_timeout() -> void:
+	started_fancy.emit()
 	if fancy:
 		await performFancyReset()
 	else:

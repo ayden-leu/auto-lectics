@@ -1,7 +1,7 @@
 @tool
 @icon("uid://cgvywsq714hf3")
 extends Area3D
-class_name StartDialogueArea
+class_name StartDialogueAreaOneShot
 ## An [Area3D] that triggers a dialogue event between a [Player] and [InteractableNPC].
 ##
 ## When a [Player] enters this node's [CollisionShape3D], it makes
@@ -42,7 +42,8 @@ func _on_area_entered(area:Area3D) -> void:
 	var areaOwner:Node3D = area.get_parent()
 	if areaOwner is Player:
 		interactableNpcToInitiate._on_interaction(areaOwner)
-	
+	queue_free()
+
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------

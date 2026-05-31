@@ -374,6 +374,7 @@ func _handleDirectionInput(direction: Vector3) -> void:
 
 	## Do not process air drift if grappling, so the two calcs don't overlap
 	if isGrappling && !is_on_floor():
+		_moving = false
 		return
 
 	if desired_h.length() > 0.0:

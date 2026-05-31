@@ -57,6 +57,7 @@ folder_colors={
 
 NPCs=""
 Ungrappleable="Ungrappleable objects should be put in here"
+light=""
 
 [input]
 
