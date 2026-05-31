@@ -363,43 +363,43 @@ func respawnFancy() -> void:
 ## Also adds the disabler to [member _nodesDisablingInput].
 static func disableInput(disabler:Node) -> void:
 	if not inputEnabled:
-		print("Player:  Input already disabled.")
+		DebugHud.addToLog("Player:  Input already disabled.")
 		return
 
 	if disabler in _nodesDisablingInput:
-		print("Player:  Disabler [", disabler.name, "] already disabled input from player.")
+		DebugHud.addToLog("Player:  Disabler [%s] already disabled input from player." % disabler.name)
 		return
 
-	print("Player:  Incrementing input disabler counter.")
+	DebugHud.addToLog("Player:  Incrementing input disabler counter.")
 	_nodesDisablingInput[disabler] = null
-	print("Player:  Disabling inputs from player due to [", disabler.name, "].")
+	DebugHud.addToLog("Player:  Disabling inputs from player due to [%s]." % disabler.name)
 	inputEnabled = false
 
 ## Allows player input to affect this.
 ## Also removes the enabler from [member _nodesDisablingInput].
 static func enableInput(enabler:Node) -> void:
 	if inputEnabled:
-		print("Player:  Input already enabled.")
+		DebugHud.addToLog("Player:  Input already enabled.")
 		return
 
 	if not enabler in _nodesDisablingInput:
-		printerr("Player:  Enabler [", enabler.name, "] didn't disable input from player.")
+		DebugHud.addToLog("Player:  Enabler [%s] didn't disable input from player." % enabler.name, DebugHud.LogType.WARNING)
 		return
 
-	print("Player:  Decrementing input disabler counter.")
+	DebugHud.addToLog("Player:  Decrementing input disabler counter.")
 	_nodesDisablingInput.erase(enabler)
 	if _nodesDisablingInput.is_empty():
-		print("Player:  Enabling inputs from player due to [", enabler.name, "].")
+		DebugHud.addToLog("Player:  Enabling inputs from player due to [%s]." % enabler.name)
 		inputEnabled = true
 
 ## Forcibly allows player input to affect this.
 ## Also clears [member _nodesDisablingInput].
 static func enableInputForce() -> void:
 	if inputEnabled:
-		print("Player:  Input already enabled; don't have to force it.")
+		DebugHud.addToLog("Player:  Input already enabled; don't have to force it.")
 		return
 
-	print("Player:  Forcing inputs from player to be enabled.")
+	DebugHud.addToLog("Player:  Forcing inputs from player to be enabled.")
 	inputEnabled = true
 	_nodesDisablingInput.clear()
 
@@ -407,42 +407,42 @@ static func enableInputForce() -> void:
 ## Also adds the freezer to [member _nodesFreezingMe].
 static func freeze(freezer:Node) -> void:
 	if frozen:
-		print("Player:  Player already frozen.")
+		DebugHud.addToLog("Player:  Player already frozen.")
 		return
 
 	if freezer in _nodesFreezingMe:
-		print("Player:  Freezer [", freezer.name, "] already froze the player.")
+		DebugHud.addToLog("Player:  Freezer [%s] already froze the player." % freezer.name)
 		return
 
-	print("Player:  Incrementing nodes freezing counter.")
+	DebugHud.addToLog("Player:  Incrementing nodes freezing counter.")
 	_nodesFreezingMe[freezer] = null
-	print("Player:  Freezing the Player due to [", freezer.name, "].")
+	DebugHud.addToLog("Player:  Freezing the Player due to [%s]." % freezer.name)
 	frozen = true
 
 ## Unfreezes this player character so they can move around again.
 ## Also removes the unfreezer from [member _nodesFreezingMe].
 static func unfreeze(unfreezer:Node) -> void:
 	if not frozen:
-		print("Player:  Player already unfrozen.")
+		DebugHud.addToLog("Player:  Player already unfrozen.")
 		return
 
 	if not unfreezer in _nodesFreezingMe:
-		printerr("Player:  Unfreezer [", unfreezer.name, "] didn't freeze the Player.")
+		DebugHud.addToLog("Player:  Unfreezer [%s] didn't freeze the Player." % unfreezer.name, DebugHud.LogType.WARNING)
 		return
 
-	print("Player:  Decrementing nodes freezing counter.")
+	DebugHud.addToLog("Player:  Decrementing nodes freezing counter.")
 	_nodesFreezingMe.erase(unfreezer)
 	if _nodesFreezingMe.is_empty():
-		print("Player:  Unfreezing Player due to [", unfreezer.name, "].")
+		DebugHud.addToLog("Player:  Unfreezing Player due to [%s]." % unfreezer.name)
 		frozen = false
 
 ## Forcibly unfreezes this player character so they can move around again.
 ## Also clears [member _nodesFreezingMe].
 static func unfreezeForce() -> void:
 	if not frozen:
-		print("Player:  Player already unfrozen; don't need to force it.")
+		DebugHud.addToLog("Player:  Player already unfrozen; don't need to force it.")
 		return
-	print("Player:  Forcibly unfreezing Player.")
+	DebugHud.addToLog("Player:  Forcibly unfreezing Player.")
 	frozen = false
 	_nodesFreezingMe.clear()
 
@@ -576,7 +576,6 @@ func _on_interact_pressed() -> void:
 	if not inputEnabled:
 		return
 
-	#print(name + ": interact pressed")
 	if interactableThing and interactableThing != _loadBearingDummy:
 		interactableThing._on_interaction(self)
 
