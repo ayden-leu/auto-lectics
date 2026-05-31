@@ -1,0 +1,12 @@
+{
+	"text": "Oh, so you're useless.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "Conversation Over Bad"
+		}
+	]
+}

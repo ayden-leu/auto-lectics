@@ -1,0 +1,103 @@
+shader_type spatial;
+render_mode blend_mix,cull_disabled,diffuse_burley,specular_schlick_ggx
+,depth_draw_opaque
+;
+uniform vec4 p_o574015679930_albedo_color = vec4(0.458823562, 1.000000000, 0.936580896, 0.474509805);
+uniform vec3 wawa = vec3(0.1, 0.3, 0.5);
+//uniform vec4 set_albedo = vec4(0.0.);
+uniform vec3 uv1_offset = vec3(0.0, 0.0, 0.0);
+uniform vec3 uv1_scale = vec3(1.0, 1.0, 1.0);
+uniform int depth_min_layers = 8;
+uniform int depth_max_layers = 16;
+uniform vec2 depth_flip = vec2(1.0);
+uniform float variation = 0.0;
+varying float elapsed_time;
+
+void vertex() {
+	elapsed_time = TIME;
+	UV = UV*uv1_scale.xy+uv1_offset.xy;
+}
+float dot2(vec2 x) {
+	return dot(x, x);
+}
+float rand(vec2 x) {
+    return fract(cos(mod(dot(x, vec2(13.9898, 8.141)), 3.14)) * 43758.5);
+}
+vec2 rand2(vec2 x) {
+    return fract(cos(mod(vec2(dot(x, vec2(13.9898, 8.141)),
+						      dot(x, vec2(3.4562, 17.398))), vec2(3.14))) * 43758.5);
+}
+vec3 rand3(vec2 x) {
+    return fract(cos(mod(vec3(dot(x, vec2(13.9898, 8.141)),
+							  dot(x, vec2(3.4562, 17.398)),
+                              dot(x, vec2(13.254, 5.867))), vec3(3.14))) * 43758.5);
+}
+float param_rnd(float minimum, float maximum, float seed) {
+	return minimum+(maximum-minimum)*rand(vec2(seed));
+}
+float param_rndi(float minimum, float maximum, float seed) {
+	return floor(param_rnd(minimum, maximum + 1.0, seed));
+}
+vec3 rgb2hsv(vec3 c) {
+	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
+	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
+	float d = q.x - min(q.w, q.y);
+	float e = 1.0e-10;
+	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+vec3 hsv2rgb(vec3 c) {
+	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+const float p_o574015679930_metallic = 0.000000000;
+const float p_o574015679930_roughness = 0.390000000;
+const float p_o574015679930_emission_energy = 1.000000000;
+const float p_o574015679930_normal = 1.000000000;
+const float p_o574015679930_ao = 1.000000000;
+const float p_o574015679930_depth_scale = 0.500000000;
+const float p_o4974679437367_translate_x = 0.000000000;
+const float seed_o574032457645 = 0.000000000;
+const float p_o574032457645_scale_x = 1.000000000;
+const float p_o574032457645_scale_y = 30.000000000;
+const float p_o574032457645_smoothness = 1.000000000;
+const float p_o574032457645_interpolation = 1.000000000;
+// #globals: translate_3 (o4974679437367)
+// #globals: noise_anisotropic (o574032457645)
+float anisotropic(vec2 uv, vec2 size, float seed, float smoothness, float interpolation) {
+	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
+
+	vec2 xy = floor(uv*size);
+	vec2 offset = vec2(rand(seed2 + xy.y), 0.0);
+	vec2 xy_offset = floor(uv * size + offset );
+	float f0 = rand(seed2+mod(xy_offset, size));
+	float f1 = rand(seed2+mod(xy_offset+vec2(1.0, 0.0), size));
+	float mixer = clamp( (fract(uv.x*size.x+offset.x) -.5) / smoothness + 0.5, 0.0, 1.0 );
+	float smooth_mix = smoothstep(0.0, 1.0, mixer);
+	float linear = mix(f0, f1, mixer);
+	float smoothed = mix(f0, f1, smooth_mix);
+
+	return mix(linear, smoothed, interpolation);
+}
+void fragment() {
+	ALBEDO = vec3(0.1, 0.3, 0.5);
+	float _seed_variation_ = variation;
+	vec2 uv = fract(UV);
+
+// #output0: noise_anisotropic (o574032457645)
+float o574032457645_0_1_f = anisotropic(((uv)-vec2(p_o4974679437367_translate_x, (-((elapsed_time * 0.3)+(tan(elapsed_time)*0.1))))), vec2(p_o574032457645_scale_x, p_o574032457645_scale_y), (seed_o574032457645+fract(_seed_variation_)), p_o574032457645_smoothness, p_o574032457645_interpolation);
+
+// #output0: translate_3 (o4974679437367)
+vec4 o4974679437367_0_1_rgba = vec4(vec3(o574032457645_0_1_f), 1.0);
+
+	vec3 albedo_tex = vec3(1.0).rgb;
+	albedo_tex = mix(pow((albedo_tex + vec3(0.055)) * (1.0 / (1.0 + 0.055)),vec3(2.4)),albedo_tex * (1.0 / 12.92),lessThan(albedo_tex,vec3(0.04045)));
+	ALBEDO = albedo_tex*p_o574015679930_albedo_color.rgb;
+	METALLIC = 1.0*p_o574015679930_metallic;
+	ROUGHNESS = 1.0*p_o574015679930_roughness;
+	NORMAL_MAP = vec3(0.5);
+	NORMAL_MAP_DEPTH = p_o574015679930_normal;
+	EMISSION = vec3(0.0)*p_o574015679930_emission_energy;
+	ALPHA = (dot((o4974679437367_0_1_rgba).rgb, vec3(1.0))/3.0);
+}

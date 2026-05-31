@@ -1,0 +1,130 @@
+[gd_scene load_steps=16 format=3 uid="uid://f37saf310u6v"]
+
+[ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_ujtst"]
+[ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_2xnlg"]
+[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="3_8hc64"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_q128n"]
+[ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="5_n5wcn"]
+[ext_resource type="PackedScene" uid="uid://0mnvycgijgpy" path="res://_framework/entities/player/grappling_hook.tscn" id="6_413rv"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hh4bn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h4x50"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ujtst"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2xnlg"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8hc64"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q128n"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_n5wcn"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_413rv"]
+
+[node name="playerSpace" type="CharacterBody3D"]
+collision_layer = 5
+collision_mask = 2
+script = ExtResource("1_ujtst")
+maxSpeed = 15.0
+jumpHeight = 2.75
+timeToApex = 0.89
+apexHangTime = 0.2
+fallGravityMultiplier = 1.1
+grapplingHookEnabled = false
+grappleAttachImpulseStrength = 20.55
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004080862)
+visible = false
+mesh = SubResource("CapsuleMesh_hh4bn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.40253866, 0, 0, 0, 1, 0, 0, 0, 0.40253866, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_h4x50")
+
+[node name="CameraAnchor" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4390247, 0)
+
+[node name="InteractionRaycast" type="RayCast3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, 50, 0)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.13870001, 0.6413051, 0.73, 0.2784314)
+
+[node name="GrappleStartMarker" type="Marker3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23946804, 0)
+
+[node name="GrappleRaycast" type="RayCast3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1)
+collision_mask = 2
+debug_shape_custom_color = Color(0.4968, 0.69, 0.61915994, 0.4392157)
+
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("2_2xnlg")
+metadata/_custom_type_script = "uid://bvgsjve6ghkfg"
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape3D_abrql")
+debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
+
+[node name="Crosshair" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_8hc64")]
+visible = false
+player = NodePath("..")
+
+[node name="SfxEventHandler" parent="." instance=ExtResource("4_q128n")]
+unique_name_in_owner = true
+sfxIds = Dictionary[String, String]({
+"death": "step",
+"deathFancy": "step",
+"jump": "step",
+"respawn": "step",
+"respawnFancy": "step",
+"step": "step"
+})
+
+[node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_ujtst")
+
+[node name="deathFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_2xnlg")
+
+[node name="jump" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_8hc64")
+
+[node name="respawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_q128n")
+
+[node name="respawnFancy" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_n5wcn")
+
+[node name="step" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_413rv")
+
+[node name="FadeToBlackOverlay" parent="." instance=ExtResource("5_n5wcn")]
+unique_name_in_owner = true
+
+[node name="GrapplingHook" parent="." node_paths=PackedStringArray("raycast", "throwOrigin") instance=ExtResource("6_413rv")]
+unique_name_in_owner = true
+raycast = NodePath("../CameraAnchor/GrappleRaycast")
+throwOrigin = NodePath("../CameraAnchor/GrappleStartMarker")
+
+[connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
+[connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]
+[connection signal="jump_pressed" from="InputHandler" to="." method="_on_jump_pressed"]
+[connection signal="mouse_moved" from="InputHandler" to="." method="_on_mouse_moved"]
+[connection signal="respawn" from="InputHandler" to="." method="_on_input_handler_respawn"]
+[connection signal="update_input_direction" from="InputHandler" to="." method="_on_updated_input_direction"]
+[connection signal="hook_attached" from="GrapplingHook" to="." method="_on_grappling_hook_hook_attached"]
+[connection signal="hook_detached" from="GrapplingHook" to="." method="_on_grappling_hook_hook_detached"]

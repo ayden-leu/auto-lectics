@@ -61,7 +61,7 @@ func _on_preset_chooser_updated(newPreset:String) -> void:
 		valueHolder.get_line_edit().editable = false
 		valueHolder.value = -1
 		return
-	
+
 	value = DialogueDefaults.WRITE_SPEED_PRESETS[newPreset]
 
 func _on_preset_chooser_updated_via_code(newPreset:String) -> void:

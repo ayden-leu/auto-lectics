@@ -1,0 +1,17 @@
+{
+	"text": "THE CHAMBER! You don't know about THE CHAMBER? That's the whole reason we're here.",
+	"mode": "normal",
+	"type": "angry",
+	"options": [
+		{
+			"text": "So what's in there?",
+			"type": "neutral",
+			"nextID": "ProjectDescription"
+		},
+		{
+			"text": "Why are we here again?",
+			"type": "neutral",
+			"nextID": "StupidQuestion"
+		}
+	]
+}

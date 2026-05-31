@@ -1,0 +1,163 @@
+[gd_scene load_steps=19 format=3 uid="uid://g6t686xswfwk"]
+
+[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="1_ib24h"]
+[ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="2_6mdwo"]
+[ext_resource type="PackedScene" uid="uid://db24nhectuest" path="res://models/environment/environmentscenes/area_2_environment.tscn" id="3_ac8ga"]
+[ext_resource type="PackedScene" uid="uid://dikbwfhelce82" path="res://models/environment/environmentscenes/stairs.tscn" id="4_onuil"]
+[ext_resource type="PackedScene" uid="uid://6xlk2w2be1gv" path="res://models/environment/trussing_forstairs.tscn" id="5_jahy0"]
+[ext_resource type="PackedScene" uid="uid://dgbsdtvmc1s3s" path="res://entities/npcs/generatorNPC.tscn" id="12_6lcgf"]
+[ext_resource type="PackedScene" uid="uid://b5qe2d4n561ak" path="res://entities/npcs/sludge.tscn" id="13_u2knn"]
+[ext_resource type="PackedScene" uid="uid://n41wo1q732c2" path="res://models/environment/tub.tscn" id="14_hbds2"]
+[ext_resource type="PackedScene" uid="uid://tqt27f4t0m0c" path="res://entities/npcs/miniboss2.tscn" id="15_qcv6r"]
+[ext_resource type="PackedScene" uid="uid://h1q7nwfs2wpl" path="res://entities/npcs/sideNPCS/splode.tscn" id="16_0hegk"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="17_lstpo"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="18_173me"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="19_p7v6n"]
+[ext_resource type="Script" uid="uid://cwtbpvdwgynmd" path="res://world/forceRepsawn.gd" id="20_jvl4d"]
+[ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="21_5cq6d"]
+[ext_resource type="PackedScene" uid="uid://cdc1ote2y5spv" path="res://models/environment/embyro.tscn" id="22_lnhh2"]
+
+[sub_resource type="GDScript" id="GDScript_doxto"]
+script/source = "extends Node3D
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta: float) -> void:
+#	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
+#		get_tree().reload_current_scene()
+		
+
+
+
+# ---------------------------------------------------------------
+# uncomment the below code if you want the `open_gate` command
+# to work regardless of who opened the DialogueConsole
+# ---------------------------------------------------------------
+
+func _ready() -> void:
+	FR_MenuManager.enable() 
+#func _on_console_command_entered(command:String) -> void:
+	#if command == \"open_gate\":
+		#$npcs/miniboss2/gateNode.open_gate()
+"
+
+[sub_resource type="Curve3D" id="Curve3D_sxeh0"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.6250153, 0.007007599, 10.114761, 0, 0, 0, 0, 0, 0, 1.6370943, -1.335144e-05, 10.326698, 1.925556, 0, -0.105508804, -1.925556, 0, 0.105508804, 0.13357711, -1.335144e-05, 12.041235, 0, 0, 0, 0, 0, 0, -1.7919788, -1.335144e-05, 10.379454, 0, 0, 0, 0, 0, 0, -1.639679, 0.007009506, 9.786102, -2.189333, 0, -0.07913208, 2.189333, 0, 0.07913208, 0.09126282, 0.007009506, 8.361877),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="week_6_playtest" type="Node3D"]
+script = SubResource("GDScript_doxto")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)
+light_color = Color(0.98435444, 0.81607527, 0.73283553, 1)
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 2.825
+shadow_blur = 0.296
+directional_shadow_max_distance = 4096.0
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("1_ib24h")
+volume_db = 17.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
+stream = ExtResource("2_6mdwo")
+
+[node name="Background" type="Node3D" parent="Environment"]
+
+[node name="Area 2 Environment" parent="Environment/Background" instance=ExtResource("3_ac8ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.406403, -10.897732, -77.5891)
+visible = false
+
+[node name="Foreground" type="Node3D" parent="Environment"]
+
+[node name="Stairs" type="Node3D" parent="Environment/Foreground"]
+transform = Transform3D(8.819942, 0, 0, 0, 3.3292618, 0, 0, 0, 3.3292618, -6.6619377, 4.2248344, -3.0258179)
+
+[node name="trussingForstairs" parent="Environment/Foreground/Stairs" instance=ExtResource("5_jahy0")]
+transform = Transform3D(-2.781701e-10, 0, -0.0063637896, 0, 0.01685907, 0, 0.01685907, 0, -7.3693335e-10, 0.83387864, -1.2404032, 1.4531736)
+
+[node name="trussingForstairs2" parent="Environment/Foreground/Stairs" instance=ExtResource("5_jahy0")]
+transform = Transform3D(-2.781701e-10, 0, -0.0063637896, 0, 0.01685907, 0, 0.01685907, 0, -7.3693335e-10, 0.83387864, 1.4043272, 1.4531736)
+
+[node name="trussingForstairs3" parent="Environment/Foreground/Stairs" instance=ExtResource("5_jahy0")]
+transform = Transform3D(0.0063637896, 0, 0, 0, 0.01685907, 0, 0, 0, 0.01685907, 1.1200529, -1.240403, 2.480973)
+
+[node name="trussingForstairs4" parent="Environment/Foreground/Stairs" instance=ExtResource("5_jahy0")]
+transform = Transform3D(0.0063637896, 0, 0, 0, 0.01685907, 0, 0, 0, 0.01685907, 1.1200529, 1.4043272, 2.480973)
+
+[node name="trussingForstairs5" parent="Environment/Foreground/Stairs" instance=ExtResource("5_jahy0")]
+transform = Transform3D(0.0063637896, 0, 0, 0, 0.01685907, 0, 0, 0, 0.01685907, 1.1200529, -1.240403, 0.5392958)
+
+[node name="trussingForstairs6" parent="Environment/Foreground/Stairs" instance=ExtResource("5_jahy0")]
+transform = Transform3D(0.0063637896, 0, 0, 0, 0.01685907, 0, 0, 0, 0.01685907, 1.1200529, 1.4043272, 0.5392958)
+
+[node name="Node3D" parent="Environment/Foreground/Stairs" instance=ExtResource("4_onuil")]
+transform = Transform3D(0.98805577, 0, 0, 0, 0.7459223, 0, 0, 0, 0.7459223, 0, 0.42739785, 0.2620539)
+
+[node name="Node3D2" parent="Environment/Foreground/Stairs" instance=ExtResource("4_onuil")]
+transform = Transform3D(0.98805577, 0, 0, 0, 0.7459223, 0, 0, 0, 0.7459223, 0, 2.1068575, 0.26219165)
+
+[node name="Node3D3" parent="Environment/Foreground/Stairs" instance=ExtResource("4_onuil")]
+transform = Transform3D(0.98805577, 0, 0, 0, 0.7459223, 0, 0, 0, 0.7459223, 0, -2.932705, 0.2620539)
+
+[node name="Node3D4" parent="Environment/Foreground/Stairs" instance=ExtResource("4_onuil")]
+transform = Transform3D(0.98805577, 0, 0, 0, 0.7459223, 0, 0, 0, 0.7459223, 0, -1.2532451, 0.2621916)
+
+[node name="npcs" type="Node" parent="."]
+
+[node name="exile" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("12_6lcgf")]
+transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 75.89146, 11.654917, 526.615)
+initialDialogueID = "EB1"
+myName = "exile"
+patrolPath = NodePath("../Path3D")
+
+[node name="Path3D" type="Path3D" parent="npcs"]
+transform = Transform3D(0.64806646, -3.5013168e-09, -3.734738e-09, 7.1193433e-09, 0.6480666, 1.1204213e-08, -3.7347373e-08, -3.7347374e-09, 0.6480666, 76.89665, 11.642079, 520.6601)
+curve = SubResource("Curve3D_sxeh0")
+debug_custom_color = Color(1, 1, 1, 1)
+
+[node name="sludge" parent="npcs" instance=ExtResource("13_u2knn")]
+transform = Transform3D(-0.39791664, 0, 0.91742146, 0, 1, 0, -0.91742146, 0, -0.39791664, 7.075592, 4.146986, 418.60422)
+
+[node name="tub" parent="npcs" instance=ExtResource("14_hbds2")]
+transform = Transform3D(1.2850658, -0.267879, 5.9604645e-08, 0.2678791, 1.2850655, -7.824237e-08, 0, 5.9604645e-08, 1.3126888, 3.0332832, -5.562578, 403.0261)
+
+[node name="tub2" parent="npcs" instance=ExtResource("14_hbds2")]
+transform = Transform3D(1.8213544, 1.434449, 0, -1.434449, 1.8213549, -1.15484e-07, -5.9604645e-08, 1.1920929e-07, 2.3183997, -3.2960968, -3.4786959, 420.33813)
+
+[node name="miniBoss2" parent="npcs" instance=ExtResource("15_qcv6r")]
+transform = Transform3D(3.002941, 0, 2.543347, 0, 3.9352596, 0, -2.543347, 0, 3.002941, 93.89873, 6.671957, 350.78043)
+
+[node name="splode" parent="npcs" instance=ExtResource("16_0hegk")]
+transform = Transform3D(0.11958245, 0, -0.99282426, 0, 1, 0, 0.99282426, 0, 0.11958245, 136.21997, 3.6323833, 485.08292)
+_talkOnlyOnce = false
+
+[node name="Player" parent="." instance=ExtResource("17_lstpo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7058907, 16.95564, -0.76000595)
+maxSpeed = 13.4
+acceleration = 9.5
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("18_173me")]
+transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)
+focus = NodePath("../Player")
+
+[node name="DeathPlane" parent="." instance=ExtResource("19_p7v6n")]
+transform = Transform3D(0.94075656, 0, -0.33908275, 0, 1, 0, 0.33908275, 0, 0.94075656, 48.671253, -72.754974, -109.03)
+
+[node name="Node3D" type="Node3D" parent="DeathPlane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.739603, 73.80671, 120.61255)
+script = ExtResource("20_jvl4d")
+
+[node name="FadeToBlackHitbox" parent="." instance=ExtResource("21_5cq6d")]
+transform = Transform3D(0.30690813, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.30690813, -10.712891, -11.071636, -99.01719)
+
+[node name="embyro" parent="." instance=ExtResource("22_lnhh2")]
+transform = Transform3D(6.382273, 0, 0, 0, 6.382273, 0, 0, 0, 6.382273, 51.29074, 77.83626, 62.72262)

@@ -1,0 +1,244 @@
+{
+	"connections": [
+		{
+			"from": "noise_anisotropic",
+			"from_port": 0,
+			"to": "translate",
+			"to_port": 0
+		},
+		{
+			"from": "translate",
+			"from_port": 0,
+			"to": "math_2",
+			"to_port": 0
+		},
+		{
+			"from": "sdcircle",
+			"from_port": 0,
+			"to": "custom_tiles",
+			"to_port": 0
+		},
+		{
+			"from": "math_2",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 7
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@867",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_paths": {
+
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 155.048950195313,
+				"y": -211.657333374023
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 0.474509805440903,
+					"b": 0.936580896377563,
+					"g": 1.0,
+					"r": 0.458823561668396,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 0.39
+			},
+			"seed_int": 0,
+			"type": "material_dynamic"
+		},
+		{
+			"name": "noise_anisotropic",
+			"node_position": {
+				"x": -549.019409179688,
+				"y": -183.380477905273
+			},
+			"parameters": {
+				"interpolation": 1.0,
+				"scale_x": 1.0,
+				"scale_y": 30.0,
+				"smoothness": 1.0
+			},
+			"seed_int": 0,
+			"type": "noise_anisotropic"
+		},
+		{
+			"generic_size": 2,
+			"name": "translate",
+			"node_position": {
+				"x": -295.58251953125,
+				"y": 186.357971191406
+			},
+			"parameters": {
+				"translate_x": 0.0,
+				"translate_y": "$time*0.4"
+			},
+			"seed_int": 0,
+			"type": "translate"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -54.4999389648438,
+				"y": -288.999969482422
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 0,
+					"points": [
+						{
+							"a": 0.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0,
+							"r": 0.0
+						},
+						{
+							"a": 0.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.493310610687023,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 0.493330610687023,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "math_2",
+			"node_position": {
+				"x": 72.2097778320313,
+				"y": 233.505676269531
+			},
+			"parameters": {
+				"clamp": false,
+				"default_in1": 1.0,
+				"default_in2": 0.5,
+				"op": 2
+			},
+			"seed_int": 0,
+			"type": "math"
+		},
+		{
+			"name": "custom_tiles",
+			"node_position": {
+				"x": -478.537811279297,
+				"y": 94.9189147949219
+			},
+			"parameters": {
+				"bevel": 0.05,
+				"columns": 23.0,
+				"mirror": true,
+				"mortar": 0.0,
+				"row_offset": 0.25,
+				"rows": 23.0
+			},
+			"seed_int": 0,
+			"type": "custom_tiles"
+		},
+		{
+			"name": "sdcircle",
+			"node_position": {
+				"x": -210.74983215332,
+				"y": -364.047241210938
+			},
+			"parameters": {
+				"cx": 0.0,
+				"cy": 0.0,
+				"r": 0.4
+			},
+			"seed_int": 0,
+			"type": "sdcircle"
+		},
+		{
+			"name": "math",
+			"node_position": {
+				"x": -347.837615966797,
+				"y": 356.901245117188
+			},
+			"parameters": {
+				"clamp": false,
+				"default_in1": "$time",
+				"default_in2": 0.5,
+				"op": 2
+			},
+			"seed_int": 0,
+			"type": "math"
+		},
+		{
+			"name": "randomize",
+			"node_position": {
+				"x": -271.680297851563,
+				"y": -23.3320865631104
+			},
+			"parameters": {
+
+			},
+			"seed_int": 3228724,
+			"type": "randomize"
+		},
+		{
+			"name": "text",
+			"node_position": {
+				"x": -161.843475341797,
+				"y": -144.684066772461
+			},
+			"parameters": {
+				"alignment": 0.0,
+				"bg": {
+					"a": 1.0,
+					"b": 0.0,
+					"g": 0.0,
+					"r": 0.0,
+					"type": "Color"
+				},
+				"center": false,
+				"fg": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"font": "",
+				"font_size": 64.0,
+				"line_spacing": 0.0,
+				"text": "Text",
+				"x": -0.4,
+				"y": -0.4
+			},
+			"seed_int": 0,
+			"type": "text"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

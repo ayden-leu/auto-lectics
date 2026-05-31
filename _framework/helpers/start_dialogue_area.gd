@@ -42,17 +42,17 @@ func _on_area_entered(area:Area3D) -> void:
 	var areaOwner:Node3D = area.get_parent()
 	if areaOwner is Player:
 		interactableNpcToInitiate._on_interaction(areaOwner)
-
+	
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if not interactableNpcToInitiate:
 		warnings.push_back(
 			"An InteractableNPC is not set."
 		)
-	
+
 	return warnings

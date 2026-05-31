@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bmoc20dib400"]
 
-[ext_resource type="Texture2D" path="res://world/8698.jpg" id="1_4rphk"]
+[ext_resource type="Texture2D" uid="uid://x72qdau6iqg8" path="res://textures/cloud.png" id="1_4rphk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3oxr"]
 transparency = 1

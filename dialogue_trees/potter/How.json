@@ -1,0 +1,14 @@
+{
+	"text": "",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "You're not going to really respond are you? ",
+			"nextID": "Who"
+		},
+		{
+			"text": "",
+			"nextID": "Who"
+		}
+	]
+}

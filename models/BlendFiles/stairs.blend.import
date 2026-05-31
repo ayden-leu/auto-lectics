@@ -37,7 +37,38 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"darkmetal1": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/PlateMaterial.tres",
+"use_external/path": "uid://ladf8f7cniqt"
+}
+},
+"nodes": {
+"PATH:Cube_136": {
+"generate/occluder": 1
+},
+"PATH:Cube_137": {
+"generate/occluder": 1
+},
+"PATH:Cube_138": {
+"generate/occluder": 1
+},
+"PATH:Cube_139": {
+"generate/occluder": 1
+},
+"PATH:Cube_140": {
+"generate/occluder": 1
+},
+"PATH:Cube_141": {
+"generate/occluder": 1
+},
+"PATH:Cube_142": {
+"generate/occluder": 1
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

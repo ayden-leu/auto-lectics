@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dikbwfhelce82"]
+
+[ext_resource type="PackedScene" uid="uid://bu4531d7q80lj" path="res://models/environment/stairs.tscn" id="1_mulm0"]
+[ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="2_mulm0"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(2.6492186, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="stairs" parent="." instance=ExtResource("1_mulm0")]
+transform = Transform3D(1.1924515, 0, 0, 0, 1.2145852, 0, 0, 0, 1.2145852, 0.99474275, -0.2095834, 1.0557052)
+
+[node name="stairs2" parent="." instance=ExtResource("1_mulm0")]
+transform = Transform3D(-1.1924515, 0, 1.0618241e-07, 0, 1.2145852, 0, -1.0424742e-07, 0, -1.2145852, 1.2451154, 0.9126713, 2.0535333)
+
+[node name="MetalBigFlat" parent="." instance=ExtResource("2_mulm0")]
+transform = Transform3D(0.05090762, 0, 0, 0, 0.15932369, 0, 0, 0, -0.037467983, 1.113913, 0.9381696, 0.79407495)
+
+[node name="MetalBigFlat2" parent="." instance=ExtResource("2_mulm0")]
+transform = Transform3D(0.05090762, 0, 0, 0, 0.15932369, 0, 0, 0, -0.037467983, 1.113913, 2.0598981, 2.3145597)

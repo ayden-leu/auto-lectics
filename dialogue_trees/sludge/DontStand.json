@@ -1,0 +1,18 @@
+{
+	"text": "Don't stand here?!?! Are you saying that because I don't have any legs!?!?",
+	"mode": "hectic",
+	"type": "neutral",
+	"nextOnHecticFailureID": "SoWhat_HecticFail",
+	"options": [
+		{
+			"text": "Yes.",
+			"type": "neutral",
+			"nextID": "JokeAround"
+		},
+		{
+			"text": "No, that's not what I meant.",
+			"type": "neutral",
+			"nextID": "Apologize2"
+		}
+	]
+}

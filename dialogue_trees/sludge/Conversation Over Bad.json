@@ -1,0 +1,11 @@
+{
+	"text": "I don't want to talk to you anymore.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"type": "neutral"
+		}
+	]
+}

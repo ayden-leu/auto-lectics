@@ -1,0 +1,12 @@
+{
+	"text": "That's such an Old Frog thing to ask.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "Old Frog?",
+			"type": "neutral",
+			"nextID": "Apologize2"
+		}
+	]
+}

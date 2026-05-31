@@ -1,4 +1,5 @@
 @tool
+@icon("uid://dycpbdo33wb4c")
 extends Node3D
 class_name PlayerCamera
 ## Holds both the player's camera.
@@ -50,7 +51,7 @@ func _ready() -> void:
 	# Makes sure the code only runs while the game is running
 	if Engine.is_editor_hint():
 		return
-	
+
 	_actAsFocus = true
 	rotation = focus.rotation
 
@@ -60,9 +61,9 @@ func _process(_delta: float) -> void:
 		return
 	if not focus:
 		return
-	
+
 	global_transform = focus.cameraAnchor.global_transform
-	
+
 	if(_actAsFocus):
 		_firstPersonMode()
 	else:
@@ -92,7 +93,7 @@ func _thirdPersonMode() -> void:
 func _on_mouse_moved(distanceMoved:Vector2) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
-		
+
 	#print(name + ": mouse moved")
 	rotation_degrees.x += -distanceMoved.y
 	rotation_degrees.y += -distanceMoved.x
@@ -102,10 +103,10 @@ func _on_mouse_moved(distanceMoved:Vector2) -> void:
 # ------------------------------------------------
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:Array[String] = []
-	
+
 	if not focus and self != get_tree().edited_scene_root:
 		warnings.push_back(
 			"No object has been assigned to the Focus property.
 		")
-	
+
 	return warnings

@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://b4qdi730tv5hl"]
 
 [ext_resource type="Script" uid="uid://ce4lw2sodbx0m" path="res://_framework/ui/hud/crosshair.gd" id="1_07bos"]
-[ext_resource type="Texture2D" uid="uid://dnfswnomwkg02" path="res://_framework/_visual_assets/crosshair/crosshair_normal.png" id="2_8hujb"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rcenm"]
+load_path = "res://.godot/imported/crosshair_normal.png-1d0e696137ec9e1e03897c4d5216955b.ctex"
 
 [node name="Crosshair" type="Control"]
 layout_mode = 3
@@ -31,4 +33,5 @@ mouse_filter = 2
 unique_name_in_owner = true
 z_index = -10
 texture_filter = 1
-texture = ExtResource("2_8hujb")
+scale = Vector2(0.075514525, 0.075514525)
+texture = SubResource("CompressedTexture2D_rcenm")

@@ -1,0 +1,10 @@
+{
+	"text": "Now leave before something bad happens to you.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[EXIT]"
+		}
+	]
+}

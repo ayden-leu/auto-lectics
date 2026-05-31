@@ -1,0 +1,22 @@
+{
+	"text": "You see that big chamber up there? Yeah, that's all me.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "You made that chamber?",
+			"type": "neutral",
+			"nextID": "StupidQuestion"
+		},
+		{
+			"text": "You came from that chamber?",
+			"type": "neutral",
+			"nextID": "StupidQuestion"
+		},
+		{
+			"text": "So what's in the chamber?",
+			"type": "neutral",
+			"nextID": "QuestionChamber"
+		}
+	]
+}

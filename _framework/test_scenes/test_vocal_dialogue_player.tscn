@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfnx4x0taxaja"]
+
+[ext_resource type="Script" uid="uid://cuikkmjx7i2kw" path="res://_framework/test_scenes/test_vocal_dialogue_player.gd" id="1_a1vij"]
+[ext_resource type="PackedScene" uid="uid://nrwq44bva56" path="res://_framework/helpers/vocal_dialogue_player.tscn" id="2_2y0fl"]
+
+[node name="Test_VocalDialoguePlayer" type="Node"]
+script = ExtResource("1_a1vij")
+
+[node name="VocalDialoguePlayer" parent="." instance=ExtResource("2_2y0fl")]
+dialogueTreeID = "_test"
+initialDialogueID = "intro_001"
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = -11.5
+offset_right = 127.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press the interact button to start"

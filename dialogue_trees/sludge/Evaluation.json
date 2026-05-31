@@ -1,0 +1,17 @@
+{
+	"text": "Evaluation? What's there to evaluate?",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "This place is a mess.",
+			"type": "neutral",
+			"nextID": "Mess"
+		},
+		{
+			"text": "Just standard procedure.",
+			"type": "neutral",
+			"nextID": "Procedure"
+		}
+	]
+}

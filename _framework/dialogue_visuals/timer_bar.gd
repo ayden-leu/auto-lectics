@@ -66,12 +66,12 @@ func _ready() -> void:
 		return
 	else:
 		visible = false
-	
+
 	_originalBarSize = bar.mesh.size
 
 func _process(delta: float) -> void:
 	_updateBar()
-	
+
 	if shouldCountdown:
 		timeElapsed += delta
 		if timeElapsed >= duration:
@@ -95,7 +95,7 @@ func pause() -> void:
 func stop() -> void:
 	if shouldCountdown == false:
 		return
-	
+
 	shouldCountdown = false
 	timeElapsed = 0
 	visible = false
@@ -107,7 +107,7 @@ func stop() -> void:
 func _timeout() -> void:
 	if not shouldCountdown:
 		return
-	
+
 	stop()
 	timeout.emit()
 

@@ -12,9 +12,11 @@ size = Vector3(2.2636719, 1, 1)
 script = ExtResource("1_abuul")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false
+dialogueTreeID = "mini-BOSS"
 initialDialogueID = "start"
 model = NodePath("miniboss")
-myName = "mini-BOSS"
+internalID = "mini-BOSS"
+displayName = "mini-BOSS"
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 6.396848, -0.15410192)

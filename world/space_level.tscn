@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://dybxuiqfbmjwu"]
+
+[ext_resource type="Script" uid="uid://dhs0icdywrl6v" path="res://space_level.gd" id="1_1a3ag"]
+[ext_resource type="Texture2D" uid="uid://mi0kj6m0ik6u" path="res://textures/starField.jpg" id="2_s142w"]
+[ext_resource type="PackedScene" uid="uid://wlc865s3d24k" path="res://models/environment/space.tscn" id="3_j482a"]
+[ext_resource type="PackedScene" uid="uid://wo7o5fb0ppt1" path="res://_framework/entities/npcs/space_Vocal_NPC.tscn" id="4_j482a"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="5_bjupe"]
+[ext_resource type="PackedScene" uid="uid://f37saf310u6v" path="res://_framework/entities/player/playerSpace.tscn" id="6_j482a"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o2c0p"]
+panorama = ExtResource("2_s142w")
+
+[sub_resource type="Sky" id="Sky_ghvm8"]
+sky_material = SubResource("PanoramaSkyMaterial_o2c0p")
+
+[sub_resource type="Environment" id="Environment_hc4ec"]
+background_mode = 2
+sky = SubResource("Sky_ghvm8")
+ambient_light_source = 2
+ambient_light_color = Color(0.9955804, 0.99558026, 0.99558026, 1)
+ambient_light_energy = 0.31
+
+[node name="spaceLevel" type="Node3D"]
+script = ExtResource("1_1a3ag")
+
+[node name="BG" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.680279, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="BG"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="BG"]
+environment = SubResource("Environment_hc4ec")
+
+[node name="Sprite3D" type="Sprite3D" parent="BG"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="FG" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.680279, 0)
+
+[node name="space" parent="FG" instance=ExtResource("3_j482a")]
+
+[node name="spaceNPC" parent="FG" instance=ExtResource("4_j482a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.4187527)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("5_bjupe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 5.680279, -15)
+focus = NodePath("../playerSpace")
+
+[node name="RespawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.006416, 7.860196, -14.703068)
+
+[node name="playerSpace" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("6_j482a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 4.453827, -15)
+respawnCheckpointLocation = NodePath("../RespawnPoint")

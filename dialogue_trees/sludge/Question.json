@@ -1,0 +1,17 @@
+{
+	"text": "What am I?!?! I'm the most IMPORTANT bot in this whole facility. What do you think?",
+	"mode": "normal",
+	"type": "angry",
+	"options": [
+		{
+			"text": "So, what do you do?",
+			"type": "neutral",
+			"nextID": "PurposeAsked"
+		},
+		{
+			"text": "You don't look important.",
+			"type": "neutral",
+			"nextID": "NotImportant"
+		}
+	]
+}

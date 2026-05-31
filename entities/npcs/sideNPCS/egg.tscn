@@ -6,15 +6,14 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.8026067
 
-[node name="egg" type="Node3D" node_paths=PackedStringArray("model", "hitbox")]
+[node name="egg" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_560c1")
-model = NodePath("egg")
-hitbox = NodePath("Hitbox")
-myName = "egg"
+_hitbox = NodePath("Hitbox")
+dialogueTreeID = "egg"
 initialDialogueID = "Dialogue1a"
 model = NodePath("egg")
-hitbox = NodePath("Hitbox")
-myName = "egg"
+internalID = "egg"
+displayName = "egg"
 
 [node name="Hitbox" type="Area3D" parent="."]
 transform = Transform3D(5.9928856, 0, 0, 0, 1, 0, 0, 0, 1, 0.07154727, 1.2036605, -0.15410192)

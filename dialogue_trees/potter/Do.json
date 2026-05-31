@@ -1,0 +1,15 @@
+{
+	"text": "Do you like my plants?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "They're look like they're dying. "
+		},
+		{
+			"text": "They're nice."
+		},
+		{
+			"text": "They're just going to be fed into that big tank right? "
+		}
+	]
+}

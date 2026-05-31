@@ -1,0 +1,22 @@
+{
+	"text": "Uhhhh, why do you wanna know? ",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "I'm curious.",
+			"type": "neutral",
+			"nextID": "Curious"
+		},
+		{
+			"text": "It's my job to know.",
+			"type": "neutral",
+			"nextID": "DodgingAlt"
+		},
+		{
+			"text": "Don't dodge the question.",
+			"type": "neutral",
+			"nextID": "Dodging"
+		}
+	]
+}

@@ -31,16 +31,16 @@ enum _OptionAnchor {
 # constants
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  Holds a reference to the dialogue option resource.
-const _OPTION_SCENE:Resource = preload(FR_Globals.SCENES.DialogueBoxOption)
+const _OPTION_SCENE:Resource = preload("uid://pdwngeenin11")
 ## [b]Internal-use only.[/b]  Holds a reference to the warning tile resource.
-const _WARNING_TILE_SCENE:Resource = preload(FR_Globals.SCENES.WarningTile3D)
+const _WARNING_TILE_SCENE:Resource = preload("uid://wm6t0orfpjfl")
 ## [b]Internal-use only.[/b]  The number of warning tiles to spawn during hectic mode.
 const _NUM_WARNINGS:int = 6
 
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly. 
+## Lets you choose which corner of the dialogue box to start spawning options from. Options will spawn up/down accordingly.
 @export var _optionsAnchor:_OptionAnchor = _OptionAnchor.TOP_LEFT
 ## The label that displays the current dialogue.
 @export var _myLabel:TypeWriterLabel3D
@@ -81,7 +81,7 @@ var text:String = "":
 	set(value):
 		text = value
 		_myLabel.fullText = value
-## The owner of this dialogue box.  Can't use [method get_parent()] due to the immediate parent not always being the thing that spawned this. 
+## The owner of this dialogue box.  Can't use [method get_parent()] due to the immediate parent not always being the thing that spawned this.
 var realOwner:Node3D
 ## The ID of the current dialogue.
 var currentDialogueID:String
@@ -123,7 +123,7 @@ func _ready() -> void:
 		$WarningPositionAreas.visible = true
 	else:
 		$WarningPositionAreas.visible = false
-	
+
 func _process(delta: float) -> void:
 	if _increaseVisibleTextAmount:
 		_timePassedSinceTextWriting += delta
@@ -138,7 +138,7 @@ func prepare() -> void:
 		_optionSpawnPositions.hectic.left = $OptionPositions/Hectic/Left.get_children()
 		_optionSpawnPositions.hectic.right = $OptionPositions/Hectic/Right.get_children()
 		_optionSpawnPositions.hectic.top = $OptionPositions/Hectic/Top.get_children()
-		
+
 		_createWarningTiles(_NUM_WARNINGS)
 		_timer.duration = 5.0  # TODO:  make this customizable
 		_timer.start()
@@ -152,17 +152,17 @@ func start() -> void:
 ## Loads the data of all posible options for this dialogue object. Also sorts the options from shortest to longest spawn delay.
 func loadOptionData(options: Array) -> void:
 	_optionData.clear()
-	
+
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
 			continue
-		
+
 		#Don't show any options that don't pass check_flag
 		var check_flags: Dictionary = option.checkFlags
 		if StoryFlags.flagsMatch(check_flags):
 			_optionData.push_back(option)
-	
-	_optionData.sort_custom(func(a, b): return a.spawnDelay < b.spawnDelay)
+
+	_optionData.sort_custom(func(a, b): return a.get("spawnDelay", 0.0) <= b.get("spawnDelay", 0.0))
 
 ## Loads the SFX from the files.
 func loadSfx(sfxEventsToLoad:Dictionary) -> void:
@@ -184,7 +184,7 @@ func _writeText() -> void:
 	var newVisibleAmount:int = roundi(_timePassedSinceTextWriting * textWriteSpeed)
 	_myLabel.visibleCharacters = newVisibleAmount
 	_sfxPlayers.text.play()
-	
+
 	if newVisibleAmount >= text.length():
 		_finishWritingText()
 
@@ -193,37 +193,37 @@ func _writeText() -> void:
 func _finishWritingText() -> void:
 	_increaseVisibleTextAmount = false
 	all_dialogue_text_visible.emit()
-	
+
 	var delay:float = delayBtwnWriteDialogueAndOptions \
 		if hecticFailureDialogueID == "" \
 		else delayBtwnWriteDialogueAndOptionsHectic
 	await get_tree().create_timer(delay).timeout
-	
+
 	if _optionData.size() == 0:
 		update_me.emit("")
 		return
-	
+
 	_createOptions()
 
 ## [b]Internal-use only.[/b]  Creates each option that the player can choose from for this dialogue object.
 func _createOptions() -> void:
 	var loadingDialogueID:String
 	var prevDelay:float = 0.0
-	
+
 	for optionObjectData in _optionData:
 		loadingDialogueID = currentDialogueID
-		
+
 		var spawnDelay = max(optionObjectData.spawnDelay - prevDelay, 0.001)
 		await get_tree().create_timer(spawnDelay).timeout
 		if loadingDialogueID != currentDialogueID:
 			return
 		prevDelay += spawnDelay - 0.001
-		
+
 		var newOption:DialogueBoxOption = _spawnOption()
 		_configureDialogueBoxOption(newOption, optionObjectData)
 		newOption.prepare()
 		new_option_available.emit()
-	
+
 	all_options_available.emit()
 
 ## [b]Internal-use only.[/b]  Creates a dialogue option scene and saves a reference to it in "_spawnedOptions"
@@ -239,12 +239,12 @@ func _setOptionPositionNormal(option:DialogueBoxOption) -> void:
 		option.position = _optionSpawnPositions.normal[_optionsAnchor].position
 		option.rotation_degrees = _optionSpawnPositions.normal[_optionsAnchor].rotation_degrees
 		return
-	
+
 	var lastOption:DialogueBoxOption = _spawnedOptions[-2]
 	var offsetMultiplier:float = 1.001
 	if _optionsAnchor == _OptionAnchor.BOTTOM_LEFT or _optionsAnchor == _OptionAnchor.BOTTOM_RIGHT:
 		offsetMultiplier *= -1
-	
+
 	option.position = lastOption.position + Vector3(0, -lastOption.labelHeight * offsetMultiplier, 0)
 	option.rotation_degrees = lastOption.rotation_degrees
 
@@ -269,10 +269,10 @@ func _setOptionPositionHectic(option:DialogueBoxOption, section:String) -> void:
 	var potentialPositions:Array = _optionSpawnPositions.hectic[section]
 	for usedPosition in _optionSpawnPositions.hectic.root.usedPositions:
 		potentialPositions.erase(usedPosition)
-	
+
 	var newPosition:Marker3D = potentialPositions.pick_random()
 	_optionSpawnPositions.hectic.root.usedPositions.push_back(newPosition)
-	
+
 	option.position = newPosition.position
 	option.rotation_degrees = newPosition.rotation_degrees
 
@@ -300,7 +300,7 @@ func _getValidHecticAreas() -> Array[String]:
 		toReturn.erase("right")
 	if _optionSpawnPositions.hectic.top.size() == 0:
 		toReturn.erase("top")
-	
+
 	match _optionsAnchor:
 		_OptionAnchor.TOP_LEFT:
 			toReturn.erase("right")
@@ -315,13 +315,13 @@ func _getValidHecticAreas() -> Array[String]:
 		_:
 			printerr("DialogueBox: _optionsAnchor value not accounted for")
 			return ["???"]
-	
+
 	return toReturn
 
 ## [b]Internal-use only.[/b]  Configures aspects of a dialogue option.
 func _configureDialogueBoxOption(option:DialogueBoxOption, data:Dictionary) -> void:
 	option.sfxEventsToLoad = data.sfx
-	
+
 	if mode == "normal":
 		_setOptionPositionNormal(option)
 		_setOptionAlignmentNormal(option)
@@ -331,7 +331,7 @@ func _configureDialogueBoxOption(option:DialogueBoxOption, data:Dictionary) -> v
 		_setOptionAlignmentHectic(option, chosenSection)
 	else:
 		printerr("DialogueBox: Mode is not set to 'normal' or 'hectic.' Got: ", mode)
-	
+
 	#instance.name = data.text
 	option.text = data.text
 	option.nextDialogueID = data.nextID
@@ -363,7 +363,7 @@ func _getWarningTilePosition() -> Vector3:
 	# TODO:  maybe make sure each area is picked at least once before picking again?
 	var chosenArea:MeshInstance3D = _warningAreas.pick_random()
 	var maxOffset:Vector3 = chosenArea.mesh.get_aabb().size
-	
+
 	_rng.randomize()
 	var offset:Vector3 = Vector3(
 		_rng.randf_range(-maxOffset.x, maxOffset.x),
@@ -395,10 +395,10 @@ func _deleteAllWarningTiles() -> void:
 func _on_option_picked(pickedOption:DialogueBoxOption, nextDialogueID:String) -> void:
 	if pickedOption:
 		StoryFlags.updateFlags(pickedOption.setFlags)
-	
+
 	_killAllOptions()
 	_deleteAllWarningTiles()
-	
+
 	_timer.stop()
 	#print("\nnext dialogue: ", nextDialogueID)
 	_sfxPlayers.spawn.stop()
@@ -418,15 +418,15 @@ func _on_timer_bar_timeout() -> void:
 func _on_warning_tile_overlap(warningTile:WarningTile3D) -> void:
 	if warningTile.numTimesRepositioned > 3:
 		return
-	
+
 	_rng.randomize()
 	var delay:float = _rng.randf_range(0.0, 1.0)
 	await get_tree().create_timer(delay).timeout
-	
+
 	# it's possible for the dialogue box to kill() in between the delay starting and stopping.
 	if not warningTile:
 		return
-	
+
 	warningTile.position = _getWarningTilePosition()
 	warningTile.lookAtCamera()
 	warningTile.numTimesRepositioned += 1

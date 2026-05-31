@@ -1,0 +1,18 @@
+{
+	"text": "What do you think is going on outside the world? ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "You mean outside the factory?",
+			"nextID": "How"
+		},
+		{
+			"text": "It's pretty bad out there.",
+			"nextID": "How"
+		},
+		{
+			"text": "",
+			"nextID": "How"
+		}
+	]
+}

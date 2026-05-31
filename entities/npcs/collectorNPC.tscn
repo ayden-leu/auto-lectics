@@ -11,9 +11,11 @@ size = Vector3(1.59375, 7.617676, 1.5296631)
 script = ExtResource("1_j8r5x")
 _hitbox = NodePath("Area3D")
 _talkOnlyOnce = false
+dialogueTreeID = "collector"
 initialDialogueID = "a"
 model = NodePath("GeneratorNPC")
-myName = "collector"
+internalID = "collector"
+displayName = "collector"
 metadata/_custom_type_script = "uid://um13i8jipsfx"
 
 [node name="Area3D" type="Area3D" parent="."]

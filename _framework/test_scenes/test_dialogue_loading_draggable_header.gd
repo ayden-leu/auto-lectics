@@ -52,7 +52,7 @@ func _process(_delta: float) -> void:
 		if _beingDragged == self:
 			_beingDragged = null
 		_offsetFromMouse = Vector2.ZERO
-	
+
 	if _mouseDragging and _beingDragged == self:
 		contents.global_position = get_global_mouse_position() - _offsetFromMouse
 

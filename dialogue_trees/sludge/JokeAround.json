@@ -1,0 +1,17 @@
+{
+	"text": "HAHA, that's pretty funny. Messed up, but funny. I'm Sludge.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "I'm a representative of the company. ",
+			"type": "neutral",
+			"nextID": "DontCare"
+		},
+		{
+			"text": "I need help figuring things out.",
+			"type": "neutral",
+			"nextID": "SludgeBot"
+		}
+	]
+}

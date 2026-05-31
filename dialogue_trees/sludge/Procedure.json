@@ -1,0 +1,12 @@
+{
+	"text": "Just standard procedure, huh?",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Secretive"
+		}
+	]
+}

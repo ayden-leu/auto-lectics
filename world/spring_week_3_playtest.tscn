@@ -50,7 +50,7 @@ script/source = "extends Node3D
 #func _process(delta: float) -> void:
 #	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
 #		get_tree().reload_current_scene()
-		
+
 
 
 
@@ -59,7 +59,11 @@ script/source = "extends Node3D
 # to work regardless of who opened the DialogueConsole
 # ---------------------------------------------------------------
 
-#func _ready() -> void:
+func _ready() -> void:
+	FR_MenuManager.enable() # either enable() or disable()
+	FR_WindowManager.enable() # either enable() or disable()
+	CursorHandler.setDefault(\"hidden\") # refer to documentation or hover over the function for valid values
+	CursorHandler.hideNuclear() # either hideNuclear() or showNuclear()
 	#FR_WindowManager.subscribeToConsole(self)
 #
 #func _on_console_command_entered(command:String) -> void:
@@ -375,7 +379,6 @@ transform = Transform3D(-1.3327236, 0, -2.3290458, 0, 2.6833947, 0, 2.3290458, 0
 transform = Transform3D(0.44070414, 0, 6.4035387, 0, 6.418686, 0, -6.4035387, 0, 0.44070414, 0, 47.69836, -177.32164)
 
 [node name="CEOBottomTube" parent="Environment/Models/Background" instance=ExtResource("18_i2csx")]
-transform = Transform3D(2.9337199, 0, -1.3758786, 0, 3.2403324, 0, 1.3758786, 0, 2.9337199, 0, 4.8914337, -177.84186)
 
 [node name="CEOBottomTube3" parent="Environment/Models/Background" instance=ExtResource("18_i2csx")]
 transform = Transform3D(-6.0325274, -2.8910992e-07, 2.8291812, 5.273802e-07, -3.3070319, -2.4733484e-07, 2.8291812, 0, 6.0325274, 0, 94.79193, -177.84186)
@@ -588,14 +591,19 @@ transform = Transform3D(2.7341738, -4.7518034, -5.3802125e-07, 1.4326831e-07, -2
 [node name="brokenUpPipe2" parent="npcs" instance=ExtResource("30_phryc")]
 transform = Transform3D(1.5249524, 0, 2.5087337, 0, 2.280819, 0, -1.6960704, 0, 2.255625, -81.5706, -22.855928, -52.229336)
 
-[node name="Player" parent="." instance=ExtResource("30_f150j")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("30_f150j")]
 transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
+respawnCheckpointLocation = NodePath("../RespawnCheckpoint")
 maxSpeed = 5.0
 
-[node name="StartDialogueAreaTemp" parent="Player" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("31_tujtg")]
-interactableNpcToInitiate = NodePath("../../npcs/ship")
+[node name="RespawnCheckpoint" type="Marker3D" parent="."]
+transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/StartDialogueAreaTemp"]
+[node name="StartDialogueAreaTemp" parent="." node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("31_tujtg")]
+transform = Transform3D(-0.99791, 0, 0.06461931, 0, 1, 0, -0.06461931, 0, -0.99791, -1.8073423, 0.63098633, 3.1272457)
+interactableNpcToInitiate = NodePath("../npcs/ship")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartDialogueAreaTemp"]
 transform = Transform3D(4.91608, 0, 0, 0, 4.91608, 0, 0, 0, 4.91608, 0, 0, 0)
 shape = SubResource("BoxShape3D_hsv1o")
 

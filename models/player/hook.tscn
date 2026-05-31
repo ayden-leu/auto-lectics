@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bigr7k425dm8m"]
+
+[ext_resource type="PackedScene" uid="uid://dybkc3h0n4kes" path="res://models/BlendFiles/hook.blend" id="1_ugs5q"]
+
+[node name="Comp" instance=ExtResource("1_ugs5q")]

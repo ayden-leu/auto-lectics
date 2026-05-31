@@ -1,5 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://drte8m2osgjcm"]
 
+[ext_resource type="Script" uid="uid://dueyx6cydqhpp" path="res://world/area2.gd" id="1_sxeh0"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_g1iaf"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="4_jvite"]
 [ext_resource type="PackedScene" uid="uid://db24nhectuest" path="res://models/environment/environmentscenes/area_2_environment.tscn" id="5_carg2"]
@@ -23,30 +24,6 @@
 [ext_resource type="Script" uid="uid://cwtbpvdwgynmd" path="res://world/forceRepsawn.gd" id="36_2kogd"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="37_l02qr"]
 
-[sub_resource type="GDScript" id="GDScript_doxto"]
-script/source = "extends Node3D
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	if $FadeToBlackHitbox.shouldIReloadTheScene == true:
-#		get_tree().reload_current_scene()
-		
-
-
-
-# ---------------------------------------------------------------
-# uncomment the below code if you want the `open_gate` command
-# to work regardless of who opened the DialogueConsole
-# ---------------------------------------------------------------
-
-func _ready() -> void:
-	FR_MenuManager.enable() 
-#func _on_console_command_entered(command:String) -> void:
-	#if command == \"open_gate\":
-		#$npcs/miniboss2/gateNode.open_gate()
-"
-
 [sub_resource type="Curve3D" id="Curve3D_sxeh0"]
 closed = true
 _data = {
@@ -55,8 +32,8 @@ _data = {
 }
 point_count = 6
 
-[node name="week_6_playtest" type="Node3D"]
-script = SubResource("GDScript_doxto")
+[node name="Area2" type="Node3D"]
+script = ExtResource("1_sxeh0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)
@@ -165,7 +142,6 @@ transform = Transform3D(2.4459057, -1.6227187, 8.7477154e-08, 9.256976e-09, -1.2
 [node name="exile" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("23_uf4jm")]
 transform = Transform3D(0.250634, 0, 0, 0, 0.25063398, 0, 0, 0, 0.25063398, 75.89146, 11.654917, 169.0174)
 initialDialogueID = "EB1"
-myName = "exile"
 patrolPath = NodePath("../Path3D")
 
 [node name="Path3D" type="Path3D" parent="npcs"]
@@ -189,10 +165,14 @@ transform = Transform3D(3.002941, 0, 2.543347, 0, 3.9352596, 0, -2.543347, 0, 3.
 transform = Transform3D(0.11958245, 0, -0.99282426, 0, 1, 0, 0.99282426, 0, 0.11958245, 136.21997, 3.6323833, 127.485344)
 _talkOnlyOnce = false
 
-[node name="Player" parent="." instance=ExtResource("32_eiahs")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("32_eiahs")]
 transform = Transform3D(0.77816635, 0, 0.62805825, 0, 1, 0, -0.62805825, 0, 0.77816635, 120.70497, 10.313862, 25.905254)
+respawnCheckpointLocation = NodePath("../RespawnCheckpoint")
 maxSpeed = 13.4
 acceleration = 9.5
+
+[node name="RespawnCheckpoint" type="Marker3D" parent="."]
+transform = Transform3D(0.77816635, 0, 0.62805825, 0, 1, 0, -0.62805825, 0, 0.77816635, 120.70497, 10.313862, 25.905254)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("34_asqrq")]
 transform = Transform3D(-0.014573067, 0, 0.99989384, 0, 1, 0, -0.99989384, 0, -0.014573067, 54.361618, -4.134655, -108.59828)

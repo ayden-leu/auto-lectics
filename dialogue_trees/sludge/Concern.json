@@ -1,0 +1,12 @@
+{
+	"text": "None of my concern, huh?",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Secretive"
+		}
+	]
+}

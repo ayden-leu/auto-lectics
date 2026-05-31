@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="16"
-   height="16"
+   width="128"
+   height="128"
    version="1.1"
    id="svg1"
    sodipodi:docname="icon_loop-manager.svg"
-   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -21,9 +21,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="21.080621"
-     inkscape:cx="1.2096418"
-     inkscape:cy="6.0244905"
+     inkscape:zoom="3.7265625"
+     inkscape:cx="51.522012"
+     inkscape:cy="42.398323"
      inkscape:window-width="2048"
      inkscape:window-height="1198"
      inkscape:window-x="0"
@@ -32,7 +32,7 @@
      inkscape:current-layer="svg1" />
   <g
      id="g1"
-     transform="translate(-0.10062894,0.12554241)"
+     transform="matrix(8,0,0,8,-0.80503152,1.0043393)"
      inkscape:label="arrow-bottom">
     <path
        fill="none"
@@ -70,7 +70,7 @@
   </g>
   <g
      id="g3"
-     transform="rotate(180,8.0210292,7.8373176)"
+     transform="matrix(-8,0,0,-8,128.33647,125.39708)"
      inkscape:label="arrow-top">
     <path
        fill="none"

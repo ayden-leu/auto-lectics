@@ -77,16 +77,16 @@ func _createEventSection(eventName:String) -> void:
 	if _sfxEventFieldOptions.has(eventName):
 		printerr("AspectsSFX:  Field for [", eventName, "] already exists.")
 		return
-	
+
 	var newEvent:DC_NodeSfxEventField = _SFX_EVENT_SCENE.instantiate()
 	newEvent.eventID = eventName
-	
+
 	if removeNpcDefaultEntry:
 		newEvent.removeNpcDefaultEntry()
 	if removeInherit:
 		newEvent.removeInherit()
 	newEvent.setup()
-	
+
 	eventHolder.add_child(VSeparator.new())
 	eventHolder.add_child(newEvent)
 	_sfxEventFieldOptions[eventName] = newEvent
@@ -108,7 +108,7 @@ func _getConfiguredEvents() -> Dictionary:
 ## Runs when a [DC_SfxEventFieldOption]'s chosen SFX ID gets updated.
 func _on_field_updated() -> void:
 	field_updated.emit()
-	
+
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------

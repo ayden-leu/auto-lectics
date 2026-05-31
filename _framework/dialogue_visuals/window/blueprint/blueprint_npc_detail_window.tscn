@@ -1,0 +1,184 @@
+[gd_scene load_steps=14 format=3 uid="uid://524kk63lga7"]
+
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_stmoi"]
+[ext_resource type="Script" uid="uid://c6ucujnx4pb32" path="res://_framework/dialogue_visuals/window/blueprint/blueprint_npc_detail_window.gd" id="2_l88yy"]
+[ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_h8c35"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_fyavw"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_re5ia"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fyavw"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0mrqo"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1akwj"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_50xor"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w2ecn"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_n2gd0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ynhip"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7bhs4"]
+
+[node name="BlueprintNpcDetailWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 364.0
+offset_bottom = 540.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_stmoi")
+script = ExtResource("2_l88yy")
+headerPanel = NodePath("Header")
+headerLabel = NodePath("Header/HBoxContainer/Label")
+canBeClosed = true
+closeButton = NodePath("Header/HBoxContainer/CloseButton")
+sfxEventHandler = NodePath("SfxEventHandler")
+metadata/_custom_type_script = "uid://bqvscaiprfmtl"
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 364.0
+offset_bottom = 30.0
+mouse_filter = 1
+theme_type_variation = &"PanelHeader"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 364.0
+offset_bottom = 27.0
+
+[node name="Label" type="Label" parent="Header/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "NPC Details"
+
+[node name="CloseButton" parent="Header/HBoxContainer" instance=ExtResource("3_h8c35")]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Contents" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 364.0
+offset_bottom = 540.0
+mouse_filter = 1
+
+[node name="GuessNpcNamePanel" type="Panel" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 81.0
+offset_top = 236.0
+offset_right = 278.0
+offset_bottom = 364.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Contents/GuessNpcNamePanel"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 23.0
+offset_right = 137.0
+offset_bottom = 46.0
+text = "Nameinput"
+
+[node name="GuessNpcNameField" type="LineEdit" parent="Contents/GuessNpcNamePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 24.5625
+offset_top = 52.0
+offset_right = 156.0
+offset_bottom = 83.0
+placeholder_text = "e.g John"
+
+[node name="SubmitNpcNameButton" type="Button" parent="Contents/GuessNpcNamePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 56.0
+offset_top = 87.0
+offset_right = 128.0
+offset_bottom = 118.0
+text = "Submit
+"
+
+[node name="NotesPanel" type="Panel" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 14.0
+offset_top = 354.0
+offset_right = 344.0
+offset_bottom = 504.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Contents/NotesPanel"]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 17.0
+offset_right = 226.0
+offset_bottom = 40.0
+text = "NotesPanel Label"
+
+[node name="NotesField" type="TextEdit" parent="Contents/NotesPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 28.0
+offset_top = 61.0
+offset_right = 300.0
+offset_bottom = 145.0
+placeholder_text = "put notes here"
+
+[node name="Portrait" type="TextureRect" parent="Contents"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -115.2
+offset_top = 6.0
+offset_right = 115.20001
+offset_bottom = 236.4
+grow_horizontal = 2
+texture = ExtResource("4_fyavw")
+expand_mode = 1
+
+[node name="SfxEventHandler" parent="." instance=ExtResource("4_re5ia")]
+sfxIds = Dictionary[String, String]({
+"buttonPressed": "",
+"click": "",
+"close": "",
+"drop": "",
+"guessNpcNameTextChanged": "",
+"hover": "",
+"notesFieldTextUpdated": "",
+"spawn": ""
+})
+
+[node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_fyavw")
+
+[node name="close" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_0mrqo")
+
+[node name="drop" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_1akwj")
+
+[node name="hover" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_50xor")
+
+[node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_w2ecn")
+
+[node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_n2gd0")
+
+[node name="guessNpcNameTextChanged" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_ynhip")
+
+[node name="notesFieldTextUpdated" type="AudioStreamPlayer" parent="SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_7bhs4")
+
+[connection signal="text_changed" from="Contents/GuessNpcNamePanel/GuessNpcNameField" to="." method="_on_guess_npc_name_field_text_changed"]
+[connection signal="pressed" from="Contents/GuessNpcNamePanel/SubmitNpcNameButton" to="." method="_on_npc_entry_name_submission"]
+[connection signal="text_changed" from="Contents/NotesPanel/NotesField" to="." method="_on_notes_field_text_changed"]

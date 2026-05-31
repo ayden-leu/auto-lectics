@@ -1,0 +1,14 @@
+{
+	"text": "Cause that's what the NOs do. Have you seen what they did to the others? Dismembered my fellow workers for their own disgusting project.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Who were these others?",
+			"nextID": "Others"
+		},
+		{
+			"text": "What project?",
+			"nextID": "Purpose"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"text": "YOU'RE NOT IMPORTANT!!!",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "[Continue]",
+			"type": "neutral",
+			"nextID": "Conversation Over Bad"
+		}
+	]
+}

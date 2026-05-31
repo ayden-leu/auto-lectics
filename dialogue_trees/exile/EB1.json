@@ -1,0 +1,20 @@
+{
+	"text": "Great, they sent another one.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "Excuse me?",
+			"type": "neutral",
+			"nextID": "EB2"
+		},
+		{
+			"text": "That wasn't very nice.",
+			"type": "neutral",
+			"nextID": "Tricked",
+			"checkFlags": {
+				"testFlag": false
+			}
+		}
+	]
+}

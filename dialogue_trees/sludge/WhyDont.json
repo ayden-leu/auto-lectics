@@ -1,0 +1,12 @@
+{
+	"text": "Cause I'm too busy doing important stuff.",
+	"mode": "normal",
+	"type": "neutral",
+	"options": [
+		{
+			"text": "So, what do you do?",
+			"type": "neutral",
+			"nextID": "Purpose"
+		}
+	]
+}

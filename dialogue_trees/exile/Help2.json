@@ -1,0 +1,13 @@
+{
+	"text": "Well. They broke the bridge out to here, and if you did pick me up and carry me back they'd just do it again. They're not nearly as original as they think they are. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]"
+		},
+		{
+			"text": "Maybe you could try being nicer? ",
+			"nextID": "no"
+		}
+	]
+}

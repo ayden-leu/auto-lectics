@@ -5,12 +5,11 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-			
+
 
 func open_gate():
-	
-		rotation.x = -90.0		
-		
-		#position += Vector3(0,-12,00) 
+
+		rotation.x = -90.0
+
+		#position += Vector3(0,-12,00)
 		pass
-			 
