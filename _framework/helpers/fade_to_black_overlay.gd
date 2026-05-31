@@ -1,23 +1,23 @@
 @icon("uid://cb6ajbh4fp7fh")
 extends Control
 class_name FadeToBlackOverlay
-## A helper scene that creates a fade-to-black screen transition. 
-## 
-## Can be used for scene transitions, player respawning, 
-## cutscenes, dialogue sequences, or any situation where the screen 
-## should fade in or out. 
-## [br][br] 
-## To use, add the pre-built [FadeToBlackOverlay] scene to your scene. 
-## Then call [method startFadeIn] or [method startFadeOut] 
-## whenever a fade transition is needed. 
-## [br][br] 
-## The [signal fade_in_complete] and [signal fade_out_complete] 
-## signals can be used to perform actions once the transition 
-## animation has finished. 
-## [br][br] 
-## The animation is entirely controlled by the attached 
-## [class AnimationPlayer]. 
-## Modify the fade animations there if a different transition speed 
+## A helper scene that creates a fade-to-black screen transition.
+##
+## Can be used for scene transitions, player respawning,
+## cutscenes, dialogue sequences, or any situation where the screen
+## should fade in or out.
+## [br][br]
+## To use, add the pre-built [FadeToBlackOverlay] scene to your scene.
+## Then call [method startFadeIn] or [method startFadeOut]
+## whenever a fade transition is needed.
+## [br][br]
+## The [signal fade_in_complete] and [signal fade_out_complete]
+## signals can be used to perform actions once the transition
+## animation has finished.
+## [br][br]
+## The animation is entirely controlled by the attached
+## [AnimationPlayer].
+## Modify the fade animations there if a different transition speed
 ## or appearance is desired.
 
 # ------------------------------------------------
@@ -78,12 +78,14 @@ func reset() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Ran by the animation player.
+## [b]Internal-use only.[/b]
+## Ran by the animation player.
 ## Runs when the fade in animation is complete.
 func _fadeInComplete() -> void:
 	fade_in_complete.emit()
 
-## [b]Internal-use only.[/b]  Ran by the animation player.
+## [b]Internal-use only.[/b]
+## Ran by the animation player.
 ## Runs when the fade out animation is complete.
 func _fadeOutComplete() -> void:
 	fade_out_complete.emit()
