@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://c0oamtxhc2q3l" path="res://_framework/test_scenes/test_label_preset.gd" id="1_vdm3e"]
 
 [node name="Test_LabelPreset" type="Control"]
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_vdm3e")
 metadata/_edit_lock_ = true
 
@@ -35,4 +37,21 @@ offset_right = 478.0
 offset_bottom = 135.0
 text = "here is some text that will change"
 
+[node name="StatusLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 772.0
+offset_right = 145.0
+offset_bottom = 795.0
+text = "Choose a preset."
+
+[node name="InvalidPresetButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 23.0
+offset_right = 193.0
+offset_bottom = 54.0
+text = "Test Invalid Preset"
+
 [connection signal="item_selected" from="HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="InvalidPresetButton" to="." method="_on_invalid_preset_button_pressed"]

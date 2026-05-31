@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://f52bdi4qqa6w"]
+
+[ext_resource type="Script" uid="uid://cbut3og8x2on" path="res://_framework/test_scenes/test_input_handler.gd" id="1_wig60"]
+[ext_resource type="PackedScene" uid="uid://dqu1u4diw32uv" path="res://_framework/helpers/input_handler.tscn" id="2_f283k"]
+
+[node name="TestInputHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_wig60")
+
+[node name="InputHandler" parent="." instance=ExtResource("2_f283k")]
+unique_name_in_owner = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 352.0
+offset_bottom = 238.0
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Input Handler Test:"
+
+[node name="MovementLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MouseLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InteractLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="JumpLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RespawnLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GrappleLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MovementToggleButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InteractionToggleButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="JumpToggleButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RespawnToggleButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2

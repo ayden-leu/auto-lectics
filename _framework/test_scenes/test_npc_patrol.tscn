@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bt36r3dqntrwu"]
+[gd_scene load_steps=11 format=3 uid="uid://bt36r3dqntrwu"]
 
 [ext_resource type="Script" uid="uid://b04t3tqdhiihd" path="res://_framework/test_scenes/test_npc_patrol.gd" id="1_us853"]
 [ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="2_tdgin"]
@@ -19,6 +19,20 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 21
+
+[sub_resource type="Curve3D" id="Curve3D_tdgin"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, -10),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_g8ism"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, -10),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [node name="Test_NpcPatrol" type="Node3D"]
 script = ExtResource("1_us853")
@@ -64,11 +78,34 @@ focus = NodePath("../Player")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.925569, 0)
 
-[node name="NPC_Test" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
+[node name="LoopNPC" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62437916, 0.34556866, 1.8266912)
-patrolPath = NodePath("../Path3D")
+patrolEnabled = true
+patrolPath = NodePath("../LoopPath")
+patrolSpeed = 5.0
 
-[node name="Path3D" type="Path3D" parent="."]
+[node name="LoopPath" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 curve = SubResource("Curve3D_w3mbd")
 debug_custom_color = Color(0.038397167, 0.038397167, 0.03839716, 1)
+
+[node name="PingPongNPC" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.468836, 0.34556866, 1.8266912)
+patrolEnabled = true
+patrolPath = NodePath("../PingPongPath")
+pathFollowMode = 1
+
+[node name="PingPongPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.646, 0.25, 0.96)
+curve = SubResource("Curve3D_tdgin")
+
+[node name="waitAtEndNPC" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("6_453m6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.37991, 0.34556866, 1.8266912)
+patrolEnabled = true
+patrolPath = NodePath("../WaitAtEndPath")
+pathFollowMode = 1
+waitAtEndDuration = 1.5
+
+[node name="WaitAtEndPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.956, 0.25, 0)
+curve = SubResource("Curve3D_g8ism")
