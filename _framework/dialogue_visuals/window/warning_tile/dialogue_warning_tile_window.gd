@@ -4,7 +4,11 @@ extends DialogueWindow
 class_name DialogueWarningTileWindow
 ## A simple window that houses a [WarningTile2D].
 ##
-## Comes with the optional SFX events for [DialogueWindow].
+## Doesn't really do much.  It's just visual flair.
+## [br][br]
+## Can be spawned with [WindowManager].
+## [br][br]
+## Comes with the optional SFX events from [DialogueWindow].
 
 # ------------------------------------------------
 # onready variables
@@ -36,14 +40,18 @@ func _process(_delta: float) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Makes the housed [member tile] start shaking.
 func enableTileShake() -> void:
 	tile.shakingEnabled = true
 
+## Makes the housed [member tile] stop shaking.
 func disableTileShake() -> void:
 	tile.shakingEnabled = false
 
+## Updates the housed [member tile]'s shake interval.
 func setShakeInterval(newInterval:float) -> void:
 	tile.shakeInterval = newInterval
 
+## Updates the housed [member tile]'s shake range.
 func setShakeRange(newRange:Vector2) -> void:
 	tile.shakeRange = newRange
