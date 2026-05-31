@@ -2,26 +2,37 @@
 @icon("uid://dycpbdo33wb4c")
 extends Node3D
 class_name PlayerCamera
-## Controls the camera used by the player. 
-## 
-## Supports both first-person and third-person camera modes while 
-## automatically following a target player. 
-## [br][br] 
-## To use, add the pre-built [PlayerCamera] scene to your gameplay scene. 
-## Then assign the desired player to [member focus]. 
-## [br][br] 
-## When [member _actAsFocus] is enabled, the camera operates in 
-## first-person mode and matches the position of the player's 
-## camera anchor. 
-## [br][br] 
-## When [member _actAsFocus] is disabled, the camera operates in 
-## third-person mode and positions itself using 
-## [member _distanceFromOrigin]. 
-## [br][br] 
-## This camera automatically follows the assigned [class Player] 
-## and updates its position every frame. 
-## 
-## Might be switched to a [Camera3D] node directly if the camera 
+## Controls the camera used by the player.
+##
+## Supports both first-person and third-person camera modes while
+## automatically following a target player.
+##
+##
+##
+## [br][br][br]
+## [b]Using:[/b][br]
+## To use, add the pre-built [PlayerCamera] scene to your gameplay scene.
+## Then assign the desired player to [member focus].
+## [br][br]
+## When [member _actAsFocus] is enabled, the camera operates in
+## first-person mode and matches the position of the player's
+## camera anchor.
+## [br][br]
+## When [member _actAsFocus] is disabled, the camera operates in
+## third-person mode and positions itself using
+## [member _distanceFromOrigin].
+## [br][br]
+## This camera automatically follows the assigned [Player]
+## and updates its position every frame.
+##
+##
+##
+## [br][br][br]
+## [b]Notes:[/b][br]
+## Despite its name, it can also be used to look at non-[Player] things.
+## Just set [member focus] to the thing you want to look at.
+## [br][br]
+## The base node type might be switched to a [Camera3D] node directly if the camera
 ## system is redesigned in the future.
 
 # ------------------------------------------------
@@ -39,7 +50,7 @@ class_name PlayerCamera
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
-## The [class Player] this camera should follow.
+## The [Node3D] this camera should follow.
 @export var focus:Node3D:
 	set(newFocus):
 		focus = newFocus
