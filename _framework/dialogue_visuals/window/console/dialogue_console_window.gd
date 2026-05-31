@@ -236,7 +236,7 @@ const _HECTIC_WARNING_SPAWN_DELAY:float = 0.01
 }
 ## The SFX event players that are manually set outside of [SfxEventHandler].
 ## [br]
-## Currently, it has [param spawn] and [param text], which is customized by [InteractableNPC]
+## Currently, it has [param spawn] and [param text], which are customized by [InteractableNPC]
 ## when it loads in a dialogue node.
 @onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %sfxSpawn,

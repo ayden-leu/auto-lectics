@@ -1,11 +1,20 @@
 @tool
 extends DialogueWindow
 class_name DialogueConsoleOptionWindow
-## [b]Internal-use only.[/b]  A dialogue option window that spawns when a user
-## is able to continue a dialogue event.
+## A dialogue option window that spawns when a user is able to continue a dialogue event.
 ##
-## On top of the SFX events for [DialogueWindow], it comes with the following optional SFX events:[br]
-## - text:  plays when text is being written into a log entry.[br]
+## Spawned by [DialogueConsole] via [WindowManager].
+## [br][br]
+## All aspects are configured by [DialogueConsole] when it spawns one of these windows.
+##
+## [b]SFX Events:[/b][br]
+## While there are additional SFX events for this, they are configured by [DialogueConsole]
+## when it spawns one of these.
+##
+##
+## [br][br][br]
+## [b]Styling:[/b][br]
+## It uses the [DialogueWindow] theme settings.
 
 # ------------------------------------------------
 # signals
@@ -13,11 +22,11 @@ class_name DialogueConsoleOptionWindow
 ## Emitted when this option is chosen.
 signal option_selected(myself:DialogueConsoleOptionWindow)
 ## Emitted when this option window enables itself.
-## [code]dataIndex[/code] is the index in [member DialogueConsole._optionData]
+## [param dataIndex] is the index in [member DialogueConsole._optionData]
 ## of the data used to create this window.
 signal enabled(dataIndex:int)
 ## Emitted when this option window disables itself.
-## [code]dataIndex[/code] is the index in [member DialogueConsole._optionData]
+## [param dataIndex] is the index in [member DialogueConsole._optionData]
 ## of the data used to create this window.
 signal disabled(dataIndex:int)
 
@@ -41,7 +50,9 @@ signal disabled(dataIndex:int)
 ## The timer representing the lifetime of this window.
 @onready var lifetimeTimer:Timer = %LifetimeTimer
 ## The SFX event players that are manually set outside of [SfxEventHandler].
-## Currently, it has "spawn" and "text," which is customized by [InteractableNPC].
+## [br]
+## Currently, it has [param spawn] and [param text], which are customized by [DialogueConsole]
+## when it spawns this window.
 @onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %sfxSpawn,
 	"text": %sfxText
@@ -58,11 +69,6 @@ var id:int:
 	set(newID):
 		id = newID
 		_updateLabel()
-
-		#if newID != 0:
-			#print("readd this?")
-			#$ColorRect2.visible = false
-			#$Label.visible = false
 
 ## The option text of the option this option window corresponds to.
 ## [br][br]
@@ -81,7 +87,8 @@ var themeVariation:String:
 		themeVariation = value
 		contentsLabel.theme_type_variation = value
 
-## How long to wait after [DialogueConsole] starts spawning [DialogueConsoleOptionWindow]s.
+## How long to wait after [DialogueConsole] starts spawning DialogueConsoleOptionWindows
+## before this actually enables itself.
 var spawnDelay:float = 0.0
 ## How long this option lives before disabling itself.
 var lifetime:float = 0.0
