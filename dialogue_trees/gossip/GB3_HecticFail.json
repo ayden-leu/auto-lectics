@@ -1,14 +1,17 @@
 {
 	"text": "What's the point in talking to you if you're just gonna be boring?",
-	"type": "angry",
 	"mode": "normal",
+	"type": "angry",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

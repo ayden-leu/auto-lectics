@@ -1,7 +1,7 @@
 {
 	"text": "*play neutral.wav*\n*play happy.wav*\n*play happy.wav*",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "dbApologyAccepted"
 	},

@@ -1,0 +1,31 @@
+{
+	"text": "I could help with this.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about the bot holding the speakers.",
+			"nextID": "P0WR-2",
+			"checkFlags": {
+				"metPreacher": true
+			}
+		},
+		{
+			"text": "Tell me about that satellite bot.",
+			"nextID": "R4-D1O",
+			"checkFlags": {
+				"metDish": true
+			}
+		},
+		{
+			"text": "Tell me about that spinning generator bot.",
+			"nextID": "Generator",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		},
+		{
+			"text": "I have other questions.",
+			"nextID": "SaidEnough"
+		}
+	]
+}

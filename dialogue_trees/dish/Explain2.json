@@ -1,7 +1,7 @@
 {
 	"text": "*play angry.wav*\n*play happy.wav*\n*play neutral.wav*",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "dbExplain2"
 	},

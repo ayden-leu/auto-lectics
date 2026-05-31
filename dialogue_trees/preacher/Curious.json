@@ -1,7 +1,7 @@
 {
 	"text": "Well the room where we were built is around here somewhere. But the almighty is no longer there, shes up in the core and Mini-Boss says I can't get past the gate. ",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},

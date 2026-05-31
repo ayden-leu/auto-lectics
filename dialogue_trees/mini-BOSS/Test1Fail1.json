@@ -1,14 +1,17 @@
 {
-	"text": "The boss hasn't said anything for a thousand years!  Talk to me when you have a clue what you're saying. ",
-	"type": "neutral",
+	"text": "The boss hasn't said anything for a thousand years! Talk to me when you have a clue what you're saying. ",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

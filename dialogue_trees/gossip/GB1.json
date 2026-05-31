@@ -1,7 +1,7 @@
 {
 	"text": "Okay, what do you have for me?",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
@@ -9,7 +9,10 @@
 		{
 			"text": "->",
 			"type": "neutral",
-			"nextID": "GB2"
+			"nextID": "GB2",
+			"setFlags": {
+				"metGossip": true
+			}
 		}
 	]
 }

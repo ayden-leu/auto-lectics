@@ -1,0 +1,34 @@
+{
+	"text": "Fine, but make it quick. Can't you see I'm busy.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about the bot holding the speakers.",
+			"nextID": "Preacher",
+			"checkFlags": {
+				"metPreacher": true
+			}
+		},
+		{
+			"text": "Tell me about the spider bot.",
+			"nextID": "Gossip",
+			"checkFlags": {
+				"metGossip": true
+			}
+		},
+		{
+			"text": "Tell me about the satellite bot.",
+			"nextID": "Dish",
+			"checkFlags": {
+				"metDish": true
+			}
+		},
+		{
+			"text": "Tell about the spinning generator bot.",
+			"nextID": "Generator",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		}
+	]
+}

@@ -1,7 +1,7 @@
 {
 	"text": "Obviously... And so what are you going to do if I let you by. ",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},

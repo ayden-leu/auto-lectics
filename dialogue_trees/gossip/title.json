@@ -1,7 +1,7 @@
 {
-	"text": "They say I'm too curious and if I talk to the rebels I'll flip sides. I think it's just an excuse to not open that gate. They love not opening that gate. ",
-	"type": "neutral",
+	"text": "They say I'm too curious and if I talk to the rebels I'll switch sides. I think it's just an excuse to not open that gate. They love not opening that gate. ",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
@@ -9,12 +9,16 @@
 		{
 			"text": "Any idea how I could convince them to let me through?",
 			"type": "neutral",
-			"nextID": "WouldntKnow"
+			"nextID": "Conversation End Bad"
 		},
 		{
 			"text": "Maybe they just like having you around? ",
 			"type": "neutral",
-			"nextID": "aasddsaafsd"
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Tell me how to get me through that gate.",
+			"nextID": "WouldntKnow"
 		}
 	]
 }

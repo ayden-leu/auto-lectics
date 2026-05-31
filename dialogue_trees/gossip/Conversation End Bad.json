@@ -1,14 +1,17 @@
 {
 	"text": "I don't have time for these elaborate questions. Away with you.",
-	"type": "angry",
 	"mode": "normal",
+	"type": "angry",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

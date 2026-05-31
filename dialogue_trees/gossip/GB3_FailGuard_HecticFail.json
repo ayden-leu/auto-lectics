@@ -1,0 +1,12 @@
+{
+	"text": "So now you want to be quiet, pathetic.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

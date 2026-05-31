@@ -1,7 +1,7 @@
 {
 	"text": "Well, it all began in a dark room made according to her plans. Small red lights dotted the walls, contant sparks broke the silence, instructions built into my very being.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},

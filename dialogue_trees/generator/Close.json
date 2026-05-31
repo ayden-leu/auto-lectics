@@ -1,0 +1,22 @@
+{
+	"text": "You are close,\nLearn the pattern and I can help.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "But, I don't know the pattern.",
+			"nextID": "Fail"
+		},
+		{
+			"text": "I think I know the pattern.",
+			"nextID": "Fail"
+		},
+		{
+			"text": "Give me a hint so I can learn.",
+			"nextID": "Pattern"
+		},
+		{
+			"text": "What is the pattern?",
+			"nextID": "Fail"
+		}
+	]
+}

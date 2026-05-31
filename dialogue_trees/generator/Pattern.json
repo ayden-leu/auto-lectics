@@ -1,0 +1,22 @@
+{
+	"text": "You got it,\nYou now understand the pattern.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I don't think I do.",
+			"nextID": "Fail"
+		},
+		{
+			"text": "Do I now?",
+			"nextID": "Yes"
+		},
+		{
+			"text": "Elaborate.",
+			"nextID": "Fail"
+		},
+		{
+			"text": "Then help me.",
+			"nextID": "Help"
+		}
+	]
+}

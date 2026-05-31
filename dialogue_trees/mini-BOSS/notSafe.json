@@ -1,13 +1,13 @@
 {
-	"text": "You. You? You want to get through here. I don’t know how you got here but I don’t really care. What’s your role?  It’s not safe. ",
-	"type": "neutral",
+	"text": "You want to get through here. Listen, I don’t know how you got here, and I don’t really care, but it's not safe. What’s your purpose here anyways? ",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
 	"options": [
 		{
-			"text": "Safe?",
+			"text": "It's not safe?",
 			"type": "neutral",
 			"nextID": "bird"
 		},
@@ -15,6 +15,10 @@
 			"text": "No it's a good idea. Let me explain. ",
 			"type": "neutral",
 			"nextID": "TestDialogueOne"
+		},
+		{
+			"text": "What's your purpose?",
+			"nextID": "whatDoYouDo"
 		}
 	]
 }

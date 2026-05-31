@@ -1,7 +1,7 @@
 {
 	"text": "On the second day, the Almighty and Magnificent said “I can’t see,” and plugged in the world to the external power grid. ",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},

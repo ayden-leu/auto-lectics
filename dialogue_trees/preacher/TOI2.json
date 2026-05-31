@@ -1,7 +1,7 @@
 {
 	"text": "Being turned on requires a lot of sacrifice. You must change. You must let the Divine rustle you around a bit. ",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},

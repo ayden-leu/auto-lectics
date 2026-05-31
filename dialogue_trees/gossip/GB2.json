@@ -1,7 +1,7 @@
 {
 	"text": "Ohhhhh woah woah woah, I don't know you...",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},

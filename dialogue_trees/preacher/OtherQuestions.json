@@ -1,0 +1,16 @@
+{
+	"text": "Ask away.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What's going on here?",
+			"type": "neutral",
+			"nextID": "TOO"
+		},
+		{
+			"text": "What are you *actually* supposed to do?",
+			"type": "neutral",
+			"nextID": "TOI"
+		}
+	]
+}

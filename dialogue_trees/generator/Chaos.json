@@ -1,0 +1,22 @@
+{
+	"text": "The project,\nEmbryo only makes things worse.\n\nWretched thing \nWe ask too much of ancient parts.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What embryo?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "What is this project?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "How do I get to the project?",
+			"nextID": "Direction"
+		},
+		{
+			"text": "Where can I find the embryo?",
+			"nextID": "Direction"
+		}
+	]
+}

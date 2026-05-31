@@ -1,7 +1,7 @@
 {
 	"text": "YOU ARE LOST! But that's okay, for I am here to help.",
-	"type": "angry",
 	"mode": "normal",
+	"type": "angry",
 	"writeSpeed": "fast",
 	"sfx": {
 		"spawn": "preacherSound"
@@ -10,7 +10,10 @@
 		{
 			"text": "->",
 			"type": "neutral",
-			"nextID": "PreacherBot"
+			"nextID": "PreacherBot",
+			"setFlags": {
+				"testFlag": false
+			}
 		}
 	]
 }

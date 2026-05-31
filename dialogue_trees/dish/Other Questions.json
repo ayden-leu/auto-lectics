@@ -1,0 +1,14 @@
+{
+	"text": "*play neutral.wav*\n*play neutral.wav*\n*play neutral.wav*",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What's your designated purpose?",
+			"nextID": "Purpose"
+		},
+		{
+			"text": "What's going on here?",
+			"nextID": "GoingOn"
+		}
+	]
+}

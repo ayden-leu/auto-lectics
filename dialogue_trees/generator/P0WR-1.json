@@ -1,0 +1,12 @@
+{
+	"text": "They are gone,\nLeft without even saying a word.\n\nThey left me,\nAlone to manage our downfall.\n\nNot welcomed,\nCannot repair the damge done.\n\nAll for naught,\nTheir divine has gave them nothing.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}
