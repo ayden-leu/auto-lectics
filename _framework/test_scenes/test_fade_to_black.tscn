@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ca2yt8rd8yvsq"]
 
 [ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="1_ai1ac"]
-[ext_resource type="Script" uid="uid://cxwlwia0htk2d" path="res://_framework/test_scenes/Test_fadeToBlack.gd" id="2_mi6me"]
+[ext_resource type="Script" uid="uid://cxwlwia0htk2d" path="res://_framework/test_scenes/test_fade_to_black.gd" id="2_mi6me"]
 
 [node name="Test_fadeToBlack" type="Node2D"]
 

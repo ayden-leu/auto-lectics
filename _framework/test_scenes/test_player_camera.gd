@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var player_camera: PlayerCamera = $PlayerCamera
 @onready var focus_target: Node3D = $FocusTarget
-@onready var camera_anchor: Node3D = $FocusTarget/cameraAnchor
+@onready var camera_anchor: Node3D = %cameraAnchor
 @onready var instructions_label: Label = $UI/InstructionsLabel
 
 func _ready() -> void:
