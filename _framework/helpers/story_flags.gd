@@ -5,11 +5,17 @@ class_name StoryFlags
 ##
 ## This class provides a central place for tracking story-related values that
 ## need to be accessed by multiple scripts.
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]Use Case[/b][br]
 ## Use story flags for simple global state, such as whether an NPC has been spoken to,
 ## whether a door should open, or whether a dialogue option should be available.
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]How to Use[/b][br]
 ## Designers should define new flags by adding them to [member DEFAULT_FLAGS].
 ## Scripts can then read from [member currentFlags], check multiple flags with
@@ -19,7 +25,10 @@ class_name StoryFlags
 ## and [code]setFlags[/code] fields. [code]checkFlags[/code] controls whether an
 ## option should appear, while [code]setFlags[/code] updates flags when an option
 ## is chosen.
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]Important Notes[/b][br]
 ## Every flag that will be checked or updated should be defined in
 ## [member DEFAULT_FLAGS]. If a script tries to access a flag that does not exist,
