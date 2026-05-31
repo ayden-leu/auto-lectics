@@ -1,0 +1,10 @@
+{
+	"text": "There are many factories. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "How"
+		}
+	]
+}

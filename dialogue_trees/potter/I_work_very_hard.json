@@ -1,0 +1,10 @@
+{
+	"text": "I work very hard. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "What_a_nice_conversation"
+		}
+	]
+}

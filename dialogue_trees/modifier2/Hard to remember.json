@@ -1,0 +1,10 @@
+{
+	"text": "My memory keeps showing up corrupted at random times. And the progress of the creature seems to advance ahead of any prediction. Usually if someone had a problem like this they would ask me... ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "You can't operate on yourself?",
+			"nextID": "Funny isn't it"
+		}
+	]
+}

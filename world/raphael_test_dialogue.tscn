@@ -78,7 +78,8 @@ initialDialogueID = "DB1"
 
 [node name="dishNPC2" parent="npcs" instance=ExtResource("4_hmrtd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.997374, -0.07807258, -21.464008)
-initialDialogueID = "DB1"
+dialogueTreeID = "potter"
+initialDialogueID = "Why"
 
 [node name="StartDialogueArea" parent="npcs/dishNPC2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_46t5o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43089676, 3.8631449, 0.48758888)

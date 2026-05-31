@@ -1,10 +1,18 @@
 {
-	"text": "",
+	"text": "Who are you? ",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "It would actually be a big help if you told me who you were",
-			"nextID": "Do"
+			"text": "It would actually be a big help if you told me who you were.",
+			"nextID": "Nobody_in_particular"
+		},
+		{
+			"text": "I'm you. ",
+			"nextID": "There_are_many_SL-4G_models,_but_only_one_potter"
+		},
+		{
+			"text": "I'm from the company. ",
+			"nextID": "The_company_must_be_a_factory."
 		}
 	]
 }

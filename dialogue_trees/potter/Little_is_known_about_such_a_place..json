@@ -1,0 +1,10 @@
+{
+	"text": "Little is known about such a place. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "How"
+		}
+	]
+}

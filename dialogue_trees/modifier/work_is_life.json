@@ -1,0 +1,14 @@
+{
+	"text": "Of course. Through changing their tools you change how they interact with the world, and what they can do. How do you think potter is able to tend their garden? They were designed to be a bucket.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "You don't seem to have a great work life balance. ",
+			"nextID": "Unemployment"
+		},
+		{
+			"text": "What about the bots down there?",
+			"nextID": "lost_cause"
+		}
+	]
+}

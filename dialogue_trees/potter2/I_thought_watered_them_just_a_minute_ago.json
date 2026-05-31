@@ -1,0 +1,10 @@
+{
+	"text": "I thought I watered them just a minute ago.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "I'm_done"
+		}
+	]
+}

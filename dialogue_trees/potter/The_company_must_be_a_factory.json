@@ -1,0 +1,10 @@
+{
+	"text": "The company must be a factory.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "Do"
+		}
+	]
+}

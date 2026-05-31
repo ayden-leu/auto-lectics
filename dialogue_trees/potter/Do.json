@@ -3,13 +3,16 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "They're look like they're dying. "
+			"text": "They're look like they're dying. ",
+			"nextID": "I_thought_I_watered_them_just_a_minute_ago"
 		},
 		{
-			"text": "They're nice."
+			"text": "They're nice.",
+			"nextID": "I_work_very_hard"
 		},
 		{
-			"text": "They're just going to be fed into that big tank right? "
+			"text": "They're just going to be fed into that big tank right? ",
+			"nextID": "They're_here_right_now"
 		}
 	]
 }

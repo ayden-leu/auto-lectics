@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c42w2xgitmthq"]
+
+[ext_resource type="Texture2D" uid="uid://c8dtlnxss68a3" path="res://models/BlendFiles/materials/redRust.png" id="1_ovpgv"]
+
+[resource]
+resource_name = "RedRust.002"
+cull_mode = 2
+albedo_texture = ExtResource("1_ovpgv")

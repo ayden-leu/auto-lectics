@@ -1,0 +1,10 @@
+{
+	"text": "I like asking questions.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "Who"
+		}
+	]
+}

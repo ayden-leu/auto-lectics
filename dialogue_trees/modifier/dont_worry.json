@@ -1,0 +1,14 @@
+{
+	"text": "Oh don't be scared, almost every bot I've worked left me better than they started. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Almost?",
+			"nextID": "mistake"
+		},
+		{
+			"text": "I'm don't think I'm compatible with your tools. ",
+			"nextID": "strange"
+		}
+	]
+}

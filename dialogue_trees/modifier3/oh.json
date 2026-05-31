@@ -1,0 +1,10 @@
+{
+	"text": "I'm sorry. I can't help you.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Help me with what?",
+			"nextID": "dissasembly"
+		}
+	]
+}

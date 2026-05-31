@@ -4,15 +4,15 @@
 	"options": [
 		{
 			"text": "It's my job.",
-			"nextID": "What"
+			"nextID": "Typical"
 		},
 		{
-			"text": "I like exploring. ",
-			"nextID": "What"
+			"text": "To explore."
+			"nextID": "Typical"
 		},
 		{
 			"text": "To chat.",
-			"nextID": "What"
+			"nextID": "I've_been_told_I'm_bad_at_conversation"
 		}
 	]
 }

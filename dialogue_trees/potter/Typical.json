@@ -1,0 +1,10 @@
+{
+	"text": "Typical. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "What"
+		}
+	]
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ci7dkpgdttqp2"]
+[gd_scene load_steps=36 format=3 uid="uid://ci7dkpgdttqp2"]
 
 [ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_qa0tg"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="3_opcsi"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://cgadj03f0km58" path="res://models/environment/backgroundClutter/big_greeble.tscn" id="25_r1rwl"]
 [ext_resource type="PackedScene" uid="uid://hf7vnxh0uha5" path="res://models/environment/backgroundClutter/solar_panel.tscn" id="26_draw8"]
 [ext_resource type="PackedScene" uid="uid://bjqvh4b5jq7w2" path="res://models/environment/generator_tube.tscn" id="26_qa0tg"]
+[ext_resource type="PackedScene" path="res://models/environment/environmentscenes/pipeWithDirt.tscn" id="30_up7t7"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="32_vdqmy"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="34_b2sj0"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="35_u8ycg"]
@@ -158,6 +159,7 @@ transform = Transform3D(0.25881904, -0.96592593, -2.1855696e-08, -3.0908627e-08,
 transform = Transform3D(10.064874, 0, 0, 0, -4.3994962e-07, 10.064874, 0, -10.064874, -4.3994962e-07, 3.378574, -6.6883583, 20.791077)
 
 [node name="smoothPipe" parent="are2/smoothPipe" instance=ExtResource("15_dylvw")]
+transform = Transform3D(0.9943379, 0.106264174, -8.742278e-08, 0.106264174, -0.9943379, 0, -8.6927784e-08, -9.289909e-09, -1, 0, 0, 0)
 
 [node name="smoothPipe2" parent="are2" instance=ExtResource("14_qa0tg")]
 transform = Transform3D(1.5046017, 0, 0, 0, 1.5046017, 4.999166e-14, 0, -8.497544e-15, 8.85168, 1.5667667, 26.45155, 20.791077)
@@ -480,8 +482,8 @@ transform = Transform3D(0.012367547, -5.299293e-15, 1.7240931, 0, 1.7241377, 0, 
 [node name="tub" parent="area2/entrace to final" instance=ExtResource("24_r1rwl")]
 transform = Transform3D(0.59725887, 1.4149028e-16, -0.34482756, 0, 0.68965524, 0, 0.3448276, -2.3572654e-15, 0.59725887, 13.760105, 36.158695, 26.14364)
 
-[node name="largePipe" parent="area2" instance=ExtResource("7_qvgb3")]
-transform = Transform3D(2.5, 0, 0, 0, -1.0927849e-07, -2.5000002, 0, 2.5000002, -8.42937e-08, 68.73024, 46.62747, 27.017347)
+[node name="largePipe2" parent="area2" instance=ExtResource("30_up7t7")]
+transform = Transform3D(2.1739564, -5.9604645e-08, -3.5527137e-15, 0, -9.502667e-08, 2.1739566, 1.1920929e-07, -2.1739564, -9.502668e-08, 68.73024, -99.49873, 27.017353)
 
 [node name="Node3D" type="Node3D" parent="area2"]
 

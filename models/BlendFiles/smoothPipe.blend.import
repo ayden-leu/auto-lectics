@@ -34,17 +34,10 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-materials/extract=0
+materials/extract=2
 materials/extract_format=0
-materials/extract_path=""
+materials/extract_path="res://models/BlendFiles/materials"
 _subresources={
-"materials": {
-"RedRust.002": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://materials/RedRust.tres",
-"use_external/path": "uid://c1m0ge3n7utw6"
-}
-},
 "nodes": {
 "PATH:Cylinder_187": {
 "generate/occluder": 1

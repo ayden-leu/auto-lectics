@@ -1,0 +1,10 @@
+{
+	"text": "Then_I'm_explored",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "What"
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+	"text": "You're not here for a modification? Well, I mean what else is there to know?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Whats your original designation?",
+			"nextID": "HOW DARE YOU"
+		},
+		{
+			"text": "What's with the big tank?",
+			"nextID": "Oooooooooooh"
+		},
+		{
+			"text": "What's with the bots who just repeat themselves? "
+		}
+	]
+}

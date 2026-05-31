@@ -4,15 +4,15 @@
 	"options": [
 		{
 			"text": "You mean outside the factory?",
-			"nextID": "How"
+			"nextID": "Little_is_known_about_such_a_place"
 		},
 		{
 			"text": "It's pretty bad out there.",
-			"nextID": "How"
+			"nextID": "Have_they_tried_growing_plants?"
 		},
 		{
-			"text": "",
-			"nextID": "How"
+			"text": "Kinda like here. A lot of work except it's by humans and not robots. ",
+			"nextID": "There_are_many_factories"
 		}
 	]
 }

@@ -1,0 +1,10 @@
+{
+	"text": "WAWA",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "What"
+		}
+	]
+}

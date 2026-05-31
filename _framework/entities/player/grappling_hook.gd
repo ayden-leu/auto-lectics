@@ -261,7 +261,7 @@ func reset() -> void:
 func _handleHookState(delta:float) -> void:
 	var start := throwOrigin.global_position
 	
-	_hook.look_at(_target.global_position)
+	_hook.look_at(_target.global_position + Vector3(0.0,0.0,0.01))
 	
 	match currentHookState:
 		GrappleHookState.TRAVELING:

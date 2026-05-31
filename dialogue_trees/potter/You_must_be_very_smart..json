@@ -1,0 +1,10 @@
+{
+	"text": "You must be very smart.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "Who"
+		}
+	]
+}
