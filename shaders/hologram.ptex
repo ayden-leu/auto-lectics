@@ -1,0 +1,89 @@
+{
+	"connections": [
+		{
+			"from": "noise_anisotropic",
+			"from_port": 0,
+			"to": "translate_3",
+			"to_port": 0
+		},
+		{
+			"from": "translate_3",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 7
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "_Node_867",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Godot/Godot 4",
+			"export_paths": {
+				"Godot/Godot 4": "C:/Users/meeps/OneDrive/Documents/GitHub/auto-lectics/materials/hologram"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 155.048950195313,
+				"y": -211.657333374023
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 0.474509805440903,
+					"b": 0.936580896377563,
+					"g": 1.0,
+					"r": 0.458823561668396,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 0.39
+			},
+			"seed_int": 0,
+			"type": "material_dynamic"
+		},
+		{
+			"name": "noise_anisotropic",
+			"node_position": {
+				"x": -549.019409179688,
+				"y": -183.380477905273
+			},
+			"parameters": {
+				"interpolation": 1.0,
+				"scale_x": 1.0,
+				"scale_y": 30.0,
+				"smoothness": 1.0
+			},
+			"seed_int": 0,
+			"type": "noise_anisotropic"
+		},
+		{
+			"generic_size": 2,
+			"name": "translate_3",
+			"node_position": {
+				"x": -176.301986694336,
+				"y": -188.479049682617
+			},
+			"parameters": {
+				"translate_x": 0.0,
+				"translate_y": "-(($time * 0.3)+(tan($time)*0.1))"
+			},
+			"seed_int": 0,
+			"type": "translate"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

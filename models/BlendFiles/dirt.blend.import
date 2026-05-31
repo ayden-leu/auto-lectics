@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bmbe7d0f5cvlq"
-path="res://.godot/imported/cloud.blend-e47e9fe951ce5ec00747b976d657207b.scn"
+uid="uid://wn01acuu0v4h"
+path="res://.godot/imported/dirt.blend-519254281ef6a2ead09ee9ae1ffe56be.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/cloud.blend"
-dest_files=["res://.godot/imported/cloud.blend-e47e9fe951ce5ec00747b976d657207b.scn"]
+source_file="res://models/BlendFiles/dirt.blend"
+dest_files=["res://.godot/imported/dirt.blend-519254281ef6a2ead09ee9ae1ffe56be.scn"]
 
 [params]
 
@@ -39,15 +39,15 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"cloud": {
+"dirt": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://materials/ocean.tres",
-"use_external/path": "uid://cmjksu673nnga"
-}
+"use_external/fallback_path": "res://materials/RedRust.tres",
+"use_external/path": "uid://c1m0ge3n7utw6"
 },
-"nodes": {
-"PATH:Cube_001": {
-"generate/occluder": 1
+"plant": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/plant.tres",
+"use_external/path": "res://materials/plant.tres"
 }
 }
 }
