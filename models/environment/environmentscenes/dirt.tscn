@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dey8jw2hm2d6l"]
+
+[ext_resource type="PackedScene" uid="uid://wn01acuu0v4h" path="res://models/BlendFiles/dirt.blend" id="1_hlwy2"]
+
+[node name="dirt" instance=ExtResource("1_hlwy2")]
