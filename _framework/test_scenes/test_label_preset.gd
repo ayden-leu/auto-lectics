@@ -1,9 +1,9 @@
 extends Control
 
-@onready var label:Label = $Label
-@onready var chooser:OptionButton = $HBoxContainer/OptionButton
-@onready var statusLabel:Label = $StatusLabel
-@onready var invalidPresetButton: Button = $InvalidPresetButton
+@onready var label:Label = %Label
+@onready var chooser:OptionButton = %Chooser
+@onready var invalidPresetButton: Button = %InvalidPresetButton
+@onready var statusLabel:RichTextLabel = %StatusLabel
 
 var _presets:Array[String] = []
 
@@ -22,7 +22,7 @@ func _ready() -> void:
 	_presets = _getFilesInPath(LabelPresetLoader.STORAGE_PATH, LabelPresetLoader.FILE_TYPE)
 
 	if _presets.size() == 0:
-		_setStatus("FAIL: No label presets found in " + LabelPresetLoader.STORAGE_PATH)
+		statusLabel.text = "[color=red]Error: No label presets found in " + LabelPresetLoader.STORAGE_PATH + "[/color]"
 		label.text = "No label presets found."
 		return
 
@@ -39,18 +39,15 @@ func _updateLabelPreset(preset:String) -> void:
 	if loadedPreset == null:
 		label.label_settings = null
 		label.text = "Failed to load preset: " + preset
-		statusLabel.text = "PASS: Invalid preset failed safely without crashing."
 		return
 
 	label.label_settings = loadedPreset
 	label.text = "Current preset: " + preset
-	statusLabel.text = "PASS: Loaded preset [" + preset + "]."
 
 
 func _getFilesInPath(path:String, type:String) -> Array[String]:
 	var tempDirAccess:DirAccess = DirAccess.open(path)
 	if not tempDirAccess:
-		_setStatus("FAIL: Directory [" + path + "] does not exist.")
 		return []
 
 	tempDirAccess.list_dir_begin()
@@ -68,16 +65,9 @@ func _getFilesInPath(path:String, type:String) -> Array[String]:
 	return files
 
 
-func _setStatus(message:String) -> void:
-	if statusLabel:
-		statusLabel.text = message
-	else:
-		print(message)
-
 
 func _on_option_button_item_selected(index:int) -> void:
 	_updateLabelPreset(chooser.get_item_text(index))
-
 
 func _on_invalid_preset_button_pressed() -> void:
 	var loadedPreset: LabelSettings = LabelPresetLoader.loadPreset("this_preset_does_not_exist", false)
@@ -85,6 +75,3 @@ func _on_invalid_preset_button_pressed() -> void:
 	if loadedPreset == null:
 		label.label_settings = null
 		label.text = "Invalid preset failed safely."
-		statusLabel.text = "PASS: Invalid preset returned null without crashing."
-	else:
-		statusLabel.text = "FAIL: Invalid preset unexpectedly loaded."
