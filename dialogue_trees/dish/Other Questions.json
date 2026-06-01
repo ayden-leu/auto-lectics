@@ -1,6 +1,9 @@
 {
 	"text": "*play neutral.wav*\n*play neutral.wav*\n*play neutral.wav*",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "dbOtherQuestions"
+	},
 	"options": [
 		{
 			"text": "What's your designated purpose?",

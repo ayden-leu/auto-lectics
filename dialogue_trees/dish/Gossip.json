@@ -1,6 +1,9 @@
 {
 	"text": "*play angry.wav*\n*play angry.wav*\n*play neutral.wav*",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "dbGossip"
+	},
 	"options": [
 		{
 			"text": "That wasn't very helpful.",

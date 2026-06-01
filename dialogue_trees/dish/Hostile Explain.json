@@ -5,7 +5,7 @@
 	"nextOnHecticFailureID": "Converstaion Fail",
 	"writeSpeed": "fast",
 	"sfx": {
-		"text": "dbHostileExplain"
+		"spawn": "dbHostileExplain"
 	},
 	"options": [
 		{

@@ -1,6 +1,9 @@
 {
 	"text": "*play happy.wav*\n*play happy.wav*\n*play happy.wav*",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "dbMiniBoss"
+	},
 	"options": [
 		{
 			"text": "That wasn't very helpful.",
