@@ -29,12 +29,12 @@
 [node name="BlueprintWindow" type="Control" node_paths=PackedStringArray("headerPanel", "headerLabel", "closeButton", "sfxEventHandler")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 5.0
-offset_right = 370.0
-offset_bottom = 270.0
+offset_right = 707.0
+offset_bottom = 475.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_srj32")
 script = ExtResource("2_sny2w")
+npcEntriesPerPage = 4
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
 canBeClosed = true
@@ -103,13 +103,11 @@ npcID = "npc_test_2"
 displayName = "Mira"
 
 [node name="npc_test_3" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
-visible = false
 layout_mode = 2
 npcID = "npc_test_3"
 displayName = "Orin"
 
 [node name="npc_test_4" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
-visible = false
 layout_mode = 2
 npcID = "npc_test_4"
 displayName = "John"
@@ -142,6 +140,7 @@ offset_left = 375.0
 offset_top = 8.0
 offset_right = 679.0
 offset_bottom = 423.0
+mouse_filter = 1
 
 [node name="Label2" type="Label" parent="Contents/Panel"]
 layout_mode = 0

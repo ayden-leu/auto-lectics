@@ -49,6 +49,9 @@ signal unlock_condition_met(conditionID:String)
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## The position on the screen where this initially spawns.
+## Doesn't interfere with [WindowManager]'s position restoring.
+const INITIAL_SPAWN_POSITION:Vector2 = Vector2(553.0, 112.0)
 
 # ------------------------------------------------
 # export variables
@@ -61,14 +64,16 @@ signal unlock_condition_met(conditionID:String)
 @export var npcEntriesPerPage:int = 2:
 	set(newNum):
 		npcEntriesPerPage = newNum
-		_updateEntryVisibility()
+		if Engine.is_editor_hint():
+			_updateEntryVisibility()
 ## The current page being displayed. Each page shows [member npcEntriesPerPage]
 ## amount of [BlueprintMenuNpcEntry]s.
 ## Modifying this value will update aspects in the editor view accordingly.
 @export var currentPageNum:int = 0:
 	set(newPageNum):
 		currentPageNum = newPageNum
-		_updateEntryVisibility()
+		if Engine.is_editor_hint():
+			_updateEntryVisibility()
 
 # ------------------------------------------------
 # onready variables
@@ -298,6 +303,9 @@ func _checkUnlockConditions() -> void:
 ## Updates the visibility of each [member _npcEntries] [BlueprintMenuNpcEntry] child
 ## based on if they fit onto the current page.
 func _updateEntryVisibility() -> void:
+	if not _npcEntryHolder:
+		return
+
 	print("BlueprintWindow:  Updating visibility of entries.")
 	var start_index = currentPageNum * npcEntriesPerPage
 	var end_index = start_index + npcEntriesPerPage

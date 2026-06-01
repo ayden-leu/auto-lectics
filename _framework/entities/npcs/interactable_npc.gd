@@ -189,6 +189,7 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	FR_WindowManager.createDialogueConsole()
 	FR_WindowManager.subscribeToConsole(self)
 	_loadNextDialogueConsole(initialDialogueID)
+	LoopManager.pauseTimer()
 
 ## [b]Internal-use only.[/b]  Ends the dialogue interaction.
 func _endDialogueConsole() -> void:
@@ -212,6 +213,7 @@ func _endDialogueConsole() -> void:
 		wasTalkedTo = true
 
 	finished_dialogue.emit()
+	LoopManager.resumeTimer()
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

@@ -94,6 +94,7 @@ sfxIds = Dictionary[String, String]({
 "respawnFancy": "",
 "step": "step"
 })
+enableToRefillSfxIds = null
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_qclge")

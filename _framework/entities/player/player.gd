@@ -205,7 +205,7 @@ func _process(delta: float) -> void:
 		update_configuration_warnings()
 		return
 
-	if _moving:
+	if _moving and is_on_floor():
 		_movingDeltaCounter += delta
 		if _movingDeltaCounter > timeBetweenSteps:
 			_sfxEventHandler.play("step")
@@ -235,8 +235,8 @@ func _physics_process(delta: float) -> void:
 
 	if grapplingHook.enabled:
 		_lookingAtGrapplable = grapplingHook.raycastCollidingWithValidTarget()
-		
-	
+
+
 
 
 # ------------------------------------------------

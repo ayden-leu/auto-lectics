@@ -190,7 +190,7 @@ func createDialogueConsole() -> DialogueConsole:
 	if _prevWindowPosition[dialogueConsole.windowType] != Vector2(-1000,-1000):
 		dialogueConsole.global_position = _prevWindowPosition[dialogueConsole.windowType]
 	else:
-		dialogueConsole.global_position = _getCenter(dialogueConsole.size)
+		dialogueConsole.global_position = dialogueConsole.INITIAL_SPAWN_POSITION
 
 	_dialogueConsoleSubscribers = _cleanSubscriberList(_dialogueConsoleSubscribers)
 	_resubscribeList(_dialogueConsoleSubscribers, _connectConsoleSignalsToSubscriber)
@@ -259,7 +259,7 @@ func createBlueprintWindow() -> BlueprintWindow:
 	if _prevWindowPosition[blueprintWindow.windowType] != Vector2(-1000,-1000):
 		blueprintWindow.global_position = _prevWindowPosition[blueprintWindow.windowType]
 	else:
-		blueprintWindow.global_position = _getRightSidePosition(blueprintWindow.size)
+		blueprintWindow.global_position = blueprintWindow.INITIAL_SPAWN_POSITION
 
 	_blueprintWindowSubscribers = _cleanSubscriberList(_blueprintWindowSubscribers)
 	_resubscribeList(_blueprintWindowSubscribers, _connectBlueprintSignalsToSubscriber)
