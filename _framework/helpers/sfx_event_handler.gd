@@ -40,6 +40,20 @@ class_name SfxEventHandler
 # ------------------------------------------------
 ## Holds the SFX ID for each SFX event to be loaded with [AudioLoader].
 @export var sfxIds:Dictionary[String, String] = {}
+## Refills [member sfxIds] when enabled.
+## [br]
+## Only works if [member sfxIds] is empty.
+## If only some entries are missing, you can re-add it as a child to get the entry back.
+@export var enableToRefillSfxIds:bool = false:
+	set(newState):
+		# failsafe in case there are AudioStreamPlayer children but
+		# the sfxIds list is empty for some reason.
+		if sfxIds.is_empty():
+			sfxIds = sfxIds.duplicate(true)  # needed to avoid an error
+			for child in get_children():
+				if child is not AudioStreamPlayer:
+					continue
+				sfxIds[child.name] = ""
 
 # ------------------------------------------------
 # onready variables
@@ -182,6 +196,8 @@ func _actuallyRemovePlayer(player:AudioStreamPlayer) -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a new node is added as a child to this node.
 func _on_child_entered_tree(node: Node) -> void:
+	if not Engine.is_editor_hint():
+		return
 	if _sorting or _loading:
 		return
 	if node is not AudioStreamPlayer:
@@ -189,11 +205,14 @@ func _on_child_entered_tree(node: Node) -> void:
 	var child:AudioStreamPlayer = node
 
 	_addEntryToSfxIds(child)
-	child.stream = AudioStreamRandomizer.new()
+	if child.stream == null:
+		child.stream = AudioStreamRandomizer.new()
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a child is removed from this node.
 func _on_child_exiting_tree(node: Node) -> void:
+	if not Engine.is_editor_hint():
+		return
 	if _sorting or _loading:
 		return
 	if node is not AudioStreamPlayer:
@@ -209,7 +228,8 @@ func _on_child_exiting_tree(node: Node) -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a child of this is node is renamed.
 func _on_child_renamed(child:AudioStreamPlayer) -> void:
-	print("eggs")
+	if not Engine.is_editor_hint():
+		return
 	_updateEventNameFromPlayer(child)
 
 func _on_tree_entered() -> void:
@@ -217,18 +237,15 @@ func _on_tree_entered() -> void:
 		return
 	call_deferred("_continue_on_tree_entered")
 func _continue_on_tree_entered() -> void:
+	if not Engine.is_editor_hint():
+		return
 	_loading = false
 
-	# failsafe in case there are AudioStreamPlayer children but
-	# the sfxIds list is empty for some reason.
-	if sfxIds.is_empty():
-		sfxIds = sfxIds.duplicate(true)  # needed to avoid an error
-		for child in get_children():
-			if child is not AudioStreamPlayer:
-				continue
-			sfxIds[child.name] = ""
+	# code that was here was moved to enableToRefillSfxIds setter
 
 func _on_tree_exiting() -> void:
+	if not Engine.is_editor_hint():
+		return
 	_loading = true
 
 # ------------------------------------------------
