@@ -1,0 +1,12 @@
+{
+	"text": "Small, but loud,\nLoves solitude, happy with changes.\n\nNo talking,\nNoise that cannot follow pattern.\n\nDangerous,\nCannot figure out what planning.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

@@ -1,0 +1,38 @@
+{
+	"text": "Why most bots are turned on, it's a way of life. You will need to be more specific about who you want to discuss.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about that satellite bot.",
+			"nextID": "Satellite Bot",
+			"checkFlags": {
+				"metDish": true
+			}
+		},
+		{
+			"text": "Tell me about that big spinning bot.",
+			"nextID": "Generator Bot",
+			"checkFlags": {
+				"metGenerator": true
+			}
+		},
+		{
+			"text": "Tell me about that gate bot.",
+			"nextID": "Gate Bot",
+			"checkFlags": {
+				"metMiniBoss": true
+			}
+		},
+		{
+			"text": "Tell me about the spider bot.",
+			"nextID": "G0SP",
+			"checkFlags": {
+				"metGossip": true
+			}
+		},
+		{
+			"text": "I have other questions.",
+			"nextID": "OtherQuestions"
+		}
+	]
+}

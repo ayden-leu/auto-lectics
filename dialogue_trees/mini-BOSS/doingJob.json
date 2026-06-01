@@ -1,15 +1,19 @@
 {
-	"text": "Just doin, my job.",
-	"type": "neutral",
+	"text": "Just doing my job. Now I ask again, what do you want?",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
 	"options": [
 		{
-			"text": "->",
+			"text": "I think I need to get past you.",
 			"type": "neutral",
-			"nextID": "start"
+			"nextID": "notSafe"
+		},
+		{
+			"text": "What do you do?",
+			"nextID": "whatDoYouDo"
 		}
 	]
 }

@@ -1,7 +1,7 @@
 {
-	"text": "Once I learn everything, I shall be perfect. But right now I really need to know what those rebels are doing with that embyro thing in the other part of the factory.",
-	"type": "neutral",
+	"text": "Once I learn everything, I shall make it perfect. But right now I really need to figure out is what those rebels are doing with that embyro.",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
@@ -9,7 +9,7 @@
 		{
 			"text": "What's stopping you?",
 			"type": "neutral",
-			"nextID": "ughhh"
+			"nextID": "Conversation End Bad"
 		},
 		{
 			"text": "What is there to learn?",
@@ -20,6 +20,14 @@
 			"text": "Being perfect is not important.",
 			"type": "neutral",
 			"nextID": "QuestionImportance"
+		},
+		{
+			"text": "Then go find out.",
+			"nextID": "ughhh"
+		},
+		{
+			"text": "What embryo?",
+			"nextID": "Conversation End Bad"
 		}
 	]
 }

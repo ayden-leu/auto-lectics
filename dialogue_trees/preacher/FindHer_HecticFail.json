@@ -1,7 +1,7 @@
 {
 	"text": "Now is not the time to remain silent.",
-	"type": "angry",
 	"mode": "normal",
+	"type": "angry",
 	"sfx": {
 		"spawn": "preacherSound"
 	},

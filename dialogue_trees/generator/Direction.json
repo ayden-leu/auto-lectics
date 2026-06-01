@@ -1,0 +1,12 @@
+{
+	"text": "Pass the gate,\nMini-boss keeps the chaos out.\n\nYou must go,\nBe busy to ward off the chaos.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

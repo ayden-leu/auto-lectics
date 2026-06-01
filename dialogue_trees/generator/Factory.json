@@ -1,0 +1,18 @@
+{
+	"text": "No order,\nChaos took over factory.\n\nPattern safe,\nKeeps the chaos at bay for now.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What chaos?",
+			"nextID": "Chaos"
+		},
+		{
+			"text": "How?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "How did that happen?",
+			"nextID": "Fail"
+		}
+	]
+}

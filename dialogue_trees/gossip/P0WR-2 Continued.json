@@ -1,0 +1,10 @@
+{
+	"text": "P0WR-2's no preacher, but an electrician who malfunctioned and confused the boss for a divine being.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me more.",
+			"nextID": "P0WR-2 Continued 2"
+		}
+	]
+}

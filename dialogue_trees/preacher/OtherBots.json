@@ -1,0 +1,14 @@
+{
+	"text": "Ah, so you want to know about who else here is also turned on? ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "No, I just need to know about the other bots.",
+			"nextID": "NoOtherBots"
+		},
+		{
+			"text": "Yes, who are the other turned on bots.",
+			"nextID": "YesOtherBots"
+		}
+	]
+}

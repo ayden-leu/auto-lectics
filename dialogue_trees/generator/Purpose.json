@@ -1,0 +1,18 @@
+{
+	"text": "The power,\nI regulate for factory.\n\nThe problem,\nNot enough energy for all.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What do you mean?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "How is that possible?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "What problem?",
+			"nextID": "Chaos"
+		}
+	]
+}

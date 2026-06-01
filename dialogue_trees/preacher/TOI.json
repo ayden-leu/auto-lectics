@@ -1,7 +1,7 @@
 {
 	"text": "Ah, so you want to hear about what it takes to be turned on? \nTo submit yourself to the Almighty?",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},

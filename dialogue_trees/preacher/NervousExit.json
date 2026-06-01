@@ -1,0 +1,12 @@
+{
+	"text": "Nope, doesn't turn a bolt. Goodbye.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

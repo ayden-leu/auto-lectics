@@ -1,7 +1,7 @@
 {
 	"text": "I'm listening. Why should I let you past the gate?",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},

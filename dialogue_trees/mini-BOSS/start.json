@@ -1,7 +1,7 @@
 {
 	"text": "What do you want?",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "miniboss"
 	},
@@ -9,17 +9,33 @@
 		{
 			"text": "How's your day going? ",
 			"type": "neutral",
-			"nextID": "doingJob"
+			"nextID": "doingJob",
+			"setFlags": {
+				"metMiniBoss": true
+			}
 		},
 		{
 			"text": "What do you do?",
 			"type": "neutral",
-			"nextID": "whatDoYouDo"
+			"nextID": "whatDoYouDo",
+			"setFlags": {
+				"metMiniBoss": true
+			}
 		},
 		{
 			"text": "I think I need to get past you.",
 			"type": "neutral",
-			"nextID": "notSafe"
+			"nextID": "notSafe",
+			"setFlags": {
+				"metMiniBoss": true
+			}
+		},
+		{
+			"text": "I need to know about the other bots.",
+			"nextID": "Other Bots",
+			"checkFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

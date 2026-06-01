@@ -1,14 +1,17 @@
 {
-	"text": "DON'T EVER QUESTION WHAT I THINK IS IMPORTANT!\n",
-	"type": "neutral",
+	"text": "DON'T EVER QUESTION WHAT I THINK IS IMPORTANT!",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},
 	"options": [
 		{
 			"text": "[EXIT]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

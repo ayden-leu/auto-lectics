@@ -1,7 +1,7 @@
 {
-	"text": "Ughhhh Mini-Boss",
-	"type": "neutral",
+	"text": "But Mini-Boss...",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},

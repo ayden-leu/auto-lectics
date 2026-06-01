@@ -1,0 +1,14 @@
+{
+	"text": "Ah, P0WR-1, the only one that seems to be doing anything useful around here. Besides me of course.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What do they do?",
+			"nextID": "Conversation End Bad"
+		},
+		{
+			"text": "Tell me about someone else.",
+			"nextID": "OtherBots"
+		}
+	]
+}

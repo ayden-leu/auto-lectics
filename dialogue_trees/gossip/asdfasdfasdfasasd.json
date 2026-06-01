@@ -1,7 +1,7 @@
 {
 	"text": "Probably just say something about stopping the embyro project and they'll like that.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "gossipSound"
 	},

@@ -1,7 +1,7 @@
 {
 	"text": "*play neutral.wav*",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "dbNeutral"
 	},
@@ -9,17 +9,26 @@
 		{
 			"text": "Sorry for interrupting. ",
 			"type": "neutral",
-			"nextID": "DB2"
+			"nextID": "DB2",
+			"setFlags": {
+				"metDish": true
+			}
 		},
 		{
 			"text": "What are you listening to?",
 			"type": "neutral",
-			"nextID": "DB2"
+			"nextID": "DB2",
+			"setFlags": {
+				"metDish": true
+			}
 		},
 		{
 			"text": "Excuse me?",
 			"type": "neutral",
-			"nextID": "DB2"
+			"nextID": "DB2",
+			"setFlags": {
+				"metDish": true
+			}
 		}
 	]
 }

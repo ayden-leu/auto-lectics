@@ -1,0 +1,17 @@
+{
+	"text": "Press continue to meet everyone.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[Continue]",
+			"setFlags": {
+				"metPreacher": true,
+				"metGossip": true,
+				"metDish": true,
+				"metGenerator": true,
+				"metMiniBoss": true,
+				"knowsSomeone": true
+			}
+		}
+	]
+}

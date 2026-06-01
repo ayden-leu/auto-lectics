@@ -1,0 +1,14 @@
+{
+	"text": "R4-D1O. I was never able to understand them. They just listen to their music now.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me more.",
+			"nextID": "R4-D1O Continued"
+		},
+		{
+			"text": "Tell me about someone else.",
+			"nextID": "OtherBots"
+		}
+	]
+}

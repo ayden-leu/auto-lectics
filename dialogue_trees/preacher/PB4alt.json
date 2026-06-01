@@ -1,13 +1,13 @@
 {
 	"text": "On third day she could see clearly how pointless this world was, and so she started making the first useful robots.",
-	"type": "neutral",
 	"mode": "normal",
+	"type": "neutral",
 	"sfx": {
 		"spawn": "preacherSound"
 	},
 	"options": [
 		{
-			"text": "[Continue]",
+			"text": "->",
 			"type": "neutral",
 			"nextID": "PB5"
 		}

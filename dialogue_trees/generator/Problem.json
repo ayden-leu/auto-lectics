@@ -1,0 +1,22 @@
+{
+	"text": "A problem\nYou do not follow the pattern.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What pattern?",
+			"nextID": "Close"
+		},
+		{
+			"text": "What is the problem?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "What is the pattern?",
+			"nextID": "Fail"
+		},
+		{
+			"text": "What problem?",
+			"nextID": "Close"
+		}
+	]
+}

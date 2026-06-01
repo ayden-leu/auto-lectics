@@ -1,0 +1,34 @@
+{
+	"text": "I can help,\nWho do you wish to know about?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Preacher bot.",
+			"nextID": "P0WR-1",
+			"checkFlags": {
+				"testFlag": false
+			}
+		},
+		{
+			"text": "Spider bot.",
+			"nextID": "Gossip",
+			"checkFlags": {
+				"testFlag": false
+			}
+		},
+		{
+			"text": "Speak of Dish.",
+			"nextID": "Dish",
+			"checkFlags": {
+				"testFlag": false
+			}
+		},
+		{
+			"text": "Mini-boss.",
+			"nextID": "Mini-boss",
+			"checkFlags": {
+				"testFlag": false
+			}
+		}
+	]
+}
