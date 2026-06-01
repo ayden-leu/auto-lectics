@@ -243,11 +243,21 @@ func getFields() -> Dictionary:
 			if option == {}:
 				continue
 
-			if option.setFlags.keys().has("testFlag"):
-				display_warning.emit("testFlag is being referenced.\nCheck console output for the data related to the option where this is the case.")
+			var potentialErrorOne:bool = (option.has("setFlags") and not option.setFlags.is_empty() and option.setFlags.keys().has("testFlag"))
+			var potentialErrorTwo:bool = option.has("checkFlags") and not option.checkFlags.is_empty() and option.checkFlags.keys().has("testFlag")
+
+			if potentialErrorOne and potentialErrorTwo:
+				display_warning.emit("testFlag is being referenced in an option's setFlags and checkFlags.\nCheck console output for the data related to the option where this is the case.")
+			elif potentialErrorOne:
+				display_warning.emit("testFlag is being referenced in an option's setFlags.\nCheck console output for the data related to the option where this is the case.")
+			elif potentialErrorTwo:
+				display_warning.emit("testFlag is being referenced in an option's checkFlags.\nCheck console output for the data related to the option where this is the case.")
+
+			if potentialErrorOne or potentialErrorTwo:
 				print_rich("[color=orange]START OF OPTION DATA[/color]")
 				_on_debug_pressed()
 				print_rich("[color=orange]END OF OPTION DATA[/color]")
+
 			optionsToAdd.push_back(option)
 
 		if optionsToAdd != []:
