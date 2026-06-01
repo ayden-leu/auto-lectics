@@ -12,6 +12,13 @@
 			"text": "What is your purpose?",
 			"type": "neutral",
 			"nextID": "PurposeAsked"
+		},
+		{
+			"text": "Can you tell me about the other bots?",
+			"nextID": "OtherBots",
+			"checkFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

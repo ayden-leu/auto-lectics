@@ -6,14 +6,24 @@
 		{
 			"text": "Excuse me?",
 			"type": "neutral",
-			"nextID": "EB2"
+			"nextID": "EB2",
+			"setFlags": {
+				"metExile": true
+			}
 		},
 		{
 			"text": "That wasn't very nice.",
 			"type": "neutral",
 			"nextID": "Tricked",
 			"checkFlags": {
-				"testFlag": false
+				"seeSign": true
+			}
+		},
+		{
+			"text": "I need you to tell me about the other bots.",
+			"nextID": "DontKnowYou",
+			"checkFlags": {
+				"knowsSomeone": true
 			}
 		}
 	]

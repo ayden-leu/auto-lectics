@@ -1,0 +1,17 @@
+{
+	"text": "You sure love asking questions, don't you? Fine, what do you want to know?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about the bots on the other side of the gate.",
+			"nextID": "OldFrogs"
+		},
+		{
+			"text": "(if met Exile)\nTell me about that bot on the island.",
+			"nextID": "Exile",
+			"checkFlags": {
+				"metExile": true
+			}
+		}
+	]
+}

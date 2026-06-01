@@ -1,0 +1,17 @@
+{
+	"text": "Worth a shot. Fine what do you want to know?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Tell me about the bots beyond the gate.",
+			"nextID": "NoBots"
+		},
+		{
+			"text": "Tell me about the bot in the vat.",
+			"nextID": "Sludge",
+			"checkFlags": {
+				"metSludge": true
+			}
+		}
+	]
+}
