@@ -20,7 +20,7 @@ extends Node3D
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var player: Node3D = %Player
+@onready var player: Player = %Player
 @onready var respawnPosition: Node3D = %RespawnPosition
 @onready var loopNpc: NPC = %LoopNPC
 @onready var pingPongNpc: NPC = %PingPongNPC
@@ -53,6 +53,7 @@ func _ready() -> void:
 	DebugHud.addChecklistEntry("NPCs in this scene are added to the NPCs group.")
 
 	_verify_npcs_in_group()
+	player.grapplingHookEnabled = false
 
 
 func _input(event: InputEvent) -> void:
