@@ -54,10 +54,10 @@ var _fancyCollisionCount: int = 0
 # ------------------------------------------------
 func _ready() -> void:
 	FR_MenuManager.disable()
-	FR_WindowManager.disable()
-	CursorHandler.setDefault("shown")
-	CursorHandler.showNuclear()
-	
+	FR_WindowManager.enable()
+	CursorHandler.setDefault("hidden")
+	CursorHandler.hideNuclear()
+
 	DebugHud.clearChecklist()
 	DebugHud.addChecklistEntry("Pressing Normal Reset makes the LoopManager overlay fade in and out.")
 	DebugHud.addChecklistEntry("Normal Reset emits resetting, do_reset, and reset_finished.")
@@ -68,10 +68,13 @@ func _ready() -> void:
 	DebugHud.addChecklistEntry("The timer countdown decreases while the scene runs.")
 	DebugHud.addChecklistEntry("After an automatic reset finishes, the timer starts counting down again.")
 	DebugHud.addChecklistEntry("The status labels update without needing console output.")
-	
+
+	DebugHud.addChecklistEntry("Being reset while talking to the InteractableNPC force-closes the interaction.")
+
 	_configureLoopManagersForTest()
 	_connectSignals()
-	
+	player.grapplingHookEnabled = false
+
 	_resetPlayerToStart()
 	_updateStatus("Ready. Press Normal Reset or Expanding Reset. Timer reset should also happen automatically.")
 	_updateResetCountLabel()
@@ -109,15 +112,15 @@ func _connectSignals() -> void:
 	normalResetButton.pressed.connect(_on_normal_reset_button_pressed)
 	fancyResetButton.pressed.connect(_on_fancy_reset_button_pressed)
 	timerToggleButton.pressed.connect(_on_timer_toggle_button_pressed)
-	
+
 	manualLoopManager.resetting.connect(_on_manual_loop_manager_resetting)
 	manualLoopManager.do_reset.connect(_on_manual_loop_manager_do_reset)
 	manualLoopManager.reset_finished.connect(_on_manual_loop_manager_reset_finished)
-	
+
 	timerLoopManager.resetting.connect(_on_timer_loop_manager_resetting)
 	timerLoopManager.do_reset.connect(_on_timer_loop_manager_do_reset)
 	timerLoopManager.reset_finished.connect(_on_timer_loop_manager_reset_finished)
-	
+
 	restartArea.collided_with_player.connect(_on_restart_area_collided_with_player)
 
 
@@ -140,7 +143,7 @@ func _updateRadiusLabel() -> void:
 	if not restartArea.collision.shape is SphereShape3D:
 		radiusLabel.text = "Restart Area Shape: " + restartArea.collision.shape.get_class()
 		return
-	
+
 	var sphere: SphereShape3D = restartArea.collision.shape as SphereShape3D
 	radiusLabel.text = "Restart Area Radius: " + str(snapped(sphere.radius, 0.01))
 
@@ -152,7 +155,7 @@ func _updateRestartAreaVisual() -> void:
 		return
 	if not restartArea.collision.shape is SphereShape3D:
 		return
-	
+
 	var sphere: SphereShape3D = restartArea.collision.shape as SphereShape3D
 	var radius: float = sphere.radius
 	restartAreaVisual.global_position = restartArea.global_position
@@ -163,11 +166,11 @@ func _updateTimerCountdownLabel() -> void:
 	if timerLoopManager == null:
 		timerCountdownLabel.text = "Auto Reset Countdown: missing TimerLoopManager"
 		return
-	
+
 	var pausedText: String = ""
 	if timerLoopManager._timer != null and timerLoopManager._timer.paused:
 		pausedText = " (PAUSED)"
-	
+
 	timerCountdownLabel.text = "Auto Reset Countdown: " \
 		+ str(snapped(timerLoopManager.resetProgressSeconds, 0.01)) \
 		+ pausedText
@@ -203,7 +206,7 @@ func _on_fancy_reset_button_pressed() -> void:
 
 func _on_timer_toggle_button_pressed() -> void:
 	timerLoopManager._timer.paused = not timerLoopManager._timer.paused
-	
+
 	if timerLoopManager._timer.paused:
 		timerToggleButton.text = "Resume Timer"
 		_updateStatus("TimerLoopManager countdown paused.")

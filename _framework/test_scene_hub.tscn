@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwmpo6y5x6ios"]
+[gd_scene load_steps=8 format=3 uid="uid://dwmpo6y5x6ios"]
 
 [ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="2_f2hun"]
 [ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_h5maa"]
 [ext_resource type="Texture2D" uid="uid://id471bfglpdp" path="res://_framework/editor_files/icon_dialogue-loader.svg" id="4_alqy5"]
+[ext_resource type="Texture2D" uid="uid://kqsaeirnco0d" path="res://_framework/editor_files/icon_loop-manager.svg" id="4_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://bxn4xxvlf1s0e" path="res://_framework/editor_files/icon_input-handler.svg" id="5_5jibs"]
 [ext_resource type="Texture2D" uid="uid://mjaagygagbwl" path="res://_framework/editor_files/icon_label-preset-loader.svg" id="5_6qplx"]
 
@@ -45,7 +46,6 @@ columns = 6
 [node name="InWorld" type="VBoxContainer" parent="MainPanel/ButtonHolder"]
 custom_minimum_size = Vector2(230, 0)
 layout_mode = 2
-metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="MainPanel/ButtonHolder/InWorld"]
 layout_mode = 2
@@ -99,7 +99,7 @@ expand_icon = true
 [node name="test_loop_manager" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
 layout_mode = 2
 text = "test_loop_manager"
-icon = ExtResource("2_f2hun")
+icon = ExtResource("4_y5v6x")
 alignment = 0
 expand_icon = true
 
