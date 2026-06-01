@@ -28,6 +28,11 @@ signal faded_out()
 ## .
 signal started_fancy()
 
+## Emitted when [member _timer] is paused.
+signal timer_paused()
+## Emitted when [member _timer] is resumed.
+signal timer_resumed()
+
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
@@ -87,7 +92,7 @@ signal started_fancy()
 var _overlayAlphaVisible:float
 ## [b]Internal-use only.[/b]   If the loop is currently resetting or not.
 var _loopBeingReset:bool = false
-## The loop timer that ticks down.  See [mmethod _on_loop_timer_timeout] for what happens when it times out.
+## The loop timer that ticks down.  See [method _on_loop_timer_timeout] for what happens when it times out.
 var _timer:Timer:
 	set(value):
 		if _timer == null:
@@ -100,6 +105,10 @@ var _actualTimeFadeOut:float = 0.6
 var _actualTimeHoldFade:float = 1.0
 ## How long it actually takes for the overlay to fade in.
 var _actualTimeFadeIn:float = 0.6
+
+
+static var _goingToPauseTimer:bool = false
+static var _goingToResumeTimer:bool = false
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -127,6 +136,21 @@ func _ready() -> void:
 	if not manual:
 		_timer.start()
 
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
+	if _goingToPauseTimer:
+		_goingToPauseTimer = false
+		_timer.paused = true
+		timer_paused.emit()
+
+	if _goingToResumeTimer:
+		_goingToResumeTimer = false
+		_timer.paused = false
+		timer_resumed.emit()
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -148,7 +172,6 @@ func performNormalReset() -> void:
 	faded_out.emit()
 	_loopBeingReset = false
 
-
 ## Executes the fancy resetting flow.
 func performFancyReset() -> void:
 	print("loop resetting")
@@ -158,10 +181,17 @@ func performFancyReset() -> void:
 	fancyArea.startGrowing()
 	var player:Player = await fancyArea.collided_with_player
 	await player.respawning_finished
-	
+
 	player.respawnCheckpoint()
 	fancyArea.reset()
 	_loopBeingReset = false
+
+
+static func pauseTimer() -> void:
+	_goingToPauseTimer = true
+static func resumeTimer() -> void:
+	_goingToResumeTimer = true
+
 
 # ------------------------------------------------
 # functions only referenced inside this script

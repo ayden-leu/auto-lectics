@@ -57,6 +57,10 @@ const _LOG_ID_LABEL:Resource = preload("uid://cdt7ouilmdwo0")
 ## The delay between spawning [DialogueWarningTile]s.
 const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011
 
+## The position on the screen where this initially spawns.
+## Doesn't interfere with [WindowManager]'s position restoring.
+const INITIAL_SPAWN_POSITION:Vector2 = Vector2(40, 40)
+
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
@@ -270,13 +274,6 @@ func close() -> void:
 	FR_MenuManager.enable()
 	_stopHecticMode()
 	_closeAllOptionWindows()
-
-	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
-	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
-		sfxEventHandler.play("close")
-		mouse_filter = Control.MOUSE_FILTER_IGNORE
-		hide()
-		await sfxPlayer.finished
 
 	super()
 

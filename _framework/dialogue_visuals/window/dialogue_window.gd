@@ -216,10 +216,16 @@ func getGlobalCornerPositions() -> Dictionary[String, Vector2]:
 func close() -> void:
 	var sfxPlayer:AudioStreamPlayer = _getSfxPlayerSafe("close")
 	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
+		sfxPlayer.get_parent().remove_child(sfxPlayer)
+		get_tree().root.add_child(sfxPlayer)
+		sfxPlayer.finished.connect(func():
+			sfxPlayer.queue_free()
+		)
+
 		_playSfxSafe("close")
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		hide()
-		await sfxPlayer.finished
+		#await sfxPlayer.finished
 	window_closed.emit(self)
 
 ## Removes this from the scene.

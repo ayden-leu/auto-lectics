@@ -49,6 +49,9 @@ signal unlock_condition_met(conditionID:String)
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## The position on the screen where this initially spawns.
+## Doesn't interfere with [WindowManager]'s position restoring.
+const INITIAL_SPAWN_POSITION:Vector2 = Vector2(553.0, 112.0)
 
 # ------------------------------------------------
 # export variables
