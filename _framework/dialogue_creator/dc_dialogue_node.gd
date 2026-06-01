@@ -22,6 +22,9 @@ signal reconnect_hectic_port(connection:Dictionary)
 ## [b]Internal-use only.[/b]  Emitted when the number of options increases or decreases.
 signal _option_amount_changed()
 
+## Emitted when a warning should be shown.
+signal display_warning(text:String)
+
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
@@ -239,6 +242,12 @@ func getFields() -> Dictionary:
 		for option in _options:
 			if option == {}:
 				continue
+
+			if option.setFlags.keys().has("testFlag"):
+				display_warning.emit("testFlag is being referenced.\nCheck console output for the data related to the option where this is the case.")
+				print_rich("[color=orange]START OF OPTION DATA[/color]")
+				_on_debug_pressed()
+				print_rich("[color=orange]END OF OPTION DATA[/color]")
 			optionsToAdd.push_back(option)
 
 		if optionsToAdd != []:
@@ -252,6 +261,7 @@ func saveToFile() -> void:
 
 	if data.id == "":
 		printerr("DC_DialogueNode/saveToFile(): Dialogue Object ID not set.")
+		return
 
 	save_me.emit(data)
 

@@ -21,6 +21,8 @@ signal _set_node_visibility(visible:bool)
 @onready var _dialogueNodeScene:PackedScene = preload("uid://c5o5n3jy08obe")
 @onready var _optionNodeScene:PackedScene = preload("uid://drh1uormkjsbh")
 @onready var _graphArea:GraphEdit = $GraphEdit
+@onready var warningLabel: RichTextLabel = %WarningLabel
+@onready var warningHolder: Control = %WarningHolder
 
 #const initialObjectPosition:Vector2 = Vector2(100, 100)
 const _SAVE_PATH:String = DialogueLoader.STORAGE_PATH
@@ -79,6 +81,8 @@ func _saveFile(data:Dictionary) -> void:
 	print("data: ", data)
 	print("path: ", _SAVE_PATH + filename)
 	print("----------")
+
+	return
 
 	# ensure file directory exists
 	DirAccess.make_dir_absolute(_SAVE_PATH + _npcNameField.text)
@@ -343,6 +347,11 @@ func _disconnectDialogueHecticPortToDialogue(dialogueFrom:DC_DialogueNode, dialo
 
 	dialogueFrom.nextOnHecticFailIdDisconnected()
 
+
+func _displayWarning(text:String) -> void:
+	warningLabel.text = "[color=orangered]" + text + "[/color]"
+	warningHolder.show()
+
 # -------------------------
 
 func _on_create_dialogue_pressed() -> void:
@@ -351,8 +360,12 @@ func _on_create_dialogue_pressed() -> void:
 	newDialogueNode.save_me.connect(_on_dialogue_node_save_me)
 	newDialogueNode.disconnect_hectic_port.connect(_on_dialogue_node_disconnect_hectic_port)
 	newDialogueNode.reconnect_hectic_port.connect(_on_dialogue_node_reconnect_hectic_port)
+	newDialogueNode.display_warning.connect(_on_dialogue_node_display_warning)
 	_dialogueNodes.push_back(newDialogueNode)
 	_configureNode(newDialogueNode)
+
+func _on_dialogue_node_display_warning(text:String) -> void:
+	_displayWarning(text)
 
 func _on_create_option_pressed() -> void:
 	var newOptionNode:DC_OptionNode = _optionNodeScene.instantiate()
@@ -511,3 +524,7 @@ func _on_save_defaults_pressed() -> void:
 	var option:Dictionary = _sidePanel.getOptionFields()
 	option.id = DialogueLoader.DEFAULT_OPTION_ID
 	_saveFile(option)
+
+
+func _on_warning_close_button_pressed() -> void:
+	warningHolder.hide()
