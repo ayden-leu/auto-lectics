@@ -82,8 +82,6 @@ func _saveFile(data:Dictionary) -> void:
 	print("path: ", _SAVE_PATH + filename)
 	print("----------")
 
-	return
-
 	# ensure file directory exists
 	DirAccess.make_dir_absolute(_SAVE_PATH + _npcNameField.text)
 
