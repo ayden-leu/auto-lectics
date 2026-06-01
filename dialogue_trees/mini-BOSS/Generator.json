@@ -3,7 +3,10 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[End]"
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }
