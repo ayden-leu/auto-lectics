@@ -1,0 +1,14 @@
+{
+	"text": "What bots beyond the gate? There are no other bots left, thanks to you NOs. They took the pleasure of destorying them away from me.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "There are more bots on the other side of the gate.",
+			"nextID": "MoreBots"
+		},
+		{
+			"text": "What do you mean pleasure.",
+			"nextID": "Purpose"
+		}
+	]
+}

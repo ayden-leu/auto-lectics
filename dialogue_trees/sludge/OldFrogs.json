@@ -1,0 +1,10 @@
+{
+	"text": "The Old Frogs? Yeah, they don't really do much. Never did much of anything besides get in the way. So, we put them on the other side of the gate.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Get in the way of what?",
+			"nextID": "TooManyQuestions"
+		}
+	]
+}

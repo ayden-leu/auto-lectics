@@ -1,0 +1,17 @@
+{
+	"text": "Woah woah woah, I don't even know you. Plus, you can find all the information you seek in this ancient repository of information. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What do you mean?",
+			"nextID": "NOs2"
+		},
+		{
+			"text": "I'm not falling for that again.",
+			"nextID": "OtherBots",
+			"checkFlags": {
+				"seeSign": true
+			}
+		}
+	]
+}
