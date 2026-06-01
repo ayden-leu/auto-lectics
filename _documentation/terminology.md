@@ -4,7 +4,6 @@ Things that are repeated throughout the documentation that may need further expl
 ## Index
 - [General](#general)
 - [Git-related](#git-related)
-- 
 
 
 

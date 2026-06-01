@@ -1,6 +1,14 @@
 extends Control
 class_name DialogueCreator
 ## A tool for creating dialogue files to be used in-game.
+##
+## The buttons in the top left are for navigating the graph area where all of
+## the dialogue nodes live.
+## [br][br]
+## The buttons in the top right are for creating and modifying dialogue trees.
+## [br][br]
+## The menu button right below the buttons in the top left opens the defaults panel.
+## In this panel, you can see the default attributes for this dialogue tree.
 
 signal _set_node_visibility(visible:bool)
 

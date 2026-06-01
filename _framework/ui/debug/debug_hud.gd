@@ -1,9 +1,7 @@
 extends Control
 ## This is auto-loaded into the game as DebugHud.
 ##
-## To show/hide, press thee "toggle_debug_hud"" keybind (shift + quote left (`/~ key)).
-## While this is visible, it eats all mouse inputs.  Can't fix this without making
-## the scroll part of it not work.
+## To show/hide, press the "toggle_debug_hud" keybind (shift + quote left (`/~ key)).
 ## [br][br]
 ## To add an entry to the log, run [method addToLog].
 

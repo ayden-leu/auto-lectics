@@ -2,20 +2,20 @@
 @icon("uid://cgvywsq714hf3")
 extends Area3D
 class_name StartDialogueArea
-## An [Area3D] that automatically starts dialogue when the [class Player] enters it. 
-## 
-## Use this when a dialogue should begin from entering a trigger area 
-## instead of requiring the player to manually interact with an NPC. 
-## [br][br] 
-## To use, add this node to a scene and add a [class CollisionShape3D] 
-## as its child. Then assign the desired [class InteractableNPC] to 
-## [member interactableNpcToInitiate]. 
-## [br][br] 
-## When the [class Player] enters this area's [class CollisionShape3D], 
-## this node tells the assigned [class InteractableNPC] to start its 
-## dialogue as if the player had interacted with it directly. 
-## [br][br] 
-## Doesn't come with a [class CollisionShape3D] by default. 
+## An [Area3D] that automatically starts dialogue when the [Player] enters it.
+##
+## Use this when a dialogue should begin from entering a trigger area
+## instead of requiring the player to manually interact with an NPC.
+## [br][br]
+## To use, add this node to a scene and add a [CollisionShape3D]
+## as its child. Then assign the desired [InteractableNPC] to
+## [member interactableNpcToInitiate].
+## [br][br]
+## When the [Player] enters this area's [CollisionShape3D],
+## this node tells the assigned [InteractableNPC] to start its
+## dialogue as if the player had interacted with it directly.
+## [br][br]
+## Doesn't come with a [CollisionShape3D] by default.
 ## One must be added and configured for the trigger area to work.
 
 # ------------------------------------------------

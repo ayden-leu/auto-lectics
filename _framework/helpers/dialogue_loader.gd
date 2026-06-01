@@ -28,7 +28,7 @@ class_name DialogueLoader
 ##
 ## [br][br][br]
 ## [b]Default Files[/b][br]
-## Each NPC/entity folder may optionally include [constant DEFAULT_DIALOGUE_ID].[constant DIALOGUE_FILE_TYPE]
+## Each dialogue tree folder may optionally include [constant DEFAULT_DIALOGUE_ID].[constant DIALOGUE_FILE_TYPE]
 ## and [constant DEFAULT_OPTION_ID].[constant DIALOGUE_FILE_TYPE].
 ## The former is currently [code]_default_dialogue.json[/code] and the latter is
 ## currently [code]_default_option.json[/code].

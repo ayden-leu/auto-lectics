@@ -2,7 +2,7 @@
 @icon("uid://bbxaj8rh6jfm6")
 extends Control
 class_name DialogueWindow
-## [b]Internal-use only.[/b]  A window that appears on the player's screen.
+## A window that appears on the player's screen.
 ##
 ## DialogueWindows are UI elements that can be dragged around by the player.
 ## All DialogueWindows are managed by the [WindowManager].
