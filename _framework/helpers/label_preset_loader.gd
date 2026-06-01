@@ -32,19 +32,21 @@ const FILE_TYPE:String = ".tres"
 ## - The given preset is nothing (spaces, newlines, tabs).[br]
 ## - The file for the given preset doesn't exist.[br]
 ## - The file for the given preset isn't a [LabelSettings] resource.
-static func loadPreset(preset:String) -> LabelSettings:
+static func loadPreset(preset:String, reportError:bool = true) -> LabelSettings:
 	preset = preset.strip_edges()
 	if preset.is_empty():
 		return null
-
+	
 	var path:String = STORAGE_PATH + preset + FILE_TYPE
 	if not ResourceLoader.exists(path):
-		DebugHud.addToLog("Label preset not found: %s" % path, DebugHud.LogType.ERROR)
+		if reportError:
+			printerr("Label preset not found: %s" % path)
 		return null
-
+	
 	var resource := load(path)
 	if resource is LabelSettings:
 		return resource
-
-	DebugHud.addToLog("Resource exists but is not a LabelSettings: %s" % path, DebugHud.LogType.ERROR)
+	
+	if reportError:
+		printerr("Resource exists but is not a LabelSettings: %s" % path)
 	return null

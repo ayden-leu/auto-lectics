@@ -1,0 +1,131 @@
+[gd_scene load_steps=11 format=3 uid="uid://b4ec8sf55jvdk"]
+
+[ext_resource type="Script" uid="uid://d1hg3tcn0b4ui" path="res://_framework/test_scenes/test_loop_manager.gd" id="1_qdxmf"]
+[ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="2_i1kju"]
+[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_rjhak"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_i1kju"]
+[ext_resource type="PackedScene" uid="uid://bcknfeyge415p" path="res://_framework/helpers/loop_manager.tscn" id="4_gxnqb"]
+[ext_resource type="PackedScene" uid="uid://nnv27ko17ev3" path="res://_framework/helpers/restart_loop_manager_area_3d.tscn" id="5_iw5oe"]
+[ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://_framework/entities/npcs/npc_test_interactable.tscn" id="7_i1kju"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gxnqb"]
+size = Vector3(30, 0.5, 30)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_iw5oe"]
+data = PackedVector3Array(-15, 0.25, 15, 15, 0.25, 15, -15, -0.25, 15, 15, 0.25, 15, 15, -0.25, 15, -15, -0.25, 15, 15, 0.25, -15, -15, 0.25, -15, 15, -0.25, -15, -15, 0.25, -15, -15, -0.25, -15, 15, -0.25, -15, 15, 0.25, 15, 15, 0.25, -15, 15, -0.25, 15, 15, 0.25, -15, 15, -0.25, -15, 15, -0.25, 15, -15, 0.25, -15, -15, 0.25, 15, -15, -0.25, -15, -15, 0.25, 15, -15, -0.25, 15, -15, -0.25, -15, 15, 0.25, 15, -15, 0.25, 15, 15, 0.25, -15, -15, 0.25, 15, -15, 0.25, -15, 15, 0.25, -15, -15, -0.25, 15, 15, -0.25, 15, -15, -0.25, -15, 15, -0.25, 15, 15, -0.25, -15, -15, -0.25, -15)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rjhak"]
+
+[node name="TestLoopManager" type="Node3D"]
+script = ExtResource("1_qdxmf")
+
+[node name="Notes" type="Label3D" parent="."]
+transform = Transform3D(-0.09311791, 0, 0.99565506, 0, 1, 0, -0.99565506, 0, -0.09311791, -24.552387, 4.702942, 0.75749445)
+text = "This test is for testing loop manager.
+Use the menu to set which kind of reset is used.
+
+Pull up the DebugHud or interact with the InteractableNPC
+to show the mouse."
+font_size = 256
+outline_size = 127
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("2_i1kju")
+
+[node name="Floor" type="MeshInstance3D" parent="Environment"]
+mesh = SubResource("BoxMesh_gxnqb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_iw5oe")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.99999404, -0.00017574159, 0.0034512868, -0.0034557583, -0.05085409, 0.99870014, -1.0856375e-09, -0.99870616, -0.05085439, -9.063457, 9.166182, 0)
+light_energy = 0.28
+shadow_enabled = true
+
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("2_rjhak")]
+unique_name_in_owner = true
+transform = Transform3D(-0.07407364, 0, 0.99725276, 0, 1, 0, -0.99725276, 0, -0.07407364, 6, 1.3727517, 0)
+respawnCheckpointLocation = NodePath("../RespawnPosition")
+
+[node name="RespawnPosition" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.6012614, 0)
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_i1kju")]
+transform = Transform3D(-0.15908861, 0, 0.98726434, 0, 1, 0, -0.98726434, 0, -0.15908861, 6, 1.4066329, 0)
+focus = NodePath("../Player")
+
+[node name="ManualLoopManager" parent="." node_paths=PackedStringArray("fancyArea") instance=ExtResource("4_gxnqb")]
+unique_name_in_owner = true
+manual = true
+fancy = true
+fancyArea = NodePath("../RestartLoopManagerArea3D")
+
+[node name="TimerLoopManager" parent="." instance=ExtResource("4_gxnqb")]
+unique_name_in_owner = true
+loopDurationSeconds = 5.0
+
+[node name="RestartLoopManagerArea3D" parent="." instance=ExtResource("5_iw5oe")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+growRate = 3.0
+
+[node name="RestartAreaVisual" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+mesh = SubResource("SphereMesh_rjhak")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 136.0
+offset_bottom = 236.0
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Loop test:"
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RadiusLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TimerCountdownLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResetCountLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NormalResetButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Normal Reset"
+
+[node name="FancyResetButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Expanding Reset"
+
+[node name="TimerToggleButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Toggle Timer"
+
+[node name="NPC_TestInteractable" parent="." instance=ExtResource("7_i1kju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.31251788, 5.0375323)
+dialogueTreeID = "_test/basic/one"
+initialDialogueID = "start"

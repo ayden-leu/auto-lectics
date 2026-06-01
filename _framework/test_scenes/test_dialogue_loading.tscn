@@ -1,23 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://deb04l8yner3u"]
+[gd_scene load_steps=8 format=3 uid="uid://deb04l8yner3u"]
 
-[ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_noga8"]
 [ext_resource type="Script" uid="uid://dr0lleyomueuq" path="res://_framework/test_scenes/test_dialogue_loading.gd" id="2_1h1tb"]
 [ext_resource type="Script" uid="uid://calvasnmkd447" path="res://_framework/test_scenes/test_dialogue_loading_draggable_header.gd" id="3_a2vm3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ic3ec"]
-size = Vector2(200, 40)
+size = Vector2(126, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_etraf"]
-size = Vector2(244, 40)
+size = Vector2(156, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2lst"]
-size = Vector2(399, 40)
+size = Vector2(264, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqxr1"]
-size = Vector2(222, 40)
+size = Vector2(143, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrtad"]
-size = Vector2(378, 40)
+size = Vector2(248, 25)
 
 [node name="Test_DialogueLoading" type="Control"]
 layout_mode = 3
@@ -27,25 +26,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_noga8")
 script = ExtResource("2_1h1tb")
 metadata/_edit_lock_ = true
 
-[node name="Notes" type="Label" parent="."]
-layout_mode = 0
-offset_left = 15.0
-offset_top = -246.0
-offset_right = 271.0
-offset_bottom = -206.0
-text = "This is just to test if the data retrieved from the DialogueLoader is correct or not.
-This is teeeeechnically covered by DialogueCreator but its best to have a separate thing to test it."
-
 [node name="Pick" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 9.0
-offset_right = 252.0
-offset_bottom = 137.0
+offset_left = 9.0
+offset_top = 4.0
+offset_right = 523.0
+offset_bottom = 89.0
 mouse_filter = 2
 metadata/_edit_group_ = true
 
@@ -59,9 +48,9 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Pick/HBoxContainer"]
 layout_mode = 2
-text = "NPC: "
+text = "Tree ID: "
 
-[node name="NpcField" type="OptionButton" parent="Pick/HBoxContainer"]
+[node name="TreeIdField" type="OptionButton" parent="Pick/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -84,16 +73,15 @@ contents = NodePath("..")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pick/Area2D"]
-position = Vector2(100, 20)
+position = Vector2(63, 11)
 shape = SubResource("RectangleShape2D_ic3ec")
 
 [node name="DialogueAttributes" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 29.0
-offset_top = 172.0
-offset_right = 283.0
-offset_bottom = 628.0
-metadata/_edit_group_ = true
+offset_left = 9.0
+offset_top = 105.0
+offset_right = 173.0
+offset_bottom = 508.0
 
 [node name="Label" type="Label" parent="DialogueAttributes"]
 layout_mode = 2
@@ -106,7 +94,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Dialogue: "
+text = "Text: "
 
 [node name="DialogueText" type="Label" parent="DialogueAttributes/HBoxContainer"]
 unique_name_in_owner = true
@@ -162,7 +150,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="DialogueAttributes/HBoxContainer10"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Hectic Options:"
+text = "Option Count:"
 
 [node name="DialogueOptionCount" type="Label" parent="DialogueAttributes/HBoxContainer10"]
 unique_name_in_owner = true
@@ -247,15 +235,15 @@ contents = NodePath("..")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueAttributes/Area2D"]
-position = Vector2(122, 20)
+position = Vector2(78, 12)
 shape = SubResource("RectangleShape2D_etraf")
 
 [node name="DialogueConfigSfx" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 668.0
-offset_right = 426.0
-offset_bottom = 796.0
+offset_left = 15.0
+offset_top = 537.0
+offset_right = 278.0
+offset_bottom = 636.0
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="DialogueConfigSfx"]
@@ -294,15 +282,15 @@ contents = NodePath("..")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueConfigSfx/Area2D"]
-position = Vector2(199.5, 20)
+position = Vector2(132, 13)
 shape = SubResource("RectangleShape2D_p2lst")
 
 [node name="OptionAttributes" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 797.0
-offset_top = 9.0
-offset_right = 1051.0
-offset_bottom = 665.0
+offset_left = 538.0
+offset_top = 1.0
+offset_right = 792.0
+offset_bottom = 545.0
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="OptionAttributes"]
@@ -470,7 +458,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OptionAttributes/HBoxContainer14"]
 layout_mode = 2
-text = "Reject Msg:"
+text = "Reject Back Msg:"
 
 [node name="OptionRejectBackMessage" type="Label" parent="OptionAttributes/HBoxContainer14"]
 unique_name_in_owner = true
@@ -484,15 +472,16 @@ contents = NodePath("..")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OptionAttributes/Area2D"]
-position = Vector2(111, 20)
+position = Vector2(71.5, 12)
 shape = SubResource("RectangleShape2D_hqxr1")
 
 [node name="OptionConfigSfx" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 433.0
-offset_top = 668.0
-offset_right = 833.0
-offset_bottom = 796.0
+offset_left = 315.0
+offset_top = 571.0
+offset_right = 564.0
+offset_bottom = 670.0
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="OptionConfigSfx"]
 layout_mode = 2
@@ -529,10 +518,10 @@ script = ExtResource("3_a2vm3")
 contents = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OptionConfigSfx/Area2D"]
-position = Vector2(189, 20)
+position = Vector2(124, 12.5)
 shape = SubResource("RectangleShape2D_rrtad")
 
-[connection signal="item_selected" from="Pick/HBoxContainer/NpcField" to="." method="_on_npc_field_item_selected"]
+[connection signal="item_selected" from="Pick/HBoxContainer/TreeIdField" to="." method="_on_tree_id_field_item_selected"]
 [connection signal="item_selected" from="Pick/HBoxContainer/FileField" to="." method="_on_file_field_item_selected"]
 [connection signal="pressed" from="Pick/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="mouse_entered" from="Pick/Area2D" to="Pick/Area2D" method="_on_mouse_entered_area"]

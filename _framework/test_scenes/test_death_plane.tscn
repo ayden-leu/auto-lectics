@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4elv63htgufa"]
+[gd_scene load_steps=12 format=3 uid="uid://c4elv63htgufa"]
 
 [ext_resource type="Environment" uid="uid://c37reu7hkifo6" path="res://_framework/test_scenes/test_world_environment.tres" id="1_jxvag"]
 [ext_resource type="Script" uid="uid://b1ko3uwfsnvvm" path="res://_framework/test_scenes/test_death_plane.gd" id="1_l2yny"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="4_4x84g"]
 [ext_resource type="Script" uid="uid://ngayr0wn30tw" path="res://_framework/helpers/death_plane.gd" id="4_60sf8"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="4_jgjv2"]
+[ext_resource type="PackedScene" uid="uid://hkpx0aww72h8" path="res://_framework/entities/npcs/npc_test.tscn" id="7_vkt6u"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v822v"]
 size = Vector3(5, 0.5, 5)
@@ -69,6 +70,7 @@ focus = NodePath("../Player")
 [node name="DeathPlane" parent="." instance=ExtResource("4_4x84g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7017784, -1.7234268, 0)
 collision_layer = 0
+collision_mask = 5
 
 [node name="DeathPlaneCustomShape" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.011122, 2.4578354, 0)
@@ -78,6 +80,16 @@ metadata/_custom_type_script = "uid://ngayr0wn30tw"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DeathPlaneCustomShape"]
+shape = SubResource("BoxShape3D_4x84g")
+debug_color = Color(0.7603503, 0.44401464, 0.14134872, 1)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DeathPlaneCustomShape"]
+transform = Transform3D(0.8435602, 0, -0.53703463, 0, 1, 0, 0.53703463, 0, 0.8435602, -1.5363121, -2.3841858e-07, 4.905963)
+shape = SubResource("BoxShape3D_4x84g")
+debug_color = Color(0.7603503, 0.44401464, 0.14134872, 1)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="DeathPlaneCustomShape"]
+transform = Transform3D(0.794298, 0, 0.6075283, 0, 1, 0, -0.6075283, 0, 0.794298, -1.7400188, 0, -4.6483335)
 shape = SubResource("BoxShape3D_4x84g")
 debug_color = Color(0.7603503, 0.44401464, 0.14134872, 1)
 
@@ -96,3 +108,17 @@ but it also works with other CollisionShapes.
 Turn on Visible Collision Shapes under the Debug tab."
 font_size = 128
 outline_size = 63
+
+[node name="NPC_Test" parent="." instance=ExtResource("7_vkt6u")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.972125, 1.7796333, 0)
+
+[node name="MoveTestNpc" type="Button" parent="."]
+offset_left = 31.0
+offset_top = 32.0
+offset_right = 155.0
+offset_bottom = 63.0
+text = "Move Test NPC"
+
+[connection signal="respawned" from="NPC_Test" to="." method="_on_npc_test_respawned"]
+[connection signal="pressed" from="MoveTestNpc" to="." method="_on_move_test_npc_pressed"]

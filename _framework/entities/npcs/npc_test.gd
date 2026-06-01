@@ -1,9 +1,12 @@
-extends Node3D
+@tool
+extends NPC
 
 # feel free to remove sections you're not using
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
+## Emitted when [method respawn] runs.
+signal respawned()
 
 # ------------------------------------------------
 # enums
@@ -20,11 +23,6 @@ extends Node3D
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var player: Player = %Player
-@onready var respawnPosition: Node3D = %RespawnPosition
-@onready var loopNpc: NPC = %LoopNPC
-@onready var pingPongNpc: NPC = %PingPongNPC
-@onready var waitAtEndNpc: NPC = %WaitAtEndNPC
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -32,48 +30,30 @@ extends Node3D
 
 # ------------------------------------------------
 # normal variables only referenced in script
+# [b]Internal-use only.[/b]
 # ------------------------------------------------
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	FR_MenuManager.enable()
-	FR_WindowManager.disable()
-	CursorHandler.setDefault("hidden")
-	CursorHandler.hideNuclear()
+	super()  # runs the inherited class' _ready() function.
 
-	DebugHud.clearChecklist()
-	DebugHud.addChecklistEntry("An NPC is moving along a patrol path.")
-	DebugHud.addChecklistEntry("The NPC turns to face its movement direction while patrolling.")
-	DebugHud.addChecklistEntry("The loop NPC wraps back to the start of its path.")
-	DebugHud.addChecklistEntry("The loop NPC has a higher patrol speed than the others.")
-	DebugHud.addChecklistEntry("The ping-pong NPC reverses direction at each end of its path.")
-	DebugHud.addChecklistEntry("The waitAtEnd NPC pauses briefly at each end.")
-	DebugHud.addChecklistEntry("NPCs in this scene are added to the NPCs group.")
-
-	_verify_npcs_in_group()
-	player.grapplingHookEnabled = false
-
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("debug_1"):
-		player.position = respawnPosition.position
+func _process(delta: float) -> void:
+	super(delta)  # runs the inherited class' _process() function.
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
+## Dummy respawn function for testing.
+func respawn() -> void:
+	DebugHud.addToLog("Test NPC:  Repsawn function ran.")
+	respawned.emit()
 
 # ------------------------------------------------
 # functions only referenced inside this script
+# [b]Internal-use only.[/b]
 # ------------------------------------------------
-func _verify_npcs_in_group() -> void:
-	var npcs: Array = get_tree().get_nodes_in_group("NPCs")
-
-	if npcs.is_empty():
-		DebugHud.addToLog("NPC test scene: No nodes found in NPCs group.", DebugHud.LogType.WARNING)
-	else:
-		DebugHud.addToLog("NPC test scene: Found " + str(npcs.size()) + " node(s) in NPCs group.", DebugHud.LogType.GOOD)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -82,3 +62,12 @@ func _verify_npcs_in_group() -> void:
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
+func _get_configuration_warnings() -> PackedStringArray:
+	return super()
+
+## [b]Editor-use Only.[/b]
+## Hides certain export fields depending on this thing's state.
+func _validate_property(property:Dictionary) -> void:
+	super(property)

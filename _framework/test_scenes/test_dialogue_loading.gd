@@ -20,7 +20,7 @@ const FILE_EXTENSION:String = ".json"
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-@onready var fieldNPC:OptionButton = %NpcField
+@onready var fieldNPC:OptionButton = %TreeIdField
 @onready var fieldFile:OptionButton = %FileField
 @onready var labelDialogueText:Label = %DialogueText
 @onready var labelDialogueMode:Label = %DialogueMode
@@ -74,13 +74,35 @@ func _ready() -> void:
 		fieldNPC,
 		_getFoldersInPath(DialogueLoader.STORAGE_PATH)
 	)
-	_on_npc_field_item_selected(fieldNPC.selected)
+	_on_tree_id_field_item_selected(fieldNPC.selected)
 
-#func _process(delta: float) -> void:
-	#super(delta)  # needed if inheriting a custom class with its own _process().  Will run the inherited class' _process() function.
+	DebugHud.addChecklistEntry("Dialogue Text loads")
+	DebugHud.addChecklistEntry("Dialogue Mode loads")
+	DebugHud.addChecklistEntry("Dialogue Hectic Fail ID loads")
+	DebugHud.addChecklistEntry("Dialogue Hectic Duration loads")
+	DebugHud.addChecklistEntry("Dialogue option count is correct")
+	DebugHud.addChecklistEntry("Dialogue Text Theme loads")
+	DebugHud.addChecklistEntry("Dialogue Type loads")
+	DebugHud.addChecklistEntry("Dialogue Write Speed Preset loads")
+	DebugHud.addChecklistEntry("Dialogue Write Speed Value loads")
+	DebugHud.addChecklistEntry("Dialogue SFX Events load")
 
-#func _physics_process(delta: float) -> void:
-	#super(delta)  # needed if inheriting a custom class with its own _physics_process().  Will run the inherited class' _physics_process() function.
+	DebugHud.addChecklistEntry("Option Text loads")
+	DebugHud.addChecklistEntry("Option Next ID loads")
+	DebugHud.addChecklistEntry("Option Text Theme loads")
+	DebugHud.addChecklistEntry("Option Type loads")
+	DebugHud.addChecklistEntry("Option Write Speed Preset loads")
+	DebugHud.addChecklistEntry("Option Write Speed Value loads")
+	DebugHud.addChecklistEntry("Option SFX Events load")
+	DebugHud.addChecklistEntry("Option Spawn Delay loads")
+	DebugHud.addChecklistEntry("Option Lifetime loads")
+	DebugHud.addChecklistEntry("Option Check Flags load")
+	DebugHud.addChecklistEntry("Option Set Flags load")
+	DebugHud.addChecklistEntry("Option Allow Back loads")
+	DebugHud.addChecklistEntry("Option Reject Back Message loads")
+
+	DebugHud.addChecklistEntry("Default values are loaded in (default_test)")
+	DebugHud.addChecklistEntry("Loading test dialogue trees matches expected data")
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -126,27 +148,27 @@ func _getFilesInPathRecursive(path: String, type: String, relativePrefix: String
 	if not tempDirAccess:
 		printerr("Directory [", path, "] does not exist.")
 		return []
-	
+
 	var files: Array[String] = []
-	
+
 	tempDirAccess.list_dir_begin()
 	var entryName: String = tempDirAccess.get_next()
-	
+
 	while entryName != "":
 		if entryName.begins_with("."):
 			entryName = tempDirAccess.get_next()
 			continue
-		
+
 		var fullPath: String = path.path_join(entryName)
 		var relativePath: String = relativePrefix.path_join(entryName) if relativePrefix != "" else entryName
-		
+
 		if tempDirAccess.current_is_dir():
 			files.append_array(_getFilesInPathRecursive(fullPath, type, relativePath))
 		elif entryName.ends_with(type):
 			files.push_back(relativePath)
-		
+
 		entryName = tempDirAccess.get_next()
-	
+
 	tempDirAccess.list_dir_end()
 	files.sort()
 	return files
@@ -172,11 +194,11 @@ func _loadDialogueFile() -> void:
 	if fileFolder != "":
 		entityName = topFolder.path_join(fileFolder)
 	var data: Dictionary = DialogueLoader.getDialogueNode(entityName, dialogueID)
-	
+
 	if data.is_empty():
 		labelDialogueText.text = "[ERROR: Failed to load dialogue file]"
 		return
-	
+
 	labelDialogueText.text = str(data.get("text", ""))
 	labelDialogueMode.text = str(data.get("mode", ""))
 	labelDialogueHecticFailID.text = str(data.get("nextOnHecticFailureID", ""))
@@ -192,33 +214,32 @@ func _loadDialogueFile() -> void:
 	labelDialogueSfxEventText.text = str(sfx.get("text", ""))
 	_clearOptionButtonOptions(fieldOption)
 	_optionData = []
-	
+
 	var optionNames: Array[String] = []
 	for option in data.get("options", []):
 		if typeof(option) != TYPE_DICTIONARY:
 			continue
-		
+
 		_optionData.push_back(option)
-		
+
 		var optionText: String = str(option.get("text", ""))
 		if optionText.strip_edges() == "":
 			optionText = "[continue / empty option]"
-		
+
 		optionNames.push_back(optionText)
-	
+
 	if not optionNames.is_empty():
 		_loadOptionButtonOptions(fieldOption, optionNames)
-
 
 func _loadOption() -> void:
 	if _optionData.is_empty():
 		return
-	
+
 	if fieldOption.selected < 0 or fieldOption.selected >= _optionData.size():
 		return
-	
+
 	var data:Dictionary = _optionData[fieldOption.selected]
-	
+
 	labelOptionText.text = str(data.get("text", ""))
 	labelOptionNextID.text = str(data.get("nextID", ""))
 	labelOptionTextTheme.text = str(data.get("textThemePreset", ""))
@@ -232,22 +253,30 @@ func _loadOption() -> void:
 	labelOptionSetFlags.text = str(data.get("setFlags", {}))
 	labelOptionAllowBack.text = str(data.get("allowBack", true))
 	labelOptionRejectBackMessage.text = str(data.get("rejectBackMessage", "N/A"))
-	
+
 	var sfx:Dictionary = data.get("sfx", {})
 	labelOptionSfxEventSpawn.text = str(sfx.get("spawn", ""))
 	labelOptionSfxEventText.text = str(sfx.get("text", ""))
-	
-	print("checkFlags:")
-	print(data.get("checkFlags", {}))
-	print("setFlags")
-	print(data.get("setFlags", {}))
 
-	# TODO:  particles
+func _clearOptionArea() -> void:
+	labelOptionText.text = ""
+	labelOptionNextID.text = ""
+	labelOptionTextTheme.text = ""
+	labelOptionType.text = ""
+	labelOptionWriteSpeedPreset.text = ""
+	labelOptionWriteSpeedValue.text = ""
+	labelOptionBackgroundTheme.text = ""
+	labelOptionSpawnDelay.text = ""
+	labelOptionLifetime.text = ""
+	labelOptionCheckFlags.text = ""
+	labelOptionSetFlags.text = ""
+	labelOptionAllowBack.text = ""
+	labelOptionRejectBackMessage.text = ""
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-func _on_npc_field_item_selected(index: int) -> void:
+func _on_tree_id_field_item_selected(index: int) -> void:
 	_clearOptionButtonOptions(fieldFile)
 	_clearOptionButtonOptions(fieldOption)
 	_optionData = []
@@ -262,11 +291,14 @@ func _on_npc_field_item_selected(index: int) -> void:
 	)
 
 func _on_file_field_item_selected(_index: int) -> void:
-	_clearOptionButtonOptions(fieldOption)
-	_optionData = []
+	#_clearOptionButtonOptions(fieldOption)
+	#_optionData = []
+	pass
 
 func _on_load_button_pressed() -> void:
+	_clearOptionButtonOptions(fieldOption)
 	_loadDialogueFile()
+	_clearOptionArea()
 	if _optionData != []:
 		_loadOption()
 

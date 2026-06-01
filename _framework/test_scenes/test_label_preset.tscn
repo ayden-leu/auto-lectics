@@ -3,36 +3,69 @@
 [ext_resource type="Script" uid="uid://c0oamtxhc2q3l" path="res://_framework/test_scenes/test_label_preset.gd" id="1_vdm3e"]
 
 [node name="Test_LabelPreset" type="Control"]
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_vdm3e")
 metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 46.0
-offset_top = 57.0
-offset_right = 136.0
-offset_bottom = 97.0
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -11.5
+offset_right = 130.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "here is some text that will change"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 155.0
+offset_right = 130.0
+offset_bottom = 240.0
+grow_horizontal = 2
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="StatusLabel" type="RichTextLabel" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=green]Label Presets exist[/color]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="InvalidPresetButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Test Invalid Preset"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Preset:"
 
-[node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
+[node name="Chooser" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-offset_left = 46.0
-offset_top = 108.0
-offset_right = 478.0
-offset_bottom = 135.0
-text = "here is some text that will change"
-
-[connection signal="item_selected" from="HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="VBoxContainer/InvalidPresetButton" to="." method="_on_invalid_preset_button_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/Chooser" to="." method="_on_option_button_item_selected"]
