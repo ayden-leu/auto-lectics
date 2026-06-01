@@ -76,6 +76,11 @@ const DEFAULT_DIALOGUE_ID:String = "_default_dialogue"
 ## [br][br]
 const DEFAULT_OPTION_ID:String = "_default_option"
 
+## [b]Internal-use Only.[/b][br]
+## Used for error returns since an empty [Dictionary] can mean something and
+## a typed [Dictionary] variable can't be [code]null[/code].
+const _ERROR_DICT:Dictionary[String, Variant] = {"error": null}
+
 
 ## Loads a dialogue node for a given entity and dialogue ID.
 ## [br][br]
@@ -93,7 +98,7 @@ const DEFAULT_OPTION_ID:String = "_default_option"
 static func getDialogueNode(dialogueTreeID:String, id: String) -> Dictionary:
 	var topPath:String = assemblePath(dialogueTreeID, id)
 	var top:Dictionary = loadDialogueNodeFile(topPath)
-	if top.is_empty():
+	if top == _ERROR_DICT:
 		DebugHud.addToLog("DialougeLoader: Failed to load dialogue ID '%s' at '%s'" % [id, topPath], DebugHud.LogType.ERROR)
 		top = loadDialogueNodeFile(
 			STORAGE_PATH + "fallback" + DIALOGUE_FILE_TYPE
@@ -101,12 +106,12 @@ static func getDialogueNode(dialogueTreeID:String, id: String) -> Dictionary:
 
 	var npcDialogueDefaultsPath:String = assemblePath(dialogueTreeID, DEFAULT_DIALOGUE_ID)
 	var npcDialogueDefaults:Dictionary = loadDialogueNodeFile(npcDialogueDefaultsPath, false)
-	if npcDialogueDefaults.is_empty():
+	if npcDialogueDefaults == _ERROR_DICT:
 		DebugHud.addToLog("DialogueLoader: No default dialogue attribute file found for dialogue tree ID '%s' at '%s'" % [dialogueTreeID, topPath], DebugHud.LogType.WARNING)
 
 	var npcOptionDefaultsPath:String = assemblePath(dialogueTreeID, DEFAULT_OPTION_ID)
 	var npcOptionDefaults:Dictionary = loadDialogueNodeFile(npcOptionDefaultsPath, false)
-	if npcOptionDefaults.is_empty():
+	if npcOptionDefaults == _ERROR_DICT:
 		DebugHud.addToLog("DialogueLoader: No default option attribute file found for dialogue tree ID '%s' at '%s'" % [dialogueTreeID, topPath], DebugHud.LogType.WARNING)
 
 	var withNpcDefaults:Dictionary = fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
@@ -131,20 +136,20 @@ static func assemblePath(entityName:String, id:String) -> String:
 ## [param path] should include the full file path and file extension.
 ## [param reportError] controls whether loading errors should be printed.
 ## [br][br]
-## Returns an empty dictionary if the file is missing, empty, invalid, or if the
+## Returns [constant _ERROR_DICT] if the file is missing, empty, invalid, or if the
 ## JSON root is not a dictionary.
 static func loadDialogueNodeFile(path: String, reportError:bool = true) -> Dictionary:
 	var jsonData := _readTextFile(path, reportError)
 	if jsonData == "":
 		if reportError:
-			DebugHud.addToLog("DialogueLoader: Missing/empty file: %s" % path, DebugHud.LogType.ERROR)
-		return {}
+			DebugHud.addToLog("DialogueLoader: Missing/empty file: %s" % path, DebugHud.LogType.WARNING)
+		return _ERROR_DICT
 
 	var parsedData = JSON.parse_string(jsonData)
 	if typeof(parsedData) != TYPE_DICTIONARY:
 		if reportError:
-			DebugHud.addToLog("DialogueLoader: Expected a JSON object at root: %s" % path, DebugHud.LogType.ERROR)
-		return {}
+			DebugHud.addToLog("DialogueLoader: Expected a JSON object at root: %s" % path, DebugHud.LogType.WARNING)
+		return _ERROR_DICT
 
 	return parsedData
 

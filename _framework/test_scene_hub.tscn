@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwmpo6y5x6ios"]
+[gd_scene load_steps=5 format=3 uid="uid://dwmpo6y5x6ios"]
 
 [ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="2_f2hun"]
+[ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_h5maa"]
+[ext_resource type="Texture2D" uid="uid://id471bfglpdp" path="res://_framework/editor_files/icon_dialogue-loader.svg" id="4_alqy5"]
 
 [node name="TestSceneHub" type="Control"]
 layout_mode = 3
@@ -52,7 +54,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_death_plane"
-icon = ExtResource("2_f2hun")
+icon = ExtResource("2_h5maa")
 alignment = 0
 expand_icon = true
 
@@ -123,7 +125,7 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_dialogue_loading"
-icon = ExtResource("2_f2hun")
+icon = ExtResource("4_alqy5")
 alignment = 0
 expand_icon = true
 
