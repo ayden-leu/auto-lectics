@@ -59,7 +59,7 @@ const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011
 
 ## The position on the screen where this initially spawns.
 ## Doesn't interfere with [WindowManager]'s position restoring.
-const INITIAL_SPAWN_POSITION:Vector2 = Vector2(40, 40)
+const INITIAL_SPAWN_POSITION:Vector2 = Vector2(20, 20)
 
 # ------------------------------------------------
 # export variables

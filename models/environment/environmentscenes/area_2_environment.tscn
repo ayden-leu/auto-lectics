@@ -171,7 +171,7 @@ visible = false
 transform = Transform3D(17.099499, 0, -3.5856662, 0, 17.471397, 0, 3.5856662, 0, 17.099499, 66.01496, 69.11684, -52.967815)
 
 [node name="bigWedgeTemp5" parent="Node3D" instance=ExtResource("10_p6b6d")]
-transform = Transform3D(11.292985, 0, 13.427489, 0, 17.545055, 0, -13.427489, 0, 11.292985, 13.625637, 69.11681, -136.03275)
+transform = Transform3D(13.269331, 0, 15.777388, 0, 20.615555, 0, -15.777388, 0, 13.269331, 25.446056, 69.11681, -110.46112)
 
 [node name="bigWedgeTemp7" parent="Node3D" instance=ExtResource("10_p6b6d")]
 transform = Transform3D(-26.958025, 0, 18.46753, 0, 32.67697, 0, -18.46753, 0, -26.958025, 188.53716, 45.85653, -68.32704)
@@ -241,7 +241,7 @@ transform = Transform3D(41.913082, 0, 0, 0, -41.913082, 3.664158e-06, 0, -3.6641
 script = ExtResource("17_dexkp")
 
 [node name="cloud3" parent="." instance=ExtResource("18_5j8fo")]
-transform = Transform3D(29.729145, 0, 0, 0, 29.729145, 0, 0, 0, 29.729145, 0, -429.52014, 0)
+transform = Transform3D(29.729145, 0, 0, 0, 29.729145, 0, 0, 0, 29.729145, 0, -426.02795, 0)
 script = ExtResource("17_dexkp")
 
 [node name="cloud2" parent="." instance=ExtResource("19_lq8kl")]

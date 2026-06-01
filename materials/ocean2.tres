@@ -1,0 +1,8 @@
+[gd_resource type="ORMMaterial3D" load_steps=2 format=3 uid="uid://bv1677uhuaxe"]
+
+[ext_resource type="Texture2D" uid="uid://wej4di8vhana" path="res://materials/ocean_albedo.png" id="1_qwuxw"]
+
+[resource]
+shading_mode = 0
+albedo_color = Color(0.37492874, 0.33013242, 0.25982484, 1)
+albedo_texture = ExtResource("1_qwuxw")
