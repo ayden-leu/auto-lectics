@@ -20,7 +20,7 @@
 			"text": "Can you tell me about the other bots?",
 			"nextID": "OtherBots",
 			"checkFlags": {
-				"testFlag": false
+				"knowsSomeone": true
 			}
 		}
 	]
