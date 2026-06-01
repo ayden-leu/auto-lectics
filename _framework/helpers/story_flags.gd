@@ -40,7 +40,11 @@ const DEFAULT_FLAGS: Dictionary = {
 	"hasExploded": false,
 	
 	##exile flags
+	"metExile": false,
 	"seeSign": false,
+	
+	##sludge flags
+	"metSludge": false,
 	
 	##miniBoss2 flags
 	"correctBlueprint": false,
