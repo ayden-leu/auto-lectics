@@ -55,8 +55,12 @@ transform = Transform3D(1, 0, 0, 0, -0.0508544, 0.9987062, 0, -0.9987062, -0.050
 light_energy = 0.28
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("3_d2s42")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("3_d2s42")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7875229, 2.883008, -1.2635736)
+respawnCheckpointLocation = NodePath("../RespawnCheckpoint")
+
+[node name="RespawnCheckpoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7875229, 2.883008, -1.2635736)
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("4_jgjv2")]
@@ -64,9 +68,11 @@ focus = NodePath("../Player")
 
 [node name="DeathPlane" parent="." instance=ExtResource("4_4x84g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7017784, -1.7234268, 0)
+collision_layer = 0
 
 [node name="DeathPlaneCustomShape" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.011122, 2.4578354, 0)
+collision_layer = 0
 script = ExtResource("4_60sf8")
 metadata/_custom_type_script = "uid://ngayr0wn30tw"
 metadata/_edit_group_ = true

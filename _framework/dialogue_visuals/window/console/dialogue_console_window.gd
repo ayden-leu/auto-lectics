@@ -1,20 +1,167 @@
 @tool
 extends DialogueWindow
 class_name DialogueConsole
-## [b]Internal-use only.[/b]  The main console-like window for interacting with
-## a dialogue event.
+## The main console-like window for interacting with dialogue events.
 ##
-## On top of the SFX events for [DialogueWindow], it comes with the following optional SFX events:[br]
-## - text:  plays when text is being written into a log entry.[br]
-## - closeReject:  plays when the DialogueConsole cannot be closed
-## and something tries to close it.[br]
-## - userTextAdded:  plays when player adds text to the [member _textInput].[br]
-## - userTextSubmitted:  plays when the player submits text in the [member _textInput].
+## Shouldn't be spawned directly.
+## Is mainly spawned by [InteractableNPC]s via [WindowManager].
+## [br][br]
+## It can do everything [DialogueWindow] can in addition to everything below.
+##
+##
+##
+## [br][br][br]
+## [b]Setup Brief:[/b][br]
+## The contents of this DialogueConsole is assembled like the following:
+## [codeblock lang=text]
+## DialogueLogStorage (referenced with _contentsStorage)
+## ├── VboxContainer (text on the left side)
+## │   └── HBoxContainer
+## │       ├── DialogueLogEntry
+## │       └── Spacer
+## ├── VboxContainer (text on the right side)
+## │   ├── DialogueIdLabel
+## │   └── HBoxContainer
+## │       ├── Spacer
+## │       └── DialogueLogEntry
+## └── InputArea
+##     ├── Label
+##     └── ConsoleInput (referenced with _textInput)
+## [/codeblock]
+## The [member _contentsStorage] node is a child of [member _contentsScroller].
+## [br][br]
+## [param DialogueLogEntry] is a pre-configured [RichTextLabel].  It has BBCode enabled,
+## letting you apply fancy effects to the text.  Refer to the online documentation
+## for "BBCode in RichTextLabel" to learn what effects you can apply out-of-the-box.
+## It is also configured to always have its contents visible, meaning there won't
+## be a small scroll bar to the right of it.
+## [br][br]
+## [param Spacer] is just used for positioning [param DialogueLogEntry].
+## Both [param DialogueLogEntry] and [param Spacer]'s [member Control.visible ratio] field
+## are set to [code]7.0[/code] and [code]3.0][/code] respectively.
+## Having the [param Spacer] be above the [param DialogueLogEntry] makes the text
+## align to the right positionally, while having it below does it to the left.
+## [br][br]
+## The [param InputArea] is set to shrink to the end and expand vertically, making it
+## always at the bottom of the window.
+##
+##
+##
+## [br][br][br]
+## [b]Dialogue Event:[/b][br]
+## When an [InteractableNPC] starts a dialogue event, any dialogue related to it
+## gets loaded into various [param DialogueLogEntry] entries, matching the
+## setup above.
+## Refer to the documentation for [InteractableNPC] to see what it does to DialogueConsole.
+## The [InteractableNPC] that started it is also saved to [member instigatingNpc].
+## [br][br]
+## When [DialogueConsoleOptionWindow]s are spawned via [method _spawnOptionWindows],
+## their position gets set by [method _setOptionWindowPosition].
+## It will choose to spawn them to the left of the DialogueConsole initially, but
+## if that position would be off screen, it spawns them to the right.
+## [br][br]
+## During a hectic dialogue event, [member numHecticWarningWindows] amount of
+## [DialogueWarningTileWindow]s will be spawned.
+## These won't cover any existing [DialogueWindow]s.  The position is determined
+## by [method WindowManager.getRandomPositionOnScreen]. A bar representing
+## how long the hectic event lasts will also be displayed above the DialogueConsole.
+## [br][br]
+## When an option is chosen, there will be a delay that lasts [member optionChooseDelay] seconds.
+## [br][br]
+## If a chosen option is configured to not allow the [code]back[/code] command,
+## the dialogue node that spawned the option will be added to [member dialogueNodeBackBlacklist]
+## and the rejection message will be added to [member dialogueNodeBackRejectMessages].
+## This will also set [member allowLoad] to [code]false[/code].
+## [br][br]
+## The IDs of all dialogue nodes loaded for this dialogue event are added to
+## [member _dialogueHistory].
+## The ID of currently loaded dialogue node is the last entry, which should
+## match [member currentDialogueID].
+##
+##
+##
+## [br][br][br]
+## [b]Commands:[/b][br]
+## Any text submitted to the console is considered a "command."
+## Below are the commands that this DialogueConsole can handle:
+## [br][br]
+## - [code][any number][/code]:  During a dialogue event, this will choose any displayed
+## [DialogueConsoleOptionWindow]s and advance the dialogue.
+## [br][br]
+## - [code]back[/code]:  During a dialogue event, this will load the previously
+## loaded dialogue node.
+## If there are none, it displays a message in the console saying there is nothing to load.
+## If the dialogue node to load is within [member dialogueNodeBackBlacklist],
+## its corresponding rejection message in [member dialogueNodeBackRejectMessages]
+## will be displayed and the dialogue node won't be loaded.
+## [br][br]
+## - [code]load [ID][/code]:  Loads a dialogue node with the given ID.
+## If [member allowLoad] is [code]false[/code], [member rejectLoadMessage] is displayed
+## in the console.  If the ID is invalid, nothing happens.
+## [br][br]
+## - [code]clear[/code]:  Clears the DialogueConsole's contents.
+## [br][br]
+## - [code]repeat_msg[/code]:  Readds [member textToAdd] to the DialogueConsole.
+## [br][br]
+## - [code]exit[/code]:  Closes the DialogueConsole.
+## [br][br]
+## - [code]help[/code]:  Displays a help message explaining the above commands.
+## [br][br]
+## All entered commands for this dialogue event are added to [member _commandHistory].
+## Players can go through their previous commands by pressing the [kbd]UP[/kbd]
+## and [kbd]DOWN[/kbd] key.
+## [br][br]
+## If a node subscribes to the DialogueConsole through [WindowManager], they'll be able
+## to listen to these commands and do whatever in response to them, like pushing
+## a message to the DialogueConsole.  Refer to the documentation for [WindowManager]
+## to see how to do that.
+##
+##
+##
+## [br][br][br]
+## [b]WindowManager:[/b][br]
+## [WindowManager] is the "middleman" for interacting with the DialogueConsole.
+## Refer to its documentation if you want to do things with the DialogueConsole.
+##
+##
+##
+## [br][br][br]
+## [b]SFX Events:[/b][br]
+## On top of the SFX events for [DialogueWindow], it comes with the following optional SFX events:
+## [br]
+## - [code]closeReject[/code]:  plays when the DialogueConsole cannot be closed
+## and something tries to close it.
+## [br]
+## - [code]userTextAdded[/code]:  plays when player adds text to the [member _textInput].
+## [br]
+## - [code]userTextSubmitted[/code]:  plays when the player submits text in the [member _textInput].
+## [br][br]
+## There are also SFX events for dialogue console text being written and the DialogueConsole
+## spawning, but those are configured by the dialogue node that gets loaded during a dialogue event.
+##
+##
+##
+## [br][br][br]
+## [b]Styling:[/b][br]
+## The theme settings for the DialogueConsole are in the same resource where all
+## of the [DialogueWindow] theme settings are defined.  DialogueConsole specific
+## entries have "Console" in their name. (e.g LabelHeaderConsole).
+##
+##
+## [br][br][br]
+## [b]Other notes:[/b][br]
+## If [member canBeClosed] is [code]false[/code], [member exitRejectMessage] will
+## be displayed in the console.
+## [br][br]
+## If you happen to see "THI" or "THIELF" in a DialogueConsole entry,
+## then something went wrong because you aren't supposed to see that.
+## It's just padding text to fix a vertical alignment issue.
 
 # ------------------------------------------------
 # signals
 # ------------------------------------------------
 ## Emitted when an option is chosen.
+## [param nextID] is the ID of the next dialogue node to load.
 signal option_chosen(nextID:String)
 ## Emitted when all dialogue for a dialogue tree node is visible.
 signal all_dialogue_text_visible()
@@ -23,68 +170,74 @@ signal new_option_available()
 ## Emitted when all dialogue options is visible.
 signal all_options_available()
 ## Emitted when the player submits text.
+## [param command] is the text the player submitted.
 signal command_entered(command:String)
-## [b]Internal-use only.[/b]  Used to continue logic when writing text.
+## [b]Internal-use only.[/b]
+## Used to continue logic when writing text.
 signal _all_text_visible()
 
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Used for referencing which corner of the
-## [DialogueConsoleWindow] to start spawning options from.
-enum _OptionAnchor {
-	TOP_LEFT,    ## Options are right-aligned and appear on the top-left corner.
-	TOP_RIGHT,   ## Options are left-aligned and appear on the top-right corner.
-	BOTTOM_LEFT, ## Options are right-aligned and appear on the bottom-left corner.
-	BOTTOM_RIGHT ## Options are left-aligned and appear on the bottom-right corner.
-}
 
 # ------------------------------------------------
 # constants
 # ------------------------------------------------
+## [b]Internal-use only.[/b]
 ## How far each spawned option should be from each other, vertically.
 const _OPTION_SPAWN_OFFSET:int = 3
+## [b]Internal-use only.[/b]
 ## The prefix to visually add before the user's input.
 ## This is just visual, so the input will not have this included.
 const _INPUT_PREFIX:String = ""
-## [b]Internal-use only.[/b]  A reference to a pre-set [RichTextLabel] scene.
+## [b]Internal-use only.[/b]
+## A reference to a pre-set [RichTextLabel] scene.
 const _LOG_ENTRY:Resource = preload("uid://1n8yvdu14dcd")
-## [b]Internal-use only.[/b]  A reference to a pre-set [Control] scene.
+## [b]Internal-use only.[/b]
+## A reference to a pre-set [Control] scene.
 const _LOG_ENTRY_SPACER:Resource = preload("uid://2pbfftop6j5e")
-## [b]Internal-use only.[/b]  A reference to a pre-set [Label] scene.
+## [b]Internal-use only.[/b]
+## A reference to a pre-set [Label] scene.
 const _LOG_ID_LABEL:Resource = preload("uid://cdt7ouilmdwo0")
 ## [b]Internal-use only.[/b]
 ## The delay between spawning [DialogueWarningTile]s.
-const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011
+const _HECTIC_WARNING_SPAWN_DELAY:float = 0.01
 
 # ------------------------------------------------
 # export variables
 # ------------------------------------------------
 ## The delay between choosing an option and acting on it, in seconds.
-@export var optionChooseDelay: float = 0.2
+@export var optionChooseDelay:float = 0.2
 
 # ------------------------------------------------
 # onready variables
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  The area where the player can enter text.
-@onready var _textInput: LineEdit = %ConsoleInput
-## [b]Internal-use only.[/b]  The thing that allows you to scroll through the console's contents.
-@onready var _contentsScroller: ScrollContainer = %ContentsScroller
-## [b]Internal-use only.[/b]  The node that holds all of the console's text contents.
+## [b]Internal-use only.[/b]
+## The area where the player can enter text.
+@onready var _textInput:LineEdit = %ConsoleInput
+## [b]Internal-use only.[/b]
+## The thing that allows you to scroll through the console's contents.
+@onready var _contentsScroller:ScrollContainer = %ContentsScroller
+## [b]Internal-use only.[/b]
+## The node that holds all of the console's text contents.
 @onready var _contentsStorage:VBoxContainer = %DialogueLogStorage
-## [b]Internal-use only.[/b]  The progress bar that displays how much time is left
+## [b]Internal-use only.[/b]
+## The progress bar that displays how much time is left
 ## until a hectic dialogue event ends.
 @onready var _hecticBar:ProgressBar = %HecticBar
-## [b]Internal-use only.[/b]  The hectic dialogue event timer.
-@onready var _hecticTimer: Timer = %HecticTimer
-## [b]Internal-use only.[/b]  The positions where options are initially spawned from.
+## [b]Internal-use only.[/b]
+## The hectic dialogue event timer.
+@onready var _hecticTimer:Timer = %HecticTimer
+## [b]Internal-use only.[/b]
+## The positions where options are initially spawned from.
 @onready var _optionSpawnPositions:Dictionary[String, Marker2D] = {
 	"left": %OptionSpawnPositions/Left,
 	"right": %OptionSpawnPositions/Right
 }
-
 ## The SFX event players that are manually set outside of [SfxEventHandler].
-## Currently, it has "spawn" and "text," which is customized by [InteractableNPC].
+## [br]
+## Currently, it has [param spawn] and [param text], which are customized by [InteractableNPC]
+## when it loads in a dialogue node.
 @onready var sfxPlayers:Dictionary[String, AudioStreamPlayer] = {
 	"spawn": %sfxSpawn,
 	"text": %sfxText
@@ -94,28 +247,28 @@ const _HECTIC_WARNING_SPAWN_DELAY:float = 0.011
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## The name of the [InteractableNPC] that was interacted with.
-var instigatingNpc: InteractableNPC
-## The text to add to the [member _contents].
+var instigatingNpc:InteractableNPC
+## The text to add to [member _contents].
 var textToAdd:String = ""
 ## How fast dialogue characters are "written," in characters per second.
 var textWriteSpeed:float = DialogueDefaults.WRITE_SPEED_PRESETS.medium
 ## The ID of the current dialogue file that is loaded.
 var currentDialogueID:String = ""
 ## The delay between the dialogue finishing being displayed and spawning the options, in seconds.
-var delayBtwnWriteDialogueAndOptions: float = 0.5
+var delayBtwnWriteDialogueAndOptions:float = 0.5
 ## The dialogue mode this console is currently in.
 ## Refer to [member DialogueDefaults.DIALOGUE_MODES] for valid modes.
 var mode:String = "normal"
 ## The dialogue ID to load when a hectic dialogue event is failed.
 var hecticFailureDialogueID:String = ""
 ## How long a hectic dialogue event lasts.
-var hecticDuration:float = 5.0:  # TODO  make this customizable
+var hecticDuration:float = 5.0:
 	set(newDuration):
 		hecticDuration = newDuration
 		_hecticBar.max_value = newDuration
 ## The theme variation for text that displays in the console.
 ## The left and right aligned text have their own entries
-## via [code].left[/code] and [code].right[/code]
+## via [param .left] and [param .right].
 var themeVariation:Dictionary = {
 	"left": "_defaultConsolePlayer",
 	"right": "_defaultConsoleBot"
@@ -125,11 +278,11 @@ var dialogueNodeBackBlacklist:Array[String] = []
 ## Maps dialogue node IDs to the message displayed when the [code]back[/code] command is denied.
 var dialogueNodeBackRejectMessages:Dictionary = {}
 ## Whether the [code]load[/code] command is enabled or not.
-var allowLoad: bool = true
+var allowLoad:bool = true
 ## The message that gets displayed when trying to run the [code]load[/code] command
 ## while [member allowLoad] is [code]false[/code].
 ## Can be overwritten to be whatever you want via code.
-var rejectLoadMessage: String = "[Load Command Disabled]"
+var rejectLoadMessage:String = "[Load Command Disabled]"
 ## The message that gets displayed if the player tries to close the console
 ## when they aren't able to.  Can be overwritten to be whatever you want via code.
 var exitRejectMessage:String = "[Console Closure Denied]"
@@ -163,24 +316,30 @@ var _commandHistory:Array[String] = []
 ## [b]Internal-use only.[/b]
 ## The current index of history we're looking at.
 var _commandHistoryIndex:int = 0
-## [b]Internal-use only.[/b]  Whether the dialogue IDs loaded get recorded
-## into [member _dialogueHistory].  Gets set to true whenever the console
-## is prepared.
+## [b]Internal-use only.[/b]
+## Whether the dialogue IDs loaded get recorded into [member _dialogueHistory].
+## Gets set to true whenever the console is prepared.
 var _recordHistory:bool = true
-## [b]Internal-use only.[/b]  True when the hectic dialgoue event timer is running.
+## [b]Internal-use only.[/b]
+## True when the hectic dialgoue event timer is running.
 var _hecticCountdownActive:bool = false
-## Show this message when "help" is inputted
-var _helpText: String = \
+## [b]Internal-use only.[/b]
+## The message that gets displayed when the [code]help[/code] command is entered.
+var _helpText:String = \
 		"Here are the commands:\n\n" + \
 		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
-		"back        =  reverse one dialog\n\n (feel free to use this if the AI's are getting argumentative, they're coded to respect the command) \n\n" + \
-		"exit        =  close the console\n\n"+\
-		"clear       =  clear the console"
+		"back        =  load the previous dialogue\n\n (feel free to use this if the bots are getting argumentative, they're coded to respect the command)\n\n" + \
+		"load [ID]   =  loads the dialogue associated with the ID" + \
+		"clear       =  clear the console" + \
+		"repeat_msg  =  repeats the last message" + \
+		"exit        =  close the console\n\n" + \
+		"help        =  displays this message"
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	# set scrollbar size because it cant be done through the editor
 	%ContentsScroller.get_v_scroll_bar().custom_minimum_size.x = 24.0
 
 	if Engine.is_editor_hint():
@@ -188,15 +347,14 @@ func _ready() -> void:
 	super()
 	windowType = "console"
 
+	# setup initial styling stuff
 	_hecticBar.visible = false
-
 	for child in _contentsStorage.get_children():
 		if child == _textInput.get_parent():
 			continue
-
 		child.queue_free()
 
-func _process(_delta: float) -> void:
+func _process(_delta:float) -> void:
 	super(_delta)
 	if Engine.is_editor_hint():
 		return
@@ -204,13 +362,14 @@ func _process(_delta: float) -> void:
 	if _hecticCountdownActive:
 		_hecticBar.value = _hecticTimer.time_left
 
-func _gui_input(event: InputEvent) -> void:
+func _gui_input(event:InputEvent) -> void:
 	super(event)
 
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Prepares the [DialogueConsole] by setting up initial defaults.
+## Prepares the [DialogueConsole] by setting up initial data.
+## Ran whenever a new dialogue node is loaded.
 func prepare() -> void:
 	dialogueEnded = false
 	headerText = instigatingNpc.displayName
@@ -225,6 +384,7 @@ func prepare() -> void:
 ## Starts displaying the the loaded text in [member textToAdd],
 ## records [member currentDialogueID] into [_dialogueHistory],
 ## and spawns options once complete.
+## Hectic mode visuals are also shown during this.
 func start() -> void:
 	sfxPlayers.spawn.stop()
 	sfxPlayers.spawn.play()
@@ -253,8 +413,8 @@ func start() -> void:
 	if mode == "hectic":
 		_startHecticCountdown()
 
-## Closes this window, unless the [InteractableNPC] the player is talking to
-## is in [member _NPCS_PREVENT_CLOSING].
+## Closes this window, unless the [member instigatingNpc]'s
+## [member InteractableNPC.rejectConsoleExit] is [code]true[/code].
 func close() -> void:
 	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
 		sfxEventHandler.play("closeReject")
@@ -266,7 +426,7 @@ func close() -> void:
 		await _addRightText(exitRejectMessage)
 		return
 
-	print("Preparing to close DialogueConsole.")
+	DebugHud.addToLog("Preparing to close DialogueConsole.")
 	FR_MenuManager.enable()
 	_stopHecticMode()
 	_closeAllOptionWindows()
@@ -283,7 +443,7 @@ func close() -> void:
 ## Removes this from the scene.
 ## If you want to close this window, run [method close] instead.
 func kill() -> void:
-	print("Killing DialogueConsole")
+	DebugHud.addToLog("Killing DialogueConsole")
 	_stopHecticMode()
 	_closeAllOptionWindows()
 	#_dialogueHistory.clear()
@@ -298,8 +458,7 @@ func loadOptionData(options:Array) -> void:
 	_optionData.clear()
 	for option in options:
 		if typeof(option) != TYPE_DICTIONARY:
-			printerr("DialogueConsole: Data for this entry is not a Dictionary.")
-			print("Entry data: ", option)
+			DebugHud.addToLog("DialogueConsole: Data for this option is not a Dictionary.  It is a [" + type_string(typeof(option)) + "]", DebugHud.LogType.ERROR)
 			continue
 
 		if StoryFlags.flagsMatch(option.checkFlags):
@@ -309,7 +468,7 @@ func loadOptionData(options:Array) -> void:
 
 ## Adds a right text entry to the console.
 ## [br][br]
-## [code]metadata[/code] can have the following fields:
+## [param metadata] can have the following fields:
 ## [codeblock]
 ## 	"writeSpeed":  # a float for the number of characters per second to display.
 ## 	"instant":  $ if the text should be displayed instantly.
@@ -336,7 +495,8 @@ func addExternalEntry(message:String, metadata:Dictionary) -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Creates a text entry and adds it to [member _contentsStorage].
+## [b]Internal-use only.[/b]
+## Creates a text entry and adds it to [member _contentsStorage].
 func _createLogEntry(alignment:HorizontalAlignment, addID:bool = false) -> RichTextLabel:
 	var entry:RichTextLabel = _LOG_ENTRY.instantiate()
 	entry.text = ""
@@ -369,8 +529,8 @@ func _createLogEntry(alignment:HorizontalAlignment, addID:bool = false) -> RichT
 
 	return entry
 
-## [b]Internal-use only.[/b]  Adds a text entry and displays it
-## at [member textWriteSpeed] characters per second.
+## [b]Internal-use only.[/b]
+## Adds a text entry and displays it at [member textWriteSpeed] characters per second.
 func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:String, addID:bool) -> void:
 	_isWritingText = true
 
@@ -384,7 +544,7 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 	if entry.text.length() < 5:
 		entry.text += "THIELF"
 
-	var delay: float = 1.0 / max(textWriteSpeed, 0.0001)
+	var delay:float = 1.0 / max(textWriteSpeed, 0.0001)
 	for _i in range(textToWrite.length()):
 		if bypassTextWriting:
 			entry.visible_characters = -1
@@ -402,7 +562,8 @@ func _typeText(textToWrite:String, alignment:HorizontalAlignment, themeVar:Strin
 	_isWritingText = false
 	_all_text_visible.emit()
 
-## [b]Internal-use only.[/b]  Adds a text entry.
+## [b]Internal-use only.[/b]
+## Adds a text entry.
 func _addText(text:String, alignment:HorizontalAlignment, themeVar:String, addID:bool) -> void:
 	var entry:RichTextLabel = _createLogEntry(alignment, addID)
 	entry.theme_type_variation = themeVar
@@ -416,20 +577,27 @@ func _addText(text:String, alignment:HorizontalAlignment, themeVar:String, addID
 
 	_scrollToBottom()
 
-## [b]Internal-use only.[/b]  Helper function to add text from the player to the console.
+## [b]Internal-use only.[/b]
+## Helper function to add text from the player to the console.
 func _addLeftText(text:String, addID:bool = false) -> void:
 	_addText(_INPUT_PREFIX + text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left, addID)
 
+## [b]Internal-use only.[/b]
+## Helper function to add text from the player to the console
+## with a typing effect.
 func _addLeftTextTyping(text:String, addID:bool = false) -> void:
 	_typeText(text, HORIZONTAL_ALIGNMENT_LEFT, themeVariation.left, addID)
 	await _all_text_visible
 
-## [b]Internal-use only.[/b]  Helper function to add text from a bot to the console.
+## [b]Internal-use only.[/b]
+## Helper function to add text from a bot to the console.
+## Applies a typing effect to the text.
 func _addRightText(text:String, addID:bool = false) -> void:
 	_typeText(text, HORIZONTAL_ALIGNMENT_RIGHT, themeVariation.right, addID)
 	await _all_text_visible
 
-## [b]Internal-use only.[/b]  Spawns the option windows.
+## [b]Internal-use only.[/b]
+## Spawns the option windows.
 func _spawnOptionWindows() -> void:
 	_forceTextInput()
 
@@ -458,7 +626,9 @@ func _spawnOptionWindows() -> void:
 
 	all_options_available.emit()
 
-func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset:float) -> void:
+## [b]Internal-use only.[/b]
+## Updates the given option window's position.
+func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset:float = 0) -> void:
 	if mode == "normal":
 		window.position = Vector2(0, verticalOffset)
 		if not FR_WindowManager.positionOnScreen(_optionSpawnPositions.left.global_position):
@@ -469,9 +639,10 @@ func _setOptionWindowPosition(window:DialogueConsoleOptionWindow, verticalOffset
 		var canOverlap:Array[String] = ["warning_tile"]
 		window.position = FR_WindowManager.getRandomPositionOnScreen(window.size, canOverlap)
 	else:
-		printerr("DialogueConsole/_setOptionWindowPosition:  Unhandled mode [" + mode + "]")
+		DebugHud.addToLog("DialogueConsole:  Unhandled mode [" + mode + "] when setting option window position.", DebugHud.LogType.ERROR)
 
-## [b]Internal-use only.[/b]  Handles logic for choosing an option.
+## [b]Internal-use only.[/b]
+## Handles logic for choosing an option.
 func _chooseOption(optionData:Dictionary) -> void:
 	themeVariation.left = optionData.textThemePreset
 	_addLeftText(optionData.text)  # TODO:  determine how to handle no writing to console
@@ -481,7 +652,7 @@ func _chooseOption(optionData:Dictionary) -> void:
 
 	# if allowBack is false, add the option to the blacklist
 	if not optionData.allowBack:
-		print("DialogueConsole:  back command blocked.")
+		DebugHud.addToLog("DialogueConsole:  back command blocked.")
 		if not dialogueNodeBackBlacklist.has(currentDialogueID):
 			dialogueNodeBackBlacklist.append(currentDialogueID)
 			# First time allowBack is false, disable load command too
@@ -491,20 +662,23 @@ func _chooseOption(optionData:Dictionary) -> void:
 	await get_tree().create_timer(optionChooseDelay).timeout
 	option_chosen.emit(optionData.nextID)
 
-## [b]Internal-use only.[/b]  Forcebilly closes all spawned option windows.
+## [b]Internal-use only.[/b]
+## Forcebilly closes all spawned option windows.
 func _closeAllOptionWindows() -> void:
 	for optionWindow in _optionWindows:
 		optionWindow.close()
 	_optionWindows.clear()
 
-## [b]Internal-use only.[/b]  Forces the scroll bar to be moved to the bottom.
+## [b]Internal-use only.[/b]
+## Forces the scroll bar to be moved to the bottom.
 func _scrollToBottom() -> void:
 	await get_tree().process_frame
 	_contentsScroller.set_deferred("scroll_vertical", (
 		_contentsScroller.get_v_scroll_bar().max_value
 	))
 
-## [b]Internal-use only.[/b]  Forces current selection to be on the input area.
+## [b]Internal-use only.[/b]
+## Forces current selection to be on the input area.
 func _forceTextInput() -> void:
 	_textInput.edit()
 
@@ -517,14 +691,16 @@ func _spawnHecticWarningWindows() -> void:
 		newWindow.global_position = newPosition
 		await get_tree().create_timer(_HECTIC_WARNING_SPAWN_DELAY).timeout
 
-## [b]Internal-use only.[/b]  Starts hectic mode.
+## [b]Internal-use only.[/b]
+## Starts hectic mode.
 func _startHecticCountdown() -> void:
 	_hecticCountdownActive = true
 	_hecticBar.visible = true
 	_hecticBar.value = INF
 	_hecticTimer.start(hecticDuration)
 
-## [b]Internal-use only.[/b]  Stops hectic mode.
+## [b]Internal-use only.[/b]
+## Stops hectic mode.
 func _stopHecticMode() -> void:
 	_hecticCountdownActive = false
 	_hecticBar.visible = false
@@ -578,14 +754,21 @@ func _handleCommand(command:String) -> void:
 			return
 		option_chosen.emit(nextID)
 
-## [b]Internal-use only.[/b]  Clear the console
+	elif command == "repeat_msg":
+		_recordHistory = false
+		_addRightText(textToAdd, true)
+		_recordHistory = true
+
+## [b]Internal-use only.[/b]
+## Clear the console
 func _clearConsole() -> void:
 	for child in _contentsStorage.get_children():
 		if child == _textInput.get_parent():
 			continue
 		child.queue_free()
 
-## [b]Internal-use only.[/b]  Handles logic for when the [code]back[/code] command is entered.
+## [b]Internal-use only.[/b]
+## Handles logic for when the [code]back[/code] command is entered.
 func _goBackOneDialogue() -> void:
 	if _dialogueHistory.size() <= 1:
 		await _addLeftTextTyping("[No saved history]")
@@ -602,13 +785,15 @@ func _goBackOneDialogue() -> void:
 	_recordHistory = false
 	option_chosen.emit(targetID)
 
-func _loadHistory(index:int) -> void:
+## [b]Internal-use only.[/b]
+## Loads a command from [member _commandHisory] into [member _textInput].
+func _loadCommandHistory(index:int) -> void:
 	if _commandHistory.size() <= 0:
-		print("DialougeConsole:  No history to load.")
+		DebugHud.addToLog("DialougeConsole:  No history to load.")
 		return
 
 	if index < 0:
-		print("DialogueConsole:  Hit the end of the console's history.")
+		DebugHud.addToLog("DialogueConsole:  Hit the end of the console's history.")
 		return
 
 	# branch essentially occurs when down is pressed
@@ -644,13 +829,13 @@ func _on_option_window_disabled(dataIndex:int) -> void:
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the text in the text input area gets updated
-func _on_input_text_changed(_new_text: String) -> void:
+func _on_input_text_changed(_new_text:String) -> void:
 	sfxEventHandler.play("userTextAdded")
 	_scrollToBottom()
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when text is entered into the [_textInput].
-func _on_input_submitted(input: String) -> void:
+func _on_input_submitted(input:String) -> void:
 	if _isWritingText:
 		if input == "":
 			bypassTextWriting = true
@@ -670,15 +855,16 @@ func _on_input_submitted(input: String) -> void:
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when text is entered into the [_textInput].
-func _on_console_input_gui_input(event: InputEvent) -> void:
+func _on_console_input_gui_input(event:InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_UP:
-			_loadHistory(_commandHistoryIndex - 1)
+			_loadCommandHistory(_commandHistoryIndex - 1)
 
 		elif event.keycode == KEY_DOWN:
-			_loadHistory(_commandHistoryIndex + 1)
+			_loadCommandHistory(_commandHistoryIndex + 1)
 
-## [b]Internal-use only.[/b]  Handles logic for when the hectic timer times out.
+## [b]Internal-use only.[/b]
+## Handles logic for when the hectic timer times out.
 func _on_hectic_timer_timeout() -> void:
 	if not _hecticCountdownActive:
 		return
@@ -687,7 +873,7 @@ func _on_hectic_timer_timeout() -> void:
 	_closeAllOptionWindows()
 
 	if hecticFailureDialogueID == "":
-		printerr("DialogueConsole:  nextOnHecticFailureID not set for ", currentDialogueID)
+		DebugHud.addToLog("DialogueConsole:  nextOnHecticFailureID not set for [" + currentDialogueID + "]", DebugHud.LogType.ERROR)
 
 	option_chosen.emit(hecticFailureDialogueID)
 
@@ -701,5 +887,5 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 ## [b]Editor-use Only.[/b]
 ## Hides certain export fields depending on this thing's state.
-func _validate_property(property: Dictionary) -> void:
+func _validate_property(property:Dictionary) -> void:
 	super(property)

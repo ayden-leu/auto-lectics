@@ -6,38 +6,53 @@ class_name DialogueLoader
 ## This helper class converts dialogue JSON files into fully configured dialogue
 ## dictionaries that can be used by dialogue-related systems such as
 ## [DialogueConsole] and [InteractableNPC].
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]Use Case[/b][br]
 ## This class is used whenever a dialogue node needs to be loaded from a dialogue
 ## tree. It handles reading the JSON file, applying NPC-specific defaults, and
 ## filling any remaining missing fields with [DialogueDefaults].
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]How to Use[/b][br]
-## Call [method getDialogueNode] with the NPC/entity folder name and the dialogue
-## ID you want to load. Dialogue files should be stored under
-## [code]res://dialogue_trees/<entity_name>/[/code] and should use the
-## [code].json[/code] file extension.
-## [br][br]
+## Call [method getDialogueNode] with the dialogue tree ID and the dialogue node
+## ID you want to load. Dialogue files should be stored under [constant STORAGE_PATH]
+## in subfolders whose name will be the dialogue tree ID.
+## The files should also use the [constant DIALOGUE_FILE_TYPE] file extension.
+##
+##
+##
+## [br][br][br]
 ## [b]Default Files[/b][br]
-## Each NPC/entity folder may optionally include [code]_default_dialogue.json[/code]
-## and [code]_default_option.json[/code]. These files define NPC-specific defaults
-## that are applied before the global defaults in [DialogueDefaults].
+## Each NPC/entity folder may optionally include [constant DEFAULT_DIALOGUE_ID].[constant DIALOGUE_FILE_TYPE]
+## and [constant DEFAULT_OPTION_ID].[constant DIALOGUE_FILE_TYPE].
+## The former is currently [code]_default_dialogue.json[/code] and the latter is
+## currently [code]_default_option.json[/code].
 ## [br][br]
+## These files define NPC-specific defaults that are applied before the global defaults in [DialogueDefaults].
+##
+##
+##
+## [br][br][br]
 ## [b]Important Notes[/b][br]
 ## This class only loads and prepares dialogue data. It does not display dialogue,
 ## spawn options, update story flags, or run dialogue events.
 ## [br][br]
 ## Dialogue flow is handled by [InteractableNPC], while dialogue display, option
 ## selection, commands, and story flag updates are handled by [DialogueConsole].
-## Dialogue-related windows are created through [WindowManager].
+## Dialogue-related windows are created and managed through [WindowManager].
 
 # TODO: rename writeSpeed to writeSpeedPreset
 # TODO: rename writeSpeedCustom to writeSpeed
 
 ## The storage location of all dialogue trees.
 ## [br]
-## Dialogue folders should be placed inside this directory. Each entity/NPC should
-## have its own folder under this path.
+## Dialogue folders should be placed inside this directory.
+## The name of the folder corresponds to the dialogue tree ID.
 ## [br][br]
 const STORAGE_PATH:String = "res://dialogue_trees/"
 
@@ -49,14 +64,14 @@ const DIALOGUE_FILE_TYPE:String = ".json"
 
 ## Determines the file name of an NPC's default dialogue attributes.
 ## [br]
-## If this file exists in an NPC/entity dialogue folder, its values are used as
+## If this file exists in a dialogue tree ID folder, its values are used as
 ## NPC-specific defaults for dialogue nodes in that folder.
 ## [br][br]
 const DEFAULT_DIALOGUE_ID:String = "_default_dialogue"
 
 ## Determines the file name of an NPC's default option attributes.
 ## [br]
-## If this file exists in an NPC/entity dialogue folder, its values are used as
+## If this file exists in a dialogue tree ID folder, its values are used as
 ## NPC-specific defaults for options in that folder.
 ## [br][br]
 const DEFAULT_OPTION_ID:String = "_default_option"
@@ -72,27 +87,27 @@ const DEFAULT_OPTION_ID:String = "_default_option"
 ## loaded instead.
 ## [br][br]
 ## [param entityName] is the name of the dialogue folder to load from.
-## [param id] is the dialogue file ID without the [code].json[/code] extension.
+## [param id] is the dialogue file ID without the [constant DIALOGUE_FILE_TYPE] extension.
 ## [br][br]
 ## Returns a fully configured dialogue dictionary.
-static func getDialogueNode(entityName:String, id: String) -> Dictionary:
-	var topPath:String = assemblePath(entityName, id)
+static func getDialogueNode(dialogueTreeID:String, id: String) -> Dictionary:
+	var topPath:String = assemblePath(dialogueTreeID, id)
 	var top:Dictionary = loadDialogueNodeFile(topPath)
 	if top.is_empty():
-		printerr("NPC: Failed to load dialogue id '%s' at '%s'" % [id, topPath])
+		DebugHud.addToLog("DialougeLoader: Failed to load dialogue ID '%s' at '%s'" % [id, topPath], DebugHud.LogType.ERROR)
 		top = loadDialogueNodeFile(
 			STORAGE_PATH + "fallback" + DIALOGUE_FILE_TYPE
 		)
 
-	var npcDialogueDefaultsPath:String = assemblePath(entityName, DEFAULT_DIALOGUE_ID)
+	var npcDialogueDefaultsPath:String = assemblePath(dialogueTreeID, DEFAULT_DIALOGUE_ID)
 	var npcDialogueDefaults:Dictionary = loadDialogueNodeFile(npcDialogueDefaultsPath, false)
 	if npcDialogueDefaults.is_empty():
-		print("NPC: No default dialogue attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
+		DebugHud.addToLog("DialogueLoader: No default dialogue attribute file found for dialogue tree ID '%s' at '%s'" % [dialogueTreeID, topPath], DebugHud.LogType.WARNING)
 
-	var npcOptionDefaultsPath:String = assemblePath(entityName, DEFAULT_OPTION_ID)
+	var npcOptionDefaultsPath:String = assemblePath(dialogueTreeID, DEFAULT_OPTION_ID)
 	var npcOptionDefaults:Dictionary = loadDialogueNodeFile(npcOptionDefaultsPath, false)
 	if npcOptionDefaults.is_empty():
-		print("NPC: No default option attribute file found for NPC '%s' at '%s'" % [entityName, topPath])
+		DebugHud.addToLog("DialogueLoader: No default option attribute file found for dialogue tree ID '%s' at '%s'" % [dialogueTreeID, topPath], DebugHud.LogType.WARNING)
 
 	var withNpcDefaults:Dictionary = fillNpcDialogueDefaults(top, npcDialogueDefaults, npcOptionDefaults)
 
@@ -103,9 +118,9 @@ static func getDialogueNode(entityName:String, id: String) -> Dictionary:
 ## Gets the path to a dialogue object.
 ## [br][br]
 ## [param entityName] is the name of the dialogue folder to load from.
-## [param id] is the dialogue file ID without the [code].json[/code] extension.
+## [param id] is the dialogue file ID without the [constant DIALOGUE_FILE_TYPE] extension.
 ## [br][br]
-## Returns the full path to the dialogue JSON file.
+## Returns the full path to the dialogue file.
 static func assemblePath(entityName:String, id:String) -> String:
 	return STORAGE_PATH + entityName + "/" + id + DIALOGUE_FILE_TYPE
 
@@ -121,15 +136,17 @@ static func assemblePath(entityName:String, id:String) -> String:
 static func loadDialogueNodeFile(path: String, reportError:bool = true) -> Dictionary:
 	var jsonData := _readTextFile(path, reportError)
 	if jsonData == "":
-		if reportError: printerr("DialogueLoader: Missing/empty file: %s" % path)
+		if reportError:
+			DebugHud.addToLog("DialogueLoader: Missing/empty file: %s" % path, DebugHud.LogType.ERROR)
 		return {}
 
-	var configuredAttributes = JSON.parse_string(jsonData)
-	if typeof(configuredAttributes) != TYPE_DICTIONARY:
-		if reportError: printerr("DialogueLoader: Expected a JSON object at root: %s" % path)
+	var parsedData = JSON.parse_string(jsonData)
+	if typeof(parsedData) != TYPE_DICTIONARY:
+		if reportError:
+			DebugHud.addToLog("DialogueLoader: Expected a JSON object at root: %s" % path, DebugHud.LogType.ERROR)
 		return {}
 
-	return configuredAttributes
+	return parsedData
 
 
 ## Applies NPC-specific default dialogue and option values to a dialogue object.
@@ -150,9 +167,6 @@ static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary,
 	if base.has("text"):
 		copy.text = base.text
 
-	if base.has("options"):
-		copy.options = base.options
-
 	if base.has("type"):
 		copy.type = base.type
 
@@ -162,7 +176,7 @@ static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary,
 			if base.has("nextOnHecticFailureID"):
 				copy.nextOnHecticFailureID = base.nextOnHecticFailureID
 			else:
-				printerr("DialogueLoader:  Base doesn't have nextOnHecticFailureID when it should.")
+				DebugHud.addToLog("DialogueLoader:  Base doesn't have nextOnHecticFailureID when it should.", DebugHud.LogType.ERROR)
 			if base.has("hecticDuration"):
 				copy.hecticDuration = base.hecticDuration
 
@@ -175,7 +189,7 @@ static func fillNpcDialogueDefaults(base:Dictionary, defaultDialogue:Dictionary,
 			if base.has("writeSpeedCustom"):
 				copy.writeSpeedCustom = base.writeSpeedCustom
 			else:
-				printerr("DialogueLoader:  Base doesn't have writeSpeedCustom when it should.")
+				DebugHud.addToLog("DialogueLoader:  Base doesn't have writeSpeedCustom when it should.", DebugHud.LogType.ERROR)
 
 	if base.has("sfx"):
 		copy.sfx = _mergeSfxAttributes(base.sfx, copy.get("sfx", {}))
@@ -218,10 +232,18 @@ static func _fillNpcOptionDefaults(base:Dictionary, defaults:Dictionary) -> Dict
 		copy.writeSpeedCustom = base.writeSpeedCustom
 
 	if base.has("checkFlags"):
-		copy.checkFlags = base.checkFlags
+		# slightly more complicated so engine knows dictionary typess
+		var temp:Dictionary[String, bool] = {}
+		for flag:String in base.checkFlags:
+			temp[flag] = base.checkFlags[flag] as bool
+		copy.checkFlags = temp
 
 	if base.has("setFlags"):
-		copy.setFlags = base.setFlags
+		# slightly more complicated so engine knows dictionary typess
+		var temp:Dictionary[String, bool] = {}
+		for flag:String in base.setFlags:
+			temp[flag] = base.setFlags[flag] as bool
+		copy.setFlags = temp
 
 	if base.has("allowBack"):
 		copy.allowBack = base.allowBack
@@ -290,13 +312,13 @@ static func fillDialogueMissingFields(configuredAttributes: Dictionary) -> Dicti
 	if typeof(configuredOptions) == TYPE_ARRAY:
 		for configuredOption in configuredOptions:
 			if typeof(configuredOption) != TYPE_DICTIONARY:
-				printerr("DialogueLoader: Item in options field of this dialogue node isn't a dictionary.")
+				DebugHud.addToLog("DialogueLoader: Item in options field of this dialogue node isn't a dictionary.", DebugHud.LogType.ERROR)
 				continue
 
 			var opt := _fillOptionMissingFields(configuredOption, dialogue)
 			dialogue.options.append(opt)
 	else:
-		printerr("DialogueLoader: Options field of this dialogue node file isn't an array.")
+		DebugHud.addToLog("DialogueLoader: Options field of this dialogue node file isn't an array.", DebugHud.LogType.ERROR)
 
 	return dialogue
 
@@ -368,10 +390,7 @@ static func _resolveOptionInheritance(option: Dictionary, optionOwner: Dictionar
 	if option.writeSpeedCustom < 0.0:
 		option.writeSpeedCustom = optionOwner.writeSpeedCustom
 
-	for event in DialogueDefaults.SFX_EVENTS:
-		#print(option.sfx[event])
-		#print()
-		#print(optionOwner.sfx[event])
+	for event:String in DialogueDefaults.SFX_EVENTS:
 		if option.sfx[event] == "inherit":
 			option.sfx[event] = optionOwner.sfx[event]
 
@@ -412,12 +431,13 @@ static func _verifyInList(value: String, list: Array, fallback: String) -> Strin
 ## does not exist or cannot be opened.
 static func _readTextFile(path: String, reportError:bool = true) -> String:
 	if not FileAccess.file_exists(path):
-		if reportError: printerr("DialogueLoader: File does not exist: ", path)
+		if reportError:
+			DebugHud.addToLog("DialogueLoader: File does not exist: '%s'" % path, DebugHud.LogType.ERROR)
 		return ""
 
 	var file:FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		if reportError: printerr("DialogueLoader: Could not open file: ", path)
+		if reportError: DebugHud.addToLog("DialogueLoader: Could not open file: '%s'" % path, DebugHud.LogType.ERROR)
 		return ""
 
 	var contents:String = file.get_as_text()

@@ -4,17 +4,26 @@ class_name DialogueDefaults
 ##
 ## This class stores the valid dialogue values and fallback dictionaries used by
 ## [DialogueLoader] when loading dialogue JSON files.
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]Use Case[/b][br]
 ## Use this class when adding, validating, or changing dialogue configuration
 ## values. For example, new dialogue types, option types, write speed presets,
 ## or default JSON fields should be added here.
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]How to Use[/b][br]
 ## Designers do not usually interact with this class directly. Instead, they
 ## create dialogue JSON files. [DialogueLoader] then uses the dictionaries in
 ## this class to fill in any missing values.
-## [br][br]
+##
+##
+##
+## [br][br][br]
 ## [b]Important Notes[/b][br]
 ## Fields in [member DEFAULT_DIALOGUE] and [member DEFAULT_OPTION] should match
 ## the expected keys in the dialogue JSON files. If a JSON file omits a field,
@@ -88,7 +97,7 @@ const SFX_EVENTS:Array[String] = [
 ## Optional fields control presentation, mode-specific behaviour, writing speed,
 ## and SFX. If omitted from the JSON file, these values are used.
 ## [br][br]
-const DEFAULT_DIALOGUE:Dictionary = {
+const DEFAULT_DIALOGUE:Dictionary[String, Variant] = {
 	# === Mandatory ===
 	"text": "",
 	"options": [],
@@ -129,7 +138,7 @@ const DEFAULT_DIALOGUE:Dictionary = {
 ## [code]rejectBackMessage[/code] is displayed if the player tries to go back to one
 ## of these dialogue nodes.
 ## [br][br]
-const DEFAULT_OPTION:Dictionary = {
+const DEFAULT_OPTION:Dictionary[String, Variant] = {
 	# === Mandatory ===
 	"text": "",
 	"nextID": "",

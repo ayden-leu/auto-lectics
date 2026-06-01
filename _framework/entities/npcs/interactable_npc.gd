@@ -2,7 +2,60 @@
 @icon("uid://b105kdcrwpi0r")
 extends NPC
 class_name InteractableNPC
-## The base class of all Interactable NPCs in the game.  Interactable NPCs allow the player to interact with them and initiate a dialogue event.
+## The base class of all Interactable NPCs in the game.
+##
+## Inherits all features from [NPC].
+## [br][br]
+## Interactable NPCs allow the player to interact with them and initiate a dialogue event.
+##
+##
+##
+## [br][br][br]
+## [b]Configuration:[/b][br]
+## [member _hitbox] allows players to interact with this InteractableNPC.
+## [br][br]
+## If [member _talkOnlyOnce] is [code]true[/code], then the player will only be able to talk to this
+## InteractableNPC once.  If you want to let the player talk to this InteractableNPC
+## again, you have to run [method reset] at some point.
+## [LoopManager] does this whenever it resets.
+## [br][br]
+## [member dialogueTreeID] is the name of the subfolder to look into when loading
+## dialogue nodes, [member initialDialogueID] is the dialogue node to load
+## into [DialogueConsole] when the player interacts with this, and [member _currentDialogueID]
+## is the ID of the currently loadeed dialogue node.
+## [br][br]
+## If [member lookAtInteractorWhileTalking] is [code]true[/code], this InteractableNPC
+## will look at [member _currentInteractor] while it performs the dialogue event.
+## [br][br]
+## [member rejectConsoleExit] will make it so the player cannot close the [DialogueConsole],
+## and [member rejectConsoleExitMessage] is the message that is displayed in the [DialogueConsole]
+## when the player tries closing it.
+##
+##
+## [br][br][br]
+## [b]Interaction:[/b][br]
+## Upon being interacted with, the following functions are ran, assuming its a valid interactor:
+## [br][br]
+## - [method _beginDialogueEventConsole]
+## [br][br]
+## - [method _loadNextDialogueConsole]
+## [br][br]
+## - [method DialogueLoader.getDialogueNode]
+## [br][br]
+## - [method _loadDialogueConsoleData]
+## [br][br]
+## - [method DialogueConsole.prepare] via reference obtained by [WindowManager]
+## [br][br]
+## - [method DialogueConsole.start] via [WindowManager]
+##
+##
+## [br][br][br]
+## [b]Other notes:[/b][br]
+## [member isTalking] and [member wasTalkedTo] can be helpful if you want to know
+## the state of this InteractableNPC.
+## [br][br]
+## This InteractableNPC will remember if it should be patrolling or not while
+## performing a dialogue event.  It is stored in [member _shouldPatrol].
 
 # ------------------------------------------------
 # signals
@@ -57,9 +110,9 @@ signal finished_dialogue()
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## Is true when this [InteractableNPC] is in a dialogue event.
-var isTalking: bool = false
+var isTalking:bool = false
 ## Keeps track of if the player has interacted with this Interactable NPC.  If true, this NPC can no longer be talked to.
-var wasTalkedTo: bool = false
+var wasTalkedTo:bool = false
 
 # ------------------------------------------------
 # normal variables only referenced in script
@@ -67,7 +120,7 @@ var wasTalkedTo: bool = false
 ## [b]Internal-use only.[/b]  The hitbox's collision shape.  Gets set when the node is ready.
 var _hitboxShapes:Array[CollisionShape3D]
 ## [b]Internal-use only.[/b]  Keeps track of which dialogue object to reference at the moment.
-var _currentDialogueID: String = ""
+var _currentDialogueID:String = ""
 ## [b]Internal-use only.[/b]  Tracks who is interacting with this NPC; curently can only be the player
 var _currentInteractor:Node3D
 ## [b]Internal-use only.[/b]  Tracks whether the NPC should be patrolling.
@@ -78,7 +131,6 @@ var _shouldPatrol:bool
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	# Makes sure the code after this is only ran in-game
 	if Engine.is_editor_hint():
 		return
 	super()
@@ -87,7 +139,7 @@ func _ready() -> void:
 	_currentDialogueID = initialDialogueID
 	_hitboxShapes = _getHitboxShapes()
 
-func _process(delta: float) -> void:
+func _process(delta:float) -> void:
 	if Engine.is_editor_hint():
 		return
 
@@ -98,14 +150,16 @@ func _process(delta: float) -> void:
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
-## Enables the [InteractableNPC].  This will make it so the player can interact with this Interactable NPC.
+## Enables the [InteractableNPC].
+## This will make it so the player can interact with this InteractableNPC.
 func enable() -> void:
 	_hitbox.monitorable = true
 	for shape in _hitboxShapes:
 		shape.set_deferred("disabled", false)
 	super()
 
-## Disables the [InteractableNPC].  This will make it so the player cannot interact with this Interactable NPC.
+## Disables the [InteractableNPC].
+## This will make it so the player cannot interact with this InteractableNPC.
 func disable() -> void:
 	_hitbox.set_deferred("monitorable", false)
 	for shape in _hitboxShapes:
@@ -126,7 +180,8 @@ func reset() -> void:
 # ------------------------------------------------
 # functions only referenced inside this script
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Gets the [member hitbox]'s collision shapes.
+## [b]Internal-use only.[/b]
+## Gets the [member hitbox]'s collision shapes.
 func _getHitboxShapes() -> Array[CollisionShape3D]:
 	var children:Array[Node] = _hitbox.get_children()
 	var shapes:Array[CollisionShape3D] = []
@@ -136,9 +191,10 @@ func _getHitboxShapes() -> Array[CollisionShape3D]:
 			shapes.push_back(child)
 	return shapes
 
-## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueConsole].
+## [b]Internal-use only.[/b]
+## Loads the data of a dialogue object into [member _dialogueConsole].
 ## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
-func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
+func _loadDialogueConsoleData(dialogueEntry:Dictionary) -> void:
 	var console:DialogueConsole = FR_WindowManager.dialogueConsole
 
 	console.instigatingNpc = self
@@ -161,8 +217,9 @@ func _loadDialogueConsoleData(dialogueEntry: Dictionary) -> void:
 	console.loadOptionData(dialogueEntry.options)
 	console.prepare()
 
-## [b]Internal-use only.[/b]  Loads the next dialogue to display.
-func _loadNextDialogueConsole(nextDialogueID: String) -> void:
+## [b]Internal-use only.[/b]
+## Loads the next dialogue to display.
+func _loadNextDialogueConsole(nextDialogueID:String) -> void:
 	if nextDialogueID == "" and isTalking:
 		_endDialogueConsole()
 		return
@@ -173,7 +230,8 @@ func _loadNextDialogueConsole(nextDialogueID: String) -> void:
 	FR_WindowManager.dialogueConsole.start()
 	dialogue_advanced.emit()
 
-## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the player.
+## [b]Internal-use only.[/b]
+## Starts a dialogue event between itself and the player.
 func _beginDialogueEventConsole(interactor:Player) -> void:
 	isTalking = true
 	patrolEnabled = false
@@ -190,7 +248,8 @@ func _beginDialogueEventConsole(interactor:Player) -> void:
 	FR_WindowManager.subscribeToConsole(self)
 	_loadNextDialogueConsole(initialDialogueID)
 
-## [b]Internal-use only.[/b]  Ends the dialogue interaction.
+## [b]Internal-use only.[/b]
+## Ends the dialogue interaction.
 func _endDialogueConsole() -> void:
 	FR_WindowManager.killDialogueConsole()
 	FR_WindowManager.unsubscribeToConsole(self)
@@ -216,46 +275,51 @@ func _endDialogueConsole() -> void:
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
-## [b]Internal-use only.[/b]  Handles flow of what to do when this [InteractableNPC] is interacted with.
-## Can also be used to simulate an interaction if need be.  The first paramter
-## is the thing that interacted with this [InteractableNPC].
+## [b]Internal-use only.[/b]
+## Handles flow of what to do when this [InteractableNPC] is interacted with.
+## Can also be used to simulate an interaction if need be.
+## [param interactor] is the thing that interacted with this [InteractableNPC].
 func _on_interaction(interactor:Node3D) -> void:
 	if wasTalkedTo or isTalking:
 		return
 
-	#_beginDialogueEventBox(interactor)
 	if interactor is Player:
 		_beginDialogueEventConsole(interactor)
 
-## [b]Internal-use only.[/b]  Handles logic for when a dialogue option is chosen.
+## [b]Internal-use only.[/b]
+## Handles logic for when a dialogue option is chosen.
 func _on_console_option_chosen(nextID:String) -> void:
 	if not isTalking:
 		return
 
 	_loadNextDialogueConsole(nextID)
 
-## [b]Internal-use only.[/b]  Emits [signal option_available].
+## [b]Internal-use only.[/b]
+## Emits [signal option_available].
 func _on_console_new_option_available() -> void:
 	if not isTalking:
 		return
 
 	option_available.emit()
 
-## [b]Internal-use only.[/b]  Emits [all_options_available].
+## [b]Internal-use only.[/b]
+## Emits [all_options_available].
 func _on_console_all_options_available() -> void:
 	if not isTalking:
 		return
 
 	all_options_available.emit()
 
-## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
+## [b]Internal-use only.[/b]
+## Emits [dialogue_all_visible].
 func _on_console_all_dialogue_text_visible() -> void:
 	if not isTalking:
 		return
 
 	dialogue_all_visible.emit()
 
-## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
+## [b]Internal-use only.[/b]
+## Handles logic for when the [DialogueConsole] wants to be closed.
 func _on_console_close(_console:DialogueConsole) -> void:
 	_endDialogueConsole()
 
@@ -280,143 +344,3 @@ func _get_configuration_warnings() -> PackedStringArray:
 	inheritedWarnings.append_array(warnings)
 
 	return inheritedWarnings
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# //////////////////////////////////////////////////////////////////////////////
-# //    DEPRECATED ZONE  DEPRECATED ZONE  DEPRECATED ZONE  DEPRECATED ZONE    //
-# //////////////////////////////////////////////////////////////////////////////
-
-# ------------------------------------------------
-# signals
-# ------------------------------------------------
-
-# ------------------------------------------------
-# enums
-# ------------------------------------------------
-## @deprecated
-## Attach methods for the [DialogueBox].
-enum BoxAttachMethod {
-	FOLLOW,  ## When spawned, the [DialogueBox] will be in the same relative position and rotation as this [InteractableNPC] all of the time.  If the [InteractableNPC] moves left, the DialogueBox will move left.  If the the [member _dialogueBoxAnchor] is right above the [InteractableNPC] and the [InteractableNPC] flips upside down, the [DialogueBox] will be physically below the [InteractableNPC] and upside down.
-	STAY  ## When spawned, the [DialogueBox] will take the position and rotation of the [member _dialogueBoxAnchor] at that moment and stay there.  If the [InteractableNPC] moves or rotates after this moment, the [DialogueBox] will stay in place.
-}
-
-# ------------------------------------------------
-# constants
-# ------------------------------------------------
-
-# ------------------------------------------------
-# export variables
-# ------------------------------------------------
-@export_subgroup("Deprecated")
-## @deprecated
-## Tells the game where to spawn a [DialogueBox] when a player interacts with the Interactable NPC.
-@export var _dialogueBoxAnchor:Marker3D:
-	set(newState):
-		printerr("InteractableNPC:  [", displayName, "] _dialogueBoxAnchor is deprecated")
-		_dialogueBoxAnchor = newState
-## @deprecated
-## How the [DialogueBox] should act after beind spawned.
-@export var _dialogueBoxAttachMethod:BoxAttachMethod:
-	set(newState):
-		printerr("InteractableNPC:  [", displayName, "] _dialogueBoxAttachMethod is deprecated")
-		_dialogueBoxAttachMethod = newState
-
-# ------------------------------------------------
-# onready variables
-# ------------------------------------------------
-
-# ------------------------------------------------
-# normal variables referenced outside of script
-# ------------------------------------------------
-
-# ------------------------------------------------
-# normal variables only referenced in script
-# ------------------------------------------------
-## @deprecated
-## [b]Internal-use only.[/b]  Holds a reference to this [InteractableNPC]'s dialogue box scene.
-var _dialogueBox:DialogueBox = null:
-	get():
-		printerr("InteractableNPC:  [", displayName, "] _dialogueBox is deprecated")
-		return _dialogueBox
-	set(newState):
-		printerr("InteractableNPC:  [", displayName, "] _dialogueBox is deprecated")
-## @deprecated
-## [b]Internal-use only.[/b]  Single-use boolean to determine if the dialogue box's signals have been connected to functions yet.
-var _connectedDialogueBoxSignals:bool = false:
-	get():
-		printerr("InteractableNPC:  [", displayName, "] _connectedDialogueBoxSignals is deprecated")
-		return _connectedDialogueBoxSignals
-	set(newState):
-		printerr("InteractableNPC:  [", displayName, "] _connectedDialogueBoxSignals is deprecated")
-
-# ------------------------------------------------
-# functions referenced outside of this script
-# ------------------------------------------------
-
-# ------------------------------------------------
-# functions only referenced inside this script
-# ------------------------------------------------
-## @deprecated
-## [b]Internal-use only.[/b]  Creates a [DialogueBox]. Only one can exist at a time.
-func _spawnDialogueBox() -> void:
-	printerr("InteractableNPC:  [", displayName, "] _spawnDialogueBox is deprecated.")
-	return
-
-## @deprecated
-## [b]Internal-use only.[/b]  Connects the [member _dialogueBox] signals to functions.
-## Only needs to be ran once.
-func _connectDialogueBoxSignals() -> void:
-	printerr("InteractableNPC:  [", displayName, "] _connectDialogueBoxSignals is deprecated.")
-	return
-
-## @deprecated
-## [b]Internal-use only.[/b]  Disconnects the [member _dialogueBox] signals to functions.
-func _disconnectDialogueBoxSignals() -> void:
-	printerr("InteractableNPC:  [", displayName, "] _disconnectDialogueBoxSignals is deprecated.")
-	return
-
-## @deprecated
-## [b]Internal-use only.[/b]  Loads the data of a dialogue object into [member _dialogueBox].
-## Make sure [member _currentDialogueID] is set to the dialogue you want to load before running.
-func _loadDialogueBoxData(_dialogueEntry:Dictionary) -> void:
-	printerr("InteractableNPC:  [", displayName, "] _loadDialogueBoxData is deprecated.")
-	return
-
-## @deprecated
-## [b]Internal-use only.[/b]  Loads the next dialogue to display.
-func _loadNextDialogueBox(_nextDialogueID: String) -> void:
-	printerr("InteractableNPC:  [", displayName, "] _loadNextDialogueBox is deprecated.")
-	return
-
-## @deprecated
-## [b]Internal-use only.[/b]  Starts a dialogue event between itself and the interactor.
-func _beginDialogueEventBox(_interactor:Node3D) -> void:
-	printerr("InteractableNPC:  [", displayName, "] _beginDialogueEventBox is deprecated.")
-	return
-
-## @deprecated
-## [b]Internal-use only.[/b]  Ends the dialogue interaction.
-func _endDialogueBox() -> void:
-	printerr("InteractableNPC:  [", displayName, "] _endDialogueBox is deprecated.")
-	return
-
-# ------------------------------------------------
-# functions that run when a signal is emitted
-# ------------------------------------------------

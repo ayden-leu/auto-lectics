@@ -73,7 +73,11 @@ size_flags_vertical = 0
 mouse_filter = 1
 text = "For each Control node (green) that doesn't care about mouse input, set their mouse filter property to \"Pass (Propagate Up)\" (Mouse > Filter).  This allows the window to be dragged by the mouse.
 
-Also, the close button for this window doesn't work due to the WindowManager handling that.  All DialogueWindows need to be created by the WindowManager to close properly."
+Also, the close button for this window doesn't work due to the WindowManager handling that.  All DialogueWindows need to be created by the WindowManager to close properly.
+
+The SfxEventHandler in this scene is needed for all DialogueWindows.  The game won't crash if you don't add it (hopefully), but it will complain at you in the logs.
+
+This label is just housing the notes.  You can remove it if you want."
 autowrap_mode = 3
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_spo03")]

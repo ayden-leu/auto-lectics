@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://bknkdc5csatcp"]
+
+[ext_resource type="Script" uid="uid://c5ysr3lav5g3c" path="res://_framework/test_scenes/test_player_camera.gd" id="1_8u10m"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_7qu3i"]
+[ext_resource type="BoxMesh" uid="uid://escx3mb3fiw7" path="res://_framework/_visual_assets/grappling_hook/hook.tres" id="4_y0rac"]
+[ext_resource type="CylinderMesh" uid="uid://cn5ha508yy41o" path="res://_framework/_visual_assets/grappling_hook/line.tres" id="5_0tw63"]
+[ext_resource type="SphereMesh" uid="uid://18w6n64r5gen" path="res://_framework/_visual_assets/dont_change/debug_sphere.tres" id="6_eqmtg"]
+
+[node name="test_PlayerCamera" type="Node3D"]
+script = ExtResource("1_8u10m")
+
+[node name="environment" type="Node" parent="."]
+
+[node name="FocusTarget" type="Node3D" parent="."]
+
+[node name="cameraAnchor" type="Node3D" parent="FocusTarget"]
+unique_name_in_owner = true
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_7qu3i")]
+focus = NodePath("../FocusTarget")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3, 0, 0)
+mesh = ExtResource("4_y0rac")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 3)
+mesh = ExtResource("4_y0rac")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -2)
+mesh = ExtResource("5_0tw63")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
+mesh = ExtResource("6_eqmtg")
+skeleton = NodePath("../MeshInstance3D3")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="InstructionsLabel" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
