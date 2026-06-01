@@ -15,6 +15,7 @@ signal _set_node_visibility(visible:bool)
 @onready var _graphArea:GraphEdit = $GraphEdit
 @onready var warningLabel: RichTextLabel = %WarningLabel
 @onready var warningHolder: Control = %WarningHolder
+@onready var statusLabel: Label = %StatusLabel
 
 #const initialObjectPosition:Vector2 = Vector2(100, 100)
 const _SAVE_PATH:String = DialogueLoader.STORAGE_PATH
@@ -206,6 +207,11 @@ func _loadDialogueTree() -> void:
 		printerr("DialogueCreator: Could not find any Dialogue files in NPC folder: ", _npcNameField.text)
 		return
 
+	statusLabel.text = "Loading"
+	statusLabel.show()
+	await get_tree().process_frame
+
+
 	_deleteAllNodes()
 	# needed so arrangement is the same each time
 	await get_tree().process_frame
@@ -249,6 +255,8 @@ func _loadDialogueTree() -> void:
 
 	_graphArea.arrange_nodes()
 	loadingDialogueFiles = false
+	statusLabel.text = ""
+	statusLabel.hide()
 	#_set_node_visibility.emit(true)
 
 func _loadNpcDefaults() -> void:

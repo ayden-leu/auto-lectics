@@ -167,7 +167,7 @@ var numOptions:int = 0:
 # normal variables only referenced in script
 # ------------------------------------------------
 ## [b]Internal-use only.[/b]  The data of each option node connected to the option ports.
-var _options:Array[Dictionary] = []
+var _options:Array[DC_OptionNode] = []
 ## [b]Internal-use only.[/b]  The labels for each option port.
 var _optionPorts:Array[Label] = []
 
@@ -199,7 +199,7 @@ func createOptionPort() -> void:
 		false, 0, Color.TRANSPARENT,
 		true, PortType.OPTION, PortColor.OPTION
 	)
-	_options.push_back({})
+	_options.push_back(null)
 	numOptions += 1
 
 	_option_amount_changed.emit()
@@ -239,12 +239,16 @@ func getFields() -> Dictionary:
 
 	if _options != []:
 		var optionsToAdd:Array[Dictionary] = []
-		for option in _options:
-			if option == {}:
+		for option:DC_OptionNode in _options:
+			if option == null:
 				continue
 
-			var potentialErrorOne:bool = (option.has("setFlags") and not option.setFlags.is_empty() and option.setFlags.keys().has("testFlag"))
-			var potentialErrorTwo:bool = option.has("checkFlags") and not option.checkFlags.is_empty() and option.checkFlags.keys().has("testFlag")
+			var optionData:Dictionary = option._getFields()
+			if optionData == {}:
+				continue
+
+			var potentialErrorOne:bool = (optionData.has("setFlags") and not optionData.setFlags.is_empty() and optionData.setFlags.keys().has("testFlag"))
+			var potentialErrorTwo:bool = optionData.has("checkFlags") and not optionData.checkFlags.is_empty() and optionData.checkFlags.keys().has("testFlag")
 
 			if potentialErrorOne and potentialErrorTwo:
 				display_warning.emit("testFlag is being referenced in an option's setFlags and checkFlags.\nCheck console output for the data related to the option where this is the case.")
@@ -258,7 +262,7 @@ func getFields() -> Dictionary:
 				_on_debug_pressed()
 				print_rich("[color=orange]END OF OPTION DATA[/color]")
 
-			optionsToAdd.push_back(option)
+			optionsToAdd.push_back(optionData)
 
 		if optionsToAdd != []:
 			currentValues.options = optionsToAdd
@@ -277,7 +281,8 @@ func saveToFile() -> void:
 
 ## Updates an option from an internal list of options to be empty.
 func optionDisconnected(port:int) -> void:
-	_options[port] = {}
+	_options[port] = null
+	#_options.remove_at(port)
 
 ## Updates [member nextOnHecticFailId] to be an empty string.
 func nextOnHecticFailIdDisconnected() -> void:
@@ -356,8 +361,8 @@ func _on_remove_option_pressed() -> void:
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a connected [DC_OptionNode]'s attributes get updated.
-func _on_option_updated(index:int, newValue:Dictionary) -> void:
-	_options[index] = newValue
+func _on_option_updated(index:int, optionNode:DC_OptionNode) -> void:
+	_options[index] = optionNode
 
 ## [b]Internal-use only.[/b]
 ## Handles logic for when a connected [DC_OptionNode] gets disconnected from an option port.
@@ -439,7 +444,9 @@ func _on_debug_pressed() -> void:
 		for event in aspects:
 			print("\t", event, ": ", aspects[event])
 
-	print("Options: ", _options)
+	print("Options:")
+	for optionNode in _options:
+		print("\t", optionNode._getFields())
 	print("OptionPorts: ", _optionPorts)
 	print("numOptions: ", numOptions)
 
