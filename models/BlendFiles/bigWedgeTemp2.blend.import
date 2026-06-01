@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cm0raywcnfphc"
-path="res://.godot/imported/bigWedgeTemp.blend-f555fd16a906ca1d44d8949a1d9cc3ec.scn"
+uid="uid://bdkdiuu8cbkn8"
+path="res://.godot/imported/bigWedgeTemp2.blend-fa03a3c5e3468c632768f0f4217f2b5c.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/bigWedgeTemp.blend"
-dest_files=["res://.godot/imported/bigWedgeTemp.blend-f555fd16a906ca1d44d8949a1d9cc3ec.scn"]
+source_file="res://models/BlendFiles/bigWedgeTemp2.blend"
+dest_files=["res://.godot/imported/bigWedgeTemp2.blend-fa03a3c5e3468c632768f0f4217f2b5c.scn"]
 
 [params]
 

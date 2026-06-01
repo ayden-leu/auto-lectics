@@ -407,6 +407,195 @@ func _on_debug_pressed() -> void:
 label_settings = SubResource("LabelSettings_pmluo")
 vertical_alignment = 3
 
+[node name="FlavorTextLabel2" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 657.0
+offset_top = -1592.0005
+offset_right = 2273.0
+offset_bottom = 8415.0
+grow_vertical = 0
+scale = Vector2(1, 0.19999999)
+theme_override_colors/font_color = Color(0.31, 0.31, 0.31, 0.14117648)
+text = "extends Node
+class_name StartingScreenForRealThisTime
+
+@export var amIOnTheTitleScreen = true
+
+@onready var flavorText = %FlavorTextLabel
+@onready var startText = %StartTextLabel
+@onready var background = %Background
+
+var isStartTextGoing = false
+var didAudioPlay = false
+
+func _ready() -> void:
+	flavorText.visible_ratio = 0
+	startText.visible_characters = 0
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"start_game\"):
+		amIOnTheTitleScreen = false
+		startText.visible = false
+		background.visible = false
+		get_tree().change_scene_to_file(\"res://world/spring_week_3_playtest.tscn\")
+							
+	elif event.is_action_pressed(\"close_game_from_title_screen\"):
+		if amIOnTheTitleScreen == true and startText.visible == true: 
+			get_tree().quit()
+
+func _updateFlavorText() -> void: 
+	
+	flavorText.visible_ratio += 0.001
+	
+	if flavorText.visible_ratio >= 1 and didAudioPlay == false:
+		%StartUp.play()
+
+		await get_tree().create_timer(1.0).timeout
+		didAudioPlay = true
+		flavorText.visible = false
+		startText.visible = true
+		isStartTextGoing = true
+
+func _updateStartText() -> void: 
+	startText.visible_characters += 1
+
+func _process(delta: float) -> void:
+	_updateFlavorText()
+	if isStartTextGoing == true:
+		_updateStartText()"
+label_settings = SubResource("LabelSettings_pmluo")
+vertical_alignment = 3
+
+[node name="FlavorTextLabel3" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 961.0
+offset_top = -2255.0
+offset_right = 2577.0
+offset_bottom = 7752.0
+grow_vertical = 0
+scale = Vector2(1, 0.19999999)
+theme_override_colors/font_color = Color(0.31, 0.31, 0.31, 0.14117648)
+text = "extends Node
+class_name StartingScreenForRealThisTime
+
+@export var amIOnTheTitleScreen = true
+
+@onready var flavorText = %FlavorTextLabel
+@onready var startText = %StartTextLabel
+@onready var background = %Background
+
+var isStartTextGoing = false
+var didAudioPlay = false
+
+func _ready() -> void:
+	flavorText.visible_ratio = 0
+	startText.visible_characters = 0
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"start_game\"):
+		amIOnTheTitleScreen = false
+		startText.visible = false
+		background.visible = false
+		get_tree().change_scene_to_file(\"res://world/spring_week_3_playtest.tscn\")
+							
+	elif event.is_action_pressed(\"close_game_from_title_screen\"):
+		if amIOnTheTitleScreen == true and startText.visible == true: 
+			get_tree().quit()
+
+func _updateFlavorText() -> void: 
+	
+	flavorText.visible_ratio += 0.001
+	
+	if flavorText.visible_ratio >= 1 and didAudioPlay == false:
+		%StartUp.play()
+
+		await get_tree().create_timer(1.0).timeout
+		didAudioPlay = true
+		flavorText.visible = false
+		startText.visible = true
+		isStartTextGoing = true
+
+func _updateStartText() -> void: 
+	startText.visible_characters += 1
+
+func _process(delta: float) -> void:
+	_updateFlavorText()
+	if isStartTextGoing == true:
+		_updateStartText()"
+label_settings = SubResource("LabelSettings_pmluo")
+vertical_alignment = 3
+
+[node name="FlavorTextLabel4" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 213.0
+offset_top = -1684.0
+offset_right = 1829.0
+offset_bottom = 8323.0
+grow_vertical = 0
+scale = Vector2(1, 0.19999999)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "extends Node
+class_name StartingScreenForRealThisTime
+
+@export var amIOnTheTitleScreen = true
+
+@onready var flavorText = %FlavorTextLabel
+@onready var startText = %StartTextLabel
+@onready var background = %Background
+
+var isStartTextGoing = false
+var didAudioPlay = false
+
+func _ready() -> void:
+	flavorText.visible_ratio = 0
+	startText.visible_characters = 0
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"start_game\"):
+		amIOnTheTitleScreen = false
+		startText.visible = false
+		background.visible = false
+		get_tree().change_scene_to_file(\"res://world/spring_week_3_playtest.tscn\")
+							
+	elif event.is_action_pressed(\"close_game_from_title_screen\"):
+		if amIOnTheTitleScreen == true and startText.visible == true: 
+			get_tree().quit()
+
+func _updateFlavorText() -> void: 
+	
+	flavorText.visible_ratio += 0.001
+	
+	if flavorText.visible_ratio >= 1 and didAudioPlay == false:
+		%StartUp.play()
+
+		await get_tree().create_timer(1.0).timeout
+		didAudioPlay = true
+		flavorText.visible = false
+		startText.visible = true
+		isStartTextGoing = true
+
+func _updateStartText() -> void: 
+	startText.visible_characters += 1
+
+func _process(delta: float) -> void:
+	_updateFlavorText()
+	if isStartTextGoing == true:
+		_updateStartText()"
+label_settings = SubResource("LabelSettings_pmluo")
+vertical_alignment = 3
+
 [node name="StartTextLabel" type="Label" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -414,10 +603,10 @@ offset_left = 28.0
 offset_top = 691.0
 offset_right = 294.0
 offset_bottom = 792.0
-text = "> compile complete
-> ready to run [AUTO-LECTICS.exe]
+text = "compile complete
+ready to run [AUTO-LECTICS.V.2.0]
 
-> run? y / n"
+run? y / n"
 
 [node name="Background" type="ColorRect" parent="."]
 unique_name_in_owner = true

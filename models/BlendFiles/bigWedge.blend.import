@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dqdw08sqmc44e"
-path="res://.godot/imported/tub.blend-c97a10d4fa1d008a1f7dac31fba580b7.scn"
+uid="uid://ccleb2j0wkhss"
+path="res://.godot/imported/bigWedge.blend-e95267b0faa4ba032d1e8742c3e4fc20.scn"
 
 [deps]
 
-source_file="res://models/BlendFiles/tub.blend"
-dest_files=["res://.godot/imported/tub.blend-c97a10d4fa1d008a1f7dac31fba580b7.scn"]
+source_file="res://models/BlendFiles/bigWedge.blend"
+dest_files=["res://.godot/imported/bigWedge.blend-e95267b0faa4ba032d1e8742c3e4fc20.scn"]
 
 [params]
 
@@ -39,67 +39,19 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"clear": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://materials/goop.tres",
-"use_external/path": "res://materials/goop.tres"
-},
-"red": {
+"RedRust": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/PlateMaterial.tres",
 "use_external/path": "uid://ladf8f7cniqt"
+},
+"YellowRust": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/YellowRust.tres",
+"use_external/path": "uid://3gptlwtllu4x"
 }
 },
 "nodes": {
-"PATH:Catenary_002": {
-"generate/occluder": 1
-},
-"PATH:Cube_070": {
-"generate/occluder": 1
-},
-"PATH:Cube_071": {
-"generate/occluder": 1
-},
-"PATH:Cube_072": {
-"generate/occluder": 1
-},
-"PATH:Cube_073": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_071": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_072": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_073": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_074": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_075": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_076": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_077": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_078": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_079": {
-"generate/occluder": 1
-},
-"PATH:Cylinder_080": {
-"generate/occluder": 1
-},
-"PATH:Sphere_005": {
-"generate/occluder": 1
-},
-"PATH:Sphere_006": {
+"PATH:Cube_043": {
 "generate/occluder": 1
 }
 }

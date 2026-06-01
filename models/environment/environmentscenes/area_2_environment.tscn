@@ -1,17 +1,16 @@
-[gd_scene load_steps=24 format=3 uid="uid://db24nhectuest"]
+[gd_scene load_steps=23 format=3 uid="uid://db24nhectuest"]
 
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="1_1c776"]
 [ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="2_wbm8u"]
 [ext_resource type="PackedScene" uid="uid://cxtrtnwgnsri7" path="res://models/environment/large_pipe.tscn" id="3_tf1lc"]
 [ext_resource type="PackedScene" uid="uid://cgadj03f0km58" path="res://models/environment/backgroundClutter/big_greeble.tscn" id="4_tldiu"]
-[ext_resource type="PackedScene" uid="uid://cm0raywcnfphc" path="res://models/BlendFiles/bigWedgeTemp.blend" id="5_p6b6d"]
+[ext_resource type="PackedScene" uid="uid://ccleb2j0wkhss" path="res://models/BlendFiles/bigWedge.blend" id="5_1ox1w"]
 [ext_resource type="PackedScene" uid="uid://ctfitg1rrf5xq" path="res://models/environment/metal_big_flat.tscn" id="6_bhlbt"]
 [ext_resource type="PackedScene" uid="uid://chka61lp34f8r" path="res://models/BlendFiles/trussingForstairs.blend" id="7_gpiq4"]
 [ext_resource type="PackedScene" uid="uid://bxyidxqmrtxn5" path="res://models/BlendFiles/bigRing.blend" id="8_wbm8u"]
 [ext_resource type="PackedScene" uid="uid://dmkoidkma4qj3" path="res://models/BlendFiles/cable.blend" id="9_tldiu"]
 [ext_resource type="AudioStream" uid="uid://b10vndwny8sbo" path="res://sounds/sfx/liecio-most-stormy-howling-wind-110211.mp3" id="10_5j8fo"]
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="10_p6b6d"]
-[ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="11_lq8kl"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="11_p6b6d"]
 [ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="12_bhlbt"]
 [ext_resource type="Texture2D" uid="uid://capq82bdntjri" path="res://textures/skybox3.png" id="15_1ox1w"]
@@ -74,28 +73,32 @@ transform = Transform3D(8.414646, -3.0329442, 7.843277e-09, 0, -3.909788e-07, -0
 [node name="bigGreeble" parent="Node3D" instance=ExtResource("4_tldiu")]
 transform = Transform3D(4.479329, 0, 0, 0, 4.479329, 0, 0, 0, 4.479329, -6.1923714, -81.55348, -4.878235)
 
-[node name="bigWedgeTemp" parent="Node3D" instance=ExtResource("5_p6b6d")]
+[node name="bigWedge" parent="Node3D" instance=ExtResource("5_1ox1w")]
+transform = Transform3D(-20.997433, 0, -15.506678, 0, 26.102667, 0, 15.506678, 0, -20.997433, 0, 54.08647, 0)
+visible = false
+
+[node name="bigWedge9" parent="Node3D" instance=ExtResource("5_1ox1w")]
 transform = Transform3D(-20.997433, 0, -15.506678, 0, 26.102667, 0, 15.506678, 0, -20.997433, 0, 54.08647, 0)
 
-[node name="bigWedgeTemp10" parent="Node3D" instance=ExtResource("5_p6b6d")]
+[node name="bigWedge2" parent="Node3D" instance=ExtResource("5_1ox1w")]
 transform = Transform3D(-25.816088, 0, -3.857317, 0, 26.102667, 0, 3.857317, 0, -25.816088, 17.33274, -16.595627, -1.9156189)
 
-[node name="bigWedgeTemp10" parent="Node3D/bigWedgeTemp10" instance=ExtResource("10_p6b6d")]
-transform = Transform3D(-0.4581005, 0.1801252, 0.1859763, -0.081949815, -0.45942405, 0.24310954, 0.24559414, 0.18268248, 0.4280175, -1.6902012, 4.3467097, -0.2525418)
+[node name="bigWedge3" parent="Node3D" instance=ExtResource("5_1ox1w")]
+transform = Transform3D(10.879028, -5.3547926, -6.4521794, -2.1391087, -11.992193, 6.345807, -8.107319, -4.021347, -10.332368, 61.941254, 96.86509, -1.9156189)
 
-[node name="bigWedgeTemp11" parent="Node3D/bigWedgeTemp10" instance=ExtResource("10_p6b6d")]
-transform = Transform3D(-0.633296, 0.24901193, 0.25710064, -0.11329061, -0.6351254, 0.33608398, 0.3395188, 0.25254732, 0.5917078, -1.6902012, 4.3467097, -0.2525418)
+[node name="bigWedge4" parent="Node3D" instance=ExtResource("5_1ox1w")]
+transform = Transform3D(15.039595, -7.402669, -8.919738, -2.957187, -16.578466, 8.772688, -11.2078705, -5.559266, -14.283863, 61.941254, 96.86509, -1.9156189)
 
-[node name="bigWedgeTemp6" parent="Node3D" instance=ExtResource("5_p6b6d")]
+[node name="bigWedge5" parent="Node3D" instance=ExtResource("5_1ox1w")]
 transform = Transform3D(-20.997433, 0, -15.506678, 0, 26.102667, 0, 15.506678, 0, -20.997433, 0, 54.08647, 0)
 
-[node name="bigWedgeTemp4" parent="Node3D" instance=ExtResource("5_p6b6d")]
+[node name="bigWedge6" parent="Node3D" instance=ExtResource("5_1ox1w")]
 transform = Transform3D(-5.5987697, 6.6796133e-07, 18.889023, -1.7119121e-06, -19.701307, 1.8926917e-07, 18.889023, -1.5875432e-06, 5.5987697, -33.867786, 121.453636, -2.7041016)
 
-[node name="bigWedgeTemp2" parent="Node3D" instance=ExtResource("5_p6b6d")]
-transform = Transform3D(10.086193, 0, -15.812051, 0, 18.755058, 0, 15.812051, 0, 10.086193, 0, 36.307106, 0)
+[node name="bigWedge7" parent="Node3D" instance=ExtResource("5_1ox1w")]
+transform = Transform3D(10.086193, 0, -15.812051, 0, 18.755058, 0, 15.812051, 0, 10.086193, 95.92688, 36.307106, -248.1464)
 
-[node name="bigWedgeTemp3" parent="Node3D" instance=ExtResource("5_p6b6d")]
+[node name="bigWedge8" parent="Node3D" instance=ExtResource("5_1ox1w")]
 transform = Transform3D(18.74918, -7.223089e-07, -0.4693532, -7.589188e-07, -18.755054, -1.4534072e-06, -0.4693532, 1.4719442e-06, -18.74918, 86.12576, 166.58736, -81.777664)
 
 [node name="MetalBigFlat3" parent="Node3D" instance=ExtResource("6_bhlbt")]
@@ -133,7 +136,7 @@ transform = Transform3D(16.803125, 0, 0, 0, 16.803125, 0, 0, 0, 16.803125, 0, -7
 transform = Transform3D(2.8717115, 0, -5.8644814, 0, 9.794764, 0, 5.8644814, 0, 2.8717115, -126.29517, 93.173706, -1.9230188)
 
 [node name="cable7" parent="Node3D" instance=ExtResource("9_tldiu")]
-transform = Transform3D(-3.8358362, -0.67904073, -5.2406206, -0.40106454, 6.494441, -0.54794514, 5.269191, 0, -3.8567464, 88.4316, 122.55798, 51.228214)
+transform = Transform3D(2.906914, -0.31310454, -5.8387213, -0.40106452, 6.494441, -0.54794514, 5.8333406, 0.60254616, 2.8719208, 105.86108, 122.55798, -68.5408)
 
 [node name="cable8" parent="Node3D" instance=ExtResource("9_tldiu")]
 transform = Transform3D(-5.5910683, -0.060716957, 3.3727026, -0.40106454, 6.494441, -0.54794514, -3.349323, -0.67632085, -5.5644846, -67.55455, 89.477295, 89.71381)
@@ -206,25 +209,22 @@ directional_shadow_max_distance = 4096.0
 [node name="Environment" type="Node" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
-stream = ExtResource("11_lq8kl")
 volume_db = 17.0
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
-stream = ExtResource("10_5j8fo")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.218214)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.75689, 0, 248.98944)
 stream = ExtResource("10_5j8fo")
-volume_db = 1.824
+volume_db = 17.062
 unit_size = 4.55
 autoplay = true
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/AudioStreamPlayer3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.906036, 0, -111.57376)
-stream = ExtResource("11_lq8kl")
-volume_db = 22.018
-unit_size = 8.85
-max_db = 6.0
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.959885, 20.829437, 145.75668)
+stream = ExtResource("10_5j8fo")
+volume_db = 1.824
+unit_size = 4.55
 autoplay = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]

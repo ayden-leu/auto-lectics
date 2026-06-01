@@ -44,6 +44,11 @@ _subresources={
 "use_external/fallback_path": "res://materials/RedRust.tres",
 "use_external/path": "uid://c1m0ge3n7utw6"
 },
+"Material.003": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/glass.tres",
+"use_external/path": "uid://bxu82yjjeiuja"
+},
 "RedRust.002": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/RedRust.tres",
@@ -58,6 +63,20 @@ _subresources={
 "use_external/enabled": true,
 "use_external/fallback_path": "res://materials/goop.tres",
 "use_external/path": "res://materials/goop.tres"
+}
+},
+"nodes": {
+"PATH:Sphere": {
+"generate/occluder": 1
+},
+"PATH:Sphere_001": {
+"generate/occluder": 1
+},
+"PATH:Sphere_018": {
+"generate/occluder": 1
+},
+"PATH:Sphere_019": {
+"generate/occluder": 1
 }
 }
 }

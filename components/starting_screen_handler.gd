@@ -5,6 +5,7 @@ class_name StartingScreenForRealThisTime
 @export var amIOnTheTitleScreen = true
 
 @onready var flavorText = %FlavorTextLabel
+
 @onready var startText = %StartTextLabel
 @onready var background = %Background
 
@@ -20,7 +21,7 @@ func _input(event: InputEvent) -> void:
 		amIOnTheTitleScreen = false
 		startText.visible = false
 		background.visible = false
-		get_tree().change_scene_to_file("res://world/spring_week_3_playtest.tscn")
+		get_tree().change_scene_to_file("res://world/mergedenvinronment.tscn")
 							
 	elif event.is_action_pressed("close_game_from_title_screen"):
 		if amIOnTheTitleScreen == true and startText.visible == true: 
