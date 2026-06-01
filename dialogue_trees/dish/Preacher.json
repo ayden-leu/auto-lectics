@@ -1,6 +1,9 @@
 {
 	"text": "*play neutral.wav*\n*play neutral.wav*\n*play angry.wav*",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "dbPreacher"
+	},
 	"options": [
 		{
 			"text": "That wasn't very helpful.",

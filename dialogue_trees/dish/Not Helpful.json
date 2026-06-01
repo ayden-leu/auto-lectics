@@ -1,6 +1,9 @@
 {
 	"text": "*play angry.wav*\n*play angry.wav*\n*play angry.wav*",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "dbNotHelpful"
+	},
 	"options": [
 		{
 			"text": "[End]",

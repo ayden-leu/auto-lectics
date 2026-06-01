@@ -1,6 +1,9 @@
 {
 	"text": "*play happy.wav*\n*play happy.wav*\n*play happy.wav*",
 	"mode": "normal",
+	"sfx": {
+		"spawn": "dbOtherBots"
+	},
 	"options": [
 		{
 			"text": "Tell me about the bot holding all the speakers.",
