@@ -6,17 +6,26 @@
 		{
 			"text": "What are you?",
 			"type": "neutral",
-			"nextID": "Question"
+			"nextID": "Question",
+			"setFlags": {
+				"metSludge": true
+			}
 		},
 		{
 			"text": "Oh, sorry.",
 			"type": "neutral",
-			"nextID": "Apologize"
+			"nextID": "Apologize",
+			"setFlags": {
+				"metSludge": true
+			}
 		},
 		{
 			"text": "I'm looking for something.",
 			"type": "neutral",
-			"nextID": "SludgeBot"
+			"nextID": "SludgeBot",
+			"setFlags": {
+				"metSludge": true
+			}
 		}
 	]
 }

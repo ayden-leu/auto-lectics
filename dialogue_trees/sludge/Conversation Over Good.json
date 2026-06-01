@@ -5,7 +5,10 @@
 	"options": [
 		{
 			"text": "[End]",
-			"type": "neutral"
+			"type": "neutral",
+			"setFlags": {
+				"knowsSomeone": true
+			}
 		}
 	]
 }

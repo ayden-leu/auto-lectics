@@ -1,0 +1,10 @@
+{
+	"text": "Oh, the exiled bot. Yeah, he refused to leave with the other Frogs. Found him hiding behind a metal plate, can you believe that? He's crazy, but sometimes we need a reminder of those who came before us.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I have other questions.",
+			"nextID": "TooManyQuestions"
+		}
+	]
+}
