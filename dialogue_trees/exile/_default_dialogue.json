@@ -1,3 +1,7 @@
 {
-	"writeSpeed": "slow"
+	"writeSpeed": "slow",
+	"sfx": {
+		"spawn": "exile",
+		"text": "none"
+	}
 }

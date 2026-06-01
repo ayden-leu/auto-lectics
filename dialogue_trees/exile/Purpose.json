@@ -5,7 +5,7 @@
 	"options": [
 		{
 			"text": "[Continue]",
-			"nextID": "Purpose2"
+			"nextID": "Purpose"
 		}
 	]
 }

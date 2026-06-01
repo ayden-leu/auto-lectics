@@ -68,6 +68,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.19771, 0.8558941, -9.9777
 
 [node name="generator" parent="npcs" instance=ExtResource("3_vekyi")]
 transform = Transform3D(-0.37573904, 0, 0.9267255, 0, 1, 0, -0.9267255, 0, -0.37573904, 15.905488, 0.12296009, 9.410873)
+_talkOnlyOnce = true
 
 [node name="preacher" parent="npcs" instance=ExtResource("1_k4mrd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.497595, 0.09056449, -12.203161)

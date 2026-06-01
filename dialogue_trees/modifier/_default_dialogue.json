@@ -1,3 +1,7 @@
 {
-
+	"writeSpeed": "slow",
+	"sfx": {
+		"spawn": "modifier",
+		"text": "none"
+	}
 }

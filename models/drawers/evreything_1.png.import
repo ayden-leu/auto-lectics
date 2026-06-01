@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://btnlol1hykp6a"
-path.s3tc="res://.godot/imported/evreything_1.png-9c1072700ae11346c92fbb49a7f3e8b0.s3tc.ctex"
-path.etc2="res://.godot/imported/evreything_1.png-9c1072700ae11346c92fbb49a7f3e8b0.etc2.ctex"
+path.s3tc="res://.godot/imported/evreything_1.png-c7c87031a1df6326eb42d22273fd86da.s3tc.ctex"
+path.etc2="res://.godot/imported/evreything_1.png-c7c87031a1df6326eb42d22273fd86da.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -15,8 +15,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://models/wardrobe/evreything_1.png"
-dest_files=["res://.godot/imported/evreything_1.png-9c1072700ae11346c92fbb49a7f3e8b0.s3tc.ctex", "res://.godot/imported/evreything_1.png-9c1072700ae11346c92fbb49a7f3e8b0.etc2.ctex"]
+source_file="res://models/drawers/evreything_1.png"
+dest_files=["res://.godot/imported/evreything_1.png-c7c87031a1df6326eb42d22273fd86da.s3tc.ctex", "res://.godot/imported/evreything_1.png-c7c87031a1df6326eb42d22273fd86da.etc2.ctex"]
 
 [params]
 

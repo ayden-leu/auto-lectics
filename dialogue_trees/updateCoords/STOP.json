@@ -1,0 +1,14 @@
+{
+	"text": "[NOTICE]\nYOU ARE ENTERING THE NEXT AREA OF THE FACTORY.\nHAVE YOU COMPLETED  THE BLUEPRINT OF THIS SECTION?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "No. ",
+			"nextID": "GOBACK"
+		},
+		{
+			"text": "Yes.",
+			"nextID": "ACCEPTABLE"
+		}
+	]
+}

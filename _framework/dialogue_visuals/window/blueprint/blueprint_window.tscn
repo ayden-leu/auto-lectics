@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://ovwd5xcohsao"]
+[gd_scene load_steps=18 format=3 uid="uid://ovwd5xcohsao"]
 
-[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_agwdo"]
+[ext_resource type="Theme" uid="uid://b6xg2n2f1ti4h" path="res://_framework/_visual_assets/dialogue_window/blueprint.tres" id="1_srj32"]
 [ext_resource type="Script" uid="uid://c6c85mv86y6ev" path="res://_framework/dialogue_visuals/window/blueprint/blueprint_window.gd" id="2_sny2w"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_gfkyj"]
+[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="4_1w1s4"]
 [ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="4_lhe8o"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_wp7vy"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="5_r6kuu"]
@@ -31,7 +32,7 @@ anchors_preset = 0
 offset_right = 365.0
 offset_bottom = 270.0
 mouse_default_cursor_shape = 2
-theme = ExtResource("1_agwdo")
+theme = ExtResource("1_srj32")
 script = ExtResource("2_sny2w")
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
@@ -42,7 +43,7 @@ metadata/_custom_type_script = "uid://bqvscaiprfmtl"
 
 [node name="Header" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 365.0
+offset_right = 705.0
 offset_bottom = 30.0
 mouse_filter = 1
 theme_type_variation = &"PanelHeader"
@@ -50,24 +51,28 @@ theme_type_variation = &"PanelHeader"
 [node name="HBoxContainer" type="HBoxContainer" parent="Header"]
 layout_mode = 0
 offset_left = 6.0
-offset_right = 365.0
+offset_right = 703.0
 offset_bottom = 27.0
 
 [node name="Label" type="Label" parent="Header/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 1
-text = "Blueprint"
+theme = ExtResource("4_1w1s4")
+theme_type_variation = &"LabelHeaderConsole"
+text = "BLUEPRINT"
 
 [node name="CloseButton" parent="Header/HBoxContainer" instance=ExtResource("3_gfkyj")]
+layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 10
 
 [node name="Contents" type="Panel" parent="."]
 layout_mode = 0
 offset_top = 30.0
-offset_right = 365.0
-offset_bottom = 270.0
+offset_right = 705.0
+offset_bottom = 475.0
 mouse_filter = 1
+theme = ExtResource("4_1w1s4")
 
 [node name="NPCList" type="Control" parent="Contents"]
 anchors_preset = 0
@@ -114,9 +119,9 @@ portraitTexture = ExtResource("5_r6kuu")
 [node name="PrevPageButton" type="Button" parent="Contents"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 234.0
+offset_top = 443.0
 offset_right = 40.0
-offset_bottom = 274.0
+offset_bottom = 483.0
 rotation = -1.5707964
 icon = ExtResource("7_23hg5")
 
@@ -124,21 +129,93 @@ icon = ExtResource("7_23hg5")
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 365.0
-offset_top = 194.0
+offset_top = 403.0
 offset_right = 405.0
-offset_bottom = 238.0
+offset_bottom = 447.0
 rotation = 1.5707964
 icon = ExtResource("7_23hg5")
+
+[node name="Panel" type="Panel" parent="Contents"]
+layout_mode = 0
+offset_left = 375.0
+offset_top = 8.0
+offset_right = 679.0
+offset_bottom = 423.0
+
+[node name="Label2" type="Label" parent="Contents/Panel"]
+layout_mode = 0
+offset_left = 71.0
+offset_right = 332.0
+offset_bottom = 361.0
+mouse_filter = 1
+theme = ExtResource("1_srj32")
+text = "
+
+x = interger
+Chooses the corresponding coversation option.
+
+x = dialogueID
+Loads the dialogue with the corresponding ID.
+
+Moves you back one conversation step. 
+
+Closes the window. "
+autowrap_mode = 3
+
+[node name="Label4" type="Label" parent="Contents/Panel"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 380.0
+offset_right = 262.0
+offset_bottom = 741.0
+mouse_filter = 1
+theme = ExtResource("1_srj32")
+theme_type_variation = &"TooltipLabel"
+theme_override_font_sizes/font_size = 11
+text = "NOTE: Some users may be able to override or deny your commands"
+autowrap_mode = 3
+
+[node name="Label" type="Label" parent="Contents/Panel"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 49.0
+mouse_filter = 1
+theme_type_variation = &"LabelHeaderConsole"
+text = "AUTO-LECTICS.v.2.0  METHODS
+"
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="Contents/Panel"]
+layout_mode = 0
+offset_right = 56.0
+offset_bottom = 309.0
+mouse_filter = 1
+theme = ExtResource("1_srj32")
+text = "
+
+x
+
+
+
+load  x
+
+
+
+back
+
+
+exit"
+autowrap_mode = 2
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_wp7vy")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
 "buttonPressed": "",
-"click": "",
-"close": "",
+"click": "console_send",
+"close": "dialogueFailSound",
 "drop": "",
 "entryGuessedCorrectly": "yippee",
-"entryNameSubmitted": "",
+"entryNameSubmitted": "console_send",
 "hover": "",
 "spawn": ""
 })

@@ -1,0 +1,11 @@
+{
+	"text": "IF YOU ARE INJURED AT ANY POINT WE WILL REPRINT YOU\nIF YOU TRY TO ESCAPE THE AREA WE WILL REPRINT YOU",
+	"mode": "normal",
+	"textThemePreset": "_test_one",
+	"options": [
+		{
+			"text": "Cotinue.",
+			"nextID": "grapple3"
+		}
+	]
+}

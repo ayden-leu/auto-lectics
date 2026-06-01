@@ -1,0 +1,16 @@
+{
+	"text": "YOU HAVE TO GO BACK AND FINISH IT BEFORE PROCEEDING.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Alright.",
+			"nextID": "ACCEPTABLE"
+		},
+		{
+			"text": "I'll get around to it later. "
+		},
+		{
+			"text": "I'm moving on I'm bored. "
+		}
+	]
+}

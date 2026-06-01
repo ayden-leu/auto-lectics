@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bx048vkluer6k"
+path="res://.godot/imported/Bird Security v0.wav-001e43227fcd4de0f7e537452bb4b08d.sample"
+
+[deps]
+
+source_file="res://Media/Bird Security v0.wav"
+dest_files=["res://.godot/imported/Bird Security v0.wav-001e43227fcd4de0f7e537452bb4b08d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

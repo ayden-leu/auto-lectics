@@ -1,0 +1,11 @@
+{
+	"text": "[NOTICE]\nDUE TO ISSUES WITH NAVIGATION NOTED BY PREVIOUS OPERATIVE\nWE ALSO INSTALLED A GRAPPLING HOOK]\n[PRESS LEFT-CLICK\n",
+	"mode": "normal",
+	"textThemePreset": "_test_one",
+	"options": [
+		{
+			"text": "Continue.",
+			"nextID": "grapple2"
+		}
+	]
+}

@@ -49,6 +49,7 @@ folder_colors={
 "res://models/": "pink",
 "res://shaders/": "teal",
 "res://sounds/": "orange",
+"res://sounds/sfx/!dump/": "teal",
 "res://textures/": "pink",
 "res://world/": "blue"
 }

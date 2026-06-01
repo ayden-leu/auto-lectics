@@ -1,3 +1,7 @@
 {
-
+	"writeSpeed": "slow",
+	"sfx": {
+		"spawn": "sludge",
+		"text": "none"
+	}
 }

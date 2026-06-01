@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://8wtl4ta4h8wl"]
+
+[ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://_framework/entities/npcs/interactable_npc.gd" id="1_0ebsq"]
+[ext_resource type="AudioStream" uid="uid://cm7xbp4ft3f10" path="res://sounds/ambient/space-station-generator.mp3" id="2_afplm"]
+[ext_resource type="PackedScene" uid="uid://c7onnsxuo8o62" path="res://models/npcs/modifier_model.tscn" id="3_0ebsq"]
+[ext_resource type="PackedScene" uid="uid://m0lhjwyqggqg" path="res://models/BlendFiles/modifier.blend" id="4_afplm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
+size = Vector3(3.671997, 10.670654, 9.139801)
+
+[node name="modifier" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+script = ExtResource("1_0ebsq")
+_hitbox = NodePath("Area3D")
+dialogueTreeID = "modifier"
+initialDialogueID = "oh"
+model = NodePath("modifier2")
+internalID = "modifier"
+displayName = "modifier"
+metadata/_custom_type_script = "uid://um13i8jipsfx"
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(0.4587031, 0, 0, 0, 0.4587031, 0, 0, 0, 0.4587031, -0.28068542, -2.349172, 0.087102115)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0449829, 5.208374, 0.06175226)
+shape = SubResource("BoxShape3D_25xfv")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1.457915, 0.21957791, 0.10303234, -0.22309445, 1.4603376, 0.04459487, -0.095178925, -0.059542786, 1.4736828, 4.834044, 4.058341, 1.5022821)
+visible = false
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_afplm")
+volume_db = -29.358
+pitch_scale = 2.21
+autoplay = true
+parameters/looping = true
+
+[node name="modifier" parent="." instance=ExtResource("3_0ebsq")]
+visible = false
+
+[node name="modifier2" parent="." instance=ExtResource("4_afplm")]

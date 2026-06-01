@@ -1,0 +1,14 @@
+{
+	"text": "[NOTICE]\nYOU AREN'T STOPPING. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I'm not. ",
+			"nextID": "YOUCANTDOTHAT"
+		},
+		{
+			"text": "I'll turn around. ",
+			"nextID": "ACCEPTABLE"
+		}
+	]
+}

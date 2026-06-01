@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://busl4smo2h1ss"
-path.s3tc="res://.godot/imported/evreything_0.png-5cc8b42705231fecf014fa380cd771e9.s3tc.ctex"
-path.etc2="res://.godot/imported/evreything_0.png-5cc8b42705231fecf014fa380cd771e9.etc2.ctex"
+path.s3tc="res://.godot/imported/evreything_0.png-d99005f0bfa8878cc244539ccfeee63a.s3tc.ctex"
+path.etc2="res://.godot/imported/evreything_0.png-d99005f0bfa8878cc244539ccfeee63a.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -15,8 +15,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://models/wardrobe/evreything_0.png"
-dest_files=["res://.godot/imported/evreything_0.png-5cc8b42705231fecf014fa380cd771e9.s3tc.ctex", "res://.godot/imported/evreything_0.png-5cc8b42705231fecf014fa380cd771e9.etc2.ctex"]
+source_file="res://models/drawers/evreything_0.png"
+dest_files=["res://.godot/imported/evreything_0.png-d99005f0bfa8878cc244539ccfeee63a.s3tc.ctex", "res://.godot/imported/evreything_0.png-d99005f0bfa8878cc244539ccfeee63a.etc2.ctex"]
 
 [params]
 

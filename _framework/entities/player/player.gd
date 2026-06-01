@@ -367,6 +367,7 @@ func _handleDirectionInput(direction: Vector3) -> void:
 	var decel := deceleration
 
 	if not is_on_floor():
+		_moving = false
 		accel = airAcceleration
 		decel = airDeceleration
 

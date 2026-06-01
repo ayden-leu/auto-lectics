@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://o7a1qb3vbdk0"
-path="res://.godot/imported/evreything.fbx_Collection.fbx-ff7d99d3c646b0aae20a8075447208a6.scn"
+path="res://.godot/imported/evreything.fbx_Collection.fbx-16e1f97a771c483afa052a53c4a60dc8.scn"
 
 [deps]
 
-source_file="res://models/evreything.fbx_Collection/evreything.fbx_Collection.fbx"
-dest_files=["res://.godot/imported/evreything.fbx_Collection.fbx-ff7d99d3c646b0aae20a8075447208a6.scn"]
+source_file="res://models/wardrobe/evreything.fbx_Collection.fbx"
+dest_files=["res://.godot/imported/evreything.fbx_Collection.fbx-16e1f97a771c483afa052a53c4a60dc8.scn"]
 
 [params]
 

@@ -32,6 +32,7 @@ script = ExtResource("1_q8vf3")
 maxSpeed = 11.2
 acceleration = 8.0
 deceleration = 7.5
+timeBetweenSteps = 0.6
 airControl = 0.5
 jumpHeight = 0.95
 timeToApex = 0.46
@@ -86,12 +87,12 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "death",
-"deathFancy": "michaelwave",
+"death": "",
+"deathFancy": "",
 "jump": "",
-"respawn": "respawn",
-"respawnFancy": "respawn",
-"step": "step"
+"respawn": "",
+"respawnFancy": "",
+"step": ""
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
@@ -111,6 +112,7 @@ stream = SubResource("AudioStreamRandomizer_s2ddf")
 
 [node name="step" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_lmmnp")
+volume_db = -5.503
 
 [node name="FadeToBlackOverlay" parent="." instance=ExtResource("4_483v1")]
 unique_name_in_owner = true

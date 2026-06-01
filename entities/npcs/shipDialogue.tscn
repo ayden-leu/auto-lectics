@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://g21ua47x4g7g"]
 
 [ext_resource type="Script" uid="uid://um13i8jipsfx" path="res://_framework/entities/npcs/interactable_npc.gd" id="1_6ak60"]
-[ext_resource type="PackedScene" uid="uid://octq4maveswy" path="res://models/npcs/drop_pod.tscn" id="2_fax51"]
+[ext_resource type="PackedScene" uid="uid://octq4maveswy" path="res://models/npcs/drop_pod_model.tscn" id="2_fax51"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ak60"]
 size = Vector3(5.7617188, 4.720703, 0.20898438)
