@@ -195,6 +195,7 @@ static func setDefault(mode:String) -> void:
 			_defaultCursorMode = Input.MOUSE_MODE_CAPTURED
 
 ## Sets the cursor mode to whatever value is in [member _defaultCursorMode].
+## Also clears [member _nodesShowingCursor] and [_nodesHidingCursor].
 static func restoreDefault() -> void:
 	print("CursorHandler/restoreDefault():  Restoring default cursor mode: ", _defaultCursorMode)
 	_nodesShowingCursor.clear()
