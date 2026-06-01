@@ -11,41 +11,41 @@ const DEFAULT_FLAGS: Dictionary = {
 	"anotherFlag": true,
 	"aThirdFlag": false,
 	"doorOpen": false,
-	
+
 	##overall flags
 	"knowsSomeone": false,
-	
+
 	##preacher flags
 	"heardSermon": false,
 	"metPreacher": false,
 	"knowsPreacher": false,
-	
+
 	##gossip flags
 	"metGossip": false,
 	"knowsGossip": false,
-	
+
 	##dish flags
 	"metDish": false,
 	"knowsDish": false,
-	
+
 	##generator flags
 	"metGenerator": false,
 	"knowsGenerator": false,
-	
+
 	##miniBoss flags
 	"metMiniBoss": false,
 	"knowsMiniBoss": false,
-	
+
 	##splode flags
 	"hasExploded": false,
-	
+
 	##exile flags
 	"metExile": false,
 	"seeSign": false,
-	
+
 	##sludge flags
 	"metSludge": false,
-	
+
 	##miniBoss2 flags
 	"correctBlueprint": false,
 	"incorrectBlueprint": false,
