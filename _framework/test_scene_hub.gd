@@ -155,6 +155,12 @@ func _on_load_test_window_manager_pressed() -> void:
 func _on_test_vocal_dialogue_player_pressed() -> void:
 	_loadTestScene("vocal_dialogue_player")
 
+func _on_test_input_handler_pressed() -> void:
+	_loadTestScene("input_handler")
+
+func _on_test_loop_manager_pressed() -> void:
+	_loadTestScene("loop_manager")
+
 func _on_back_button_pressed() -> void:
 	_returnToHub()
 

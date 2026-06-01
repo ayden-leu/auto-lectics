@@ -1,7 +1,7 @@
 @icon("uid://cb1q7neti54xl")
 extends Area3D
 class_name DeathPlane
-## An out-of-bounds area that attempts to respawn bodies that enter it.
+## An out-of-bounds area that attempts to respawn bodies and owners of [Area3D]s that enter it.
 ##
 ## [b]Using:[/b][br]
 ## There are two ways to use this.
@@ -27,7 +27,7 @@ class_name DeathPlane
 ##
 ## [br][br][br]
 ## [b]Feature Brief:[/b][br]
-## When a body enters the [DeathPlane], this script checks whether that body has
+## When a body or [Area3D] enters the [DeathPlane], this script checks whether that body has
 ## a [code]respawn()[/code] function. If it does, that function is called.
 ## This allows each body to define its own respawn behaviour, such as returning
 ## to its last grounded position or resetting to a default spawn point.
@@ -38,7 +38,8 @@ class_name DeathPlane
 ## Make sure this [Area3D]'s collision mask can detect the bodies that should be
 ## respawned.
 ## For example, if its supposed to interact with [Player] characters, enable the
-## Player/1 layer mask.
+## Player/1 layer [i]mask[/i].  Setting the collision [i]layer[/i] won't affect
+## this DeathPlane's functionality.
 
 # ------------------------------------------------
 # signals
@@ -74,6 +75,7 @@ class_name DeathPlane
 # ------------------------------------------------
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	area_entered.connect(_on_area_entered)
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -83,20 +85,27 @@ func _ready() -> void:
 # functions only referenced inside this script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+## If the subject has a [code]respawn()[/code] function, that function is called.
+## Otherwise, a warning is printed and nothing else happens.
+func _performRespawn(subject:Node3D) -> void:
+	if subject.has_method("respawn"):
+		DebugHud.addToLog("DeathPlane:  Respawning [%s]." % subject.name)
+		subject.respawn()
+	else:
+		DebugHud.addToLog("DeathPlane:  Body [%s] missing respawn() function." % subject.name, DebugHud.LogType.WARNING)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
 # ------------------------------------------------
+## Runs when a body enters this [DeathPlane].
+func _on_body_entered(body:Node3D) -> void:
+	_performRespawn(body)
+
 ## [b]Internal-use Only.[/b]
-## Runs when a body collides with this DeathPlane's collision shape(s).
-## [br][br]
-## If the body has a [code]respawn()[/code] function, that function is called.
-## Otherwise, a warning is printed and nothing else happens.
-func _on_body_entered(body:Node) -> void:
-	if body.has_method("respawn"):
-		body.respawn()
-	else:
-		DebugHud.addToLog("DeathPlane: Body [" + body.name + "] missing respawn() function.", DebugHud.LogType.WARNING)
+## Same as [method _on_body_entered], but for [Area3D]s.
+func _on_area_entered(area:Area3D) -> void:
+	print("area")
+	_performRespawn(area.get_parent())
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"

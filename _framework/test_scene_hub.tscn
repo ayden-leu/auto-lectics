@@ -1,18 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://dwmpo6y5x6ios"]
+[gd_scene load_steps=3 format=3 uid="uid://dwmpo6y5x6ios"]
 
 [ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
-[ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_x2kea"]
-[ext_resource type="Texture2D" uid="uid://dfdwbkf245m7l" path="res://_framework/editor_files/icon_menu-manager.svg" id="4_j2pjv"]
-[ext_resource type="Texture2D" uid="uid://b105kdcrwpi0r" path="res://_framework/editor_files/icon_interactable-NPC.svg" id="5_0fyl3"]
-[ext_resource type="Texture2D" uid="uid://d3bctx6al0yha" path="res://_framework/editor_files/icon_grappling-hook.svg" id="5_wtvxm"]
-[ext_resource type="Texture2D" uid="uid://bbxaj8rh6jfm6" path="res://_framework/editor_files/icon_dialogue-window.svg" id="5_x2kea"]
-[ext_resource type="Texture2D" uid="uid://4k8rw8ox10br" path="res://_framework/editor_files/icon_NPC.svg" id="6_f2hun"]
-[ext_resource type="Texture2D" uid="uid://bfg0nlmruxfhi" path="res://_framework/editor_files/icon_window-manager.svg" id="7_3d80c"]
-[ext_resource type="Texture2D" uid="uid://dvylpsokk73w0" path="res://_framework/editor_files/icon_audio-loader.svg" id="7_j2pjv"]
-[ext_resource type="Texture2D" uid="uid://id471bfglpdp" path="res://_framework/editor_files/icon_dialogue-loader.svg" id="8_j2pjv"]
-[ext_resource type="Texture2D" uid="uid://mjaagygagbwl" path="res://_framework/editor_files/icon_label-preset-loader.svg" id="9_0fyl3"]
-[ext_resource type="Texture2D" uid="uid://cd5jlaus7ngf7" path="res://_framework/editor_files/icon_story-flags.svg" id="10_f2hun"]
-[ext_resource type="Texture2D" uid="uid://b0xrrnjriup2r" path="res://_framework/editor_files/icon_vocal-dialogue-player.svg" id="11_3d80c"]
+[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="2_f2hun"]
 
 [node name="TestSceneHub" type="Control"]
 layout_mode = 3
@@ -63,7 +52,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_death_plane"
-icon = ExtResource("2_x2kea")
+icon = ExtResource("2_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -71,7 +60,6 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_npc_interaction"
-icon = ExtResource("5_0fyl3")
 alignment = 0
 expand_icon = true
 
@@ -79,7 +67,7 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_npc_patrol"
-icon = ExtResource("6_f2hun")
+icon = ExtResource("2_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -87,7 +75,6 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_player_movement"
-icon = ExtResource("5_wtvxm")
 alignment = 0
 expand_icon = true
 
@@ -95,7 +82,6 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_console_command"
-icon = ExtResource("5_x2kea")
 alignment = 0
 expand_icon = true
 
@@ -103,6 +89,13 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_waterdrop"
+alignment = 0
+expand_icon = true
+
+[node name="test_loop_manager" type="Button" parent="MainPanel/ButtonHolder/InWorld"]
+layout_mode = 2
+text = "test_loop_manager"
+icon = ExtResource("2_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -123,7 +116,6 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_audio_loading"
-icon = ExtResource("7_j2pjv")
 alignment = 0
 expand_icon = true
 
@@ -131,7 +123,7 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_dialogue_loading"
-icon = ExtResource("8_j2pjv")
+icon = ExtResource("2_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -139,7 +131,7 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_label_preset"
-icon = ExtResource("9_0fyl3")
+icon = ExtResource("2_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -147,7 +139,6 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_story_flags"
-icon = ExtResource("10_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -155,7 +146,13 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_vocal_dialogue_player"
-icon = ExtResource("11_3d80c")
+alignment = 0
+expand_icon = true
+
+[node name="test_input_handler" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
+layout_mode = 2
+text = "test_input_hander"
+icon = ExtResource("2_f2hun")
 alignment = 0
 expand_icon = true
 
@@ -176,7 +173,6 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_menu_manager"
-icon = ExtResource("4_j2pjv")
 alignment = 0
 expand_icon = true
 
@@ -184,7 +180,6 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_window_manager"
-icon = ExtResource("7_3d80c")
 alignment = 0
 expand_icon = true
 
@@ -214,11 +209,13 @@ text = "Back (Ctrl+Q)"
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_player_movement" to="." method="_on_load_test_player_movement_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_console_command" to="." method="_on_load_test_console_command_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_waterdrop" to="." method="_on_load_test_waterdrop_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/InWorld/test_loop_manager" to="." method="_on_test_loop_manager_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_audio_loading" to="." method="_on_load_test_audio_loading_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_dialogue_loading" to="." method="_on_load_test_dialogue_loading_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_label_preset" to="." method="_on_load_test_label_preset_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_story_flags" to="." method="_on_load_test_story_flags_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_vocal_dialogue_player" to="." method="_on_test_vocal_dialogue_player_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_input_handler" to="." method="_on_test_input_handler_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/GUI/test_menu_manager" to="." method="_on_load_test_menu_manager_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/GUI/test_window_manager" to="." method="_on_load_test_window_manager_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
