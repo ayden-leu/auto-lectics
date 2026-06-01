@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="9_flnpa"]
 [ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="11_3oc8m"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="11_wipx8"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
+[ext_resource type="Script" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
 [ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="12_qo5h7"]
 [ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="14_u8beo"]
 [ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="15_pwsq1"]
@@ -210,7 +210,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "Write Speed Aspects"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../WriteSpeedAspects")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="HSeparator5" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
 layout_mode = 2
@@ -267,7 +266,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../Events")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects"]
 layout_mode = 2
@@ -361,7 +359,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "Write Speed Aspects"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../OptionWriteSpeedAspects")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="OptionWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
 layout_mode = 2
@@ -421,7 +418,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../Events")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects"]
 layout_mode = 2

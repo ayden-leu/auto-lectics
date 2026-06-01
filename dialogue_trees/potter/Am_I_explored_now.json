@@ -1,10 +1,10 @@
 {
-	"text": "SL-4G, potter. ",
+	"text": "Am I explored now?",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "->",
-			"nextID": "Do"
+			"nextID": "Who"
 		}
 	]
 }
