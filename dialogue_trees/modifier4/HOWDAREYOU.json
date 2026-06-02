@@ -1,0 +1,23 @@
+{
+	"text": "THAT'S- THAT'S A VERY RUDE THING TO ASK AROUND HERE. ",
+	"mode": "hectic",
+	"nextOnHecticFailureID": "loser",
+	"options": [
+		{
+			"text": "I didn't mean to imply anythign. ",
+			"nextID": "Errrhg"
+		},
+		{
+			"text": "I'm sorry? ",
+			"nextID": "Errrhg"
+		},
+		{
+			"text": "I'm asking on the sake of the boss.",
+			"nextID": "Reminder"
+		},
+		{
+			"text": "WHY IS IT RUDE?",
+			"nextID": "Reminder"
+		}
+	]
+}

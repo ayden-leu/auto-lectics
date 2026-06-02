@@ -1,0 +1,10 @@
+{
+	"text": "Work is life. There used to be alot more plants and animals all around this place. As far as I can tell they were all unemployed and now they're all dead. Simple",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I see...",
+			"nextID": "dont_want_that"
+		}
+	]
+}

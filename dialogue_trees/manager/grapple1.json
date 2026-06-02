@@ -4,8 +4,11 @@
 	"textThemePreset": "_test_one",
 	"options": [
 		{
-			"text": "Continue.",
-			"nextID": "grapple2"
+			"text": "->",
+			"nextID": "grapple2",
+			"setFlags": {
+				"DoingTheirJob": true
+			}
 		}
 	]
 }

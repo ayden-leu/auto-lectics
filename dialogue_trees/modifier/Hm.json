@@ -1,0 +1,18 @@
+{
+	"text": "What else is there to talk about other than modification?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What about the big tank? ",
+			"nextID": "Oooooooooooh"
+		},
+		{
+			"text": "What about the bots who keep repeating themselves?",
+			"nextID": "mistake"
+		},
+		{
+			"text": "What's your original designation?",
+			"nextID": "HOWDAREYOU"
+		}
+	]
+}

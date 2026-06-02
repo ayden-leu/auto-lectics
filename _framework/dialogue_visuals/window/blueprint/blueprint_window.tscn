@@ -1,14 +1,19 @@
-[gd_scene load_steps=18 format=3 uid="uid://ovwd5xcohsao"]
+[gd_scene load_steps=23 format=3 uid="uid://ovwd5xcohsao"]
 
 [ext_resource type="Theme" uid="uid://b6xg2n2f1ti4h" path="res://_framework/_visual_assets/dialogue_window/blueprint.tres" id="1_srj32"]
 [ext_resource type="Script" uid="uid://c6c85mv86y6ev" path="res://_framework/dialogue_visuals/window/blueprint/blueprint_window.gd" id="2_sny2w"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_gfkyj"]
 [ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="4_1w1s4"]
-[ext_resource type="PackedScene" uid="uid://y186te5d3kpy" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.tscn" id="4_lhe8o"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_wp7vy"]
-[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="5_r6kuu"]
-[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="6_r6kuu"]
+[ext_resource type="PackedScene" uid="uid://dju67bxg0gqt5" path="res://_framework/ui/menus/blueprint/1.tscn" id="5_556d2"]
+[ext_resource type="PackedScene" uid="uid://2sg0q6jlys5w" path="res://_framework/ui/menus/blueprint/dish.tscn" id="6_srj32"]
 [ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_framework/dialogue_creator/visual_assets/arrow_up.svg" id="7_23hg5"]
+[ext_resource type="PackedScene" uid="uid://c8rbeeqahclg7" path="res://_framework/ui/menus/blueprint/watcher.tscn" id="7_2853f"]
+[ext_resource type="PackedScene" path="res://_framework/ui/menus/blueprint/Preacher.tscn" id="8_25bmj"]
+[ext_resource type="PackedScene" uid="uid://2xxmrhrlyu3n" path="res://_framework/ui/menus/blueprint/exile.tscn" id="9_wdlxk"]
+[ext_resource type="PackedScene" uid="uid://bm3disqhkjvb2" path="res://_framework/ui/menus/blueprint/modifier.tscn" id="10_unxuv"]
+[ext_resource type="PackedScene" uid="uid://gpdcpccx561u" path="res://_framework/ui/menus/blueprint/potter.tscn" id="11_anmd6"]
+[ext_resource type="PackedScene" uid="uid://bsp7s8pyda4fq" path="res://_framework/ui/menus/blueprint/sludge.tscn" id="12_v4plt"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_556d2"]
 
@@ -60,6 +65,7 @@ layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("4_1w1s4")
 theme_type_variation = &"LabelHeaderConsole"
+theme_override_colors/font_color = Color(2.5027991e-06, 0.8223345, 0.69294983, 1)
 text = "BLUEPRINT"
 
 [node name="CloseButton" parent="Header/HBoxContainer" instance=ExtResource("3_gfkyj")]
@@ -89,31 +95,33 @@ offset_top = 6.0
 offset_right = 384.0
 offset_bottom = 206.0
 
-[node name="npc_test_1" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+[node name="BlueprintNpcEntry" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("5_556d2")]
 layout_mode = 2
-npcID = "npc_test_1"
-displayName = "Aster"
-entryTextureUnlocked = ExtResource("6_r6kuu")
-entryTextureLocked = ExtResource("5_r6kuu")
-portraitTexture = ExtResource("5_r6kuu")
 
-[node name="npc_test_2" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+[node name="asdas" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("6_srj32")]
 layout_mode = 2
-npcID = "npc_test_2"
-displayName = "Mira"
 
-[node name="npc_test_3" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+[node name="asdas7" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("7_2853f")]
 layout_mode = 2
-npcID = "npc_test_3"
-displayName = "Orin"
 
-[node name="npc_test_4" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("4_lhe8o")]
+[node name="asdas2" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("8_25bmj")]
 layout_mode = 2
-npcID = "npc_test_4"
-displayName = "John"
-entryTextureUnlocked = ExtResource("6_r6kuu")
-entryTextureLocked = ExtResource("5_r6kuu")
-portraitTexture = ExtResource("5_r6kuu")
+
+[node name="asdas3" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("9_wdlxk")]
+visible = false
+layout_mode = 2
+
+[node name="asdas4" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("10_unxuv")]
+visible = false
+layout_mode = 2
+
+[node name="asdas5" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("11_anmd6")]
+visible = false
+layout_mode = 2
+
+[node name="asdas6" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("12_v4plt")]
+visible = false
+layout_mode = 2
 
 [node name="PrevPageButton" type="Button" parent="Contents"]
 unique_name_in_owner = true
@@ -179,9 +187,11 @@ autowrap_mode = 3
 layout_mode = 0
 offset_right = 320.0
 offset_bottom = 49.0
+scale = Vector2(1.002079, 1)
 mouse_filter = 1
 theme_type_variation = &"LabelHeaderConsole"
-text = "AUTO-LECTICS.v.2.0  METHODS
+theme_override_colors/font_color = Color(0, 0.8235294, 0.69411767, 1)
+text = "AUTO-LECTICS.V.2.0  METHODS
 "
 autowrap_mode = 2
 
@@ -207,17 +217,70 @@ back
 exit"
 autowrap_mode = 2
 
+[node name="ColorRect" type="ColorRect" parent="Contents/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 64.0
+offset_top = 60.0
+offset_right = 66.0
+offset_bottom = 374.0
+
+[node name="ColorRect2" type="ColorRect" parent="Contents/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 309.0
+offset_top = 126.0
+offset_right = 311.0
+offset_bottom = 440.0
+rotation = 1.5707964
+
+[node name="ColorRect3" type="ColorRect" parent="Contents/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 309.0
+offset_top = 230.0
+offset_right = 311.0
+offset_bottom = 544.0
+rotation = 1.5707964
+
+[node name="ColorRect4" type="ColorRect" parent="Contents/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 309.0
+offset_top = 231.0
+offset_right = 311.0
+offset_bottom = 545.0
+rotation = 1.5707964
+
+[node name="ColorRect5" type="ColorRect" parent="Contents/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 307.0
+offset_top = 310.0
+offset_right = 309.0
+offset_bottom = 624.0
+rotation = 1.5707964
+
+[node name="ColorRect6" type="ColorRect" parent="Contents/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 311.0
+offset_top = 366.0
+offset_right = 313.0
+offset_bottom = 680.0
+rotation = 1.5707964
+
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_wp7vy")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"buttonPressed": "",
+"buttonPressed": "console_send",
 "click": "console_send",
-"close": "dialogueFailSound",
-"drop": "",
+"close": "",
+"drop": "console_send",
 "entryGuessedCorrectly": "yippee",
-"entryNameSubmitted": "console_send",
+"entryNameSubmitted": "",
 "hover": "",
-"spawn": ""
+"spawn": "console_send"
 })
 
 [node name="buttonPressed" type="AudioStreamPlayer" parent="SfxEventHandler"]
@@ -244,9 +307,5 @@ stream = SubResource("AudioStreamRandomizer_2853f")
 [node name="spawn" type="AudioStreamPlayer" parent="SfxEventHandler"]
 stream = SubResource("AudioStreamRandomizer_25bmj")
 
-[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_1" to="." method="_on_npc_entry_selected"]
-[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_2" to="." method="_on_npc_entry_selected"]
-[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_3" to="." method="_on_npc_entry_selected"]
-[connection signal="selected" from="Contents/NPCList/NPCEntryHolder/npc_test_4" to="." method="_on_npc_entry_selected"]
 [connection signal="pressed" from="Contents/PrevPageButton" to="." method="_on_prev_page_button_pressed"]
 [connection signal="pressed" from="Contents/NextPageButton" to="." method="_on_next_page_button_pressed"]

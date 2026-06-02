@@ -49,6 +49,13 @@ const DEFAULT_FLAGS: Dictionary = {
 	##miniBoss2 flags
 	"correctBlueprint": false,
 	"incorrectBlueprint": false,
+	
+	##management flags
+	"notDoingTheirJob":false,
+	"DoingTheirJob":false,
+	
+	
+	
 }
 #---------------------------------------------------
 

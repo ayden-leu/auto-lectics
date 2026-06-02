@@ -19,6 +19,7 @@ offset_left = 28.0
 offset_top = -10007.0
 offset_right = 1644.0
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0.8235294, 0.69411767, 1)
 text = "extends DC_BaseNode
 class_name DC_DialogueNode
 ## The node in [DialogueCreator] that represents a dialogue object file to be used in-game.
@@ -603,6 +604,7 @@ offset_left = 28.0
 offset_top = 691.0
 offset_right = 294.0
 offset_bottom = 792.0
+theme_override_colors/font_color = Color(0, 0.8235294, 0.69411767, 1)
 text = "compile complete
 ready to run [AUTO-LECTICS.V.2.0]
 

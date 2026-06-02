@@ -1,15 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://cf05ww5bswxb"]
+[gd_scene load_steps=6 format=3 uid="uid://cf05ww5bswxb"]
 
 [ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_byji8"]
 [ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="2_b22bc"]
-[ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="3_fkyek"]
-[ext_resource type="Texture2D" uid="uid://b5b1os832ccbk" path="res://_framework/_visual_assets/dont_change/placeholder2.png" id="4_q81qe"]
+[ext_resource type="Texture2D" uid="uid://figxlfe0oab3" path="res://textures/NPCS/exile.png" id="3_n6dso"]
 [ext_resource type="FontFile" uid="uid://ced3oybpj57me" path="res://fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf" id="6_uhuh5"]
 
 [sub_resource type="Theme" id="Theme_nrhjc"]
 default_font = ExtResource("6_uhuh5")
 
-[node name="BlueprintNPCEntry" type="Control"]
+[node name="ASDFASDFASDF" type="Control"]
 custom_minimum_size = Vector2(200, 120)
 layout_mode = 3
 anchors_preset = 0
@@ -19,8 +18,11 @@ offset_bottom = 120.0
 mouse_filter = 2
 theme = ExtResource("1_byji8")
 script = ExtResource("2_b22bc")
-entryTextureUnlocked = ExtResource("3_fkyek")
-entryTextureLocked = ExtResource("4_q81qe")
+npcID = "ASDFASDFASDF"
+displayName = "Exile"
+entryTextureUnlocked = ExtResource("3_n6dso")
+entryTextureLocked = ExtResource("3_n6dso")
+portraitTexture = ExtResource("3_n6dso")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
@@ -29,7 +31,7 @@ offset_left = 26.0
 offset_top = -50.0
 offset_right = 175.0
 offset_bottom = 99.0
-texture_normal = ExtResource("3_fkyek")
+texture_normal = ExtResource("3_n6dso")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -49,6 +51,6 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_nrhjc")
 theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
-text = "UNKNOWN"
+text = "Exile"
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

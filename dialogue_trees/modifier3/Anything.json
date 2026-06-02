@@ -1,0 +1,10 @@
+{
+	"text": "It's a body that modifies itself constantly. It will be able to do anything! Isn't it excellent?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Yeah...",
+			"nextID": "Hm"
+		}
+	]
+}

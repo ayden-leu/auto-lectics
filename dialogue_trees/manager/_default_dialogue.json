@@ -1,3 +1,7 @@
 {
-
+	"textThemePreset": "_test_one",
+	"sfx": {
+		"spawn": "preacherSound",
+		"text": "none"
+	}
 }

@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://2sg0q6jlys5w"]
+
+[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_x71ug"]
+[ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="2_xnnht"]
+[ext_resource type="Texture2D" uid="uid://p2cyj27utxg8" path="res://textures/NPCS/dish.png" id="3_6unpe"]
+
+[node name="asdas" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 175.0
+mouse_filter = 1
+theme = ExtResource("1_x71ug")
+script = ExtResource("2_xnnht")
+npcID = "asdas"
+displayName = "dish"
+entryTextureUnlocked = ExtResource("3_6unpe")
+entryTextureLocked = ExtResource("3_6unpe")
+portraitTexture = ExtResource("3_6unpe")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5
+offset_right = 74.5
+offset_bottom = 149.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_6unpe")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -77.0
+offset_top = 152.0
+offset_right = 77.0
+offset_bottom = 175.0
+grow_horizontal = 2
+mouse_filter = 1
+text = "dish"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

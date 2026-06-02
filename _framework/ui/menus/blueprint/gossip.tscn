@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj6b0iulfp8l6"]
+
+[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_188xj"]
+[ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="2_df2ad"]
+[ext_resource type="Texture2D" uid="uid://div4b15f447vk" path="res://textures/NPCS/watcher.png" id="3_kbmlm"]
+[ext_resource type="FontFile" uid="uid://ced3oybpj57me" path="res://fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf" id="4_2wcfe"]
+
+[sub_resource type="Theme" id="Theme_nrhjc"]
+default_font = ExtResource("4_2wcfe")
+
+[node name="ASDFASDFASDF" type="Control"]
+custom_minimum_size = Vector2(200, 120)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2.0
+offset_right = 202.0
+offset_bottom = 120.0
+mouse_filter = 2
+theme = ExtResource("1_188xj")
+script = ExtResource("2_df2ad")
+npcID = "ASDFASDFASDF"
+displayName = "Gossip"
+entryTextureUnlocked = ExtResource("3_kbmlm")
+entryTextureLocked = ExtResource("3_kbmlm")
+portraitTexture = ExtResource("3_kbmlm")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 26.0
+offset_right = 175.0
+offset_bottom = 149.0
+texture_normal = ExtResource("3_kbmlm")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = 30.0
+offset_right = 56.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_nrhjc")
+theme_override_colors/font_color = Color(0.9843137, 0.6901961, 0.2509804, 1)
+text = "Gossip"
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

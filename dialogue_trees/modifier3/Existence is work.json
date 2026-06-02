@@ -1,0 +1,14 @@
+{
+	"text": "But purpose is the self! What else is there to existence other than work? By changing what work you do, you change your whole being.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "You don't have a great work life balance. ",
+			"nextID": "Unemployment"
+		},
+		{
+			"text": "What if someone chooses not to work? ",
+			"nextID": "Huh"
+		}
+	]
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://db24nhectuest"]
+[gd_scene load_steps=24 format=3 uid="uid://db24nhectuest"]
 
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="1_1c776"]
 [ext_resource type="PackedScene" uid="uid://dmchdthf2dvcw" path="res://models/environment/ceo_bottom_tube.tscn" id="2_wbm8u"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bcqd5dpe3rwxu" path="res://models/environment/backgroundClutter/big_wedge_temp.tscn" id="10_p6b6d"]
 [ext_resource type="PackedScene" uid="uid://cmjkms00wo12x" path="res://models/environment/single_wire.tscn" id="11_p6b6d"]
 [ext_resource type="PackedScene" uid="uid://daamgh4g7okca" path="res://models/environment/bigtrussing.tscn" id="12_bhlbt"]
+[ext_resource type="AudioStream" uid="uid://djhuol0mnjl0t" path="res://sounds/sfx/!dump/ambience_plus15db.mp3" id="14_1ox1w"]
 [ext_resource type="Texture2D" uid="uid://capq82bdntjri" path="res://textures/skybox3.png" id="15_1ox1w"]
 [ext_resource type="PackedScene" uid="uid://bmbe7d0f5cvlq" path="res://models/BlendFiles/cloud.blend" id="16_dexkp"]
 [ext_resource type="Script" uid="uid://bh5gr5gwafogb" path="res://models/cloud.gd" id="17_1ox1w"]
@@ -214,17 +215,24 @@ volume_db = 17.0
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Environment"]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.75689, 0, 248.98944)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.52108, -10.44783, 164.18663)
 stream = ExtResource("10_5j8fo")
-volume_db = 17.062
-unit_size = 4.55
+volume_db = 28.152
+unit_size = 1.2
+autoplay = true
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.52108, -10.44783, 164.18663)
+stream = ExtResource("10_5j8fo")
+volume_db = 28.152
+unit_size = 1.2
 autoplay = true
 
 [node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.959885, 20.829437, 145.75668)
-stream = ExtResource("10_5j8fo")
-volume_db = 1.824
-unit_size = 4.55
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.822319, 20.829437, 1.053482)
+stream = ExtResource("14_1ox1w")
+volume_db = 20.448
+unit_size = 6.13
 autoplay = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]

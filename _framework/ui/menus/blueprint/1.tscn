@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://dju67bxg0gqt5"]
+
+[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_hv7sj"]
+[ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="2_d2dgi"]
+[ext_resource type="Texture2D" uid="uid://ccaw0ydvouvph" path="res://textures/NPCS/generator.png" id="3_a2udw"]
+
+[node name="asdas" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 175.0
+mouse_filter = 1
+theme = ExtResource("1_hv7sj")
+script = ExtResource("2_d2dgi")
+npcID = "asdas"
+displayName = "Generator"
+entryTextureUnlocked = ExtResource("3_a2udw")
+entryTextureLocked = ExtResource("3_a2udw")
+portraitTexture = ExtResource("3_a2udw")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5
+offset_right = 74.5
+offset_bottom = 149.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_a2udw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -77.0
+offset_top = 152.0
+offset_right = 77.0
+offset_bottom = 175.0
+grow_horizontal = 2
+mouse_filter = 1
+text = "Generator"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

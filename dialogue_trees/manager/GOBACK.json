@@ -3,14 +3,15 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "Alright.",
-			"nextID": "ACCEPTABLE"
+			"text": "I'll get around to it later.",
+			"nextID": "FILE"
 		},
 		{
-			"text": "I'll get around to it later. "
+			"text": "I'm moving on. I'm bored. ",
+			"nextID": "MANAGERMENT"
 		},
 		{
-			"text": "I'm moving on I'm bored. "
+			"text": "Alright."
 		}
 	]
 }

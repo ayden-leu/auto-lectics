@@ -1,18 +1,10 @@
 {
-	"text": "You're not here for a modification? Well, I mean what else is there to know?",
+	"text": "I'm sorry. I can't help you.",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "Whats your original designation?",
-			"nextID": "HOWDAREYOU"
-		},
-		{
-			"text": "What's with the big tank?",
-			"nextID": "Oooooooooooh"
-		},
-		{
-			"text": "What's with the bots who just repeat themselves? ",
-			"nextID": "mistake"
+			"text": "With what?",
+			"nextID": "dissamsembly"
 		}
 	]
 }

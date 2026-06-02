@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_1g2y5"]
 size = Vector3(3.7146912, 3.3453865, 3.8427734)
 
-[node name="updatedCoordinates" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="manager" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_g7hxf")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false

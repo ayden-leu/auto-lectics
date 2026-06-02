@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="9_flnpa"]
 [ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="11_3oc8m"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="11_wipx8"]
-[ext_resource type="Script" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
+[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
 [ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="12_qo5h7"]
 [ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="14_u8beo"]
 [ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="15_pwsq1"]

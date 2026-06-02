@@ -1,0 +1,14 @@
+{
+	"text": "Oh... them.   They each still slave away at their \"True\" purpose. I can't bring change to someone who doesn't want it. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Preacher definitely seems like they've undergone some modifications, ",
+			"nextID": "Preacher"
+		},
+		{
+			"text": "Couldn't they be modified without changing their role?",
+			"nextID": "Existence is work"
+		}
+	]
+}

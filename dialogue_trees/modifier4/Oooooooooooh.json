@@ -1,0 +1,14 @@
+{
+	"text": "Some of my finest work I must say. It's growing a type of machine based not on metal parts, but organic cells. Progress recently has been erratic I'm not sure why.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Erratic?",
+			"nextID": "Hard to remember"
+		},
+		{
+			"text": "A living creature?",
+			"nextID": "Probabaly"
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"text": "Mama hasn't got to that part yet but once she's back. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Wait. Mama?",
+			"nextID": "Scary"
+		}
+	]
+}

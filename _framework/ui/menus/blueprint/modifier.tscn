@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://bm3disqhkjvb2"]
+
+[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_nawv6"]
+[ext_resource type="Script" uid="uid://b188eije27v4p" path="res://_framework/ui/menus/blueprint/blueprint_npc_entry.gd" id="2_1ytvq"]
+[ext_resource type="Texture2D" uid="uid://bf3togcveqm83" path="res://textures/NPCS/modifier.png" id="3_a4ij3"]
+
+[node name="F1X-ER" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 175.0
+mouse_filter = 1
+theme = ExtResource("1_nawv6")
+script = ExtResource("2_1ytvq")
+npcID = "F1X-ER"
+displayName = "modifier"
+entryTextureUnlocked = ExtResource("3_a4ij3")
+entryTextureLocked = ExtResource("3_a4ij3")
+portraitTexture = ExtResource("3_a4ij3")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5
+offset_right = 74.5
+offset_bottom = 149.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_a4ij3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -77.0
+offset_top = 152.0
+offset_right = 77.0
+offset_bottom = 175.0
+grow_horizontal = 2
+mouse_filter = 1
+text = "modifier"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b8oqtsvu488a"]
+[gd_scene load_steps=19 format=3 uid="uid://b8oqtsvu488a"]
 
 [ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_0et2d"]
 [ext_resource type="Script" uid="uid://cpoeic0esjhb3" path="res://_framework/dialogue_visuals/window/console/dialogue_console_window.gd" id="1_qw6ov"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cdt7ouilmdwo0" path="res://_framework/dialogue_visuals/window/console/dialogue_console_log_entry_id.tscn" id="6_mpmwx"]
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="7_a26bi"]
 [ext_resource type="Script" uid="uid://ch0pccw0x64dk" path="res://_framework/dialogue_visuals/window/console/dialogue_console_input.gd" id="7_nusfc"]
+[ext_resource type="Theme" uid="uid://b6xg2n2f1ti4h" path="res://_framework/_visual_assets/dialogue_window/blueprint.tres" id="7_ou5hb"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nusfc"]
 
@@ -32,6 +33,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 428.0
 offset_bottom = 468.0
+scale = Vector2(1.0056336, 1)
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_0et2d")
 script = ExtResource("1_qw6ov")
@@ -123,6 +125,7 @@ text = "me when i log my entry a a a a a a a a a a a a aa a ahehehehehhehehe"
 [node name="InputArea" type="HBoxContainer" parent="Contents/ContentsScroller/DialogueLogStorage"]
 layout_mode = 2
 size_flags_vertical = 10
+theme = ExtResource("7_ou5hb")
 
 [node name="Label" type="Label" parent="Contents/ContentsScroller/DialogueLogStorage/InputArea"]
 layout_mode = 2
@@ -170,13 +173,13 @@ one_shot = true
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("7_a26bi")]
 sfxIds = Dictionary[String, String]({
-"click": "",
+"click": "console_send",
 "close": "dialogueFailSound",
 "closeReject": "console_close",
-"drop": "",
+"drop": "console_send",
 "hover": "",
-"userTextAdded": "",
-"userTextSubmitted": "console_send"
+"userTextAdded": "console_send",
+"userTextSubmitted": ""
 })
 
 [node name="click" type="AudioStreamPlayer" parent="SfxEventHandler"]

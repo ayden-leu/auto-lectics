@@ -3,7 +3,10 @@
 	"mode": "normal",
 	"options": [
 		{
-			"text": "[EXIT]"
+			"text": "[EXIT]",
+			"setFlags": {
+				"DoingTheirJob": true
+			}
 		}
 	]
 }

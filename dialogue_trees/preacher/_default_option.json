@@ -1,3 +1,6 @@
 {
-
+	"sfx": {
+		"spawn": "mama",
+		"text": "none"
+	}
 }
