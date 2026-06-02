@@ -42,6 +42,8 @@ func _ready() -> void:
 	CursorHandler.hideNuclear()
 	FR_WindowManager.subscribeToConsole(self)
 
+	DebugHud.addChecklistEntry("Console commands mentioned in the sky text work")
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------

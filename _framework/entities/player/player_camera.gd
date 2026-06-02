@@ -92,7 +92,8 @@ func _process(_delta: float) -> void:
 	if not focus:
 		return
 
-	global_transform = focus.cameraAnchor.global_transform
+	if focus.cameraAnchor:
+		global_transform = focus.cameraAnchor.global_transform
 
 	if(_actAsFocus):
 		_firstPersonMode()

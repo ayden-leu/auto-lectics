@@ -38,6 +38,11 @@ func _ready() -> void:
 	CursorHandler.setDefault("hidden")
 	CursorHandler.hideNuclear()
 
+	DebugHud.addChecklistEntry("Player can move")
+	DebugHud.addChecklistEntry("Player can jump")
+	DebugHud.addChecklistEntry("Player can grapple")
+	DebugHud.addChecklistEntry("Grappling hook works")
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_1"):
 		Player.disableInput(self)

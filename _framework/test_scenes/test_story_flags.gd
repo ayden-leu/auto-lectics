@@ -48,6 +48,12 @@ func _ready() -> void:
 		_getFlags().keys()
 	)
 
+	DebugHud.addChecklistEntry("Flag can be set to true")
+	DebugHud.addChecklistEntry("Flag can be set to false")
+	DebugHud.addChecklistEntry("Check while its matching works")
+	DebugHud.addChecklistEntry("Check while its not matching works")
+	DebugHud.addChecklistEntry("Flags can be reset to default values")
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------

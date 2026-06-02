@@ -164,6 +164,18 @@ func _on_test_loop_manager_pressed() -> void:
 func _on_test_sfx_event_handler_pressed() -> void:
 	_loadTestScene("sfx_event_handler")
 
+func _on_test_player_pressed() -> void:
+	_loadTestScene("player")
+
+func _on_test_player_camera_pressed() -> void:
+	_loadTestScene("player_camera")
+
+func _on_test_crosshair_pressed() -> void:
+	_loadTestScene("crosshair")
+
+func _on_test_fade_to_black_pressed() -> void:
+	_loadTestScene("fade_to_black")
+
 func _on_back_button_pressed() -> void:
 	_returnToHub()
 

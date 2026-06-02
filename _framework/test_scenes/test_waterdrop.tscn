@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://ce5ufr7w3rky4"]
+[gd_scene load_steps=13 format=3 uid="uid://ce5ufr7w3rky4"]
 
+[ext_resource type="Script" uid="uid://efnenxgww008" path="res://_framework/test_scenes/test_waterdrop.gd" id="1_006ky"]
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="2_wsfuu"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="3_eqdbr"]
 
@@ -40,6 +41,7 @@ size = Vector3(0.2, 0.2, 0.2)
 [sub_resource type="Skin" id="Skin_uvnsu"]
 
 [node name="Test_WaterDrop" type="Node3D"]
+script = ExtResource("1_006ky")
 
 [node name="Environment" type="Node" parent="."]
 
@@ -62,20 +64,8 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_0wuky")
 
-[node name="Player" parent="." node_paths=PackedStringArray("sfxPlayers") instance=ExtResource("2_wsfuu")]
+[node name="Player" parent="." instance=ExtResource("2_wsfuu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8981714, 0)
-sfxPlayers = {
-"death": NodePath("SFX/Death"),
-"grappleExtending": NodePath("SFX/grapple/Extending"),
-"grappleHitFail": NodePath("SFX/grapple/HitFail"),
-"grappleHitSuccess": NodePath("SFX/grapple/HitSuccess"),
-"grappleMaxRangeReached": NodePath("SFX/grapple/MaxRangeReached"),
-"grappleRecall": NodePath("SFX/grapple/Recall"),
-"grappleRecallFinish": NodePath("SFX/grapple/RecallFinish"),
-"grappleThrow": NodePath("SFX/grapple/Throw"),
-"jump": NodePath("SFX/Jump"),
-"respawn": NodePath("SFX/Respawn")
-}
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("3_eqdbr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8151361, 3.2788496, 6.0864906)
