@@ -5,12 +5,21 @@
 [node name="Test_WindowManager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 31.0
+offset_top = 32.0
+offset_right = 31.0
+offset_bottom = 32.0
+mouse_filter = 2
 script = ExtResource("1_oj7u1")
 
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -16.0
+offset_top = -17.0
+offset_right = -16.0
+offset_bottom = -17.0
+mouse_filter = 2
+metadata/_edit_group_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 0
@@ -20,6 +29,9 @@ offset_bottom = 241.0
 [node name="CreateExampleWindow" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Create Example Window"
+
+[node name="HSeparator" type="HSeparator" parent="Control/VBoxContainer"]
+layout_mode = 2
 
 [node name="CreateConsole" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
@@ -45,6 +57,13 @@ text = "Unsubscribe to Console"
 layout_mode = 2
 text = "Start Console Hectic Mode"
 
+[node name="CreateWarningTileWindow" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Create Warning Tile Window"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/VBoxContainer"]
+layout_mode = 2
+
 [node name="CreateBlueprintWindow" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Create Blueprint Window"
@@ -64,9 +83,9 @@ text = "Kill All Windows"
 [node name="EnteredCommand" type="HBoxContainer" parent="Control"]
 layout_mode = 0
 offset_left = 273.0
-offset_top = 143.0
+offset_top = 152.0
 offset_right = 489.0
-offset_bottom = 166.0
+offset_bottom = 175.0
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Control/EnteredCommand"]
@@ -80,9 +99,9 @@ layout_mode = 2
 [node name="BlueprintMenuSignals" type="VBoxContainer" parent="Control"]
 layout_mode = 0
 offset_left = 273.0
-offset_top = 283.0
+offset_top = 336.0
 offset_right = 585.0
-offset_bottom = 306.0
+offset_bottom = 386.0
 metadata/_edit_group_ = true
 
 [node name="EntryGuessedCorrectly" type="HBoxContainer" parent="Control/BlueprintMenuSignals"]
@@ -107,69 +126,83 @@ text = "Unlock condition met:"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PushToConsole" type="VBoxContainer" parent="Control"]
+[node name="ConsoleStuff" type="VBoxContainer" parent="Control"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
-offset_top = 397.0
-offset_right = 423.0
-offset_bottom = 526.0
+offset_left = 277.0
+offset_top = -18.0
+offset_right = 700.0
+offset_bottom = 139.0
 metadata/_edit_group_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PushToConsole"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="Control/ConsoleStuff"]
 layout_mode = 2
 
-[node name="PushMessageToConsole" type="Button" parent="Control/PushToConsole/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/ConsoleStuff/HBoxContainer5"]
+layout_mode = 2
+text = "Console can be closed:"
+
+[node name="ConsoleCanCloseToggle" type="CheckBox" parent="Control/ConsoleStuff/HBoxContainer5"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ConsoleStuff"]
+layout_mode = 2
+
+[node name="PushMessageToConsole" type="Button" parent="Control/ConsoleStuff/HBoxContainer"]
 layout_mode = 2
 text = "Push Message to Console"
 
-[node name="MessageToConsole" type="TextEdit" parent="Control/PushToConsole/HBoxContainer"]
+[node name="MessageToConsole" type="TextEdit" parent="Control/ConsoleStuff/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "..."
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PushToConsole"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ConsoleStuff"]
 layout_mode = 2
 
-[node name="PassWriteSpeed" type="CheckBox" parent="Control/PushToConsole/HBoxContainer2"]
+[node name="PassWriteSpeed" type="CheckBox" parent="Control/ConsoleStuff/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PushToConsole/HBoxContainer2"]
+[node name="Label" type="Label" parent="Control/ConsoleStuff/HBoxContainer2"]
 layout_mode = 2
 text = "Write Speed: "
 
-[node name="MessageWriteSpeed" type="SpinBox" parent="Control/PushToConsole/HBoxContainer2"]
+[node name="MessageWriteSpeed" type="SpinBox" parent="Control/ConsoleStuff/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Control/PushToConsole"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/ConsoleStuff"]
 layout_mode = 2
 
-[node name="PassTheme" type="CheckBox" parent="Control/PushToConsole/HBoxContainer3"]
+[node name="PassTheme" type="CheckBox" parent="Control/ConsoleStuff/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PushToConsole/HBoxContainer3"]
+[node name="Label" type="Label" parent="Control/ConsoleStuff/HBoxContainer3"]
 layout_mode = 2
 text = "Theme: "
 
-[node name="MessageTheme" type="LineEdit" parent="Control/PushToConsole/HBoxContainer3"]
+[node name="MessageTheme" type="LineEdit" parent="Control/ConsoleStuff/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Control/PushToConsole"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/ConsoleStuff"]
 layout_mode = 2
 
-[node name="PassInstant" type="CheckBox" parent="Control/PushToConsole/HBoxContainer4"]
+[node name="PassInstant" type="CheckBox" parent="Control/ConsoleStuff/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PushToConsole/HBoxContainer4"]
+[node name="Label" type="Label" parent="Control/ConsoleStuff/HBoxContainer4"]
 layout_mode = 2
 text = "Instant:"
 
-[node name="MessageInstant" type="CheckBox" parent="Control/PushToConsole/HBoxContainer4"]
+[node name="MessageInstant" type="CheckBox" parent="Control/ConsoleStuff/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -180,8 +213,10 @@ layout_mode = 2
 [connection signal="pressed" from="Control/VBoxContainer/SubscribeToConsole" to="." method="_on_subscribe_to_console_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/UnsubscribeToConsole" to="." method="_on_unsubscribe_to_console_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/StartConsoleHecticMode" to="." method="_on_start_console_hectic_mode_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/CreateWarningTileWindow" to="." method="_on_create_warning_tile_window_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/CreateBlueprintWindow" to="." method="_on_create_blueprint_window_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/SubscribeToBlueprintWindow" to="." method="_on_subscribe_to_blueprint_window_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/UnsubscribeToBlueprintWindow" to="." method="_on_unsubscribe_to_blueprint_window_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/KillAllWindows" to="." method="_on_kill_all_windows_pressed"]
-[connection signal="pressed" from="Control/PushToConsole/HBoxContainer/PushMessageToConsole" to="." method="_on_push_message_to_console_pressed"]
+[connection signal="toggled" from="Control/ConsoleStuff/HBoxContainer5/ConsoleCanCloseToggle" to="." method="_on_console_can_close_toggle_toggled"]
+[connection signal="pressed" from="Control/ConsoleStuff/HBoxContainer/PushMessageToConsole" to="." method="_on_push_message_to_console_pressed"]

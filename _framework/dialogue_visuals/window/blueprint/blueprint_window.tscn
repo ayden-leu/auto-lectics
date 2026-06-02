@@ -33,6 +33,7 @@ offset_bottom = 270.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_agwdo")
 script = ExtResource("2_sny2w")
+numNeededBeforeUnlocking = 1
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
 canBeClosed = true

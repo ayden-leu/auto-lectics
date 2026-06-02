@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dwmpo6y5x6ios"]
+[gd_scene load_steps=10 format=3 uid="uid://dwmpo6y5x6ios"]
 
 [ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_h5maa"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bxn4xxvlf1s0e" path="res://_framework/editor_files/icon_input-handler.svg" id="5_5jibs"]
 [ext_resource type="Texture2D" uid="uid://mjaagygagbwl" path="res://_framework/editor_files/icon_label-preset-loader.svg" id="5_6qplx"]
 [ext_resource type="Texture2D" uid="uid://b2wigq2n6kjs8" path="res://_framework/editor_files/icon_sfx-event-handler.svg" id="8_x2kea"]
+[ext_resource type="Texture2D" uid="uid://bfg0nlmruxfhi" path="res://_framework/editor_files/icon_window-manager.svg" id="9_wtvxm"]
 
 [node name="TestSceneHub" type="Control"]
 layout_mode = 3
@@ -192,6 +193,7 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "test_window_manager"
+icon = ExtResource("9_wtvxm")
 alignment = 0
 expand_icon = true
 

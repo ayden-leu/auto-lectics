@@ -326,14 +326,14 @@ var _hecticCountdownActive:bool = false
 ## [b]Internal-use only.[/b]
 ## The message that gets displayed when the [code]help[/code] command is entered.
 var _helpText:String = \
-		"Here are the commands:\n\n" + \
-		"0, 1, 2...  =  choose an option by ID \n\n(you can also type out the text but that would take forever)\n\n" + \
-		"back        =  load the previous dialogue\n\n (feel free to use this if the bots are getting argumentative, they're coded to respect the command)\n\n" + \
-		"load [ID]   =  loads the dialogue associated with the ID" + \
-		"clear       =  clear the console" + \
-		"repeat_msg  =  repeats the last message" + \
-		"exit        =  close the console\n\n" + \
-		"help        =  displays this message"
+		"Here are the commands:\n" + \
+		"0, 1, 2... =  choose an option by ID \n(you can also type out the text but that would take forever)\n\n" + \
+		"back = load the previous dialogue\n (feel free to use this if the bots are getting argumentative, they're coded to respect the command)\n\n" + \
+		"load [ID] = loads the dialogue associated with the ID\n\n" + \
+		"clear = clear the console\n\n" + \
+		"repeat_msg = repeats the last message\n\n" + \
+		"exit = close the console\n\n" + \
+		"help = displays this message"
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
@@ -430,13 +430,6 @@ func close() -> void:
 	FR_MenuManager.enable()
 	_stopHecticMode()
 	_closeAllOptionWindows()
-
-	var sfxPlayer:AudioStreamPlayer = sfxEventHandler.getPlayerForEvent("close")
-	if sfxPlayer and sfxEventHandler.sfxIds.get("close", "") != "":
-		sfxEventHandler.play("close")
-		mouse_filter = Control.MOUSE_FILTER_IGNORE
-		hide()
-		await sfxPlayer.finished
 
 	super()
 

@@ -337,7 +337,7 @@ func killBlueprintNpcDetailWindow() -> void:
 ## 	# Associated signal:  command_entered
 ## 	# Will run whenever the player enters a command into the console.
 ##
-## func _on_console_close(console:DialogueConsole) -> void
+## func _on_console_close(console:DialogueConsole) -> void:
 ## 	# Associated signal:  window_closed
 ## 	# Will run when the DialogueConsole is closed.
 ## [/codeblock]

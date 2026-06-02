@@ -144,7 +144,7 @@ func _gui_input(event: InputEvent) -> void:
 ## }
 ## [/codeblock]
 func getState() -> Dictionary:
-	print("BlueprintWindow:  Generating current state of entries.")
+	DebugHud.addToLog("BlueprintWindow:  Generating current state of entries.")
 	var state: Dictionary = {}
 	for entry: BlueprintMenuNpcEntry in _npcEntries:
 		state[entry.npcID] = {
@@ -157,10 +157,10 @@ func getState() -> Dictionary:
 
 ## [b]Internal-use only.[/b]  Restores the state of each NPC when window is reloaded.
 func loadState(state:Dictionary) -> void:
-	print("BlueprintWindow:  Loading data into entries.")
+	DebugHud.addToLog("BlueprintWindow:  Loading data into entries.")
 	for entry:BlueprintMenuNpcEntry in _npcEntries:
 		if not state.has(entry.npcID):
-			printerr("BlueprintWindow:  Skipping entry with ID of [", entry.npcID, "] due to given data not having any for it.")
+			DebugHud.addToLog("BlueprintWindow:  Skipping entry with ID of [%s] due to given data not having any for it." % entry.npcID, DebugHud.LogType.ERROR)
 			continue
 
 		var entry_state: Dictionary = state[entry.npcID]
@@ -195,7 +195,7 @@ func kill() -> void:
 ## Essentially only runs once due to being called in [method _ready].
 func _loadEntries() -> void:
 	if not _npcEntries.is_empty():
-		printerr("BlueprintWindow:  Cannot load data into _npcEntryHolder due to it already having data.")
+		DebugHud.addToLog("BlueprintWindow:  Cannot load data into _npcEntryHolder due to it already having data.", DebugHud.LogType.ERROR)
 		return
 
 	var index:int = 0
@@ -206,7 +206,7 @@ func _loadEntries() -> void:
 
 		# just in case
 		if not entry.selected.is_connected(_on_npc_entry_selected):
-			printerr("BlueprintWindow:  Signal \"selected\" not connected to this node's \"_on_npc_entry_selected\" function in-editor.  Please consider doing so.")
+			DebugHud.addToLog("BlueprintWindow:  Signal \"selected\" not connected to this node's \"_on_npc_entry_selected\" function in-editor.  Please consider doing so.", DebugHud.LogType.ERROR)
 			entry.selected.connect(_on_npc_entry_selected)
 
 		_npcEntries.push_back(entry)
@@ -218,7 +218,7 @@ func _loadEntries() -> void:
 ## Returns [code]null[/code] if it cannot find an [BlueprintMenuNpcEntry] with the given [code]entryID[/code].
 func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 	if not _idToIndex.has(entryID):
-		printerr("BlueprintWindow:  Could not find entry with ID: [", entryID, "]")
+		DebugHud.addToLog("BlueprintWindow:  Could not find entry with ID: [%s]" % entryID, DebugHud.LogType.ERROR)
 		return null
 	return _npcEntries[_idToIndex[entryID]]
 
@@ -226,7 +226,7 @@ func _getEntry(entryID:String) -> BlueprintMenuNpcEntry:
 ## Shows details related to [_selectedEntry] by loading them into [member _detailWindow].
 func _showDetails() -> void:
 	if _selectedEntry == null:
-		printerr("BlueprintWindow:  Cannot load details when no entry is selected.")
+		DebugHud.addToLog("BlueprintWindow:  Cannot load details when no entry is selected.", DebugHud.LogType.ERROR)
 		return
 
 	_detailWindow = FR_WindowManager.createBlueprintNpcDetailWindow()
@@ -235,17 +235,17 @@ func _showDetails() -> void:
 	if not _detailWindow.npc_name_submitted.is_connected(_on_detail_window_name_submitted):
 		_detailWindow.npc_name_submitted.connect(_on_detail_window_name_submitted)
 	else:
-		printerr("BlueprintWindow:  How? (1)")
+		DebugHud.addToLog("BlueprintWindow:  How? (1)", DebugHud.LogType.ERROR)
 	if not _detailWindow.notes_changed.is_connected(_on_detail_window_notes_changed):
 		_detailWindow.notes_changed.connect(_on_detail_window_notes_changed)
 	else:
-		printerr("BlueprintWindow:  How? (2)")
+		DebugHud.addToLog("BlueprintWindow:  How? (2)", DebugHud.LogType.ERROR)
 
 ## [b]Internal-use only.[/b]
 ## Closes [memmber _detailWindow].
 func _hideDetails() -> void:
 	if _detailWindow != null:
-		print("BlueprintWindow:  Closing details window.")
+		DebugHud.addToLog("BlueprintWindow:  Closing details window.")
 		_detailWindow.close()
 		_detailWindow = null
 
@@ -254,19 +254,19 @@ func _hideDetails() -> void:
 func _determineIfGuessMatchesSelectedEntry(guess:String) -> void:
 	var correctName:String = _selectedEntry.displayName
 	if guess.to_lower() == correctName.to_lower():
-		print("BlueprintWindow:  Correct name correctGuesses for ", _selectedEntry.npcID)
+		DebugHud.addToLog("BlueprintWindow:  Correct name correctGuesses for %s" % _selectedEntry.npcID, DebugHud.LogType.GOOD)
 		_selectedEntry.nameGuessedCorrectly = true
 		_playSfxSafe("entryGuessedCorrectly")
 		npc_name_guessed_correctly.emit(_selectedEntry.npcID)
 	else:
-		print("BlueprintWindow:  Incorrect name for ", _selectedEntry.npcID)
+		DebugHud.addToLog("BlueprintWindow:  Incorrect name for %s" % _selectedEntry.npcID)
 		_selectedEntry.nameGuessedCorrectly = false
 		_playSfxSafe("entryNameSubmitted")
 
 ## [b]Internal-use only.[/b]
 ## "Unlocks" all NPC entries whose names were guessed correctly.
 func _unlockCorrectGuesses() -> void:
-	print("BlueprintWindow:  Unlocking all correctly guessed entries.")
+	DebugHud.addToLog("BlueprintWindow:  Unlocking all correctly guessed entries.")
 	var correctGuesses:Array[BlueprintMenuNpcEntry] = []
 	for entry:BlueprintMenuNpcEntry in _npcEntries:
 		if entry.nameGuessedCorrectly:
@@ -275,6 +275,8 @@ func _unlockCorrectGuesses() -> void:
 	if correctGuesses.size() >= numNeededBeforeUnlocking:
 		for entry in correctGuesses:
 			entry.unlock()
+
+	_checkUnlockConditions()
 
 ## [b]Internal-use only.[/b]
 ## Checks whether the defined unlock conditions have been met.
@@ -291,14 +293,14 @@ func _checkUnlockConditions() -> void:
 		return
 
 	if checker1.nameGuessedCorrectly and checker2.nameGuessedCorrectly:
-		print("BlueprintWindow:  Door_A unlock condition met.")
+		DebugHud.addToLog("BlueprintWindow:  Door_A unlock condition met.", DebugHud.LogType.GOOD)
 		unlock_condition_met.emit("Door_A")
 
 ## [b]Internal-use only.[/b]
 ## Updates the visibility of each [member _npcEntries] [BlueprintMenuNpcEntry] child
 ## based on if they fit onto the current page.
 func _updateEntryVisibility() -> void:
-	print("BlueprintWindow:  Updating visibility of entries.")
+	DebugHud.addToLog("BlueprintWindow:  Updating visibility of entries.")
 	var start_index = currentPageNum * npcEntriesPerPage
 	var end_index = start_index + npcEntriesPerPage
 
@@ -333,7 +335,7 @@ func _on_detail_window_notes_changed(entry:BlueprintMenuNpcEntry, notes: String)
 ## [b]Internal-use only.[/b]
 ## Handles logic for when an [BlueprintMenuNpcEntry] is clicked.
 func _on_npc_entry_selected(entry:BlueprintMenuNpcEntry) -> void:
-	print("BlueprintWindow:  Entry with ID [", entry.npcID, "] was selected.")
+	DebugHud.addToLog("BlueprintWindow:  Entry with ID [%s] was selected." % entry.npcID)
 	_playSfxSafe("buttonPressed")
 	_selectedEntry = entry
 	_showDetails()
@@ -344,7 +346,7 @@ func _on_prev_page_button_pressed() -> void:
 	if currentPageNum > 0:
 		_playSfxSafe("buttonPressed")
 		currentPageNum -= 1
-		print("BlueprintWindow:  Decrementing to page #", currentPageNum, ".")
+		DebugHud.addToLog("BlueprintWindow:  Decrementing to page #%s." % currentPageNum)
 		_updateEntryVisibility()
 
 ## [b]Internal-use only.[/b]
@@ -354,7 +356,7 @@ func _on_next_page_button_pressed() -> void:
 	if currentPageNum < max_page:
 		_playSfxSafe("buttonPressed")
 		currentPageNum += 1
-		print("BlueprintWindow:  Incrementing to page #", currentPageNum, ".")
+		DebugHud.addToLog("BlueprintWindow:  Incrementing to page #%s." % currentPageNum)
 		_updateEntryVisibility()
 
 # ------------------------------------------------
