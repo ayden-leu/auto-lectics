@@ -22,15 +22,15 @@ func _input(event: InputEvent) -> void:
 		startText.visible = false
 		background.visible = false
 		get_tree().change_scene_to_file("res://world/firstRoom.tscn")
-							
+
 	elif event.is_action_pressed("close_game_from_title_screen"):
-		if amIOnTheTitleScreen == true and startText.visible == true: 
+		if amIOnTheTitleScreen == true and startText.visible == true:
 			get_tree().quit()
 
-func _updateFlavorText() -> void: 
-	
+func _updateFlavorText() -> void:
+
 	flavorText.visible_ratio += 0.001
-	
+
 	if flavorText.visible_ratio >= 1 and didAudioPlay == false:
 		%StartUp.play()
 
@@ -40,7 +40,7 @@ func _updateFlavorText() -> void:
 		startText.visible = true
 		isStartTextGoing = true
 
-func _updateStartText() -> void: 
+func _updateStartText() -> void:
 	startText.visible_characters += 1
 
 func _process(delta: float) -> void:

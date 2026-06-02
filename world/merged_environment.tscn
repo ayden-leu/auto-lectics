@@ -202,7 +202,6 @@ initialDialogueID = "DB1"
 [node name="miniboss" parent="npcs" groups=["Ungrappleable"] instance=ExtResource("23_xh5lt")]
 transform = Transform3D(-0.36880827, 0.21723315, -0.21723315, 0, 0.33941126, 0.3394113, 0.30721408, 0.2607868, -0.26078686, -13.082989, 5.303937, 31.994684)
 _talkOnlyOnce = true
-dialogueTreeID = "MINI-Boss"
 internalID = "MINI-Boss"
 displayName = "MINI-Boss"
 

@@ -34,7 +34,7 @@ func _on_loop_manager_faded_in() -> void:
 func _on_change_respawn_body_entered(body: Node3D) -> void:
 	print("updated marker")
 	$Marker3D.global_position = Vector3(-23.0,25.0,23.0)
-	
+
 
 
 
