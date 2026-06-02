@@ -120,6 +120,14 @@ func _createStoryFlagSection() -> void:
 	newFlag._on_update_available_flags(_unusedFlags)
 	await get_tree().process_frame  # let flag field get ready
 
+	flagID = _getUnusedStoryFlag()
+	if flagID == "":
+		update_available_flags.disconnect(newFlag._on_update_available_flags)
+		_currentFlagFields.erase(newFlag)
+		separator.queue_free()
+		newFlag.queue_free()
+		return
+
 	newFlag.flagID = flagID
 	_usedFlags.push_back(flagID)
 	_updateUnusedFlags()

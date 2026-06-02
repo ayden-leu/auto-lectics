@@ -166,9 +166,6 @@ allow_greater = true
 [node name="HSeparator" type="HSeparator" parent="AdvancedOptions"]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="AdvancedOptions"]
-layout_mode = 2
-
 [node name="TextThemeChooser" type="HBoxContainer" parent="AdvancedOptions" node_paths=PackedStringArray("chooser")]
 unique_name_in_owner = true
 layout_mode = 2
