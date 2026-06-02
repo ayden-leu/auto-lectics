@@ -35,3 +35,10 @@ func _on_change_respawn_body_entered(body: Node3D) -> void:
 	print("updated marker")
 	$Marker3D.global_position = Vector3(-23.0,25.0,23.0)
 	
+
+
+
+
+func _on_area_3d_2_body_entered(body: Node3D) -> void:
+	get_tree().change_scene_to_file("res://world/lastRoom.tscn")
+	pass # Replace with function body.

@@ -54,6 +54,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"notDoingTheirJob":false,
 	"DoingTheirJob":false,
 	
+	"dropPod":false
 	
 	
 }

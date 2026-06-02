@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://f37saf310u6v"]
+[gd_scene load_steps=17 format=3 uid="uid://f37saf310u6v"]
 
 [ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="1_ujtst"]
 [ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="2_2xnlg"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="4_q128n"]
 [ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="5_n5wcn"]
 [ext_resource type="PackedScene" uid="uid://0mnvycgijgpy" path="res://_framework/entities/player/grappling_hook.tscn" id="6_413rv"]
+[ext_resource type="AudioStream" uid="uid://b6bk0rv02tmrm" path="res://sounds/Space_1.mp3" id="7_2xnlg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hh4bn"]
 
@@ -86,12 +87,12 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_q128n")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "step",
-"deathFancy": "step",
-"jump": "step",
-"respawn": "step",
-"respawnFancy": "step",
-"step": "step"
+"death": "",
+"deathFancy": "",
+"jump": "",
+"respawn": "",
+"respawnFancy": "",
+"step": "spaceSteps"
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
@@ -119,6 +120,10 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 raycast = NodePath("../CameraAnchor/GrappleRaycast")
 throwOrigin = NodePath("../CameraAnchor/GrappleStartMarker")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_2xnlg")
+autoplay = true
 
 [connection signal="grapple_pressed" from="InputHandler" to="." method="_on_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_interact_pressed"]

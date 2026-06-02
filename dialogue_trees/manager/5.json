@@ -1,0 +1,10 @@
+{
+	"text": "YOU'RE GOING TO THE PLANET TO EXTRACT THE TECHNOLOGY.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "6"
+		}
+	]
+}

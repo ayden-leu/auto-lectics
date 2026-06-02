@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://7a2ih4a2477"]
+[gd_scene load_steps=61 format=3 uid="uid://7a2ih4a2477"]
 
 [ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_8ajir"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_uild8"]
@@ -47,13 +47,22 @@
 [ext_resource type="PackedScene" uid="uid://bjqvh4b5jq7w2" path="res://models/environment/generator_tube.tscn" id="38_yeq75"]
 [ext_resource type="PackedScene" uid="uid://octq4maveswy" path="res://models/npcs/drop_pod_model.tscn" id="39_gucvl"]
 [ext_resource type="PackedScene" uid="uid://5cb2txandxvs" path="res://models/environment/environmentscenes/tankTube.tscn" id="40_bdm51"]
+[ext_resource type="PackedScene" uid="uid://cqyq1p74l6ifx" path="res://models/environment/arc_bridge.tscn" id="41_6032j"]
 [ext_resource type="PackedScene" uid="uid://owwa5jy73u7r" path="res://models/BlendFiles/smoothPipe.blend" id="41_qwdqd"]
 [ext_resource type="PackedScene" uid="uid://n41wo1q732c2" path="res://models/environment/tub.tscn" id="42_nwgj0"]
 [ext_resource type="PackedScene" uid="uid://wn01acuu0v4h" path="res://models/BlendFiles/dirt.blend" id="43_jwhbw"]
 [ext_resource type="PackedScene" uid="uid://cvi7xrhbglnxj" path="res://models/BlendFiles/tankInTrusses.blend" id="44_a2yu0"]
+[ext_resource type="PackedScene" uid="uid://drp5bu6fnkwbd" path="res://models/BlendFiles/largePipe.blend" id="44_jstux"]
+[ext_resource type="PackedScene" uid="uid://bgy1kooxe1ihx" path="res://models/BlendFiles/CEOBottomTube.blend" id="54_i5cl6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5cl6"]
+size = Vector3(0.08968353, 0.69873047, 0.08453369)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nroer"]
+size = Vector3(12, 9, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l3f82"]
-size = Vector3(2.8991165, 2.3817139, 2.5271635)
+size = Vector3(2.2228737, 2.3817139, 4.9)
 
 [sub_resource type="Curve3D" id="Curve3D_akgd6"]
 closed = true
@@ -69,6 +78,14 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_nroer"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -10.858729, -2.670288e-05, -0.42405164, 0, 0, 0, 0, 0, 0, -8.809152, -2.670288e-05, -2.8444817, -1.1679802, 0, 0.684906, 1.1679802, 0, -0.684906, -0.84783363, 2.4978992e-05, 0.9713354, 0, 0, 0, 0, 0, 0, 4.2946286, -0.062428474, -0.48848724),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [node name="mergedEnvironment" type="Node3D"]
 transform = Transform3D(0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0)
@@ -97,6 +114,7 @@ transform = Transform3D(0.54, 0, 0, 0, 0.54, 0, 0, 0, 0.54, -17, 0, -55)
 
 [node name="LoopManager" parent="Environment" node_paths=PackedStringArray("fancyArea") instance=ExtResource("5_h4w1a")]
 loopDurationSeconds = 120.0
+timeHoldFade = 5.0
 fancy = true
 fancyArea = NodePath("RestartLoopManagerArea3D")
 
@@ -118,12 +136,19 @@ script = ExtResource("8_xh5lt")
 
 [node name="FadeToBlackHitbox" parent="." instance=ExtResource("9_nroer")]
 transform = Transform3D(0.3069081, 0, -0.9517391, 0, 1, 0, 0.9517391, 0, 0.3069081, 14.035847, 13.928366, -95.48166)
+visible = false
+
+[node name="Area3D2" type="Area3D" parent="."]
+transform = Transform3D(0.3069081, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.3069081, 14.035848, 107.17532, -95.48166)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(167.77565, 0, 0, 0, 167.77565, 0, 0, 0, 167.77565, -94.62387, 34.21563, 67.99302)
+shape = SubResource("BoxShape3D_i5cl6")
 
 [node name="npcs" type="Node" parent="."]
 
 [node name="sludge" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("10_jstux")]
 transform = Transform3D(0.5106935, 0, -0.15198235, 0, 0.53282875, 0, 0.15198235, 0, 0.5106935, -2.5160654, 20.012672, 0.32553443)
-_talkOnlyOnce = false
 patrolEnabled = true
 patrolPath = NodePath("../paths/Path3D3")
 patrolSpeed = 0.94
@@ -146,15 +171,19 @@ patrolEnabled = true
 patrolPath = NodePath("../paths/Path3D")
 
 [node name="potter_model" parent="npcs/potter" instance=ExtResource("14_ssoqu")]
-transform = Transform3D(0.83389753, 0, 0, 0, 0.83389753, 0, 0, 0, 0.83389753, 0, 0.5356293, 1.1833935)
+transform = Transform3D(-3.6450817e-08, 0, 0.83389753, 0, 0.83389753, 0, -0.83389753, 0, -3.6450817e-08, 0, 0.5356293, 1.1833935)
 
-[node name="preacher" parent="npcs" instance=ExtResource("15_6kqi8")]
+[node name="preacher" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("15_6kqi8")]
 transform = Transform3D(0.43547416, 0, -0.20942979, 0, 0.4832169, 0, 0.20942979, 0, 0.43547416, -18.696253, 5.085404, 36.227753)
 _talkOnlyOnce = true
 lookAtInteractorWhileTalking = true
+patrolEnabled = true
+patrolPath = NodePath("../paths/preacherpath")
+patrolSpeed = 4.07
 
 [node name="exile" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("19_gd84c")]
-transform = Transform3D(0.4854434, 0, -0.15670039, 0, 0.5101081, 0, 0.15670039, 0, 0.4854434, 28.960613, 13.883817, 11.437608)
+transform = Transform3D(0.09708868, 0, -0.031340074, 0, 0.10202162, 0, 0.031340074, 0, 0.09708868, 28.960613, 13.883817, 11.437608)
+_talkOnlyOnce = true
 patrolEnabled = true
 patrolPath = NodePath("../paths/Path3D4")
 
@@ -163,9 +192,11 @@ transform = Transform3D(2.1840525, 0, 0, 0, 2.1840525, 0, 0, 0, 2.1840525, -15.5
 
 [node name="looker" parent="npcs" instance=ExtResource("19_h4w1a")]
 transform = Transform3D(0.44005987, -0.0015250742, -0.1996084, 0.13546017, 0.35719338, 0.2959087, 0.14661646, -0.32543674, 0.3257193, 14.459345, 4.458775, 43.218487)
+_talkOnlyOnce = true
 
 [node name="dishNPC" parent="npcs" instance=ExtResource("20_06v4c")]
 transform = Transform3D(0.43547416, 0, -0.20942979, 0, 0.4832169, 0, 0.20942979, 0, 0.43547416, -16.804409, 5.047678, 31.210388)
+_talkOnlyOnce = true
 initialDialogueID = "DB1"
 
 [node name="miniboss" parent="npcs" groups=["Ungrappleable"] instance=ExtResource("23_xh5lt")]
@@ -175,9 +206,17 @@ dialogueTreeID = "MINI-Boss"
 internalID = "MINI-Boss"
 displayName = "MINI-Boss"
 
-[node name="gate" parent="npcs/miniboss" groups=["Ungrappleable"] instance=ExtResource("24_nroer")]
+[node name="gateNode" parent="npcs/miniboss" groups=["Ungrappleable"] instance=ExtResource("24_nroer")]
 transform = Transform3D(-1.0899737, 6.077128e-08, 0.61773264, 0.43680304, 0.8858997, 0.7707279, -0.43680298, 0.8858996, -0.77072775, -7.9056015, 0.72031975, -4.5989246)
 script = ExtResource("25_jstux")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="npcs/miniboss/gateNode" groups=["Ungrappleable"]]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/miniboss/gateNode/StaticBody3D" groups=["Ungrappleable"]]
+transform = Transform3D(0.99997693, 6.7902417e-13, -1.1920929e-07, 9.148238e-14, 1, 3.907985e-14, 5.2303076e-06, -1.6427758e-13, 0.99999905, -0.4999962, 3.9999995, -0.5000076)
+shape = SubResource("BoxShape3D_nroer")
 
 [node name="management" type="Node" parent="npcs"]
 
@@ -195,7 +234,7 @@ collision_mask = 5
 interactableNpcToInitiate = NodePath("../updatedCoordinates")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/management/change_respawn2/StartDialogueArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4024105, 0.0058555603, -0.008672714)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0642891, 0.0058555603, 1.1777458)
 shape = SubResource("BoxShape3D_l3f82")
 
 [node name="change_respawn" type="Area3D" parent="npcs/management/change_respawn2/StartDialogueArea"]
@@ -257,6 +296,21 @@ interactableNpcToInitiate = NodePath("../updatedCoordinates2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9530592, 0.9876118, -0.111400604)
 shape = SubResource("BoxShape3D_l3f82")
 
+[node name="stop3" type="Node" parent="npcs/management"]
+
+[node name="updatedCoordinates2" parent="npcs/management/stop3" instance=ExtResource("17_hxe5j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.438723, 14.126133, -26.03857)
+initialDialogueID = "HOLDON"
+rejectConsoleExit = true
+
+[node name="StartDialogueArea2" parent="npcs/management/stop3" instance=ExtResource("18_augjw")]
+transform = Transform3D(1, 0, 0, 0, 3.8622968, 0, 0, 0, 1, -13.656516, 13.8346815, -20.934578)
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/management/stop3/StartDialogueArea2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9530592, 0.9876118, -0.111400604)
+shape = SubResource("BoxShape3D_l3f82")
+
 [node name="paths" type="Node" parent="npcs"]
 
 [node name="Path3D" type="Path3D" parent="npcs/paths"]
@@ -264,7 +318,7 @@ transform = Transform3D(0.6186342, 0, 0.5591751, 0, 0.83389753, 0, -0.5591751, 0
 curve = SubResource("Curve3D_akgd6")
 
 [node name="Path3D4" type="Path3D" parent="npcs/paths"]
-transform = Transform3D(0.5010937, 0, 0.4529318, 0, 0.675457, 0, -0.4529318, 0, 0.5010937, 27.903423, 13.938742, 13.568714)
+transform = Transform3D(-0.20749392, 0, -0.6427973, 0, 0.675457, 0, 0.6427973, 0, -0.20749392, 19.303423, 13.738742, 8.968714)
 curve = SubResource("Curve3D_akgd6")
 
 [node name="Path3D3" type="Path3D" parent="npcs/paths"]
@@ -275,11 +329,16 @@ curve = SubResource("Curve3D_akgd6")
 transform = Transform3D(-6.976851e-08, 0, 1.5961175, 0, 1.5961175, 0, -1.5961175, 0, -6.976851e-08, -2.9002411, 28.754213, 40.282345)
 curve = SubResource("Curve3D_56eo6")
 
+[node name="preacherpath" type="Path3D" parent="npcs/paths"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.706752, 4.870661, 38.6806)
+curve = SubResource("Curve3D_nroer")
+debug_custom_color = Color(0.038397167, 0.038397167, 0.03839716, 1)
+
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, -58.04239, 63.73821, 359.93195)
+transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, -65.54239, 58.738213, 361.93195)
 
 [node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("21_j2cnk")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -114.94262, 155.71768, 153.63107)
+transform = Transform3D(-1.3996763, 0, 0.03010112, 0, 1.4, 0, -0.03010112, 0, -1.3996763, -65.54239, 58.738213, 361.93195)
 respawnCheckpointLocation = NodePath("../Marker3D")
 maxSpeed = 5.2
 acceleration = 2.5
@@ -294,7 +353,7 @@ focus = NodePath("../Player")
 [node name="Node" type="Node" parent="."]
 
 [node name="bigFloorArc3" parent="Node" instance=ExtResource("23_adwts")]
-transform = Transform3D(0.086724244, 0.040547967, -0.048638593, -0.043417, 0.09811583, 0.0043811216, 0.04609572, 0.01612736, 0.09563492, 2.0876815, 14.991285, 23.176807)
+transform = Transform3D(0.086724244, 0.6852607, -0.048638593, -0.043417, 1.6581577, 0.0043811216, 0.04609572, 0.2725524, 0.09563492, 2.0876815, 14.991285, 23.176807)
 
 [node name="lamp5" parent="Node" instance=ExtResource("24_wgjoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1189137, 30.647314, 10.993439)
@@ -303,10 +362,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1189137, 30.647314, 10.993
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.98969, 24.051168, 16.723541)
 
 [node name="lamp7" parent="Node" instance=ExtResource("24_wgjoj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9125857, 20.548464, 9.691157)
+
+[node name="lamp8" parent="Node" instance=ExtResource("24_wgjoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0555205, 22.700127, 9.461865)
 
 [node name="bigFloorArc4" parent="Node" instance=ExtResource("23_adwts")]
-transform = Transform3D(-0.0029197354, 0.028266508, -0.10355397, -0.043417007, 0.0944294, 0.026999984, 0.09817019, 0.042603273, 0.00886122, -4.988176, 19.77424, 17.549507)
+transform = Transform3D(-0.0029197354, 0.47770402, -0.10355397, -0.043417007, 1.595857, 0.026999984, 0.09817019, 0.7199954, 0.00886122, -4.988176, 19.77424, 17.549507)
 
 [node name="bigWires" parent="Node" instance=ExtResource("25_tvs7y")]
 transform = Transform3D(0.47159693, 1.4962247e-08, -0.5172977, -1.7763575e-15, 0.70000017, -3.552715e-15, 0.51729757, -5.4026694e-09, 0.4715967, 1.0629054, -28.933704, -35.041046)
@@ -546,10 +608,10 @@ transform = Transform3D(1, 0, 0, 0, 9.430001, 0, 0, 0, 1, 0, -0.20000003, 0)
 transform = Transform3D(0.7881292, -1.0294483, 0.63698184, -0.11690216, -14.07342, -0.033770505, 1.5289973, -0.54537344, -0.33091748, -0.51690835, 34.243843, -33.871605)
 
 [node name="MetalBigFlat2" parent="Node/area2/bridege" instance=ExtResource("30_1ykxl")]
-transform = Transform3D(1.2740742, 4.158914, 0.38241813, 0.841452, -8.785138, -5.9604638e-08, 0.8008379, 2.6141465, -0.6083991, 18.252823, 38.374622, -9.580869)
+transform = Transform3D(1.2740742, 2.079457, 0.38241813, 0.841452, -4.392569, -5.9604638e-08, 0.8008379, 1.3070732, -0.6083991, 17.967554, 38.97721, -9.760178)
 
 [node name="MetalBigFlat4" parent="Node/area2/bridege" instance=ExtResource("30_1ykxl")]
-transform = Transform3D(-1.8208439, -6.2005677, 0.5143257, 0.72284085, -25.462868, -0.027300565, 1.6517184, 4.3078284, 0.5789372, 28.855732, 29.658693, -13.480691)
+transform = Transform3D(-1.539302, -5.5781703, 0.31749177, 0.5051036, -17.149288, -0.09926021, 0.7699537, 0.09828103, 0.6998506, 29.06482, 28.65207, -20.332577)
 
 [node name="MetalBigFlat3" parent="Node/area2/bridege" instance=ExtResource("30_1ykxl")]
 transform = Transform3D(1.4597222, 7.765183e-15, -0.38241804, 0, 23.293337, 0, 0.9175295, -7.938174e-14, 0.6083991, 20.095215, 48.791016, -8.422806)
@@ -590,6 +652,9 @@ transform = Transform3D(-2.2106295, 7.294147e-15, -4.778198, 0, 2.5526137, 0, 1.
 [node name="smoothPipe7" parent="Node/area2/bridege" instance=ExtResource("34_8jy2c")]
 transform = Transform3D(-2.2106295, 7.294147e-15, -4.778198, 0, 2.5526137, 0, 1.2763071, 4.815994e-15, -8.276084, 7.5601006, 44.18593, 1.8437958)
 
+[node name="arcBridge" parent="Node/area2/bridege" instance=ExtResource("41_6032j")]
+transform = Transform3D(0.93332106, 2.4691017e-15, -3.095884, -9.771777e-16, 1.3086944, 1.1012282e-15, 1.0120327, -3.7396225e-15, 2.855099, 64.309265, 13.78239, -53.944824)
+
 [node name="entrace to final" type="Node3D" parent="Node/area2"]
 
 [node name="MetalStack13" parent="Node/area2/entrace to final" instance=ExtResource("30_1ykxl")]
@@ -605,10 +670,10 @@ transform = Transform3D(2.0073485, 1.0262349, -0.0879408, 0.10643643, 0.42163417
 transform = Transform3D(1, 0, 0, 0, 9.430001, 0, 0, 0, 1, 0, -0.20000003, 0)
 
 [node name="MetalStack15" parent="Node/area2/entrace to final" instance=ExtResource("30_1ykxl")]
-transform = Transform3D(-0.8880768, -1.7943448, -1.1009961, -0.21009724, 18.20195, 0.0555372, 1.5553052, 1.4342289, -0.6211646, 2.34766, 66.12189, 0.25629234)
+transform = Transform3D(-0.8880768, -1.7943448, -1.1009961, -0.21009724, 18.20195, 0.0555372, 1.5553052, 1.4342289, -0.6211646, 3.6926577, 52.47814, -0.81877124)
 
 [node name="MetalBigFlat2" parent="Node/area2/entrace to final/MetalStack15" instance=ExtResource("30_1ykxl")]
-transform = Transform3D(1, 1.9073486e-06, 0, -3.7252903e-09, 9.430001, 6.548362e-11, 2.386514e-09, 2.7846545e-07, 1, 0.6218929, -0.7227011, 0.35025024)
+transform = Transform3D(1, 1.9073486e-06, 0, -3.7252903e-09, 9.430001, 6.548362e-11, 2.386514e-09, 2.7846545e-07, 1, 0.62189305, -0.12340021, 0.35025027)
 
 [node name="MetalStack16" parent="Node/area2/entrace to final" instance=ExtResource("30_1ykxl")]
 transform = Transform3D(-0.8880768, -1.7943448, -1.1009961, -0.21009724, 18.20195, 0.0555372, 1.5553052, 1.4342289, -0.6211646, -19.672264, 67.23263, -12.167002)
@@ -621,6 +686,9 @@ transform = Transform3D(3.754727e-07, -4.388596, -2.5337584, 5.067516, -2.215081
 
 [node name="trussingX2" parent="Node/area2/entrace to final" instance=ExtResource("35_12x6g")]
 transform = Transform3D(2.7254862e-07, -3.1856005, -1.8392086, 3.6784167, -1.6078866e-07, 9.4504594e-07, -4.973909e-07, -1.8392084, 3.1856024, -7.0290833, 3.5879784, 18.6489)
+
+[node name="trussingX3" parent="Node/area2/entrace to final" instance=ExtResource("35_12x6g")]
+transform = Transform3D(2.725484e-07, -3.1856005, -1.8392086, 3.6784167, -1.6078866e-07, 9.4504594e-07, -4.973906e-07, -1.8392084, 3.1856024, 26.405937, 37.725906, 2.1170921)
 
 [node name="largePipe2" parent="Node/area2" instance=ExtResource("36_05n8p")]
 transform = Transform3D(2.676, -2.4188004, -6.372074e-08, 1.4604014e-21, -1.5767381e-07, 2.1739562, -2.4187994, -2.6760006, -7.049637e-08, 57.06453, -107.67605, 8.220619)
@@ -636,6 +704,9 @@ text = "GOTCHA"
 
 [node name="bigGreeble" parent="Node" instance=ExtResource("37_oc6gc")]
 transform = Transform3D(0.8660254, -4.5017234e-09, 0.5000002, 1.0412897e-14, 1, -7.1054274e-15, -0.5000002, 4.501713e-09, 0.8660255, -27.01873, -6.0000043, 16.994852)
+
+[node name="largePipe" parent="Node" instance=ExtResource("44_jstux")]
+transform = Transform3D(1.0000001, 4.440892e-16, 0, -2.4264695e-24, -4.3711392e-08, 1.0000001, -5.551115e-17, -1.0000001, -4.3711392e-08, -38.3, -66.36, 56.100002)
 
 [node name="generatorTube" parent="Node" instance=ExtResource("38_yeq75")]
 transform = Transform3D(1.00328, 0, -0.7403849, 0, 1.2468921, 0, 0.7403849, 0, 1.00328, -41.920116, 4, 59.28655)
@@ -708,7 +779,7 @@ transform = Transform3D(0.37648106, 0, -0.10087779, 0, 0.38976187, 0, 0.10087779
 transform = Transform3D(10.064874, 0, 0, 0, -4.3994962e-07, 10.064874, 0, -10.064874, -4.3994962e-07, -1.7743945, -47.79466, 11.808153)
 
 [node name="smoothPipe" parent="are2/smoothPipe8" groups=["Ungrappleable"] instance=ExtResource("34_8jy2c")]
-transform = Transform3D(0.9943379, 0.106264174, -8.742278e-08, 0.106264174, -0.9943379, 0, -8.6927784e-08, -9.289909e-09, -1, 0, 0, 0)
+transform = Transform3D(0.994338, 0.106264174, -8.742278e-08, 0.106264174, -0.994338, -2.842171e-14, -8.6927784e-08, -9.289888e-09, -1, 2.1957552, -0.576262, 1.0929103)
 
 [node name="smoothPipe9" parent="are2" groups=["Ungrappleable"] instance=ExtResource("41_qwdqd")]
 transform = Transform3D(10.064874, 0, 0, 0, -4.3994962e-07, 10.064874, 0, -10.064874, -4.3994962e-07, -2.6987333, -54.49881, 23.790962)
@@ -741,7 +812,17 @@ transform = Transform3D(11.500002, 0, 0, 0, 11.500002, 0, 0, 0, 11.500002, 55.00
 [node name="dirt3" parent="." instance=ExtResource("43_jwhbw")]
 transform = Transform3D(4.8533034, 0, 0, 0, 4.8533034, 0, 0, 0, 4.8533034, -7.7992268, 67.117584, 129.53656)
 
+[node name="trussingX" parent="." instance=ExtResource("35_12x6g")]
+transform = Transform3D(4.8711233, 0, 5.0842094, 0, 15.763383, 0, -1.1279012, 0, 21.95743, -78.74936, 67.59851, -113.21036)
+
+[node name="trussingX2" parent="." instance=ExtResource("35_12x6g")]
+transform = Transform3D(4.8711233, 0, 5.0842094, 0, 15.763383, 0, -1.1279012, 0, 21.95743, -57.81584, 67.59851, -118.05748)
+
+[node name="CEOBottomTube" parent="." instance=ExtResource("54_i5cl6")]
+transform = Transform3D(4.94429, 0.7443115, 0, 3.253489e-08, -2.1612179e-07, -5.0000005, -0.7443115, 4.94429, -2.1855696e-07, -91.446625, 77.02973, -240.59256)
+
 [connection signal="faded_in" from="Environment/LoopManager" to="." method="_on_loop_manager_faded_in"]
 [connection signal="resetting" from="Environment/LoopManager" to="." method="_on_loop_manager_resetting"]
 [connection signal="started_fancy" from="Environment/LoopManager" to="." method="_on_loop_manager_started_fancy"]
+[connection signal="body_entered" from="Area3D2" to="." method="_on_area_3d_2_body_entered"]
 [connection signal="body_entered" from="npcs/management/change_respawn2/StartDialogueArea/change_respawn" to="." method="_on_change_respawn_body_entered"]

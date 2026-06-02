@@ -29,7 +29,8 @@ shape = SubResource("BoxShape3D_25xfv")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_vrelp")
-volume_db = -14.679
+volume_db = -7.907
+pitch_scale = 1.76
 autoplay = true
 parameters/looping = true
 

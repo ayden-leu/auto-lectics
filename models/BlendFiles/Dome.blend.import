@@ -37,7 +37,20 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"light": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/lightemitter.tres",
+"use_external/path": "uid://dvdwmm0pkqsm8"
+},
+"metal": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://materials/darkmetal2.tres",
+"use_external/path": "res://materials/darkmetal2.tres"
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

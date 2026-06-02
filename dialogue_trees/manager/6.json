@@ -1,0 +1,10 @@
+{
+	"text": "WE'VE UNINSTALLED YOUR REGULAR SPEECH FUNCTIONS. YOU'RE NOW RUNNING AN INTERFACE THAT WILL ALLOW YOU TO COMMUNICATE WITH THE FACILITY SYSTEMS.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "7"
+		}
+	]
+}

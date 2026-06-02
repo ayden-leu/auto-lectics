@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AUTO-Lectics"
-run/main_scene="uid://drte8m2osgjcm"
+run/main_scene="uid://11dkiqp8ejdd"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://chbxb717vmcnh"
 

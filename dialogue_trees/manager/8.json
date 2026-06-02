@@ -1,0 +1,13 @@
+{
+	"text": "HEAD OFFICE WANTS IMMORTALITY TECH WITH NO MORE DELAYS. IF YOU SCREW THIS UP I MAY GO DOWN, BUT YOU'RE GOING DOWN WITH ME.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "9",
+			"setFlags": {
+				"dropPod": true
+			}
+		}
+	]
+}

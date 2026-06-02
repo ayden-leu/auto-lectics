@@ -1,0 +1,10 @@
+{
+	"text": "MAKE SOMEONE LIVE FOREVER.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "5"
+		}
+	]
+}

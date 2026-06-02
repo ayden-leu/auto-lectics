@@ -1,0 +1,17 @@
+{
+	"text": "YOU CAN'T GO TO THE CORE YET. DID YOU EVEN FINISH THE BLUEPRINT?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "I did. ",
+			"nextID": "WOW"
+		},
+		{
+			"text": "Nah.",
+			"nextID": "OHCOMEON"
+		},
+		{
+			"text": "Why do you want the blueprint again?"
+		}
+	]
+}

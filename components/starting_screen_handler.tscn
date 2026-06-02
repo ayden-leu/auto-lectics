@@ -608,7 +608,8 @@ theme_override_colors/font_color = Color(0, 0.8235294, 0.69411767, 1)
 text = "compile complete
 ready to run [AUTO-LECTICS.V.2.0]
 
-run? y / n"
+wake up?
+ y / n"
 
 [node name="Background" type="ColorRect" parent="."]
 unique_name_in_owner = true

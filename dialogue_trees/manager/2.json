@@ -1,0 +1,10 @@
+{
+	"text": "HEAD OFFICE SAYS THEY'VE RECIEVED AN ANCIENT COMPANY CODED DISTRESS CALL.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "3"
+		}
+	]
+}

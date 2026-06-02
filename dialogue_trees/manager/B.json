@@ -1,0 +1,10 @@
+{
+	"text": "ONCE YOU'RE THERE PRESS B TO OPEN THE MENU.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "FILL IT OUT"
+		}
+	]
+}

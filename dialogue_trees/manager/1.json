@@ -1,0 +1,10 @@
+{
+	"text": "YOU'RE LATE. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "2"
+		}
+	]
+}

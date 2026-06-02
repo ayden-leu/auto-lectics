@@ -53,7 +53,6 @@ func _despawn() -> void:
 	
 	
 func _process(delta: float) -> void:
-	
 	if StoryFlags.currentFlags.DoingTheirJob:_despawn()
 	
 

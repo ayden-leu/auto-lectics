@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=24 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="Script" uid="uid://cypt3ypnimoj5" path="res://world/raphael_test_dialogue.gd" id="1_4bdpc"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bmgejwfuqqqm6" path="res://entities/npcs/exile.tscn" id="9_b6tvr"]
 [ext_resource type="PackedScene" uid="uid://tqt27f4t0m0c" path="res://entities/npcs/miniboss2.tscn" id="14_4bdpc"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://_framework/entities/npcs/npc_test_interactable.tscn" id="15_46t5o"]
+[ext_resource type="PackedScene" uid="uid://wo7o5fb0ppt1" path="res://_framework/entities/npcs/space_Vocal_NPC.tscn" id="17_2oxty"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -125,3 +126,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.76616, 0, 2.95328)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.108421, 9.536743e-07, -7.2517395)
 _talkOnlyOnce = true
 initialDialogueID = "LearnEverything"
+
+[node name="spaceNPC" parent="." instance=ExtResource("17_2oxty")]
+transform = Transform3D(0.5795146, 0, 0, 0, 0.5795146, 0, 0, 0, 0.5795146, 34.011974, 2.943527, -36.918404)
