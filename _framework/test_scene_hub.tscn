@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwmpo6y5x6ios"]
+[gd_scene load_steps=9 format=3 uid="uid://dwmpo6y5x6ios"]
 
 [ext_resource type="Script" uid="uid://cn8g6wqk2s14s" path="res://_framework/test_scene_hub.gd" id="1_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://cb1q7neti54xl" path="res://_framework/editor_files/icon_death-plane.svg" id="2_h5maa"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://kqsaeirnco0d" path="res://_framework/editor_files/icon_loop-manager.svg" id="4_y5v6x"]
 [ext_resource type="Texture2D" uid="uid://bxn4xxvlf1s0e" path="res://_framework/editor_files/icon_input-handler.svg" id="5_5jibs"]
 [ext_resource type="Texture2D" uid="uid://mjaagygagbwl" path="res://_framework/editor_files/icon_label-preset-loader.svg" id="5_6qplx"]
+[ext_resource type="Texture2D" uid="uid://b2wigq2n6kjs8" path="res://_framework/editor_files/icon_sfx-event-handler.svg" id="8_x2kea"]
 
 [node name="TestSceneHub" type="Control"]
 layout_mode = 3
@@ -160,6 +161,13 @@ icon = ExtResource("5_5jibs")
 alignment = 0
 expand_icon = true
 
+[node name="test_sfx_event_handler" type="Button" parent="MainPanel/ButtonHolder/CodeHelper"]
+layout_mode = 2
+text = "test_sfx_event_handler"
+icon = ExtResource("8_x2kea")
+alignment = 0
+expand_icon = true
+
 [node name="VSeparator2" type="VSeparator" parent="MainPanel/ButtonHolder"]
 layout_mode = 2
 mouse_filter = 1
@@ -220,6 +228,7 @@ text = "Back (Ctrl+Q)"
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_story_flags" to="." method="_on_load_test_story_flags_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_vocal_dialogue_player" to="." method="_on_test_vocal_dialogue_player_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_input_handler" to="." method="_on_test_input_handler_pressed"]
+[connection signal="pressed" from="MainPanel/ButtonHolder/CodeHelper/test_sfx_event_handler" to="." method="_on_test_sfx_event_handler_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/GUI/test_menu_manager" to="." method="_on_load_test_menu_manager_pressed"]
 [connection signal="pressed" from="MainPanel/ButtonHolder/GUI/test_window_manager" to="." method="_on_load_test_window_manager_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

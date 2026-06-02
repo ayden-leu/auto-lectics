@@ -39,6 +39,11 @@ func _ready() -> void:
 	CursorHandler.setDefault("shown")
 	CursorHandler.showNuclear()
 
+	DebugHud.addChecklistEntry("SFX Event [one] plays [_test_1] SFX")
+	DebugHud.addChecklistEntry("SFX Event [two] plays [_test_2] SFX")
+	DebugHud.addChecklistEntry("SFX Event [three] plays [_test_3] SFX")
+	DebugHud.addChecklistEntry("Trying to play an invalid SFX event puts error into log")
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------

@@ -178,9 +178,13 @@ func _ready() -> void:
 ## If there isn't an [AudioStreamPlayer] for the given event name, nothing happens.
 ## Will stop the current event from playing its sound an immediately start playing it again.
 func play(eventName:String) -> void:
+	if not _sfxEventNameToPlayer.has(eventName):
+		DebugHud.addToLog("SfxEventHandler:  Could not find event player of name [" + eventName + "] in _sfxEventNameToPlayer", DebugHud.LogType.ERROR)
+		return
+
 	var player:AudioStreamPlayer = _sfxEventNameToPlayer[eventName]
 	if player == null:
-		DebugHud.addToLog("SfxEventHandler:  Could not find event player of name [" + eventName + "]", DebugHud.LogType.ERROR)
+		DebugHud.addToLog("SfxEventHandler:  Event player of name [" + eventName + "] turned null", DebugHud.LogType.ERROR)
 		return
 
 	print("SfxEventHandler:  Playing ", eventName)
