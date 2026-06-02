@@ -1,10 +1,10 @@
 {
-	"text": "I thought I watered them just a minute ago. ",
+	"text": "I thought I watered them just a minute ago.",
 	"mode": "normal",
 	"options": [
 		{
-			"text": "Continue.",
-			"nextID": "What_a_nice_conversation"
+			"text": "->",
+			"nextID": "I'm_done"
 		}
 	]
 }
