@@ -180,10 +180,13 @@ func performFancyReset() -> void:
 
 	fancyArea.startGrowing()
 	var player:Player = await fancyArea.collided_with_player
+
+	faded_in.emit()
 	await player.respawning_finished
 
 	player.respawnCheckpoint()
 	fancyArea.reset()
+	faded_out.emit()
 	_loopBeingReset = false
 
 
