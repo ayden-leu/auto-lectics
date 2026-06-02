@@ -259,13 +259,13 @@ func start() -> void:
 
 ## Closes this window, unless the [InteractableNPC] the player is talking to
 ## is in [member _NPCS_PREVENT_CLOSING].
-func close() -> void:
-	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded:
+func close(force:bool = false) -> void:
+	if instigatingNpc != null and instigatingNpc.rejectConsoleExit and not dialogueEnded and not force:
 		sfxEventHandler.play("closeReject")
 		await _addRightText(instigatingNpc.rejectConsoleExitMessage)
 		return
 
-	if not canBeClosed:
+	if not canBeClosed and not force:
 		sfxEventHandler.play("closeReject")
 		await _addRightText(exitRejectMessage)
 		return

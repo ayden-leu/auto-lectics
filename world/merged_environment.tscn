@@ -155,6 +155,7 @@ patrolSpeed = 0.94
 
 [node name="modifier" parent="npcs" node_paths=PackedStringArray("patrolPath") instance=ExtResource("11_6032j")]
 transform = Transform3D(-6.976851e-08, 0, 1.5961175, 0, 1.5961175, 0, -1.5961175, 0, -6.976851e-08, -2.9002411, 29.480558, 40.282345)
+initialDialogueID = "Oh"
 patrolEnabled = true
 patrolPath = NodePath("../paths/Path3D2")
 waitAtEndDuration = 2.225

@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	super(delta)
-	
+
 	time += delta;
 	model.rotation = Vector3(0, base_position.y +get_sine(), 0)
 	#position = Vector3(base_position.x, base_position.y + get_sine(), base_position.z)
@@ -23,4 +23,3 @@ func _process(delta: float) -> void:
 
 func get_sine():
 	return sin(time * 0.5) * 1
-	

@@ -197,17 +197,25 @@ func createDialogueConsole() -> DialogueConsole:
 
 	return dialogueConsole
 
+
+var currentlyClosingConsole:bool = false
 ## Kills the current [DialogueConsole].
 func killDialogueConsole() -> void:
+	if currentlyClosingConsole:
+		return
+
 	if not enabled:
 		return
 
 	if dialogueConsole != null:
+		currentlyClosingConsole = true
 		_prevWindowPosition[dialogueConsole.windowType] = dialogueConsole.global_position
 		Player.unfreeze(dialogueConsole)
+		dialogueConsole.close(true)
 		dialogueConsole.kill()
 		_on_window_closed(dialogueConsole)
 		dialogueConsole = null
+		currentlyClosingConsole = false
 
 ## Creates a [DialogueConsoleOptionWindow].  Not pre-configured.
 func createDialogueOptionWindow() -> DialogueConsoleOptionWindow:
