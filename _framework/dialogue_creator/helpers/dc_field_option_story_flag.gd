@@ -96,7 +96,8 @@ var _prevSelectedFlagID:String
 ## [b]Internal-use only.[/b]  Deletes this field.
 func _delete() -> void:
 	removing.emit(self)
-	separator.queue_free()
+	if separator:
+		separator.queue_free()
 	queue_free()
 
 

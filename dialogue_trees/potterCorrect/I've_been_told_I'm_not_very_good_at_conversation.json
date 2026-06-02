@@ -1,0 +1,10 @@
+{
+	"text": "I've been told I'm not very good at conversation.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Who"
+		}
+	]
+}

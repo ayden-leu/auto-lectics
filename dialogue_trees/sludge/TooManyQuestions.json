@@ -1,0 +1,12 @@
+{
+	"text": "You're asking a lot of questions. I think you should go.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[End]",
+			"setFlags": {
+				"knowsSomeone": true
+			}
+		}
+	]
+}

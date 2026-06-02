@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b38hwl8plmrky"]
+[gd_scene load_steps=18 format=3 uid="uid://b38hwl8plmrky"]
 
 [ext_resource type="Script" uid="uid://37b2qalntast" path="res://_framework/dialogue_creator/dialogue_creator.gd" id="1_emjdv"]
 [ext_resource type="Theme" uid="uid://caibapog63fvf" path="res://_framework/dialogue_creator/theming/dialogue_creator_theme.tres" id="1_vav2e"]
@@ -11,11 +11,12 @@
 [ext_resource type="Script" uid="uid://datx30ksd4vfa" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_preset_chooser.gd" id="9_flnpa"]
 [ext_resource type="Script" uid="uid://dclyl1dgxgyd2" path="res://_framework/dialogue_creator/helpers/dc_node_write_speed_preset_chooser.gd" id="11_3oc8m"]
 [ext_resource type="Script" uid="uid://df28j1seff1dg" path="res://_framework/dialogue_creator/helpers/dc_node_sfx_aspects.gd" id="11_wipx8"]
-[ext_resource type="Script" uid="uid://bfnjtkqowwtbp" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
+[ext_resource type="Script" path="res://_framework/dialogue_creator/helpers/dc_section_toggle.gd" id="12_p0r8u"]
 [ext_resource type="Script" uid="uid://deh3k2isqbd8j" path="res://_framework/dialogue_creator/helpers/dc_node_text_theme_value_field.gd" id="12_qo5h7"]
 [ext_resource type="Script" uid="uid://kayrti54x1tv" path="res://_framework/dialogue_creator/helpers/dc_on_type_chooser.gd" id="14_u8beo"]
 [ext_resource type="Script" uid="uid://c1lhwy1ojiwam" path="res://_framework/dialogue_creator/helpers/dc_on_spawn_delay.gd" id="15_pwsq1"]
 [ext_resource type="Script" uid="uid://bqrkamioy7nsv" path="res://_framework/dialogue_creator/helpers/dc_on_lifetime.gd" id="16_flnpa"]
+[ext_resource type="PackedScene" uid="uid://ccer37a12iyow" path="res://_framework/dialogue_creator/helpers/dc_close_button.tscn" id="17_pwsq1"]
 
 [node name="DialogueCreator" type="Control" node_paths=PackedStringArray("_npcNameField", "_sidePanel")]
 layout_mode = 3
@@ -210,7 +211,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "Write Speed Aspects"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../WriteSpeedAspects")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="HSeparator5" type="HSeparator" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node"]
 layout_mode = 2
@@ -267,7 +267,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../Events")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Node/NodeSfxAspects"]
 layout_mode = 2
@@ -361,7 +360,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "Write Speed Aspects"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../OptionWriteSpeedAspects")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="OptionWriteSpeedAspects" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option"]
 layout_mode = 2
@@ -421,7 +419,6 @@ theme_type_variation = &"CheckBoxFold"
 text = "SFX Events"
 script = ExtResource("12_p0r8u")
 fields = [NodePath("../Events")]
-metadata/_custom_type_script = "uid://bfnjtkqowwtbp"
 
 [node name="Events" type="VBoxContainer" parent="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionSfxAspects"]
 layout_mode = 2
@@ -435,6 +432,68 @@ offset_bottom = 38.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
 theme_type_variation = &"ButtonMenu"
+
+[node name="WarningHolder" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WarningLabel" type="RichTextLabel" parent="WarningHolder"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -37.0
+offset_right = 208.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"RichTextLabelWarning"
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+
+[node name="WarningCloseButton" parent="WarningHolder" instance=ExtResource("17_pwsq1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64400005
+anchor_top = 0.96700007
+anchor_right = 0.64400005
+anchor_bottom = 0.96700007
+offset_left = 0.6398926
+offset_top = -41.27008
+offset_right = 38.639893
+offset_bottom = -3.2700806
+size_flags_vertical = 0
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.5
+offset_top = -20.0
+offset_right = 3.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading"
 
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
@@ -460,3 +519,4 @@ theme_type_variation = &"ButtonMenu"
 [connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedPresetChooser" method="_on_value_input_field_updated"]
 [connection signal="value_changed" from="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField/InputField" to="SidePanel/Contents/Defaults/TabContainer/Dialogue Option/OptionWriteSpeedAspects/HBoxContainer/OptionWriteSpeedValueField" method="_on_input_field_value_changed"]
 [connection signal="pressed" from="SidePanel/ToggleSidePanel" to="SidePanel" method="_on_toggler_pressed"]
+[connection signal="pressed" from="WarningHolder/WarningCloseButton" to="." method="_on_warning_close_button_pressed"]

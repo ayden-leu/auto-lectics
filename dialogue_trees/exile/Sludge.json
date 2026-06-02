@@ -1,0 +1,10 @@
+{
+	"text": "Oh, that bot that loves to swim in their mystery soup. Always hated them. They think they're \"important\" cause they do something with the project of theirs, but it should've never been started in the first place.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "What project?",
+			"nextID": "TooManyQuestions"
+		}
+	]
+}

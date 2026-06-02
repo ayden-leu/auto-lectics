@@ -5,7 +5,7 @@
 		{
 			"text": "[End]",
 			"setFlags": {
-				"testFlag": false
+				"knowsSomeone": true
 			}
 		}
 	]

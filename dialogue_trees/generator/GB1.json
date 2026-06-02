@@ -6,21 +6,21 @@
 			"text": "I'm not from here.",
 			"nextID": "Problem",
 			"setFlags": {
-				"testFlag": false
+				"metGenerator": true
 			}
 		},
 		{
 			"text": "What do you do?",
 			"nextID": "Problem",
 			"setFlags": {
-				"testFlag": false
+				"metGenerator": true
 			}
 		},
 		{
 			"text": "Can you tell me what's going on?",
 			"nextID": "Problem",
 			"setFlags": {
-				"testFlag": false
+				"metGenerator": true
 			}
 		}
 	]

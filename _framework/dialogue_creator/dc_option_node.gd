@@ -6,7 +6,7 @@ class_name DC_OptionNode
 # signals
 # ------------------------------------------------
 ## Emitted whenever a field gets updated.
-signal values_updated(port:int, newValues:Dictionary)
+signal values_updated(port:int, me:DC_OptionNode)
 ## Emitted when this is planning on being deleted.  Listen to this if you are connected to the dialogue port.
 signal disconnect_dialogue(port:int)
 
@@ -265,8 +265,11 @@ func _on_dialogue_node_disconnected() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
 func _on_field_updated() -> void:
-	#print("option modified, emitting")
-	values_updated.emit(port, _getFields())
+	print("option modified, emitting")
+	var data:Dictionary = _getFields()
+	print(data)
+	print()
+	values_updated.emit(port, self)
 
 func _on_field_updated_state(_newState:bool) -> void:
 	_on_field_updated()

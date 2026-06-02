@@ -6,28 +6,28 @@
 			"text": "Preacher bot.",
 			"nextID": "P0WR-1",
 			"checkFlags": {
-				"testFlag": false
+				"metPreacher": true
 			}
 		},
 		{
 			"text": "Spider bot.",
 			"nextID": "Gossip",
 			"checkFlags": {
-				"testFlag": false
+				"metGossip": true
 			}
 		},
 		{
 			"text": "Speak of Dish.",
 			"nextID": "Dish",
 			"checkFlags": {
-				"testFlag": false
+				"metDish": true
 			}
 		},
 		{
 			"text": "Mini-boss.",
 			"nextID": "Mini-boss",
 			"checkFlags": {
-				"testFlag": false
+				"metMiniBoss": true
 			}
 		}
 	]
