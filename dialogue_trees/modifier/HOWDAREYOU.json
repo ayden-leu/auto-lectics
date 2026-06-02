@@ -7,13 +7,16 @@
 			"text": ""
 		},
 		{
-			"text": ""
+			"text": "I'm sorry? ",
+			"nextID": "Errrhg"
 		},
 		{
-			"text": ""
+			"text": "I'm asking on the sake of the boss.",
+			"nextID": "Reminder"
 		},
 		{
-			"text": ""
+			"text": "WHY IS IT RUDE?",
+			"nextID": "Reminder"
 		}
 	]
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://7a2ih4a2477"]
+[gd_scene load_steps=54 format=3 uid="uid://7a2ih4a2477"]
 
 [ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_8ajir"]
 [ext_resource type="AudioStream" uid="uid://bkf0uc18kl5lb" path="res://sounds/sfx/ambience_plus15db.ogg" id="2_uild8"]
@@ -26,7 +26,10 @@
 [ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="21_j2cnk"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="22_vkd5x"]
 [ext_resource type="PackedScene" uid="uid://dgim7xtnvx8nn" path="res://models/environment/big_floor_arc.tscn" id="23_adwts"]
+[ext_resource type="PackedScene" uid="uid://db3i2eheilapy" path="res://entities/npcs/miniboss.tscn" id="23_xh5lt"]
+[ext_resource type="PackedScene" uid="uid://cxric1di8hyca" path="res://models/BlendFiles/gate.blend" id="24_nroer"]
 [ext_resource type="PackedScene" uid="uid://ci2sp25krps8a" path="res://models/environment/environmentscenes/lamp.tscn" id="24_wgjoj"]
+[ext_resource type="Script" uid="uid://bocggstjplylv" path="res://world/gate.gd" id="25_jstux"]
 [ext_resource type="PackedScene" uid="uid://c0gkoa5s8geir" path="res://models/environment/backgroundClutter/big_wires.tscn" id="25_tvs7y"]
 [ext_resource type="PackedScene" uid="uid://ia3m4r8gqxaa" path="res://models/environment/environmentscenes/battery_block2.tscn" id="26_k7728"]
 [ext_resource type="PackedScene" uid="uid://ckjpbarwajofg" path="res://models/environment/environmentscenes/battery_block.tscn" id="27_ntv2v"]
@@ -209,6 +212,18 @@ collision_mask = 4
 transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, -0.11361708, -0.055668503, 0.24593697)
 shape = SubResource("BoxShape3D_l3f82")
 
+[node name="miniboss" parent="management/change_respawn2" groups=["Ungrappleable"] instance=ExtResource("23_xh5lt")]
+transform = Transform3D(-0.36880827, 0.21723315, -0.21723315, 0, 0.33941126, 0.3394113, 0.30721408, 0.2607868, -0.26078686, -13.082989, 5.303937, 31.994684)
+_talkOnlyOnce = true
+dialogueTreeID = ""
+initialDialogueID = ""
+internalID = ""
+displayName = ""
+
+[node name="gate" parent="management/change_respawn2/miniboss" groups=["Ungrappleable"] instance=ExtResource("24_nroer")]
+transform = Transform3D(-1.0899737, 6.077128e-08, 0.61773264, 0.43680304, 0.8858997, 0.7707279, -0.43680298, 0.8858996, -0.77072775, -7.9056015, 0.72031975, -4.5989246)
+script = ExtResource("25_jstux")
+
 [node name="grappletutorial" type="Node" parent="management"]
 
 [node name="updatedCoordinates2" parent="management/grappletutorial" instance=ExtResource("17_hxe5j")]
@@ -385,6 +400,12 @@ transform = Transform3D(1, 0, 0, 0, 9.430001, 0, 0, 0, 1, 0, -0.20000003, 0)
 transform = Transform3D(0.24726541, 1.7688339e-15, 0.772692, -3.959618e-16, 1.3518695, -7.1054274e-15, -0.17223825, 3.0810713e-15, 1.1092777, -13.352201, 3.8049593, 26.668825)
 
 [node name="MetalBigFlat2" parent="Node/MetalStack14" instance=ExtResource("30_1ykxl")]
+transform = Transform3D(1, 0, 0, 0, 9.430001, 0, 0, 0, 1, 0, -0.20000003, 0)
+
+[node name="MetalStack19" parent="Node" instance=ExtResource("30_1ykxl")]
+transform = Transform3D(-0.024590084, 3.5527035e-15, 1.0013332, -3.813839e-16, 1.3518693, -5.2820005e-15, -0.28920287, 8.679547e-18, -0.0851404, -21.021759, 3.705462, 22.79472)
+
+[node name="MetalBigFlat2" parent="Node/MetalStack19" instance=ExtResource("30_1ykxl")]
 transform = Transform3D(1, 0, 0, 0, 9.430001, 0, 0, 0, 1, 0, -0.20000003, 0)
 
 [node name="MetalStack17" parent="Node" instance=ExtResource("30_1ykxl")]

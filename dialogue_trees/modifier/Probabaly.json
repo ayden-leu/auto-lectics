@@ -1,0 +1,13 @@
+{
+	"text": "Exciting isn't it? The possibilities are endless, the work it might do with a form everchanging. ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "If that's what you're all working on now, what are you going to do when it's done.",
+			"nextID": "Well..."
+		},
+		{
+			"text": ""
+		}
+	]
+}

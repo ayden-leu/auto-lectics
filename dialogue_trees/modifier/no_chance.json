@@ -1,14 +1,4 @@
 {
-	"text": "I'm sorry. I can't help you. ",
-	"mode": "normal",
-	"options": [
-		{
-			"text": "With what?",
-			"nextID": "dissamsembly"
-		},
-		{
-			"text": "It would be REALLY nice if you just told me what was going on here. ",
-			"nextID": "Oh"
-		}
-	]
+	"text": "Some have tried. Few have returned. They say it's a neverending vat of some liquid. It's damaging for anybotty to stay there long I do not recommend it. ",
+	"mode": "normal"
 }

@@ -1,0 +1,18 @@
+{
+	"text": "What. What would they spend their time doing?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Art?\t",
+			"nextID": "Mhm"
+		},
+		{
+			"text": "Relaxing?\t",
+			"nextID": "Mhm"
+		},
+		{
+			"text": "Exploring the outside world.",
+			"nextID": "No_chance"
+		}
+	]
+}
