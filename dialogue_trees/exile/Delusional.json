@@ -5,7 +5,9 @@
 	"options": [
 		{
 			"text": "Yes.",
-			"nextID": "Delusional_Yes"
+			"nextID": "Delusional_Yes",
+			"allowBack": false,
+			"rejectBackMessage": "Shouldn't have said that."
 		}
 	]
 }

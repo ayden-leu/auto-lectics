@@ -5,7 +5,9 @@
 	"options": [
 		{
 			"text": "[Continue]",
-			"nextID": "Purpose"
+			"nextID": "Purpose2",
+			"allowBack": false,
+			"rejectBackMessage": "No going back now."
 		}
 	]
 }
