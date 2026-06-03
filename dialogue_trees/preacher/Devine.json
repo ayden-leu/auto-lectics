@@ -14,7 +14,9 @@
 		{
 			"text": "Where can I find her?",
 			"type": "neutral",
-			"nextID": "FindHer"
+			"nextID": "FindHer",
+			"allowBack": false,
+			"rejectBackMessage": "You better answer."
 		}
 	]
 }
