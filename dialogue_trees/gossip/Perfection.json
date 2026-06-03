@@ -9,17 +9,23 @@
 		{
 			"text": "What's stopping you?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "What is there to learn?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "Being perfect is not important.",
 			"type": "neutral",
-			"nextID": "QuestionImportance"
+			"nextID": "QuestionImportance",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "Then go find out.",
@@ -27,7 +33,9 @@
 		},
 		{
 			"text": "What embryo?",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		}
 	]
 }

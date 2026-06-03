@@ -14,7 +14,9 @@
 		{
 			"text": "What is perfection?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "You don't seem perfect.",
@@ -24,7 +26,9 @@
 		{
 			"text": "Are you perfect?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		}
 	]
 }
