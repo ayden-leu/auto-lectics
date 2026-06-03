@@ -8,11 +8,15 @@
 		},
 		{
 			"text": "What is the problem?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "What is the pattern?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "What problem?",
