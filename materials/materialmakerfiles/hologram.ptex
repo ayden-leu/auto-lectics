@@ -23,36 +23,49 @@
 			"from_port": 0,
 			"to": "Material",
 			"to_port": 7
+		},
+		{
+			"from": "math_2",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 3
 		}
 	],
 	"label": "Graph",
 	"longdesc": "",
-	"name": "@Node@867",
+	"name": "_Node_867",
 	"node_position": {
 		"x": 0.0,
 		"y": 0.0
 	},
 	"nodes": [
 		{
+			"export_last_target": "Godot/Godot 4",
 			"export_paths": {
-
+				"Godot/Godot 4": "C:/Users/meeps/OneDrive/Documents/GitHub/auto-lectics/materials/redGram"
 			},
 			"name": "Material",
 			"node_position": {
-				"x": 155.048950195313,
-				"y": -211.657333374023
+				"x": 247.048950195313,
+				"y": -268.657348632813
 			},
 			"parameters": {
 				"albedo_color": {
 					"a": 0.474509805440903,
-					"b": 0.936580896377563,
-					"g": 1.0,
+					"b": 1.0,
+					"g": 0.568750023841858,
 					"r": 0.458823561668396,
 					"type": "Color"
 				},
 				"ao": 1.0,
 				"depth_scale": 0.5,
-				"emission_energy": 1.0,
+				"emission_energy": 2.33,
 				"flags_transparent": true,
 				"metallic": 0.0,
 				"normal": 1.0,
@@ -93,33 +106,26 @@
 		{
 			"name": "colorize",
 			"node_position": {
-				"x": -54.4999389648438,
-				"y": -288.999969482422
+				"x": 253.500061035156,
+				"y": 133.000030517578
 			},
 			"parameters": {
 				"gradient": {
-					"interpolation": 0,
+					"interpolation": 1,
 					"points": [
 						{
 							"a": 0.0,
 							"b": 0.0,
 							"g": 0.0,
-							"pos": 0,
-							"r": 0.0
-						},
-						{
-							"a": 0.0,
-							"b": 0.0,
-							"g": 0.0,
-							"pos": 0.493310610687023,
+							"pos": 0.0,
 							"r": 0.0
 						},
 						{
 							"a": 1.0,
-							"b": 1.0,
-							"g": 1.0,
-							"pos": 0.493330610687023,
-							"r": 1.0
+							"b": 0.0588235445320606,
+							"g": 0.0588235445320606,
+							"pos": 0.493320610687023,
+							"r": 0.756862759590149
 						}
 					],
 					"type": "Gradient"
@@ -138,7 +144,7 @@
 				"clamp": false,
 				"default_in1": 1.0,
 				"default_in2": 0.5,
-				"op": 2
+				"op": 2.0
 			},
 			"seed_int": 0,
 			"type": "math"
@@ -184,7 +190,7 @@
 				"clamp": false,
 				"default_in1": "$time",
 				"default_in2": 0.5,
-				"op": 2
+				"op": 2.0
 			},
 			"seed_int": 0,
 			"type": "math"
