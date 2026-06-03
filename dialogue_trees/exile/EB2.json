@@ -11,7 +11,9 @@
 		{
 			"text": "I'm not going to kill you.",
 			"type": "neutral",
-			"nextID": "Kill"
+			"nextID": "Kill",
+			"allowBack": false,
+			"rejectBackMessage": "Better respond."
 		},
 		{
 			"text": "Who even are you?",
