@@ -545,13 +545,13 @@ func _handleCommand(command:String) -> void:
 
 	# command is an option text
 	for option in _optionData:
-		if command.to_lower() == option.text.to_lower() and not option.disabled:
+		if command.to_lower().strip_edges() == option.text.to_lower().strip_edges() and not option.disabled:
 			_chooseOption(option)
 			return
 
 	# else assume its an actual command
+	command = command.strip_edges() #.to_lower()
 	_addLeftText(command)
-	command = command.to_lower()
 	command_entered.emit(command)
 	_scrollToBottom()
 
@@ -660,7 +660,7 @@ func _on_input_submitted(input: String) -> void:
 
 	sfxEventHandler.play("userTextSubmitted")
 	_textInput.text = ""
-	var text := input.strip_edges()
+	var text := input #.strip_edges()
 
 	_commandHistory.push_back(text)
 	_commandHistoryIndex = _commandHistory.size()

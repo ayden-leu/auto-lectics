@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://2sg0q6jlys5w" path="res://_framework/ui/menus/blueprint/dish.tscn" id="6_srj32"]
 [ext_resource type="Texture2D" uid="uid://c3vsjymr5g5oy" path="res://_framework/dialogue_creator/visual_assets/arrow_up.svg" id="7_23hg5"]
 [ext_resource type="PackedScene" uid="uid://c8rbeeqahclg7" path="res://_framework/ui/menus/blueprint/watcher.tscn" id="7_2853f"]
-[ext_resource type="PackedScene" path="res://_framework/ui/menus/blueprint/Preacher.tscn" id="8_25bmj"]
+[ext_resource type="PackedScene" uid="uid://bnwptf7btt2a6" path="res://_framework/ui/menus/blueprint/preacher.tscn" id="8_25bmj"]
 [ext_resource type="PackedScene" uid="uid://2xxmrhrlyu3n" path="res://_framework/ui/menus/blueprint/exile.tscn" id="9_wdlxk"]
 [ext_resource type="PackedScene" uid="uid://bm3disqhkjvb2" path="res://_framework/ui/menus/blueprint/modifier.tscn" id="10_unxuv"]
 [ext_resource type="PackedScene" uid="uid://gpdcpccx561u" path="res://_framework/ui/menus/blueprint/potter.tscn" id="11_anmd6"]
@@ -95,31 +95,36 @@ offset_top = 6.0
 offset_right = 384.0
 offset_bottom = 206.0
 
-[node name="BlueprintNpcEntry" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("5_556d2")]
+[node name="generator" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("5_556d2")]
 layout_mode = 2
+npcID = "generator"
 
-[node name="asdas" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("6_srj32")]
+[node name="dish" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("6_srj32")]
 layout_mode = 2
+npcID = "dish"
 
-[node name="asdas7" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("7_2853f")]
+[node name="watcher" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("7_2853f")]
 layout_mode = 2
+npcID = "watcher"
 
-[node name="asdas2" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("8_25bmj")]
+[node name="preacher" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("8_25bmj")]
 layout_mode = 2
+npcID = "preacher"
 
-[node name="asdas3" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("9_wdlxk")]
+[node name="CLN-R" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("9_wdlxk")]
 visible = false
 layout_mode = 2
 
-[node name="asdas4" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("10_unxuv")]
+[node name="F1X-ER" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("10_unxuv")]
 visible = false
 layout_mode = 2
 
-[node name="asdas5" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("11_anmd6")]
+[node name="potter" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("11_anmd6")]
 visible = false
 layout_mode = 2
+npcID = "potter"
 
-[node name="asdas6" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("12_v4plt")]
+[node name="SL-4G" parent="Contents/NPCList/NPCEntryHolder" instance=ExtResource("12_v4plt")]
 visible = false
 layout_mode = 2
 

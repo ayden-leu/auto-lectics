@@ -42,6 +42,7 @@ func _on_area_entered(area:Area3D) -> void:
 	var areaOwner:Node3D = area.get_parent()
 	if areaOwner is Player:
 		interactableNpcToInitiate._on_interaction(areaOwner)
+		queue_free()
 
 
 # ------------------------------------------------

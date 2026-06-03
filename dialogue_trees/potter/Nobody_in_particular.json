@@ -1,4 +1,10 @@
 {
 	"text": "SL-4G, potter. ",
-	"mode": "normal"
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Do"
+		}
+	]
 }
