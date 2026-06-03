@@ -24,8 +24,8 @@ DebugHud="*res://_framework/ui/debug/debug_hud.tscn"
 
 [display]
 
-window/size/viewport_width=1440
-window/size/viewport_height=810
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
@@ -173,4 +173,5 @@ toggle_debug_hud={
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/use_debanding=true
 occlusion_culling/use_occlusion_culling=true
