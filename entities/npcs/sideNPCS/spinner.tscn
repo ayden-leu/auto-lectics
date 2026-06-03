@@ -7,7 +7,7 @@
 height = 1.0175781
 radius = 3.0581055
 
-[node name="spinner" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="spinner" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_5b655")
 _hitbox = NodePath("Hitbox")
 dialogueTreeID = "spinner"

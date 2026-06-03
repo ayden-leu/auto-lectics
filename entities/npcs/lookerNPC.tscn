@@ -6,7 +6,7 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_u8dq6"]
 radius = 1.47114
 
-[node name="looker" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="looker" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("3_y34t1")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false

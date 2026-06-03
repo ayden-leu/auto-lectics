@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
 size = Vector3(1.59375, 7.617676, 1.5296631)
 
-[node name="collector" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="collector" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_j8r5x")
 _hitbox = NodePath("Area3D")
 _talkOnlyOnce = false

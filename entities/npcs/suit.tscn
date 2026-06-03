@@ -6,13 +6,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
 size = Vector3(3.671997, 10.670654, 9.139801)
 
-[node name="suit" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="suit" type="Node3D" node_paths=PackedStringArray("_hitbox") groups=["NPCs"]]
 script = ExtResource("1_uejil")
 _hitbox = NodePath("Area3D")
 _talkOnlyOnce = false
 dialogueTreeID = "generator"
 initialDialogueID = "a"
-model = NodePath("")
 internalID = "generator"
 displayName = "generator"
 metadata/_custom_type_script = "uid://um13i8jipsfx"

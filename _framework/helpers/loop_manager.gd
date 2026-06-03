@@ -120,7 +120,6 @@ func _ready() -> void:
 	_overlayAlphaVisible = _overlay.color.a
 	_overlay.color.a = 0
 	_overlay.visible = true
-	_connectSignals()
 	_createLoopTimer()
 	_configureTimer()
 
@@ -135,6 +134,12 @@ func _ready() -> void:
 
 	if not manual:
 		_timer.start()
+
+	# delay connecting signals just in case
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_connectSignals()
 
 
 func _process(_delta: float) -> void:
@@ -231,10 +236,20 @@ func _fadeOverlay(fadingIn:bool) -> void:
 ## [b]Internal-use only.[/b]
 ## Connects all signals to all nodes who need to know about them.
 func _connectSignals() -> void:
+	var fadeInConnections:Array[Callable] = []
+	for fadeInConnection in faded_in.get_connections():
+		fadeInConnections.push_back(fadeInConnection.callable)
+
+	var fadeOutConnections:Array[Callable] = []
+	for fadeOutConnection in faded_out.get_connections():
+		fadeOutConnections.push_back(fadeOutConnection.callable)
+
 	var npcs:Array = get_tree().get_nodes_in_group("NPCs")
 	for npc in npcs as Array[NPC]:
-		faded_in.connect(npc._on_loop_manager_overlay_faded_in)
-		faded_out.connect(npc._on_loop_manager_overlay_faded_out)
+		if npc._on_loop_manager_overlay_faded_in not in fadeInConnections:
+			faded_in.connect(npc._on_loop_manager_overlay_faded_in)
+		if npc._on_loop_manager_overlay_faded_out not in fadeOutConnections:
+			faded_out.connect(npc._on_loop_manager_overlay_faded_out)
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

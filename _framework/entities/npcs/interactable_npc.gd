@@ -79,9 +79,9 @@ var _shouldPatrol:bool
 # ------------------------------------------------
 func _ready() -> void:
 	# Makes sure the code after this is only ran in-game
+	super()
 	if Engine.is_editor_hint():
 		return
-	super()
 
 	_shouldPatrol = patrolEnabled
 	_currentDialogueID = initialDialogueID
@@ -100,14 +100,14 @@ func _process(delta: float) -> void:
 # ------------------------------------------------
 ## Enables the [InteractableNPC].  This will make it so the player can interact with this Interactable NPC.
 func enable() -> void:
-	_hitbox.monitorable = true
+	_hitbox.set_deferred("monitorable", false)
 	for shape in _hitboxShapes:
 		shape.set_deferred("disabled", false)
 	super()
 
 ## Disables the [InteractableNPC].  This will make it so the player cannot interact with this Interactable NPC.
 func disable() -> void:
-	_hitbox.monitorable = false
+	_hitbox.set_deferred("monitorable", false)
 	for shape in _hitboxShapes:
 		shape.set_deferred("disabled", true)
 	super()

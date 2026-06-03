@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_g1gq4"]
 size = Vector3(15.211182, 4.095703, 6.5566406)
 
-[node name="container" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="container" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_gw5m8")
 _hitbox = NodePath("Hitbox")
 dialogueTreeID = "container"

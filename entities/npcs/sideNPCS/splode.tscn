@@ -206,7 +206,7 @@ script/source = "extends AnimatedSprite3D
 # ------------------------------------------------
 "
 
-[node name="splode" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+[node name="splode" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
 script = ExtResource("1_tsffd")
 _hitbox = NodePath("Hitbox")
 dialogueTreeID = "splode"

@@ -80,9 +80,10 @@ var _pathFollowDirection: float = 1.0
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
-func _ready() -> void:
+func _init() -> void:
 	add_to_group("NPCs")
 
+func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 
