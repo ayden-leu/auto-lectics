@@ -11,12 +11,16 @@
 		{
 			"text": "That's not important.",
 			"type": "neutral",
-			"nextID": "QuestionImportance"
+			"nextID": "QuestionImportance",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "What?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "I'm new here.",
@@ -26,7 +30,9 @@
 		{
 			"text": "Are you okay?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		}
 	]
 }

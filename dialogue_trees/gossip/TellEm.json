@@ -9,7 +9,9 @@
 		{
 			"text": "What do you do now?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "So, the factory is no longer perfect.",
@@ -19,7 +21,9 @@
 		{
 			"text": "How'd you watch them?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		}
 	]
 }
