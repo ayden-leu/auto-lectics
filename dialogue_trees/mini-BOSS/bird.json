@@ -14,7 +14,9 @@
 		{
 			"text": "I'll stay here then.",
 			"type": "neutral",
-			"nextID": "StayHere"
+			"nextID": "StayHere",
+			"allowBack": false,
+			"rejectBackMessage": "You made your choice."
 		}
 	]
 }
