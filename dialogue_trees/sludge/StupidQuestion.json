@@ -6,7 +6,9 @@
 		{
 			"text": "Old Frog?",
 			"type": "neutral",
-			"nextID": "Apologize2"
+			"nextID": "Apologize2",
+			"allowBack": false,
+			"rejectBackMessage": "You asked too much."
 		}
 	]
 }
