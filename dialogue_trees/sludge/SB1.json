@@ -17,7 +17,9 @@
 			"nextID": "Apologize",
 			"setFlags": {
 				"metSludge": true
-			}
+			},
+			"allowBack": false,
+			"rejectBackMessage": "Shouldn't have been sorry."
 		},
 		{
 			"text": "I'm looking for something.",

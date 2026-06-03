@@ -11,7 +11,9 @@
 		{
 			"text": "You don't look important.",
 			"type": "neutral",
-			"nextID": "NotImportant"
+			"nextID": "NotImportant",
+			"allowBack": false,
+			"rejectBackMessage": "Shouldn't have said that."
 		}
 	]
 }
