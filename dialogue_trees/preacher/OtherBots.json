@@ -4,7 +4,9 @@
 	"options": [
 		{
 			"text": "No, I just need to know about the other bots.",
-			"nextID": "NoOtherBots"
+			"nextID": "NoOtherBots",
+			"allowBack": false,
+			"rejectBackMessage": "You already made your choice."
 		},
 		{
 			"text": "Yes, who are the other turned on bots.",

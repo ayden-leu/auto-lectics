@@ -6,7 +6,7 @@
 			"text": "Tell me about the spider bot.",
 			"nextID": "G0SP",
 			"checkFlags": {
-				"testFlag": false
+				"metGossip": true
 			}
 		},
 		{

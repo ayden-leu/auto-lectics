@@ -9,7 +9,9 @@
 		{
 			"text": "But what was your previous job?",
 			"type": "neutral",
-			"nextID": "Preacher Conversation Fail"
+			"nextID": "Preacher Conversation Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You asked for too much."
 		}
 	]
 }

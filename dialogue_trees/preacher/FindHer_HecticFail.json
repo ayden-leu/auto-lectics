@@ -9,7 +9,9 @@
 		{
 			"text": "[Continue]",
 			"type": "neutral",
-			"nextID": "Preacher Conversation Fail"
+			"nextID": "Preacher Conversation Fail",
+			"allowBack": false,
+			"rejectBackMessage": "Should have answered."
 		}
 	]
 }
