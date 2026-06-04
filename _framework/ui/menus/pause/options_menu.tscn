@@ -91,6 +91,17 @@ popup/item_2/id = 2
 popup/item_3/text = "x8 (Slowest)"
 popup/item_3/id = 3
 
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Use Temporal AA"
+
+[node name="VSeparator3" type="VSeparator" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EnableTemporalAAToggle" type="CheckBox" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="BackButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Back"
@@ -108,4 +119,5 @@ stream = SubResource("AudioStreamRandomizer_6x3p0")
 [connection signal="pressed" from="PanelContainer/VBoxContainer/ApplySettings" to="." method="_on_apply_settings_pressed"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/VBoxContainer/WindowModeOptions" to="." method="_on_window_mode_options_item_selected"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/VBoxContainer/AliasOptions" to="." method="_on_alias_options_item_selected"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/VBoxContainer/EnableTemporalAAToggle" to="." method="_on_enable_temporal_aa_toggle_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/BackButton" to="." method="_on_back_pressed"]
