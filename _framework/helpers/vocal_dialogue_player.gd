@@ -1,3 +1,4 @@
+@tool
 @icon("uid://b0xrrnjriup2r")
 extends AudioStreamPlayer
 class_name VocalDialoguePlayer
@@ -80,13 +81,30 @@ const ERROR_MSG_AUDIO_TO_LOAD_NOT_SET:String = "an error has occured due to ther
 ## If this can do stuff or not.
 @export var enabled:bool = true
 ## The name of the subfolder to look into located at [member STORAGE_PATH].
-@export var dialogueTreeID:String
+@export var dialogueTreeID:String:
+	set(newID):
+		dialogueTreeID = newID
+		update_configuration_warnings()
 ## The vocal dialogue file to load at the start.
-@export var initialDialogueID:String
+@export var initialDialogueID:String:
+	set(newID):
+		initialDialogueID = newID
+		update_configuration_warnings()
 ## The delay, in seconds, between the audio file finishing playing, and being able to continue.
 @export var delayBeforeAllowContinue:float = 0.0
 ## If the subtitles should fade out or not before the player is able to continue.
 @export var fadeSubtitles:bool = false
+
+## If this should start doing its thing from interaction or not.
+@export var startFromInteraction:bool = false:
+	set(newState):
+		startFromInteraction = newState
+		update_configuration_warnings()
+		notify_property_list_changed()
+@export_category("Interaction Stuff")
+## If the player can only interact with this once, assuming [startFromInteraction] is [code]true[/code].
+## When the player starts an interaction again, it will start from [member intialDialogueID] again.
+@export var interactOnlyOnce:bool = false
 
 # ------------------------------------------------
 # onready variables
@@ -101,23 +119,49 @@ const ERROR_MSG_AUDIO_TO_LOAD_NOT_SET:String = "an error has occured due to ther
 # ------------------------------------------------
 ## The current vocal dialogue file to load.
 var currentDialogueID:String = ""
+## If this is currently in the process of doing stuff or not.
+var interactedWith:bool = false
 
 # ------------------------------------------------
 # normal variables only referenced in script
 # [b]Internal-use only.[/b]
 # ------------------------------------------------
+# [b]Internal-use only.[/b]
 ## The next vocal dialogue file to load.
 var _nextDialogueID: String = ""
+## [b]Internal-use only.[/b]
 ## Whether the player can continue forward or not.
 var _canContinue:bool = true
+## [b]Editor-use only.[/b]
+## The first [Area3D] child thiis node has, and only the first.
+## Is obtained via [method _get_area].
+var _hitbox:Area3D
+## [b]Editor-use only.[/b]
+## The previous collision layer state of [_hitbox], specifically for the 3rd (NPC) layer.
+var _prevHitboxCollisionValue:bool
 
 # ------------------------------------------------
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		_hitbox = _get_area()
+		if not _hitbox:
+			return
+		_prevHitboxCollisionValue = _hitbox.get_collision_layer_value(3)
+		return
+
 	currentDialogueID = initialDialogueID
 	subtitles.visible = false
 	continueIcon.visible = false
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		_hitbox = _get_area()
+		# this is needed to detect when the collision layer gets updated
+		if _hitbox and not _hitbox.get_collision_layer_value(3):
+			update_configuration_warnings()
+		return
 
 # ------------------------------------------------
 # functions referenced outside of this script
@@ -130,7 +174,7 @@ func loadNextDialogue() -> void:
 	dialogue_advanced.emit()
 
 	if currentDialogueID == "":
-		_finish()
+		call_deferred("_finish")
 		return
 
 	# actual file
@@ -274,7 +318,20 @@ func _fadeOutSubtitles() -> void:
 func _finish() -> void:
 	subtitles.visible = false
 	continueIcon.visible = false
+	if not interactOnlyOnce:
+		_canContinue = true
+		interactedWith = false
+		currentDialogueID = initialDialogueID
 	dialogue_finished.emit()
+
+## [b]Internal-use only.[/b]
+## Gets this node's first [Area3D] child, and only the first one.
+func _get_area() -> Area3D:
+	var children:Array = get_children()
+	for child in children:
+		if child is Area3D:
+			return child
+	return null
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -282,8 +339,55 @@ func _finish() -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when the player presses the interact button.
 func _on_input_handler_interact_button_pressed() -> void:
+	if startFromInteraction and not interactedWith:
+		return
+
 	loadNextDialogue()
+
+## [b]Internal-use only.[/b]
+## Handles logic for when this node's [Area3D] node gets interacted with.
+func _on_interaction(interactor:Node3D) -> void:
+	if not startFromInteraction and not interactedWith:
+		return
+
+	#_beginDialogueEventBox(interactor)
+	if interactor is Player:
+		interactedWith = true
+		loadNextDialogue()
 
 # ------------------------------------------------
 # editor dev-ing functions like "_get_configuration_warnings()"
 # ------------------------------------------------
+## [b]Editor-use Only.[/b]
+## Returns editor warnings depending on this thing's state.
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings:Array[String] = []
+
+	if self != get_tree().edited_scene_root:
+		if not dialogueTreeID:
+			warnings.push_back(
+				"Dialogue tree ID not set."
+			)
+		if not initialDialogueID:
+			warnings.push_back(
+				"Initial dialogue ID not set."
+			)
+
+		if startFromInteraction:
+			if _hitbox == null:
+				warnings.push_back(
+					"Needs an Area3D child so interaction can happen."
+				)
+			else:
+				if not _hitbox.get_collision_layer_value(3):
+					warnings.push_back(
+						"Area3D child needs its third collision layer (named NPC) to be enabled so interaction can happen."
+					)
+
+	return warnings
+
+## [b]Editor-use Only.[/b]
+## Updates property visibility depending on this thing's state.
+func _validate_property(property: Dictionary) -> void:
+	if property.name in ["interactOnlyOnce"] and not startFromInteraction:
+		property.usage = PROPERTY_USAGE_NO_EDITOR

@@ -48,6 +48,9 @@ extends Menu
 ## [b]Internal-use only.[/b]
 ## Holds the anti-aliasing options that can be chosen.
 @onready var _aliasOptions: OptionButton = %AliasOptions
+## [b]Internal-use only.[/b]
+## The toggler that toggles the use of Temporal Anti-Aliasing.
+@onready var _enableTemporalToggle: CheckBox = %EnableTemporalAAToggle
 
 # ------------------------------------------------
 # normal variables referenced outside of script
@@ -98,6 +101,8 @@ func _ready() -> void:
 		if _aliasIdToValue[id] == get_viewport().msaa_2d:
 			_aliasOptions.select(_aliasOptions.get_item_index(id))
 
+	_enableTemporalToggle.button_pressed = get_viewport().use_taa
+
 # ------------------------------------------------
 # functions referenced outside of this script
 # ------------------------------------------------
@@ -129,6 +134,7 @@ func _resetFlags() -> void:
 func _updateAliasMode(modeId:int) -> void:
 	get_viewport().msaa_2d = _aliasIdToValue[modeId]
 	get_viewport().msaa_3d = _aliasIdToValue[modeId]
+	get_viewport().use_taa = _enableTemporalToggle.button_pressed
 
 # ------------------------------------------------
 # functions that run when a signal is emitted
@@ -162,6 +168,11 @@ func _on_window_mode_options_item_selected(_index:int) -> void:
 ## [b]Internal-use only.[/b]
 ## Handles logic for when an anti-aliasing option is chosen.
 func _on_alias_options_item_selected(_index: int) -> void:
+	_applySettings.disabled = false
+
+## [b]Internal-use only.[/b]
+## Handles logic for when the use temporal anti=aliasing togggle is clicked.
+func _on_enable_temporal_aa_toggle_pressed() -> void:
 	_applySettings.disabled = false
 
 # ------------------------------------------------

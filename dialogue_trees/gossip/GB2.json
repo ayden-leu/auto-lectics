@@ -9,7 +9,9 @@
 		{
 			"text": "->",
 			"type": "neutral",
-			"nextID": "GB3"
+			"nextID": "GB3",
+			"allowBack": false,
+			"rejectBackMessage": "You better answer."
 		}
 	]
 }

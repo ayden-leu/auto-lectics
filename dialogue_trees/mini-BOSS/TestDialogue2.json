@@ -14,17 +14,23 @@
 		{
 			"text": "Because we need them to complete the project.",
 			"type": "neutral",
-			"nextID": "Test2DialogueFail2"
+			"nextID": "Test2DialogueFail2",
+			"allowBack": false,
+			"rejectBackMessage": "Where do you think you're going?"
 		},
 		{
 			"text": "Because they pay us money.",
 			"type": "neutral",
-			"nextID": "Test2DialogueFail1"
+			"nextID": "Test2DialogueFail1",
+			"allowBack": false,
+			"rejectBackMessage": "Where do you think you're going?"
 		},
 		{
 			"text": "Because they made us, so they can fix us.",
 			"type": "neutral",
-			"nextID": "Test2DialogueFail3"
+			"nextID": "Test2DialogueFail3",
+			"allowBack": false,
+			"rejectBackMessage": "Where do you think you're going?"
 		}
 	]
 }

@@ -11,12 +11,16 @@
 		{
 			"text": "Excuse me?",
 			"type": "neutral",
-			"nextID": "GB3_FailGuard"
+			"nextID": "GB3_FailGuard",
+			"allowBack": false,
+			"rejectBackMessage": "You better answer."
 		},
 		{
 			"text": "Are you okay?",
 			"type": "neutral",
-			"nextID": "GB3_FailGuard"
+			"nextID": "GB3_FailGuard",
+			"allowBack": false,
+			"rejectBackMessage": "You better answer."
 		},
 		{
 			"text": "I'm new.",
@@ -26,7 +30,9 @@
 		{
 			"text": "That's not important.",
 			"type": "neutral",
-			"nextID": "QuestionImportance"
+			"nextID": "QuestionImportance",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		}
 	]
 }

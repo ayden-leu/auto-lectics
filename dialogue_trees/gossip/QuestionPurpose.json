@@ -16,7 +16,9 @@
 		{
 			"text": "Are you sure you're ok?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "I'm here to inspect the factory. ",

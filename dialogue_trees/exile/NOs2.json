@@ -6,7 +6,9 @@
 		{
 			"text": "How do I reach it?",
 			"type": "neutral",
-			"nextID": "NOs3"
+			"nextID": "NOs3",
+			"allowBack": false,
+			"rejectBackMessage": "No going back now."
 		}
 	]
 }

@@ -19,7 +19,9 @@
 		{
 			"text": "No.",
 			"type": "neutral",
-			"nextID": "Preacher Conversation Fail"
+			"nextID": "Preacher Conversation Fail",
+			"allowBack": false,
+			"rejectBackMessage": "Nuh uh."
 		}
 	]
 }

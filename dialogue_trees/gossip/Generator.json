@@ -4,7 +4,9 @@
 	"options": [
 		{
 			"text": "What do they do?",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "Tell me about someone else.",

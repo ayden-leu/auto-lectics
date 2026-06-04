@@ -37,7 +37,7 @@ const DEFAULT_DIALOGUE:Dictionary = {
 	"type": "neutral",  # see DIALOGUE_TYPES
 	"mode": "normal",
 	"nextOnHecticFailureID": "",
-	"hecticDuration": 25.0,
+	"hecticDuration": 7.0,
 	"textThemePreset": "_defaultConsoleBot",
 	"writeSpeed": "medium",
 	"writeSpeedCustom": 0.0,

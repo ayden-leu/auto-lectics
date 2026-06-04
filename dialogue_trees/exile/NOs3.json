@@ -7,10 +7,7 @@
 			"text": "[End]",
 			"type": "neutral",
 			"setFlags": {
-				"testFlag": true
-			},
-			"checkFlags": {
-				"testFlag": false
+				"seeSign": true
 			}
 		}
 	]

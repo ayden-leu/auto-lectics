@@ -178,7 +178,6 @@ func _createNodesFromFile(filename:String) -> void:
 			newOptionNode.disableBack = !option.allowBack
 
 		if option.has("rejectBackMessage"):
-			print_debug(option.rejectBackMessage)
 			newOptionNode.rejectBackMessage = option.rejectBackMessage
 
 		if option.has("nextID"):

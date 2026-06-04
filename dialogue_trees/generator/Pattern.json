@@ -4,7 +4,9 @@
 	"options": [
 		{
 			"text": "I don't think I do.",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "Do I now?",
@@ -12,7 +14,9 @@
 		},
 		{
 			"text": "Elaborate.",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "Then help me.",

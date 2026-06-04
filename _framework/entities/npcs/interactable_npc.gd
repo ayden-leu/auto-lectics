@@ -259,6 +259,8 @@ func _on_console_all_dialogue_text_visible() -> void:
 
 ## [b]Internal-use only.[/b]  Emits [dialogue_all_visible].
 func _on_console_close(_console:DialogueConsole) -> void:
+	if not isTalking:
+		return
 	_endDialogueConsole()
 
 # ------------------------------------------------
