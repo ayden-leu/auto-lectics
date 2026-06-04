@@ -1,0 +1,215 @@
+[gd_scene load_steps=21 format=3 uid="uid://baertya45hvnl"]
+
+[ext_resource type="Script" uid="uid://d2mkh6dk1sn11" path="res://world/firstRoom.gd" id="1_0pn3e"]
+[ext_resource type="PackedScene" uid="uid://8laypsac6ms1" path="res://entities/npcs/suit.tscn" id="2_o8hab"]
+[ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="3_d7d1g"]
+[ext_resource type="Script" uid="uid://cwtbpvdwgynmd" path="res://world/forceRepsawn.gd" id="4_yvf1x"]
+[ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="5_21nkn"]
+[ext_resource type="PackedScene" uid="uid://bogwjnwthdoge" path="res://entities/npcs/one_time_dialogue_NPC.tscn" id="6_srfys"]
+[ext_resource type="PackedScene" uid="uid://bearq8quulj0c" path="res://_framework/helpers/start_dialogue_area_one_shot.tscn" id="7_7kser"]
+[ext_resource type="PackedScene" uid="uid://djeoi8vh4brrg" path="res://models/BlendFiles/characterYellow.blend" id="8_plpit"]
+[ext_resource type="PackedScene" uid="uid://nrwq44bva56" path="res://_framework/helpers/vocal_dialogue_player.tscn" id="9_hwxgb"]
+[ext_resource type="PackedScene" uid="uid://f37saf310u6v" path="res://_framework/entities/player/playerSpace.tscn" id="10_vnmqq"]
+[ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="11_annjd"]
+[ext_resource type="Script" uid="uid://b3ex46p0jvvf2" path="res://world/spot_light_3d_2.gd" id="12_ptnho"]
+[ext_resource type="PackedScene" uid="uid://btee0l07581vb" path="res://models/environment/drop_podfor_space.tscn" id="13_coucx"]
+[ext_resource type="PackedScene" uid="uid://dujaqa541rom2" path="res://models/BlendFiles/characterBlue.blend" id="14_xyirj"]
+[ext_resource type="PackedScene" uid="uid://c8xsdgjulflg7" path="res://models/BlendFiles/characterRed.blend" id="15_iu0h5"]
+
+[sub_resource type="Environment" id="Environment_mqjft"]
+background_mode = 1
+background_color = Color(0.0627451, 0.03529412, 0.05490196, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l3f82"]
+size = Vector3(2.2228737, 2.3817139, 4.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_555a5"]
+size = Vector3(1, 6, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gg74"]
+size = Vector3(4934.042, 1, 7188.293)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yjmia"]
+size = Vector3(0.11491394, 1, 6.6698)
+
+[node name="mergedEnvironment" type="Node3D"]
+transform = Transform3D(0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0)
+script = ExtResource("1_0pn3e")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.38268346, -0.36098847, 0.8504356, 0, 0.92050487, 0.39073113, -0.92387956, -0.14952633, 0.352262, -2.4403229, -10.461521, -130.50633)
+visible = false
+light_color = Color(0.98435444, 0.81607527, 0.73283553, 1)
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 2.825
+shadow_blur = 0.296
+directional_shadow_max_distance = 4096.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_mqjft")
+
+[node name="suit" parent="Environment" node_paths=PackedStringArray("model") instance=ExtResource("2_o8hab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6649742, -1.0635402, -0.19838715)
+_talkOnlyOnce = true
+dialogueTreeID = "manager"
+initialDialogueID = "1"
+lookAtInteractorWhileTalking = true
+rejectConsoleExit = true
+model = NodePath(".")
+internalID = "manager"
+displayName = "manager"
+
+[node name="DeathPlane" parent="." instance=ExtResource("3_d7d1g")]
+transform = Transform3D(0.94075656, 0, -0.3390827, 0, 1, 0, 0.3390827, 0, 0.94075656, 38.405388, -97.754974, -70.28115)
+
+[node name="Node3D" type="Node3D" parent="DeathPlane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.739603, 73.80671, 120.61255)
+script = ExtResource("4_yvf1x")
+
+[node name="FadeToBlackHitbox" parent="." instance=ExtResource("5_21nkn")]
+transform = Transform3D(0.3069081, 0, -0.9517391, 0, 1, 0, 0.9517391, 0, 0.3069081, 14.035847, 13.928366, -95.48166)
+visible = false
+
+[node name="npcs" type="Node" parent="."]
+
+[node name="management" type="Node" parent="npcs"]
+
+[node name="change_respawn2" type="Node" parent="npcs/management"]
+
+[node name="updatedCoordinates" parent="npcs/management/change_respawn2" instance=ExtResource("6_srfys")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.7916, 118.09739, 23.419333)
+visible = false
+_talkOnlyOnce = true
+initialDialogueID = "ONELASTTHING"
+rejectConsoleExit = true
+
+[node name="StartDialogueArea" parent="npcs/management/change_respawn2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("7_7kser")]
+transform = Transform3D(1, 0, 0, 0, 6.682387, 0, 0, 0, 17.056036, -54.033234, 4.9383907, 1.5386868)
+visible = false
+collision_mask = 5
+interactableNpcToInitiate = NodePath("../updatedCoordinates")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/management/change_respawn2/StartDialogueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0642891, 0.0058555603, 1.1777458)
+shape = SubResource("BoxShape3D_l3f82")
+
+[node name="change_respawn" type="Area3D" parent="npcs/management/change_respawn2/StartDialogueArea"]
+transform = Transform3D(24.82394, 0, 0, 0, 24.82394, 0, 0, 0, 24.82394, 3.3296719, 1.0834446, -6.142618)
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/management/change_respawn2/StartDialogueArea/change_respawn"]
+transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, -0.11361708, -0.055668503, 0.24593697)
+visible = false
+shape = SubResource("BoxShape3D_l3f82")
+
+[node name="startMonoloigue" type="Node" parent="npcs/management"]
+
+[node name="updatedCoordinates" parent="npcs/management/startMonoloigue" node_paths=PackedStringArray("_hitbox") instance=ExtResource("6_srfys")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.7916, 118.09739, 23.419333)
+visible = false
+_hitbox = NodePath("../StartDialogueArea/change_respawn")
+_talkOnlyOnce = true
+initialDialogueID = "1"
+rejectConsoleExit = true
+
+[node name="StartDialogueArea" parent="npcs/management/startMonoloigue" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("7_7kser")]
+transform = Transform3D(1, 0, 0, 0, 6.682387, 0, 0, 0, 17.056036, 5.288412, 4.9383907, 1.5386868)
+visible = false
+collision_mask = 5
+interactableNpcToInitiate = NodePath("../updatedCoordinates")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/management/startMonoloigue/StartDialogueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0642891, 0.0058555603, 1.1777458)
+visible = false
+shape = SubResource("BoxShape3D_l3f82")
+
+[node name="change_respawn" type="Area3D" parent="npcs/management/startMonoloigue/StartDialogueArea"]
+transform = Transform3D(24.82394, 0, 0, 0, 24.82394, 0, 0, 0, 24.82394, 3.3296719, 1.0834446, -6.142618)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/management/startMonoloigue/StartDialogueArea/change_respawn"]
+transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, -0.11361708, -0.055668503, 0.24593697)
+visible = false
+shape = SubResource("BoxShape3D_l3f82")
+
+[node name="vocals" type="Node" parent="npcs"]
+
+[node name="lucienne" type="Node3D" parent="npcs/vocals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -30)
+
+[node name="characterYellow" parent="npcs/vocals/lucienne" instance=ExtResource("8_plpit")]
+
+[node name="VocalDialoguePlayer" parent="npcs/vocals/lucienne" instance=ExtResource("9_hwxgb")]
+dialogueTreeID = "lucienne"
+initialDialogueID = "intro_001"
+startFromInteraction = true
+interactOnlyOnce = true
+
+[node name="Area3D" type="Area3D" parent="npcs/vocals/lucienne/VocalDialoguePlayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -30)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="npcs/vocals/lucienne/VocalDialoguePlayer/Area3D"]
+transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 2.9, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_555a5")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, 520.34033, 58.738213, 41.53705)
+
+[node name="playerSpace" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("10_vnmqq")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36.808838, 0, 1.3086261e-05)
+respawnCheckpointLocation = NodePath("../Marker3D")
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("11_annjd")]
+transform = Transform3D(-0.014573097, 0, 0.9998941, 0, 1, 0, -0.9998941, 0, -0.014573097, 52.0393, 81.16119, 5.2925925)
+focus = NodePath("../playerSpace")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(5.0000005, 0, 0, 0, -2.1855696e-07, 5.0000005, 0, -5.0000005, -2.1855696e-07, -8.324872, 37.702156, -0.9919375)
+visible = false
+light_color = Color(0, 0.95686275, 0.92941177, 1)
+light_energy = 14.814
+spot_range = 7.4501343
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(4.569961, 0, 2.0286598, -2.0286598, -2.1855696e-07, 4.569961, 8.8675534e-08, -5.0000005, -1.9975934e-07, -312.09125, 84.76395, -4.0286584)
+light_color = Color(0, 0.95686275, 0.92941177, 1)
+light_energy = 0.0
+spot_range = 14.957334
+script = ExtResource("12_ptnho")
+
+[node name="dropPodforSpace" parent="." instance=ExtResource("13_coucx")]
+transform = Transform3D(-2.1855696e-07, 0, -5.0000005, 0, 5.0000005, 0, 5.0000005, 0, -2.1855696e-07, -338.48175, 23.02016, -3.0845504)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.6869793, 0, 0, 0, 1.6869793, 0, 0, 0, 1.6869793, 2.0011141, 0, -512.75854)
+shape = SubResource("BoxShape3D_6gg74")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -388.38867, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 93.24695, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(167.77565, 0, 0, 0, 167.77565, 0, 0, 0, 167.77565, -298.86746, 0, -228.5718)
+shape = SubResource("BoxShape3D_yjmia")
+
+[node name="characterBlue" parent="." instance=ExtResource("14_xyirj")]
+transform = Transform3D(5.0000005, 0, 0, 0, 5.0000005, 0, 0, 0, 5.0000005, 210.00002, 0, -245.00003)
+
+[node name="characterRed" parent="." instance=ExtResource("15_iu0h5")]
+transform = Transform3D(5.0000005, 0, 0, 0, 5.0000005, 0, 0, 0, 5.0000005, -140.00003, 0, 120.000015)
+
+[connection signal="body_entered" from="npcs/management/change_respawn2/StartDialogueArea/change_respawn" to="." method="_on_change_respawn_body_entered"]
+[connection signal="body_entered" from="npcs/management/startMonoloigue/StartDialogueArea/change_respawn" to="." method="_on_change_respawn_body_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -22,4 +22,4 @@ green/colors/default_color = Color(0.72145927, 0.881254, 1.92523e-06, 1)
 manager/base_type = &"RichTextLabel"
 manager/colors/default_color = Color(0.2973797, 0.6572612, 1, 1)
 operative/base_type = &"RichTextLabel"
-operative/colors/default_color = Color(0, 0.59152037, 0.38012913, 1)
+operative/colors/default_color = Color(0.46650112, 0.25617155, 0.30634502, 1)
