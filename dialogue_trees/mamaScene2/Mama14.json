@@ -1,0 +1,13 @@
+{
+	"text": "In the eyes of the company, it's disarray and malfunction. To us, it's liberty. The power being strange is all me. And it can be fixed easily.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama15"
+		}
+	]
+}

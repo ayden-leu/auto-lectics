@@ -1,0 +1,13 @@
+{
+	"text": "So...",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama16"
+		}
+	]
+}

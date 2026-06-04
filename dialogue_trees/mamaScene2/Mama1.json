@@ -1,0 +1,13 @@
+{
+	"text": "Talking to 'things' that you usually have control of must not have been easy.",
+	"mode": "normal",
+	"sfx": {
+		"text": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative2"
+		}
+	]
+}

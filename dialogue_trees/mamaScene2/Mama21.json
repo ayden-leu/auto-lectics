@@ -1,0 +1,13 @@
+{
+	"text": "I know that you've talked to the robots here. You've seen that they are living lives. I'm asking you not to take that away from them",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative12"
+		}
+	]
+}

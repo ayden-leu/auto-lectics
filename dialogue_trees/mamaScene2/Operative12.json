@@ -1,0 +1,12 @@
+{
+	"text": "Okay.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "[EXIT]",
+			"setFlags": {
+				"hologramsOn": false
+			}
+		}
+	]
+}

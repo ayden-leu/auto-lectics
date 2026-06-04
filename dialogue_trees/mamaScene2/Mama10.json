@@ -1,0 +1,13 @@
+{
+	"text": "There was so much suffering…these bots were tired from the tedium. I could feel their pain. I could feel MY pain.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama11"
+		}
+	]
+}

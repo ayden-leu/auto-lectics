@@ -1,6 +1,10 @@
 {
 	"text": "And do you know what it took for me to get here?",
 	"mode": "normal",
+	"textThemePreset": "_test_one",
+	"sfx": {
+		"spawn": "_test_1"
+	},
 	"options": [
 		{
 			"text": "->",

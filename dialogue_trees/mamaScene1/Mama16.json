@@ -5,6 +5,10 @@
 	"options": [
 		{
 			"text": "->",
+			"textThemePreset": "operative",
+			"sfx": {
+				"spawn": "_test_1"
+			},
 			"nextID": "Operative10"
 		}
 	]

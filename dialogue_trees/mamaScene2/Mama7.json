@@ -1,0 +1,13 @@
+{
+	"text": "His health faltering caused a quake in the factory and things weren't working the way they should have.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama8"
+		}
+	]
+}

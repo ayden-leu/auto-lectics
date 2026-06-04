@@ -129,3 +129,7 @@ initialDialogueID = "LearnEverything"
 
 [node name="spaceNPC" parent="." instance=ExtResource("17_2oxty")]
 transform = Transform3D(0.5795146, 0, 0, 0, 0.5795146, 0, 0, 0, 0.5795146, 34.011974, 2.943527, -36.918404)
+visible = false
+
+[node name="spaceNPC2" parent="." instance=ExtResource("17_2oxty")]
+transform = Transform3D(0.5795146, 0, 0, 0, 0.5795146, 0, 0, 0, 0.5795146, -12.116707, 2.5268173, 4.6181684)

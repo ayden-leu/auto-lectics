@@ -1,0 +1,13 @@
+{
+	"text": "My core…it's what fixes the 'malfunctions' in the factory. You need to destroy it. As long as it's here, the spacecraft will just keep sending more people until we're 'fixed'.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative11"
+		}
+	]
+}

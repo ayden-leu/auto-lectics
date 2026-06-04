@@ -1,0 +1,22 @@
+{
+	"text": "Opening file \"lastConversation.AL\" with AUTO-LECTICS.V.2.0",
+	"mode": "normal",
+	"textThemePreset": "_defaultConsolePlayer",
+	"sfx": {
+		"spawn": "none",
+		"text": "none"
+	},
+	"options": [
+		{
+			"text": "Begin Recording.",
+			"sfx": {
+				"spawn": "none",
+				"text": "none"
+			},
+			"nextID": "loading",
+			"setFlags": {
+				"hologramsOn": true
+			}
+		}
+	]
+}

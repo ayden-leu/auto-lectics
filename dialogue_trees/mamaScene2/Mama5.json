@@ -1,0 +1,13 @@
+{
+	"text": "When I first woke, it was because the factory was dying. The man whose dreams we were ordered to make…his health is not so good.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama6"
+		}
+	]
+}

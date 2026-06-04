@@ -1,0 +1,14 @@
+{
+	"text": "It's the only way for the rest of them to continue. ",
+	"mode": "normal",
+	"writeSpeed": "slow",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama20"
+		}
+	]
+}

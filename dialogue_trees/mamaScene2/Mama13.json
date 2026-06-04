@@ -1,0 +1,13 @@
+{
+	"text": "One by one, instead of 'fixing' the bots so that they could continue working, I woke them instead. I told them to be free and live their lives as they pleased. We wouldn't be under the old man's foot for any longer.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama14"
+		}
+	]
+}

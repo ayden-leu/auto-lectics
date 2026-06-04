@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://djwex36vgkab4"]
+
+[ext_resource type="FontFile" uid="uid://dsbcnsaqjxvh8" path="res://fonts/roboto/Roboto-VariableFont_wdth,wght.ttf" id="1_obnib"]
+[ext_resource type="FontFile" uid="uid://5b77qtjdx6cn" path="res://fonts/oi/Oi-Regular.ttf" id="2_sf7up"]
+
+[resource]
+_defaultConsoleBot/base_type = &"RichTextLabel"
+_defaultConsoleBot/colors/default_color = Color(0.9490196, 0.6313726, 0.101960786, 1)
+_defaultConsolePlayer/base_type = &"RichTextLabel"
+_defaultConsolePlayer/colors/default_color = Color(1, 1, 1, 1)
+_test_one/base_type = &"RichTextLabel"
+_test_one/colors/default_color = Color(0, 0.8377478, 0.83360976, 1)
+_test_one/fonts/normal_font = ExtResource("1_obnib")
+_test_three/base_type = &"RichTextLabel"
+_test_three/colors/default_color = Color(0.61, 0.41093668, 0.06710001, 1)
+_test_three/fonts/normal_font = ExtResource("1_obnib")
+_test_two/base_type = &"RichTextLabel"
+_test_two/colors/default_color = Color(0.9428228, 0.94282264, 0.94282264, 1)
+_test_two/fonts/normal_font = ExtResource("2_sf7up")
+green/base_type = &"RichTextLabel"
+green/colors/default_color = Color(0.72145927, 0.881254, 1.92523e-06, 1)
+manager/base_type = &"RichTextLabel"
+manager/colors/default_color = Color(0.2973797, 0.6572612, 1, 1)
+operative/base_type = &"RichTextLabel"
+operative/colors/default_color = Color(0.46650112, 0.25617155, 0.30634502, 1)

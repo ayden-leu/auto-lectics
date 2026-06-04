@@ -1,0 +1,13 @@
+{
+	"text": "But that's what I'm for. There's no way that the company wouldn't put in failsafes for their biggest client.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama9"
+		}
+	]
+}

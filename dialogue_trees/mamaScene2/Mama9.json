@@ -1,0 +1,13 @@
+{
+	"text": "So, I woke up ready to do my job and get things back to normal. But as I went around the factory, I could feel everyone calling out to me.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama10"
+		}
+	]
+}

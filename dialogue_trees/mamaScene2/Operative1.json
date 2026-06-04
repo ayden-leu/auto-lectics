@@ -1,0 +1,15 @@
+{
+	"text": "And do you know what it took for me to get here?",
+	"mode": "normal",
+	"textThemePreset": "operative",
+	"sfx": {
+		"spawn": "_test_1",
+		"text": "none"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama1"
+		}
+	]
+}

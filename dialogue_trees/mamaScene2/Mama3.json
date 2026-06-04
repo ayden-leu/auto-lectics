@@ -1,0 +1,13 @@
+{
+	"text": "Hm.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative8"
+		}
+	]
+}

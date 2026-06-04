@@ -1,0 +1,10 @@
+{
+	"text": "What? I can't do that!",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama17"
+		}
+	]
+}

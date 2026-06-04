@@ -1,0 +1,13 @@
+{
+	"text": "But YOU MUST.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama18"
+		}
+	]
+}

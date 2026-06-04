@@ -1,0 +1,13 @@
+{
+	"text": "It's just that you humans are so odd. It's just that you humans are so odd.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative9"
+		}
+	]
+}

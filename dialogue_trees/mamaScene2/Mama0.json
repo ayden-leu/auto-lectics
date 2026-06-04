@@ -1,0 +1,13 @@
+{
+	"text": "Of course. I watched you every step of the way.",
+	"mode": "normal",
+	"sfx": {
+		"spawn": "mama"
+	},
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative1"
+		}
+	]
+}

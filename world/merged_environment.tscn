@@ -56,7 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://bgy1kooxe1ihx" path="res://models/BlendFiles/CEOBottomTube.blend" id="54_i5cl6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i5cl6"]
-size = Vector3(0.08968353, 0.69873047, 0.08453369)
+size = Vector3(0.08968353, 0.7902832, 0.08453369)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nroer"]
 size = Vector3(12, 9, 2)
@@ -137,7 +137,7 @@ visible = false
 transform = Transform3D(0.3069081, 0, -0.95173913, 0, 1, 0, 0.95173913, 0, 0.3069081, 14.035848, 107.17532, -95.48166)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
-transform = Transform3D(167.77565, 0, 0, 0, 167.77565, 0, 0, 0, 167.77565, -94.62387, 34.21563, 67.99302)
+transform = Transform3D(167.77565, 0, 0, 0, 167.77565, 0, 0, 0, 167.77565, -94.62387, 26.53547, 67.99301)
 shape = SubResource("BoxShape3D_i5cl6")
 
 [node name="npcs" type="Node" parent="."]
@@ -222,6 +222,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.7916, 23.921728, 23.41933
 _talkOnlyOnce = true
 initialDialogueID = "coords2"
 rejectConsoleExit = true
+displayName = "Lucien"
 
 [node name="StartDialogueArea" parent="npcs/management/change_respawn2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.93958, 25.172958, 23.619854)
@@ -248,6 +249,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.020657, 10.589527, 52.3416
 visible = false
 initialDialogueID = "grapple1"
 rejectConsoleExit = true
+displayName = "Lucien"
 
 [node name="StartDialogueArea2" parent="npcs/management/grappletutorial" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3927, 10.696577, 51.3137)
@@ -266,6 +268,7 @@ shape = SubResource("BoxShape3D_l3f82")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.352201, 3.8049593, 26.668825)
 initialDialogueID = "STOP"
 rejectConsoleExit = true
+displayName = "Lucien"
 
 [node name="StartDialogueArea2" parent="npcs/management/stop1" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.352201, 3.8049593, 26.668825)
@@ -282,6 +285,7 @@ shape = SubResource("BoxShape3D_l3f82")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.27487, 11.535165, 23.410011)
 initialDialogueID = "STAIRSSTOP"
 rejectConsoleExit = true
+displayName = "Lucien"
 
 [node name="StartDialogueArea2" parent="npcs/management/stop2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.27487, 11.535165, 23.410011)
@@ -299,6 +303,7 @@ shape = SubResource("BoxShape3D_l3f82")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.438723, 14.126133, -26.03857)
 initialDialogueID = "HOLDON"
 rejectConsoleExit = true
+displayName = "Lucien"
 
 [node name="StartDialogueArea2" parent="npcs/management/stop3" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 3.8622968, 0, 0, 0, 1, -13.656516, 13.8346815, -20.934578)
@@ -382,6 +387,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1189137, 30.647314, 10.993
 
 [node name="lamp6" parent="Node" instance=ExtResource("24_wgjoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.98969, 24.051168, 16.723541)
+
+[node name="lamp9" parent="Node" instance=ExtResource("24_wgjoj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.451893, 17.51028, 19.416445)
 
 [node name="lamp7" parent="Node" instance=ExtResource("24_wgjoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9125857, 20.548464, 9.691157)
@@ -649,6 +657,9 @@ visible = false
 
 [node name="arcBridge" parent="Node/area2/bridege" instance=ExtResource("41_6032j")]
 transform = Transform3D(0.93332106, 2.4691017e-15, -3.095884, -9.771777e-16, 1.3086944, 1.1012282e-15, 1.0120327, -3.7396225e-15, 2.855099, 64.309265, 13.78239, -53.944824)
+
+[node name="arcBridge2" parent="Node/area2/bridege" instance=ExtResource("41_6032j")]
+transform = Transform3D(0.933321, 0.044110745, -3.0926278, 0, 1.3073179, 0.19309868, 1.0120327, -0.04067999, 2.852096, 37.606346, 13.926716, -30.149897)
 
 [node name="entrace to final" type="Node3D" parent="Node/area2"]
 
