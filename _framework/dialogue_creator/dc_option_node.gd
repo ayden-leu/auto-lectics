@@ -265,10 +265,6 @@ func _on_dialogue_node_disconnected() -> void:
 
 ## [b]Internal-use only.[/b]  Handles logic for when an attribute gets modified.
 func _on_field_updated() -> void:
-	print("option modified, emitting")
-	var data:Dictionary = _getFields()
-	print(data)
-	print()
 	values_updated.emit(port, self)
 
 func _on_field_updated_state(_newState:bool) -> void:
