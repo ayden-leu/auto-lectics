@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bu4531d7q80lj"]
+[gd_scene load_steps=11 format=3 uid="uid://bu4531d7q80lj"]
 
 [ext_resource type="PackedScene" uid="uid://7r1ierwjg273" path="res://models/BlendFiles/stairs.blend" id="1_r8ehv"]
+[ext_resource type="Material" uid="uid://ladf8f7cniqt" path="res://materials/PlateMaterial.tres" id="2_j8qj6"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_j8qj6"]
 data = PackedVector3Array(-1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1)
@@ -27,6 +28,9 @@ data = PackedVector3Array(-0.97489995, 0.97489995, -0.74219996, -0.97489995, 0.7
 size = Vector3(1, 0.29504395, 2.87146)
 
 [node name="stairs" instance=ExtResource("1_r8ehv")]
+
+[node name="Cube_142" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_j8qj6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_142" index="0"]
 collision_layer = 2

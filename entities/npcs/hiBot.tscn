@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtucl8vgiq48a"]
+
+[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_ypfkx"]
+[ext_resource type="PackedScene" uid="uid://dfotyutaus0ek" path="res://models/npcs/robot_model.tscn" id="2_yy72b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
+size = Vector3(2.1817017, 2.1185303, 6.694496)
+
+[node name="generator" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
+script = ExtResource("1_ypfkx")
+_hitbox = NodePath("Area3D")
+_talkOnlyOnce = false
+dialogueTreeID = "hi"
+initialDialogueID = "hi"
+model = NodePath("robot")
+internalID = "hi"
+displayName = "hi"
+metadata/_custom_type_script = "uid://um13i8jipsfx"
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28068542, 0, -0.33616632)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2998352, 0.932312, 2.3206215)
+shape = SubResource("BoxShape3D_25xfv")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1.457915, 0.21957791, 0.10303234, -0.22309445, 1.4603376, 0.04459487, -0.095178925, -0.059542786, 1.4736828, 4.834044, 4.058341, 1.5022821)
+visible = false
+
+[node name="robot" parent="." instance=ExtResource("2_yy72b")]

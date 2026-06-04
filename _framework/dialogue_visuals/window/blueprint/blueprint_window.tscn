@@ -164,7 +164,7 @@ mouse_filter = 1
 theme = ExtResource("1_srj32")
 text = "
 
-x = interger
+x = integer
 Chooses the corresponding coversation option.
 
 x = dialogueID

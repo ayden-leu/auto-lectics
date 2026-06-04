@@ -1,0 +1,10 @@
+{
+	"text": "I think we were taught wrong.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama3"
+		}
+	]
+}

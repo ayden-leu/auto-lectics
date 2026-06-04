@@ -38,6 +38,7 @@ jumpHeight = 0.95
 timeToApex = 0.46
 apexHangTime = 0.1
 fallGravityMultiplier = 2.8
+grapplingHookEnabled = false
 grappleAttachImpulseStrength = 5.75
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -87,12 +88,12 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "death",
-"deathFancy": "michaelwave",
+"death": "",
+"deathFancy": "",
 "jump": "",
-"respawn": "respawn",
-"respawnFancy": "respawn",
-"step": "step"
+"respawn": "",
+"respawnFancy": "",
+"step": ""
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]

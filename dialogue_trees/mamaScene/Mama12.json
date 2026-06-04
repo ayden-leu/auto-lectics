@@ -1,0 +1,10 @@
+{
+	"text": "Why should we continue this way? I couldn't stand it now that I had woken.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama13"
+		}
+	]
+}

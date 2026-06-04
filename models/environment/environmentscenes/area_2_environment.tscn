@@ -220,6 +220,7 @@ stream = ExtResource("10_5j8fo")
 volume_db = 28.152
 unit_size = 1.2
 autoplay = true
+parameters/looping = true
 
 [node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.52108, -10.44783, 164.18663)
@@ -227,6 +228,7 @@ stream = ExtResource("10_5j8fo")
 volume_db = 28.152
 unit_size = 1.2
 autoplay = true
+parameters/looping = true
 
 [node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.822319, 20.829437, 1.053482)
@@ -234,6 +236,7 @@ stream = ExtResource("14_1ox1w")
 volume_db = 20.448
 unit_size = 6.13
 autoplay = true
+parameters/looping = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_n0do3")

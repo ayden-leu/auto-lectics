@@ -1,0 +1,10 @@
+{
+	"text": "Of course. I watched you every step of the way.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative1"
+		}
+	]
+}

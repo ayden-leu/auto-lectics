@@ -1,0 +1,10 @@
+{
+	"text": "What is it?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative6"
+		}
+	]
+}

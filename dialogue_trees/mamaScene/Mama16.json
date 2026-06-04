@@ -1,0 +1,11 @@
+{
+	"text": "I need you to end me.",
+	"mode": "normal",
+	"writeSpeed": "slow",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative10"
+		}
+	]
+}

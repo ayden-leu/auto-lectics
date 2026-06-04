@@ -1,0 +1,10 @@
+{
+	"text": "His health faltering caused a quake in the factory and things weren't working the way they should have.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama8"
+		}
+	]
+}

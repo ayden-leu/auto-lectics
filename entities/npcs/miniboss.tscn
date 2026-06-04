@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_4c5lk"]
 size = Vector3(2.2636719, 1, 1)
 
-[node name="miniboss" type="Node3D" node_paths=PackedStringArray("_hitbox", "model") groups=["NPCs"]]
+[node name="miniboss" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
 script = ExtResource("1_abuul")
 _hitbox = NodePath("Hitbox")
 _talkOnlyOnce = false

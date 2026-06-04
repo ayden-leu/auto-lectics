@@ -1,0 +1,10 @@
+{
+	"text": "And do you know what it took for me to get here?",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama1"
+		}
+	]
+}

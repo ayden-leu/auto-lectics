@@ -1,0 +1,10 @@
+{
+	"text": "But I think…",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative5"
+		}
+	]
+}
