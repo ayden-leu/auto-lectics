@@ -323,6 +323,9 @@ func killBlueprintNpcDetailWindow() -> void:
 ## [br][br]
 ## Here is a list functions that you must define in order to run code
 ## whenever the associated signal is emitted.
+## [br][br]
+## [b]If your thing is inheriting a class that already listens to these, be sure to
+## call [code]super()[/code] and pass in the required parameters so things don't break![/b]
 ## [codeblock]
 ## func _on_console_option_chosen(nextID:String) -> void:
 ## 	# Associated signal: option_chosen
@@ -369,6 +372,9 @@ func unsubscribeToConsole(subscriber) -> void:
 ## [br][br]
 ## Here is a list functions that you must define in order to run code
 ## whenever the associated signal is emitted.
+## [br][br]
+## [b]If your thing is inheriting a class that already listens to these, be sure to
+## call [code]super()[/code] and pass in the required parameters so things don't break![/b]
 ## [codeblock]
 ## func _on_blueprint_npc_name_guessed_correctly(npcID:String) -> void:
 ## 	# Associated signal: npc_name_guessed_correctly
