@@ -49,6 +49,10 @@ class_name SfxEventHandler
 		# failsafe in case there are AudioStreamPlayer children but
 		# the sfxIds list is empty for some reason.
 		if sfxIds.is_empty():
+			print_rich("[color=yellow]Refilling SFX IDs for [%s][/color]" % get_parent().name)
+			print_rich("[color=yellow]Here's whati's in them before I reset it:[/color]")
+			print(sfxIds)
+			print("------")
 			sfxIds = sfxIds.duplicate(true)  # needed to avoid an error
 			for child in get_children():
 				if child is not AudioStreamPlayer:
@@ -178,6 +182,7 @@ func _updateEventNameFromPlayer(player:AudioStreamPlayer) -> void:
 ## [b]Internal-use only.[/b]
 ## Adds an entry into [member sfxIds], along with other internal variables.
 func _addEntryToSfxIds(player:AudioStreamPlayer) -> void:
+	print_rich("[color=yellow]Adding an entry to the SFX IDs for [%s][/color]" % get_parent().name)
 	_addToVariables(player)
 	sfxIds = sfxIds.duplicate(true)  # needed to avoid an error
 	sfxIds[player.name] = ""
@@ -204,7 +209,8 @@ func _on_child_entered_tree(node: Node) -> void:
 		return
 	var child:AudioStreamPlayer = node
 
-	_addEntryToSfxIds(child)
+	if not sfxIds.has(child.name):
+		_addEntryToSfxIds(child)
 	if child.stream == null:
 		child.stream = AudioStreamRandomizer.new()
 

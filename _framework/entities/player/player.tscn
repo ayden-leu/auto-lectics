@@ -88,12 +88,12 @@ player = NodePath("..")
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_rh8r5")]
 unique_name_in_owner = true
 sfxIds = Dictionary[String, String]({
-"death": "",
-"deathFancy": "",
+"death": "death",
+"deathFancy": "michaelwave",
 "jump": "",
-"respawn": "",
-"respawnFancy": "",
-"step": ""
+"respawn": "respawn",
+"respawnFancy": "respawn",
+"step": "step"
 })
 
 [node name="death" type="AudioStreamPlayer" parent="SfxEventHandler"]
