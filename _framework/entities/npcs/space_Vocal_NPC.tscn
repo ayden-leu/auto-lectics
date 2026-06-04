@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://wo7o5fb0ppt1"]
+[gd_scene load_steps=8 format=3 uid="uid://wo7o5fb0ppt1"]
 
 [ext_resource type="Script" uid="uid://cuikkmjx7i2kw" path="res://_framework/test_scenes/test_vocal_dialogue_player.gd" id="1_q7a73"]
 [ext_resource type="PackedScene" uid="uid://nrwq44bva56" path="res://_framework/helpers/vocal_dialogue_player.tscn" id="2_fnb7a"]
 [ext_resource type="Material" uid="uid://ftlr325lulml" path="res://materials/hologram.tres" id="3_fnb7a"]
 [ext_resource type="PackedScene" uid="uid://dfgf7g5bmiin3" path="res://models/BlendFiles/suit.blend" id="4_k1atr"]
 [ext_resource type="Script" uid="uid://b66oabg2p0cva" path="res://models/BlendFiles/suit.gd" id="5_2kcyw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2kcyw"]
+size = Vector3(1, 4.4624023, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_k1atr"]
 material = ExtResource("3_fnb7a")
@@ -16,6 +19,16 @@ script = ExtResource("1_q7a73")
 [node name="VocalDialoguePlayer" parent="." instance=ExtResource("2_fnb7a")]
 dialogueTreeID = "_test"
 initialDialogueID = "intro_001"
+startFromInteraction = true
+interactOnlyOnce = true
+
+[node name="Area3D" type="Area3D" parent="VocalDialoguePlayer"]
+collision_layer = 207
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VocalDialoguePlayer/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7312012, 0)
+shape = SubResource("BoxShape3D_2kcyw")
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 8
@@ -30,6 +43,7 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Press the interact button to start"
+metadata/_edit_use_anchors_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

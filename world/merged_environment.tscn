@@ -222,7 +222,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.7916, 23.921728, 23.41933
 _talkOnlyOnce = true
 initialDialogueID = "coords2"
 rejectConsoleExit = true
-displayName = "Lucien"
+displayName = "MICHELLE"
 
 [node name="StartDialogueArea" parent="npcs/management/change_respawn2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.93958, 25.172958, 23.619854)
@@ -249,7 +249,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.020657, 10.589527, 52.3416
 visible = false
 initialDialogueID = "grapple1"
 rejectConsoleExit = true
-displayName = "Lucien"
+displayName = "MICHELLE"
 
 [node name="StartDialogueArea2" parent="npcs/management/grappletutorial" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3927, 10.696577, 51.3137)
@@ -285,7 +285,7 @@ shape = SubResource("BoxShape3D_l3f82")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.27487, 11.535165, 23.410011)
 initialDialogueID = "STAIRSSTOP"
 rejectConsoleExit = true
-displayName = "Lucien"
+displayName = "MICHELLE"
 
 [node name="StartDialogueArea2" parent="npcs/management/stop2" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.27487, 11.535165, 23.410011)
@@ -303,7 +303,7 @@ shape = SubResource("BoxShape3D_l3f82")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.438723, 14.126133, -26.03857)
 initialDialogueID = "HOLDON"
 rejectConsoleExit = true
-displayName = "Lucien"
+displayName = "MICHELLE"
 
 [node name="StartDialogueArea2" parent="npcs/management/stop3" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("18_augjw")]
 transform = Transform3D(1, 0, 0, 0, 3.8622968, 0, 0, 0, 1, -13.656516, 13.8346815, -20.934578)

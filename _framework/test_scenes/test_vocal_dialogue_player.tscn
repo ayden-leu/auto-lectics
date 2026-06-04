@@ -9,6 +9,8 @@ script = ExtResource("1_a1vij")
 [node name="VocalDialoguePlayer" parent="." instance=ExtResource("2_2y0fl")]
 dialogueTreeID = "_test"
 initialDialogueID = "intro_001"
+startFromInteraction = true
+interactOnlyOnce = true
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 8

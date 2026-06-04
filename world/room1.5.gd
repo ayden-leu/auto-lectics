@@ -38,5 +38,10 @@ func _on_change_respawn_body_entered(body: Node3D) -> void:
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	get_tree().change_scene_to_file("res://world/1.5room.tscn")
+	pass # Replace with function body.
+
+
+func _on_vocal_dialogue_player_dialogue_finished() -> void:
+	get_tree().change_scene_to_file("res://world/merged_environment.tscn")
+
 	pass # Replace with function body.

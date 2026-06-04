@@ -1,7 +1,7 @@
 @tool
 @icon("uid://b0xrrnjriup2r")
 extends AudioStreamPlayer
-class_name VocalDialoguePlayer
+class_name VocalDialoguePlayerOperative
 ## Plays audio files in a vocal dialogue tree and displays subtitles.
 ##
 ## Vocal dialogue files that can be loaded by this are located in subfolders
@@ -144,6 +144,7 @@ var _prevHitboxCollisionValue:bool
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
+	$Timer.start()
 	if Engine.is_editor_hint():
 		_hitbox = _get_area()
 		if not _hitbox:
@@ -151,10 +152,13 @@ func _ready() -> void:
 		_prevHitboxCollisionValue = _hitbox.get_collision_layer_value(3)
 		print(_hitbox,"hitbxo")
 		return
+	
 
 	currentDialogueID = initialDialogueID
 	subtitles.visible = false
 	continueIcon.visible = false
+	
+	
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -323,9 +327,10 @@ func _finish() -> void:
 		_canContinue = true
 		interactedWith = false
 		currentDialogueID = initialDialogueID
+
 	dialogue_finished.emit()
-	get_tree().change_scene_to_file("res://world/merged_environment.tscn")
 	
+
 ## [b]Internal-use only.[/b]
 ## Gets this node's first [Area3D] child, and only the first one.
 func _get_area() -> Area3D:
@@ -394,3 +399,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _validate_property(property: Dictionary) -> void:
 	if property.name in ["interactOnlyOnce"] and not startFromInteraction:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
+
+
+func _on_timer_timeout() -> void:
+	if startFromInteraction and not interactedWith:
+		return
+
+	loadNextDialogue()
+	pass # Replace with function body.

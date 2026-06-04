@@ -1,3 +1,6 @@
-[gd_resource type="Theme" format=3 uid="uid://bnau1gg2ifc3y"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bnau1gg2ifc3y"]
+
+[ext_resource type="FontFile" uid="uid://geh0wpn7wb5f" path="res://fonts/inconsolata/Inconsolata_Expanded-Medium.ttf" id="1_whxyb"]
 
 [resource]
+Label/fonts/font = ExtResource("1_whxyb")
