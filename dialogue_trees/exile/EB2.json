@@ -1,7 +1,8 @@
 {
-	"text": "You wouldn't be the first NO to try to kill me and you won't be the last.",
+	"text": "You wouldn't be the first NO to try to kill me, and you won't be the last.",
 	"mode": "normal",
 	"type": "neutral",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "NOs?",
