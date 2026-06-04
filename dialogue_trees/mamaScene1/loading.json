@@ -1,10 +1,10 @@
 {
-	"text": "What? I can't do that!",
+	"text": "Beginning  recording. ",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "->",
-			"nextID": "Mama17"
+			"nextID": "Operative0"
 		}
 	]
 }

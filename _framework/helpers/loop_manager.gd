@@ -176,7 +176,8 @@ func performNormalReset() -> void:
 	#print("faded out")
 	faded_out.emit()
 	_loopBeingReset = false
-
+	print("You're reset")
+	
 ## Executes the fancy resetting flow.
 func performFancyReset() -> void:
 	print("loop resetting")
@@ -283,3 +284,9 @@ func _validate_property(property: Dictionary) -> void:
 	if property.name in ["Fancy Stuff", "fancyArea", "fancyTimeFadeOut", "fancyTimeHoldFade",
 	"fancyTimeFadeIn"] and not fancy:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
+
+
+func _on_input_handler_respawn() -> void:
+	performNormalReset()
+
+	pass # Replace with function body.

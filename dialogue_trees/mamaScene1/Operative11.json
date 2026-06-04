@@ -1,0 +1,14 @@
+{
+	"text": "I can't do that! That goes directly against my mission.  ",
+	"mode": "normal",
+	"writeSpeed": "fast",
+	"options": [
+		{
+			"text": "->",
+			"sfx": {
+				"spawn": "none"
+			},
+			"nextID": "Mama19"
+		}
+	]
+}

@@ -1,10 +1,10 @@
 {
-	"text": "What? I can't do that!",
+	"text": "But YOU MUST.",
 	"mode": "normal",
 	"options": [
 		{
 			"text": "->",
-			"nextID": "Mama17"
+			"nextID": "Mama18"
 		}
 	]
 }

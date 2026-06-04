@@ -1,0 +1,10 @@
+{
+	"text": "Please. This is the first time in my conscious life that I am begging.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Mama21"
+		}
+	]
+}

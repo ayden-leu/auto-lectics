@@ -4,7 +4,7 @@
 	"options": [
 		{
 			"text": "Begin Recording.",
-			"nextID": "loading..."
+			"nextID": "loading"
 		}
 	]
 }

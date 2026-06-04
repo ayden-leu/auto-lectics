@@ -55,7 +55,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4390247, 0)
 [node name="InteractionRaycast" type="RayCast3D" parent="CameraAnchor"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 11, 0)
+target_position = Vector3(0, 30, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false

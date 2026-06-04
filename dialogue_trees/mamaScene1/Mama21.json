@@ -1,0 +1,10 @@
+{
+	"text": "I know that you've talked to the robots here. You've seen that they are living lives. I'm asking you not to take that away from them",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "Operative12"
+		}
+	]
+}

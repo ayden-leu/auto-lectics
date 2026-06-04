@@ -555,6 +555,7 @@ func _on_updated_input_direction(newDirection:Vector2) -> void:
 func _on_input_handler_respawn() -> void:
 	if not inputEnabled:
 		return
+	await get_tree().create_timer(2.0).timeout
 	grapplingHook.reset()
 	respawnCheckpoint()
 
