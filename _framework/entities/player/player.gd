@@ -115,7 +115,7 @@ signal respawning_finished()
 # normal variables referenced outside of script
 # ------------------------------------------------
 ## The interactable thing the player is looking at during this moment.
-var interactableThing:Node3D = null:
+var interactableThing:Node = null:
 	set(thing):
 		if thing == interactableThing:
 			return
@@ -147,7 +147,7 @@ var inputDirectionRelative: Vector2
 ## the "looking_at_interactable" signals don't emit due to
 ## the old value of [member interactableThing] becoming [code]null[/code] on
 ## the same frame as the new value being [code]null[/code].
-var _loadBearingDummy:Node3D = Node3D.new()
+var _loadBearingDummy:Node = Node.new()
 ## [b]Internal-use only.[/b]  The vertical velocity applied when jumping.
 ## Calculated in [method _recomputeJumpParameters]
 var _jumpVelocity: float = 0.0
@@ -227,7 +227,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	if _interactionRaycast.get_collider() != null:
-		var hit = _interactionRaycast.get_collider().owner
+		var hit = _interactionRaycast.get_collider().get_parent()
 		if _determineIfValidInteractable(hit):
 			interactableThing = hit
 	else:
@@ -479,7 +479,7 @@ static func unfreezeForce() -> void:
 	_nodesFreezingMe.clear()
 
 ## [b]Internal-use only.[/b]  Determines if a passed in node is a valid interactable.
-func _determineIfValidInteractable(interactable:Node3D) -> bool:
+func _determineIfValidInteractable(interactable:Node) -> bool:
 	if interactable.has_method("_on_interaction"):
 		return true
 
@@ -515,7 +515,6 @@ func _on_interact_pressed() -> void:
 	if not inputEnabled:
 		return
 
-	#print(name + ": interact pressed")
 	if interactableThing and interactableThing != _loadBearingDummy:
 		interactableThing._on_interaction(self)
 
