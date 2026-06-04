@@ -1,6 +1,7 @@
 {
 	"text": "Hmm, maybe you're not like the other NOs.",
 	"mode": "normal",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "[Continue]",

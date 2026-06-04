@@ -2,6 +2,7 @@
 	"text": "I don't know what you're talking about.",
 	"mode": "normal",
 	"type": "neutral",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "You made me jump over the edge.",

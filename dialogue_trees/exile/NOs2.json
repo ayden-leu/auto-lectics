@@ -1,7 +1,8 @@
 {
-	"text": "Underneath this platform lies an ancient repository of information. I believe you NOs call it... a sign.",
+	"text": "Underneath this platform, lies an ancient repository of information. I believe you NOs call it... a sign.",
 	"mode": "normal",
 	"type": "neutral",
+	"writeSpeed": "fast",
 	"options": [
 		{
 			"text": "How do I reach it?",
