@@ -12,7 +12,9 @@
 		{
 			"text": "No, that's not what I meant.",
 			"type": "neutral",
-			"nextID": "Apologize2"
+			"nextID": "Apologize2",
+			"allowBack": false,
+			"rejectBackMessage": "Shouldn't have said that."
 		}
 	]
 }

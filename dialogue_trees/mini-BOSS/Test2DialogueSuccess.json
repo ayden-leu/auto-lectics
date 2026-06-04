@@ -14,7 +14,9 @@
 		{
 			"text": "To stop the subversive bots from building their spaceship. ",
 			"type": "neutral",
-			"nextID": "Test3Fail1"
+			"nextID": "Test3Fail1",
+			"allowBack": false,
+			"rejectBackMessage": "No going back after what you just said. Might be the dumbest thing I've ever heard."
 		}
 	]
 }

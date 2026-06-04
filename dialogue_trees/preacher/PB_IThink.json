@@ -10,10 +10,7 @@
 		{
 			"text": "->",
 			"type": "neutral",
-			"nextID": "PreacherBot",
-			"setFlags": {
-				"testFlag": false
-			}
+			"nextID": "PreacherBot"
 		}
 	]
 }

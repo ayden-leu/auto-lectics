@@ -4,11 +4,15 @@
 	"options": [
 		{
 			"text": "What do you mean?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "How is that possible?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "What problem?",

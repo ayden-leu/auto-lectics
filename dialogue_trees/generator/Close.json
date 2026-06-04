@@ -4,11 +4,15 @@
 	"options": [
 		{
 			"text": "But, I don't know the pattern.",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "I think I know the pattern.",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "Give me a hint so I can learn.",
@@ -16,7 +20,9 @@
 		},
 		{
 			"text": "What is the pattern?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		}
 	]
 }

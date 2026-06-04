@@ -9,16 +9,22 @@
 		{
 			"text": "Any idea how I could convince them to let me through?",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "Maybe they just like having you around? ",
 			"type": "neutral",
-			"nextID": "Conversation End Bad"
+			"nextID": "Conversation End Bad",
+			"allowBack": false,
+			"rejectBackMessage": "Can't retreat now."
 		},
 		{
 			"text": "Tell me how to get me through that gate.",
-			"nextID": "WouldntKnow"
+			"nextID": "WouldntKnow",
+			"allowBack": false,
+			"rejectBackMessage": "Nope."
 		}
 	]
 }

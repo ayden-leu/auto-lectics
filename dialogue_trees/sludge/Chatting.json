@@ -6,7 +6,9 @@
 		{
 			"text": "Excuse me?",
 			"type": "neutral",
-			"nextID": "Conversation Over Bad"
+			"nextID": "Conversation Over Bad",
+			"allowBack": false,
+			"rejectBackMessage": "You asked too much."
 		}
 	]
 }

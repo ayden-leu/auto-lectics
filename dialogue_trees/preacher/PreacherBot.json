@@ -9,18 +9,12 @@
 		{
 			"text": "What's going on here?",
 			"type": "neutral",
-			"nextID": "TOO",
-			"setFlags": {
-				"testFlag": false
-			}
+			"nextID": "TOO"
 		},
 		{
 			"text": "What are you *actually* supposed to do?",
 			"type": "neutral",
-			"nextID": "TOI",
-			"setFlags": {
-				"testFlag": false
-			}
+			"nextID": "TOI"
 		},
 		{
 			"text": "Can you tell me about some of the other bots?",

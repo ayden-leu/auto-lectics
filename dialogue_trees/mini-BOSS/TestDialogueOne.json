@@ -9,12 +9,16 @@
 		{
 			"text": "Because management says I need to get to the center of the factory.",
 			"type": "neutral",
-			"nextID": "ManagementFail"
+			"nextID": "ManagementFail",
+			"allowBack": false,
+			"rejectBackMessage": "Where do you think you're going?"
 		},
 		{
 			"text": "Because there's been a change in plans.",
 			"type": "neutral",
-			"nextID": "Test1Fail2"
+			"nextID": "Test1Fail2",
+			"allowBack": false,
+			"rejectBackMessage": "Where do you think you're going?"
 		},
 		{
 			"text": "Because the factory is broken.",
@@ -24,7 +28,9 @@
 		{
 			"text": "Because I'm on a mission from the boss. ",
 			"type": "neutral",
-			"nextID": "Test1Fail1"
+			"nextID": "Test1Fail1",
+			"allowBack": false,
+			"rejectBackMessage": "Where do you think you're going?"
 		},
 		{
 			"text": "Because the boss needs our help.",

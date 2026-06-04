@@ -17,7 +17,9 @@
 		{
 			"text": "So what?",
 			"type": "neutral",
-			"nextID": "SoWhat"
+			"nextID": "SoWhat",
+			"allowBack": false,
+			"rejectBackMessage": "Shouldn't have said that."
 		}
 	]
 }

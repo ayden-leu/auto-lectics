@@ -9,7 +9,9 @@
 		{
 			"text": "I just want to know what's going on.",
 			"type": "neutral",
-			"nextID": "DontYouHavePurposeEnd"
+			"nextID": "DontYouHavePurposeEnd",
+			"allowBack": false,
+			"rejectBackMessage": "Not so fast."
 		},
 		{
 			"text": "There's something that I have to do. Just listen to me.",

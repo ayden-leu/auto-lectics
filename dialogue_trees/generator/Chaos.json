@@ -4,11 +4,15 @@
 	"options": [
 		{
 			"text": "What embryo?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "What is this project?",
-			"nextID": "Fail"
+			"nextID": "Fail",
+			"allowBack": false,
+			"rejectBackMessage": "You broke the pattern."
 		},
 		{
 			"text": "How do I get to the project?",
