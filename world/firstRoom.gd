@@ -38,5 +38,5 @@ func _on_change_respawn_body_entered(body: Node3D) -> void:
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	get_tree().change_scene_to_file("res://world/1.5room.tscn")
+	get_tree().change_scene_to_file("res://world/merged_environment.tscn")
 	pass # Replace with function body.

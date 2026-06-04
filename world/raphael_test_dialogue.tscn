@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d6okd7h708el"]
+[gd_scene load_steps=24 format=3 uid="uid://d6okd7h708el"]
 
 [ext_resource type="Script" uid="uid://cypt3ypnimoj5" path="res://world/raphael_test_dialogue.gd" id="1_4bdpc"]
 [ext_resource type="PackedScene" uid="uid://stwpbfk20ea4" path="res://entities/npcs/preacherNPC.tscn" id="1_k4mrd"]
@@ -17,9 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://tqt27f4t0m0c" path="res://entities/npcs/miniboss2.tscn" id="14_4bdpc"]
 [ext_resource type="PackedScene" uid="uid://bq04u0nihuu52" path="res://_framework/entities/npcs/npc_test_interactable.tscn" id="15_46t5o"]
 [ext_resource type="PackedScene" uid="uid://wo7o5fb0ppt1" path="res://_framework/entities/npcs/space_Vocal_NPC.tscn" id="17_2oxty"]
-[ext_resource type="PackedScene" uid="uid://nrwq44bva56" path="res://_framework/helpers/vocal_dialogue_player.tscn" id="18_mi4ox"]
-[ext_resource type="PackedScene" uid="uid://dfgf7g5bmiin3" path="res://models/BlendFiles/suit.blend" id="19_nphhe"]
-[ext_resource type="Script" uid="uid://b66oabg2p0cva" path="res://models/BlendFiles/suit.gd" id="20_p77b6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyt2i"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -41,12 +38,6 @@ size = Vector2(18.48, 37.805)
 data = PackedVector3Array(9.24, 0, 18.9025, -9.24, 0, 18.9025, 9.24, 0, -18.9025, -9.24, 0, 18.9025, -9.24, 0, -18.9025, 9.24, 0, -18.9025)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3dfxh"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2oxty"]
-size = Vector3(1, 4.4624023, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_wbjbh"]
-size = Vector3(1, 4.4624023, 1)
 
 [node name="RaphaelTestDialogue" type="Node3D"]
 script = ExtResource("1_4bdpc")
@@ -136,33 +127,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.108421, 9.536743e-07, -7.
 _talkOnlyOnce = true
 initialDialogueID = "LearnEverything"
 
+[node name="spaceNPC" parent="." instance=ExtResource("17_2oxty")]
+transform = Transform3D(0.5795146, 0, 0, 0, 0.5795146, 0, 0, 0, 0.5795146, 34.011974, 2.943527, -36.918404)
+visible = false
+
 [node name="spaceNPC2" parent="." instance=ExtResource("17_2oxty")]
 transform = Transform3D(0.5795146, 0, 0, 0, 0.5795146, 0, 0, 0, 0.5795146, -12.116707, 2.5268173, 4.6181684)
-
-[node name="Area3D" type="Area3D" parent="spaceNPC2"]
-collision_layer = 207
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="spaceNPC2/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7312012, 0)
-shape = SubResource("BoxShape3D_2oxty")
-
-[node name="spaceNPC" parent="." instance=ExtResource("17_2oxty")]
-transform = Transform3D(0.5795146, 0, 0, 0, 0.5795146, 0, 0, 0, 0.5795146, 0, 3.1550317, 0)
-
-[node name="VocalDialoguePlayer" parent="." instance=ExtResource("18_mi4ox")]
-dialogueTreeID = "_test"
-initialDialogueID = "intro_001"
-startFromInteraction = true
-interactOnlyOnce = true
-
-[node name="Area3D" type="Area3D" parent="VocalDialoguePlayer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7369065, 2.651525, 0)
-collision_layer = 207
-collision_mask = 255
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VocalDialoguePlayer/Area3D"]
-shape = SubResource("BoxShape3D_wbjbh")
-
-[node name="suit" parent="VocalDialoguePlayer" instance=ExtResource("19_nphhe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7369065, 2.651525, 0)
-script = ExtResource("20_p77b6")

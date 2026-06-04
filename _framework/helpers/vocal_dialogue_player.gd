@@ -149,7 +149,6 @@ func _ready() -> void:
 		if not _hitbox:
 			return
 		_prevHitboxCollisionValue = _hitbox.get_collision_layer_value(3)
-		print(_hitbox,"hitbxo")
 		return
 
 	currentDialogueID = initialDialogueID
@@ -324,8 +323,7 @@ func _finish() -> void:
 		interactedWith = false
 		currentDialogueID = initialDialogueID
 	dialogue_finished.emit()
-	get_tree().change_scene_to_file("res://world/merged_environment.tscn")
-	
+
 ## [b]Internal-use only.[/b]
 ## Gets this node's first [Area3D] child, and only the first one.
 func _get_area() -> Area3D:
@@ -334,7 +332,6 @@ func _get_area() -> Area3D:
 		if child is Area3D:
 			return child
 	return null
-	
 
 # ------------------------------------------------
 # functions that run when a signal is emitted

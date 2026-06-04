@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://524kk63lga7"]
 
-[ext_resource type="Theme" uid="uid://bnau1gg2ifc3y" path="res://_framework/_visual_assets/blueprint_menu/blueprint_theme.tres" id="1_fyavw"]
+[ext_resource type="Theme" uid="uid://bvocyor065ht5" path="res://_framework/_visual_assets/dialogue_window/dialogue_window_theme.tres" id="1_stmoi"]
 [ext_resource type="Script" uid="uid://c6ucujnx4pb32" path="res://_framework/dialogue_visuals/window/blueprint/blueprint_npc_detail_window.gd" id="2_l88yy"]
 [ext_resource type="PackedScene" uid="uid://bdy6ylqslqkpr" path="res://_framework/dialogue_visuals/window/close_button.tscn" id="3_h8c35"]
 [ext_resource type="Texture2D" uid="uid://dib2r871pugpb" path="res://_framework/_visual_assets/dont_change/placeholder1.png" id="4_fyavw"]
@@ -28,7 +28,7 @@ anchors_preset = 0
 offset_right = 364.0
 offset_bottom = 540.0
 mouse_default_cursor_shape = 2
-theme = ExtResource("1_fyavw")
+theme = ExtResource("1_stmoi")
 script = ExtResource("2_l88yy")
 headerPanel = NodePath("Header")
 headerLabel = NodePath("Header/HBoxContainer/Label")
@@ -91,7 +91,7 @@ offset_left = 24.5625
 offset_top = 52.0
 offset_right = 156.0
 offset_bottom = 83.0
-placeholder_text = "e.g R0-B07"
+placeholder_text = "e.g John"
 
 [node name="SubmitNpcNameButton" type="Button" parent="Contents/GuessNpcNamePanel"]
 unique_name_in_owner = true
