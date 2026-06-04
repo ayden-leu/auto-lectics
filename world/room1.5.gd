@@ -42,6 +42,10 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 
 func _on_vocal_dialogue_player_dialogue_finished() -> void:
+	
+	await get_tree().create_timer(1.0).timeout
+	$AudioStreamPlayer.play()
+	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://world/merged_environment.tscn")
 
 	pass # Replace with function body.

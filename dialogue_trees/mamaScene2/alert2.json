@@ -1,0 +1,11 @@
+{
+	"text": "File titled \"to_the_next_one.AL\" detected. \n",
+	"mode": "normal",
+	"textThemePreset": "_defaultConsolePlayer",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "to_the_next_one"
+		}
+	]
+}

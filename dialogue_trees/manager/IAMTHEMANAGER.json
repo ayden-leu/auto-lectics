@@ -1,0 +1,10 @@
+{
+	"text": "[NOTICE]\nI AM YOUR MANAGER.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "REPRINT1"
+		}
+	]
+}

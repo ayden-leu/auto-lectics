@@ -33,7 +33,6 @@ autowrap_mode = 3
 
 [node name="ContinueIcon" type="TextureRect" parent="."]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(80, 80)
 anchors_preset = 3
 anchor_left = 1.0

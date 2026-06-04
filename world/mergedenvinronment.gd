@@ -1,5 +1,8 @@
 extends Node3D
 
+var amIFaded = false
+
+
 func _ready() -> void:
 	FR_MenuManager.enable() # either enable() or disable()
 	FR_WindowManager.enable() # either enable() or disable()
@@ -36,9 +39,15 @@ func _on_change_respawn_body_entered(body: Node3D) -> void:
 	$Marker3D.global_position = Vector3(-23.0,25.0,23.0)
 
 
-
-
-
 func _on_area_3d_2_body_entered(body: Node3D) -> void:
 	get_tree().change_scene_to_file("res://world/lastRoom.tscn")
 	pass # Replace with function body.
+
+func _process(delta: float) -> void:
+	if StoryFlags.currentFlags.endGameDestroy == true and amIFaded == false: 
+		$FadeToBlackOverlay.startFadeIn()
+		amIFaded = true
+		
+	if StoryFlags.currentFlags.endGamePreserve == true and amIFaded == false:
+		$FadeToBlackOverlay.startFadeIn()
+		amIFaded = true

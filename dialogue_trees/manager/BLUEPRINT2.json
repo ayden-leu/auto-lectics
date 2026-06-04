@@ -1,0 +1,10 @@
+{
+	"text": "PRESS [B] ",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "YOU CAN FIGURE OUT THE REST."
+		}
+	]
+}

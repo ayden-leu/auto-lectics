@@ -1,6 +1,7 @@
 {
 	"text": "Loading position data. Reconstructing scene. Beginning recording.",
 	"mode": "normal",
+	"textThemePreset": "_defaultConsolePlayer",
 	"options": [
 		{
 			"text": "->",

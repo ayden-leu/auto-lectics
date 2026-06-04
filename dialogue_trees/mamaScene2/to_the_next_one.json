@@ -1,0 +1,14 @@
+{
+	"text": "I did it. I killed the one that they all call Mama…but I couldn't carry out her wish. If I destroyed the core, there's no way I could've gone back to the spacecraft alive. They'll send out another operative. I assume that you're reading this now. If you've taken the same journey that I have, you'll understand my sympathy for these robots. I've hidden the core in a safe space in the factory. Destroy it or bring it back to the spacecraft. I don't care. This assignment has been far too taxing and I want to go home.",
+	"mode": "normal",
+	"textThemePreset": "operative",
+	"sfx": {
+		"spawn": "_test_1"
+	},
+	"options": [
+		{
+			"text": "Make your choice.",
+			"nextID": "Choose"
+		}
+	]
+}

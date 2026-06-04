@@ -81,7 +81,6 @@ shape = SubResource("CapsuleShape3D_abrql")
 debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
 
 [node name="Crosshair" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_8hc64")]
-visible = false
 player = NodePath("..")
 
 [node name="SfxEventHandler" parent="." instance=ExtResource("4_q128n")]

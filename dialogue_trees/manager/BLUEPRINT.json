@@ -1,0 +1,10 @@
+{
+	"text": "[NOTICE]\nWE WANT YOU TO FILL OUT A BLUEPRINT WITH THE ID'S OF MACHINES AS YOU FIND THEM.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "BLUEPRINT2"
+		}
+	]
+}

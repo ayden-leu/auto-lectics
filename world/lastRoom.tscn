@@ -1,20 +1,26 @@
-[gd_scene load_steps=20 format=3 uid="uid://cjwp5h1m4disi"]
+[gd_scene load_steps=35 format=3 uid="uid://cjwp5h1m4disi"]
 
 [ext_resource type="Script" uid="uid://dhmafss6y7nec" path="res://world/mergedenvinronment.gd" id="1_6wfer"]
 [ext_resource type="PackedScene" uid="uid://bfx0jhjujr4oe" path="res://_framework/helpers/death_plane.tscn" id="3_2qrar"]
 [ext_resource type="Script" uid="uid://cwtbpvdwgynmd" path="res://world/forceRepsawn.gd" id="4_vggyw"]
-[ext_resource type="PackedScene" uid="uid://b4srktkju34tq" path="res://_framework/entities/player/player.tscn" id="5_13vdb"]
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="5_iu0tb"]
 [ext_resource type="PackedScene" uid="uid://bucgr164dhw0b" path="res://entities/npcs/mamaScene.tscn" id="5_vggyw"]
 [ext_resource type="PackedScene" uid="uid://bearq8quulj0c" path="res://_framework/helpers/start_dialogue_area_one_shot.tscn" id="6_iu0tb"]
 [ext_resource type="Material" uid="uid://c1m0ge3n7utw6" path="res://materials/RedRust.tres" id="7_6wfer"]
+[ext_resource type="Script" uid="uid://otbt3kom16qm" path="res://_framework/entities/player/player.gd" id="7_tsn07"]
 [ext_resource type="PackedScene" uid="uid://03p5qkxj03vb" path="res://models/environment/environmentscenes/dome.tscn" id="8_6wfer"]
+[ext_resource type="Script" uid="uid://bvgsjve6ghkfg" path="res://_framework/helpers/input_handler.gd" id="8_mkuyj"]
 [ext_resource type="PackedScene" uid="uid://dgbn1vowuq8nf" path="res://models/BlendFiles/CEOHolder.blend" id="9_2qrar"]
 [ext_resource type="PackedScene" uid="uid://dsl56lwxriwa1" path="res://models/BlendFiles/mamaAlive.blend" id="9_13vdb"]
+[ext_resource type="PackedScene" uid="uid://b4qdi730tv5hl" path="res://_framework/ui/hud/crosshair.tscn" id="9_hw6pm"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="9_wb7ss"]
 [ext_resource type="PackedScene" uid="uid://dujaqa541rom2" path="res://models/BlendFiles/characterBlue.blend" id="10_2qrar"]
+[ext_resource type="PackedScene" uid="uid://dkiyyqnrj805g" path="res://_framework/helpers/sfx_event_handler.tscn" id="10_y2fve"]
+[ext_resource type="PackedScene" uid="uid://ppcjbgw3grh3" path="res://_framework/helpers/fade_to_black_overlay.tscn" id="11_8avo7"]
 [ext_resource type="PackedScene" uid="uid://drin6jhxjr5ov" path="res://models/BlendFiles/mamaDead2.blend" id="11_vggyw"]
+[ext_resource type="PackedScene" uid="uid://0mnvycgijgpy" path="res://_framework/entities/player/grappling_hook.tscn" id="12_jf8vh"]
 [ext_resource type="Script" uid="uid://v4omasy8kxv7" path="res://world/holograms.gd" id="13_iu0tb"]
+[ext_resource type="AudioStream" uid="uid://dlwuxtl8lt57f" path="res://sounds/song1.mp3" id="21_mkuyj"]
 
 [sub_resource type="Environment" id="Environment_mqjft"]
 background_mode = 1
@@ -22,6 +28,24 @@ background_color = Color(0.0627451, 0.03529412, 0.05490196, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v8dti"]
 size = Vector3(2.2228737, 2.3817139, 4.9)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hh4bn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h4x50"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abrql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qclge"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hh4bn"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6t6ql"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4ncf"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s2ddf"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmmnp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6gg74"]
 size = Vector3(4934.042, 1, 7188.293)
@@ -64,6 +88,7 @@ visible = false
 
 [node name="mama" parent="npcs" instance=ExtResource("5_vggyw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 173.32661, 0)
+initialDialogueID = "alert"
 
 [node name="StartDialogueArea" parent="npcs" node_paths=PackedStringArray("interactableNpcToInitiate") instance=ExtResource("6_iu0tb")]
 transform = Transform3D(0.6738512, 0, -0.7388671, 0, 1, 0, 0.7388671, 0, 0.6738512, -14.796034, 4.4892178, -18.938501)
@@ -84,11 +109,112 @@ transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, -0.11361708, -0.0
 shape = SubResource("BoxShape3D_v8dti")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, 17.220318, 58.738182, 17.568295)
+transform = Transform3D(3.5355341, 0, -3.5355344, 0, 4.999999, 0, 3.5355344, 0, 3.5355341, -162.15019, 35.42901, -187.62935)
 
-[node name="Player" parent="." node_paths=PackedStringArray("respawnCheckpointLocation") instance=ExtResource("5_13vdb")]
+[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("respawnCheckpointLocation")]
 transform = Transform3D(-6.5741014, 0, -5.2158027, 0, 8.391865, 0, 5.2158027, 0, -6.5741014, -180.21889, 17.56188, -206.69241)
+collision_layer = 5
+collision_mask = 2
+script = ExtResource("7_tsn07")
 respawnCheckpointLocation = NodePath("../Marker3D")
+maxSpeed = 11.2
+acceleration = 8.0
+deceleration = 7.5
+timeBetweenSteps = 0.6
+airControl = 0.5
+jumpHeight = 0.95
+timeToApex = 0.46
+apexHangTime = 0.1
+fallGravityMultiplier = 2.8
+grapplingHookEnabled = false
+grappleAttachImpulseStrength = 5.75
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004080862)
+mesh = SubResource("CapsuleMesh_hh4bn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_h4x50")
+
+[node name="CameraAnchor" type="Marker3D" parent="Player"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4390247, 0)
+
+[node name="InteractionRaycast" type="RayCast3D" parent="Player/CameraAnchor"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, 11.885, 0)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.13870001, 0.6413051, 0.73, 0.2784314)
+
+[node name="GrappleStartMarker" type="Marker3D" parent="Player/CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23946804, 0)
+
+[node name="GrappleRaycast" type="RayCast3D" parent="Player/CameraAnchor"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49326694, 0)
+target_position = Vector3(0, 0, -1)
+collision_mask = 2
+debug_shape_custom_color = Color(0.4968, 0.69, 0.61915994, 0.4392157)
+
+[node name="InputHandler" type="Node" parent="Player"]
+script = ExtResource("8_mkuyj")
+metadata/_custom_type_script = "uid://bvgsjve6ghkfg"
+
+[node name="Hurtbox" type="Area3D" parent="Player"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Hurtbox"]
+shape = SubResource("CapsuleShape3D_abrql")
+debug_color = Color(0.8259848, 0.3672111, 0.41260174, 0.41960785)
+
+[node name="Crosshair" parent="Player" node_paths=PackedStringArray("player") instance=ExtResource("9_hw6pm")]
+player = NodePath("..")
+
+[node name="SfxEventHandler" parent="Player" instance=ExtResource("10_y2fve")]
+unique_name_in_owner = true
+sfxIds = Dictionary[String, String]({
+"death": "death",
+"deathFancy": "michaelwave",
+"jump": "",
+"respawn": "respawn",
+"respawnFancy": "respawn",
+"step": "step"
+})
+
+[node name="death" type="AudioStreamPlayer" parent="Player/SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_qclge")
+
+[node name="deathFancy" type="AudioStreamPlayer" parent="Player/SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_hh4bn")
+
+[node name="jump" type="AudioStreamPlayer" parent="Player/SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_6t6ql")
+
+[node name="respawn" type="AudioStreamPlayer" parent="Player/SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_k4ncf")
+
+[node name="respawnFancy" type="AudioStreamPlayer" parent="Player/SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_s2ddf")
+
+[node name="step" type="AudioStreamPlayer" parent="Player/SfxEventHandler"]
+stream = SubResource("AudioStreamRandomizer_lmmnp")
+volume_db = -5.503
+
+[node name="FadeToBlackOverlay" parent="Player" instance=ExtResource("11_8avo7")]
+unique_name_in_owner = true
+
+[node name="GrapplingHook" parent="Player" node_paths=PackedStringArray("raycast", "throwOrigin") instance=ExtResource("12_jf8vh")]
+unique_name_in_owner = true
+raycast = NodePath("../CameraAnchor/GrappleRaycast")
+throwOrigin = NodePath("../CameraAnchor/GrappleStartMarker")
+shootSpeed = 30.085
+recallSpeed = 10.105
+maxRange = 25.185
+swingInfluenceForce = 1.805
+maxSwingSpeed = 73.065
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("focus") instance=ExtResource("9_wb7ss")]
 transform = Transform3D(-0.014573097, 0, 0.9998941, 0, 1, 0, -0.9998941, 0, -0.014573097, 52.0393, 81.16119, 5.2925925)
@@ -115,6 +241,10 @@ transform = Transform3D(0.14426778, -0.83228844, 0.53524107, 0.9893006, 0.109447
 
 [node name="mamaDead2" parent="." instance=ExtResource("11_vggyw")]
 transform = Transform3D(1.1495185, 1.0157477, -8.868306, -0.0024659783, 8.941577, 1.02382, 8.926288, -0.12833671, 1.1423346, 28.146976, 1.2271092, -35.222897)
+visible = false
+
+[node name="mama" parent="." instance=ExtResource("5_vggyw")]
+transform = Transform3D(1.1495185, 1.0157478, -8.868306, -0.0024659783, 8.941577, 1.02382, 8.926289, -0.12833671, 1.1423346, 48.682503, 1.2271092, -16.418917)
 
 [node name="holograms" type="Node3D" parent="."]
 transform = Transform3D(3.062825, 0, -8.462807, 0, 9.000001, 0, 8.462807, 0, 3.062825, 10.903675, 1.0066308, -20.451443)
@@ -126,3 +256,18 @@ transform = Transform3D(0.99999994, 0, -5.9604645e-08, 0, 0.99999994, 0, 5.96046
 
 [node name="characterBlue" parent="holograms" instance=ExtResource("10_2qrar")]
 transform = Transform3D(0.1890633, 0, 0.5223955, 0, 0.5555555, 0, -0.5223955, 0, 0.1890633, 0.12645471, -0.018126786, 5.3952518)
+
+[node name="FadeToBlackOverlay" parent="." instance=ExtResource("11_8avo7")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_mkuyj")
+autoplay = true
+
+[connection signal="grapple_pressed" from="Player/InputHandler" to="Player" method="_on_grapple_pressed"]
+[connection signal="interact_button_pressed" from="Player/InputHandler" to="Player" method="_on_interact_pressed"]
+[connection signal="jump_pressed" from="Player/InputHandler" to="Player" method="_on_jump_pressed"]
+[connection signal="mouse_moved" from="Player/InputHandler" to="Player" method="_on_mouse_moved"]
+[connection signal="respawn" from="Player/InputHandler" to="Player" method="_on_input_handler_respawn"]
+[connection signal="update_input_direction" from="Player/InputHandler" to="Player" method="_on_updated_input_direction"]
+[connection signal="hook_attached" from="Player/GrapplingHook" to="Player" method="_on_grappling_hook_hook_attached"]
+[connection signal="hook_detached" from="Player/GrapplingHook" to="Player" method="_on_grappling_hook_hook_detached"]

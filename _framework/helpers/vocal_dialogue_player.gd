@@ -49,6 +49,7 @@ signal dialogue_advanced()
 ## Emitted when the vocal dialogue hits an end.
 signal dialogue_finished()
 
+
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
@@ -333,6 +334,7 @@ func _get_area() -> Area3D:
 	for child in children:
 		if child is Area3D:
 			return child
+			print(child)
 	return null
 	
 

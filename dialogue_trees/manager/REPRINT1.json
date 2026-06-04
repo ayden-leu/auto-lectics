@@ -1,0 +1,10 @@
+{
+	"text": "IF YOU ARE AT ANY POINT PHYSICALLY STUCK PRESS SEMICOLON [ ; ] AND WE WILL REPRINT YOU.",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "->",
+			"nextID": "REPRINT2"
+		}
+	]
+}

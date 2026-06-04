@@ -1,18 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bucgr164dhw0b"]
+[gd_scene load_steps=5 format=3 uid="uid://bucgr164dhw0b"]
 
-[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_pod1j"]
+[ext_resource type="Script" uid="uid://doy6253ijow7j" path="res://entities/npcs/mamaNPC.gd" id="1_look1"]
 [ext_resource type="PackedScene" uid="uid://b14kyj776kh6y" path="res://models/week6playtestStuff/npcs/dish.fbx" id="2_look1"]
+[ext_resource type="PackedScene" uid="uid://do30yh0tla1k1" path="res://models/npcs/mama_dead_model.tscn" id="3_look1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1g2y5"]
 size = Vector3(3.7146912, 3.3453865, 3.8427734)
 
 [node name="mama" type="Node3D" node_paths=PackedStringArray("_hitbox", "model")]
-script = ExtResource("1_pod1j")
+script = ExtResource("1_look1")
 _hitbox = NodePath("Hitbox")
 dialogueTreeID = "mamaScene2"
-initialDialogueID = "alert"
+initialDialogueID = "alert2"
 rejectConsoleExit = true
-model = NodePath("dishmodel")
+model = NodePath("mamaDead2")
 internalID = "AL OS"
 displayName = "AL OS"
 
@@ -21,17 +22,17 @@ transform = Transform3D(0.3630648, 0, 0.9317639, 0, 1, 0, -0.9317639, 0, 0.36306
 visible = false
 
 [node name="Hitbox" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 67.41583, 0)
-visible = false
+transform = Transform3D(0.40708038, 0, 0, 0, 0.40708038, 0, 0, 0, 0.40708038, 0.34883612, 4.1885023, 0.92135537)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26234436, 1.659708, 0.1303711)
 shape = SubResource("BoxShape3D_1g2y5")
 
 [node name="DialogueBoxAnchor" type="Marker3D" parent="."]
 transform = Transform3D(-0.30925646, 0, 0.6112163, 0, 0.68500006, 0, -0.6112163, 0, -0.30925646, -6.1824217, 1.538078, 1.0376358)
 visible = false
 metadata/_edit_group_ = true
+
+[node name="mamaDead2" parent="." instance=ExtResource("3_look1")]

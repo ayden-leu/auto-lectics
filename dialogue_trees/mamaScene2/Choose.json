@@ -1,0 +1,19 @@
+{
+	"text": "..",
+	"mode": "normal",
+	"textThemePreset": "_defaultConsolePlayer",
+	"options": [
+		{
+			"text": "Return with the core. ",
+			"setFlags": {
+				"endGamePreserve": true
+			}
+		},
+		{
+			"text": "Destroy the core. ",
+			"setFlags": {
+				"endGameDestroy": true
+			}
+		}
+	]
+}

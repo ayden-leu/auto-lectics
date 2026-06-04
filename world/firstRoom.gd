@@ -3,7 +3,7 @@ extends Node3D
 func _ready() -> void:
 	FR_MenuManager.enable() # either enable() or disable()
 	FR_WindowManager.enable() # either enable() or disable()
-	CursorHandler.setDefault("hidden") # refer to documentation or hover over the function for valid values
+	CursorHandler.setDefault("shown") # refer to documentation or hover over the function for valid values
 	CursorHandler.hideNuclear() # either hideNuclear() or showNuclear()
 
 
@@ -39,4 +39,14 @@ func _on_change_respawn_body_entered(body: Node3D) -> void:
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	get_tree().change_scene_to_file("res://world/1.5room.tscn")
+	pass # Replace with function body.
+
+
+func _on_vocal_dialogue_player_dialogue_finished() -> void:
+	$dropPodStuff.visible = true
+	pass # Replace with function body.
+
+
+func _on_vocal_dialogue_player_dialogue_advanced() -> void:
+	$dropPodStuff.visible = true
 	pass # Replace with function body.

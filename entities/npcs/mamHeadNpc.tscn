@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dycu5w8of13ai"]
+
+[ext_resource type="Script" uid="uid://bvljd2vvat3wo" path="res://entities/npcs/dishNPC.gd" id="1_i5okt"]
+[ext_resource type="PackedScene" uid="uid://dfgf7g5bmiin3" path="res://models/BlendFiles/suit.blend" id="2_c5tim"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_25xfv"]
+size = Vector3(3.671997, 10.670654, 9.139801)
+
+[node name="suit" type="Node3D" node_paths=PackedStringArray("_hitbox")]
+script = ExtResource("1_i5okt")
+_hitbox = NodePath("Area3D")
+dialogueTreeID = "generator"
+initialDialogueID = "a"
+internalID = "generator"
+displayName = "generator"
+metadata/_custom_type_script = "uid://um13i8jipsfx"
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28068542, 0, -0.33616632)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0449829, 5.208374, 0.06175226)
+shape = SubResource("BoxShape3D_25xfv")
+
+[node name="DialogueBoxAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1.457915, 0.21957791, 0.10303234, -0.22309445, 1.4603376, 0.04459487, -0.095178925, -0.059542786, 1.4736828, 4.834044, 4.058341, 1.5022821)
+visible = false
+
+[node name="suit" parent="." instance=ExtResource("2_c5tim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.698267, 0)
+visible = false

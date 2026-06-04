@@ -54,11 +54,13 @@ const DEFAULT_FLAGS: Dictionary = {
 	"notDoingTheirJob":false,
 	"DoingTheirJob":false,
 	
+	#first scene
 	"dropPod":false,
 	
-	
-	"hologramsOn":false
-	
+	#final scene
+	"hologramsOn":false,
+	"endGameDestroy":false,
+	"endGamePreserve":false,
 }
 #---------------------------------------------------
 

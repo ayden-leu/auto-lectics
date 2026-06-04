@@ -1,6 +1,6 @@
 {
   "file": "hello",
-  "subtitles": "hey can’t see or hear you, but they’ll be checking your location, vitals, and blueprint progress.",
+  "subtitles": "They’ll be checking your location, vitals, and blueprint progress.",
   "delayBeforeAllowContinue": 0.5,
   "nextID": "3"
 }

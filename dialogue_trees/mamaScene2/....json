@@ -1,0 +1,18 @@
+{
+	"text": "..",
+	"mode": "normal",
+	"options": [
+		{
+			"text": "Destroy the core. ",
+			"setFlags": {
+				"endGameDestroy": true
+			}
+		},
+		{
+			"text": "Return with the core. ",
+			"setFlags": {
+				"endGamePreserve": true
+			}
+		}
+	]
+}
