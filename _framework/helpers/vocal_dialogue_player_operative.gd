@@ -144,7 +144,7 @@ var _prevHitboxCollisionValue:bool
 # functions like _ready, _process, and _physics_process
 # ------------------------------------------------
 func _ready() -> void:
-	$Timer.start()
+#	$Timer.start()
 	if Engine.is_editor_hint():
 		_hitbox = _get_area()
 		if not _hitbox:

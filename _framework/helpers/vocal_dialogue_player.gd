@@ -49,7 +49,6 @@ signal dialogue_advanced()
 ## Emitted when the vocal dialogue hits an end.
 signal dialogue_finished()
 
-
 # ------------------------------------------------
 # enums
 # ------------------------------------------------
@@ -205,6 +204,7 @@ func loadNextDialogue() -> void:
 
 	_prepare(base)
 	await _begin()
+	
 
 # ------------------------------------------------
 # functions only referenced inside this script
@@ -334,7 +334,6 @@ func _get_area() -> Area3D:
 	for child in children:
 		if child is Area3D:
 			return child
-			print(child)
 	return null
 	
 
@@ -396,3 +395,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _validate_property(property: Dictionary) -> void:
 	if property.name in ["interactOnlyOnce"] and not startFromInteraction:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
+
+
+func _on_input_handler_grapple_pressed() -> void:
+	
+	pass # Replace with function body.

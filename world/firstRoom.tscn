@@ -75,6 +75,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 27)
 [node name="VocalDialoguePlayer" parent="npcs/vocals/lucienne" instance=ExtResource("9_c2fq7")]
 dialogueTreeID = "lucienne"
 initialDialogueID = "intro_001"
+delayBeforeAllowContinue = 0.0
 startFromInteraction = true
 interactOnlyOnce = true
 
@@ -92,6 +93,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -0.1, 6)
 [node name="VocalDialoguePlayer" parent="npcs/vocals/michelle" instance=ExtResource("9_c2fq7")]
 dialogueTreeID = "michelle"
 initialDialogueID = "1"
+delayBeforeAllowContinue = 0.0
 startFromInteraction = true
 interactOnlyOnce = true
 

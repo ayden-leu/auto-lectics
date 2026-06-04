@@ -47,4 +47,5 @@ texture = ExtResource("2_fiadj")
 
 [node name="InputHandler" parent="." instance=ExtResource("2_o8xeo")]
 
+[connection signal="grapple_pressed" from="InputHandler" to="." method="_on_input_handler_grapple_pressed"]
 [connection signal="interact_button_pressed" from="InputHandler" to="." method="_on_input_handler_interact_button_pressed"]
