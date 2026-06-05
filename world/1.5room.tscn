@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bk5yr8o3mt4ro" path="res://components/roll_credits_trigger.tscn" id="4_aawjp"]
 [ext_resource type="Script" uid="uid://c4arbj7x8rlqn" path="res://_framework/helpers/vocal_dialogue_player_operative.gd" id="6_07q4k"]
 [ext_resource type="PackedScene" uid="uid://nrwq44bva56" path="res://_framework/helpers/vocal_dialogue_player.tscn" id="6_f2ilj"]
-[ext_resource type="AudioStream" uid="uid://qsct1x7c50fp" path="res://dialogue_trees/vocal/operative/hello.mp3" id="6_f44cl"]
+[ext_resource type="AudioStream" path="res://dialogue_trees/vocal/operative/hello.mp3" id="6_f44cl"]
 [ext_resource type="PackedScene" uid="uid://dfgf7g5bmiin3" path="res://models/BlendFiles/suit.blend" id="7_eb6sj"]
 [ext_resource type="PackedScene" uid="uid://f37saf310u6v" path="res://_framework/entities/player/playerSpace.tscn" id="8_uqqr6"]
 [ext_resource type="PackedScene" uid="uid://bm2wlegvafwbr" path="res://_framework/entities/player/player_camera.tscn" id="9_vrxgp"]
@@ -60,9 +60,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, -3)
 [node name="VocalDialoguePlayer" parent="npcs/vocals/michelle" instance=ExtResource("6_f2ilj")]
 stream = ExtResource("6_f44cl")
 script = ExtResource("6_07q4k")
-dialogueTreeID = "operative"
+dialogueTreeID = "operative2"
 initialDialogueID = "1"
-delayBeforeAllowContinue = 0.0
 
 [node name="suit" parent="npcs/vocals/michelle" instance=ExtResource("7_eb6sj")]
 visible = false
